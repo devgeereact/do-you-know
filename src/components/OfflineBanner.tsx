@@ -9,9 +9,9 @@ export function OfflineBanner(): JSX.Element | null {
     <div
       role="status"
       aria-live="polite"
-      className="fixed inset-x-0 bottom-0 z-50 animate-fade-up bg-surface px-4 py-3 text-center text-sm text-content-muted border-t border-surface-border"
+      className="fixed inset-x-0 bottom-0 z-50 animate-fade-up border-t border-surface-border bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-center text-sm text-content"
     >
-      You're offline — showing cached content.
+      You’re offline. Some things won’t load until you’re back online.
     </div>
   );
 }

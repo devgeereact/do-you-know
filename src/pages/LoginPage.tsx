@@ -49,55 +49,68 @@ export function LoginPage(): JSX.Element {
         ? await supabase.auth.updateUser({ email }, { emailRedirectTo: redirectTo })
         : await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo } });
       if (error) throw error;
-      setMessage('Check your inbox — we sent you a link.');
+      setMessage('Check your inbox. We’ve sent you a link.');
     });
 
   return (
-    <main className="grid min-h-screen place-items-center px-4">
-      <Card className="w-full max-w-sm animate-fade-up">
-        <h1 className="mb-1 text-2xl font-semibold text-content">Save your progress</h1>
-        <p className="mb-6 text-content-muted">
-          Keep your scores, streak and avatar on every device. No password needed.
+    <main className="grid min-h-dvh place-items-center px-4 py-10">
+      <Card className="w-full max-w-sm animate-fade-up border-2 p-7 shadow-lift">
+        <h1 className="mb-2 text-3xl font-semibold text-content">Save your progress</h1>
+        <p className="mb-7 text-content-muted">
+          Keep your scores, streak and avatar on every device. You won’t need a password.
         </p>
 
         <Button className="w-full" disabled={busy} onClick={() => void continueWithGoogle()}>
           Continue with Google
         </Button>
 
-        <div className="my-5 flex items-center gap-3 text-sm text-content-muted">
-          <span className="h-px flex-1 bg-surface-border" /> or <span className="h-px flex-1 bg-surface-border" />
+        <div className="my-6 flex items-center gap-3 text-sm font-bold text-content-muted">
+          <span aria-hidden="true" className="h-0.5 flex-1 rounded-full bg-surface-border" />
+          or
+          <span aria-hidden="true" className="h-0.5 flex-1 rounded-full bg-surface-border" />
         </div>
 
-        <label className="mb-1 block text-sm text-content-muted" htmlFor="email">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-          className="mb-4 min-h-tap w-full rounded-xl border border-surface-border bg-background px-4 text-content outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-          placeholder="you@example.com"
-        />
-        <Button
-          className="w-full"
-          variant="ghost"
-          disabled={busy || email.length < 5}
-          onClick={() => void sendEmailLink()}
+        <form
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            void sendEmailLink();
+          }}
         >
-          Email me a sign-in link
-        </Button>
+          <label className="mb-2 block font-bold text-content" htmlFor="email">
+            Your email
+          </label>
+          <input
+            id="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+            className="mb-4 min-h-tap w-full rounded-full border-2 border-surface-border bg-background px-5 text-content outline-none transition-colors placeholder:text-content-muted/70 focus-visible:border-primary"
+            placeholder="name@example.com"
+          />
+          <Button
+            type="submit"
+            className="w-full"
+            variant="ghost"
+            disabled={busy || email.length < 5}
+          >
+            {busy ? 'Sending…' : 'Email me a sign-in link'}
+          </Button>
+        </form>
 
-        <p className="mt-5 text-center text-sm text-content-muted">
-          Under 13? Ask a grown-up to save your progress with their own email.
+        <p
+          aria-live="polite"
+          role="status"
+          className="mt-4 min-h-[1.5rem] text-center font-bold text-content"
+        >
+          {message}
         </p>
 
-        {message && (
-          <p role="status" className="mt-4 text-center text-content">
-            {message}
-          </p>
-        )}
+        <p className="mt-2 rounded-xl bg-background px-4 py-3 text-center text-sm text-content-muted">
+          Under 13? Ask a grown-up to save your progress with their own email.
+        </p>
       </Card>
     </main>
   );

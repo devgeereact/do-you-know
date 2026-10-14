@@ -46,6 +46,14 @@ const config: Config = {
         xl: '1rem', // cards
         '2xl': '1.5rem', // sheets, dialogs
       },
+      boxShadow: {
+        // Chunky "game button" edge. The edge shrinks on press so the button sinks.
+        'edge-primary': '0 4px 0 0 rgb(var(--primary-edge))',
+        'edge-sun': '0 4px 0 0 rgb(var(--sun-edge))',
+        'edge-surface': '0 4px 0 0 rgb(var(--surface-border))',
+        'edge-pressed': '0 1px 0 0 rgb(var(--surface-border))',
+        lift: '0 12px 32px -12px rgb(var(--primary) / 0.35)',
+      },
       minHeight: { tap: '3rem' }, // 48px touch targets
       minWidth: { tap: '3rem' },
       keyframes: {
@@ -57,6 +65,10 @@ const config: Config = {
           '0%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.06)' },
           '100%': { transform: 'scale(1)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
         },
         shake: {
           '0%, 100%': { transform: 'translateX(0)' },

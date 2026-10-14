@@ -47,35 +47,53 @@ export function DashboardPage(): JSX.Element {
     }
   }, [user, settings, send]);
 
+  const notificationsOn = settings?.notifications_enabled === true;
+
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="font-display text-3xl text-content">Dashboard</h1>
+    <main className="mx-auto max-w-2xl px-4 py-12 md:px-8 md:py-16">
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <h1 className="text-3xl font-semibold text-content">Your profile</h1>
         <Button variant="ghost" size="sm" onClick={() => void signOut()}>
           Sign out
         </Button>
       </div>
 
       {loading ? (
-        <p className="text-content-muted">Loading…</p>
+        <div aria-busy="true" aria-label="Loading your profile" className="space-y-6">
+          <div className="h-28 animate-pulse rounded-2xl bg-surface" />
+          <div className="h-24 animate-pulse rounded-2xl bg-surface" />
+        </div>
       ) : (
         <div className="space-y-6">
-          <Card>
-            <h2 className="mb-2 text-lg font-semibold text-content">Profile</h2>
-            <p className="text-content-muted">
-              {profile?.nickname ?? 'No nickname yet'}
-            </p>
-          </Card>
-
-          <Card className="flex items-center justify-between">
+          <Card className="flex items-center gap-4">
+            <div
+              aria-hidden="true"
+              className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-secondary font-display text-2xl font-semibold text-secondary-fg"
+            >
+              {(profile?.nickname ?? '?').charAt(0).toUpperCase()}
+            </div>
             <div>
-              <h2 className="text-lg font-semibold text-content">Notifications</h2>
-              <p className="text-sm text-content-muted">
-                {settings?.notifications_enabled ? 'Enabled' : 'Disabled'}
+              <h2 className="text-sm font-bold uppercase tracking-wider text-content-muted">
+                Nickname
+              </h2>
+              <p className="font-display text-2xl font-semibold text-content">
+                {profile?.nickname ?? 'Not picked yet'}
               </p>
             </div>
-            <Button size="sm" onClick={() => void toggleNotifications()}>
-              {settings?.notifications_enabled ? 'Turn off' : 'Turn on'}
+          </Card>
+
+          <Card className="flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold text-content">Notifications</h2>
+              <p className="text-sm text-content-muted">{notificationsOn ? 'On' : 'Off'}</p>
+            </div>
+            <Button
+              size="sm"
+              variant={notificationsOn ? 'ghost' : 'primary'}
+              aria-pressed={notificationsOn}
+              onClick={() => void toggleNotifications()}
+            >
+              {notificationsOn ? 'Turn off' : 'Turn on'}
             </Button>
           </Card>
         </div>

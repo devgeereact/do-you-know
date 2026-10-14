@@ -15,9 +15,11 @@
     --surface-border: 207 228 245;
     --primary: 21 112 194; /* #1570C2 sky blue */
     --primary-fg: 255 255 255;
+    --primary-edge: 14 80 140; /* #0E508C, pressed-button edge under primary */
     --sky: 79 179 246; /* #4FB3F6 */
     --sun: 255 201 60; /* #FFC93C sunshine yellow */
     --sun-fg: 27 42 58;
+    --sun-edge: 214 154 20; /* #D69A14, pressed-button edge under sun */
     --content: 27 42 58; /* #1B2A3A ink */
     --content-muted: 74 94 115;
     --correct: 23 128 79; /* #17804F */
@@ -32,9 +34,11 @@
     --surface-border: 40 62 88;
     --primary: 79 179 246; /* #4FB3F6, dark text on it */
     --primary-fg: 15 27 42;
+    --primary-edge: 30 120 186;
     --sky: 79 179 246;
     --sun: 255 201 60;
     --sun-fg: 27 42 58;
+    --sun-edge: 214 154 20;
     --content: 234 246 255;
     --content-muted: 160 182 204;
     --correct: 23 128 79;

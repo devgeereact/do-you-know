@@ -65,11 +65,14 @@ Line-height 1.6 for body.
 - Radius: answer buttons and CTAs `rounded-full`; cards `rounded-xl`; sheets `rounded-2xl`.
 - **Touch targets ≥ 48 px**: use `min-h-tap` / `min-w-tap`. Answer buttons ≥ 56 px tall.
 - Shadows: one soft shadow for raised cards; borders do most of the work.
+- Buttons sit on a darker edge (`shadow-edge-primary`, `shadow-edge-sun`, `shadow-edge-surface`), coloured by `--primary-edge` and `--sun-edge` in `src/index.css`. This is the "chunky game button" signature: keep it on CTAs and answer buttons, not on cards.
+- Raised panels (hero teaser, login card, prompts) use `shadow-lift`, a soft primary-tinted shadow.
+- Navigation that looks like a button uses `buttonClasses()` on a `<Link>`. Never wrap a `<Button>` in a `<Link>`.
 
 ## 3. Motion (Framer Motion + CSS)
 | Interaction | Spec |
 | --- | --- |
-| Button tap | `scale 0.97`, 120 ms |
+| Button press | Drops 3 px and its edge shadow shrinks (`shadow-edge-*` to `shadow-edge-pressed`), 120 ms. Hover lifts 2 px |
 | Screen / question in | `opacity 0→1`, `y 10→0`, 300 ms ease-out (`animate-fade-up`) |
 | Correct answer | `animate-pop` (scale 1→1.06→1, 250 ms) + scene brightens |
 | Wrong answer | `animate-shake` (±6 px, 250 ms) then explanation slides up |
