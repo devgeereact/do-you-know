@@ -121,6 +121,7 @@ export function useQuestionTimer(
   limitSeconds: number | null,
   questionKey: string | null,      // resets when the question changes
   onExpire?: () => void,
+  timing?: { deadline: string | null; serverNow: string }, // accurate on resume
 ): UseQuestionTimer;
 ```
 
@@ -285,3 +286,9 @@ export function useAiDrafts(): UseAiDrafts;
 - Side-effectful hooks clean up their listeners in the `useEffect` return.
 - Game hooks never hold or derive an answer before `answer_question` returns it.
 - Polling (avatars, AI drafts) backs off (2 s → 10 s) and stops when the tab is hidden.
+
+## Milestone 1 progress hook
+
+`usePlayerProgress(userId?: string)` loads only the current session's nickname and latest 20 finished attempts through `progressService`. It returns `profile`, `attempts`, `loading`, `error`, and `refresh`. Queries are owner-scoped and abort on session changes; earlier session data is hidden immediately. No guest account is created by visiting `/me`.
+
+Game recovery: uncertain answer failures require explicit Resume, never automatic resubmission. A lost finish response retries the idempotent finish RPC with the existing attempt ID. Guest creation and initial attempt starts coalesce simultaneous calls, including React StrictMode.

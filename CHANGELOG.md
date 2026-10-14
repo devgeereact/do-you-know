@@ -38,3 +38,9 @@
 - Added migration 0005 with a server question deadline for refresh-safe countdown display. Existing grading is unchanged.
 - Added three matching database checks (64 total).
 - Restricted REST caching to public catalogue queries, removed the old broad cache and suppressed update prompts on play routes.
+
+### Guest/game services batch (2026-10-14)
+
+- Added deduplicated anonymous session creation, typed start/answer/next/finish services and the attempt lifecycle hook.
+- Added display-only countdown driven by the server deadline, with a preserved clock on resume.
+- Verified one guest/start under StrictMode, uncertain answer recovery, lost finish recovery and double-click suppression through the local game UI.

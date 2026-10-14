@@ -31,7 +31,7 @@
 1. DONE: baseline and reliable database test runner, evidence and progress record. Commit `a8c5c34`, PR #1.
 2. DONE locally: persistent local Supabase setup, private access instructions and original development-only quiz seed. API integrity checks pass. Mac-origin tunnel still needs a check there.
 3. DONE locally: public catalogue service/hook, home discovery, category and quiz landing routes, age-band/curriculum filters, loading/empty/error/offline states. Browser evidence in `qa/FUNCTIONAL-AUDIT.md`. Play remains disabled until batch 5.
-4. In progress: first add server question deadline and restrict public-only caching; then guest session, typed game RPC service and attempt lifecycle with refresh/retry handling.
+4. DONE: server deadline (migration 0005), public-only cache predicates, deduplicated guest sessions, typed RPC services and recoverable attempt lifecycle. Scratch DB 64/64 checks; game recovery browser checks pass.
 5. Game UI for choice, true/false and slider, feedback, results/review and protected update behaviour.
 6. `/me` basics and complete responsive/recovery regression checks.
 
