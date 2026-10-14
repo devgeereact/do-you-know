@@ -79,6 +79,8 @@ npm install
 cp .env.example .env      # then fill in your browser-safe keys
 ```
 
+For the current local-only build, follow [Local development](docs/07-operations/LOCAL-DEVELOPMENT.md). Run `npm run backend:start` before the app; use `npm run backend:check` for an API integrity smoke check. The Mac reaches Ubuntu through a private SSH tunnel, without copying env files.
+
 ### 3. Set up Supabase
 1. **Auth → Providers:** enable **Anonymous sign-ins** (guests), **Google**, and **Email**
    (magic link). Turn on **manual identity linking** (so guests can link Google and keep

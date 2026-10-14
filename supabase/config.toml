@@ -1,0 +1,44 @@
+# Local development only. Start on the loopback Docker network documented in
+# docs/07-operations/LOCAL-DEVELOPMENT.md. Do not link or push to a hosted project.
+project_id = "do-you-know"
+
+[api]
+enabled = true
+port = 55321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 55322
+shadow_port = 55320
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[realtime]
+enabled = false
+
+[studio]
+enabled = false
+
+[local_smtp]
+enabled = false
+
+[storage]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://localhost:5202"
+additional_redirect_urls = ["http://127.0.0.1:5202"]
+enable_signup = true
+enable_anonymous_sign_ins = true
+
+[edge_runtime]
+enabled = false
+
+[analytics]
+enabled = false

@@ -28,8 +28,8 @@
 
 ## Ordered batches
 
-1. Baseline and reliable database test runner, evidence and progress record.
-2. Persistent local Supabase setup, private access instructions and original development-only quiz seed.
+1. DONE: baseline and reliable database test runner, evidence and progress record. Commit `a8c5c34`, PR #1.
+2. DONE locally: persistent local Supabase setup, private access instructions and original development-only quiz seed. API integrity checks pass. Mac-origin tunnel still needs a check there.
 3. Public catalogue service/hook, home discovery, category and quiz landing routes, loading/empty/error/offline states.
 4. Guest session, typed game RPC service and attempt lifecycle with refresh/retry handling.
 5. Game UI for choice, true/false and slider, feedback, results/review and protected update behaviour.
@@ -42,7 +42,11 @@ Each batch: focused diff, appropriate checks, documentation update, atomic commi
 - Milestone 1 player services, hooks and screens are missing at baseline.
 - Fix service-worker cache scope before introducing private player/history reads.
 - Verify the actual server RPC payloads and timer/resume behaviour before implementing the hook. Current payload lacks a question deadline; do not invent an accurate resumed countdown.
-- Local backend and Mac tunnel not yet verified.
+- Local backend verified. Mac-origin tunnel not yet verified.
 - Dependency advisories need a separate compatible-update assessment.
 - Live iPhone/Android, assistive technology, PWA update/offline matrix and production checks remain untested.
 - Milestones 2–4: challenges/boards/avatars, CMS/background functions/prerender/CI, reviewed launch content and release gates.
+
+## RPC observation
+
+- `start_attempt` preserves an already shown question. Called during feedback, it immediately starts the next question; after the last answer it returns `complete`. The player hook must reconcile an uncertain answer response without blindly resubmitting to a newly advanced question.
