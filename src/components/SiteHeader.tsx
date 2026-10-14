@@ -21,6 +21,9 @@ export function SiteHeader(): JSX.Element {
         >
           {copy.nav.quizzes}
         </a>
+        <Link to="/me" className="inline-flex min-h-tap items-center px-3 font-bold text-primary">
+          {copy.game.profile}
+        </Link>
         <Button
           variant="ghost"
           onClick={toggleTheme}

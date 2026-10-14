@@ -44,3 +44,11 @@
 - Added deduplicated anonymous session creation, typed start/answer/next/finish services and the attempt lifecycle hook.
 - Added display-only countdown driven by the server deadline, with a preserved clock on resume.
 - Verified one guest/start under StrictMode, uncertain answer recovery, lost finish recovery and double-click suppression through the local game UI.
+
+### Player UI and progress batch (2026-10-14)
+
+- Enabled guest play with all three answer controls, server feedback, explanation/source links, results, full review and replay.
+- Added session-owned latest-20 history at `/me` without collecting names, emails or free text.
+- Verified complete play and recovery journeys plus real service-worker caching and update suppression against the static build.
+- Fixed static deep-link asset 404s with a root base for the dedicated docroot (ADR-002).
+- Milestone 1 passes local acceptance. Real devices, Mac-origin access, dependency advisories and later milestones remain pending.

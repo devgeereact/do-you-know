@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { CatalogStatus } from '@/components/CatalogStatus';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -65,11 +66,17 @@ export function QuizLandingPage(): JSX.Element {
               </p>
             )}
             <div className="mt-8 border-t-2 border-surface-border pt-6">
-              <Button disabled size="lg">
-                {copy.landing.play}
-              </Button>
+              {online ? (
+                <Link to={`/play/${quiz.slug}`} className={buttonClasses('primary', 'lg')}>
+                  {copy.landing.play}
+                </Link>
+              ) : (
+                <Button disabled size="lg">
+                  {copy.landing.play}
+                </Button>
+              )}
               <p role="status" className="mt-4 text-base text-content-muted">
-                {online ? copy.landing.pending : copy.landing.offline}
+                {online ? copy.game.noSignup : copy.landing.offline}
               </p>
             </div>
           </Card>

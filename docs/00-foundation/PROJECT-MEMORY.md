@@ -16,7 +16,7 @@ Blueprint doc: https://claude.ai/code/artifact/2b9d6ebc-ae0c-432d-82bb-cb49f4ab5
 ## Build progress (2026-10-14)
 
 - Current work and ordered batches: `.agent/CURRENT-TASK.md`. Verification: `docs/06-quality/EVIDENCE-STATUS.md`.
-- Ubuntu inspection confirmed a branded shell, four numbered migrations and game payload types. Discovery services/hook/screens added in the catalogue batch. Guest/gameplay/results/profile, CMS, Edge Functions and prerender/deploy automation remain.
+- Ubuntu inspection confirmed a branded shell, four numbered migrations and game payload types. Discovery services/hook/screens added in the catalogue batch. Guest play/results/review and basic progress history now pass local browser acceptance. CMS, competition, avatars, Edge Functions and prerender/deploy automation remain.
 - User authorised small verified branch pushes and PR review, plus a local backend accessible privately from the Mac. No production actions or merge.
 - Initial Ubuntu frontend gates pass. Imported claims of 61 database checks are historical until independently rerun here.
 - Most additional GEE OS specifications are still UNKNOWN scaffolds. Populated app specifications remain authoritative.

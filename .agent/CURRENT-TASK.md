@@ -12,7 +12,7 @@
 
 - Imported from `do-you-know.zip` and repackaged into the GEE OS layout. App docs moved into the numbered `docs/` folders; links updated.
 - Dev server pinned to 5202 (`strictPort`). Added to `dev-all` as `doyouknow`.
-- Branded shell (home, login, dashboard, 404) given a design polish pass. Player game screens do not exist yet.
+- Branded shell plus discovery, guest game, feedback, results/review and `/me` history are implemented.
 - Database migrations 0001 to 0004 and 61 behaviour checks came with the import. Re-run independently on Ubuntu: 61/61 pass on scratch Postgres 16.
 - No hosted Supabase project is linked. Local Supabase is now running on Ubuntu; its own ignored `.env.local` contains only browser-safe local credentials.
 
@@ -30,18 +30,18 @@
 
 1. DONE: baseline and reliable database test runner, evidence and progress record. Commit `a8c5c34`, PR #1.
 2. DONE locally: persistent local Supabase setup, private access instructions and original development-only quiz seed. API integrity checks pass. Mac-origin tunnel still needs a check there.
-3. DONE locally: public catalogue service/hook, home discovery, category and quiz landing routes, age-band/curriculum filters, loading/empty/error/offline states. Browser evidence in `qa/FUNCTIONAL-AUDIT.md`. Play remains disabled until batch 5.
+3. DONE locally: public catalogue service/hook, home discovery, category and quiz landing routes, age-band/curriculum filters, loading/empty/error/offline states. Browser evidence in `qa/FUNCTIONAL-AUDIT.md`. Play is now enabled.
 4. DONE: server deadline (migration 0005), public-only cache predicates, deduplicated guest sessions, typed RPC services and recoverable attempt lifecycle. Scratch DB 64/64 checks; game recovery browser checks pass.
-5. Game UI for choice, true/false and slider, feedback, results/review and protected update behaviour.
-6. `/me` basics and complete responsive/recovery regression checks.
+5. DONE locally: choice, true/false and slider game UI, feedback, server results/review, preserved timer and protected update behaviour.
+6. DONE locally: `/me` latest-20 history and guest-session explanation; responsive, recovery and PWA cache checks.
 
 Each batch: focused diff, appropriate checks, documentation update, atomic commit and push. No force push or default-branch push. Keep Milestones 2–4 pending.
 
 ## Remaining work and proof
 
-- Catalogue services/hook and discovery screens are implemented. Guest/game services, hooks, play/results and `/me` remain.
-- Fix service-worker cache scope before introducing private player/history reads.
-- Verify the actual server RPC payloads and timer/resume behaviour before implementing the hook. Current payload lacks a question deadline; do not invent an accurate resumed countdown.
+- Milestone 1 is implemented and locally verified with original development fixtures. Real device and production acceptance remain outstanding.
+- Public-only service-worker caching, private-read exclusions and legacy-cache deletion pass runtime checks.
+- Migration 0005 supplies the server question deadline. Countdown/resume/server-timeout checks pass; grading remains in 0003.
 - Local backend verified. Mac-origin tunnel not yet verified.
 - Dependency advisories need a separate compatible-update assessment.
 - Live iPhone/Android, assistive technology, PWA update/offline matrix and production checks remain untested.
@@ -57,3 +57,10 @@ Each batch: focused diff, appropriate checks, documentation update, atomic commi
 - Guest sign-in is deduplicated and created only on Play. Disable answer buttons immediately on submission. On uncertain failures, resume server state rather than automatically resending an answer.
 - Render choice, true/false and native range answers; show explanations only from answer RPC responses; results and review only from finish RPC.
 - Verify refresh, double taps, failed answer response, offline recovery and replay against local Supabase in portrait and landscape.
+
+## Current checkpoint
+
+- Milestone 1 local acceptance: PASS. A fresh visitor browses, starts one guest session/attempt, answers all three types and sees server score, explanations and review. `/me` shows session-owned finished attempts.
+- Runtime evidence and remaining test limits: `qa/FUNCTIONAL-AUDIT.md`, `qa/PWA-AUDIT.md`, `docs/06-quality/EVIDENCE-STATUS.md`.
+- Next implementation milestone: Milestone 2 (boards, daily/friend challenges, nickname/age band and avatars). Prepare its task contract at the next session.
+- No hosted Supabase changes, deployment or merge. Mac-origin tunnel remains unverified.
