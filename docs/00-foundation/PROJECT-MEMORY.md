@@ -1,6 +1,6 @@
 # Project Memory — DO YOU KNOW
 
-_Last updated: 2026-10-14 — SCAFFOLDED (project folder `do-you-know/`)_
+_Last updated: 2026-10-14. Milestone 1 build started; not release-ready._
 
 Blueprint doc: https://claude.ai/code/artifact/2b9d6ebc-ae0c-432d-82bb-cb49f4ab5cf2
 
@@ -12,6 +12,14 @@ Blueprint doc: https://claude.ai/code/artifact/2b9d6ebc-ae0c-432d-82bb-cb49f4ab5
 - Docs rewritten: PRD, DESIGN, ARCHITECTURE, SCHEMA, RULES (+§9), AGENTS (+§8), HOOKS (+11 contracts), README (+build plan), CLAUDE, DEPLOYMENT, env files.
 - Decision: under-13s play as guests; a parent upgrades the account with the parent's own email (Supabase magic link verifies it) + confirm_parental_consent(). No custom token.
 - Next: Milestone 1 (Play) — player screens + useQuizAttempt/gameService.
+
+## Build progress (2026-10-14)
+
+- Current work and ordered batches: `.agent/CURRENT-TASK.md`. Verification: `docs/06-quality/EVIDENCE-STATUS.md`.
+- Ubuntu inspection confirmed a branded shell, four numbered migrations and game payload types. Player services/hooks/screens, CMS, Edge Functions and prerender/deploy automation are not implemented.
+- User authorised small verified branch pushes and PR review, plus a local backend accessible privately from the Mac. No production actions or merge.
+- Initial Ubuntu frontend gates pass. Imported claims of 61 database checks are historical until independently rerun here.
+- Most additional GEE OS specifications are still UNKNOWN scaffolds. Populated app specifications remain authoritative.
 
 ## Confirmed Decisions
 - App name: **DO YOU KNOW** (display "Do You Know"; slug `do-you-know`; short name `DoYouKnow`).
