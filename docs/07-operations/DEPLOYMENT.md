@@ -13,6 +13,10 @@ and only the built artifacts are shipped.
 
 ---
 
+## Routing base
+
+The current build targets the root of this app's dedicated docroot (`base: '/'`). Relative asset URLs broke direct `/play/...` loads in static preview by requesting `/play/assets/...`. Root asset URLs and the existing SPA rewrite are required for direct links and refresh. A subdirectory deployment would require an explicitly configured Vite base and matching router basename; it is not supported by the current build.
+
 ## 1. Build locally
 
 ```bash

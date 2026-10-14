@@ -5,8 +5,8 @@ import path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Relative base so the static bundle works from any cPanel sub-directory.
-  base: './',
+  // Dedicated cPanel docroot. Absolute assets survive direct SPA deep links.
+  base: '/',
 
   resolve: {
     alias: {
