@@ -1,0 +1,33 @@
+# deps & build
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# env (only .env.example is tracked)
+.env
+.env.*
+!.env.example
+
+# supabase local
+supabase/.temp/
+supabase/.branches/
+
+# logs & editors
+npm-debug.log*
+*.log
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# tests
+coverage/
+playwright-report/
+test-results/
+
+# edge function secrets
+supabase/functions/.env
+
+# GEE OS scaffold extras
+build/

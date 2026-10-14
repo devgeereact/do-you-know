@@ -1,0 +1,42 @@
+# cPanel static hosting: HTTPS, SPA routing, caching, security headers
+Options -Indexes
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Real files and folders are served as-is
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Everything else → the SPA shell
+RewriteRule ^ index.html [L]
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType application/javascript .js .mjs
+  AddType font/woff2 .woff2
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Never cache the shell, service worker or manifest
+  <FilesMatch "(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Hashed assets are immutable
+  <FilesMatch "\.(js|css|woff2|png|svg|webp|jpg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Never serve source maps or backups publicly
+<FilesMatch "\.(map|bak|sql|zip|env)$">
+  Require all denied
+</FilesMatch>

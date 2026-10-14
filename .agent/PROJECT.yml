@@ -1,0 +1,43 @@
+project:
+  name: "Do You Know"
+  type: "pwa"
+  lifecycle: build
+  risk: high            # children are users; UK Children's Code and COPPA apply
+  owner: Gideon
+  created: 2026-10-14
+  location: .
+  summary: Bright, playful quiz PWA for all ages with server-side grading in Supabase and a CMS at /admin.
+gee_os:
+  minimum_version: "0.10.0"
+  profile: full-product
+  workflow: new-project-bootstrap
+  primary_mode: build
+  primary_system: pwa-engineering
+  conditional_systems: []
+authority:
+  scaffolding: allowed
+  implementation: confirm-in-current-request
+  external_mutation: explicit-approval-required
+machines:
+  primary: mac-primary        # owns env files and secrets
+  secondary: ubuntu-build     # builds and tests published branches
+  code_transport: github      # small focused commits, pushed per verified batch
+  env_files: primary-only     # never committed, never copied between computers
+  workflow: ~/.agents/gee-os/guides/TWO-COMPUTER-WORKFLOW.md
+dev_server:
+  port: 5202                  # strictPort on server and preview; registry block 20
+  command: npm run dev
+  dev_all_name: doyouknow
+stack: [react-18, typescript-strict, vite-6, tailwind-3, vite-plugin-pwa, supabase, framer-motion, sentry, imagekit, inngest, cpanel-static]
+sources_of_truth:
+  memory: docs/00-foundation/PROJECT-MEMORY.md
+  rules: docs/00-foundation/RULES.md
+  product: docs/01-product/PRODUCT-SPEC.md
+  architecture: docs/02-architecture/ARCHITECTURE.md
+  data_model: docs/02-architecture/DATA-MODEL.md
+  design: docs/03-design/DESIGN-SYSTEM.md
+  deployment: docs/07-operations/DEPLOYMENT.md
+  decisions: docs/08-change-management/DECISIONS.md
+  release: docs/09-release/RELEASE-REPORT.md
+mcp_profile: .agent/MCP-PROFILE.yml
+current_task: .agent/CURRENT-TASK.md

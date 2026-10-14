@@ -1,0 +1,77 @@
+import type { Config } from 'tailwindcss';
+
+// Design tokens mirror docs/03-design/DESIGN-SYSTEM.md. Every colour is a CSS variable (RGB
+// channels) defined in src/index.css for light (:root) and dark (.dark), so one
+// class name works in both themes. Keep class names NativeWind-compatible.
+const token = (name: string): string => `rgb(var(--${name}) / <alpha-value>)`;
+
+const config: Config = {
+  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        background: token('background'), // page: sky wash / deep navy
+        surface: {
+          DEFAULT: token('surface'), // cards, sheets
+          border: token('surface-border'),
+        },
+        primary: {
+          DEFAULT: token('primary'), // sky blue: buttons, links
+          fg: token('primary-fg'), // text on primary
+        },
+        secondary: {
+          DEFAULT: token('sun'), // sunshine yellow: accents, highlights
+          fg: token('sun-fg'),
+        },
+        sky: token('sky'), // light sky for illustration fills
+        content: {
+          DEFAULT: token('content'), // body text
+          muted: token('content-muted'),
+        },
+        correct: { DEFAULT: token('correct'), fg: '#FFFFFF' },
+        wrong: { DEFAULT: token('wrong'), fg: '#FFFFFF' },
+        warning: { DEFAULT: token('warning'), fg: '#1B2A3A' },
+      },
+      fontFamily: {
+        sans: ['"Nunito Variable"', 'Nunito', 'system-ui', 'sans-serif'],
+        display: ['"Fredoka Variable"', 'Fredoka', '"Nunito Variable"', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
+      fontSize: {
+        // 16px minimum body text for young readers
+        base: ['1rem', { lineHeight: '1.6' }],
+      },
+      borderRadius: {
+        xl: '1rem', // cards
+        '2xl': '1.5rem', // sheets, dialogs
+      },
+      minHeight: { tap: '3rem' }, // 48px touch targets
+      minWidth: { tap: '3rem' },
+      keyframes: {
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        pop: {
+          '0%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.06)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-6px)' },
+          '75%': { transform: 'translateX(6px)' },
+        },
+      },
+      animation: {
+        'fade-up': 'fade-up 300ms ease-out both',
+        pop: 'pop 250ms ease-out',
+        shake: 'shake 250ms ease-in-out',
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

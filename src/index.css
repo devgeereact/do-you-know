@@ -1,0 +1,80 @@
+@import '@fontsource-variable/nunito';
+@import '@fontsource-variable/fredoka';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Light theme (default). Values are RGB channels for Tailwind alpha support.
+     Contrast checked: white on primary 5.1:1, content on background 13.3:1,
+     content on sun 9.5:1, white on correct 5.0:1, white on wrong 5.2:1. */
+  :root {
+    --background: 234 246 255; /* #EAF6FF sky wash */
+    --surface: 255 255 255;
+    --surface-border: 207 228 245;
+    --primary: 21 112 194; /* #1570C2 sky blue */
+    --primary-fg: 255 255 255;
+    --sky: 79 179 246; /* #4FB3F6 */
+    --sun: 255 201 60; /* #FFC93C sunshine yellow */
+    --sun-fg: 27 42 58;
+    --content: 27 42 58; /* #1B2A3A ink */
+    --content-muted: 74 94 115;
+    --correct: 23 128 79; /* #17804F */
+    --wrong: 201 54 59; /* #C9363B */
+    --warning: 245 158 11; /* #F59E0B, dark text only */
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: 15 27 42; /* #0F1B2A */
+    --surface: 22 38 58; /* #16263A */
+    --surface-border: 40 62 88;
+    --primary: 79 179 246; /* #4FB3F6, dark text on it */
+    --primary-fg: 15 27 42;
+    --sky: 79 179 246;
+    --sun: 255 201 60;
+    --sun-fg: 27 42 58;
+    --content: 234 246 255;
+    --content-muted: 160 182 204;
+    --correct: 23 128 79;
+    --wrong: 201 54 59;
+    --warning: 245 158 11;
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-content font-sans antialiased;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
+  /* Visible focus for keyboard users (WCAG 2.2 focus appearance). */
+  :focus-visible {
+    outline: 3px solid rgb(var(--sun));
+    outline-offset: 2px;
+  }
+
+  /* Respect user motion preferences globally. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
