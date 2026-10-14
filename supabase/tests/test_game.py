@@ -1,6 +1,7 @@
 """End-to-end behaviour tests for the Do You Know migrations (local Postgres + Supabase shim).
 Run: python3 test_game.py   (expects a fresh 'dyk' database with 0001–0004 applied)
 """
+from datetime import datetime
 import json
 import os
 import uuid
@@ -317,6 +318,11 @@ check("players cannot import drafts", rpc_err(guest, "import_ai_draft", draft) =
 # ---------------------------------------------------------------- timing is server-side and fair
 as_user(admin).execute("update public.quizzes set time_limit_seconds = 10 where id = %s", (quiz,))
 t = rpc(guest, "start_attempt", "science-starter", "practice", None)
+check("timed question exposes a server deadline", t["question_deadline"] is not None)
+resumed = rpc(guest, "start_attempt", "science-starter", "practice", None)
+check("resume preserves question deadline", resumed["question_deadline"] == t["question_deadline"])
+remaining = (datetime.fromisoformat(t["question_deadline"]) - datetime.fromisoformat(t["server_now"])).total_seconds()
+check("deadline matches server timer", 9 <= remaining <= 10)
 superuser().execute("update public.attempts set current_sent_at = now() - interval '3 seconds' where id = %s", (t["attempt_id"],))
 c = superuser(); c.execute("select quiz_version_id from public.attempts where id=%s", (t["attempt_id"],)); vid = c.fetchone()[0]
 k = key_for(vid, t["question"]["id"])

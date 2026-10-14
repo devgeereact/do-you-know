@@ -108,8 +108,8 @@ supabase/
 - `vite-plugin-pwa` (Workbox `generateSW`) precaches the hashed app shell, icons and the
   self-hosted fonts. Manifest: `orientation: any`, `display: standalone`,
   `theme_color #1570C2`, `background_color #EAF6FF`, categories `education, games`.
-- **Runtime caching:** ImageKit → `CacheFirst` (30 days, 200 entries); Supabase REST GETs
-  → `NetworkFirst` (5 s timeout, 5-min fallback). **Game RPCs are POSTs and never cached.**
+- **Runtime caching:** ImageKit → `CacheFirst` (30 days, 200 entries); Allowlisted public catalogue REST GETs
+  → `NetworkFirst` (5 s timeout, 5-min fallback). **Game RPCs, auth, profiles and attempt history are never cached.** The old `supabase-api` cache is deleted on app startup. Public quiz cache matching requires published status and the discovery projection.
 - **Offline:** app shell, previously opened quiz pages and images load; Play shows "You
   need a connection to play — your answers are checked online". `public/offline.html` is
   the last-resort page.

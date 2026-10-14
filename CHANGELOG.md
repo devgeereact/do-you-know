@@ -32,3 +32,9 @@
 - Public discovery queries select metadata without author IDs. Browsing does not create an auth session; filter choices stay in page state.
 - Centralised new player copy for future translation. Preserved existing login/dashboard routes.
 - Verified the catalogue against the local backend in portrait, landscape and at 320px. Gameplay is the next batch.
+
+### Gameplay foundation batch (2026-10-14)
+
+- Added migration 0005 with a server question deadline for refresh-safe countdown display. Existing grading is unchanged.
+- Added three matching database checks (64 total).
+- Restricted REST caching to public catalogue queries, removed the old broad cache and suppressed update prompts on play routes.

@@ -8,6 +8,7 @@ the SQL editor). This doc explains it.
 | `0001_init.sql` | Base: `profiles`, `app_settings`, RLS, `set_updated_at()`, sign-up trigger |
 | `0002_quiz_core.sql` | All app tables, RLS, audit, column protection, guest/upgrade triggers |
 | `0003_game_functions.sql` | Game RPCs (start/answer/next/finish), boards, challenges, nicknames, avatars, publishing |
+| `0005_question_deadline.sql` | Adds display-only `question_deadline` to attempt state; no grading changes |
 | `0004_scheduled_jobs.sql` | Daily switch, scheduled publish, rebuild hook, cleanup (`pg_cron` + `pg_net`) |
 
 **Golden rule:** the browser can read a question's public text, **never its answer**.

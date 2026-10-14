@@ -31,7 +31,7 @@
 1. DONE: baseline and reliable database test runner, evidence and progress record. Commit `a8c5c34`, PR #1.
 2. DONE locally: persistent local Supabase setup, private access instructions and original development-only quiz seed. API integrity checks pass. Mac-origin tunnel still needs a check there.
 3. DONE locally: public catalogue service/hook, home discovery, category and quiz landing routes, age-band/curriculum filters, loading/empty/error/offline states. Browser evidence in `qa/FUNCTIONAL-AUDIT.md`. Play remains disabled until batch 5.
-4. Guest session, typed game RPC service and attempt lifecycle with refresh/retry handling.
+4. In progress: first add server question deadline and restrict public-only caching; then guest session, typed game RPC service and attempt lifecycle with refresh/retry handling.
 5. Game UI for choice, true/false and slider, feedback, results/review and protected update behaviour.
 6. `/me` basics and complete responsive/recovery regression checks.
 
@@ -50,3 +50,10 @@ Each batch: focused diff, appropriate checks, documentation update, atomic commi
 ## RPC observation
 
 - `start_attempt` preserves an already shown question. Called during feedback, it immediately starts the next question; after the last answer it returns `complete`. The player hook must reconcile an uncertain answer response without blindly resubmitting to a newly advanced question.
+
+## Gameplay implementation plan
+
+- Keep server grading, rankings and recorded time untouched. Add deadline metadata in migration 0005 and matching deadline/resume checks.
+- Guest sign-in is deduplicated and created only on Play. Disable answer buttons immediately on submission. On uncertain failures, resume server state rather than automatically resending an answer.
+- Render choice, true/false and native range answers; show explanations only from answer RPC responses; results and review only from finish RPC.
+- Verify refresh, double taps, failed answer response, offline recovery and replay against local Supabase in portrait and landscape.

@@ -35,7 +35,8 @@ export default defineConfig({
       manifest: {
         name: 'Do You Know',
         short_name: 'DoYouKnow',
-        description: 'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
+        description:
+          'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
         theme_color: '#1570C2',
         background_color: '#EAF6FF',
         display: 'standalone',
@@ -80,10 +81,27 @@ export default defineConfig({
           {
             // Supabase REST reads (published quizzes, categories) — network-first with
             // short fallback. Game RPCs are POSTs and are never cached.
-            urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/.*/i,
+            urlPattern: ({ url }) => {
+              const trusted =
+                url.hostname.endsWith('.supabase.co') ||
+                (url.hostname === '127.0.0.1' && url.port === '55321');
+              if (!trusted) return false;
+              if (url.pathname === '/rest/v1/categories')
+                return url.searchParams.get('is_active') === 'eq.true';
+              if (url.pathname === '/rest/v1/curriculum_tags') return true;
+              if (
+                url.pathname !== '/rest/v1/quizzes' ||
+                url.searchParams.get('status') !== 'eq.published'
+              )
+                return false;
+              return (
+                url.searchParams.get('select') ===
+                'id,slug,title,intro,category_id,difficulty,age_min,age_max,curriculum_tags,cover_image_url,question_count,time_limit_seconds,is_ranked'
+              );
+            },
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'supabase-api',
+              cacheName: 'public-catalogue-v1',
               networkTimeoutSeconds: 5,
               expiration: { maxEntries: 50, maxAgeSeconds: 60 * 5 },
               cacheableResponse: { statuses: [0, 200] },

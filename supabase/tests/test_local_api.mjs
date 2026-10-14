@@ -37,6 +37,7 @@ try {
     assert.deepEqual(data, [], `${table} must hide answer keys from guests`);
   }
   let state = await rpc('start_attempt', { p_quiz_slug: 'solar-system-starter', p_mode: 'practice' });
+  assert.equal(state.question_deadline, null);
   const attemptId = state.attempt_id;
   const resumed = await rpc('start_attempt', { p_quiz_slug: 'solar-system-starter', p_mode: 'practice' });
   assert.equal(resumed.attempt_id, attemptId);

@@ -44,6 +44,7 @@ export interface AttemptState {
   time_limit_seconds: number | null;
   question: PublicQuestion | null;
   server_now: string;
+  question_deadline: string | null;
 }
 
 /** answer_question */

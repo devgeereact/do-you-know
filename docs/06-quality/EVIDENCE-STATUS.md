@@ -10,7 +10,7 @@ Evidence owner: Codex build session, 14 October 2026, Ubuntu. Baseline `233cbc6`
 | Lint | PASS | `npm run lint`, zero warnings | Through catalogue batch |
 | Static PWA build | PASS | `npm run build`, generated static assets and service worker | Not a browser/device test |
 | Dependency security | FAIL | `npm audit`: 14 advisories (4 moderate, 10 high) | Compatible update assessment pending, see DEP-001 |
-| Database behaviour | PASS | All four migrations applied; 61/61 checks passed on isolated Postgres 16 at loopback port 55434 | Supabase shim, not hosted Supabase or production |
+| Database behaviour | PASS | Migrations 0001–0005 applied; 64/64 checks passed on isolated Postgres 16 at loopback port 55434 | Supabase shim, not hosted Supabase or production |
 | Runner failure handling | PASS | Deliberately invalid migration in a temporary test copy exits 3 before behaviour tests | Scratch Postgres 16; no applied migrations edited |
 | Runner target guards | PASS | Remote hostname and `postgres` database name rejected before connecting; shell syntax checked | Only local disposable database names allowed |
 | Local backend | PASS | All four migrations on real local Supabase/Postgres 17; repeatable `npm run backend:start`; seed rerun is safe | Loopback only; development fixtures |
@@ -21,3 +21,5 @@ Evidence owner: Codex build session, 14 October 2026, Ubuntu. Baseline `233cbc6`
 | Release/device/PWA matrix | NOT TESTED | No production deployment, real device or upgrade checks | Not release-ready |
 
 Full local command output is held under `/tmp/dyk-*-20261014.*` on Ubuntu, not committed. Do not capture CLI status credentials into project evidence.
+
+Gameplay foundation: source inspection confirms public-only cache predicates and play-route update suppression. Runtime cache/update checks remain pending with the game UI. Deadline and preserved resume deadline passed on scratch Postgres 16.
