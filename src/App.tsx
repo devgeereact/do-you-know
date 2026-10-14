@@ -5,6 +5,8 @@ import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { InstallPrompt } from '@/components/InstallPrompt';
 import { UpdatePrompt } from '@/components/UpdatePrompt';
 import { OfflineBanner } from '@/components/OfflineBanner';
+import { CategoryPage } from '@/pages/CategoryPage';
+import { QuizLandingPage } from '@/pages/QuizLandingPage';
 import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
@@ -17,6 +19,8 @@ export function App(): JSX.Element {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/c/:slug" element={<CategoryPage />} />
+            <Route path="/q/:slug" element={<QuizLandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/dashboard"

@@ -136,7 +136,7 @@ interface CatalogFilters {
 }
 interface UseQuizCatalog {
   categories: Category[];
-  quizzes: Quiz[];
+  quizzes: CatalogQuiz[];           // public discovery metadata, no author IDs
   curriculumTags: CurriculumTag[];
   loading: boolean;
   error: string | null;

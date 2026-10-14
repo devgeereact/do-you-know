@@ -30,7 +30,7 @@
 
 1. DONE: baseline and reliable database test runner, evidence and progress record. Commit `a8c5c34`, PR #1.
 2. DONE locally: persistent local Supabase setup, private access instructions and original development-only quiz seed. API integrity checks pass. Mac-origin tunnel still needs a check there.
-3. Public catalogue service/hook, home discovery, category and quiz landing routes, loading/empty/error/offline states.
+3. DONE locally: public catalogue service/hook, home discovery, category and quiz landing routes, age-band/curriculum filters, loading/empty/error/offline states. Browser evidence in `qa/FUNCTIONAL-AUDIT.md`. Play remains disabled until batch 5.
 4. Guest session, typed game RPC service and attempt lifecycle with refresh/retry handling.
 5. Game UI for choice, true/false and slider, feedback, results/review and protected update behaviour.
 6. `/me` basics and complete responsive/recovery regression checks.
@@ -39,7 +39,7 @@ Each batch: focused diff, appropriate checks, documentation update, atomic commi
 
 ## Remaining work and proof
 
-- Milestone 1 player services, hooks and screens are missing at baseline.
+- Catalogue services/hook and discovery screens are implemented. Guest/game services, hooks, play/results and `/me` remain.
 - Fix service-worker cache scope before introducing private player/history reads.
 - Verify the actual server RPC payloads and timer/resume behaviour before implementing the hook. Current payload lacks a question deadline; do not invent an accurate resumed countdown.
 - Local backend verified. Mac-origin tunnel not yet verified.

@@ -52,7 +52,8 @@ in **Supabase**.
 | DB behaviour tests (`supabase/tests`, 61 checks) | ✅ Done |
 | Types for every RPC payload (`src/types/game.ts`), friendly error copy (`src/lib/gameErrors.ts`) | ✅ Done |
 | Product, design, architecture, schema, rules, hooks, deployment docs | ✅ Done |
-| Player screens, CMS screens, game hooks | ⏳ Milestone 1–3 |
+| Public home/category/quiz discovery, filters and catalogue hook | Implemented; local browser checks pass |
+| Gameplay/results/profile, CMS and remaining game hooks | Pending Milestone 1–3 |
 | Edge Functions (`inngest`, `trigger-rebuild`) | ⏳ Milestone 2 (contracts in `supabase/functions/README.md`) |
 | Prerender script + GitHub Actions deploy | ⏳ Milestone 3 |
 

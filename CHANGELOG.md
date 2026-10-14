@@ -25,3 +25,10 @@
 - Added pinned, repeatable local Supabase startup with loopback binding checks and preserved machine-owned env files.
 - Added an original development-only quiz covering choice, true/false and slider questions.
 - Added API integrity smoke checks and private Mac access instructions. Mac-origin access remains untested.
+
+### Build batch 3 (2026-10-14)
+
+- Added published quiz discovery, categories, age-group/curriculum filtering and quiz details with explicit loading, empty, retry and offline states.
+- Public discovery queries select metadata without author IDs. Browsing does not create an auth session; filter choices stay in page state.
+- Centralised new player copy for future translation. Preserved existing login/dashboard routes.
+- Verified the catalogue against the local backend in portrait, landscape and at 320px. Gameplay is the next batch.
