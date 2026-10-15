@@ -411,3 +411,7 @@ enabled = true
 # declarative_schema_path = "./schemas"
 # JSON string passed through to pg-delta SQL formatting.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"
+
+# Inngest signs its own requests, so the gateway must not demand a Supabase JWT.
+[functions.inngest]
+verify_jwt = false
