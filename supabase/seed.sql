@@ -122,5 +122,14 @@ begin
 
   perform public.publish_quiz(qz);
   perform set_config('request.jwt.claim.sub', '', true);
+
+  -- ---------- Daily challenges: the next 14 London days, alternating ----
+  insert into public.daily_challenges (challenge_date, quiz_id, created_by)
+  select public._london_today() + d,
+         (select id from public.quizzes
+           where slug = case when d % 2 = 0 then 'amazing-animals' else 'times-tables-sprint' end),
+         admin_id
+    from generate_series(0, 13) d;
+  perform public.activate_daily_challenge();
 end;
 $$;
