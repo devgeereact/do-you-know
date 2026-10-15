@@ -9,6 +9,10 @@ import { HomePage } from '@/pages/HomePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { CategoryPage } from '@/pages/CategoryPage';
+import { QuizPage } from '@/pages/QuizPage';
+import { PlayPage } from '@/pages/PlayPage';
+import { MePage } from '@/pages/MePage';
 
 export function App(): JSX.Element {
   return (
@@ -17,6 +21,10 @@ export function App(): JSX.Element {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/c/:slug" element={<CategoryPage />} />
+            <Route path="/q/:slug" element={<QuizPage />} />
+            <Route path="/play/:slug" element={<PlayPage />} />
+            <Route path="/me" element={<MePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/dashboard"

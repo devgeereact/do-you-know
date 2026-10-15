@@ -1,0 +1,99 @@
+import { Link } from 'react-router-dom';
+import { SiteHeader } from '@/components/SiteHeader';
+import { buttonClasses } from '@/components/ui/buttonClasses';
+import { Card } from '@/components/ui/Card';
+import { useMyGames } from '@/hooks/useMyGames';
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+
+function when(iso: string): string {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+export function MePage(): JSX.Element {
+  const { user } = useSupabaseAuth();
+  const { games, streak, loading, error } = useMyGames();
+  const isGuest = user === null || user.is_anonymous === true;
+
+  return (
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+        <h1 className="text-4xl font-semibold text-content">My games</h1>
+
+        <div className="mt-6 grid grid-cols-2 gap-4">
+          <Card className="p-5 text-center">
+            <p className="font-display text-4xl font-semibold text-content">{streak.current}</p>
+            <p className="text-sm font-bold text-content-muted">Day streak</p>
+          </Card>
+          <Card className="p-5 text-center">
+            <p className="font-display text-4xl font-semibold text-content">{games.length}</p>
+            <p className="text-sm font-bold text-content-muted">Games played</p>
+          </Card>
+        </div>
+
+        {isGuest ? (
+          <Card className="mt-6 p-5">
+            <p className="text-content">
+              You’re playing as a guest, so your games live on this device only.
+            </p>
+            <Link to="/login" className={buttonClasses('primary', 'md', 'mt-4')}>
+              Save my progress
+            </Link>
+          </Card>
+        ) : (
+          <Link to="/dashboard" className={buttonClasses('ghost', 'md', 'mt-6')}>
+            Settings
+          </Link>
+        )}
+
+        <h2 className="mb-4 mt-10 text-2xl font-semibold text-content">Recent games</h2>
+        {loading && (
+          <p role="status" className="text-content-muted">
+            Loading…
+          </p>
+        )}
+        {error && (
+          <p role="alert" className="text-content">
+            {error}
+          </p>
+        )}
+        {!loading && !error && games.length === 0 && (
+          <div className="text-center">
+            <p className="text-content-muted">No games yet. Pick a quiz and give it a go!</p>
+            <Link to="/" className={buttonClasses('primary', 'md', 'mt-4')}>
+              Find a quiz
+            </Link>
+          </div>
+        )}
+        <ul className="grid gap-3">
+          {games.map((game) => (
+            <li key={game.attemptId}>
+              <Card className="flex items-center justify-between gap-4 p-4">
+                <div className="min-w-0">
+                  {game.quiz ? (
+                    <Link
+                      to={`/q/${game.quiz.slug}`}
+                      className="block truncate font-display text-lg font-semibold text-content hover:text-primary"
+                    >
+                      {game.quiz.title}
+                    </Link>
+                  ) : (
+                    <p className="font-display text-lg font-semibold text-content-muted">
+                      A retired quiz
+                    </p>
+                  )}
+                  <p className="text-sm text-content-muted">{when(game.finishedAt)}</p>
+                </div>
+                <p className="shrink-0 font-display text-2xl font-semibold text-content">
+                  {game.correct}
+                  <span className="text-content-muted">/{game.total}</span>
+                </p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </>
+  );
+}

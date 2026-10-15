@@ -160,6 +160,20 @@ interface UseQuiz {
 export function useQuiz(slug: string | undefined): UseQuiz;
 ```
 
+### 9b. `useMyGames`
+`src/hooks/useMyGames.ts`
+The current player's finished games (newest first) and daily streak, for `/me`. Scores are
+read back from rows the server wrote; RLS limits them to the player's own attempts.
+```ts
+interface UseMyGames {
+  games: GameHistoryItem[];        // from gameService.listMyGames
+  streak: { current: number; best: number };
+  loading: boolean;
+  error: string | null;
+}
+export function useMyGames(): UseMyGames;
+```
+
 ### 10. `useDailyChallenge`
 `src/hooks/useDailyChallenge.ts`
 Today's challenge (London date) and whether this player has played it.

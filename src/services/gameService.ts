@@ -53,3 +53,47 @@ export async function finishAttempt(attemptId: string): Promise<AttemptSummary> 
   if (error) throw error;
   return data as unknown as AttemptSummary;
 }
+
+export interface GameHistoryItem {
+  attemptId: string;
+  mode: AttemptMode;
+  correct: number;
+  total: number;
+  answerTimeMs: number;
+  finishedAt: string;
+  quiz: { slug: string; title: string } | null; // null if the quiz is no longer published
+}
+
+/**
+ * The player's own finished games, newest first. Scores are read back from the
+ * rows the server wrote; RLS limits this to the signed-in user's attempts.
+ */
+export async function listMyGames(userId: string, limit = 20): Promise<GameHistoryItem[]> {
+  const { data: attempts, error } = await supabase
+    .from('attempts')
+    .select('id, quiz_id, mode, correct_count, answered_count, answer_time_ms, finished_at')
+    .eq('user_id', userId)
+    .eq('status', 'finished')
+    .order('finished_at', { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  if (attempts.length === 0) return [];
+
+  const quizIds = [...new Set(attempts.map((a) => a.quiz_id))];
+  const { data: quizzes, error: quizError } = await supabase
+    .from('quizzes')
+    .select('id, slug, title')
+    .in('id', quizIds);
+  if (quizError) throw quizError;
+  const byId = new Map(quizzes.map((q) => [q.id, { slug: q.slug, title: q.title }]));
+
+  return attempts.map((a) => ({
+    attemptId: a.id,
+    mode: a.mode,
+    correct: a.correct_count,
+    total: a.answered_count, // a finished attempt has answered every question
+    answerTimeMs: a.answer_time_ms,
+    finishedAt: a.finished_at ?? '',
+    quiz: byId.get(a.quiz_id) ?? null,
+  }));
+}
