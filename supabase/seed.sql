@@ -56,4 +56,9 @@ on conflict (quiz_id, question_id) do nothing;
 
 select public.publish_quiz('50000000-0000-4000-8000-000000000001')
 where not exists (select 1 from public.quizzes where id = '50000000-0000-4000-8000-000000000001' and status = 'published');
+-- Development daily fixture; never overwrite an existing scheduled day.
+insert into public.daily_challenges (challenge_date, quiz_id)
+select public._london_today(), id from public.quizzes where slug = 'solar-system-starter'
+on conflict (challenge_date) do nothing;
+select public.activate_daily_challenge();
 commit;

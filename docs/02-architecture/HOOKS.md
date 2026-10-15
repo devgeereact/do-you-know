@@ -296,3 +296,5 @@ Game recovery: uncertain answer failures require explicit Resume, never automati
 ## Milestone 2 identity settings
 
 Identity settings use `identityService` to read only the current player's nickname and age band. Generated nicknames are available to every age group; this slice adds no free-text inputs. Age-band writes and nickname generation remain server RPCs. Public boards use only `get_leaderboard`, with rows and ranking supplied by the server. Board requests abort on filters/session changes and hide previous-session results immediately.
+
+Daily preview uses `get_daily_challenge()` (migration 0006), not the device date. It refreshes on focus and exposes `refresh()` for retry. Friend preview creates no session; accepting starts the existing challenge mode. Generated links are created only after a finished attempt and shared only after a separate explicit click. `navigator.share` falls back to clipboard; a visible selectable link remains if both fail. Shared links require a reachable configured app URL for real cross-device use; localhost links are development-only.

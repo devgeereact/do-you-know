@@ -63,3 +63,9 @@
 
 - Added read-only daily preview RPC using the same server London date as play, with own completion/streak only.
 - Added five database checks, bringing the scratch suite to 69 checks.
+
+### Challenge services (15 October 2026)
+
+- Added daily and friend challenge services/hooks, with preview reads that do not create guest sessions.
+- Added explicit challenge creation and Web Share/clipboard fallback with manual-copy recovery.
+- Added a local daily fixture using the server's London date; existing scheduled days are preserved.
