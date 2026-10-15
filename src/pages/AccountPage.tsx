@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ClerkProvider } from '@clerk/react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { AdultAccountControls } from '@/components/AdultAccountControls';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Button } from '@/components/ui/Button';
@@ -10,10 +10,12 @@ import { env } from '@/lib/env';
 /** Clerk loads only after an adult enters this account flow, never during play. */
 export function AccountPage(): JSX.Element {
   const [adultConfirmed, setAdultConfirmed] = useState(false);
+  const [searchParams] = useSearchParams();
+  const cpanelPreview = searchParams.get('preview') === 'cpanel';
 
   return (
     <>
-      <SiteHeader />
+      {!cpanelPreview && <SiteHeader />}
       <main className="mx-auto max-w-2xl px-4 py-8 md:px-8">
         <h1 className="text-3xl font-semibold text-content">Parent and staff accounts</h1>
         <p className="mt-3 text-content-muted">
@@ -29,7 +31,10 @@ export function AccountPage(): JSX.Element {
               Adult account sign-in is not available yet. You can still play quizzes.
             </p>
           ) : adultConfirmed ? (
-            <ClerkProvider publishableKey={env.clerkPublishableKey} afterSignOutUrl="/account">
+            <ClerkProvider
+              publishableKey={env.clerkPublishableKey}
+              afterSignOutUrl={cpanelPreview ? '/account?preview=cpanel' : '/account'}
+            >
               <AdultAccountControls />
             </ClerkProvider>
           ) : (
@@ -37,10 +42,10 @@ export function AccountPage(): JSX.Element {
           )}
         </Card>
         <Link
-          to="/me"
+          to={cpanelPreview ? '/preview' : '/me'}
           className="mt-6 inline-flex min-h-tap items-center font-semibold text-primary"
         >
-          Back to my games
+          {cpanelPreview ? 'Back to practice quizzes' : 'Back to my games'}
         </Link>
       </main>
     </>

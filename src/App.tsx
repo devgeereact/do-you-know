@@ -22,6 +22,9 @@ import { AvatarPage } from '@/pages/AvatarPage';
 const AccountPage = lazy(() =>
   import('@/pages/AccountPage').then((m) => ({ default: m.AccountPage })),
 );
+const BackendPreviewPage = lazy(() =>
+  import('@/pages/BackendPreviewPage').then((m) => ({ default: m.BackendPreviewPage })),
+);
 
 export function App(): JSX.Element {
   return (
@@ -30,6 +33,14 @@ export function App(): JSX.Element {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route
+              path="/preview"
+              element={
+                <Suspense fallback={<p role="status" className="p-6">Loading quizzes…</p>}>
+                  <BackendPreviewPage />
+                </Suspense>
+              }
+            />
             <Route path="/c/:slug" element={<CategoryPage />} />
             <Route path="/q/:slug" element={<QuizPage />} />
             <Route path="/play/:slug" element={<PlayPage />} />

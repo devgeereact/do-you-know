@@ -2,6 +2,10 @@
 Options -Indexes
 RewriteEngine On
 
+# Reject private-looking paths before SPA rewrites, including absent files.
+RewriteRule (^|/)(\.(?!well-known(/|$))|config[^/]*\.php(/|$)|composer\.(json|lock)(/|$)) - [F,L,NC]
+RewriteRule \.(map|bak|sql|zip|env|log|ini|phar)(/|$) - [F,L,NC]
+
 # Force HTTPS
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

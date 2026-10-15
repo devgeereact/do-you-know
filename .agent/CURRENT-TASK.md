@@ -12,11 +12,15 @@
   Completed user sign-in and production instance remain NOT TESTED. No replacement app.
 - PHP foundation added under backend/: private config, Clerk verification, guest
   sessions, catalogue and practice grading, MySQL migrations, API/Apache routing,
-  cleanup and release packaging. Tested locally, no cPanel deployment/cutover.
+  cleanup and release packaging. Deployed to its own cPanel development origin,
+  with a separate /preview practice UI. No full backend cutover.
   Competition, avatars, history, profile editing/deletion and account linking still
   use the existing backend. See qa/CPANEL-API.md and backend/README.md.
-- cPanel domain, docroot, PHP/database capabilities and deployment access are UNKNOWN.
-  Owner supplies non-sensitive hosting facts; no secrets through chat.
+- Target: doyouknow.soulrefresh.net, own docroot /home/devgeereact/doyouknow.soulrefresh.net.
+  SSH alias cpanel works, PHP 8.4/MariaDB 11.4 verified, dedicated database provisioned.
+  Cloudflare Origin TLS installed, private configs and quiz examples provisioned.
+  Public DNS BLOCKED: Cloudflare MCP exists in the Mac client, but cached OAuth
+  expired and macOS held credential-store access. No DNS mutation. See qa/CPANEL-API.md.
 - No environment files inspected during this setup. Earlier key status below is
   historical and must not override the owner's local-development setup.
 

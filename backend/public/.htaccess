@@ -1,5 +1,8 @@
 Options -Indexes
 RewriteEngine On
+# LiteSpeed may apply the API rewrite before FilesMatch authorisation.
+RewriteRule (^|/)(\.|config[^/]*\.php(/|$)|composer\.(json|lock)(/|$)) - [F,L,NC]
+RewriteRule \.(map|bak|sql|zip|env|log|ini|phar)(/|$) - [F,L,NC]
 # cPanel may otherwise strip bearer headers before PHP sees them.
 RewriteCond %{HTTP:Authorization} .
 RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

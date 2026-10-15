@@ -3,7 +3,8 @@
 Status: APPROVED by the owner on 15 October 2026. Implementation is staged.
 The PHP foundation package is now under backend/; current evidence is
 qa/CPANEL-API.md. It is not a full frontend/backend cutover.
-Prepared 15 October 2026. This guide describes work to implement, not a deployed backend.
+Updated 15 October 2026. PHP practice is deployed to the dedicated development
+origin; public DNS and full migration remain incomplete. See the deployment record below.
 
 ## Target and scope
 
@@ -274,3 +275,60 @@ No passwords or private keys are needed in chat.
 - [Clerk child-data terms](https://clerk.com/legal/standard-terms)
 - [cPanel database setup](https://www.namecheap.com/support/knowledgebase/article.aspx/9363/2180/how-to-create-and-maintain-databases-in-cpanel/)
 - [cPanel tools and cron](https://www.namecheap.com/support/knowledgebase/article.aspx/9797/2219/cpanel-control-panel-overview/)
+
+## Development origin deployment record, 15 October 2026
+
+Owner selected doyouknow.soulrefresh.net and authorised cPanel deployment via CLI.
+SSH alias cpanel targets devgeereact@premium17.web-hosting.com, port 21098.
+Dedicated docroot: /home/devgeereact/doyouknow.soulrefresh.net.
+Private PHP release: /home/devgeereact/dyk-backend/releases/0d3ef1a.
+Database: devgeereact_dyk_dev, with separate runtime and migration users.
+The server generated passwords locally. Secrets were not copied between computers.
+Runtime config: /home/devgeereact/dyk-backend/shared/config.php (0600).
+Migration config: /home/devgeereact/dyk-backend/shared/migration.php (0600).
+Clerk development issuer: https://finer-mite-6071.clerk.accounts.dev.
+Only its public verification PEM was fetched for this API, no backend secret needed.
+Refresh that pinned public PEM when Clerk rotates signing keys.
+
+The deployed api/.htaccess sets:
+
+```apache
+SetEnv DYK_BACKEND_DIR /home/devgeereact/dyk-backend/releases/0d3ef1a
+SetEnv DYK_CONFIG /home/devgeereact/dyk-backend/shared/config.php
+```
+
+The origin's root redirects / to /preview with HTTP 302. This is a labelled
+practice preview, separate from existing Supabase routes. Account links retain
+?preview=cpanel so adult navigation returns to practice. Guest tokens stay in
+sessionStorage for this tab, with an in-memory fallback if storage is unavailable.
+Adult identities are not connected to guest history yet.
+
+The own-docroot deployment follows the existing CF-RAY guard convention and
+exempts .well-known. This is defence in depth, not authenticated origin pulls.
+The existing wildcard Cloudflare Origin certificate is installed. AutoSSL is not
+available. Public DNS must be a proxied A record to 185.61.152.45; no DNS record was
+created because the Mac's installed Cloudflare MCP sign-in was inaccessible.
+No SSL-mode, DNSSEC or unrelated DNS/site changes were made.
+
+Rollback before a full cutover: place the development docroot into maintenance
+with a root rewrite returning HTTP 503 for all requests. Keep its database and
+private releases for inspection, do not drop or import over them. The pre-deploy
+own-docroot archive is outside webroots at
+/home/devgeereact/private_backups/doyouknow/before-preview-20261015.tar.gz.
+It contains the original cgi-bin, there was no previous app in this docroot.
+Verify maintenance response over public HTTPS after DNS is available. Never
+mirror-delete shared public_html or restore this archive into another docroot.
+
+Both computers can use the same hosted preview once DNS is configured. For local
+preview work, each computer needs VITE_CPANEL_API_URL set to
+https://doyouknow.soulrefresh.net/api/v1 in its own configuration. Local CORS allows
+localhost:5202 and 127.0.0.1:5202. Do not transfer .env files or database credentials.
+Development Clerk sign-in still needs a completed real-user test. Competition,
+profiles, parent linking, staff tools and avatar workers remain to be ported.
+
+Preview packaging used the normal package:cpanel command with public build overrides:
+VITE_APP_URL=https://doyouknow.soulrefresh.net, VITE_CPANEL_API_URL=/api/v1,
+VITE_SENTRY_DSN empty and VITE_POSTHOG_KEY empty. The deployed development root adds
+X-Robots-Tag: noindex, nofollow and robots.txt disallows all crawling. Normal builds
+keep their existing configuration. Public service workers remain to be tested through
+Cloudflare after DNS, alongside a completed adult sign-in.

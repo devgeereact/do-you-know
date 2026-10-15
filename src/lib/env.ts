@@ -7,6 +7,7 @@ interface AppEnv {
   appName: string;
   appUrl: string;
   clerkPublishableKey: string;
+  cpanelApiUrl: string;
   supabaseUrl: string;
   supabaseAnonKey: string;
   imagekitUrlEndpoint: string;
@@ -44,6 +45,7 @@ export const env: AppEnv = {
   appName: read('VITE_APP_NAME', 'Do You Know'),
   appUrl: read('VITE_APP_URL'),
   clerkPublishableKey: read('VITE_CLERK_PUBLISHABLE_KEY'),
+  cpanelApiUrl: read('VITE_CPANEL_API_URL', '/api/v1'),
   supabaseUrl: read('VITE_SUPABASE_URL'),
   supabaseAnonKey: read('VITE_SUPABASE_ANON_KEY'),
   imagekitUrlEndpoint: read('VITE_IMAGEKIT_URL_ENDPOINT'),

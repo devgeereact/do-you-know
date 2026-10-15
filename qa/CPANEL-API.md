@@ -1,7 +1,8 @@
 # Clerk and cPanel API evidence, 15 October 2026
 
-Overall: PARTIAL migration. The local PHP foundation passes its checks. It has not
-been deployed to cPanel or substituted for the frontend's Supabase game services.
+Overall: PARTIAL migration. The PHP foundation and a separate practice preview are
+deployed to the owner's cPanel origin. Public Cloudflare DNS is BLOCKED on saved
+MCP sign-in access. Existing Supabase game routes have not been cut over.
 
 ## Clerk development setup
 
@@ -52,12 +53,61 @@ private/, excludes public source maps and never copies live private configuratio
 Generated private/config.php comes from the blank example. Source backend/config.php
 is ignored and contains a blank template awaiting host values.
 
+## Hosted development origin checks
+
+PASS: 45 HTTP/TLS checks against the dedicated cPanel origin, including health,
+private-path/source-map denial, own-profile bearer forwarding, origin/CORS checks,
+two published quizzes played through server results, hidden answer fields, invalid
+Clerk-token denial, guest revocation and subsequent rejection. TLS uses the official
+Cloudflare Origin CA with hostname verification, not an insecure certificate bypass.
+The test harness initially expected 201/204 where the API contract returns 200;
+expectations were corrected. No application behaviour was changed to suit tests.
+
+PASS: Chromium origin preview at 375x812, 812x375 and 1440x900, without horizontal
+overflow. A real quiz reaches its server result and the adult gate opens the hosted
+Clerk sign-in modal without page errors. No account created or sign-in completed.
+Browser origin verification pins the already-verified certificate's public key and
+maps only this hostname to its origin IP. CF-RAY is injected only on origin requests;
+an initial harness sent it to Clerk too, triggering CORS. That harness was corrected.
+Service workers were blocked during this origin-only browser check because their
+requests lack the simulated Cloudflare header. Public service-worker behaviour is
+NOT TESTED. Raw PASS output and modal screenshot are under qa/evidence/cpanel/.
+
+The staged preview build disables Sentry/PostHog configuration and sets noindex
+headers/robots. This does not change normal builds or claim offline readiness.
+
 ## Limits and next action
 
-Host PHP 8.2+/extensions, MySQL/MariaDB version, account/domain/docroot, HTTPS and
-execution limits remain UNKNOWN. Composer's dependency resolution targets PHP 8.2,
-but runtime tests used PHP 8.5/MariaDB 12, not the owner's hosting environment.
-No public deploy, DNS change, database import or paid image request was performed.
+PASS: cPanel SSH account devgeereact, dedicated docroot
+/home/devgeereact/doyouknow.soulrefresh.net, PHP 8.4.26, MariaDB
+11.4.13-MariaDB-cll-lve, PDO MySQL, cURL and OpenSSL verified. No Node runtime.
+Private backend release: /home/devgeereact/dyk-backend/releases/0d3ef1a.
+Private runtime/migration configs: /home/devgeereact/dyk-backend/shared/.
+Database devgeereact_dyk_dev uses separate runtime DML and migration DDL users.
+Both numbered migrations applied. Two published quizzes, two categories and two
+immutable version snapshots imported, without users, sessions or passwords.
+Clerk public PEM configured from the selected development instance's public JWKS.
+Rotate that pinned public key when Clerk rotates signing keys.
+
+PASS: wildcard Cloudflare Origin certificate installed on this subdomain. Direct
+origin TLS verified against Cloudflare's official Origin CA root and hostname.
+Origin checks supply a test CF-RAY header to satisfy the existing hosting guard.
+This does not verify public Cloudflare routing or offer cryptographic origin access
+control. AutoSSL is unavailable on the account; no zone SSL settings were changed.
+
+The new docroot received a static bundle, API entrypoint and Apache settings only.
+No mirror deletion. Existing cgi-bin preserved; shared public_html untouched.
+Private pre-deployment backup:
+/home/devgeereact/private_backups/doyouknow/before-preview-20261015.tar.gz.
+LiteSpeed required explicit forbidden-path rewrites before SPA/API fallbacks;
+FilesMatch alone did not deny absent private-looking URLs on this host.
+
+BLOCKED: doyouknow.soulrefresh.net has no public A record at this check. The
+Cloudflare MCP plugin is installed on this Mac, but its cached session is expired
+and macOS held the credential-store read. No DNS record was created. Resume with
+the connected MCP after its sign-in is accessible, confirm zone/account and exact
+record, then add proxied A 185.61.152.45 with automatic TTL. Verify public HTTPS
+without certificate exceptions and repeat hosted checks through Cloudflare.
 
 The React game still uses Supabase. PHP endpoints currently cover identity, catalogue
 and practice only. Daily/ranked/friend competition, history, profile edits/deletion,
@@ -67,6 +117,5 @@ is implemented by this package. Frontend account sign-in does not call the new A
 or link game history yet. Rate-limit identifiers are HMACs, not stored raw addresses;
 shared networks share a quota. These facts prevent a production-readiness claim.
 
-Next: owner fills private config using backend/README.md, confirms dedicated dev
-hosting targets, then approves that deployment. Follow the staged migration guide
-and retain the existing backend until the replacement passes equivalent tests.
+Next: complete Cloudflare access and public DNS verification. Retain the existing
+backend until the replacement passes equivalent tests. No paid image request was made.
