@@ -90,3 +90,10 @@
 - Server reserves unseen questions per account, serialises concurrent starts and resumes the original timer. Exhausted pools produce a clear message instead of repeats.
 - Existing grading, leaderboard and streak rules remain unchanged. Cross-device continuity requires the same linked account; anonymous browsers remain separate.
 - Local fixture has only three questions, so it correctly offers no further full fresh round. Larger reviewed content and account-linking UX remain pending.
+
+### Player account deletion (15 October 2026)
+
+- Added an explicit two-step deletion control in Progress, with cancellation focused first, offline blocking and duplicate-request protection.
+- Uses the existing owner-scoped RPC. Confirmed deletion is followed by local sign-out; cleanup retry does not delete again. Uncertain responses keep a recovery message and permit retry.
+- Verified temporary local guests, cancellation/focus, failure and lost-response recovery, storage cleanup retry, cross-tab sign-out and fresh guest play. Existing profile-service exports are retained.
+- No schema, grading, account-linking or production change.

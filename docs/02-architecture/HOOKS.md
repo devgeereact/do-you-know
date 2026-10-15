@@ -299,3 +299,11 @@ Game recovery: uncertain answer failures require explicit Resume, never automati
 Identity settings use `identityService` to read only the current player's nickname and age band. Generated nicknames are available to every age group; this slice adds no free-text inputs. Age-band writes and nickname generation remain server RPCs. Public boards use only `get_leaderboard`, with rows and ranking supplied by the server. Board requests abort on filters/session changes and hide previous-session results immediately.
 
 Daily preview uses `get_daily_challenge()` (migration 0006), not the device date. It refreshes on focus and exposes `refresh()` for retry. Friend preview creates no session; accepting starts the existing challenge mode. Generated links are created only after a finished attempt and shared only after a separate explicit click. `navigator.share` falls back to clipboard; a visible selectable link remains if both fail. Shared links require a reachable configured app URL for real cross-device use; localhost links are development-only.
+
+## Account deletion implementation slice
+
+`AccountDeletion` uses the existing `profileService` alongside the owner-scoped identity controls. It does not claim the full future `useProfile` contract is implemented. `deleteAccount(expectedUserId)` checks the current local identity before calling `delete_my_account()` with no user-ID argument; the server derives ownership. `clearDeletedSession(expectedUserId)` uses local-scope sign-out and verifies the deleted identity is no longer stored. It does not sign out a different current identity. Network logout errors are tolerated only when local session removal is verified.
+
+The confirmation remains inline, starts focus on cancellation and returns focus to its trigger on cancel. A ref guards rapid submits. Known server deletion switches recovery to session cleanup only; an uncertain RPC response remains explicitly uncertain until a successful retry. No guest session is created by deletion or by visiting Progress.
+
+Supabase auth semantics were checked through Context7 and the installed auth-js source: https://supabase.com/docs/reference/javascript/auth-signout.

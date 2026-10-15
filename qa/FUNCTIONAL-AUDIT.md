@@ -42,3 +42,12 @@ Evidence: `/tmp/dyk-board-browser.mjs`, `/tmp/dyk-challenge-browser.mjs`, `/tmp/
 - PASS: local Supabase browser journey completes ranked daily, offers fresh practice, shows exhaustion without a question/repeat, preserves this outcome on refresh and retains friend challenge/board/offline flows.
 - PASS: ordinary guest play/recovery regression, typecheck, lint and static build.
 - PARTIAL: the local development fixture has no spare questions. Multiple-round selection is verified with synthetic scratch content, not reviewed launch content. Anonymous devices cannot share history; linked-account UI and real two-device checks remain pending.
+
+## Account deletion, 15 October 2026
+
+- PASS: 91/91 scratch database checks. Added owner deletion coverage for auth/profile, attempts/answers, board rows, pending avatar and owned friend link, another player’s attempts remaining, anonymous-role denial and idempotent retry.
+- PASS: local browser confirmation and cancel focus, no request on cancellation, offline disabling, 320/375/812/1280 px layouts, server failure retry, double-tap protection, lost deletion response retry and local logout despite endpoint failure.
+- PASS: simulated local-storage failure after confirmed deletion recovers through sign-out only, with one delete RPC. Same-browser second tab clears its old account; reload stays signed out and new play creates a fresh guest with empty history.
+- PASS: ordinary guest/recovery and ranked/identity/board regressions, typecheck, zero-warning lint and static build.
+- NOT TESTED: physical devices, assistive technology, linked accounts on separate machines and external avatar image-file erasure. No managed image storage is configured by this batch.
+- Local test scripts/logs: `/tmp/dyk-delete-browser.mjs`, `/tmp/dyk-delete-db.log`, `/tmp/dyk-delete-build.log`. Temporary test users only.

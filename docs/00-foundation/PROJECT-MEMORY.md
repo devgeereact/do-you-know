@@ -143,3 +143,7 @@ Compact navigation, quieter controls and thinner card outlines follow the reques
 ### Fresh-round implementation, 15 October 2026
 
 ADR-003 records the owner’s choice: one ranked daily run, then fresh unranked rounds. Migration 0007 isolates fresh practice, serialises same-account starts, excludes every previously reserved question ID and preserves unfinished deadlines. Exhaustion is explicit. No change to grading, ranks or streaks. Local sample has three-of-three questions, so browser validation covers the exhausted state; the scratch suite uses a larger synthetic pool to verify multiple disjoint rounds. Linked-account UX and reviewed content are still needed for useful cross-device fresh play.
+
+### Account deletion slice, 15 October 2026
+
+Progress now offers explicit account deletion through the existing owner-scoped RPC. Confirmation defaults to cancellation, offline writes are blocked and a synchronous lock prevents duplicate submits. Session cleanup is separate from server deletion: known deletion retries only cleanup; unknown outcomes permit an idempotent RPC retry. Existing profile exports and identity behaviour remain intact. Browser checks cover failure recovery, storage failure, cross-tab sign-out and new guest play. Linked-account design, reviewed content and managed-service work remain pending. External image-file removal is not implemented or verified, since avatar storage/generation is not provisioned.

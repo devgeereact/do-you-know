@@ -112,6 +112,27 @@ export const copy = {
     saved: 'Your quiz identity is saved.',
     yourRank: (rank: number): string => `Your rank: ${rank}`,
   },
+  account: {
+    heading: 'Your account and data',
+    description: 'You can permanently delete your account and its quiz progress.',
+    open: 'Delete my account',
+    confirmHeading: 'Delete your account?',
+    warning:
+      'This permanently removes your profile, quiz history, leaderboard results, avatars and challenge links. You cannot undo it.',
+    cancel: 'Keep my account',
+    confirm: 'Yes, delete my account',
+    busy: 'Deleting and signing out…',
+    error:
+      'We could not confirm deletion. Your request may have reached the server. Stay on this page and try again when connected.',
+    offline: 'Connect to the internet before deleting your account.',
+    cleanupHeading: 'Your account has been deleted',
+    cleanupNote: 'Finish signing out of this browser before playing again.',
+    cleanupError:
+      'Your account was deleted, but this browser could not finish signing out. Please try signing out again.',
+    clearSession: 'Finish signing out',
+    deleted:
+      'Your account and quiz progress have been deleted. You can start fresh whenever you are ready.',
+  },
   progress: {
     loading: 'Loading your progress…',
     error: 'We could not load your progress. Please try again when connected.',

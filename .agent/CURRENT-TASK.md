@@ -1,7 +1,7 @@
 # Current Task
 
 - Outcome: Milestone 2 competition. Visitors can play ranked quizzes, see server-produced leaderboards and play daily/friend challenges. Profile identity remains safe for children.
-- Completed locally: ranked mode; weekly/all-time/daily boards; generated nickname/age-band settings; daily challenge/streak preview; friend preview/play/comparison/link sharing.
+- Completed locally: explicit account deletion and local-session recovery; ranked mode; weekly/all-time/daily boards; generated nickname/age-band settings; daily challenge/streak preview; friend preview/play/comparison/link sharing.
 - Next slices: reviewed question pools and privacy-safe account linking for cross-device continuity; share-card images; avatar builder and background function integration, with managed-service configuration and cost review before activation.
 - Out of scope: CMS, production deployment, paid service activation, public release and merge.
 - Mode/system: Build, change safety, PWA engineering.
@@ -49,3 +49,16 @@ CodeRabbit reviewed only the initial baseline batch. Later summaries hit the fre
 - PASS: 81/81 scratch database checks through migration 0007, typecheck, zero-warning lint, static build, daily/friend/exhaustion browser flow and ordinary guest recovery regression.
 - PASS: concurrent starts reserve one round, same identity resumes from another connection, timed refresh keeps its deadline, extra rounds have no ranks or streak changes.
 - PARTIAL: useful fresh rounds need more reviewed questions. Actual cross-device account linking, physical phones and Mac-origin access remain unverified.
+
+## Active batch: account deletion
+
+- Scope: existing owner-scoped delete RPC, local-session cleanup, explicit confirmation in Progress, offline/error/uncertain-response recovery. No real player data deletion during development checks.
+- Affected: profile service, Progress page, confirmation component, copy and account cascade tests. No schema or grading change.
+- Verification: temporary local guests only; cancel/keyboard focus, offline controls, single request on double tap, deletion cascades, another user unaffected, lost-response retry and fresh guest play. Run typecheck/lint/build and scratch DB suite.
+- Out of scope: account linking, email collection, parental consent changes, production and external service activation.
+
+## Account deletion checkpoint
+
+- Implemented: confirmation/cancel focus, offline protection, duplicate-submit guard, existing owner RPC, separate sign-out cleanup and explicit uncertain-response retry.
+- PASS: 91 scratch checks, typecheck/lint/static build, local deletion recovery browser matrix, ordinary guest play and ranked/identity/board regressions.
+- Remaining: reviewed content, privacy-safe account linking, avatars/background/share-card images, managed-media erasure and existing release/device/advisory gates. No production changes.

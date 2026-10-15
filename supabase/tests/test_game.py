@@ -1,5 +1,5 @@
 """End-to-end behaviour tests for the Do You Know migrations (local Postgres + Supabase shim).
-Run: python3 test_game.py   (expects a fresh 'dyk' database with 0001–0004 applied)
+Run: python3 test_game.py   (expects a fresh scratch database with all migrations applied)
 """
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
@@ -403,9 +403,32 @@ check("exhausted pool does not silently repeat", rpc_err(fresh_user, "start_dail
 check("fresh rounds do not reopen ranked daily", rpc_err(fresh_user, "start_attempt", None, "daily", None) == "daily_already_played")
 
 # ---------------------------------------------------------------- account deletion
+# Deletion is owner-scoped and removes game data, without affecting other players.
+rpc(guest2, "create_friend_challenge", ds["attempt_id"])
+check("anonymous role cannot delete an account", rpc_err(None, "delete_my_account") is not None)
+c = superuser()
+c.execute("select count(*) from public.attempts where user_id=%s", (guest,))
+other_attempts = c.fetchone()[0]
+c.execute("select id from public.attempts where user_id=%s", (guest2,))
+deleted_attempts = [row[0] for row in c.fetchall()]
+check("deletion fixture has existing quiz attempts", len(deleted_attempts) > 0)
 rpc(guest2, "delete_my_account")
 c = superuser(); c.execute("select count(*) from public.profiles where id=%s", (guest2,))
 check("delete my account removes profile (cascade)", c.fetchone()[0] == 0)
+c = superuser()
+c.execute("select count(*) from auth.users where id=%s", (guest2,))
+check("delete account removes auth identity", c.fetchone()[0] == 0)
+c.execute("select count(*) from public.attempt_answers where attempt_id = any(%s)", (deleted_attempts,))
+check("delete account removes attempt answers", c.fetchone()[0] == 0)
+for table in ("attempts", "leaderboard_entries", "avatars"):
+    c.execute(f"select count(*) from public.{table} where user_id=%s", (guest2,))
+    check(f"delete account removes owned {table}", c.fetchone()[0] == 0)
+c.execute("select count(*) from public.friend_challenges where creator_id=%s", (guest2,))
+check("delete account removes owned challenge links", c.fetchone()[0] == 0)
+c.execute("select count(*) from public.attempts where user_id=%s", (guest,))
+check("delete account preserves another player's attempts", c.fetchone()[0] == other_attempts)
+check("delete retry with original identity is idempotent", rpc_err(guest2, "delete_my_account") is None)
+
 
 failed = [r for r in results if not r[1]]
 print(f"\n{len(results) - len(failed)}/{len(results)} checks passed")

@@ -38,3 +38,9 @@ Gameplay foundation: source inspection confirms public-only cache predicates and
 - PASS: typecheck, zero-warning lint, static build and responsive/theme browser checks. Focused scope and limits are in `qa/UX-AUDIT.md`.
 - PASS: migration 0007, 81/81 scratch database checks, daily exhaustion/browser regression and ordinary guest play regression. The server now offers distinct unranked sets when enough unseen questions exist.
 - PARTIAL: three-of-three local questions cannot produce extra fresh sets; reviewed content and linked-account UX remain pending. Anonymous devices have separate history.
+
+## Account deletion checkpoint, 15 October 2026
+
+- PASS: 91/91 scratch checks through migration 0007, typecheck, zero-warning lint and static build. No new migration.
+- PASS: explicit confirmation/cancel, offline/error/lost-response recovery, single delete submit, storage cleanup retry, cross-tab sign-out and fresh guest browser checks. Ordinary play and ranked/identity/boards regressions pass. See `qa/FUNCTIONAL-AUDIT.md`.
+- PARTIAL: full profile contract, account linking, physical devices and managed image erasure remain pending. No claim of production privacy/release acceptance.

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { AccountDeletion } from '@/components/AccountDeletion';
 import { IdentitySettings } from '@/components/IdentitySettings';
 import { Link } from 'react-router-dom';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
@@ -11,6 +13,7 @@ import { copy } from '@/lib/copy';
 
 export function MePage(): JSX.Element {
   const auth = useSupabaseAuth();
+  const [deleted, setDeleted] = useState(false);
   const progress = usePlayerProgress(auth.user?.id);
   const catalog = useQuizCatalog();
   return (
@@ -18,6 +21,11 @@ export function MePage(): JSX.Element {
       <SiteHeader />
       <main className="mx-auto grid max-w-3xl gap-6 px-4 pb-24 pt-6 md:px-8">
         <h1 className="font-display text-4xl font-semibold text-content">{copy.game.profile}</h1>
+        {deleted && !auth.user && (
+          <p role="status" className="text-content">
+            {copy.account.deleted}
+          </p>
+        )}
         {auth.loading || progress.loading ? (
           <p role="status" className="text-content">
             {copy.progress.loading}
@@ -85,6 +93,13 @@ export function MePage(): JSX.Element {
               </ol>
             )}
           </>
+        )}
+        {auth.user && (
+          <AccountDeletion
+            key={auth.user.id}
+            userId={auth.user.id}
+            onDeleted={() => setDeleted(true)}
+          />
         )}
         <Link to="/" className="inline-flex min-h-tap items-center font-bold text-primary">
           ← {copy.game.leave}
