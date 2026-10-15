@@ -5,8 +5,10 @@ import path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Relative base so the static bundle works from any cPanel sub-directory.
-  base: './',
+  // Absolute base: the app has its own docroot (docs/07-operations/DEPLOYMENT.md).
+  // A relative base breaks deep links such as /q/<slug>, because assets would
+  // resolve to /q/assets/... If the app ever moves to a subpath, set it here.
+  base: '/',
 
   resolve: {
     alias: {
@@ -43,8 +45,8 @@ export default defineConfig({
         orientation: 'any', // never lock: play in portrait or landscape
         categories: ['education', 'games'],
         lang: 'en-GB',
-        scope: './',
-        start_url: './',
+        scope: '/',
+        start_url: '/',
         icons: [
           { src: 'icons/pwa-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/pwa-512.png', sizes: '512x512', type: 'image/png' },
