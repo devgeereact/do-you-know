@@ -4,6 +4,9 @@ export const copy = {
   nav: {
     label: 'Main navigation',
     quizzes: 'Quizzes',
+    daily: 'Daily',
+    boards: 'Boards',
+    progress: 'Progress',
     theme: (theme: 'dark' | 'light'): string => `Use ${theme} theme`,
   },
   catalog: {

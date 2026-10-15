@@ -32,3 +32,8 @@ Gameplay foundation: source inspection confirms public-only cache predicates and
 - PASS: ranked/identity/board flow, two-session daily and friend challenge order/versus flow, sharing adapters and static PWA competition privacy checks. See `qa/FUNCTIONAL-AUDIT.md` and `qa/PWA-AUDIT.md`.
 - PARTIAL: Milestone 2, avatars/background generation and share-card images remain pending. Physical phones, Mac-origin tunnel, native share dialogs and release acceptance remain unverified.
 - Review: PR #2 is stacked on unmerged PR #1. CodeRabbit free-plan summary/rate-limit output is not a comprehensive review approval. Dependency advisory gate remains FAIL.
+
+## Visual refinement, 15 October 2026
+
+- PASS: typecheck, zero-warning lint, static build and responsive/theme browser checks. Focused scope and limits are in `qa/UX-AUDIT.md`.
+- BLOCKED: daily freshness implementation follows the owner’s choice of one ranked daily run and fresh unranked rounds. Three-of-three local questions cannot produce fresh sets; anonymous devices lack linked identity. No changed daily behaviour is claimed.

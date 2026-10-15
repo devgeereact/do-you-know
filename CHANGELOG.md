@@ -77,3 +77,9 @@
 - Added explicit challenge creation and native-share/clipboard/manual link recovery.
 - Verified two-session play, frozen question order, own-challenge rejection, privacy, responsive layouts, direct static routes and uncached competition responses.
 - Avatars, share-card images and physical-device/release checks remain pending.
+
+### Visual refinement (15 October 2026)
+
+- Added compact four-tab navigation, clear current-page feedback, lighter card outlines and quiet secondary controls.
+- Kept brand typography and colours, added immediate press feedback and header transparency/contrast fallbacks.
+- Typecheck, lint, static build and responsive browser checks pass. Daily freshness remains scheduled as a separate unranked-round batch and needs adequate question content.

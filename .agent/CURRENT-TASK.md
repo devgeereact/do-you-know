@@ -36,3 +36,10 @@ CodeRabbit reviewed only the initial baseline batch. Later summaries hit the fre
 - Typecheck/lint/build and Milestone 1 play/recovery regressions pass. No rank, score or elapsed time is submitted by the client.
 - Stacked PR #2 targets `feat/milestone-1-play`; PR #1 remains unmerged. Neither PR is production release approval.
 - Milestone 2 is PARTIAL: avatars, background generation and share-card images remain. Real two-phone sharing and the Mac-origin tunnel are NOT TESTED; localhost links are development-only.
+
+## Current request: daily freshness and cleaner presentation
+
+- Visual refinement: compact navigation, lighter outlines, quiet secondary controls and immediate press feedback. Apple Design skill applied; brand palette and fonts retained.
+- Owner chose one ranked daily run followed by fresh unranked rounds. This is the next implementation batch. Normal refresh must preserve the unfinished question and its server deadline.
+- The local fixture contains three questions and selects all three. A larger reviewed pool is required for genuinely different sets. Separate anonymous devices cannot be recognised as the same person without linked identity; no fingerprinting is permitted.
+- This visual batch does not claim daily repetition has been solved.

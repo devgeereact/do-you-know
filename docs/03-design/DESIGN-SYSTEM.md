@@ -1,7 +1,7 @@
 # Design System & Visual Guidelines — Do You Know
 
 ## 1. Aesthetic direction
-**Bright and playful.** Sunny colours, rounded shapes, chunky pill buttons and friendly
+**Bright and playful.** Sunny colours, rounded shapes, clear pill buttons and friendly
 illustrated scenes. It should feel like a game a 7-year-old and their parent both enjoy —
 never like an exam. Light mode is the default; dark mode follows the device or the
 player's toggle.
@@ -61,18 +61,18 @@ question prompt (`text-4xl` on tablets) · `text-5xl md:text-6xl` hero and final
 Line-height 1.6 for body.
 
 ### Spacing, radius, size
-- 4 px base unit. Generous padding: cards `p-5`, screens `px-4 md:px-8`.
+- 4 px base unit. Generous padding: cards `p-5 sm:p-6`, screens `px-4 md:px-8`.
 - Radius: answer buttons and CTAs `rounded-full`; cards `rounded-xl`; sheets `rounded-2xl`.
 - **Touch targets ≥ 48 px**: use `min-h-tap` / `min-w-tap`. Answer buttons ≥ 56 px tall.
 - Shadows: one soft shadow for raised cards; borders do most of the work.
-- Buttons sit on a darker edge (`shadow-edge-primary`, `shadow-edge-sun`, `shadow-edge-surface`), coloured by `--primary-edge` and `--sun-edge` in `src/index.css`. This is the "chunky game button" signature: keep it on CTAs and answer buttons, not on cards.
+- Primary and secondary buttons sit on a darker edge (`shadow-edge-primary`, `shadow-edge-sun`, `shadow-edge-surface`), coloured by `--primary-edge` and `--sun-edge` in `src/index.css`. Keep this game signature on prominent CTAs and answer buttons. Ghost buttons are flat, with a thin border; standard cards use a single thin outline.
 - Raised panels (hero teaser, login card, prompts) use `shadow-lift`, a soft primary-tinted shadow.
 - Navigation that looks like a button uses `buttonClasses()` on a `<Link>`. Never wrap a `<Button>` in a `<Link>`.
 
 ## 3. Motion (Framer Motion + CSS)
 | Interaction | Spec |
 | --- | --- |
-| Button press | Drops 3 px and its edge shadow shrinks (`shadow-edge-*` to `shadow-edge-pressed`), 120 ms. Hover lifts 2 px |
+| Button press | Immediate active state: scale 0.98 and remove the edge shadow. No hover translation. Reduced motion removes scaling |
 | Screen / question in | `opacity 0→1`, `y 10→0`, 300 ms ease-out (`animate-fade-up`) |
 | Correct answer | `animate-pop` (scale 1→1.06→1, 250 ms) + scene brightens |
 | Wrong answer | `animate-shake` (±6 px, 250 ms) then explanation slides up |
@@ -98,3 +98,9 @@ Motion is short and springy, never blocks input, and is never the only signal.
 - Variants are prop-driven class maps; compose with `cn()` (clsx + tailwind-merge).
 - Game components in `src/components/game/`, admin in `src/components/admin/`.
 - No inline `style={{}}`. Avatars and scenes render as `<img>` with token classes.
+
+## 6. Navigation refinement, 15 October 2026
+
+The Apple Design skill informed restrained hierarchy and immediate feedback while preserving the app palette and self-hosted rounded fonts. Four compact tabs have 48 px minimum targets, a visible current-page state and full accessible names. The sticky header uses a single backdrop layer; reduced-transparency preferences remove blur and use an opaque background. Increased-contrast preferences add a solid divider. Section anchors account for the mobile header.
+
+Browser evidence covers layout and preference states, not a full accessibility certification. See `qa/UX-AUDIT.md`.

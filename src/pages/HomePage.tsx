@@ -23,7 +23,7 @@ export function HomePage(): JSX.Element {
               {copy.home.findQuiz} <span aria-hidden="true">↓</span>
             </a>
           </div>
-          <div className="relative flex min-h-64 items-center justify-center overflow-hidden rounded-2xl border-2 border-surface-border bg-surface p-8">
+          <div className="relative flex min-h-64 items-center justify-center overflow-hidden rounded-2xl border border-surface-border bg-surface p-8">
             <div
               aria-hidden="true"
               className="absolute -right-6 -top-6 h-36 w-36 rounded-full bg-secondary"
@@ -44,7 +44,7 @@ export function HomePage(): JSX.Element {
         <section
           id="quizzes"
           aria-labelledby="quizzes-heading"
-          className="scroll-mt-5 border-t-2 border-surface-border pt-8"
+          className="scroll-mt-36 border-t border-surface-border pt-8"
         >
           <h2
             id="quizzes-heading"

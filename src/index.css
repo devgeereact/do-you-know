@@ -50,6 +50,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    scroll-padding-top: 9rem;
+    font-optical-sizing: auto;
   }
 
   body {
@@ -61,7 +63,8 @@
   h1,
   h2,
   h3 {
-    @apply font-display;
+    @apply font-display tracking-tight;
+    line-height: 1.15;
   }
 
   /* Visible focus for keyboard users (WCAG 2.2 focus appearance). */

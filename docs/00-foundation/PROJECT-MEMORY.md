@@ -135,3 +135,7 @@ RLS everywhere; attempts/leaderboards written only by SECURITY DEFINER functions
 
 ### Naming & Branding (→ forge.config.json)
 appName "Do You Know", shortName "DoYouKnow", slug "do-you-know", themeColor "#1570C2", backgroundColor "#EAF6FF", url "https://doyouknow.example" (placeholder until domain chosen).
+
+### Visual refinement and daily freshness request, 15 October 2026
+
+Compact navigation, quieter controls and thinner card outlines follow the requested Apple Design skill while retaining the existing brand. Responsive/theme checks pass, with evidence limits in `qa/UX-AUDIT.md`. Owner chose one ranked daily run followed by fresh unranked rounds; implementation and a larger reviewed pool remain. Three-of-three local fixture questions cannot provide fresh sets. Cross-device continuity requires linked identity; anonymous users must not be fingerprinted.
