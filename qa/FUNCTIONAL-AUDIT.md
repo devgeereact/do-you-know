@@ -28,7 +28,12 @@
 | M2 daily done + streak | Mac, local Supabase + `vite` dev, Chromium via Playwright | /daily after playing | Done for today; streak 1 | As expected | PASS | `daily-done-phone.png`, `daily-desktop.png` |
 | M2 one daily play per day | Mac, local Supabase + `vite` dev, Chromium via Playwright | Open /daily/play again | Server refuses; friendly copy + board link | "You've played today's challenge…" | PASS | session snapshot |
 | M2 leaderboard You badge | Mac, local Supabase + `vite` dev, Chromium via Playwright | 375px daily board | Nickname truncates, You badge stays visible | FAIL first (badge cut to "Y…"); fixed | PASS | code fix in LeaderboardTable |
+| M2 create challenge link | Mac, local Supabase + `vite` dev, Chromium via Playwright | Finish ranked quiz, tap Challenge a friend | 8-char link; share sheet or copy fallback | Link /challenge/8ceMLoMa shown; link base fixed to page origin (was placeholder VITE_APP_URL) | PASS | session log |
+| M2 challenge preview | Mac, local Supabase + `vite` dev, Chromium via Playwright | Fresh guest opens link (375px, 1440px) | Nickname + score only, Accept button | CosmicPanda59 scored 1/3 | PASS | `qa/evidence/m2-compete/challenge-preview-phone.png`, `challenge-preview-desktop.png` |
+| M2 exact same questions | Mac, local Supabase + `vite` dev, Chromium via Playwright | Friend plays challenge | Same question order as creator | DB: question_order equal | PASS | SQL check in session log |
+| M2 head to head | Mac, local Supabase + `vite` dev, Chromium via Playwright | Friend finishes | Server-decided winner, both scores; no Play again / re-challenge | CosmicPanda59 wins this time | PASS | `versus-phone.png` |
+| M2 bad challenge code | Mac, local Supabase + `vite` dev, Chromium via Playwright | Open /challenge/NOPE1234 | Friendly not-found | As expected | PASS | session snapshot |
 
 Cover loading, empty, success, validation, service failure, permission denial, session expiry and recovery. Test critical journeys end to end, not only isolated functions.
 
-Recorded 2026-10-15 by Claude Code (owner: Gideon). Not yet tested: real Supabase project, physical phone or tablet, Safari/iOS install, offline behaviour, dark mode in the game screens.
+Recorded 2026-10-15 by Claude Code (owner: Gideon). Not yet tested: native share sheet on a real phone, real Supabase project, physical phone or tablet, Safari/iOS install, offline behaviour, dark mode in the game screens.
