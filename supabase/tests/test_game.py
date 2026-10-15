@@ -338,6 +338,41 @@ c = superuser(); c.execute("select answer_time_ms from public.attempts where id=
 check("timed-out question counts at most the limit (10 s)", c.fetchone()[0] <= 4500 + 10000)
 as_user(admin).execute("update public.quizzes set time_limit_seconds = null where id = %s", (quiz,))
 
+# ---------------------------------------------------------------- concurrent starts (0005)
+# Transaction A starts an attempt and stays open; B starts the same quiz meanwhile.
+# With the per-player lock, B waits for A and then resumes A's attempt.
+import threading
+import time
+
+racer = new_user(True)
+conn_a = psycopg.connect(DSN)  # not autocommit: we hold the transaction open
+cur_a = conn_a.cursor()
+cur_a.execute("set role authenticated")
+cur_a.execute("select set_config('request.jwt.claim.sub', %s, true)", (str(racer),))
+cur_a.execute("select public.start_attempt('science-starter', 'practice', null)")
+first = cur_a.fetchone()[0]
+
+second = {}
+def start_b():
+    conn_b = psycopg.connect(DSN, autocommit=True)
+    cur_b = conn_b.cursor()
+    cur_b.execute("set role authenticated")
+    cur_b.execute("select set_config('request.jwt.claim.sub', %s, false)", (str(racer),))
+    cur_b.execute("select public.start_attempt('science-starter', 'practice', null)")
+    second["state"] = cur_b.fetchone()[0]
+    conn_b.close()
+
+t_b = threading.Thread(target=start_b)
+t_b.start()
+time.sleep(0.5)
+check("second start waits while the first is open", t_b.is_alive())
+conn_a.commit()
+conn_a.close()
+t_b.join(10)
+c = superuser(); c.execute("select count(*) from public.attempts where user_id=%s and status='in_progress'", (racer,))
+check("concurrent starts make one attempt, not two",
+      c.fetchone()[0] == 1 and second.get("state", {}).get("attempt_id") == first["attempt_id"])
+
 # ---------------------------------------------------------------- account deletion
 rpc(guest2, "delete_my_account")
 c = superuser(); c.execute("select count(*) from public.profiles where id=%s", (guest2,))
