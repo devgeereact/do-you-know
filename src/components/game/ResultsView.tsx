@@ -12,7 +12,7 @@ interface ResultsViewProps {
   quizTitle: string;
   isGuest: boolean;
   restarting: boolean;
-  onPlayAgain: () => void;
+  onPlayAgain?: () => void; // omitted for the daily challenge (one play a day)
 }
 
 function cheer(correct: number, total: number): string {
@@ -109,9 +109,11 @@ export function ResultsView({
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Button size="lg" onClick={onPlayAgain} disabled={restarting}>
-            Play again
-          </Button>
+          {onPlayAgain && (
+            <Button size="lg" onClick={onPlayAgain} disabled={restarting}>
+              Play again
+            </Button>
+          )}
           <Link to={`/q/${quizSlug}`} className={buttonClasses('ghost', 'lg')}>
             Back to quiz
           </Link>

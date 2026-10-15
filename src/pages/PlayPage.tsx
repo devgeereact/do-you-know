@@ -33,12 +33,16 @@ function Centered({ children }: { children: ReactNode }): JSX.Element {
   return <div className="grid min-h-[60dvh] place-items-center text-center">{children}</div>;
 }
 
-export function PlayPage(): JSX.Element {
-  const { slug = '' } = useParams<{ slug: string }>();
-  const [params] = useSearchParams();
-  const mode = params.get('mode') === 'practice' ? 'practice' : 'ranked';
+interface PlayPageProps {
+  daily?: boolean; // /daily/play: today's challenge, one ranked play per day
+}
 
-  const game = useQuizAttempt({ mode, quizSlug: slug });
+export function PlayPage({ daily = false }: PlayPageProps): JSX.Element {
+  const { slug: routeSlug = '' } = useParams<{ slug: string }>();
+  const [params] = useSearchParams();
+  const mode = daily ? 'daily' : params.get('mode') === 'practice' ? 'practice' : 'ranked';
+
+  const game = useQuizAttempt({ mode, quizSlug: daily ? undefined : routeSlug });
   const { isGuest } = useGuestSession();
   const { phase, state, lastResult, summary, submitting, error } = game;
   const question = state?.question ?? null;
@@ -60,13 +64,15 @@ export function PlayPage(): JSX.Element {
     if (phase === 'feedback') feedbackRef.current?.focus();
   }, [phase, question?.id]);
 
-  const title = state?.quiz.title ?? 'Quiz';
+  const title = state?.quiz.title ?? (daily ? "Today's challenge" : 'Quiz');
+  const slug = state?.quiz.slug ?? routeSlug;
+  const leaveTo = daily ? '/daily' : `/q/${slug}`;
 
   return (
     <main className="mx-auto min-h-dvh max-w-3xl px-4 pb-12 pt-4 md:px-8 lg:max-w-5xl">
       <header className="mb-4 flex items-center justify-between gap-3">
         <Link
-          to={`/q/${slug}`}
+          to={leaveTo}
           className="inline-flex min-h-tap items-center rounded-full px-2 font-semibold text-primary"
         >
           <span aria-hidden="true">←&nbsp;</span>Leave
@@ -99,6 +105,11 @@ export function PlayPage(): JSX.Element {
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button onClick={() => void game.restart()}>Try again</Button>
+              {daily && (
+                <Link to="/leaderboards?board=daily" className={buttonClasses('ghost')}>
+                  Today's leaderboard
+                </Link>
+              )}
               <Link to="/" className={buttonClasses('ghost')}>
                 Home
               </Link>
@@ -114,7 +125,7 @@ export function PlayPage(): JSX.Element {
           quizTitle={title}
           isGuest={isGuest}
           restarting={submitting}
-          onPlayAgain={() => void game.restart()}
+          onPlayAgain={daily ? undefined : () => void game.restart()}
         />
       )}
 

@@ -115,3 +115,52 @@ export async function getLeaderboard(
   if (error) throw error;
   return data as unknown as Leaderboard;
 }
+
+export interface DailyToday {
+  id: string;
+  date: string; // YYYY-MM-DD, Europe/London
+  quiz: { slug: string; title: string; cover_image_url: string | null };
+}
+
+/** Today's date in Europe/London, the calendar the daily challenge runs on. */
+export function londonToday(now: Date = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/London',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(now);
+}
+
+/** Today's live daily challenge, or null when none is live yet. */
+export async function getDailyToday(): Promise<DailyToday | null> {
+  const today = londonToday();
+  const { data: daily, error } = await supabase
+    .from('daily_challenges')
+    .select('id, challenge_date, quiz_id')
+    .eq('status', 'live')
+    .eq('challenge_date', today)
+    .maybeSingle();
+  if (error) throw error;
+  if (!daily) return null;
+  const { data: quiz, error: quizError } = await supabase
+    .from('quizzes')
+    .select('slug, title, cover_image_url')
+    .eq('id', daily.quiz_id)
+    .maybeSingle();
+  if (quizError) throw quizError;
+  if (!quiz) return null;
+  return { id: daily.id, date: daily.challenge_date, quiz };
+}
+
+/** True once the player has finished this daily challenge. */
+export async function hasFinishedDaily(userId: string, dailyId: string): Promise<boolean> {
+  const { count, error } = await supabase
+    .from('attempts')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .eq('daily_challenge_id', dailyId)
+    .eq('status', 'finished');
+  if (error) throw error;
+  return (count ?? 0) > 0;
+}

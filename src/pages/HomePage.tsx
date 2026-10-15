@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
+import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { QuizCard } from '@/components/game/QuizCard';
 
 // A taste of the game, not a live question: nothing here is marked right or wrong,
@@ -18,6 +19,7 @@ export function HomePage(): JSX.Element {
   const signedIn = user !== null && user.is_anonymous !== true;
   const reduceMotion = useReducedMotion();
   const { categories, quizzes, loading, error, refresh } = useQuizCatalog();
+  const daily = useDailyChallenge();
 
   const rise = (delay: number) =>
     reduceMotion
@@ -104,6 +106,30 @@ export function HomePage(): JSX.Element {
       </div>
 
       <section id="quizzes" className="mx-auto max-w-5xl scroll-mt-4 px-4 pb-16 md:px-8">
+        {daily.today && (
+          <Link
+            to="/daily"
+            className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-secondary p-6 text-secondary-fg shadow-edge-sun transition-transform duration-[120ms] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <span>
+              <span className="block text-sm font-bold uppercase tracking-wide">
+                Today’s challenge
+              </span>
+              <span className="block font-display text-2xl font-semibold">
+                {daily.today.quiz.title}
+              </span>
+              {daily.streak > 0 && (
+                <span className="block text-sm font-bold">
+                  Streak: {daily.streak} {daily.streak === 1 ? 'day' : 'days'}
+                </span>
+              )}
+            </span>
+            <span className="font-display text-lg font-semibold">
+              {daily.playedToday ? '✓ Done today' : 'Play →'}
+            </span>
+          </Link>
+        )}
+
         <h2 className="text-3xl font-semibold text-content">Pick a quiz</h2>
 
         {categories.length > 0 && (

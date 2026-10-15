@@ -65,9 +65,9 @@ export function LeaderboardTable({
               {row.rank}
             </span>
             <Avatar row={row} />
-            <span className="min-w-0 flex-1 truncate font-semibold text-content">
-              {row.nickname}
-              {row.is_me && <span className="ml-2 text-sm font-bold text-primary">You</span>}
+            <span className="flex min-w-0 flex-1 items-center gap-2">
+              <span className="truncate font-semibold text-content">{row.nickname}</span>
+              {row.is_me && <span className="shrink-0 text-sm font-bold text-primary">You</span>}
             </span>
             <span className="shrink-0 text-right">
               <span className="block font-display text-lg font-semibold text-content">
