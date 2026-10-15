@@ -18,6 +18,11 @@
 | Game layout on tablet portrait | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 820x1180 | Question above answers, larger type | As expected | PASS | `tablet-portrait.png` |
 | Game layout on desktop | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 1440x900 | Two columns, wider container | As expected | PASS | `desktop.png` |
 | Game layout on phone landscape | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 812x375 | Two columns; install banner never covers answers | Banner hidden on /play | PASS | `phone-landscape.png` |
+| M2 age band asked once after a ranked game | Mac, local Supabase + `vite` dev, Chromium via Playwright | Fresh guest finishes ranked quiz (375px) | Age band choice; no own rank shown before naming | As expected (rank hidden after fix) | PASS | `qa/evidence/m2-compete/age-band-phone.png` |
+| M2 under-13 nickname | Mac, local Supabase + `vite` dev, Chromium via Playwright | Choose Under 13, Shuffle, Use this name | Generated name only, no text box; appears on board as You | JollyKoala19 at #1 | PASS | `child-nickname-phone.png` |
+| M2 13+ nickname | Mac, local Supabase + `vite` dev, Chromium via Playwright | Choose 18 or over, type `a!!b` then `QuizWhizz` | Server rejects invalid name with friendly copy; valid name saved | "Nicknames need 3–20 letters or numbers."; QuizWhizz at #2 | PASS | session log |
+| M2 /leaderboards | Mac, local Supabase + `vite` dev, Chromium via Playwright | 1440x900, all-time board | Ranked rows: nickname, score, time; You highlighted | As expected | PASS | `leaderboards-desktop.png` |
+| M2 delete account | Mac, local Supabase + `vite` dev, Chromium via Playwright | /me → Delete → Yes | Profile and board rows removed; session cleared; back to home | Rows gone, no auth token left | PASS | `me-delete-phone.png`; DB check |
 
 Cover loading, empty, success, validation, service failure, permission denial, session expiry and recovery. Test critical journeys end to end, not only isolated functions.
 
