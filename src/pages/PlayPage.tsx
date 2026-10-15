@@ -34,15 +34,26 @@ function Centered({ children }: { children: ReactNode }): JSX.Element {
 }
 
 interface PlayPageProps {
-  daily?: boolean; // /daily/play: today's challenge, one ranked play per day
+  /**
+   * quiz:      /play/:slug (ranked, or practice with ?mode=practice)
+   * daily:     /daily/play, today's challenge, one play per day
+   * challenge: /challenge/:code/play, a friend's exact questions
+   */
+  kind?: 'quiz' | 'daily' | 'challenge';
 }
 
-export function PlayPage({ daily = false }: PlayPageProps): JSX.Element {
-  const { slug: routeSlug = '' } = useParams<{ slug: string }>();
+export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
+  const { slug: routeSlug = '', code = '' } = useParams<{ slug: string; code: string }>();
   const [params] = useSearchParams();
-  const mode = daily ? 'daily' : params.get('mode') === 'practice' ? 'practice' : 'ranked';
+  const daily = kind === 'daily';
+  const challenge = kind === 'challenge';
+  const mode = kind === 'quiz' ? (params.get('mode') === 'practice' ? 'practice' : 'ranked') : kind;
 
-  const game = useQuizAttempt({ mode, quizSlug: daily ? undefined : routeSlug });
+  const game = useQuizAttempt({
+    mode,
+    quizSlug: kind === 'quiz' ? routeSlug : undefined,
+    challengeCode: challenge ? code : undefined,
+  });
   const { isGuest } = useGuestSession();
   const { phase, state, lastResult, summary, submitting, error } = game;
   const question = state?.question ?? null;
@@ -66,7 +77,7 @@ export function PlayPage({ daily = false }: PlayPageProps): JSX.Element {
 
   const title = state?.quiz.title ?? (daily ? "Today's challenge" : 'Quiz');
   const slug = state?.quiz.slug ?? routeSlug;
-  const leaveTo = daily ? '/daily' : `/q/${slug}`;
+  const leaveTo = daily ? '/daily' : challenge ? `/challenge/${code}` : `/q/${slug}`;
 
   return (
     <main className="mx-auto min-h-dvh max-w-3xl px-4 pb-12 pt-4 md:px-8 lg:max-w-5xl">
@@ -125,7 +136,7 @@ export function PlayPage({ daily = false }: PlayPageProps): JSX.Element {
           quizTitle={title}
           isGuest={isGuest}
           restarting={submitting}
-          onPlayAgain={daily ? undefined : () => void game.restart()}
+          onPlayAgain={kind === 'quiz' ? () => void game.restart() : undefined}
         />
       )}
 

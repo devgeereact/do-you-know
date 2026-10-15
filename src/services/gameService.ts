@@ -1,6 +1,12 @@
 import { supabase } from '@/lib/supabase';
 import type { AttemptMode, Board } from '@/types/database.types';
-import type { AnswerResult, AttemptState, AttemptSummary, Leaderboard } from '@/types/game';
+import type {
+  AnswerResult,
+  AttemptState,
+  AttemptSummary,
+  FriendChallengePreview,
+  Leaderboard,
+} from '@/types/game';
 
 /**
  * Thin wrappers over the game RPCs in supabase/migrations/0003_game_functions.sql.
@@ -163,4 +169,22 @@ export async function hasFinishedDaily(userId: string, dailyId: string): Promise
     .eq('status', 'finished');
   if (error) throw error;
   return (count ?? 0) > 0;
+}
+
+/** Makes (or reuses) an 8-character challenge link for a finished attempt. */
+export async function createFriendChallenge(
+  attemptId: string,
+): Promise<{ code: string; expires_at: string }> {
+  const { data, error } = await supabase.rpc('create_friend_challenge', {
+    p_attempt_id: attemptId,
+  });
+  if (error) throw error;
+  return data as unknown as { code: string; expires_at: string };
+}
+
+/** Public preview of a challenge: nickname and score only. Null when unknown. */
+export async function getFriendChallenge(code: string): Promise<FriendChallengePreview | null> {
+  const { data, error } = await supabase.rpc('get_friend_challenge', { p_code: code });
+  if (error) throw error;
+  return (data as unknown as FriendChallengePreview | null) ?? null;
 }

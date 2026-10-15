@@ -2,7 +2,9 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
+import { ChallengeFriend } from '@/components/game/ChallengeFriend';
 import { ResultsBoard } from '@/components/game/ResultsBoard';
+import { VersusPanel } from '@/components/game/VersusPanel';
 import { cn, isWebUrl } from '@/lib/utils';
 import type { AttemptSummary, ReviewItem } from '@/types/game';
 
@@ -118,6 +120,14 @@ export function ResultsView({
             Back to quiz
           </Link>
         </div>
+        {summary.mode !== 'challenge' && (
+          <ChallengeFriend
+            attemptId={summary.attempt_id}
+            quizTitle={quizTitle}
+            correct={summary.correct}
+            total={summary.total}
+          />
+        )}
         {isGuest && (
           <p className="mt-5 text-sm text-content-muted">
             Playing as a guest.{' '}
@@ -127,6 +137,15 @@ export function ResultsView({
           </p>
         )}
       </section>
+
+      {summary.versus && (
+        <VersusPanel
+          versus={summary.versus}
+          correct={summary.correct}
+          total={summary.total}
+          answerTimeMs={summary.answer_time_ms}
+        />
+      )}
 
       {(summary.mode === 'ranked' || summary.mode === 'daily') && (
         <ResultsBoard

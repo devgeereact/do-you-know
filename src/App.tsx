@@ -15,6 +15,7 @@ import { PlayPage } from '@/pages/PlayPage';
 import { MePage } from '@/pages/MePage';
 import { LeaderboardsPage } from '@/pages/LeaderboardsPage';
 import { DailyPage } from '@/pages/DailyPage';
+import { ChallengePage } from '@/pages/ChallengePage';
 
 export function App(): JSX.Element {
   return (
@@ -29,7 +30,9 @@ export function App(): JSX.Element {
             <Route path="/me" element={<MePage />} />
             <Route path="/leaderboards" element={<LeaderboardsPage />} />
             <Route path="/daily" element={<DailyPage />} />
-            <Route path="/daily/play" element={<PlayPage daily />} />
+            <Route path="/daily/play" element={<PlayPage kind="daily" />} />
+            <Route path="/challenge/:code" element={<ChallengePage />} />
+            <Route path="/challenge/:code/play" element={<PlayPage kind="challenge" />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/dashboard"
