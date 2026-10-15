@@ -33,6 +33,12 @@
 | M2 exact same questions | Mac, local Supabase + `vite` dev, Chromium via Playwright | Friend plays challenge | Same question order as creator | DB: question_order equal | PASS | SQL check in session log |
 | M2 head to head | Mac, local Supabase + `vite` dev, Chromium via Playwright | Friend finishes | Server-decided winner, both scores; no Play again / re-challenge | CosmicPanda59 wins this time | PASS | `versus-phone.png` |
 | M2 bad challenge code | Mac, local Supabase + `vite` dev, Chromium via Playwright | Open /challenge/NOPE1234 | Friendly not-found | As expected | PASS | session snapshot |
+| M2 avatar options readable | Mac, local Supabase + Edge runtime + Inngest dev server (Docker) + `vite` dev, Chromium | get_avatar_options (0006) | Traits, limit, today's count; nothing else from site_config | DB tests 65/65 at the time | PASS | supabase/tests/test_game.py |
+| M2 avatar needs age band | Mac, local Supabase + Edge runtime + Inngest dev server (Docker) + `vite` dev, Chromium | request_avatar with no age band (0007) | Refused with age_band_required | FAIL before 0007 (adult look allowed); PASS after, 66/66 | PASS | supabase/tests/test_game.py |
+| M2 avatar builder layout | Mac, local Supabase + Edge runtime + Inngest dev server (Docker) + `vite` dev, Chromium | 375px and 1440px | Fits the screen; chip rows scroll on phones | FAIL first (page 2078px wide: sr-only radios escaped the scroll row); fixed | PASS | `qa/evidence/m2-compete/avatar-builder-phone.png`, `avatar-builder-desktop.png` |
+| M2 kid avatar options | Mac, local Supabase + Edge runtime + Inngest dev server (Docker) + `vite` dev, Chromium | Under 13 → builder, 20× Surprise me | Only child/teen looks, no facial hair | As expected | PASS | session log |
+| M2 avatar job pipeline (no paid keys) | Mac, local Supabase + Edge runtime + Inngest dev server (Docker) + `vite` dev, Chromium | Paint → event → Inngest dev → Edge Function | Claim pending→generating; stops at missing OPENROUTER_API_KEY; onFailure marks failed; UI shows kind failure | As expected | PARTIAL | `avatar-failed-phone.png`; real painting NOT TESTED (needs OpenRouter + ImageKit keys) |
+| M2 use avatar | Mac, local Supabase + Edge runtime + Inngest dev server (Docker) + `vite` dev, Chromium | Ready avatar (stand-in image set by SQL) → Use this avatar | Avatar shows on /me | As expected | PASS | `me-with-avatar-phone.png` |
 
 Cover loading, empty, success, validation, service failure, permission denial, session expiry and recovery. Test critical journeys end to end, not only isolated functions.
 
