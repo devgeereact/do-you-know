@@ -132,8 +132,8 @@ export const generateAvatar = inngest.createFunction(
     triggers: { event: 'avatar/requested' },
     // After the last retry: mark it failed, which frees the trait combination.
     onFailure: async ({ event, error }) => {
-      const avatarId = (event.data as { event?: { data?: { avatar_id?: unknown } } }).event
-        ?.data?.avatar_id;
+      const avatarId = (event.data as { event?: { data?: { avatar_id?: unknown } } }).event?.data
+        ?.avatar_id;
       if (typeof avatarId !== 'string') return;
       await admin()
         .from('avatars')
