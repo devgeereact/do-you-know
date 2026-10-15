@@ -10,6 +10,21 @@ export default defineConfig({
   // resolve to /q/assets/... If the app ever moves to a subpath, set it here.
   base: '/',
 
+  // src/lib/env.ts uses dynamic lookups, so expose only these public settings.
+  // A mistakenly prefixed private key must never enter the browser bundle.
+  envPrefix: [
+    'VITE_APP_NAME',
+    'VITE_APP_URL',
+    'VITE_SUPABASE_URL',
+    'VITE_SUPABASE_ANON_KEY',
+    'VITE_IMAGEKIT_URL_ENDPOINT',
+    'VITE_IMAGEKIT_PUBLIC_KEY',
+    'VITE_SENTRY_DSN',
+    'VITE_INNGEST_EVENT_KEY',
+    'VITE_POSTHOG_KEY',
+    'VITE_POSTHOG_HOST',
+  ],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
