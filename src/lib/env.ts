@@ -6,6 +6,7 @@
 interface AppEnv {
   appName: string;
   appUrl: string;
+  clerkPublishableKey: string;
   supabaseUrl: string;
   supabaseAnonKey: string;
   imagekitUrlEndpoint: string;
@@ -30,7 +31,6 @@ function requireKeys(keys: (keyof ImportMetaEnv)[]): void {
   if (import.meta.env.PROD) return;
   const missing = keys.filter((k) => read(k).length === 0);
   if (missing.length > 0) {
-     
     console.warn(
       `[env] Missing env vars: ${missing.join(', ')}. ` +
         'Copy .env.example to .env and fill them in.',
@@ -43,6 +43,7 @@ requireKeys(['VITE_SUPABASE_URL', 'VITE_SUPABASE_ANON_KEY']);
 export const env: AppEnv = {
   appName: read('VITE_APP_NAME', 'Do You Know'),
   appUrl: read('VITE_APP_URL'),
+  clerkPublishableKey: read('VITE_CLERK_PUBLISHABLE_KEY'),
   supabaseUrl: read('VITE_SUPABASE_URL'),
   supabaseAnonKey: read('VITE_SUPABASE_ANON_KEY'),
   imagekitUrlEndpoint: read('VITE_IMAGEKIT_URL_ENDPOINT'),

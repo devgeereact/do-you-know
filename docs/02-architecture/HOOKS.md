@@ -1,5 +1,10 @@
 # Custom Hooks Specification — Do You Know
 
+Transition note, 15 October 2026: existing Supabase hooks continue to own guest
+play and game records. The isolated adult `/account` flow uses Clerk's `useAuth`,
+guarded by `isLoaded`. A Clerk sign-in must not mark `useGuestSession` ready or
+authorise calls to Supabase as that identity. PHP-backed replacements are pending.
+
 Contracts for every reusable hook in `src/hooks`. Signatures here are the source
 of truth — implementations must match.
 

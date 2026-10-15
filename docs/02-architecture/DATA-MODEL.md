@@ -1,5 +1,10 @@
 # Supabase PostgreSQL Schema & Security — Do You Know
 
+Migration note, 15 October 2026: PHP/MySQL replacement is approved in
+`docs/07-operations/CPANEL-MIGRATION.md`. This schema is still authoritative for
+gameplay. Clerk adult IDs are a separate identity and must not replace existing
+profile UUIDs. No MySQL schema or identity mapping has been deployed yet.
+
 The runnable source is `supabase/migrations/` (apply in order with `supabase db push` or
 the SQL editor). This doc explains it.
 

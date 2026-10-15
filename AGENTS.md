@@ -47,6 +47,12 @@ Before generating or modifying code, load and obey, in this order:
 4. `docs/02-architecture/HOOKS.md` — the sanctioned hook contracts.
 
 ## 2. Deployment reality (non-negotiable)
+Approved transition (15 October 2026): Clerk adult accounts and a separate PHP/MySQL
+API on cPanel, per `docs/07-operations/CPANEL-MIGRATION.md`. Supabase remains the
+game backend until replacement endpoints pass equivalent tests. Server-side grading,
+permissions, answer secrecy and child privacy remain mandatory. Frontend output
+stays static; PHP is a separately deployed backend. Do not cut over implicitly.
+
 The build target is a **static** PWA on Namecheap cPanel (Stellar Plus).
 - ❌ No SSR, no Next.js server components, no Node server in this repo — nothing
   that needs a runtime on cPanel.

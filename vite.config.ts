@@ -15,6 +15,7 @@ export default defineConfig({
   envPrefix: [
     'VITE_APP_NAME',
     'VITE_APP_URL',
+    'VITE_CLERK_PUBLISHABLE_KEY',
     'VITE_SUPABASE_URL',
     'VITE_SUPABASE_ANON_KEY',
     'VITE_IMAGEKIT_URL_ENDPOINT',

@@ -159,6 +159,13 @@ export function MePage(): JSX.Element {
           </Link>
         )}
 
+        <Link
+          to="/account"
+          className="mt-6 inline-flex min-h-tap items-center font-semibold text-primary"
+        >
+          Parent and staff accounts
+        </Link>
+
         <h2 className="mb-4 mt-10 text-2xl font-semibold text-content">Recent games</h2>
         {loading && (
           <p role="status" className="text-content-muted">

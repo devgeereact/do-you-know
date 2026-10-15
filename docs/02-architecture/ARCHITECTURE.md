@@ -1,5 +1,15 @@
 # System Architecture — Do You Know
 
+## Approved migration, 15 October 2026
+
+The owner approved a staged move to Clerk adult accounts and a PHP/MySQL API on
+cPanel. The implementation plan is `docs/07-operations/CPANEL-MIGRATION.md`.
+Existing Supabase game services remain authoritative until equivalent PHP contracts
+pass behavioural tests. Clerk sessions must not be treated as Supabase sessions.
+The adult account route mounts Clerk separately from guest play. No child identity
+is sent to Clerk by the game flow. Account linking and backend cutover are pending.
+The topology below describes the existing game backend during this transition.
+
 ## 1. Topology
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐

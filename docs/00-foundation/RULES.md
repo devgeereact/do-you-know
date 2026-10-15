@@ -4,6 +4,9 @@ These are enforced by TypeScript, ESLint, and CodeRabbit. PRs that violate them
 do not merge.
 
 ## 1. Architecture
+- Approved transition: Clerk handles adult account identity; a separate PHP/MySQL
+  API will replace Supabase in stages. Follow `docs/07-operations/CPANEL-MIGRATION.md`.
+  Preserve existing game ownership and grading until equivalent backend tests pass.
 - **Static-first.** All code runs client-side or hits a managed API. No Node
   server, no SSR, no serverless functions inside this repo.
 - **Respect the folder map** in `docs/02-architecture/ARCHITECTURE.md`. No new top-level folders

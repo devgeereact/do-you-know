@@ -1,5 +1,22 @@
 # Current Task
 
+## Active task, 15 October 2026: approved Clerk/cPanel migration
+
+- Owner approved `docs/07-operations/CPANEL-MIGRATION.md` in session.
+- Current branch: `feat/clerk-cpanel-migration`, based on `feat/m2-avatars`.
+- First slice: install React SDK, isolated adult `/account` flow, retain current
+  Supabase guest/game sessions until the PHP API is verified. No auto-imports.
+- Selected existing Clerk app: `app_3KkAGkEUg8ST1ts6ydvb9DWKhI9`.
+- Clerk CLI reports `auth_required`; owner must run `npx -y clerk@latest auth login`
+  in the host terminal before linking to that application. SDK/provider now installed;
+  skip init, then use link --app and env pull. No replacement app.
+- cPanel domain, docroot, PHP/database capabilities and deployment access are UNKNOWN.
+  Owner supplies non-sensitive hosting facts; no secrets through chat.
+- No environment files inspected during this setup. Earlier key status below is
+  historical and must not override the owner's local-development setup.
+
+## Previous milestone context
+
 - Outcome: Milestone 1 (Play). A visitor finds a quiz, plays it on a phone in portrait, sees an honest score and explanations.
 - In scope: Home, category, quiz landing, game screen (multiple choice, true/false, slider), results and review, guest sessions, `/me` basics, `useQuizAttempt` and `gameService`.
 - Out of scope: Leaderboards, daily and friend challenges, avatars, CMS, deploy. Those are Milestones 2 and 3.

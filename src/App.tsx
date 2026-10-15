@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
@@ -18,6 +19,10 @@ import { DailyPage } from '@/pages/DailyPage';
 import { ChallengePage } from '@/pages/ChallengePage';
 import { AvatarPage } from '@/pages/AvatarPage';
 
+const AccountPage = lazy(() =>
+  import('@/pages/AccountPage').then((m) => ({ default: m.AccountPage })),
+);
+
 export function App(): JSX.Element {
   return (
     <ThemeProvider>
@@ -36,6 +41,20 @@ export function App(): JSX.Element {
             <Route path="/challenge/:code" element={<ChallengePage />} />
             <Route path="/challenge/:code/play" element={<PlayPage kind="challenge" />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/account"
+              element={
+                <Suspense
+                  fallback={
+                    <p role="status" className="p-6">
+                      Loading account…
+                    </p>
+                  }
+                >
+                  <AccountPage />
+                </Suspense>
+              }
+            />
             <Route
               path="/dashboard"
               element={
