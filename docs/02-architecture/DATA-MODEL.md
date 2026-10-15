@@ -8,6 +8,8 @@ the SQL editor). This doc explains it.
 | `0001_init.sql` | Base: `profiles`, `app_settings`, RLS, `set_updated_at()`, sign-up trigger |
 | `0002_quiz_core.sql` | All app tables, RLS, audit, column protection, guest/upgrade triggers |
 | `0003_game_functions.sql` | Game RPCs (start/answer/next/finish), boards, challenges, nicknames, avatars, publishing |
+| `0007_daily_practice.sql` | Adds an unranked fresh-round flag and server-selected non-repeating daily practice RPC |
+| `0006_daily_preview.sql` | Read-only server-day daily preview and own completion/streak |
 | `0005_question_deadline.sql` | Adds display-only `question_deadline` to attempt state; no grading changes |
 | `0004_scheduled_jobs.sql` | Daily switch, scheduled publish, rebuild hook, cleanup (`pg_cron` + `pg_net`) |
 
@@ -174,3 +176,11 @@ behaviour checks. **Never point it at your real project** — it drops its test 
 ## Daily preview (migration 0006)
 
 `get_daily_challenge()` is a read-only RPC for anonymous and authenticated clients. It uses `_london_today()` and returns only the live daily quiz's date/title/slug/cover, plus the caller's own completion flag and streak. It never returns questions, answer keys or another player's completion. No grading, ranking or start-attempt rules changed.
+
+## Fresh daily practice (migration 0007)
+
+`start_daily_practice()` is authenticated-only and derives identity from `auth.uid()`. It locks that profile row before selecting/reserving questions, so concurrent starts resume one attempt. It first resumes an unfinished fresh round (including across midnight, until normal stale-attempt cleanup), preserving the current deadline. New rounds require today’s finished ranked daily and use that daily’s frozen version. Every question ID reserved in any prior attempt for this account is excluded. Fewer than `question_count` available questions raises `fresh_questions_exhausted`, with no partial round or silent repeats.
+
+The attempt has `mode = practice` and `is_daily_practice = true`, with no daily/friend link. A constraint enforces this combination. Ordinary `start_attempt` does not resume the fresh lane. Existing grading/finish functions remain unchanged; practice does not write ranks or streaks. The RPC returns only the existing sanitised attempt-state contract. Account deletion clears history through existing cascades. Anonymous browsers remain separate accounts; linking UX is not implemented by this change.
+
+Security-definer permissions and empty search path follow current Supabase function guidance retrieved through Context7: https://supabase.com/docs/guides/database/functions.

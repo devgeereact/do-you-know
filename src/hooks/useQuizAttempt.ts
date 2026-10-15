@@ -36,7 +36,12 @@ const EMPTY: Model = {
   error: null,
 };
 
-export function useQuizAttempt({ mode, quizSlug, challengeCode }: StartArgs): UseQuizAttempt {
+export function useQuizAttempt({
+  mode,
+  quizSlug,
+  challengeCode,
+  freshDaily,
+}: StartArgs): UseQuizAttempt {
   const [model, patch] = useReducer(
     (state: Model, change: Partial<Model>): Model => ({ ...state, ...change }),
     EMPTY,
@@ -65,7 +70,7 @@ export function useQuizAttempt({ mode, quizSlug, challengeCode }: StartArgs): Us
     try {
       if (!navigator.onLine) throw new Error('offline');
       await ensureSession();
-      const state = await startAttempt({ mode, quizSlug, challengeCode });
+      const state = await startAttempt({ mode, quizSlug, challengeCode, freshDaily });
       if (version !== epoch.current) return;
       if (state.complete) {
         patch({ phase: 'finishing', state });
@@ -80,7 +85,7 @@ export function useQuizAttempt({ mode, quizSlug, challengeCode }: StartArgs): Us
     } finally {
       if (version === epoch.current) busy.current = false;
     }
-  }, [mode, quizSlug, challengeCode, ensureSession, fail]);
+  }, [mode, quizSlug, challengeCode, freshDaily, ensureSession, fail]);
 
   const cancel = useCallback((): void => {
     epoch.current += 1;

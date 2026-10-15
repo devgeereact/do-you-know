@@ -10,6 +10,9 @@ const MESSAGES: Record<GameErrorCode, string> = {
   invalid_mode: 'Something went wrong starting that game. Please try again.',
   too_many_attempts: 'Whoa, speedy! Take a breather and start again in a minute.',
   no_daily_today: "Today's challenge isn't ready yet. Try a quiz while you wait!",
+  daily_not_finished: 'Finish today’s ranked challenge before starting a fresh round.',
+  fresh_questions_exhausted:
+    'You have explored all the fresh rounds available for this quiz. Try another quiz or check back when more questions are added.',
   daily_already_played: "You've played today's challenge. Come back tomorrow for a new one!",
   challenge_not_found: 'This challenge link has expired or doesn’t exist.',
   own_challenge: "That's your own challenge — send it to a friend instead!",

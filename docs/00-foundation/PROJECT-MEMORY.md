@@ -139,3 +139,7 @@ appName "Do You Know", shortName "DoYouKnow", slug "do-you-know", themeColor "#1
 ### Visual refinement and daily freshness request, 15 October 2026
 
 Compact navigation, quieter controls and thinner card outlines follow the requested Apple Design skill while retaining the existing brand. Responsive/theme checks pass, with evidence limits in `qa/UX-AUDIT.md`. Owner chose one ranked daily run followed by fresh unranked rounds; implementation and a larger reviewed pool remain. Three-of-three local fixture questions cannot provide fresh sets. Cross-device continuity requires linked identity; anonymous users must not be fingerprinted.
+
+### Fresh-round implementation, 15 October 2026
+
+ADR-003 records the owner’s choice: one ranked daily run, then fresh unranked rounds. Migration 0007 isolates fresh practice, serialises same-account starts, excludes every previously reserved question ID and preserves unfinished deadlines. Exhaustion is explicit. No change to grading, ranks or streaks. Local sample has three-of-three questions, so browser validation covers the exhausted state; the scratch suite uses a larger synthetic pool to verify multiple disjoint rounds. Linked-account UX and reviewed content are still needed for useful cross-device fresh play.

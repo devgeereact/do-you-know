@@ -83,3 +83,10 @@
 - Added compact four-tab navigation, clear current-page feedback, lighter card outlines and quiet secondary controls.
 - Kept brand typography and colours, added immediate press feedback and header transparency/contrast fallbacks.
 - Typecheck, lint, static build and responsive browser checks pass. Daily freshness remains scheduled as a separate unranked-round batch and needs adequate question content.
+
+### Fresh daily practice (15 October 2026)
+
+- Kept one ranked daily run and added separate unranked extra rounds, as chosen by the owner.
+- Server reserves unseen questions per account, serialises concurrent starts and resumes the original timer. Exhausted pools produce a clear message instead of repeats.
+- Existing grading, leaderboard and streak rules remain unchanged. Cross-device continuity requires the same linked account; anonymous browsers remain separate.
+- Local fixture has only three questions, so it correctly offers no further full fresh round. Larger reviewed content and account-linking UX remain pending.

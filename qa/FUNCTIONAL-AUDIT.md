@@ -35,3 +35,10 @@ PASS: finished-result challenge creation, anonymous preview, own-challenge rejec
 PASS: prior Milestone 1 play and recovery regression scripts. Static production build direct links and cache/privacy checks pass.
 
 Evidence: `/tmp/dyk-board-browser.mjs`, `/tmp/dyk-challenge-browser.mjs`, `/tmp/dyk-share-check.mjs`, `/tmp/dyk-compete-static.mjs`, `/tmp/dyk-board-320.png`. Native share dialogs, real two-phone access, share-card images, avatar generation, Mac-origin tunnel and release matrix remain NOT TESTED or pending. Localhost links are not externally reachable share links.
+
+## Fresh daily rounds, 15 October 2026
+
+- PASS: scratch Postgres tests cover completion gating, answer protection, disjoint sets, repeat resume, same-account second connection, concurrent starts, exhaustion and no extra ranks/streaks.
+- PASS: local Supabase browser journey completes ranked daily, offers fresh practice, shows exhaustion without a question/repeat, preserves this outcome on refresh and retains friend challenge/board/offline flows.
+- PASS: ordinary guest play/recovery regression, typecheck, lint and static build.
+- PARTIAL: the local development fixture has no spare questions. Multiple-round selection is verified with synthetic scratch content, not reviewed launch content. Anonymous devices cannot share history; linked-account UI and real two-device checks remain pending.

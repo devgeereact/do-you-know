@@ -143,6 +143,8 @@ export type GameErrorCode =
   | 'invalid_mode'
   | 'too_many_attempts'
   | 'no_daily_today'
+  | 'daily_not_finished'
+  | 'fresh_questions_exhausted'
   | 'daily_already_played'
   | 'challenge_not_found'
   | 'own_challenge'

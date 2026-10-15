@@ -31,9 +31,22 @@ export function DailyPage(): JSX.Element {
             </h2>
             <p className="font-bold text-content">{copy.challenge.streak(daily.streak)}</p>
             {daily.playedToday ? (
-              <p role="status" className="text-content">
-                {copy.challenge.played}
-              </p>
+              <div className="grid gap-4">
+                <p role="status" className="text-content">
+                  {copy.challenge.played}
+                </p>
+                <p className="text-content-muted">{copy.challenge.freshIntro}</p>
+                {online ? (
+                  <Link
+                    className={buttonClasses()}
+                    to={`/play/${daily.today.quiz.slug}?round=fresh`}
+                  >
+                    {copy.challenge.fresh}
+                  </Link>
+                ) : (
+                  <p className="text-content">{copy.landing.offline}</p>
+                )}
+              </div>
             ) : online ? (
               <Link className={buttonClasses()} to={`/play/${daily.today.quiz.slug}?mode=daily`}>
                 {copy.challenge.startDaily}
@@ -51,6 +64,7 @@ export function DailyPage(): JSX.Element {
         ) : (
           <p className="text-content">{copy.challenge.none}</p>
         )}
+        <p className="text-content-muted">{copy.challenge.deviceNote}</p>
         <Button
           variant="ghost"
           disabled={daily.loading || !online}

@@ -18,6 +18,7 @@ export function PlayPage(): JSX.Element {
       requested === 'ranked' || requested === 'daily' || requested === 'challenge'
         ? requested
         : 'practice',
+    freshDaily: params.get('round') === 'fresh',
     quizSlug: slug,
     challengeCode: params.get('challenge') ?? undefined,
   });
@@ -26,6 +27,9 @@ export function PlayPage(): JSX.Element {
     <>
       <SiteHeader />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 md:px-8">
+        {params.get('round') === 'fresh' && (
+          <p className="mb-4 text-content-muted">{copy.challenge.freshIntro}</p>
+        )}
         <Card>
           {(game.phase === 'loading' || game.phase === 'finishing') && (
             <p role="status" className="text-lg text-content">
@@ -40,6 +44,14 @@ export function PlayPage(): JSX.Element {
               <Button disabled={!online} onClick={() => void game.restart()}>
                 {copy.game.resume}
               </Button>
+              {params.get('round') === 'fresh' && (
+                <Link
+                  to="/daily"
+                  className="inline-flex min-h-tap items-center font-bold text-primary"
+                >
+                  {copy.challenge.daily}
+                </Link>
+              )}
               <Link to="/" className="inline-flex min-h-tap items-center font-bold text-primary">
                 {copy.game.leave}
               </Link>

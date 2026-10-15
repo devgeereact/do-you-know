@@ -99,7 +99,9 @@ Targets are starting assumptions; tune them against real data after launch.
 
 ### 4.4 Daily challenge
 - One featured quiz per day, scheduled in the CMS calendar, live at **00:00 Europe/London**.
-- Same questions in the same order for everyone; one ranked play per player per day.
+- Same questions in the same order for everyone; one ranked play per account per day.
+- After finishing, offer fresh unranked rounds from today’s frozen question pool. Exclude questions reserved by any previous attempt for this account, even across versions. Resume an unfinished fresh round on refresh without resetting its timer; stop honestly when fewer than a full round remain.
+- Fresh rounds do not update leaderboards or daily streaks. Anonymous browsers have separate identities. Cross-device history requires the same linked account, never fingerprinting.
 - Daily, weekly and all-time boards; **streak** of consecutive days played.
 
 ### 4.5 Friend challenges

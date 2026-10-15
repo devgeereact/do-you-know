@@ -36,6 +36,11 @@ export function ResultsView({ summary, restart }: ResultsViewProps): JSX.Element
         </div>
       </dl>
       <div className="flex flex-wrap gap-3">
+        {summary.mode === 'daily' && (
+          <Link to="/daily" className={buttonClasses()}>
+            {copy.challenge.fresh}
+          </Link>
+        )}
         {summary.mode !== 'daily' && (
           <Button onClick={() => void restart()}>{copy.game.playAgain}</Button>
         )}

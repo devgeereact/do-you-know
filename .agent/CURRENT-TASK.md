@@ -2,7 +2,7 @@
 
 - Outcome: Milestone 2 competition. Visitors can play ranked quizzes, see server-produced leaderboards and play daily/friend challenges. Profile identity remains safe for children.
 - Completed locally: ranked mode; weekly/all-time/daily boards; generated nickname/age-band settings; daily challenge/streak preview; friend preview/play/comparison/link sharing.
-- Next slices: share-card images; avatar builder and background function integration, with managed-service configuration and cost review before activation.
+- Next slices: reviewed question pools and privacy-safe account linking for cross-device continuity; share-card images; avatar builder and background function integration, with managed-service configuration and cost review before activation.
 - Out of scope: CMS, production deployment, paid service activation, public release and merge.
 - Mode/system: Build, change safety, PWA engineering.
 - Authority: ongoing project implementation and verified branch pushes, local backend only. No production changes or new spending.
@@ -40,6 +40,12 @@ CodeRabbit reviewed only the initial baseline batch. Later summaries hit the fre
 ## Current request: daily freshness and cleaner presentation
 
 - Visual refinement: compact navigation, lighter outlines, quiet secondary controls and immediate press feedback. Apple Design skill applied; brand palette and fonts retained.
-- Owner chose one ranked daily run followed by fresh unranked rounds. This is the next implementation batch. Normal refresh must preserve the unfinished question and its server deadline.
+- Owner chose one ranked daily run followed by fresh unranked rounds. Implemented in migration 0007 and the daily/play UI. Normal refresh must preserve the unfinished question and its server deadline.
 - The local fixture contains three questions and selects all three. A larger reviewed pool is required for genuinely different sets. Separate anonymous devices cannot be recognised as the same person without linked identity; no fingerprinting is permitted.
-- This visual batch does not claim daily repetition has been solved.
+- Fresh rounds now exclude prior account questions. Local fixture has no spare questions, so its UI reports exhaustion. Linked-account UX and larger reviewed content remain pending.
+
+## Fresh-round verification checkpoint
+
+- PASS: 81/81 scratch database checks through migration 0007, typecheck, zero-warning lint, static build, daily/friend/exhaustion browser flow and ordinary guest recovery regression.
+- PASS: concurrent starts reserve one round, same identity resumes from another connection, timed refresh keeps its deadline, extra rounds have no ranks or streak changes.
+- PARTIAL: useful fresh rounds need more reviewed questions. Actual cross-device account linking, physical phones and Mac-origin access remain unverified.

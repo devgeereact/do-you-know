@@ -46,7 +46,13 @@ export const copy = {
     error: 'We could not load the challenge. Please try again when connected.',
     loading: 'Finding your challenge…',
     none: 'Today’s challenge is not ready yet. Try another quiz while you wait.',
-    played: 'You have played today. Come back tomorrow for a new challenge.',
+    played: 'Today’s ranked result is saved. Extra rounds are just for fun.',
+    fresh: 'Play a fresh round',
+    freshIntro:
+      'Unranked practice. Fresh rounds use questions this account has not played before, while questions are available.',
+    deviceNote:
+      'Guest progress belongs to this browser. Another device has separate progress unless you use the same linked account.',
+
     startDaily: 'Play today’s challenge',
     dailyBoard: 'Today’s leaderboard',
     refresh: 'Refresh',

@@ -36,4 +36,5 @@ Gameplay foundation: source inspection confirms public-only cache predicates and
 ## Visual refinement, 15 October 2026
 
 - PASS: typecheck, zero-warning lint, static build and responsive/theme browser checks. Focused scope and limits are in `qa/UX-AUDIT.md`.
-- BLOCKED: daily freshness implementation follows the owner’s choice of one ranked daily run and fresh unranked rounds. Three-of-three local questions cannot produce fresh sets; anonymous devices lack linked identity. No changed daily behaviour is claimed.
+- PASS: migration 0007, 81/81 scratch database checks, daily exhaustion/browser regression and ordinary guest play regression. The server now offers distinct unranked sets when enough unseen questions exist.
+- PARTIAL: three-of-three local questions cannot produce extra fresh sets; reviewed content and linked-account UX remain pending. Anonymous devices have separate history.

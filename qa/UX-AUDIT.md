@@ -10,6 +10,6 @@ Focused visual pass, 15 October 2026, local Supabase and headless Chrome. Apple 
 | Home section anchor | PASS | Target remains below sticky header |
 | Reduced transparency | NOT TESTED | CSS fallback implemented, runtime preference check pending |
 | Physical devices and assistive technology | NOT TESTED | Headless checks do not establish full accessibility acceptance |
-| Daily fresh question requirement | PARTIAL | Fresh unranked rounds implementation and larger reviewed pool needed; cross-device continuity requires linked identity |
+| Daily fresh question requirement | PARTIAL | Fresh unranked rounds implemented and scratch-tested; larger reviewed pool and linked identity remain pending |
 
 Local visual script: `/tmp/dyk-apple-visual.mjs`; screenshots: `/tmp/dyk-apple-daily-{light,dark,contrast}.png`. These are temporary machine-local evidence, not portable release artefacts.

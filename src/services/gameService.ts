@@ -7,19 +7,28 @@ export interface StartArgs {
   mode: AttemptMode;
   quizSlug?: string;
   challengeCode?: string;
+  freshDaily?: boolean;
 }
 const starts = new Map<string, Promise<AttemptState>>();
 export async function startAttempt(args: StartArgs): Promise<AttemptState> {
   const session = await ensureGuestSession();
-  const key = JSON.stringify([session.user.id, args.mode, args.quizSlug, args.challengeCode]);
+  const key = JSON.stringify([
+    session.user.id,
+    args.mode,
+    args.quizSlug,
+    args.challengeCode,
+    args.freshDaily,
+  ]);
   const existing = starts.get(key);
   if (existing) return existing;
   const pending = (async (): Promise<AttemptState> => {
-    const { data, error } = await supabase.rpc('start_attempt', {
-      p_quiz_slug: args.quizSlug ?? null,
-      p_mode: args.mode,
-      p_challenge_code: args.challengeCode ?? null,
-    });
+    const { data, error } = args.freshDaily
+      ? await supabase.rpc('start_daily_practice')
+      : await supabase.rpc('start_attempt', {
+          p_quiz_slug: args.quizSlug ?? null,
+          p_mode: args.mode,
+          p_challenge_code: args.challengeCode ?? null,
+        });
     if (error) throw error;
     return data as unknown as AttemptState;
   })().finally(() => {

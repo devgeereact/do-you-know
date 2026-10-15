@@ -92,6 +92,7 @@ interface StartArgs {
   mode: AttemptMode;               // 'practice' | 'ranked' | 'daily' | 'challenge'
   quizSlug?: string;               // practice / ranked
   challengeCode?: string;          // challenge
+  freshDaily?: boolean;           // separate unranked daily RPC
 }
 interface UseQuizAttempt {
   phase: AttemptPhase;

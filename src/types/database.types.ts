@@ -107,6 +107,7 @@ type AttemptRow = {
   mode: AttemptMode;
   daily_challenge_id: string | null;
   friend_challenge_id: string | null;
+  is_daily_practice: boolean;
   question_order: string[];
   current_index: number;
   current_sent_at: string | null;
@@ -182,6 +183,7 @@ export type Database = {
         Returns: Json;
       };
       finish_attempt: { Args: { p_attempt_id: string }; Returns: Json };
+      start_daily_practice: { Args: Record<string, never>; Returns: Json };
       get_daily_challenge: { Args: Record<string, never>; Returns: Json };
       get_leaderboard: {
         Args: { p_quiz_slug?: string | null; p_board?: Board; p_limit?: number };

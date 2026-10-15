@@ -1,6 +1,7 @@
 """End-to-end behaviour tests for the Do You Know migrations (local Postgres + Supabase shim).
 Run: python3 test_game.py   (expects a fresh 'dyk' database with 0001–0004 applied)
 """
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import json
 import os
@@ -349,6 +350,57 @@ check("answer after the time limit is marked wrong", r["timed_out"] is True and 
 c = superuser(); c.execute("select answer_time_ms from public.attempts where id=%s", (t["attempt_id"],))
 check("timed-out question counts at most the limit (10 s)", c.fetchone()[0] <= 4500 + 10000)
 as_user(admin).execute("update public.quizzes set time_limit_seconds = null where id = %s", (quiz,))
+
+# ---------------------------------------------------------------- fresh unranked daily rounds
+check("anon cannot start daily practice", rpc_err(None, "start_daily_practice") is not None)
+fresh_user = new_user(True)
+check("daily completion required for fresh rounds", rpc_err(fresh_user, "start_daily_practice") == "daily_not_finished")
+# Use a larger synthetic test-only pool: twelve questions, three per round.
+for n in range(4):
+    qid = add_choice(f"Fresh synthetic question number {n}?", ["A", "B"], 0)
+    as_user(admin).execute("insert into public.quiz_questions (quiz_id, question_id, position) values (%s,%s,%s)", (quiz, qid, 100+n))
+as_user(admin).execute("update public.quizzes set question_count = 3, time_limit_seconds = 30 where id = %s", (quiz,))
+fresh_ver = rpc(admin, "publish_quiz", quiz)
+superuser().execute("update public.daily_challenges set quiz_version_id = %s where challenge_date = public._london_today()", (fresh_ver,))
+fd = rpc(fresh_user, "start_attempt", None, "daily", None)
+play(fresh_user, fd)
+def attempt_order(attempt_id):
+    c = superuser(); c.execute("select question_order from public.attempts where id=%s", (attempt_id,))
+    return set(c.fetchone()[0])
+seen = attempt_order(fd["attempt_id"])
+def fresh_connection_start():
+    with psycopg.connect(DSN, autocommit=True) as parallel:
+        with parallel.cursor() as pc:
+            pc.execute("set role authenticated")
+            pc.execute("select set_config('request.jwt.claim.sub', %s, false)", (str(fresh_user),))
+            pc.execute("select public.start_daily_practice()")
+            return pc.fetchone()[0]
+with ThreadPoolExecutor(max_workers=2) as pool:
+    simultaneous = list(pool.map(lambda _: fresh_connection_start(), range(2)))
+check("simultaneous fresh starts reserve one round", simultaneous[0]["attempt_id"] == simultaneous[1]["attempt_id"])
+fp = rpc(fresh_user, "start_daily_practice")
+check("fresh round is practice with no answer leakage", fp["mode"] == "practice" and "is_correct" not in json.dumps(fp))
+check("fresh round excludes ranked daily questions", seen.isdisjoint(attempt_order(fp["attempt_id"])))
+resumed = rpc(fresh_user, "start_daily_practice")
+check("fresh refresh preserves attempt and deadline", resumed["attempt_id"] == fp["attempt_id"] and resumed["question_deadline"] is not None and resumed["question_deadline"] == fp["question_deadline"])
+# Same identity in a new connection still resumes the same reserved set.
+other = psycopg.connect(DSN, autocommit=True)
+oc = other.cursor(); oc.execute("set role authenticated")
+oc.execute("select set_config('request.jwt.claim.sub', %s, false)", (str(fresh_user),))
+oc.execute("select public.start_daily_practice()")
+check("same account on another connection resumes round", oc.fetchone()[0]["attempt_id"] == fp["attempt_id"])
+other.close()
+seen |= attempt_order(fp["attempt_id"])
+summary, _ = play(fresh_user, fp)
+check("fresh round has no ranks and preserves daily streak", not summary["ranks"] and summary["streak"] == 1)
+for i in range(2):
+    fp = rpc(fresh_user, "start_daily_practice")
+    order = attempt_order(fp["attempt_id"])
+    check(f"fresh round {i+2} excludes every prior question", seen.isdisjoint(order))
+    seen |= order
+    play(fresh_user, fp)
+check("exhausted pool does not silently repeat", rpc_err(fresh_user, "start_daily_practice") == "fresh_questions_exhausted")
+check("fresh rounds do not reopen ranked daily", rpc_err(fresh_user, "start_attempt", None, "daily", None) == "daily_already_played")
 
 # ---------------------------------------------------------------- account deletion
 rpc(guest2, "delete_my_account")
