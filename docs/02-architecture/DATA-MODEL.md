@@ -170,3 +170,7 @@ behaviour checks. **Never point it at your real project** — it drops its test 
 - One numbered file per change (`0005_add_achievements.sql`). Additive and idempotent
   (`if not exists`, `create or replace`, guarded constraints).
 - Never edit an applied migration; add a new one. Run the test kit before pushing.
+
+## Daily preview (migration 0006)
+
+`get_daily_challenge()` is a read-only RPC for anonymous and authenticated clients. It uses `_london_today()` and returns only the live daily quiz's date/title/slug/cover, plus the caller's own completion flag and streak. It never returns questions, answer keys or another player's completion. No grading, ranking or start-attempt rules changed.

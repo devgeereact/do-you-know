@@ -58,3 +58,8 @@
 - Added abortable public leaderboard reads, owner-scoped identity reads and protected generated nickname/age-band RPC wrappers.
 - Began Milestone 2 on a branch stacked above the unmerged Milestone 1 PR.
 - Existing CodeRabbit summaries are not a line-by-line review approval.
+
+### Server daily preview (15 October 2026)
+
+- Added read-only daily preview RPC using the same server London date as play, with own completion/streak only.
+- Added five database checks, bringing the scratch suite to 69 checks.

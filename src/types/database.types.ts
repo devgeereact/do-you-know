@@ -11,13 +11,7 @@
  * in src/types/admin.ts and only used inside /admin.
  */
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 type Timestamps = { created_at: string; updated_at: string };
 
@@ -175,7 +169,11 @@ export type Database = {
     Views: Record<never, never>;
     Functions: {
       start_attempt: {
-        Args: { p_quiz_slug?: string | null; p_mode?: AttemptMode; p_challenge_code?: string | null };
+        Args: {
+          p_quiz_slug?: string | null;
+          p_mode?: AttemptMode;
+          p_challenge_code?: string | null;
+        };
         Returns: Json;
       };
       next_question: { Args: { p_attempt_id: string }; Returns: Json };
@@ -184,6 +182,7 @@ export type Database = {
         Returns: Json;
       };
       finish_attempt: { Args: { p_attempt_id: string }; Returns: Json };
+      get_daily_challenge: { Args: Record<string, never>; Returns: Json };
       get_leaderboard: {
         Args: { p_quiz_slug?: string | null; p_board?: Board; p_limit?: number };
         Returns: Json;

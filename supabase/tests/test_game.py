@@ -242,10 +242,13 @@ vs, _ = play(guest2, st2, wrong=set())
 check("head-to-head result: friend (8/8) beats creator (7/8)", vs["versus"]["you_won"] is True and vs["versus"]["creator_correct"] == 7)
 
 # ---------------------------------------------------------------- daily challenge
+check("daily preview empty before schedule", rpc(None, "get_daily_challenge") == {"today": None, "played_today": False, "streak": 0})
 cur = superuser()
 cur.execute("insert into public.daily_challenges (challenge_date, quiz_id) values ((now() at time zone 'Europe/London')::date, %s)", (quiz,))
 check("no daily before activation", rpc_err(guest2, "start_attempt", None, "daily", None) == "no_daily_today")
 superuser().execute("select public.activate_daily_challenge()")
+preview = rpc(None, "get_daily_challenge")
+check("public daily preview contains metadata only", set(preview["today"]) == {"date", "quiz"} and set(preview["today"]["quiz"]) == {"slug", "title", "cover_image_url"})
 d = rpc(guest2, "start_attempt", None, "daily", None)
 d2 = rpc(guest, "start_attempt", None, "daily", None)
 c = superuser(); c.execute("select question_order from public.attempts where id in (%s,%s)", (d["attempt_id"], d2["attempt_id"]))
@@ -253,6 +256,9 @@ o = [r[0] for r in c.fetchall()]
 check("everyone gets the same daily questions", o[0] == o[1])
 ds, _ = play(guest2, d, wrong=set())
 check("daily writes daily rank + streak 1", "daily" in ds["ranks"] and ds["streak"] == 1)
+check("daily preview reports own completion", rpc(guest2, "get_daily_challenge")["played_today"] is True)
+check("daily preview hides another player's completion", rpc(guest, "get_daily_challenge")["played_today"] is False)
+check("anonymous daily preview has no private streak", rpc(None, "get_daily_challenge")["streak"] == 0)
 check("one daily per day", rpc_err(guest2, "start_attempt", None, "daily", None) == "daily_already_played")
 
 # ---------------------------------------------------------------- children
