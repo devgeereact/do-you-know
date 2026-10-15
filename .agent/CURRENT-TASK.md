@@ -7,9 +7,14 @@
 - First slice: install React SDK, isolated adult `/account` flow, retain current
   Supabase guest/game sessions until the PHP API is verified. No auto-imports.
 - Selected existing Clerk app: `app_3KkAGkEUg8ST1ts6ydvb9DWKhI9`.
-- Clerk CLI reports `auth_required`; owner must run `npx -y clerk@latest auth login`
-  in the host terminal before linking to that application. SDK/provider now installed;
-  skip init, then use link --app and env pull. No replacement app.
+- Clerk development application is now linked/reachable; CLI authentication and
+  development key diagnostics PASS. Browser sign-in controls and modal PASS.
+  Completed user sign-in and production instance remain NOT TESTED. No replacement app.
+- PHP foundation added under backend/: private config, Clerk verification, guest
+  sessions, catalogue and practice grading, MySQL migrations, API/Apache routing,
+  cleanup and release packaging. Tested locally, no cPanel deployment/cutover.
+  Competition, avatars, history, profile editing/deletion and account linking still
+  use the existing backend. See qa/CPANEL-API.md and backend/README.md.
 - cPanel domain, docroot, PHP/database capabilities and deployment access are UNKNOWN.
   Owner supplies non-sensitive hosting facts; no secrets through chat.
 - No environment files inspected during this setup. Earlier key status below is

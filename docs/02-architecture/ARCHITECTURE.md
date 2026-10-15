@@ -10,6 +10,13 @@ The adult account route mounts Clerk separately from guest play. No child identi
 is sent to Clerk by the game flow. Account linking and backend cutover are pending.
 The topology below describes the existing game backend during this transition.
 
+The approved PHP package lives in `backend/`: `public/` contains only `api.php`
+and API `.htaccess`; `src/` holds request, identity and game services; `migrations/`
+holds numbered MySQL migrations; `bin/` holds CLI migration tools; `tests/` holds
+PHP/HTTP checks. `config.example.php` documents server configuration. Composer's
+`vendor/` and live `config.php` are ignored. Deploy everything except `public/`
+outside every webroot. The frontend remains a separately built `dist/` artefact.
+
 ## 1. Topology
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐

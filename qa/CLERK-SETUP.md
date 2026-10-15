@@ -1,5 +1,8 @@
 # Clerk setup evidence, 15 October 2026
 
+Historical first-slice record. Follow-up verification now passes CLI login, link,
+keys and live sign-in-dialog checks; see `qa/CPANEL-API.md` for the current evidence.
+
 Overall status: PARTIAL. SDK and adult flow are implemented. Existing application
 linking and live sign-in are BLOCKED by the owner's Clerk CLI login.
 

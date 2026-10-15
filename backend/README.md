@@ -1,0 +1,125 @@
+# cPanel API package
+
+Status: tested local foundation, not a complete Supabase replacement. Do not switch
+all frontend services to this API yet. Competition, profile edits/deletion, history,
+parent-child linking, content authoring and avatar workers still need migration.
+Unimplemented routes return JSON 404; non-practice game modes return 501.
+
+## Files and deployment layout
+
+```text
+/home/CPANEL_USER/dyk-backend/       outside ALL webroots
+  config.php                       your private settings (never committed)
+  vendor/                          Composer dependencies
+  src/                             PHP application
+  migrations/                      versioned MySQL DDL
+  bin/migrate.php                   CLI-only migration runner
+/home/CPANEL_USER/APP_DOCROOT/       this app's own webroot
+  index.html, assets/, sw.js, ...   built PWA, no public source maps
+  .htaccess                        repo-root Apache rules
+  api/
+    .htaccess                      API rewrite/headers
+    api.php                        public entry point only
+```
+
+1. Confirm PHP 8.2+ with PDO MySQL, cURL, OpenSSL and the actual MySQL/MariaDB version.
+   The foundation has been exercised on MariaDB 12 locally. Check your host before
+   deploying. No Node runtime is required on cPanel.
+2. Create a dedicated development database and user in cPanel Database Wizard. PHP
+   connects to localhost on cPanel. Your two computers call HTTPS, never MySQL directly.
+3. Run `composer install --no-dev --prefer-dist --optimize-autoloader` in backend/ on
+   the build computer (or use `php /path/to/composer.phar` if Composer is not global).
+   Dependencies are locked. Upload vendor/ privately if Composer is unavailable on-host.
+4. Copy config.example.php to private config.php. Fill the database connection,
+   exact allowed frontend origins, Clerk issuer and authorised parties. Supply its
+   PEM JWT public key or backend secret, never a VITE_-prefixed private key. Set a
+   random rate-limit key of at least 32 characters. Use a private owner-readable
+   file (chmod 600). No real configuration belongs in the public api/ directory.
+5. Add this line to the DEPLOYED api/.htaccess, replacing the path:
+
+   ```apache
+   SetEnv DYK_BACKEND_DIR /home/CPANEL_USER/dyk-backend
+   ```
+
+   Leave the repository template generic. If your host forbids SetEnv, have the host
+   configure DYK_BACKEND_DIR or change only the public entry point's private path.
+6. Run on the host (SSH/Terminal), with the runtime configuration in place:
+
+   ```sh
+   cd /home/CPANEL_USER/dyk-backend
+   php bin/migrate.php
+   ```
+
+   This creates tables in the configured dedicated database; it does not reset it.
+   Use a migration account for DDL; use a runtime account limited to required table
+   reads/writes (no global privileges). MySQL DDL is not transactionally reversible.
+   If it fails, stop deployment and inspect the private migration state. Never edit
+   a migration recorded in schema_migrations. Back up outside every webroot first.
+7. Build the frontend on the Mac/CI and run `npm run package:cpanel`. It creates a
+   new ignored build/cpanel-* release directory with public/ and private/ sections.
+   The package includes a blank private/config.php generated from the example,
+   never copied from live settings. Fill it AFTER upload. Never upload the
+   release's private/ folder underneath a public document root.
+8. Upload public/ into this app's dedicated docroot, private/ into the private path
+   above. Do not mirror-delete other sites, API configuration or runtime files.
+9. Verify `/api/v1/health`, then create a test guest and play a seeded/imported test
+   practice quiz. API errors must be JSON, not index.html. Complete the broader
+   migration guide before frontend cutover or production deployment.
+
+Clerk's development instance can be used for testing only. Production instance,
+DNS and OAuth configuration still require their own setup. No user import happens
+on deployment. A verified Clerk subject receives a separate internal adult profile;
+existing guest game history is not automatically linked.
+
+## Implemented API
+
+All responses are JSON and `Cache-Control: no-store, private`. POST requires an
+object-shaped application/json body, at most 32 KiB. Public reads are capped at 100.
+Private endpoints require `Authorization: Bearer <token>`; no credentials in URLs.
+
+| Method/path (prefix /api/v1) | Body / behaviour |
+| --- | --- |
+| GET /health | Liveness only, no database or secrets disclosed |
+| POST /guest-sessions | `{}`; returns unguessable token, expiry and own profile ID |
+| DELETE /session | Revokes the current guest token; Clerk sign-out stays in Clerk |
+| POST /account/session | `{ "adult_confirmed": true }` plus a verified Clerk session token; creates/resolves adult identity, no staff grant |
+| GET /me | Own minimal profile; never a public user directory |
+| GET /categories | Active category metadata |
+| GET /quizzes | Published quiz metadata, no answer snapshots |
+| GET /quizzes/:slug | One published quiz |
+| POST /attempts | `{ "quiz_slug": "…", "mode": "practice" }`; starts/resumes |
+| POST /attempts/:id/next | `{}`; original server clock retained on repeated next |
+| POST /attempts/:id/answer | `{ "option_id": "…" }` or `{ "value": 5 }`; server grades/times |
+| POST /attempts/:id/finish | `{}`; owner-only result/review, idempotent |
+
+Do not expose generic SELECT * readers, question tables or quiz version snapshots.
+A submitted score, role or profile ID is never an authority. Public question payloads
+whitelist id, type, prompt, image, option id/label and slider display bounds only.
+
+Guest sessions expire after seven days by default, store only token hashes and
+contain no child email/name/photo. No cookie/CSRF protocol is implied by this bearer
+API. A future frontend adapter must define its safe storage and session lifecycle.
+Rate limits use a keyed hash of the network address, not a stored raw address;
+shared networks may share an allowance. Schedule `php /home/CPANEL_USER/dyk-backend/bin/cleanup.php` at a frequency
+allowed by your host. It removes up to 1000 expired sessions and throttle buckets
+per run, never profiles or gameplay records.
+
+## Verification
+
+```sh
+composer test
+# Against a fresh, isolated local database configured with environment=test,
+# database name ending _test, and migrations applied:
+DYK_CONFIG=/private/test-config.php php bin/migrate.php
+DYK_CONFIG=/private/test-config.php php -S 127.0.0.1:55438 -t public public/api.php
+DYK_CONFIG=/private/test-config.php php tests/integration.php
+```
+
+The HTTP/database test creates original fixtures and test guests. Run only on a
+throwaway database. It must not use the cPanel development/production database.
+The unit tests generate their own RSA key to check valid/invalid signed sessions;
+this tests token verification but does not impersonate or create a real Clerk user.
+Actual Clerk sign-in and cPanel runtime checks are separate.
+
+Full migration, import, competition, avatar queues, rollback and release steps:
+[CPANEL-MIGRATION.md](../docs/07-operations/CPANEL-MIGRATION.md).

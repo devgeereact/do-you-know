@@ -1,6 +1,8 @@
 # Proposed Clerk and cPanel migration
 
 Status: APPROVED by the owner on 15 October 2026. Implementation is staged.
+The PHP foundation package is now under backend/; current evidence is
+qa/CPANEL-API.md. It is not a full frontend/backend cutover.
 Prepared 15 October 2026. This guide describes work to implement, not a deployed backend.
 
 ## Target and scope

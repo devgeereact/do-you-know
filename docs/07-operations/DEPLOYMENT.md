@@ -106,3 +106,17 @@ triggers a rebuild:
 
 The same workflow runs on merge to `main`. Store `SSH_KEY`, `SSH_HOST`, `SSH_USER`,
 `SENTRY_AUTH_TOKEN` and the `VITE_*` values as GitHub Actions secrets — never in the repo.
+
+## Approved PHP API transition (15 October 2026)
+
+The owner approved a separate cPanel PHP/MySQL backend. The frontend remains static.
+`npm run package:cpanel` creates a new ignored `build/cpanel-*` directory: upload its
+`public/` contents to the dedicated app docroot and its `private/` contents outside
+ALL webroots. Never upload the whole release directory publicly. `private/config.php`
+is a blank template; fill it on-host. Root and API Apache rules are included. Supply
+`DYK_BACKEND_DIR` in deployed `api/.htaccess`, then run private `bin/migrate.php`.
+See `backend/README.md` for exact paths, config fields, endpoint contracts and checks.
+
+This package does not perform a frontend backend switch or import Supabase data.
+Practice APIs are implemented; competition, avatars and other profile operations
+still require migration. Do not cut over the full app before their acceptance tests.

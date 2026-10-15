@@ -1,0 +1,14 @@
+Options -Indexes
+RewriteEngine On
+# cPanel may otherwise strip bearer headers before PHP sees them.
+RewriteCond %{HTTP:Authorization} .
+RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+# API entry point only. Private configuration is never placed here.
+<FilesMatch "^(?!api\.php$).*\.(php|env|ini|json|lock|sql|log|bak|map|zip)$">
+  Require all denied
+</FilesMatch>
+RewriteRule ^ api.php [END]
+<IfModule mod_headers.c>
+  Header always set Cache-Control "no-store, private"
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>
