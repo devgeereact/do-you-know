@@ -195,6 +195,7 @@ export type Database = {
       set_nickname: { Args: { p_nickname: string }; Returns: string };
       confirm_parental_consent: { Args: Record<string, never>; Returns: undefined };
       request_avatar: { Args: { p_traits: Json }; Returns: Json };
+      get_avatar_options: { Args: Record<string, never>; Returns: Json }; // 0006
       set_active_avatar: { Args: { p_avatar_id: string }; Returns: undefined };
       delete_my_account: { Args: Record<string, never>; Returns: undefined };
       publish_quiz: { Args: { p_quiz_id: string; p_publish_at?: string | null }; Returns: string };
