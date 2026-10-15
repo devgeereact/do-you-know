@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
+import { ResultsBoard } from '@/components/game/ResultsBoard';
 import { cn, isWebUrl } from '@/lib/utils';
 import type { AttemptSummary, ReviewItem } from '@/types/game';
 
@@ -124,6 +125,14 @@ export function ResultsView({
           </p>
         )}
       </section>
+
+      {(summary.mode === 'ranked' || summary.mode === 'daily') && (
+        <ResultsBoard
+          quizSlug={quizSlug}
+          board={summary.mode === 'daily' ? 'daily' : 'all_time'}
+          needsNickname={summary.needs_nickname}
+        />
+      )}
 
       <h2 className="mb-4 mt-10 text-2xl font-semibold text-content">Your answers</h2>
       <ol className="grid gap-4">

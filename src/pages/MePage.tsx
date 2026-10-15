@@ -1,9 +1,98 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { NicknamePicker } from '@/components/game/NicknamePicker';
 import { SiteHeader } from '@/components/SiteHeader';
 import { buttonClasses } from '@/components/ui/buttonClasses';
+import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useMyGames } from '@/hooks/useMyGames';
+import { useProfile } from '@/hooks/useProfile';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+
+const AGE_BAND_LABEL = {
+  under_13: 'Under 13',
+  '13_17': '13 to 17',
+  '18_plus': '18 or over',
+} as const;
+
+/** Nickname, age group and account deletion. Shown once a session exists. */
+function ProfileCard(): JSX.Element | null {
+  const { profile, error, deleteAccount } = useProfile();
+  const navigate = useNavigate();
+  const [confirming, setConfirming] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  if (!profile) return null;
+
+  return (
+    <Card className="mt-6 p-5">
+      <h2 className="text-xl font-semibold text-content">Your profile</h2>
+      {profile.nickname ? (
+        <dl className="mt-3 grid gap-1 text-content">
+          <div className="flex flex-wrap gap-x-2">
+            <dt className="text-content-muted">Leaderboard name:</dt>
+            <dd className="font-semibold">{profile.nickname}</dd>
+          </div>
+          {profile.age_band && (
+            <div className="flex flex-wrap gap-x-2">
+              <dt className="text-content-muted">Age group:</dt>
+              <dd className="font-semibold">{AGE_BAND_LABEL[profile.age_band]}</dd>
+            </div>
+          )}
+        </dl>
+      ) : (
+        <div className="mt-4">
+          <NicknamePicker />
+        </div>
+      )}
+
+      <div className="mt-6 border-t-2 border-surface-border pt-4">
+        {confirming ? (
+          <div role="alertdialog" aria-labelledby="delete-title">
+            <p id="delete-title" className="font-semibold text-content">
+              Delete your account and every score? This can’t be undone.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button
+                variant="ghost"
+                disabled={deleting}
+                onClick={() => setConfirming(false)}
+                autoFocus
+              >
+                Keep my account
+              </Button>
+              <Button
+                className="bg-wrong text-wrong-fg shadow-none hover:bg-wrong/90"
+                disabled={deleting}
+                onClick={() => {
+                  setDeleting(true);
+                  void deleteAccount().then((ok) => {
+                    setDeleting(false);
+                    if (ok) navigate('/', { replace: true });
+                  });
+                }}
+              >
+                Yes, delete everything
+              </Button>
+            </div>
+            {error && (
+              <p role="alert" className="mt-2 text-content">
+                {error}
+              </p>
+            )}
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setConfirming(true)}
+            className="min-h-tap text-sm font-semibold text-content-muted underline underline-offset-2"
+          >
+            Delete my account
+          </button>
+        )}
+      </div>
+    </Card>
+  );
+}
 
 function when(iso: string): string {
   if (!iso) return '';
@@ -31,6 +120,8 @@ export function MePage(): JSX.Element {
             <p className="text-sm font-bold text-content-muted">Games played</p>
           </Card>
         </div>
+
+        <ProfileCard />
 
         {isGuest ? (
           <Card className="mt-6 p-5">

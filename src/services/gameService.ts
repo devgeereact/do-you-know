@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
-import type { AttemptMode } from '@/types/database.types';
-import type { AnswerResult, AttemptState, AttemptSummary } from '@/types/game';
+import type { AttemptMode, Board } from '@/types/database.types';
+import type { AnswerResult, AttemptState, AttemptSummary, Leaderboard } from '@/types/game';
 
 /**
  * Thin wrappers over the game RPCs in supabase/migrations/0003_game_functions.sql.
@@ -96,4 +96,22 @@ export async function listMyGames(userId: string, limit = 20): Promise<GameHisto
     finishedAt: a.finished_at ?? '',
     quiz: byId.get(a.quiz_id) ?? null,
   }));
+}
+
+/**
+ * Top rows plus "your rank". Public: nickname, avatar, score and time only.
+ * For the daily board the slug may be omitted (today's challenge).
+ */
+export async function getLeaderboard(
+  quizSlug: string | null,
+  board: Board,
+  limit = 50,
+): Promise<Leaderboard> {
+  const { data, error } = await supabase.rpc('get_leaderboard', {
+    p_quiz_slug: quizSlug,
+    p_board: board,
+    p_limit: limit,
+  });
+  if (error) throw error;
+  return data as unknown as Leaderboard;
 }

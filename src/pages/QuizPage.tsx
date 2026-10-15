@@ -1,11 +1,37 @@
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { LeaderboardTable } from '@/components/game/LeaderboardTable';
 import { SiteHeader } from '@/components/SiteHeader';
 import { buttonClasses } from '@/components/ui/buttonClasses';
+import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { useQuiz } from '@/hooks/useQuiz';
 import { ageLabel, difficultyLabel } from '@/lib/quizLabels';
 import { isWebUrl } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+
+function TopPlayers({ slug }: { slug: string }): JSX.Element {
+  const { data } = useLeaderboard(slug, 'all_time', 10);
+  return (
+    <section className="mt-12">
+      <div className="mb-4 flex items-baseline justify-between gap-3">
+        <h2 className="text-2xl font-semibold text-content">Top players</h2>
+        <Link
+          to={`/leaderboards?quiz=${slug}`}
+          className="text-sm font-semibold text-primary underline underline-offset-2"
+        >
+          Full leaderboard
+        </Link>
+      </div>
+      {data ? (
+        <LeaderboardTable data={data} />
+      ) : (
+        <p role="status" className="text-content-muted">
+          Loading…
+        </p>
+      )}
+    </section>
+  );
+}
 
 export function QuizPage(): JSX.Element {
   const { slug } = useParams<{ slug: string }>();
@@ -83,6 +109,8 @@ export function QuizPage(): JSX.Element {
                 {quiz.intro}
               </div>
             )}
+
+            {quiz.is_ranked && <TopPlayers slug={quiz.slug} />}
           </article>
         )}
       </main>

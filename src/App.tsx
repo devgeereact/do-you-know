@@ -13,6 +13,7 @@ import { CategoryPage } from '@/pages/CategoryPage';
 import { QuizPage } from '@/pages/QuizPage';
 import { PlayPage } from '@/pages/PlayPage';
 import { MePage } from '@/pages/MePage';
+import { LeaderboardsPage } from '@/pages/LeaderboardsPage';
 
 export function App(): JSX.Element {
   return (
@@ -25,6 +26,7 @@ export function App(): JSX.Element {
             <Route path="/q/:slug" element={<QuizPage />} />
             <Route path="/play/:slug" element={<PlayPage />} />
             <Route path="/me" element={<MePage />} />
+            <Route path="/leaderboards" element={<LeaderboardsPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/dashboard"
