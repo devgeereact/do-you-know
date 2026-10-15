@@ -8,18 +8,18 @@
 - Evidence required: `npm run typecheck`, `npm run lint`, `npm run build` all pass; DB tests pass on a scratch Postgres; the game flow is checked in a browser at 375px portrait and in landscape.
 - Completion: The Milestone 1 "done when" line in `README.md` is demonstrably true.
 
-## Where things stand (2026-10-14)
+## Where things stand (2026-10-15)
 
-- Imported from `do-you-know.zip` and repackaged into the GEE OS layout. App docs moved into the numbered `docs/` folders; links updated.
-- Dev server pinned to 5202 (`strictPort`). Added to `dev-all` as `doyouknow`.
-- Branded shell (home, login, dashboard, 404) given a design polish pass. Player game screens do not exist yet.
-- Database migrations 0001 to 0004 and 61 behaviour checks came with the import. They have NOT been re-run on this machine.
-- No Supabase project is linked yet. `.env` on the Mac holds whatever the zip shipped; check it before first real run.
+- Branch `feat/m1-play`. Milestone 1 screens built: home catalogue, `/c/:slug`, `/q/:slug`, `/play/:slug`, results + review, `/me` basics.
+- Hooks: `useGuestSession`, `useQuizAttempt` (+ `timeUp`), `useQuestionTimer`, `useQuizCatalog`, `useQuiz`, `useMyGames`. Services: `gameService`, `catalogService`.
+- Bug found in the browser and fixed in migration `0005_start_attempt_lock.sql` (concurrent starts made two attempts). DB tests 63/63 on scratch Postgres 16.
+- typecheck, lint, build: PASS. Browser journey at 375px portrait and 812px landscape against a LOCAL Supabase stack: PASS (see `qa/FUNCTIONAL-AUDIT.md`, `qa/evidence/m1-play/`).
+- Local stack: `supabase start` (ports 5542x, seed in `supabase/seed.sql`). Run the app against it with
+  `VITE_SUPABASE_URL=http://127.0.0.1:55421 VITE_SUPABASE_ANON_KEY=<local anon key from supabase status> npm run dev`.
+- Not tested: a real Supabase project (none linked), a physical phone, offline play, dark mode on game screens.
 
-## Next session (Ubuntu build machine)
+## Next
 
-1. `git clone` the repo, then `npm ci`.
-2. Create a local `.env` from `.env.example` with Ubuntu's own restricted keys. Never copy the Mac `.env`.
-3. `npm run typecheck && npm run lint && npm run build`.
-4. Run `supabase/tests/run_tests.sh` against a scratch Postgres 16.
-5. Start Milestone 1 on a feature branch and raise a PR (CodeRabbit reviews PRs only).
+1. Raise a PR from `feat/m1-play` for CodeRabbit review.
+2. Pre-existing prettier drift in 13 older files (not touched here).
+3. Then Milestone 2 (Compete): leaderboards, daily challenge and streaks, friend challenges, nicknames, age band, avatars.
