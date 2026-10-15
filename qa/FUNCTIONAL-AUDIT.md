@@ -23,6 +23,11 @@
 | M2 13+ nickname | Mac, local Supabase + `vite` dev, Chromium via Playwright | Choose 18 or over, type `a!!b` then `QuizWhizz` | Server rejects invalid name with friendly copy; valid name saved | "Nicknames need 3–20 letters or numbers."; QuizWhizz at #2 | PASS | session log |
 | M2 /leaderboards | Mac, local Supabase + `vite` dev, Chromium via Playwright | 1440x900, all-time board | Ranked rows: nickname, score, time; You highlighted | As expected | PASS | `leaderboards-desktop.png` |
 | M2 delete account | Mac, local Supabase + `vite` dev, Chromium via Playwright | /me → Delete → Yes | Profile and board rows removed; session cleared; back to home | Rows gone, no auth token left | PASS | `me-delete-phone.png`; DB check |
+| M2 home daily card | Mac, local Supabase + `vite` dev, Chromium via Playwright | 375px home | Today's challenge card above quizzes | Shown with Play | PASS | `qa/evidence/m2-compete/home-daily-card-phone.png` |
+| M2 daily play + board | Mac, local Supabase + `vite` dev, Chromium via Playwright | /daily → Play, finish, pick name | Daily mode, no Play again, today's board with You | CosmicPanda59 #1 on today's board | PASS | `daily-results-board-phone.png` |
+| M2 daily done + streak | Mac, local Supabase + `vite` dev, Chromium via Playwright | /daily after playing | Done for today; streak 1 | As expected | PASS | `daily-done-phone.png`, `daily-desktop.png` |
+| M2 one daily play per day | Mac, local Supabase + `vite` dev, Chromium via Playwright | Open /daily/play again | Server refuses; friendly copy + board link | "You've played today's challenge…" | PASS | session snapshot |
+| M2 leaderboard You badge | Mac, local Supabase + `vite` dev, Chromium via Playwright | 375px daily board | Nickname truncates, You badge stays visible | FAIL first (badge cut to "Y…"); fixed | PASS | code fix in LeaderboardTable |
 
 Cover loading, empty, success, validation, service failure, permission denial, session expiry and recovery. Test critical journeys end to end, not only isolated functions.
 
