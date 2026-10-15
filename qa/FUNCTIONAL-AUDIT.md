@@ -13,7 +13,12 @@
 | M1 `/me` basics | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Open `/me` as guest | Streak, games played, recent games, save-progress prompt | As expected | PASS | `me-portrait.png` |
 | M1 category age filter | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | `/c/maths`, tap 14+ | 7–11 quiz hidden | Hidden; empty state shown | PASS | snapshot in session log |
 | M1 integrity: no answers before answering | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Call `start_attempt` as a guest | No is_correct / correct_value / accept_* / explanation in question | None present | PASS | SQL check in session log |
+| Deep links in production build | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | Load `/q/amazing-animals` directly | Page boots | FAIL first (base './' made assets resolve to /q/assets/...); PASS after `base: '/'` | PASS | console log in session |
+| PWA installable on desktop | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 1440x900 Chromium, production build | SW registered at `/`, standalone manifest, install prompt fires | All three observed | PASS | `qa/evidence/m1-play/desktop-home.png` |
+| Game layout on tablet portrait | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 820x1180 | Question above answers, larger type | As expected | PASS | `tablet-portrait.png` |
+| Game layout on desktop | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 1440x900 | Two columns, wider container | As expected | PASS | `desktop.png` |
+| Game layout on phone landscape | Mac, production build (`vite build` + `vite preview`) against local Supabase, Chromium via Playwright | 812x375 | Two columns; install banner never covers answers | Banner hidden on /play | PASS | `phone-landscape.png` |
 
 Cover loading, empty, success, validation, service failure, permission denial, session expiry and recovery. Test critical journeys end to end, not only isolated functions.
 
-Recorded 2026-10-15 by Claude Code (owner: Gideon). Not yet tested: real Supabase project, physical phone, offline behaviour, dark mode in the game screens.
+Recorded 2026-10-15 by Claude Code (owner: Gideon). Not yet tested: real Supabase project, physical phone or tablet, Safari/iOS install, offline behaviour, dark mode in the game screens.
