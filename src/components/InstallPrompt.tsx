@@ -1,12 +1,17 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { usePWAInstall } from '@/hooks/usePWAInstall';
 import { Button } from '@/components/ui/Button';
 
-/** Dismissible banner offering to install the PWA when eligible. */
+/**
+ * Dismissible banner offering to install the PWA when eligible. Never shown
+ * mid-game, where it would cover the answers on small or landscape screens.
+ */
 export function InstallPrompt(): JSX.Element | null {
   const { isInstallable, promptInstall } = usePWAInstall();
   const [dismissed, setDismissed] = useState(false);
-  if (!isInstallable || dismissed) return null;
+  const { pathname } = useLocation();
+  if (!isInstallable || dismissed || pathname.startsWith('/play/')) return null;
 
   return (
     <div
@@ -16,9 +21,11 @@ export function InstallPrompt(): JSX.Element | null {
     >
       <div>
         <p className="font-display font-semibold text-content">
-          Put Do You Know on your home screen
+          Install Do You Know on this device
         </p>
-        <p className="text-sm text-content-muted">It opens like an app. No app store needed.</p>
+        <p className="text-sm text-content-muted">
+          Opens like an app on your phone, tablet or computer. No app store needed.
+        </p>
       </div>
       <div className="flex shrink-0 gap-2">
         <Button size="sm" variant="ghost" onClick={() => setDismissed(true)}>

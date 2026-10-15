@@ -63,7 +63,7 @@ export function PlayPage(): JSX.Element {
   const title = state?.quiz.title ?? 'Quiz';
 
   return (
-    <main className="mx-auto min-h-dvh max-w-3xl px-4 pb-12 pt-4 md:px-8">
+    <main className="mx-auto min-h-dvh max-w-3xl px-4 pb-12 pt-4 md:px-8 lg:max-w-5xl">
       <header className="mb-4 flex items-center justify-between gap-3">
         <Link
           to={`/q/${slug}`}
@@ -119,11 +119,11 @@ export function PlayPage(): JSX.Element {
       )}
 
       {(phase === 'question' || phase === 'feedback') && state && question && (
-        <div key={question.id} className="animate-fade-up">
+        <div key={question.id} className="animate-fade-up md:pt-[4vh]">
           <ProgressDots position={state.position} total={state.total} />
 
-          <div className="mt-4 grid gap-6 md:grid-cols-2 md:items-start landscape:max-md:grid-cols-2 landscape:max-md:gap-4">
-            <section className="rounded-2xl border-2 border-surface-border bg-surface p-6 shadow-lift md:sticky md:top-4 landscape:max-md:sticky landscape:max-md:top-4">
+          <div className="mt-4 grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-8 landscape:max-lg:grid-cols-2 landscape:max-lg:items-start landscape:max-lg:gap-4">
+            <section className="rounded-2xl border-2 border-surface-border bg-surface p-6 shadow-lift md:p-8 lg:sticky lg:top-4 landscape:max-lg:sticky landscape:max-lg:top-4">
               {isWebUrl(question.image_url) && (
                 <img
                   src={question.image_url}
@@ -134,7 +134,7 @@ export function PlayPage(): JSX.Element {
               <h1
                 ref={promptRef}
                 tabIndex={-1}
-                className="text-balance font-display text-2xl font-semibold leading-snug text-content focus:outline-none md:text-3xl"
+                className="text-balance font-display text-2xl font-semibold leading-snug text-content focus:outline-none md:text-4xl landscape:max-lg:text-2xl"
               >
                 {question.prompt}
               </h1>

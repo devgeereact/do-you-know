@@ -35,7 +35,7 @@ export function AnswerButton({
       type={type}
       aria-pressed={chosen}
       className={cn(
-        'flex min-h-[3.5rem] w-full touch-manipulation select-none items-center justify-between gap-3 rounded-full border-2 px-5 py-3 text-left font-display text-lg font-semibold',
+        'flex min-h-[3.5rem] w-full touch-manipulation select-none items-center justify-between gap-3 rounded-full border-2 px-5 py-3 text-left font-display text-lg font-semibold md:min-h-[4rem] md:px-6 md:text-xl',
         'transition-[transform,box-shadow,background-color,border-color] duration-[120ms] ease-out',
         'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         'disabled:cursor-default',
