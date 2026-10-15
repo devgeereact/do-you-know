@@ -21,7 +21,12 @@ export function SiteHeader(): JSX.Element {
         >
           {copy.nav.quizzes}
         </a>
-
+        <Link
+          to="/daily"
+          className="inline-flex min-h-tap items-center px-3 font-bold text-primary"
+        >
+          {copy.challenge.daily}
+        </Link>
         <Link
           to="/leaderboards"
           className="inline-flex min-h-tap items-center px-3 font-bold text-primary"

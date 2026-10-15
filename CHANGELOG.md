@@ -69,3 +69,11 @@
 - Added daily and friend challenge services/hooks, with preview reads that do not create guest sessions.
 - Added explicit challenge creation and Web Share/clipboard fallback with manual-copy recovery.
 - Added a local daily fixture using the server's London date; existing scheduled days are preserved.
+
+### Competition UI (15 October 2026)
+
+- Added ranked launch, weekly/all-time/daily leaderboards and generated nickname/locked age-band settings with no free-text fields.
+- Added server-dated daily preview, once-per-day play, streak display, friend preview/play and server-returned head-to-head results.
+- Added explicit challenge creation and native-share/clipboard/manual link recovery.
+- Verified two-session play, frozen question order, own-challenge rejection, privacy, responsive layouts, direct static routes and uncached competition responses.
+- Avatars, share-card images and physical-device/release checks remain pending.

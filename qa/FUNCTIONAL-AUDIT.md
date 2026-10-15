@@ -23,3 +23,15 @@ PASS: two immediate clicks submit once; offline answer/Next controls disable; if
 Evidence scripts: `/tmp/dyk-play-browser.mjs`, `/tmp/dyk-game-recovery.mjs`. Screenshots: `/tmp/dyk-results-portrait.png`, `/tmp/dyk-feedback-landscape-dark.png`.
 
 Local Milestone 1 acceptance: PASS. Real iPhone/Android, screen readers, broad expired-auth/slow-network matrix, production hosting and reviewed launch content remain NOT TESTED or pending. No release-readiness claim.
+
+## Competition acceptance, 15 October 2026
+
+PASS: ranked quiz finish, generated nickname assignment and publication of the best server result to weekly/all-time boards. Under-13 age band remains locked after save; profile flow has no free-text/email inputs. An independent anonymous browser sees public rows without the first player's private result. Board filters, service error/retry and 375px/812px landscape/320px layouts pass.
+
+PASS: daily preview creates no guest session, uses the server's London date and shows own completion/streak. Two independent guests receive the same ordered daily questions; completing once removes replay and the preview blocks a second daily play. Existing server checks enforce one daily completion per player.
+
+PASS: finished-result challenge creation, anonymous preview, own-challenge rejection, independent guest acceptance, identical question order and server-returned versus outcome. Invalid links display unavailable, offline preview removes Play. Native share payload, clipboard fallback and manual-copy failure recovery pass with isolated browser adapters; no messages were sent.
+
+PASS: prior Milestone 1 play and recovery regression scripts. Static production build direct links and cache/privacy checks pass.
+
+Evidence: `/tmp/dyk-board-browser.mjs`, `/tmp/dyk-challenge-browser.mjs`, `/tmp/dyk-share-check.mjs`, `/tmp/dyk-compete-static.mjs`, `/tmp/dyk-board-320.png`. Native share dialogs, real two-phone access, share-card images, avatar generation, Mac-origin tunnel and release matrix remain NOT TESTED or pending. Localhost links are not externally reachable share links.

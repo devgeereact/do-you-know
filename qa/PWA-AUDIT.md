@@ -11,3 +11,9 @@ PASS: a changed local worker script creates a genuine waiting worker while the q
 Evidence: `/tmp/dyk-pwa-cache-check.mjs`, `/tmp/dyk-pwa-update-check.mjs`.
 
 NOT TESTED: installed iPhone/Android behaviour, an upgrade from a deployed production version, full offline/slow/intermittent/expired-auth matrix, real push/install prompts and release recovery. This is not a complete PWA release audit.
+
+## Competition extension, 15 October 2026
+
+PASS: direct `/daily`, `/leaderboards` and `/challenge/:code` links in the static build. With the actual service worker controlling the browser, daily/leaderboard/friend RPC responses, auth and identity/history reads are absent from Cache Storage. Offline board navigation shows an error and no stale personal result. Board layouts fit 375px portrait, 812px landscape and 320px.
+
+Evidence: `/tmp/dyk-compete-static.mjs`. This does not replace installed-phone and deployed-upgrade checks.

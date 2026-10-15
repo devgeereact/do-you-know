@@ -65,3 +65,15 @@ PATH=/tmp/dyk-test-venv/bin:$PATH PGHOST=127.0.0.1 PGPORT=55434 PGUSER=postgres 
 ```
 
 If a scratch container already occupies 55434, reuse it after confirming its identity rather than starting a second one. The build session's scratch container is `dyk-tests-pg16-20261014`. Test databases must be `dyk_test` or have a `dyk_test_` prefix. The runner rejects remote hosts and stops on migration failure.
+
+## Daily fixture and competition checks
+
+Migration 0006 adds the server-dated daily preview. Apply pending migrations only to the local stack with `npx --yes supabase@2.121.0 migration up --local`.
+
+The local seed now schedules the sample quiz for the server's current London day if no challenge is already scheduled, then invokes the normal activation function. On a later day, run the local seed again if you need a fresh development challenge:
+
+```bash
+docker exec -i supabase_db_do-you-know psql -U postgres -d postgres -v ON_ERROR_STOP=1 < supabase/seed.sql
+```
+
+This command is exclusively for the named local development stack. It preserves existing scheduled days and published sample versions. Never apply the development seed to a hosted project. Share links generated with localhost are suitable for isolated browser tests only; real devices need the configured app URL to be reachable through an authorised network or deployment. Native share/clipboard test adapters do not send messages.

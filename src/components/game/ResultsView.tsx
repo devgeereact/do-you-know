@@ -1,3 +1,4 @@
+import { ChallengeShare } from '@/components/game/ChallengeShare';
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { AttemptSummary } from '@/types/game';
@@ -35,7 +36,9 @@ export function ResultsView({ summary, restart }: ResultsViewProps): JSX.Element
         </div>
       </dl>
       <div className="flex flex-wrap gap-3">
-        <Button onClick={() => void restart()}>{copy.game.playAgain}</Button>
+        {summary.mode !== 'daily' && (
+          <Button onClick={() => void restart()}>{copy.game.playAgain}</Button>
+        )}
         <Link to="/" className={buttonClasses('ghost')}>
           {copy.game.leave}
         </Link>
@@ -43,6 +46,49 @@ export function ResultsView({ summary, restart }: ResultsViewProps): JSX.Element
           {copy.game.profile}
         </Link>
       </div>
+      {summary.mode === 'daily' && (
+        <p className="text-content">
+          {copy.challenge.noReplay} {copy.challenge.streak(summary.streak)}
+        </p>
+      )}
+      {summary.versus && (
+        <div className="rounded-xl bg-background p-5 text-lg font-bold text-content">
+          <p>
+            {copy.challenge.friendScore(
+              summary.versus.creator_nickname,
+              summary.versus.creator_correct,
+              summary.total,
+            )}
+          </p>
+          <p>
+            {summary.versus.tie
+              ? copy.challenge.tie
+              : summary.versus.you_won
+                ? copy.challenge.won
+                : copy.challenge.otherWon}
+          </p>
+        </div>
+      )}
+      {(summary.mode === 'ranked' || summary.mode === 'daily') && (
+        <div className="text-content">
+          {summary.ranks.all_time != null && (
+            <p>
+              {copy.compete.allTime}: {copy.compete.yourRank(summary.ranks.all_time)}
+            </p>
+          )}
+          {summary.ranks.daily != null && (
+            <p>
+              {copy.challenge.daily}: {copy.compete.yourRank(summary.ranks.daily)}
+            </p>
+          )}
+          {summary.needs_nickname && (
+            <Link to="/me" className="inline-flex min-h-tap items-center font-bold text-primary">
+              {copy.compete.choose} →
+            </Link>
+          )}
+        </div>
+      )}
+      <ChallengeShare key={summary.attempt_id} attemptId={summary.attempt_id} />
       <h2 className="font-display text-2xl font-semibold text-content">{copy.game.review}</h2>
       <ol className="grid gap-5">
         {summary.review.map((item) => (

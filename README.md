@@ -54,7 +54,8 @@ in **Supabase**.
 | Product, design, architecture, schema, rules, hooks, deployment docs | ✅ Done |
 | Public home/category/quiz discovery, filters and catalogue hook | Implemented; local browser checks pass |
 | Guest game, all three question types, server results/review, refresh/recovery and `/me` history | Implemented; local browser checks pass, real devices pending |
-| CMS, competition, avatars, background functions and release checks | Pending Milestones 2–4 |
+| Ranked boards, generated identity, daily/friend challenges and link sharing | Implemented; independent local browser sessions pass |
+| CMS, avatars, share-card images, background functions and release checks | Pending Milestones 2–4 |
 | Edge Functions (`inngest`, `trigger-rebuild`) | ⏳ Milestone 2 (contracts in `supabase/functions/README.md`) |
 | Prerender script + GitHub Actions deploy | ⏳ Milestone 3 |
 
