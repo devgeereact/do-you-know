@@ -220,6 +220,7 @@ The current player's profile and the protected actions that change it.
 ```ts
 interface UseProfile {
   profile: Profile | null;
+  avatarUrl: string | null;        // active avatar image once it is ready
   isChild: boolean;                // age_band === 'under_13'
   loading: boolean;
   error: string | null;
@@ -248,9 +249,12 @@ interface UseAvatarBuilder {
   remainingToday: number;
   error: string | null;            // e.g. "Someone already has that exact look!"
   useAvatar: () => Promise<boolean>; // set_active_avatar
+  ready: boolean;                  // options loaded (get_avatar_options, 0006)
 }
 export function useAvatarBuilder(): UseAvatarBuilder;
 ```
+Mount it only once the player has an age band: `request_avatar` refuses without one (0007),
+and the filtered options depend on it. `/me/avatar` asks for the age band first.
 
 ### 15. `useAnalyticsConsent`
 `src/hooks/useAnalyticsConsent.ts`

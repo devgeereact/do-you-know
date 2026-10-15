@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useMyGames } from '@/hooks/useMyGames';
 import { useProfile } from '@/hooks/useProfile';
+import { isWebUrl } from '@/lib/utils';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 
 const AGE_BAND_LABEL = {
@@ -17,7 +18,7 @@ const AGE_BAND_LABEL = {
 
 /** Nickname, age group and account deletion. Shown once a session exists. */
 function ProfileCard(): JSX.Element | null {
-  const { profile, error, deleteAccount } = useProfile();
+  const { profile, avatarUrl, error, deleteAccount } = useProfile();
   const navigate = useNavigate();
   const [confirming, setConfirming] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -25,7 +26,27 @@ function ProfileCard(): JSX.Element | null {
 
   return (
     <Card className="mt-6 p-5">
-      <h2 className="text-xl font-semibold text-content">Your profile</h2>
+      <div className="flex items-center gap-4">
+        {isWebUrl(avatarUrl) ? (
+          <img src={avatarUrl} alt="Your avatar" className="h-16 w-16 rounded-full object-cover" />
+        ) : (
+          <span
+            aria-hidden="true"
+            className="grid h-16 w-16 place-items-center rounded-full bg-sky/30 font-display text-2xl font-semibold text-primary"
+          >
+            ?
+          </span>
+        )}
+        <div>
+          <h2 className="text-xl font-semibold text-content">Your profile</h2>
+          <Link
+            to="/me/avatar"
+            className="text-sm font-semibold text-primary underline underline-offset-2"
+          >
+            {avatarUrl ? 'Change my avatar' : 'Make my avatar'}
+          </Link>
+        </div>
+      </div>
       {profile.nickname ? (
         <dl className="mt-3 grid gap-1 text-content">
           <div className="flex flex-wrap gap-x-2">

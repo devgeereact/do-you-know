@@ -1,13 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
+import { AgeBandPicker } from '@/components/game/AgeBandPicker';
 import { Button } from '@/components/ui/Button';
 import { useProfile } from '@/hooks/useProfile';
-import type { AgeBand } from '@/types';
-
-const BANDS: { band: AgeBand; label: string }[] = [
-  { band: 'under_13', label: 'Under 13' },
-  { band: '13_17', label: '13 to 17' },
-  { band: '18_plus', label: '18 or over' },
-];
 
 interface NicknamePickerProps {
   onDone?: (nickname: string) => void;
@@ -53,27 +47,11 @@ export function NicknamePicker({ onDone }: NicknamePickerProps): JSX.Element | n
 
   if (profile.age_band === null) {
     return (
-      <section aria-labelledby={`${inputId}-age`} className="text-center">
-        <h2 id={`${inputId}-age`} className="text-xl font-semibold text-content">
-          How old are you?
-        </h2>
-        <p className="mx-auto mt-1 max-w-sm text-sm text-content-muted">
-          This keeps the game safe for everyone. You can only choose once.
-        </p>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {BANDS.map(({ band, label }) => (
-            <Button
-              key={band}
-              variant="ghost"
-              disabled={busy}
-              onClick={() => void act(() => setAgeBand(band))}
-            >
-              {label}
-            </Button>
-          ))}
-        </div>
-        {errorLine}
-      </section>
+      <AgeBandPicker
+        busy={busy}
+        error={error}
+        onPick={(band) => void act(() => setAgeBand(band))}
+      />
     );
   }
 
