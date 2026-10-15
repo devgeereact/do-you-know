@@ -35,7 +35,8 @@ export default defineConfig({
       manifest: {
         name: 'Do You Know',
         short_name: 'DoYouKnow',
-        description: 'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
+        description:
+          'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
         theme_color: '#1570C2',
         background_color: '#EAF6FF',
         display: 'standalone',
