@@ -2,6 +2,18 @@
 
 | Requirement or journey | Environment | Test | Expected | Observed | Status | Evidence |
 |---|---|---|---|---|---|---|
-| FR-001 | `UNKNOWN` | `NOT TESTED` | `UNKNOWN` | `UNKNOWN` | NOT TESTED | `UNKNOWN` |
+| M1 browse: home lists categories and published quizzes | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Open `/` | Categories + 2 seeded quizzes | Shown | PASS | snapshot in session log |
+| M1 guest play: no sign-up | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Open `/play/amazing-animals` with empty storage | Anonymous session, question 1 shown | Guest user created, Q1 shown with focus on prompt | PASS | `qa/evidence/m1-play/feedback-portrait.png` |
+| M1 choice/boolean feedback | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Pick right and wrong answers at 375px | Right/wrong by colour + icon + words, explanation, source link | As expected | PASS | `feedback-portrait.png`, `wrong-portrait.png` |
+| M1 slider | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Keyboard ArrowRight then Lock it in | Value moves one step; server grades; answer + range shown | 13 → graded wrong, 20 (18–22) shown | PASS | `slider-portrait.png` |
+| M1 refresh-safe resume | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Reload mid-quiz | Resume same attempt at next question | FAIL first run (two attempts from concurrent starts); PASS after migration 0005 | PASS | DB check: 1 in-progress attempt; resumed at Q2 |
+| M1 timer | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Let a 15 s question run out | Server marks timed out; client shows Time's up | Answer sent 16.8 s after send; `timed_out=t`, `time_ms=15000` | PASS | `timeout-portrait.png` |
+| M1 results + review | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Finish 5 questions | Server score and full review | 1/5 with every answer, explanation and source | PASS | `results-portrait.png` |
+| M1 landscape | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | 812x375 mid-quiz | Two columns, no rotate prompt | Two columns; prompt card now sticky | PASS | `landscape.png` |
+| M1 `/me` basics | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Open `/me` as guest | Streak, games played, recent games, save-progress prompt | As expected | PASS | `me-portrait.png` |
+| M1 category age filter | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | `/c/maths`, tap 14+ | 7–11 quiz hidden | Hidden; empty state shown | PASS | snapshot in session log |
+| M1 integrity: no answers before answering | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Call `start_attempt` as a guest | No is_correct / correct_value / accept_* / explanation in question | None present | PASS | SQL check in session log |
 
 Cover loading, empty, success, validation, service failure, permission denial, session expiry and recovery. Test critical journeys end to end, not only isolated functions.
+
+Recorded 2026-10-15 by Claude Code (owner: Gideon). Not yet tested: real Supabase project, physical phone, offline behaviour, dark mode in the game screens.
