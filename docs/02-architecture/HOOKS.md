@@ -292,3 +292,7 @@ export function useAiDrafts(): UseAiDrafts;
 `usePlayerProgress(userId?: string)` loads only the current session's nickname and latest 20 finished attempts through `progressService`. It returns `profile`, `attempts`, `loading`, `error`, and `refresh`. Queries are owner-scoped and abort on session changes; earlier session data is hidden immediately. No guest account is created by visiting `/me`.
 
 Game recovery: uncertain answer failures require explicit Resume, never automatic resubmission. A lost finish response retries the idempotent finish RPC with the existing attempt ID. Guest creation and initial attempt starts coalesce simultaneous calls, including React StrictMode.
+
+## Milestone 2 identity settings
+
+Identity settings use `identityService` to read only the current player's nickname and age band. Generated nicknames are available to every age group; this slice adds no free-text inputs. Age-band writes and nickname generation remain server RPCs. Public boards use only `get_leaderboard`, with rows and ranking supplied by the server. Board requests abort on filters/session changes and hide previous-session results immediately.

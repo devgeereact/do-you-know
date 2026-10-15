@@ -52,3 +52,9 @@
 - Verified complete play and recovery journeys plus real service-worker caching and update suppression against the static build.
 - Fixed static deep-link asset 404s with a root base for the dedicated docroot (ADR-002).
 - Milestone 1 passes local acceptance. Real devices, Mac-origin access, dependency advisories and later milestones remain pending.
+
+### Competition services (15 October 2026)
+
+- Added abortable public leaderboard reads, owner-scoped identity reads and protected generated nickname/age-band RPC wrappers.
+- Began Milestone 2 on a branch stacked above the unmerged Milestone 1 PR.
+- Existing CodeRabbit summaries are not a line-by-line review approval.
