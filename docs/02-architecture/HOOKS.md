@@ -102,6 +102,8 @@ interface UseQuizAttempt {
   error: string | null;            // friendly copy
   answerOption: (optionId: string) => Promise<void>;
   answerValue: (value: number) => Promise<void>;   // slider
+  timeUp: () => Promise<void>;     // display timer hit zero: waits out the server's
+                                   // 1.5 s grace, then asks the server to mark it timed out
   next: () => Promise<void>;       // next_question, or finish_attempt after the last
   restart: () => Promise<void>;    // new attempt, same quiz/mode
 }
@@ -143,6 +145,19 @@ interface UseQuizCatalog {
   refresh: () => Promise<void>;
 }
 export function useQuizCatalog(filters?: CatalogFilters): UseQuizCatalog;
+```
+
+### 9a. `useQuiz`
+`src/hooks/useQuiz.ts`
+One published quiz by slug for its landing page (`/q/:slug`). Quiz row only, never questions.
+```ts
+interface UseQuiz {
+  quiz: Quiz | null;
+  notFound: boolean;               // loaded, but not published or no such slug
+  loading: boolean;
+  error: string | null;
+}
+export function useQuiz(slug: string | undefined): UseQuiz;
 ```
 
 ### 10. `useDailyChallenge`
