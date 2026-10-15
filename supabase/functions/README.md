@@ -17,7 +17,9 @@ Input `{ avatar_id }`. Steps (each retried up to 3× with backoff):
    head-and-shoulders portrait, large expressive eyes, warm plain background, everyday
    clothing, friendly expression, no text, no logos, not resembling any real person or
    existing character).
-3. Call OpenRouter with the image model from `site_config.ai_models.image`.
+3. Call OpenRouter with the image model from `site_config.ai_models.image`
+   (`google/gemini-3.1-flash-image` after migration 0008), preferring the
+   lowest-priced provider for that model.
 4. Safety check the result (OpenRouter moderation or a vision model yes/no); on fail →
    `rejected` (frees the trait combination).
 5. Upload to ImageKit `/avatars/<user_id>/<avatar_id>.webp` (512×512).

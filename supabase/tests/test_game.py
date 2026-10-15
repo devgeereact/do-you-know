@@ -390,6 +390,14 @@ rpc(guest2, "delete_my_account")
 c = superuser(); c.execute("select count(*) from public.profiles where id=%s", (guest2,))
 check("delete my account removes profile (cascade)", c.fetchone()[0] == 0)
 
+# ---------------------------------------------------------------- avatar model (0008)
+c = superuser()
+c.execute("select value from public.site_config where key = 'ai_models'")
+models = c.fetchone()[0]
+check("avatar generation uses Gemini 3.1 Flash Image",
+      models["image"] == "google/gemini-3.1-flash-image")
+check("avatar image migration preserves the safety model", models["text"] == "openai/gpt-4o-mini")
+
 failed = [r for r in results if not r[1]]
 print(f"\n{len(results) - len(failed)}/{len(results)} checks passed")
 raise SystemExit(1 if failed else 0)

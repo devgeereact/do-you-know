@@ -23,6 +23,6 @@
 
 ## Next
 
-1. Owner keys for avatars: OPENROUTER_API_KEY, IMAGEKIT_PRIVATE_KEY (+ IMAGEKIT_URL_ENDPOINT), INNGEST_SIGNING_KEY as Supabase function secrets; VITE_INNGEST_EVENT_KEY in the app env. Image model already set: google/gemini-2.5-flash-image (site_config.ai_models). Then deploy `inngest` and test one real avatar.
+1. Avatar configuration checked 2026-10-15: OpenRouter and ImageKit private keys authenticate. Private keys moved out of VITE_* settings into ignored server-only configuration. Migration 0008 selects google/gemini-3.1-flash-image; image requests prefer lowest-priced providers. Root Supabase URL/anon key and ImageKit endpoint/public key are still examples. Supply real public configuration, confirm the target Supabase project, then separately authorise deployment/secrets installation and test one real avatar. Inngest event/signing authentication remains NOT TESTED; signing-key format passes. Sentry token access check returned 403; DSN remains empty. Evidence: qa/AVATAR-CONFIGURATION-CHECK.md.
 2. Raise PRs (`feat/m1-play`, then `feat/m2-compete`, then `feat/m2-avatars`) for CodeRabbit.
 3. Not tested anywhere yet: a real Supabase project, physical phones/tablets, Safari/iOS install, offline, dark mode on game screens.

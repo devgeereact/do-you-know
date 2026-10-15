@@ -80,6 +80,7 @@ async function paint(model: string, prompt: string): Promise<string> {
     model,
     messages: [{ role: 'user', content: prompt }],
     modalities: ['image', 'text'],
+    provider: { sort: 'price' },
     image_config: { aspect_ratio: '1:1' },
   });
   const url = firstMessage(json)?.images?.[0]?.image_url?.url;
