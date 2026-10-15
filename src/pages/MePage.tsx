@@ -1,3 +1,4 @@
+import { IdentitySettings } from '@/components/IdentitySettings';
 import { Link } from 'react-router-dom';
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { usePlayerProgress } from '@/hooks/usePlayerProgress';
@@ -45,6 +46,7 @@ export function MePage(): JSX.Element {
                 {auth.user.is_anonymous ? copy.progress.guestNote : copy.progress.savedNote}
               </p>
             </Card>
+            <IdentitySettings key={auth.user.id} userId={auth.user.id} onSaved={progress.refresh} />
             <h2 className="font-display text-2xl font-semibold text-content">
               {copy.progress.history}
             </h2>

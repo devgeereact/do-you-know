@@ -75,6 +75,20 @@ export function QuizLandingPage(): JSX.Element {
                   {copy.landing.play}
                 </Button>
               )}
+              {online && quiz.is_ranked && (
+                <Link
+                  to={`/play/${quiz.slug}?mode=ranked`}
+                  className={buttonClasses('ghost', 'lg', 'mt-4 sm:ml-4')}
+                >
+                  {copy.compete.ranked}
+                </Link>
+              )}
+              <Link
+                to={`/leaderboards?quiz=${quiz.slug}`}
+                className="mt-4 flex min-h-tap items-center font-bold text-primary"
+              >
+                {copy.compete.heading} →
+              </Link>
               <p role="status" className="mt-4 text-base text-content-muted">
                 {online ? copy.game.noSignup : copy.landing.offline}
               </p>

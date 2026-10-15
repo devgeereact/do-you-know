@@ -14,13 +14,20 @@ export function SiteHeader(): JSX.Element {
         <img src="/favicon.svg" alt="" width={44} height={44} />
         <span>{copy.brand}</span>
       </Link>
-      <nav aria-label={copy.nav.label} className="flex items-center gap-3">
+      <nav aria-label={copy.nav.label} className="flex flex-wrap items-center gap-3">
         <a
           href="/#quizzes"
           className="inline-flex min-h-tap items-center px-3 font-bold text-primary"
         >
           {copy.nav.quizzes}
         </a>
+
+        <Link
+          to="/leaderboards"
+          className="inline-flex min-h-tap items-center px-3 font-bold text-primary"
+        >
+          {copy.compete.heading}
+        </Link>
         <Link to="/me" className="inline-flex min-h-tap items-center px-3 font-bold text-primary">
           {copy.game.profile}
         </Link>

@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { useQuizAttempt } from '@/hooks/useQuizAttempt';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -11,7 +11,16 @@ import { copy } from '@/lib/copy';
 
 export function PlayPage(): JSX.Element {
   const { slug } = useParams<{ slug: string }>();
-  const game = useQuizAttempt({ mode: 'practice', quizSlug: slug });
+  const [params] = useSearchParams();
+  const requested = params.get('mode');
+  const game = useQuizAttempt({
+    mode:
+      requested === 'ranked' || requested === 'daily' || requested === 'challenge'
+        ? requested
+        : 'practice',
+    quizSlug: slug,
+    challengeCode: params.get('challenge') ?? undefined,
+  });
   const online = useOnlineStatus();
   return (
     <>
