@@ -102,4 +102,5 @@ jobs:
           done
           php backend/tests/integration.php
           php backend/tests/competition.php
+          php backend/tests/daily.php
           php backend/tests/concurrency.php
