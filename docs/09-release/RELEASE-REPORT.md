@@ -32,4 +32,4 @@ Public DNS, HTTPS and PHP practice are verified in qa/CPANEL-API.md. This does n
 establish a complete production release. The backend ports, production Clerk
 sign-in, account linking, deployment pipeline and canonical merge-base choice are
 unfinished. See docs/07-operations/PRODUCTION-CUTOVER.md for acceptance gates.
-No risk acceptance or final production release approval is implied.
+No final production cutover has been performed.

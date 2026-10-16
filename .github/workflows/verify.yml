@@ -53,8 +53,6 @@ jobs:
         options: >-
           --health-cmd="healthcheck.sh --connect --innodb_initialized"
           --health-interval=10s --health-timeout=5s --health-retries=10
-    env:
-      DYK_CONFIG: ${{ runner.temp }}/dyk-ci.php
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -75,6 +73,8 @@ jobs:
           composer test
       - name: Configure disposable database
         run: |
+          export DYK_CONFIG="$RUNNER_TEMP/dyk-ci.php"
+          echo "DYK_CONFIG=$DYK_CONFIG" >> "$GITHUB_ENV"
           php <<'PHP'
           <?php
           $config = require 'backend/config.example.php';

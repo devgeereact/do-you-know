@@ -5,8 +5,8 @@
 - Owner requested full merge/build and shared access from both computers.
 - Continue the Clerk/PHP migration, preserving grading and child privacy. The live
   development preview remains authoritative for its current practice-only slice.
-- Production cutover is not authorised by a passing DNS check alone. Do not label
-  the incomplete migration production-ready or silently switch remaining services.
+- DNS alone does not establish production readiness. The owner authorised the
+  transition; verify the complete migration before cutting over remaining services.
 - Merge-base choice requested in session: keep the current avatar/Clerk/cPanel build
   and bring across fixes, or use the milestone PR interface and integrate the rest.
   These branches contain different screens and overlapping Supabase migration
