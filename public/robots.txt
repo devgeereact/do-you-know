@@ -1,9 +1,11 @@
 User-agent: *
 Allow: /
+# Play screens and personal pages hold nothing worth indexing.
 Disallow: /play/
+Disallow: /daily/play
 Disallow: /challenge/
 Disallow: /me
-Disallow: /admin
+Disallow: /account
+Disallow: /dashboard
 
-# Generated at build time by the prerender step:
-Sitemap: https://doyouknow.example/sitemap.xml
+Sitemap: https://doyouknow.soulrefresh.net/sitemap.xml

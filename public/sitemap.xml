@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fixed pages only. Category and quiz pages are not listed yet: they come from the
+     database, so a generated sitemap needs a server route (see docs/06-quality). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://doyouknow.soulrefresh.net/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/daily</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/leaderboards</loc><changefreq>daily</changefreq></url>
+</urlset>
