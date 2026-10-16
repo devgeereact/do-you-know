@@ -7,7 +7,8 @@ Shared rules live in `AGENTS.md`. This file only maps Claude-specific context.
 
 **Project:** Do You Know — a bright, playful, installable quiz PWA for all ages (including
 under-13s): daily challenges, friend challenges and school-subject quizzes, with
-server-side grading in Supabase and a CMS at `/admin`.
+server-side grading (PHP API on cPanel, Supabase only for the current preview until
+cutover) and a CMS at `/admin`.
 
 You are working inside a **static, offline-first PWA** deployed to cPanel.
 Treat the constraints below as ground truth for every response.
@@ -38,6 +39,13 @@ Treat the constraints below as ground truth for every response.
   (`0003_game_functions.sql`); player code never sees an answer early or posts a score.
 - **Children use this app:** collect no personal data from players; nickname + avatar
   only in public. See `docs/00-foundation/RULES.md` §9 and `AGENTS.md` §8.
+
+## Guards
+- The PreToolUse hook in `.claude/settings.json` (`scripts/agent_guard.py`) blocks secret
+  files and asks before risky commands. Treat a block as stop and ask, never a detour.
+- Enable the Git guard once per clone: `git config core.hooksPath .githooks`.
+- GEE OS commands when the plugin is installed: `/gee-os-cowork:verify`,
+  `/gee-os-cowork:restructure`, `/gee-os-cowork:launch`.
 
 ## Working style
 - Prefer editing an existing file over creating a new one.

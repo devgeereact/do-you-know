@@ -1,5 +1,19 @@
 # Current Task
 
+## 16 October 2026: GEE OS 1.4 cpanel contract audit (branch chore/gee-os-cpanel-contract)
+
+- Owner asked to verify every GEE OS cpanel profile file: create what is missing, update
+  what exists. Local work only; nothing pushed, deployed or changed on any account.
+- Created: `.claude/settings.json` agent hook, `.githooks/pre-commit`, `scripts/agent_guard.py`,
+  `scripts/guard.py`, `scripts/verify.py`, `scripts/check-htaccess.sh`.
+- Updated: root `.htaccess` (proxy-aware HTTPS, caching scoped to hashed assets and icons,
+  stray PHP denied, HSTS, real 404 for missing static files), AGENTS.md, CLAUDE.md,
+  CODEX.md, `.agent/PROJECT.yml` (stack_profile cpanel), DEPLOYMENT.md, scripts/README.md.
+- Kept: frontend at the repo root (moving it under `app/` would touch CI and packaging for
+  no user benefit), existing docs set, backend layout (already matches the profile).
+- Open, needs the owner: automated GitHub Actions deploy (deploy key and secrets),
+  confirming the cleanup cron on the server, pushing this branch and opening a PR.
+
 ## Active task, 16 October 2026: full merge and production transition
 
 - Owner requested full merge/build and shared access from both computers.

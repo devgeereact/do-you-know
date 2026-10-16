@@ -56,10 +56,14 @@ stays static; PHP is a separately deployed backend. Do not cut over implicitly.
 The build target is a **static** PWA on Namecheap cPanel (Stellar Plus).
 - ❌ No SSR, no Next.js server components, no Node server in this repo — nothing
   that needs a runtime on cPanel.
-- ✅ Everything runs in the browser or is offloaded to a managed service. Server-side
-  and scheduled logic lives in **Supabase** (Edge Functions, Postgres triggers, RLS);
-  media in ImageKit; monitoring in Sentry; background workflows via Inngest.
-- The only shippable output is the static `dist/` folder.
+- ✅ GEE OS stack profile: **cpanel**. Target server logic is the private PHP 8.2+ API in
+  `backend/` (only `api.php` public, code and `config.php` outside every webroot) with
+  MySQL or MariaDB and Clerk tokens verified on the server (official `clerkinc/backend-php`).
+  Scheduled clean-up (`backend/bin/cleanup.php`) belongs in cPanel cron as described in
+  `backend/README.md`; whether it is scheduled on the server is UNKNOWN until checked.
+- Supabase still serves the current hosted preview until the gates in
+  `docs/07-operations/PRODUCTION-CUTOVER.md` pass. Do not add new Supabase features.
+- The frontend's only shippable output is the static `dist/` folder.
 
 ## 3. Styling
 - Tailwind / NativeWind utility classes **only**.
@@ -67,6 +71,8 @@ The build target is a **static** PWA on Namecheap cPanel (Stellar Plus).
 - Use the design tokens defined in `tailwind.config.ts` — never raw hex values.
 
 ## 4. Data access
+- PHP API: prepared statements only, owner filter in every query, input validated on the
+  server, one JSON error shape. Migrations are additive files in `backend/migrations/`.
 - All Supabase reads/writes go through `src/services/*` or `src/lib/supabase.ts`.
 - Never bypass Row Level Security. Never embed the `service_role` key.
 - Client-exposed keys must be write-scoped or RLS-protected (anon key, ImageKit
@@ -74,6 +80,9 @@ The build target is a **static** PWA on Namecheap cPanel (Stellar Plus).
 
 ## 5. Quality gates (a PR must pass all)
 - `npm run typecheck` — zero errors, no implicit `any`.
+- `npm run build` — succeeds.
+- `cd backend && composer test` — unit checks pass; integration tests per `backend/README.md`.
+- `python3 scripts/verify.py` — GEE OS contract and guards present.
 - `npm run lint` — zero warnings.
 - No unused imports/variables, no leaked secrets, no `console.log`.
 
@@ -105,3 +114,15 @@ This is a quiz app used by **children**. These rules override convenience:
   in function secrets. AI output is stored as drafts for human review — never auto-publish.
 - **Orientation:** never add an orientation lock or "rotate your phone" screen.
 - **Content:** never copy questions, art or copy from other quiz sites.
+
+## 9. Guards (GEE OS)
+- `.claude/settings.json` runs `scripts/agent_guard.py` before every Bash, Read, Edit,
+  Write, Grep and Glob call in Claude Code. It denies secret files (`.env*` except the
+  example, keys, `config.php`) and asks before force pushes, hard resets, destructive SQL,
+  migrations, deploys and `curl | sh`. A block means stop and ask the owner.
+- `.githooks/pre-commit` runs `scripts/guard.py` on staged files. Enable once per clone:
+  `git config core.hooksPath .githooks`.
+- Codex and Cowork do not run Claude hooks: follow the same rules by hand and run
+  `python3 scripts/guard.py` after `git add`.
+- Root `.htaccess` changes must pass the local Apache check recorded in
+  `docs/07-operations/DEPLOYMENT.md` before release.
