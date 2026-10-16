@@ -14,25 +14,30 @@ preview works without a local checkout. Guest identities remain browser-specific
 shared player history requires verified account/profile linking, which is pending.
 Production data must not be used by disposable tests or development fixtures.
 
-## Merge decision required
+## Canonical merge decision
 
 PR #1: feat/milestone-1-play to main.
 PR #2: feat/milestone-2-compete to feat/milestone-1-play.
 PR #3: feat/m2-avatars to feat/m2-compete.
 PR #4: feat/clerk-cpanel-migration to feat/m2-avatars.
 
-The differently named milestone and m1/m2 branches have diverged. They are not
-aliases for the same commits. There are parallel UI/service implementations and
-Supabase migration numbers 0005 to 0007 overlap with different meanings. Applied
-migrations must not be edited or renumbered blindly. Resolve canonical UI/contracts
-with the owner, reconcile schema changes in new migrations and verify before
-retargeting/merging the PR chain. Keep every branch until its changes are accounted for.
-A non-mutating merge-tree preview found 29 conflicting files. PR #4 is now ready
-for review. No PR has been merged for this production transition yet.
+Owner chose option 1 on 16 October: the current avatar/Clerk/cPanel implementation
+is canonical. Retarget PR #4 to main rather than blindly merging the alternative
+milestone implementation. Keep every alternate branch as history. Its useful fixes
+must be assessed against the canonical contracts and added individually with tests.
+
+- PR #3 avatar commits are already ancestors of the current branch.
+- PR #1/#2 milestone interfaces are alternatives, not missing app features to merge
+  verbatim. Their server-based question deadline and recovery improvements are useful
+  references for the PHP port. Optional fresh practice must not affect ranked fairness.
+- Their overlapping Supabase migration numbers will not be imported or renumbered.
+  Existing applied Supabase files stay immutable. PHP uses its own migration ledger.
+- A main merge consolidates the verified development code. It does not cut over
+  the incomplete app to production or trigger a deployment workflow.
 
 ## Required work
 
-1. Resolve the merge-base decision, preserve verified fixes and run checks against
+1. Apply the canonical merge decision, preserve verified fixes and run checks against
    the resulting integration branch. No force pushes. Keep the main branch deploy
    separate from an incomplete development preview.
 2. Port remaining catalogue/filter metadata, profiles/settings/deletion, history,
@@ -75,4 +80,4 @@ paths recorded in CPANEL-MIGRATION.md. Do not drop databases or overwrite applie
 migrations. Production deployment requires a candidate-specific rollback, a verified
 backup/restore procedure and passing post-change checks. Roll back on broken sign-in,
 incorrect ownership/grading, lost data or failed smoke checks. Release remains NO-GO
-until evidence supports the complete feature set and the merge decision is resolved.
+until evidence supports the complete feature set. The canonical merge decision is resolved.

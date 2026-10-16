@@ -7,15 +7,14 @@
   development preview remains authoritative for its current practice-only slice.
 - DNS alone does not establish production readiness. The owner authorised the
   transition; verify the complete migration before cutting over remaining services.
-- Merge-base choice requested in session: keep the current avatar/Clerk/cPanel build
-  and bring across fixes, or use the milestone PR interface and integrate the rest.
-  These branches contain different screens and overlapping Supabase migration
-  numbers. No branch may be blindly discarded or force-pushed.
+- Owner chose option 1: current avatar/Clerk/cPanel build is canonical. Bring
+  across verified fixes, preserving its interface and agreed business rules.
+  Keep alternate branches, do not merge their overlapping Supabase migrations.
 - Secret-free Linux CI now PASS: frontend build/lint/types and isolated MariaDB
   contracts on PHP 8.2/8.4, run 38860929591. PR #4 is ready for review. Its previous
   CodeRabbit SUCCESS was a skipped draft review, not approval.
-- Non-mutating merge-tree preview found 29 conflicting files. Await the owner's
-  base choice before resolving them. No production cutover or PR merge performed.
+- Consolidate PR #4 into main after checks, retaining alternative branches.
+  Continue production implementation in a separate reviewed branch afterwards.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
   remain server-side; each computer keeps its own configuration. Actual Ubuntu
   checkout/local configuration remains NOT TESTED until that machine is available.
