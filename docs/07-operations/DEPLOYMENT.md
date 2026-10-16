@@ -122,7 +122,8 @@ After each release: check `/api/v1/health`, check `/api/v1/daily` returns today'
 play one quiz as a guest, and confirm API errors are JSON, not `index.html`.
 
 cPanel cron runs two hourly jobs against `~/dyk-backend/current`, so each release picks
-them up without a cron edit: `bin/cleanup.php` (minute 17) and `bin/daily.php` (minute 5).
+them up without a cron edit: `bin/cleanup.php` (minute 17) and `bin/daily.php` (minute 5). Both run through
+`/usr/local/bin/php` (CLI). A bare `php` in cron is the CGI build and silently does nothing.
 
 ## 7. Automated deploy (`.github/workflows/deploy.yml`)
 

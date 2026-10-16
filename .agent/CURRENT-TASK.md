@@ -11,9 +11,18 @@
   76 HTTP/database, 63 competition, 16 daily, 9 concurrency PASS. Mutation check: removing
   the least-recently-used ordering fails the daily suite 5 of 5 runs.
 - Before this work, live `GET /api/v1/daily` returned `null` (no live row for today).
-- Remaining: PR and CI, merge and automatic deploy, add the hourly cron line
-  (`5 * * * * php /home/devgeereact/dyk-backend/current/bin/daily.php`), run it once on
-  the server and check `/api/v1/daily` and the `/daily` page live.
+- Shipped: PR #7 merged after CI (`79d69c3`), automatic deploy PASS. Cron added
+  `5 * * * * /usr/local/bin/php /home/devgeereact/dyk-backend/current/bin/daily.php`
+  (crontab backup in `~/dyk-backend/shared/`). First live run auto-picked
+  `amazing-animals` for 2026-10-16; second run `already_live`. Live `/api/v1/daily`
+  returns it with no answer fields; a guest daily start works; `/daily` page shows it at
+  390, 820 and 1440 px with no overflow or console errors.
+- Found and fixed: cron's bare `php` is the CGI build, so the cleanup cron added earlier
+  had never run (scripts answered 404, exit 0). Both lines now use `/usr/local/bin/php`;
+  a manual cleanup run then PASS.
+- Left in production: one throwaway guest from the live check (no nickname, one
+  unfinished daily attempt, not on any board). Its token was not kept, so it was not
+  deleted through the API.
 - No migration needed: the activator uses the 0004 `daily_challenges` table as it is.
 
 ## Active task, 16 October 2026: cPanel only, Supabase removed (branch feat/cpanel-only)
@@ -47,7 +56,7 @@ Remaining steps, in order:
    before setup. Rules in `docs/07-operations/DEPLOYMENT.md` §7.
 3. Live verification on `doyouknow.soulrefresh.net`: health check, guest play, daily,
    friend challenge, leaderboards, deletion, offline and update prompt, and a real adult
-   Clerk sign-in. Cleanup cron confirmed on the server 16 October 2026 (hourly, minute 17).
+   Clerk sign-in. Cleanup cron confirmed working on the server 16 October 2026 (hourly, minute 17, CLI PHP).
 4. Supabase project deletion: only after steps 1 and 3 are verified, and only with the
    owner's explicit yes at that time.
 
