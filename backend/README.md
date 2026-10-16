@@ -1,10 +1,12 @@
 # cPanel API package
 
-Status: tested local foundation, not a complete Supabase replacement. Do not switch
-all frontend services to this API yet. Profile actions, settings, catalogue filters
-and history now have tested endpoints; ranked/daily/friend competition is also
-ported. Frontend adapters, parent-child linking, content authoring and avatar workers
-still need migration. Unimplemented routes return JSON 404.
+Status, 16 October 2026: this PHP API with MySQL/MariaDB is the app's only backend
+(ADR-003). The frontend calls it only through `src/lib/api.ts`. Catalogue, guest
+sessions, practice, ranked, daily and friend play, leaderboards, profiles, preset avatars,
+settings, history and deletion are implemented and tested locally. Not built yet: content
+authoring and publishing, linking adult accounts to game history, and a parental consent
+flow. Content will be imported from the old project with owner approval. Live deploy is
+not done. Unimplemented routes return JSON 404.
 
 ## Files and deployment layout
 
@@ -64,8 +66,7 @@ still need migration. Unimplemented routes return JSON 404.
 8. Upload public/ into this app's dedicated docroot, private/ into the private path
    above. Do not mirror-delete other sites, API configuration or runtime files.
 9. Verify `/api/v1/health`, then create a test guest and play a seeded/imported test
-   practice quiz. API errors must be JSON, not index.html. Complete the broader
-   migration guide before frontend cutover or production deployment.
+   practice quiz. API errors must be JSON, not index.html.
 
 Clerk's development instance can be used for testing only. Production instance,
 DNS and OAuth configuration still require their own setup. No user import happens
@@ -88,6 +89,7 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | POST /me/age-band | `{ "band": "under_13" }`, one-time age band |
 | POST /me/nickname/random | `{}`, server-generated nickname |
 | POST /me/nickname | `{ "nickname": "…" }`, moderated, 13+ only |
+| POST /me/avatar | `{ "avatar_id": "fox" }`, one of the 12 presets in `Player::AVATARS` |
 | GET /me/settings | Own preferences, safe defaults |
 | POST /me/settings | Strict theme/notifications whitelist, real booleans |
 | GET /me/games?limit=20 | Own server-written finished results, capped at 100 |
@@ -98,8 +100,8 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | GET /quizzes | Published metadata; category_id/age/curriculum_tag/search filters, literal wildcards |
 | GET /quizzes/:slug | One published quiz |
 | GET /daily | Today's published challenge, London server date |
-| GET /leaderboards | board/quiz_slug/limit, public nickname/score rows only |
-| GET /challenges/:code | Public nickname/score preview, labels expiry |
+| GET /leaderboards | board/quiz_slug/limit, public nickname/avatar_id/score rows only |
+| GET /challenges/:code | Public nickname/avatar_id/score preview, labels expiry |
 | GET /me/daily/:id/finished | Owner-only daily completion |
 | POST /attempts/:id/challenge | `{}`, creates/reuses a 30-day friend link |
 | POST /attempts | practice/ranked with quiz_slug, daily, or challenge with challenge_code |
@@ -113,7 +115,8 @@ whitelist id, type, prompt, image, option id/label and slider display bounds onl
 
 Guest sessions expire after seven days by default, store only token hashes and
 contain no child email/name/photo. No cookie/CSRF protocol is implied by this bearer
-API. A future frontend adapter must define its safe storage and session lifecycle.
+API. The frontend keeps the opaque `guest_` token in localStorage key `dyk-guest`, sends
+it as a bearer token and forgets it on a 401 or after `DELETE /session`.
 Rate limits use a keyed hash of the network address, not a stored raw address;
 shared networks may share an allowance. Schedule `php /home/CPANEL_USER/dyk-backend/bin/cleanup.php` at a frequency
 allowed by your host. It removes up to 1000 expired sessions and throttle buckets
@@ -136,8 +139,8 @@ The unit tests generate their own RSA key to check valid/invalid signed sessions
 this tests token verification but does not impersonate or create a real Clerk user.
 Actual Clerk sign-in and cPanel runtime checks are separate.
 
-Full migration, import, competition, avatar queues, rollback and release steps:
-[CPANEL-MIGRATION.md](../docs/07-operations/CPANEL-MIGRATION.md).
+Release steps and safety rules: [DEPLOYMENT.md](../docs/07-operations/DEPLOYMENT.md).
+Remaining gates: [CURRENT-TASK.md](../.agent/CURRENT-TASK.md).
 
 ## Production port progress
 
@@ -159,7 +162,7 @@ Daily starts use the pinned version in snapshot order for all players. A publish
 quiz remains required for new starts. Public scoreboards omit user IDs and ages.
 The API sends a display-only question_deadline and database server_now; PHP still
 grades every answer and owns elapsed time. The React timer accepts this clock while
-retaining its legacy fallback, with duplicate-expiry protection under StrictMode.
+retaining a local fallback, with duplicate-expiry protection under StrictMode.
 
 Tests: tests/http.php supplies a guarded localhost/test-database harness.
 tests/integration.php covers ownership/metadata/practice, tests/competition.php

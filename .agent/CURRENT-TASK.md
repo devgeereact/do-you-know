@@ -1,5 +1,42 @@
 # Current Task
 
+## Active task, 16 October 2026: cPanel only, Supabase removed (branch feat/cpanel-only)
+
+- Done: Supabase removed from the code. The app is a static Vite/React/TypeScript PWA
+  built in CI and served from cPanel (`doyouknow.soulrefresh.net`, own docroot
+  `/home/devgeereact/doyouknow.soulrefresh.net`, proxied Cloudflare record, Full (strict)
+  TLS). The only server is the private PHP API in `backend/` with MySQL/MariaDB. The
+  frontend calls it only through `src/lib/api.ts`. Players are guests; adults use Clerk
+  on `/account` only. Avatars are 12 presets. Decision: ADR-003.
+- Owner decisions today: preset avatars; move content only (categories, quizzes,
+  questions, daily challenges) into MySQL, players start fresh; delete the Supabase
+  project only after the content export and the live app are verified, with the owner's
+  explicit yes at that time; releases through a GitHub Actions SSH deploy.
+- Checks today: typecheck, lint, build PASS. Backend 14 unit, 76 HTTP/database, 63
+  competition, 9 concurrency PASS on local MariaDB. `npm run check:htaccess` 18/18 PASS.
+  Browser run against the local PHP API PASS for catalogue, practice and ranked play,
+  grading, review, history, age group, nickname, preset avatar, settings, leaderboard
+  with avatar and account deletion.
+- Not yet tested: content import, live deploy, real adult Clerk sign-in, GitHub Actions
+  deploy.
+
+Remaining steps, in order:
+
+1. Content import: export categories, quizzes, questions and daily challenges from the
+   old Supabase project and load them into MySQL. Needs the owner's approval before any
+   read of the old project or write to the cPanel database. Verify counts and play a
+   sample of imported quizzes. How daily rows become `live` after import is UNKNOWN
+   (owner: Gideon, next check: during import).
+2. GitHub Actions SSH deploy: needs the owner's approval of the deploy key and secrets
+   before setup. Rules in `docs/07-operations/DEPLOYMENT.md` §7.
+3. Live verification on `doyouknow.soulrefresh.net`: health check, guest play, daily,
+   friend challenge, leaderboards, deletion, offline and update prompt, and a real adult
+   Clerk sign-in. Confirm the cleanup cron on the server.
+4. Supabase project deletion: only after steps 1 and 3 are verified, and only with the
+   owner's explicit yes at that time.
+
+Sections below are history.
+
 ## 16 October 2026: GEE OS 1.4 cpanel contract audit (branch chore/gee-os-cpanel-contract)
 
 - Owner asked to verify every GEE OS cpanel profile file: create what is missing, update
@@ -14,7 +51,7 @@
 - Open, needs the owner: automated GitHub Actions deploy (deploy key and secrets),
   confirming the cleanup cron on the server, pushing this branch and opening a PR.
 
-## Active task, 16 October 2026: full merge and production transition
+## Previous task, 16 October 2026: full merge and production transition (superseded by ADR-003)
 
 - Owner requested full merge/build and shared access from both computers.
 - Continue the Clerk/PHP migration, preserving grading and child privacy. The live
@@ -92,7 +129,7 @@
   - C. Friend challenges: link + share/copy, `/challenge/:code`, exact same questions, head to head. PASS.
   - D. Avatars on `feat/m2-avatars` (stacked on `feat/m2-compete`): migrations 0006 (avatar options) and 0007 (age band required), builder at `/me/avatar`, `inngest` Edge Function with `generate-avatar`. Verified locally up to the missing OpenRouter key. Real painting NOT TESTED.
 - Evidence: `qa/FUNCTIONAL-AUDIT.md`, `qa/evidence/m1-play/`, `qa/evidence/m2-compete/`.
-- Local stack: `supabase start` (ports 5542x). App against it:
+- SUPERSEDED 16 October 2026 (ADR-003), do not use. Former local stack: `supabase start` (ports 5542x). App against it:
   `VITE_SUPABASE_URL=http://127.0.0.1:55421 VITE_SUPABASE_ANON_KEY=<local anon key> npx vite --port 5212`.
 
 ## Next

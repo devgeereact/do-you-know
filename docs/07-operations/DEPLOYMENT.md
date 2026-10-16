@@ -1,13 +1,15 @@
-# Deployment — Static PWA on cPanel (Do You Know)
+# Deployment: static PWA and PHP API on cPanel (Do You Know)
 
-This app builds to a **static `dist/`** folder and is served as plain files. There is
-**no server runtime** — the cPanel host runs PHP/Apache only (typically `git`,
-`rsync`, `mysql`; **no `node`/`npm`**). So the frontend is **built locally** (or in CI)
-and only the built artifacts are shipped.
+The frontend builds to a **static `dist/`** folder served as plain files. The only server
+code is the private PHP 8.2+ API in `backend/` with MySQL/MariaDB. The cPanel host runs
+PHP/Apache only (typically `git`, `rsync`, `mysql`; **no `node`/`npm`**), so the frontend
+is built in CI or on the Mac and only the built artefacts are shipped. Supabase was
+removed from the code on 16 October 2026 (ADR-003).
 
-> **This app's target:** domain `doyouknow.example` (placeholder until the real domain is
-> chosen) → docroot `~/doyouknow.example/` (an addon domain with its **own** docroot).
-> Replace the placeholders (`<domain>`, `<docroot>`) below with these values. If
+> **This app's target:** `doyouknow.soulrefresh.net` → its own docroot
+> `/home/devgeereact/doyouknow.soulrefresh.net`, behind a proxied Cloudflare record with
+> Full (strict) TLS. Private API releases live under `~/dyk-backend`, outside every
+> webroot. Replace the placeholders (`<domain>`, `<docroot>`) below with these values. If
 > you deploy through a personal wrapper/CI, that tooling still has to obey the safety
 > rules below — they exist because breaking them has caused real outages and leaks.
 
@@ -47,6 +49,7 @@ dedicated subdirectory** — for example `~/<domain>/` for an addon domain, or
 sites live in.
 
 Typical options:
+
 - **rsync over SSH** (fast, incremental) into `<docroot>/`.
 - **cPanel Git Version Control** + a `.cpanel.yml` copy step.
 - **FTP/SFTP** upload of `dist/` (CI or manual).
@@ -94,42 +97,65 @@ after upload). See `docs/02-architecture/ARCHITECTURE.md` §8 for the security p
   the EU region with PII scrubbing on. Only browser-safe DSN ships to the client.
 - **CodeRabbit only reviews pull requests.** Use branch → PR → merge; work pushed
   straight to the default branch is never reviewed.
-- **Supabase / ImageKit / Inngest keys shipped to the browser must be write-only or
-  RLS-guarded** (Supabase anon, ImageKit public, Inngest write-only event key). The
-  `service_role` key and Inngest signing key are server-only and never touch this
-  static bundle.
+- **Only browser-safe values ship in the bundle** (`VITE_*`: API URL, Clerk publishable
+  key, ImageKit URL endpoint and public key, Sentry DSN, PostHog key). Database
+  credentials, the Clerk secret and the rate-limit key live only in the private
+  `config.php` and never touch the static bundle.
 
 - **Do You Know specifics.** Create the Sentry project in the **EU (DE) region** with
   default PII scrubbing on — this app has child users. Never attach user emails or
-  nicknames to Sentry events; the user id is enough. Supabase project in an EU region.
+  nicknames to Sentry events; the user id is enough.
 
 ---
 
-## 6. Do You Know: content-triggered rebuilds
-Public quiz and category pages are prerendered at build time, so publishing content
-triggers a rebuild:
-1. `publish_quiz()` / the daily switch add a row to `rebuild_requests`.
-2. Every 5 minutes `send_rebuild_hook()` (pg_cron + pg_net) calls the `trigger-rebuild`
-   Edge Function once for all pending rows.
-3. `trigger-rebuild` sends GitHub `repository_dispatch: content-published`.
-4. The GitHub Actions workflow runs `npm ci && npm run build && node scripts/prerender.mjs`,
-   then deploys `dist/` + `.htaccess` to `~/doyouknow.example/` over SSH/rsync (dry-run
-   step first, exclude list from §3) and uploads source maps to Sentry, deleting `*.map`
-   from the shipped set.
+## 6. API release (PHP and MySQL)
 
-The same workflow runs on merge to `main`. Store `SSH_KEY`, `SSH_HOST`, `SSH_USER`,
-`SENTRY_AUTH_TOKEN` and the `VITE_*` values as GitHub Actions secrets — never in the repo.
+`npm run package:cpanel` builds `dist/` and creates a new ignored `build/cpanel-*`
+directory. Upload its `public/` contents to the app docroot (the API entry
+`backend/public/api.php` becomes `api/api.php`) and its `private/` contents to
+`~/dyk-backend`, outside ALL webroots. Never upload the whole release directory publicly.
+`private/config.php` is a blank template; fill it on the host. Supply `DYK_BACKEND_DIR` in
+the deployed `api/.htaccess`, then run `php bin/migrate.php` with the migration user.
+Exact paths, config fields, endpoint contracts and checks: `backend/README.md`.
 
-## Approved PHP API transition (15 October 2026)
+After each release: check `/api/v1/health`, play one quiz as a guest, and confirm API
+errors are JSON, not `index.html`.
 
-The owner approved a separate cPanel PHP/MySQL backend. The frontend remains static.
-`npm run package:cpanel` creates a new ignored `build/cpanel-*` directory: upload its
-`public/` contents to the dedicated app docroot and its `private/` contents outside
-ALL webroots. Never upload the whole release directory publicly. `private/config.php`
-is a blank template; fill it on-host. Root and API Apache rules are included. Supply
-`DYK_BACKEND_DIR` in deployed `api/.htaccess`, then run private `bin/migrate.php`.
-See `backend/README.md` for exact paths, config fields, endpoint contracts and checks.
+## 7. Automated deploy (`.github/workflows/deploy.yml`)
 
-This package does not perform a frontend backend switch or import Supabase data.
-Practice APIs are implemented; competition, avatars and other profile operations
-still require migration. Do not cut over the full app before their acceptance tests.
+Status: written and committed, NOT TESTED. It cannot run until the owner approves and
+adds the deploy key and secrets below. Nothing deploys from pull requests or feature
+branches.
+
+How it runs: after "Verify application" passes on `main` (or by hand from the Actions
+tab), it builds `dist/`, installs locked PHP dependencies, runs
+`scripts/package-cpanel.mjs`, then over SSH with a pinned host key:
+
+1. uploads `private/` to `~/dyk-backend/releases/<commit>/` (never `config.php`),
+2. links `~/dyk-backend/shared/config.php` into that release,
+3. switches `~/dyk-backend/current` to the new release in one atomic rename,
+4. uploads `public/` into `~/doyouknow.soulrefresh.net/` with no `--delete`, keeping the
+   live `api/.htaccess`, `cgi-bin` and older hashed assets,
+5. checks `https://doyouknow.soulrefresh.net/api/v1/health` and `/`,
+6. keeps the last five backend releases.
+
+It never runs database migrations. Apply those by hand after a backup (§6).
+
+One-time setup (owner approval required for each item):
+
+| Where                        | Name                                                                                                                       | Value                                                                                       |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| cPanel, SSH Access           | dedicated deploy key                                                                                                       | a new ed25519 key used only by this workflow                                                |
+| GitHub secret                | `CPANEL_SSH_KEY`                                                                                                           | private half of that deploy key                                                             |
+| GitHub secret                | `CPANEL_KNOWN_HOSTS`                                                                                                       | the server's verified host key line (`ssh-keyscan -p PORT HOST`, checked against the host)  |
+| GitHub secrets               | `CPANEL_HOST`, `CPANEL_USER`, `CPANEL_PORT`                                                                                | server name, cPanel user, SSH port                                                          |
+| GitHub variables             | `VITE_APP_URL`, `VITE_CLERK_PUBLISHABLE_KEY`, optional `VITE_SENTRY_DSN`, `VITE_POSTHOG_KEY`, `VITE_IMAGEKIT_URL_ENDPOINT` | public browser values only                                                                  |
+| GitHub environment           | `production`                                                                                                               | add the owner as required reviewer to approve each release                                  |
+| Server                       | `~/dyk-backend/shared/config.php`                                                                                          | the live private config (mode 600), already outside the webroot                             |
+| Server, live `api/.htaccess` | `SetEnv DYK_BACKEND_DIR /home/devgeereact/dyk-backend/current`                                                             | confirm or change once; UNKNOWN whether it currently points at `current` or a fixed release |
+
+Rollback: on the server, `cd ~/dyk-backend && ln -sfn releases/<previous-commit>
+current.next && mv -Tf current.next current`, then redeploy the matching public files by
+re-running the workflow for that commit. Database changes are not rolled back by this.
+
+Content pages are not prerendered and there is no content-triggered rebuild.

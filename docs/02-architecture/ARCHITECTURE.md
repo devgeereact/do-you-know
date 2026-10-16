@@ -1,204 +1,192 @@
-# System Architecture — Do You Know
+# System Architecture: Do You Know
 
-## Approved migration, 15 October 2026
-
-The owner approved a staged move to Clerk adult accounts and a PHP/MySQL API on
-cPanel. The implementation plan is `docs/07-operations/CPANEL-MIGRATION.md`.
-Existing Supabase game services remain authoritative until equivalent PHP contracts
-pass behavioural tests. Clerk sessions must not be treated as Supabase sessions.
-The adult account route mounts Clerk separately from guest play. No child identity
-is sent to Clerk by the game flow. Account linking and backend cutover are pending.
-The topology below describes the existing game backend during this transition.
-
-The approved PHP package lives in `backend/`: `public/` contains only `api.php`
-and API `.htaccess`; `src/` holds request, identity and game services; `migrations/`
-holds numbered MySQL migrations; `bin/` holds CLI migration tools; `tests/` holds
-PHP/HTTP checks. `config.example.php` documents server configuration. Composer's
-`vendor/` and live `config.php` are ignored. Deploy everything except `public/`
-outside every webroot. The frontend remains a separately built `dist/` artefact.
+Updated 16 October 2026. Supabase was removed from the code on this date (ADR-003 in
+`docs/08-change-management/DECISIONS.md`). The cPanel PHP/MySQL API is the only backend.
 
 ## 1. Topology
+
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
-│                  Client Browser / Installed PWA                        │
-│   React 18 + Vite + Tailwind · Service Worker (Workbox)               │
-│   Static files on cPanel: prerendered SEO pages + SPA app shell        │
-└──────┬────────────────┬───────────────┬───────────────┬──────────────┘
-       │ RPC + REST     │ images        │ errors        │ events (write-only key)
-       ▼                ▼               ▼               ▼
-┌──────────────┐  ┌────────────┐  ┌────────────┐  ┌────────────────────┐
-│   Supabase   │  │  ImageKit  │  │   Sentry   │  │  Inngest (ingest)  │
-│ Auth (anon,  │  │ avatars,   │  │  (EU, PII  │  │ avatar/requested   │
-│ Google, link)│  │ scenes,    │  │  scrubbed) │  │ questions/draft... │
-│ Postgres+RLS │  │ covers     │  └────────────┘  └─────────┬──────────┘
-│ game RPCs    │  └─────▲──────┘                            │ invokes
-│ pg_cron      │        │ upload                             ▼
-│ Edge Funcs ◄─┼────────┴──────────────────── Supabase Edge Functions
-└──────┬───────┘                              (inngest, trigger-rebuild)
-       │ pg_net (publish → debounced hook)            │ OpenRouter (text + image models)
-       ▼                                              ▼
- GitHub Actions: build → prerender → deploy dist/ to cPanel over FTP/SSH
+│                  Client browser / installed PWA                      │
+│   React 18 + Vite + Tailwind · service worker (Workbox)              │
+│   Static files from cPanel: SPA app shell                            │
+└──────┬───────────────────────┬───────────────┬──────────────┬────────┘
+       │ HTTPS JSON /api/v1     │ adult sign-in │ images       │ errors (optional)
+       ▼                       ▼ (/account)    ▼              ▼
+┌────────────────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐
+│ cPanel (same origin)   │ │   Clerk    │ │  ImageKit  │ │   Sentry   │
+│ api/api.php → private  │ │ (adults    │ │ (quiz cover│ │ (EU, PII   │
+│ PHP 8.2+ in            │ │  only)     │ │  images)   │ │  scrubbed) │
+│ ~/dyk-backend          │ └────────────┘ └────────────┘ └────────────┘
+│ MySQL/MariaDB          │
+└────────────────────────┘
 ```
-The static bundle talks to each managed service over HTTPS. **cPanel only serves
-files** — every piece of logic that must be trusted runs inside Supabase.
+
+- Site: `doyouknow.soulrefresh.net`, own docroot
+  `/home/devgeereact/doyouknow.soulrefresh.net`, behind a proxied Cloudflare record with
+  Full (strict) TLS.
+- The static bundle is built in CI (or on the Mac) and served by Apache. The root
+  `.htaccess` routes `/api/v1/*` to `api/api.php`, the only public PHP file. All PHP code,
+  `vendor/` and `config.php` live outside every webroot, in private releases under
+  `~/dyk-backend`.
+- Everything that must be trusted (grading, timing, scores, ownership, nicknames,
+  avatars) runs in the PHP API against MySQL/MariaDB.
+- Clerk is loaded lazily on `/account` only. Its session tokens are verified server-side
+  with `clerkinc/backend-php`. Children never use accounts.
+- PostHog (optional, consent-gated) is configured through `VITE_POSTHOG_KEY`.
 
 ## 2. Directory layout
+
 ```text
 src/
-├── assets/        # images/svgs imported by code (mascot, scene layers)
 ├── components/
-│   ├── ui/        # primitives: Button, Card, AnswerButton, ScoreRing, AvatarImage, Sheet
-│   ├── game/      # QuestionView, ChoiceAnswers, SliderAnswer, FeedbackSheet, ResultsView, Timer
-│   ├── admin/     # QuizEditor steps, QuestionForm, CsvImport, DailyCalendar, DraftReview
-│   └── …          # ErrorBoundary, InstallPrompt, OfflineBanner, UpdatePrompt, ProtectedRoute
-├── context/       # AuthProvider (+ auto guest sign-in), ThemeProvider (light default)
-├── hooks/         # see docs/02-architecture/HOOKS.md (base + game hooks)
+│   ├── ui/          # Button, Card, buttonClasses
+│   ├── game/        # AnswerButton, SliderAnswer, TimerBadge, ProgressDots, ResultsView,
+│   │                # ResultsBoard, LeaderboardTable, VersusPanel, ChallengeFriend,
+│   │                # NicknamePicker, AgeBandPicker, QuizCard
+│   └── …            # AvatarBadge, AdultAccountControls (Clerk), ErrorBoundary,
+│                    # InstallPrompt, OfflineBanner, UpdatePrompt, SiteHeader, ProtectedRoute
+├── context/         # SessionContext (guest session), ThemeContext (light default)
+├── hooks/           # see docs/02-architecture/HOOKS.md
 ├── lib/
+│   ├── api.ts         # the only door to the PHP API; guest token in localStorage 'dyk-guest'
+│   ├── avatars.ts     # 12 preset avatars (must match Player::AVATARS on the server)
 │   ├── env.ts         # validated, typed import.meta.env
-│   ├── supabase.ts    # typed Supabase client
-│   ├── sentry.ts      # Sentry init (EU, PII scrubbing)
-│   ├── imagekit.ts    # ImageKit URL builder
-│   ├── gameErrors.ts  # RPC error code → friendly copy
+│   ├── gameErrors.ts  # API error code → friendly copy
+│   ├── imagekit.ts    # ImageKit URL builder (quiz cover images)
+│   ├── quizLabels.ts  # display labels
+│   ├── sentry.ts      # optional Sentry init (EU, PII scrubbing)
 │   └── utils.ts       # cn() and small helpers
-├── pages/         # route views (public, play, me, admin/*)
+├── pages/           # route views (see §3)
 ├── services/
-│   ├── gameService.ts        # start/answer/next/finish RPCs
-│   ├── catalogService.ts     # categories, quizzes, curriculum tags (public reads)
-│   ├── leaderboardService.ts # get_leaderboard
-│   ├── challengeService.ts   # create/get friend challenges
-│   ├── profileService.ts     # profile, age band, nickname, delete account
-│   ├── avatarService.ts      # request/activate avatars, poll status
-│   ├── settingsService.ts    # app_settings (theme, notifications)
-│   └── admin/                # quizzes, questions, CSV, drafts, daily, moderation (staff)
-├── types/         # database.types.ts, game.ts (RPC payloads), admin.ts (staff-only)
-├── App.tsx        # providers + router
-├── main.tsx       # bootstrap: Sentry, SW registration, render
-└── index.css      # Tailwind layers + theme CSS variables
-scripts/
-└── prerender.mjs  # build-time: static HTML for public pages + sitemap.xml
-.github/
-└── workflows/     # secret-free build and isolated backend checks before merging
-supabase/
-├── migrations/    # 0001 base · 0002 core tables + RLS · 0003 game RPCs · 0004 jobs
-├── functions/     # Edge Functions (inngest handler, trigger-rebuild) + server-only .env.example
-└── tests/         # run_tests.sh: rebuilds a scratch DB and runs 61 behaviour checks
+│   ├── catalogService.ts   # categories, quizzes, curriculum tags (public reads)
+│   ├── gameService.ts      # attempts, daily, challenges, leaderboards, history
+│   ├── profileService.ts   # profile, age band, nickname, avatar, delete
+│   └── settingsService.ts  # theme and notification preferences
+├── types/           # domain.ts (row shapes), game.ts (game payloads), index.ts
+├── App.tsx          # providers + router
+├── main.tsx         # bootstrap: Sentry, SW registration, render
+└── index.css        # Tailwind layers + theme CSS variables
+backend/
+├── public/api.php   # public entry, deployed as api/api.php
+├── src/             # Api, Catalog, Game, Competition, Player, Identity, RateLimit, Database, Config
+├── migrations/      # additive MySQL migrations 0001–0004
+├── bin/             # migrate.php (CLI ledger), cleanup.php (cron)
+├── tests/           # unit, HTTP/database, competition, concurrency checks
+└── config.example.php
+scripts/             # package-cpanel.mjs, check-htaccess.sh, agent_guard.py, guard.py, verify.py
+.github/workflows/   # verify.yml: secret-free frontend build and isolated backend checks
 ```
-**Dependency direction:** `pages → services → lib`. Components consume `hooks` and
-`context`. Nothing in `lib` imports from `pages`/`components`. Player code never imports
-`types/admin.ts` or `services/admin/*`.
 
-## 3. Rendering & routing
-- SPA with **React Router** (`createBrowserRouter`), plus **prerendered HTML** for public,
-  indexable routes so search engines and link previews see real content.
+**Dependency direction:** `pages → hooks → services → lib/api.ts`. Components consume
+`hooks` and `context`. Nothing in `lib` imports from `pages` or `components`.
 
-| Route | View | Indexed | Prerendered |
-| --- | --- | :-: | :-: |
-| `/` | Home: today's challenge, trending, categories | ✅ | ✅ |
-| `/c/:slug` | Category: quizzes, age/curriculum filters | ✅ | ✅ |
-| `/q/:slug` | Quiz landing: intro, details, Play, top 10 | ✅ | ✅ |
-| `/play/:slug` | Game (practice or ranked) | ❌ | ❌ |
-| `/daily` | Today's challenge → game | ✅ | ✅ |
-| `/challenge/:code` | Friend-challenge preview → game | ❌ | ❌ (OG tags via share card) |
-| `/leaderboards` | Boards by quiz / daily | ✅ | ✅ |
-| `/me` | History, streak, avatar builder, settings, delete account | ❌ | ❌ |
-| `/parent` | Parent sign-in + consent for an under-13 | ❌ | ❌ |
-| `/admin/*` | CMS (staff only; `ProtectedRoute` + `is_staff()`) | ❌ | ❌ |
-| `/how-to-play`, `/about`, `/contact`, `/privacy`, `/terms` | Static | ✅ | ✅ |
+## 3. Rendering and routing
 
-- Deep links work because `.htaccess` serves real files first (prerendered pages) and
-  rewrites everything else to `index.html`; Workbox's `navigateFallback` does the same
-  offline.
-- First visit: `AuthProvider` calls `supabase.auth.signInAnonymously()` the first time a
-  player presses Play, creating a **guest** with no email.
+SPA with React Router. Prerendered SEO pages are not built yet.
+
+| Route                                       | View                                                                 |
+| ------------------------------------------- | -------------------------------------------------------------------- |
+| `/`                                         | Home: today's challenge, categories, quizzes                         |
+| `/c/:slug`                                  | Category: quizzes with age/curriculum filters                        |
+| `/q/:slug`                                  | Quiz landing: intro, details, Play, top scores                       |
+| `/play/:slug`                               | Game (practice or ranked)                                            |
+| `/daily`, `/daily/play`                     | Today's challenge and its game                                       |
+| `/challenge/:code`, `/challenge/:code/play` | Friend-challenge preview and game                                    |
+| `/leaderboards`                             | Boards by quiz / daily                                               |
+| `/me`, `/me/avatar`                         | History, streak, age band, nickname, preset avatar, settings, delete |
+| `/account`                                  | Adult (parent/staff) sign-in with Clerk, loaded lazily               |
+| `/login`                                    | Redirects to `/account`                                              |
+| `/dashboard`                                | Behind `ProtectedRoute` (needs a guest session)                      |
+| `/preview`                                  | Redirects to `/`                                                     |
+
+Deep links work because `.htaccess` serves real files first and rewrites everything else
+to `index.html`; Workbox's `navigateFallback` does the same offline.
 
 ## 4. State management
-- **Auth:** `AuthProvider` (Context) holds the Supabase session; guests are real
-  (anonymous) sessions, so every RPC has an `auth.uid()`.
-- **Game:** `useQuizAttempt` keeps the current `AttemptState`/`AnswerResult` in a
-  reducer. The server is the source of truth; on reload the hook calls `start_attempt`,
-  which **resumes** the open attempt with its clock intact.
-- **Catalogue data:** fetched per view through `services/*`; Workbox caches GETs.
-  (TanStack Query can be added later if caching needs grow.)
-- **UI/theme:** `ThemeProvider` — light by default, follows device dark mode, toggle
-  persisted (storage failures are tolerated).
-- No global store in V1.
 
-## 5. PWA & offline strategy
-- `vite-plugin-pwa` (Workbox `generateSW`) precaches the hashed app shell, icons and the
-  self-hosted fonts. Manifest: `orientation: any`, `display: standalone`,
-  `theme_color #1570C2`, `background_color #EAF6FF`, categories `education, games`.
-- **Runtime caching:** ImageKit → `CacheFirst` (30 days, 200 entries); Supabase REST GETs
-  → `NetworkFirst` (5 s timeout, 5-min fallback). **Game RPCs are POSTs and never cached.**
-- **Offline:** app shell, previously opened quiz pages and images load; Play shows "You
-  need a connection to play — your answers are checked online". `public/offline.html` is
-  the last-resort page.
-- **Updates:** `registerType: 'prompt'`, `skipWaiting: false`; the "Reload to update"
-  prompt is suppressed while a quiz is in progress.
+- **Session:** `SessionProvider` (`src/context/SessionContext.tsx`) holds the guest
+  session. `POST /guest-sessions` issues an opaque `guest_` token, stored in
+  localStorage key `dyk-guest` and sent as a bearer token. A 401 clears it. Players never
+  give an email. `useSession` and `useGuestSession` expose it.
+- **Adults:** Clerk state lives only inside the lazily loaded `/account` page. It does not
+  mark the guest session ready. Game history is not linked to adult accounts yet.
+- **Game:** `useQuizAttempt` keeps the current attempt state in a reducer. The server is
+  the source of truth; on reload `POST /attempts` resumes the open attempt with its clock.
+- **Catalogue data:** fetched per view through `services/*`.
+- **Theme:** `ThemeProvider`, light by default, toggle persisted (storage failures tolerated).
+
+## 5. PWA and offline strategy
+
+- `vite-plugin-pwa` (Workbox `generateSW`) precaches the hashed app shell, icons and
+  self-hosted fonts. Manifest: `orientation: any`, `display: standalone`.
+- **Runtime caching:** ImageKit → `CacheFirst` (30 days, 200 entries). Public catalogue
+  GETs only (`/api/v1/categories|quizzes|curriculum-tags|daily`) → `NetworkFirst`
+  (5 s timeout, 5-minute expiry). Player routes (`/me`, `/attempts`, `/session`,
+  `/guest-sessions`) are never cached.
+- **Offline:** app shell and previously loaded catalogue data. Play needs a connection
+  because answers are checked online. `public/offline.html` is the last-resort page.
+- **Updates:** `registerType: 'prompt'`, `skipWaiting: false`; the update prompt waits
+  while a quiz is in progress.
 
 ## 6. Data flow: answering a question (the integrity path)
+
 ```text
-QuestionView (player taps "Venus")
-  → useQuizAttempt.answer(optionId)
-    → gameService.answerQuestion(attemptId, optionId)
-      → supabase.rpc('answer_question', { p_attempt_id, p_option_id })
-        [Postgres, SECURITY DEFINER]
-        · lock attempt row; check owner = auth.uid(), status, question was shown
-        · read the answer key from the frozen quiz_versions snapshot
-        · time = now() − current_sent_at (server clock), capped at 60 s / timer
-        · insert attempt_answers; bump correct/answered/time; current_sent_at = null
-        ← { is_correct, correct_option_ids, explanation, source_url, is_last }
-  → FeedbackSheet shows result + explanation (clock is stopped while reading)
-  → player taps Next → supabase.rpc('next_question')  (starts the next clock)
-  → after the last one → supabase.rpc('finish_attempt')
-        · totals on the server; writes all-time/weekly/daily bests; updates streak
-        ← { correct, total, answer_time_ms, review[], ranks, versus, needs_nickname }
-  → ResultsView: Play again · Challenge a friend · Share · Next quiz
+Player taps an option
+  → useQuizAttempt.answerOption(optionId)
+    → gameService → api('/attempts/{id}/answer', { option_id })   (or { value } for a slider)
+      [PHP Game.php, inside a transaction]
+      · lock the profile, then the attempt; check owner and status
+      · read the answer key from the frozen quiz_versions snapshot
+      · time = server now − current_sent_at, capped by the frozen timer
+      · insert attempt_answers; update counts and time; stop the clock
+      ← { is_correct, correct_option_ids, explanation, source_url, is_last, … }
+  → feedback shows the result and explanation (the clock is stopped while reading)
+  → Next → POST /attempts/{id}/next (starts the next clock; returns a display deadline)
+  → after the last → POST /attempts/{id}/finish
+      · totals on the server; leaderboard bests; daily streak
+      ← summary with review, ranks and versus data
   → errors: gameErrorMessage(code) for rule errors; Sentry for anything else
 ```
+
 The browser never holds an answer before answering and never sends a score.
 
-## 7. Background work, AI and scheduled jobs
-All of this runs in Supabase — never on cPanel, never in the browser.
+## 7. Background and scheduled work
 
-| Job | Trigger | Runs in | What it does |
-| --- | --- | --- | --- |
-| Avatar generation | client sends `avatar/requested {avatar_id}` after `request_avatar()` | Inngest → Edge Function `inngest` | Re-checks the row is `pending`; builds a prompt from traits + house style; calls the OpenRouter **image** model from `site_config.ai_models`; runs a safety check; uploads to ImageKit `/avatars/`; sets `ready` + `image_url` (or `failed`, freeing the combo). Retries 3× with backoff. |
-| AI question drafts | staff inserts a draft row and sends `questions/draft.requested {draft_id}` | Inngest → Edge Function `inngest` | Calls the OpenRouter **text** model (web-search-capable) with a strict JSON schema; every question must include a `source_url`; stores the result and sets `ready`. Staff then run `import_ai_draft()`. |
-| Daily switch | `pg_cron` hourly | Postgres `activate_daily_challenge()` | At 00:00 London, sets today live and freezes its quiz version. |
-| Scheduled publish | `pg_cron` every 5 min | `publish_due_quizzes()` | Flips due `scheduled` quizzes to `published`. |
-| Site rebuild | `pg_cron` every 5 min | `send_rebuild_hook()` → Edge Function `trigger-rebuild` | One debounced call per batch of publishes → GitHub `repository_dispatch` → Actions rebuild + prerender + deploy. |
-| Housekeeping | `pg_cron` daily 03:30 UTC | `cleanup_stale_data()` | Abandons stale attempts, purges long-expired challenge links. |
+| Job      | Trigger                                                 | What it does                                                                                                                                                                            |
+| -------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Clean-up | cPanel cron running `php ~/dyk-backend/bin/cleanup.php` | Removes up to 1000 expired guest sessions and rate-limit buckets per run. Whether the cron is scheduled on the server is UNKNOWN (owner: Gideon, next check: before live verification). |
 
-Server-only secrets (set with `supabase secrets set`, never in this repo's `.env`):
-`OPENROUTER_API_KEY`, `IMAGEKIT_PRIVATE_KEY`, `INNGEST_SIGNING_KEY`,
-`REBUILD_HOOK_SECRET`, `GITHUB_DISPATCH_TOKEN`. See `supabase/functions/.env.example`.
+There are no background job queues, AI workers or rebuild hooks. Daily challenge rows must
+already have `status = 'live'` for today (London date) to be served; no PHP job switches
+them. How daily rows become live after the content import is UNKNOWN (owner: Gideon,
+next check: content import).
 
-## 8. Build & deploy pipeline
-The server has **no Node/npm** — the build runs locally or in GitHub Actions and only
-static artifacts ship. Full playbook + safety rules: **`docs/07-operations/DEPLOYMENT.md`**.
-1. `npm run build` → `tsc --noEmit` (gate) → Vite build → `dist/` (+ `sw.js`, manifest, maps).
-2. `node scripts/prerender.mjs` → reads **published** categories/quizzes with the anon key
-   (RLS allows only public rows), writes `dist/q/<slug>/index.html`, `dist/c/<slug>/index.html`,
-   etc. with real titles, descriptions, Open Graph tags and intro text, and `dist/sitemap.xml`.
-3. Deploy `dist/*` and root `.htaccess` into **this app's own docroot** via SSH/rsync or
-   FTP from Actions. **Never** a shared docroot; dry-run any delete first.
-4. Upload source maps to Sentry; do not serve `*.map` (`.htaccess` denies them).
+## 8. Build and deploy pipeline
 
-Triggers: push to `main` (after PR review) and `repository_dispatch: content-published`.
+The server has no Node. Full playbook and safety rules: `docs/07-operations/DEPLOYMENT.md`.
+
+1. CI (`.github/workflows/verify.yml`) runs typecheck, lint and build, plus backend checks
+   on PHP 8.2 and 8.4 against a disposable MariaDB. It does not deploy.
+2. `npm run package:cpanel` builds `dist/` and creates an ignored `build/cpanel-*`
+   release with `public/` (docroot) and `private/` (outside every webroot) parts.
+3. Release delivery through a GitHub Actions SSH deploy is planned and needs the owner's
+   approval of the deploy key and secrets. It is not set up yet.
 
 ## 9. Security posture
-- Browser-safe keys only: Supabase **anon** (RLS-guarded), ImageKit **public**, Inngest
-  **write-only event** key, optional PostHog project key.
-- `service_role`, OpenRouter, ImageKit private, Inngest signing and GitHub tokens are
-  Edge Function secrets only.
-- **Answers:** `questions`, `question_options`, `quiz_versions` are staff-only under RLS;
-  players get questions only through `_public_question()`, which strips answer fields.
-- **Writes:** players cannot insert/update attempts, answers, board rows, avatars or
-  protected profile columns; only SECURITY DEFINER functions do, after checks.
-- **Rate limits:** 5 attempt starts/minute; one answer per question; 3 avatars/day.
-- **Children:** no real names stored; generated nicknames for under-13s; parent email
-  only via parental consent; boards show nickname + avatar only.
-- `.htaccess`: HTTPS redirect, `X-Content-Type-Options`, `X-Frame-Options`,
-  `Referrer-Policy`, `Permissions-Policy`, and denies `*.map`/backups.
-- Tests: `supabase/tests/run_tests.sh` proves the rules (61 checks: answer hiding,
-  privilege escalation, fake scores, double answers, timers, versioning, kids' rules).
+
+- Browser-safe values only in `VITE_*`: API URL, Clerk publishable key, ImageKit URL
+  endpoint and public key, Sentry DSN, PostHog key.
+- Database credentials, the Clerk secret or JWT key and the rate-limit key live only in
+  the private `config.php`.
+- **Answers:** quiz versions (with answers) stay in MySQL. Public question payloads
+  whitelist id, type, prompt, image, option id/label and slider display bounds only.
+- **Writes:** a submitted score, role or profile ID is never trusted. Identity comes from
+  the verified bearer token. Every query filters by owner.
+- **Rate limits:** 120 API requests per minute and 10 new guest sessions per hour per
+  network address (keyed hash, raw address not stored).
+- **Children:** no real names, emails or photos; generated nicknames for under-13s;
+  preset avatars only; boards and challenge previews show nickname, avatar and score only.
+- `.htaccess`: HTTPS redirect, HSTS, `X-Content-Type-Options`, frame and referrer
+  policies; denies `*.map`, dotfiles, `config.php` and stray PHP.
+- Tests: `backend/tests/` (unit, HTTP/database, competition, concurrency).

@@ -1,5 +1,9 @@
 # Clerk and cPanel API evidence, 15 October 2026
 
+> Historical record. Supabase was removed from the code on 16 October 2026 (see
+> docs/08-change-management/DECISIONS.md). Current architecture:
+> docs/02-architecture/ARCHITECTURE.md.
+
 Overall: PARTIAL migration. The PHP foundation and a separate practice preview are
 publicly available at https://doyouknow.soulrefresh.net/ through Cloudflare.
 Public DNS, HTTPS and the practice flow PASS on 16 October 2026. Existing Supabase

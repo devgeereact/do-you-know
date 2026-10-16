@@ -6,7 +6,7 @@ project:
   owner: Gideon
   created: 2026-10-14
   location: .
-  summary: Bright, playful quiz PWA for all ages with server-side grading and a CMS at /admin. Canonical build is cPanel (static PWA, private PHP API, MySQL, Clerk); Supabase serves the current preview until cutover.
+  summary: Bright, playful quiz PWA for all ages with server-side grading. cPanel only (static PWA built in CI, private PHP 8.2+ API, MySQL/MariaDB, Clerk for adults on /account). Supabase removed from the code on 2026-10-16 (ADR-003).
 gee_os:
   minimum_version: "0.10.0"
   profile: full-product
@@ -30,7 +30,6 @@ dev_server:
   dev_all_name: doyouknow
 stack_profile: cpanel          # GEE OS 1.4 profile; see AGENTS.md section 2
 stack: [react-18, typescript-strict, vite-6, tailwind-3, vite-plugin-pwa, framer-motion, sentry, imagekit, cpanel-static, php-8.2, mysql-mariadb, clerk]
-legacy_until_cutover: [supabase, inngest]   # docs/07-operations/PRODUCTION-CUTOVER.md
 sources_of_truth:
   memory: docs/00-foundation/PROJECT-MEMORY.md
   rules: docs/00-foundation/RULES.md

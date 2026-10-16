@@ -1,5 +1,9 @@
 # Proposed Clerk and cPanel migration
 
+> Historical record. Supabase was removed from the code on 16 October 2026 (see
+> docs/08-change-management/DECISIONS.md). Current architecture:
+> docs/02-architecture/ARCHITECTURE.md.
+
 Status: APPROVED by the owner on 15 October 2026. Implementation is staged.
 The PHP foundation package is now under backend/; current evidence is
 qa/CPANEL-API.md. It is not a full frontend/backend cutover.
