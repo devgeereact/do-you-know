@@ -69,10 +69,10 @@ src/
 └── index.css        # Tailwind layers + theme CSS variables
 backend/
 ├── public/api.php   # public entry, deployed as api/api.php
-├── src/             # Api, Catalog, Game, Competition, Player, Identity, RateLimit, Database, Config
+├── src/             # Api, Catalog, Game, Competition, Daily, Player, Identity, RateLimit, Database, Config
 ├── migrations/      # additive MySQL migrations 0001–0004
-├── bin/             # migrate.php (CLI ledger), cleanup.php (cron)
-├── tests/           # unit, HTTP/database, competition, concurrency checks
+├── bin/             # migrate.php (CLI ledger), cleanup.php and daily.php (cron)
+├── tests/           # unit, HTTP/database, competition, daily, concurrency checks
 └── config.example.php
 scripts/             # package-cpanel.mjs, check-htaccess.sh, agent_guard.py, guard.py, verify.py
 .github/workflows/   # verify.yml: secret-free frontend build and isolated backend checks
@@ -153,14 +153,14 @@ The browser never holds an answer before answering and never sends a score.
 
 ## 7. Background and scheduled work
 
-| Job      | Trigger                                                 | What it does                                                                                                                                                                            |
-| -------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Clean-up | cPanel cron running `php ~/dyk-backend/bin/cleanup.php` | Removes up to 1000 expired guest sessions and rate-limit buckets per run. Whether the cron is scheduled on the server is UNKNOWN (owner: Gideon, next check: before live verification). |
+| Job             | Trigger                                                                       | What it does                                                                                                                                                                                                           |
+| --------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Clean-up        | cPanel cron, hourly at minute 17: `php ~/dyk-backend/current/bin/cleanup.php` | Removes up to 1000 expired guest sessions and rate-limit buckets per run. Scheduled on the server 16 October 2026.                                                                                                     |
+| Daily challenge | cPanel cron, hourly: `php ~/dyk-backend/current/bin/daily.php` (`Dyk\Daily`)  | Uses the London date. Marks earlier `live` and missed `scheduled` rows `done`, makes today's `scheduled` row `live`, or auto-picks the least recently used published quiz and pins its current version. Safe to rerun. |
 
-There are no background job queues, AI workers or rebuild hooks. Daily challenge rows must
-already have `status = 'live'` for today (London date) to be served; no PHP job switches
-them. How daily rows become live after the content import is UNKNOWN (owner: Gideon,
-next check: content import).
+There are no background job queues, AI workers or rebuild hooks. `GET /daily` serves
+today's row only when `status = 'live'`, so between London midnight and the next hourly
+run it returns `null`.
 
 ## 8. Build and deploy pipeline
 

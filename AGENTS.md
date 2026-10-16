@@ -60,8 +60,8 @@ behind a proxied Cloudflare record with Full (strict) TLS).
   `backend/` (public entry `backend/public/api.php`, deployed as `api/api.php`; code and
   `config.php` outside every webroot, private releases under `~/dyk-backend`) with
   MySQL or MariaDB and Clerk tokens verified on the server (official `clerkinc/backend-php`).
-  Scheduled clean-up (`backend/bin/cleanup.php`) belongs in cPanel cron as described in
-  `backend/README.md`; whether it is scheduled on the server is UNKNOWN until checked.
+  Scheduled clean-up (`backend/bin/cleanup.php`) and the daily challenge activator
+  (`backend/bin/daily.php`) run hourly from cPanel cron as described in `backend/README.md`.
 - Server-side grading, permissions, answer secrecy and child privacy remain mandatory.
 - The frontend's only shippable output is the static `dist/` folder, built in CI or on
   the Mac. Release gates: `docs/07-operations/PRODUCTION-CUTOVER.md` and

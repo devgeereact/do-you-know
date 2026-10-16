@@ -1,5 +1,21 @@
 # Current Task
 
+## Active task, 16 October 2026: daily challenge activator (branch feat/daily-activator)
+
+- Owner goal: build `backend/bin/daily.php`, run by hourly cPanel cron, that marks
+  earlier live days done, sets today's row live and auto-picks a published quiz when
+  nothing is scheduled, with backend tests; then branch, PR, merge after CI, add the cron
+  and verify `/daily` live.
+- Done locally: `Dyk\Daily` (`backend/src/Daily.php`), `backend/bin/daily.php`,
+  `backend/tests/daily.php` (16 checks) added to `verify.yml`. Local MariaDB 11: 14 unit,
+  76 HTTP/database, 63 competition, 16 daily, 9 concurrency PASS. Mutation check: removing
+  the least-recently-used ordering fails the daily suite 5 of 5 runs.
+- Before this work, live `GET /api/v1/daily` returned `null` (no live row for today).
+- Remaining: PR and CI, merge and automatic deploy, add the hourly cron line
+  (`5 * * * * php /home/devgeereact/dyk-backend/current/bin/daily.php`), run it once on
+  the server and check `/api/v1/daily` and the `/daily` page live.
+- No migration needed: the activator uses the 0004 `daily_challenges` table as it is.
+
 ## Active task, 16 October 2026: cPanel only, Supabase removed (branch feat/cpanel-only)
 
 - Done: Supabase removed from the code. The app is a static Vite/React/TypeScript PWA
@@ -31,7 +47,7 @@ Remaining steps, in order:
    before setup. Rules in `docs/07-operations/DEPLOYMENT.md` §7.
 3. Live verification on `doyouknow.soulrefresh.net`: health check, guest play, daily,
    friend challenge, leaderboards, deletion, offline and update prompt, and a real adult
-   Clerk sign-in. Confirm the cleanup cron on the server.
+   Clerk sign-in. Cleanup cron confirmed on the server 16 October 2026 (hourly, minute 17).
 4. Supabase project deletion: only after steps 1 and 3 are verified, and only with the
    owner's explicit yes at that time.
 
