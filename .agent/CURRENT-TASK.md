@@ -11,8 +11,11 @@
   and bring across fixes, or use the milestone PR interface and integrate the rest.
   These branches contain different screens and overlapping Supabase migration
   numbers. No branch may be blindly discarded or force-pushed.
-- Add secret-free Linux CI for frontend build and isolated MariaDB/PHP contracts
-  before merging. PR #4's CodeRabbit SUCCESS was a skipped draft review, not approval.
+- Secret-free Linux CI now PASS: frontend build/lint/types and isolated MariaDB
+  contracts on PHP 8.2/8.4, run 38860929591. PR #4 is ready for review. Its previous
+  CodeRabbit SUCCESS was a skipped draft review, not approval.
+- Non-mutating merge-tree preview found 29 conflicting files. Await the owner's
+  base choice before resolving them. No production cutover or PR merge performed.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
   remain server-side; each computer keeps its own configuration. Actual Ubuntu
   checkout/local configuration remains NOT TESTED until that machine is available.

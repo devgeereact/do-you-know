@@ -27,7 +27,8 @@ Supabase migration numbers 0005 to 0007 overlap with different meanings. Applied
 migrations must not be edited or renumbered blindly. Resolve canonical UI/contracts
 with the owner, reconcile schema changes in new migrations and verify before
 retargeting/merging the PR chain. Keep every branch until its changes are accounted for.
-No PR has been merged for this production transition yet.
+A non-mutating merge-tree preview found 29 conflicting files. PR #4 is now ready
+for review. No PR has been merged for this production transition yet.
 
 ## Required work
 
@@ -58,7 +59,14 @@ Node 24, npm ci, typecheck, lint and static build. Backend: PHP 8.2 and host-mat
 8.4, MariaDB 11.4, locked Composer dependencies, unit checks, migrations twice and
 HTTP/database ownership/grading tests. It uses a disposable database ending _test,
 no cPanel credentials and no deployment step. This is CI, not automatic deployment.
-GitHub-hosted results must be recorded after the first run.
+PASS: GitHub-hosted run 38860929591 at commit d83190d completed successfully:
+frontend and backend jobs for both PHP versions passed. Each backend job ran 14
+unit and 43 isolated HTTP/database checks. Link:
+https://github.com/devgeereact/do-you-know/actions/runs/38860929591.
+The first workflow attempt was rejected before jobs started because runner.temp
+was used outside its allowed context; configuration is now created at step runtime.
+This check does not test the owner's physical Ubuntu checkout or full production
+features. No cPanel/database deployment occurred in this CI batch.
 
 ## Rollback and release gate
 

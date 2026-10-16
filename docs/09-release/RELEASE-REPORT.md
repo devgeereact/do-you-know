@@ -33,3 +33,7 @@ establish a complete production release. The backend ports, production Clerk
 sign-in, account linking, deployment pipeline and canonical merge-base choice are
 unfinished. See docs/07-operations/PRODUCTION-CUTOVER.md for acceptance gates.
 No final production cutover has been performed.
+
+PASS: Linux build/type/lint and isolated MariaDB tests on PHP 8.2/8.4 completed in
+GitHub Actions run 38860929591 (d83190d). This is CI evidence only. The merge-tree
+preview found 29 conflicts; canonical implementation choice remains pending.
