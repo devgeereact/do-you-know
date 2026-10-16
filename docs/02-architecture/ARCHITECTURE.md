@@ -45,7 +45,8 @@ src/
 │   │                # ResultsBoard, LeaderboardTable, VersusPanel, ChallengeFriend,
 │   │                # NicknamePicker, AgeBandPicker, QuizCard
 │   └── …            # AvatarBadge, AdultAccountControls (Clerk), ErrorBoundary,
-│                    # InstallPrompt, OfflineBanner, UpdatePrompt, SiteHeader, ProtectedRoute
+│                    # InstallPrompt, OfflineBanner, UpdatePrompt, AppLayout (shell),
+│                    # SiteHeader, TabBar, SiteFooter, navItems, BackLink
 ├── context/         # SessionContext (guest session), ThemeContext (light default)
 ├── hooks/           # see docs/02-architecture/HOOKS.md
 ├── lib/
@@ -85,20 +86,30 @@ scripts/             # package-cpanel.mjs, check-htaccess.sh, agent_guard.py, gu
 
 SPA with React Router. Prerendered SEO pages are not built yet.
 
-| Route                                       | View                                                                 |
-| ------------------------------------------- | -------------------------------------------------------------------- |
-| `/`                                         | Home: today's challenge, categories, quizzes                         |
-| `/c/:slug`                                  | Category: quizzes with age/curriculum filters                        |
-| `/q/:slug`                                  | Quiz landing: intro, details, Play, top scores                       |
-| `/play/:slug`                               | Game (practice or ranked)                                            |
-| `/daily`, `/daily/play`                     | Today's challenge and its game                                       |
-| `/challenge/:code`, `/challenge/:code/play` | Friend-challenge preview and game                                    |
-| `/leaderboards`                             | Boards by quiz / daily                                               |
-| `/me`, `/me/avatar`                         | History, streak, age band, nickname, preset avatar, settings, delete |
-| `/account`                                  | Adult (parent/staff) sign-in with Clerk, loaded lazily               |
-| `/login`                                    | Redirects to `/account`                                              |
-| `/dashboard`                                | Behind `ProtectedRoute` (needs a guest session)                      |
-| `/preview`                                  | Redirects to `/`                                                     |
+Browse pages render inside `AppLayout`: `SiteHeader` (logo home, and the main nav from
+tablet width), the page, `SiteFooter` (settings, parents and staff) and, on phones, the
+bottom `TabBar` (Quizzes, Today, Boards, Me). The nav list lives in
+`components/navItems.tsx`, so header and tab bar never drift. Play screens sit outside the
+layout and keep only their own back link. Every page below the top level starts with a
+`BackLink` to its parent: quiz to its category, category to all quizzes, avatar, settings
+and account to My games. Results offer "Next quiz" (next in the same category, then any
+other), "Play again" where allowed and "More <category> quizzes".
+
+| Route                                       | View                                                       |
+| ------------------------------------------- | ---------------------------------------------------------- |
+| `/`                                         | Home: today's challenge, categories, quizzes               |
+| `/c/:slug`                                  | Category: quizzes with age/curriculum filters              |
+| `/q/:slug`                                  | Quiz landing: intro, details, Play, top scores             |
+| `/play/:slug`                               | Game (practice or ranked)                                  |
+| `/daily`, `/daily/play`                     | Today's challenge and its game                             |
+| `/challenge/:code`, `/challenge/:code/play` | Friend-challenge preview and game                          |
+| `/leaderboards`                             | Boards by quiz / daily                                     |
+| `/me`, `/me/avatar`                         | History, streak, age band, nickname, preset avatar, delete |
+| `/me/settings`                              | Device settings (light or dark colours); no account needed |
+| `/account`                                  | Adult (parent/staff) sign-in with Clerk, loaded lazily     |
+| `/login`                                    | Redirects to `/account`                                    |
+| `/dashboard`                                | Redirects to `/me/settings`                                |
+| `/preview`                                  | Redirects to `/`                                           |
 
 Deep links work because `.htaccess` serves real files first and rewrites everything else
 to `index.html`; Workbox's `navigateFallback` does the same offline.

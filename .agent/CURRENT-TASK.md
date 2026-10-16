@@ -1,5 +1,18 @@
 # Current Task
 
+## Active task, 16 October 2026: navigation and structure (branch fix/navigation-structure)
+
+- Owner request: the UI looks unstructured; back and next navigation are missing. Full
+  findings and status: `qa/UX-NAVIGATION-AUDIT.md`.
+- Done locally: shared shell (header, phone tab bar, footer), back links on every inner
+  page, results "Next quiz" and "What next?", settings rebuilt at `/me/settings`
+  (guest "Sign out" and the dead notifications toggle removed), per-page title, canonical
+  and robots, favicon 404 fixed, robots.txt and sitemap.xml fixed, compact quiz cards,
+  missing loading and error states. Typecheck, lint, build and verify PASS; local browser
+  run at 320 to 1440 px PASS.
+- Waiting on the owner: approval to merge and deploy; privacy notice text; CSP rollout;
+  Sentry replay decision; a social preview image.
+
 ## Active task, 16 October 2026: daily challenge activator (branch feat/daily-activator)
 
 - Owner goal: build `backend/bin/daily.php`, run by hourly cPanel cron, that marks
