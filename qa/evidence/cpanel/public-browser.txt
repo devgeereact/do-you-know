@@ -1,0 +1,7 @@
+PASS hosted preview layout 375x812
+PASS hosted preview layout 812x375
+PASS hosted preview layout 1440x900
+PASS hosted quiz reaches server result
+PASS hosted Clerk sign-in modal
+PASS no browser page errors
+PASS public root redirect and service worker registration

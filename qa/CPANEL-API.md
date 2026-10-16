@@ -1,8 +1,9 @@
 # Clerk and cPanel API evidence, 15 October 2026
 
 Overall: PARTIAL migration. The PHP foundation and a separate practice preview are
-deployed to the owner's cPanel origin. Public Cloudflare DNS is BLOCKED on saved
-MCP sign-in access. Existing Supabase game routes have not been cut over.
+publicly available at https://doyouknow.soulrefresh.net/ through Cloudflare.
+Public DNS, HTTPS and the practice flow PASS on 16 October 2026. Existing Supabase
+game routes have not been cut over.
 
 ## Clerk development setup
 
@@ -102,12 +103,35 @@ Private pre-deployment backup:
 LiteSpeed required explicit forbidden-path rewrites before SPA/API fallbacks;
 FilesMatch alone did not deny absent private-looking URLs on this host.
 
-BLOCKED: doyouknow.soulrefresh.net has no public A record at this check. The
-Cloudflare MCP plugin is installed on this Mac, but its cached session is expired
-and macOS held the credential-store read. No DNS record was created. Resume with
-the connected MCP after its sign-in is accessible, confirm zone/account and exact
-record, then add proxied A 185.61.152.45 with automatic TTL. Verify public HTTPS
-without certificate exceptions and repeat hosted checks through Cloudflare.
+PASS, 16 October 2026: the DNS blocker is resolved. The authenticated Cloudflare
+MCP confirmed the active soulrefresh.net zone and no existing exact-name record.
+Created one proxied A record, automatic TTL, pointing to 185.61.152.45. Existing
+Full (strict) TLS was read and preserved. No unrelated records/settings changed.
+Record ID: bff968754a7dd7a867aba46adce06864.
+
+PASS: 44 HTTP/database checks through public Cloudflare HTTPS with normal system
+certificate and hostname validation. Includes both practice quizzes through server
+results, answer secrecy, CORS, ownership, invalid Clerk-token rejection and guest
+revocation. API cache control remains no-store and Cloudflare reports DYNAMIC.
+
+PASS: public Chromium checks at 375x812, 812x375 and 1440x900, a quiz through its
+result, hosted Clerk modal, no page errors, service-worker registration and repeat
+root navigation under an active service worker. No IP mapping, certificate bypass
+or simulated Cloudflare header used in these public checks. Completed account
+sign-in and offline play remain NOT TESTED.
+
+The first public browser check caught service-worker navigation bypassing the
+server's root redirect. VITE_CPANEL_PREVIEW=true now redirects / to /preview in
+React too; its default is false for normal builds. Public headers also exposed an
+immutable service-worker response. Critical-file headers now override generic JS
+caching, set no-store and expired Expires. Targeted Cloudflare purges affected only
+this site's root, index.html, sw.js and manifest. Public sw.js now reports BYPASS
+and no-store. Typecheck, lint and preview packaging PASS after the route change.
+
+Public output and screenshot: qa/evidence/cpanel/public-*. DNS rollback removes
+only the created record from the confirmed zone. The private pre-fix own-docroot
+backup is /home/devgeereact/private_backups/doyouknow/before-dns-root-fix-20261016.tar.gz.
+Shared public_html remains untouched.
 
 The React game still uses Supabase. PHP endpoints currently cover identity, catalogue
 and practice only. Daily/ranked/friend competition, history, profile edits/deletion,
@@ -117,5 +141,6 @@ is implemented by this package. Frontend account sign-in does not call the new A
 or link game history yet. Rate-limit identifiers are HMACs, not stored raw addresses;
 shared networks share a quota. These facts prevent a production-readiness claim.
 
-Next: complete Cloudflare access and public DNS verification. Retain the existing
-backend until the replacement passes equivalent tests. No paid image request was made.
+Next: complete an owner-driven adult sign-in test, then continue the remaining
+backend migration stages. Retain the existing backend until replacement features
+pass equivalent tests. No paid image request was made.

@@ -19,8 +19,10 @@
 - Target: doyouknow.soulrefresh.net, own docroot /home/devgeereact/doyouknow.soulrefresh.net.
   SSH alias cpanel works, PHP 8.4/MariaDB 11.4 verified, dedicated database provisioned.
   Cloudflare Origin TLS installed, private configs and quiz examples provisioned.
-  Public DNS BLOCKED: Cloudflare MCP exists in the Mac client, but cached OAuth
-  expired and macOS held credential-store access. No DNS mutation. See qa/CPANEL-API.md.
+  Public DNS/TLS PASS on 16 October: proxied A to 185.61.152.45, automatic TTL,
+  Full (strict) TLS preserved. Public API, quiz results, Clerk modal and repeat visits
+  with an active service worker PASS. Build with VITE_CPANEL_PREVIEW=true for this
+  development site only. Full migration remains PARTIAL. See qa/CPANEL-API.md.
 - No environment files inspected during this setup. Earlier key status below is
   historical and must not override the owner's local-development setup.
 

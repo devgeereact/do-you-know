@@ -4,7 +4,8 @@ Status: APPROVED by the owner on 15 October 2026. Implementation is staged.
 The PHP foundation package is now under backend/; current evidence is
 qa/CPANEL-API.md. It is not a full frontend/backend cutover.
 Updated 15 October 2026. PHP practice is deployed to the dedicated development
-origin; public DNS and full migration remain incomplete. See the deployment record below.
+origin; public DNS is verified as of 16 October. The full migration remains
+incomplete. See the deployment records below.
 
 ## Target and scope
 
@@ -332,3 +333,38 @@ VITE_SENTRY_DSN empty and VITE_POSTHOG_KEY empty. The deployed development root 
 X-Robots-Tag: noindex, nofollow and robots.txt disallows all crawling. Normal builds
 keep their existing configuration. Public service workers remain to be tested through
 Cloudflare after DNS, alongside a completed adult sign-in.
+
+## Public DNS completion, 16 October 2026
+
+The earlier DNS blocker is resolved. Owner requested DNS setup in this session.
+Authenticated Cloudflare MCP checked the account and active soulrefresh.net zone,
+confirmed there was no existing record for the exact name, and created:
+
+- Zone ID: f55e87a9e8b94c876108c3a8dbd0cf25.
+- Record ID: bff968754a7dd7a867aba46adce06864.
+- Type/name: A, doyouknow.soulrefresh.net.
+- Origin: 185.61.152.45, proxied true, TTL 1 (automatic).
+- Existing Full (strict) TLS preserved, no DNSSEC or unrelated site changes.
+
+Public health, practice API, quiz results, Clerk modal and service-worker navigation
+pass with normal browser/system certificate validation. Evidence: qa/CPANEL-API.md.
+A real signed-in account and offline play remain NOT TESTED.
+
+Build this dedicated preview with VITE_CPANEL_PREVIEW=true in addition to the
+previous public overrides. React redirects / to /preview too, because an installed
+service worker can serve the shell without consulting the server's 302. The flag
+defaults to false, so existing normal-build routes keep their original behaviour.
+No Supabase game service was silently redirected to PHP.
+
+Critical shell/worker/manifest responses use no-store, no-cache, must-revalidate,
+max-age=0 and an expired Expires header. The generic immutable-JS rule runs first.
+Purged only this site's /, index.html, sw.js and manifest.webmanifest in Cloudflare;
+public sw.js then returned BYPASS with the required headers. No zone-wide purge.
+
+Rollback DNS: confirm this exact record still matches the above name, type and
+origin, then delete only record bff968754a7dd7a867aba46adce06864 from zone
+f55e87a9e8b94c876108c3a8dbd0cf25. For the preview route/cache fix, a private
+pre-change own-docroot backup is at
+/home/devgeereact/private_backups/doyouknow/before-dns-root-fix-20261016.tar.gz.
+Restore only into this app's own docroot and recheck public HTTPS/headers. Existing
+hashed assets were retained during deployment; shared public_html was not changed.
