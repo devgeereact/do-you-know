@@ -66,6 +66,11 @@ ServerSignature Off
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
   Header always unset X-Powered-By
+  # Content-Security-Policy in REPORT-ONLY mode: browsers log violations to the console
+  # and block nothing. Clerk hosts follow Clerk's CSP guide; the sha256 is the theme
+  # script inline in index.html (recompute it if that script changes). Switch to
+  # enforcing only after a clean run of every journey, including /account sign-in.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'sha256-Am9HIyUXdM5J+HUj6OF9rv6t8Cw120RRcxq9OmM+7wk=' https://clerk.soulrefresh.net https://challenges.cloudflare.com https://*.protect.clerk.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://img.clerk.com https://ik.imagekit.io; font-src 'self' data:; connect-src 'self' https://clerk.soulrefresh.net https://*.protect.clerk.com:* https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://*.ingest.us.sentry.io; worker-src 'self' blob:; frame-src 'self' https://challenges.cloudflare.com https://*.protect.clerk.com; manifest-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'"
   # HSTS on secure responses only, one year, no preload.
   Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on' || req('X-Forwarded-Proto') == 'https'"
 
