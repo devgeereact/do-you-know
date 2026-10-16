@@ -1,16 +1,17 @@
-import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { LeaderboardTable } from '@/components/game/LeaderboardTable';
-import { SiteHeader } from '@/components/SiteHeader';
+import { BackLink } from '@/components/BackLink';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useQuiz } from '@/hooks/useQuiz';
+import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { ageLabel, difficultyLabel } from '@/lib/quizLabels';
 import { isWebUrl } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 function TopPlayers({ slug }: { slug: string }): JSX.Element {
-  const { data } = useLeaderboard(slug, 'all_time', 10);
+  const { data, error } = useLeaderboard(slug, 'all_time', 10);
   return (
     <section className="mt-12">
       <div className="mb-4 flex items-baseline justify-between gap-3">
@@ -24,6 +25,10 @@ function TopPlayers({ slug }: { slug: string }): JSX.Element {
       </div>
       {data ? (
         <LeaderboardTable data={data} />
+      ) : error ? (
+        <p className="text-content-muted">
+          The leaderboard isn’t loading right now. Try again later.
+        </p>
       ) : (
         <p role="status" className="text-content-muted">
           Loading…
@@ -36,10 +41,13 @@ function TopPlayers({ slug }: { slug: string }): JSX.Element {
 export function QuizPage(): JSX.Element {
   const { slug } = useParams<{ slug: string }>();
   const { quiz, notFound, loading, error } = useQuiz(slug);
+  const { categories } = useQuizCatalog();
+  const category = quiz ? categories.find((c) => c.id === quiz.category_id) : undefined;
 
-  useEffect(() => {
-    if (quiz) document.title = `${quiz.seo_title ?? quiz.title} · Do You Know`;
-  }, [quiz]);
+  useDocumentMeta({
+    title: quiz ? (quiz.seo_title ?? quiz.title) : 'Quiz',
+    description: quiz?.seo_description ?? quiz?.intro ?? undefined,
+  });
 
   if (notFound) return <NotFoundPage />;
 
@@ -47,20 +55,30 @@ export function QuizPage(): JSX.Element {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-3xl px-4 pb-16 pt-4 md:px-8">
+        <BackLink
+          to={category ? `/c/${category.slug}` : '/'}
+          label={category ? category.name : 'All quizzes'}
+        />
         {loading && (
           <p role="status" className="py-16 text-center text-content-muted">
             Loading quiz…
           </p>
         )}
         {error && (
-          <p role="alert" className="py-16 text-center text-content">
-            {error}
-          </p>
+          <div role="alert" className="py-16 text-center">
+            <p className="text-content">{error}</p>
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className={buttonClasses('ghost', 'md', 'mt-4')}
+            >
+              Try again
+            </button>
+          </div>
         )}
         {quiz && (
-          <article className="animate-fade-up">
+          <article className="mt-2 animate-fade-up">
             {isWebUrl(quiz.cover_image_url) && (
               <img
                 src={quiz.cover_image_url}

@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LeaderboardTable } from '@/components/game/LeaderboardTable';
-import { SiteHeader } from '@/components/SiteHeader';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
@@ -20,13 +19,14 @@ export function DailyPage(): JSX.Element {
   const { today, playedToday, streak, loading, error } = useDailyChallenge();
   const board = useLeaderboard(null, 'daily', 10);
 
-  useEffect(() => {
-    document.title = "Today's challenge · Do You Know";
-  }, []);
+  useDocumentMeta({
+    title: 'Today’s challenge',
+    description:
+      'One quiz a day, the same questions for everyone. Play once and climb today’s board.',
+  });
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
         <p className="font-bold text-content-muted">{today ? longDate(today.date) : 'Today'}</p>
         <h1 className="text-4xl font-semibold text-content md:text-5xl">Today’s challenge</h1>
@@ -104,8 +104,16 @@ export function DailyPage(): JSX.Element {
                 Full leaderboard
               </Link>
             </div>
-            {board.data && (
+            {board.data ? (
               <LeaderboardTable data={board.data} emptyText="No scores yet today. Be the first!" />
+            ) : board.error ? (
+              <p className="text-content-muted">
+                Today’s board isn’t loading right now. Try again later.
+              </p>
+            ) : (
+              <p role="status" className="text-content-muted">
+                Loading…
+              </p>
             )}
           </section>
         )}

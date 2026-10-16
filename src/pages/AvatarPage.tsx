@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AvatarBadge } from '@/components/AvatarBadge';
-import { SiteHeader } from '@/components/SiteHeader';
+import { BackLink } from '@/components/BackLink';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useProfile } from '@/hooks/useProfile';
 import { AVATARS } from '@/lib/avatars';
@@ -12,6 +13,7 @@ export function AvatarPage(): JSX.Element {
   const { profile, error, setAvatar } = useProfile();
   const { ensureSession } = useGuestSession();
   const navigate = useNavigate();
+  useDocumentMeta({ title: 'Pick your avatar', noindex: true });
   const [saving, setSaving] = useState<string | null>(null);
 
   // Someone landing here directly still gets a guest session (no email).
@@ -28,11 +30,8 @@ export function AvatarPage(): JSX.Element {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-xl px-4 pb-16 pt-4 md:px-8">
-        <Link to="/me" className="inline-flex min-h-tap items-center font-semibold text-primary">
-          <span aria-hidden="true">←&nbsp;</span>My games
-        </Link>
+        <BackLink to="/me" label="My games" />
         <h1 className="mt-4 text-4xl font-semibold text-content">Pick your avatar</h1>
         <p className="mt-2 text-content-muted">It shows next to your name on the leaderboards.</p>
         {error && (

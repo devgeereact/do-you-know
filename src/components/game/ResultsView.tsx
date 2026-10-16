@@ -15,6 +15,34 @@ interface ResultsViewProps {
   isGuest: boolean;
   restarting: boolean;
   onPlayAgain?: () => void; // omitted for the daily challenge (one play a day)
+  /** Another quiz to try, picked by the play screen; null when there is none. */
+  nextQuiz: { slug: string; title: string } | null;
+  /** The wider list to browse: the quiz's category, or all quizzes. */
+  moreTo: { to: string; label: string };
+}
+
+function NextSteps({
+  nextQuiz,
+  moreTo,
+}: Pick<ResultsViewProps, 'nextQuiz' | 'moreTo'>): JSX.Element {
+  return (
+    <nav
+      aria-label="What next"
+      className="mt-10 rounded-2xl border-2 border-surface-border bg-surface p-6 text-center"
+    >
+      <h2 className="text-2xl font-semibold text-content">What next?</h2>
+      <div className="mt-4 flex flex-wrap justify-center gap-3">
+        {nextQuiz && (
+          <Link to={`/q/${nextQuiz.slug}`} className={buttonClasses('primary', 'lg')}>
+            Next quiz: {nextQuiz.title}
+          </Link>
+        )}
+        <Link to={moreTo.to} className={buttonClasses('ghost', 'lg')}>
+          {moreTo.label}
+        </Link>
+      </div>
+    </nav>
+  );
 }
 
 function cheer(correct: number, total: number): string {
@@ -87,6 +115,8 @@ export function ResultsView({
   isGuest,
   restarting,
   onPlayAgain,
+  nextQuiz,
+  moreTo,
 }: ResultsViewProps): JSX.Element {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => headingRef.current?.focus(), []);
@@ -111,14 +141,21 @@ export function ResultsView({
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {nextQuiz && (
+            <Link to={`/q/${nextQuiz.slug}`} className={buttonClasses('primary', 'lg')}>
+              Next quiz
+            </Link>
+          )}
           {onPlayAgain && (
-            <Button size="lg" onClick={onPlayAgain} disabled={restarting}>
+            <Button
+              size="lg"
+              variant={nextQuiz ? 'ghost' : 'primary'}
+              onClick={onPlayAgain}
+              disabled={restarting}
+            >
               Play again
             </Button>
           )}
-          <Link to={`/q/${quizSlug}`} className={buttonClasses('ghost', 'lg')}>
-            Back to quiz
-          </Link>
         </div>
         {summary.mode !== 'challenge' && (
           <ChallengeFriend
@@ -161,6 +198,8 @@ export function ResultsView({
           <ReviewRow key={item.position} item={item} />
         ))}
       </ol>
+
+      <NextSteps nextQuiz={nextQuiz} moreTo={moreTo} />
     </div>
   );
 }

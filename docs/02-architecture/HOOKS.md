@@ -26,6 +26,21 @@ interface UsePWAInstall {
 export function usePWAInstall(): UsePWAInstall;
 ```
 
+### 2a. `useDocumentMeta`
+
+`src/hooks/useDocumentMeta.ts`. Every page calls it once. It sets the document title
+(`<title> · Do You Know`), meta description, `og:title`/`og:description`/`og:url`, the
+canonical link and robots. Personal and play pages pass `noindex: true`.
+
+```ts
+interface DocumentMeta {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+export function useDocumentMeta(meta: DocumentMeta): void;
+```
+
 ### 2. `useOnlineStatus`
 
 `src/hooks/useOnlineStatus.ts`. Reactive connectivity from `online`/`offline` events.

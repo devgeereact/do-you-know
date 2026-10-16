@@ -13,3 +13,8 @@ export function cn(...inputs: ClassValue[]): string {
 export function isWebUrl(url: string | null | undefined): url is string {
   return typeof url === 'string' && /^https?:\/\//i.test(url);
 }
+
+/** Any play screen: /play/:slug, /daily/play or /challenge/:code/play. */
+export function isPlayPath(pathname: string): boolean {
+  return pathname.startsWith('/play/') || /\/play\/?$/.test(pathname);
+}
