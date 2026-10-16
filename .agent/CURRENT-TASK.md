@@ -1,6 +1,24 @@
 # Current Task
 
-## Active task, 15 October 2026: approved Clerk/cPanel migration
+## Active task, 16 October 2026: full merge and production transition
+
+- Owner requested full merge/build and shared access from both computers.
+- Continue the Clerk/PHP migration, preserving grading and child privacy. The live
+  development preview remains authoritative for its current practice-only slice.
+- Production cutover is not authorised by a passing DNS check alone. Do not label
+  the incomplete migration production-ready or silently switch remaining services.
+- Merge-base choice requested in session: keep the current avatar/Clerk/cPanel build
+  and bring across fixes, or use the milestone PR interface and integrate the rest.
+  These branches contain different screens and overlapping Supabase migration
+  numbers. No branch may be blindly discarded or force-pushed.
+- Add secret-free Linux CI for frontend build and isolated MariaDB/PHP contracts
+  before merging. PR #4's CodeRabbit SUCCESS was a skipped draft review, not approval.
+- Shared development: both computers call the cPanel HTTPS API. MySQL credentials
+  remain server-side; each computer keeps its own configuration. Actual Ubuntu
+  checkout/local configuration remains NOT TESTED until that machine is available.
+- Scope and acceptance gates: docs/07-operations/PRODUCTION-CUTOVER.md.
+
+## Previous implementation: approved Clerk/cPanel migration
 
 - Owner approved `docs/07-operations/CPANEL-MIGRATION.md` in session.
 - Current branch: `feat/clerk-cpanel-migration`, based on `feat/m2-avatars`.

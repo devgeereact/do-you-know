@@ -76,6 +76,8 @@ src/
 └── index.css      # Tailwind layers + theme CSS variables
 scripts/
 └── prerender.mjs  # build-time: static HTML for public pages + sitemap.xml
+.github/
+└── workflows/     # secret-free build and isolated backend checks before merging
 supabase/
 ├── migrations/    # 0001 base · 0002 core tables + RLS · 0003 game RPCs · 0004 jobs
 ├── functions/     # Edge Functions (inngest handler, trigger-rebuild) + server-only .env.example
