@@ -153,8 +153,8 @@ The browser never holds an answer before answering and never sends a score.
 
 ## 7. Background and scheduled work
 
-| Job             | Trigger                                                                       | What it does                                                                                                                                                                                                           |
-| --------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Job             | Trigger                                                                                      | What it does                                                                                                                                                                                                           |
+| --------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Clean-up        | cPanel cron, hourly at minute 17: `/usr/local/bin/php ~/dyk-backend/current/bin/cleanup.php` | Removes up to 1000 expired guest sessions and rate-limit buckets per run. Scheduled on the server 16 October 2026.                                                                                                     |
 | Daily challenge | cPanel cron, hourly: `/usr/local/bin/php ~/dyk-backend/current/bin/daily.php` (`Dyk\Daily`)  | Uses the London date. Marks earlier `live` and missed `scheduled` rows `done`, makes today's `scheduled` row `live`, or auto-picks the least recently used published quiz and pins its current version. Safe to rerun. |
 
