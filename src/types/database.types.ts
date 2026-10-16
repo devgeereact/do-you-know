@@ -11,13 +11,7 @@
  * in src/types/admin.ts and only used inside /admin.
  */
 
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 type Timestamps = { created_at: string; updated_at: string };
 
@@ -175,7 +169,11 @@ export type Database = {
     Views: Record<never, never>;
     Functions: {
       start_attempt: {
-        Args: { p_quiz_slug?: string | null; p_mode?: AttemptMode; p_challenge_code?: string | null };
+        Args: {
+          p_quiz_slug?: string | null;
+          p_mode?: AttemptMode;
+          p_challenge_code?: string | null;
+        };
         Returns: Json;
       };
       next_question: { Args: { p_attempt_id: string }; Returns: Json };
@@ -195,6 +193,7 @@ export type Database = {
       set_nickname: { Args: { p_nickname: string }; Returns: string };
       confirm_parental_consent: { Args: Record<string, never>; Returns: undefined };
       request_avatar: { Args: { p_traits: Json }; Returns: Json };
+      get_avatar_options: { Args: Record<string, never>; Returns: Json }; // 0006
       set_active_avatar: { Args: { p_avatar_id: string }; Returns: undefined };
       delete_my_account: { Args: Record<string, never>; Returns: undefined };
       publish_quiz: { Args: { p_quiz_id: string; p_publish_at?: string | null }; Returns: string };

@@ -2,11 +2,20 @@
 Options -Indexes
 RewriteEngine On
 
+# Reject private-looking paths before SPA rewrites, including absent files.
+RewriteRule (^|/)(\.(?!well-known(/|$))|config[^/]*\.php(/|$)|composer\.(json|lock)(/|$)) - [F,L,NC]
+RewriteRule \.(map|bak|sql|zip|env|log|ini|phar)(/|$) - [F,L,NC]
+
 # Force HTTPS
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Real files and folders are served as-is
+# Route API calls before the SPA fallback and preserve bearer authentication.
+RewriteCond %{HTTP:Authorization} .
+RewriteRule ^api(?:/|$) - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteRule ^api/v1(?:/.*)?$ api/api.php [END]
+
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
@@ -26,17 +35,23 @@ RewriteRule ^ index.html [L]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 
-  # Never cache the shell, service worker or manifest
-  <FilesMatch "(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest)$">
-    Header set Cache-Control "no-cache"
-  </FilesMatch>
   # Hashed assets are immutable
   <FilesMatch "\.(js|css|woff2|png|svg|webp|jpg)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Apply after the generic JS rule so service workers are revalidated.
+  <FilesMatch "^(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
   </FilesMatch>
 </IfModule>
 
 # Never serve source maps or backups publicly
 <FilesMatch "\.(map|bak|sql|zip|env)$">
+  Require all denied
+</FilesMatch>
+
+# Configuration and dependency metadata are never public assets.
+<FilesMatch "(^\.|^config.*\.php$|^composer\.(json|lock)$|\.(log|ini|phar)$)">
   Require all denied
 </FilesMatch>

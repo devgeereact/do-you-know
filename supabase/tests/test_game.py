@@ -265,6 +265,11 @@ check("kids get a generated nickname", nick and nick[0].isupper() and nick[-2:].
 traits = {"age_look": "teen", "skin_tone": "brown", "face_shape": "round", "hair_style": "afro",
           "hair_colour": "black", "eye_colour": "dark-brown", "outfit": "hoodie", "outfit_colour": "navy",
           "accessory": "none", "facial_hair": "none"}
+# 0007: no avatar until the age band is known (else a child could pick the adult look).
+no_band = new_user(True)
+check("avatar needs an age band first",
+      rpc_err(no_band, "request_avatar", json.dumps(dict(traits, age_look="adult", facial_hair="goatee"))) == "age_band_required")
+rpc(guest2, "set_age_band", "13_17")
 a1 = rpc(guest, "request_avatar", json.dumps(traits))
 check("avatar request accepted (pending)", a1["status"] == "pending")
 check("same trait combo refused for another user", rpc_err(guest2, "request_avatar", json.dumps(traits)) == "avatar_combo_taken")
@@ -281,6 +286,13 @@ check("avatar shows on leaderboard", lb["top"][0]["avatar_url"] == "https://ik.i
 for i, col in enumerate(["emerald", "mustard"]):
     rpc(guest, "request_avatar", json.dumps(dict(traits, outfit_colour=col)))
 check("daily avatar limit (3) enforced", rpc_err(guest, "request_avatar", json.dumps(dict(traits, outfit_colour="purple"))) == "avatar_limit_reached")
+# 0006: the builder can read its options, and nothing else from site_config.
+opts = rpc(guest, "get_avatar_options")
+check("avatar options: traits, limit and today's count",
+      "hair_style" in opts["traits"] and opts["daily_limit"] == 3 and opts["used_today"] == 3)
+anon_opts = rpc(None, "get_avatar_options")
+check("avatar options expose no other config",
+      set(anon_opts) == {"traits", "daily_limit", "used_today"} and anon_opts["used_today"] == 0)
 
 # ---------------------------------------------------------------- upgrade + parental consent
 superuser().execute("update auth.users set is_anonymous = false, email = 'parent@example.com' where id = %s", (kid,))
@@ -338,10 +350,53 @@ c = superuser(); c.execute("select answer_time_ms from public.attempts where id=
 check("timed-out question counts at most the limit (10 s)", c.fetchone()[0] <= 4500 + 10000)
 as_user(admin).execute("update public.quizzes set time_limit_seconds = null where id = %s", (quiz,))
 
+# ---------------------------------------------------------------- concurrent starts (0005)
+# Transaction A starts an attempt and stays open; B starts the same quiz meanwhile.
+# With the per-player lock, B waits for A and then resumes A's attempt.
+import threading
+import time
+
+racer = new_user(True)
+conn_a = psycopg.connect(DSN)  # not autocommit: we hold the transaction open
+cur_a = conn_a.cursor()
+cur_a.execute("set role authenticated")
+cur_a.execute("select set_config('request.jwt.claim.sub', %s, true)", (str(racer),))
+cur_a.execute("select public.start_attempt('science-starter', 'practice', null)")
+first = cur_a.fetchone()[0]
+
+second = {}
+def start_b():
+    conn_b = psycopg.connect(DSN, autocommit=True)
+    cur_b = conn_b.cursor()
+    cur_b.execute("set role authenticated")
+    cur_b.execute("select set_config('request.jwt.claim.sub', %s, false)", (str(racer),))
+    cur_b.execute("select public.start_attempt('science-starter', 'practice', null)")
+    second["state"] = cur_b.fetchone()[0]
+    conn_b.close()
+
+t_b = threading.Thread(target=start_b)
+t_b.start()
+time.sleep(0.5)
+check("second start waits while the first is open", t_b.is_alive())
+conn_a.commit()
+conn_a.close()
+t_b.join(10)
+c = superuser(); c.execute("select count(*) from public.attempts where user_id=%s and status='in_progress'", (racer,))
+check("concurrent starts make one attempt, not two",
+      c.fetchone()[0] == 1 and second.get("state", {}).get("attempt_id") == first["attempt_id"])
+
 # ---------------------------------------------------------------- account deletion
 rpc(guest2, "delete_my_account")
 c = superuser(); c.execute("select count(*) from public.profiles where id=%s", (guest2,))
 check("delete my account removes profile (cascade)", c.fetchone()[0] == 0)
+
+# ---------------------------------------------------------------- avatar model (0008)
+c = superuser()
+c.execute("select value from public.site_config where key = 'ai_models'")
+models = c.fetchone()[0]
+check("avatar generation uses Gemini 3.1 Flash Image",
+      models["image"] == "google/gemini-3.1-flash-image")
+check("avatar image migration preserves the safety model", models["text"] == "openai/gpt-4o-mini")
 
 failed = [r for r in results if not r[1]]
 print(f"\n{len(results) - len(failed)}/{len(results)} checks passed")

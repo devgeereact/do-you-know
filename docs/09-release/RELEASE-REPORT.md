@@ -1,9 +1,9 @@
 # Release Report
 
 - Version: `UNKNOWN`
-- Candidate: `UNKNOWN`
-- Environment: `UNKNOWN`
-- Decision: `NOT DECIDED`
+- Candidate: `feat/clerk-cpanel-migration` (incomplete migration)
+- Environment: public cPanel development preview
+- Decision: `NO-GO` for full production, 16 October 2026
 - Decision owner and date: `UNKNOWN`
 
 ## Evidence summary
@@ -25,3 +25,15 @@
 - Post-release checks: `UNKNOWN`
 
 Allowed decisions are `GO`, `NO-GO` and `CONDITIONAL GO`. Scaffolding and unchecked boxes are not release evidence.
+
+## Production transition, 16 October 2026
+
+Public DNS, HTTPS and PHP practice are verified in qa/CPANEL-API.md. This does not
+establish a complete production release. The backend ports, production Clerk
+sign-in, account linking, deployment pipeline and canonical merge-base choice are
+unfinished. See docs/07-operations/PRODUCTION-CUTOVER.md for acceptance gates.
+No final production cutover has been performed.
+
+PASS: Linux build/type/lint and isolated MariaDB tests on PHP 8.2/8.4 completed in
+GitHub Actions run 38860929591 (d83190d). This is CI evidence only. The merge-tree
+preview found 29 conflicts; canonical implementation choice remains pending.

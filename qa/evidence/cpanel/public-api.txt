@@ -1,0 +1,44 @@
+PASS /api/v1/health
+PASS /api/v1/health private cache
+PASS /api/v1/no-route
+PASS /api/v1/no-route private cache
+PASS /config.php
+PASS /api/config.php
+PASS /private.sql
+PASS /assets/test.map
+PASS /preview
+PASS /account
+PASS unapproved origin denied
+PASS localhost CORS
+PASS published catalogue
+PASS guest session
+PASS bearer forwarding
+PASS times-tables-sprint start
+PASS question answer fields withheld
+PASS server answer feedback
+PASS next question
+PASS question answer fields withheld
+PASS server answer feedback
+PASS next question
+PASS question answer fields withheld
+PASS server answer feedback
+PASS times-tables-sprint server result
+PASS amazing-animals start
+PASS question answer fields withheld
+PASS server answer feedback
+PASS next question
+PASS question answer fields withheld
+PASS server answer feedback
+PASS next question
+PASS question answer fields withheld
+PASS server answer feedback
+PASS next question
+PASS question answer fields withheld
+PASS server answer feedback
+PASS next question
+PASS question answer fields withheld
+PASS server answer feedback
+PASS amazing-animals server result
+PASS invalid Clerk token denied
+PASS session revocation
+PASS revoked guest denied

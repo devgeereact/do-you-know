@@ -1,5 +1,10 @@
 # Supabase PostgreSQL Schema & Security — Do You Know
 
+Migration note, 15 October 2026: PHP/MySQL replacement is approved in
+`docs/07-operations/CPANEL-MIGRATION.md`. This schema is still authoritative for
+gameplay. Clerk adult IDs are a separate identity and must not replace existing
+profile UUIDs. No MySQL schema or identity mapping has been deployed yet.
+
 The runnable source is `supabase/migrations/` (apply in order with `supabase db push` or
 the SQL editor). This doc explains it.
 
@@ -169,3 +174,12 @@ behaviour checks. **Never point it at your real project** — it drops its test 
 - One numbered file per change (`0005_add_achievements.sql`). Additive and idempotent
   (`if not exists`, `create or replace`, guarded constraints).
 - Never edit an applied migration; add a new one. Run the test kit before pushing.
+
+## PHP foundation implementation (15 October 2026)
+
+`backend/migrations/0001_api_foundation.sql` creates separate MySQL profiles,
+case-sensitive external identity mappings (migration 0002), hashed guest sessions,
+rate limits, categories, quizzes, private version snapshots and practice attempts/
+answers. UUIDs remain internal identifiers; Clerk subjects never substitute for them.
+It is a foundation schema, not a conversion of every Supabase table. There is no
+automatic data import or frontend cutover. See `backend/README.md` for current scope.

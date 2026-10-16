@@ -5,8 +5,28 @@ import path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Relative base so the static bundle works from any cPanel sub-directory.
-  base: './',
+  // Absolute base: the app has its own docroot (docs/07-operations/DEPLOYMENT.md).
+  // A relative base breaks deep links such as /q/<slug>, because assets would
+  // resolve to /q/assets/... If the app ever moves to a subpath, set it here.
+  base: '/',
+
+  // src/lib/env.ts uses dynamic lookups, so expose only these public settings.
+  // A mistakenly prefixed private key must never enter the browser bundle.
+  envPrefix: [
+    'VITE_APP_NAME',
+    'VITE_APP_URL',
+    'VITE_CLERK_PUBLISHABLE_KEY',
+    'VITE_CPANEL_API_URL',
+    'VITE_CPANEL_PREVIEW',
+    'VITE_SUPABASE_URL',
+    'VITE_SUPABASE_ANON_KEY',
+    'VITE_IMAGEKIT_URL_ENDPOINT',
+    'VITE_IMAGEKIT_PUBLIC_KEY',
+    'VITE_SENTRY_DSN',
+    'VITE_INNGEST_EVENT_KEY',
+    'VITE_POSTHOG_KEY',
+    'VITE_POSTHOG_HOST',
+  ],
 
   resolve: {
     alias: {
@@ -35,15 +55,16 @@ export default defineConfig({
       manifest: {
         name: 'Do You Know',
         short_name: 'DoYouKnow',
-        description: 'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
+        description:
+          'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
         theme_color: '#1570C2',
         background_color: '#EAF6FF',
         display: 'standalone',
         orientation: 'any', // never lock: play in portrait or landscape
         categories: ['education', 'games'],
         lang: 'en-GB',
-        scope: './',
-        start_url: './',
+        scope: '/',
+        start_url: '/',
         icons: [
           { src: 'icons/pwa-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/pwa-512.png', sizes: '512x512', type: 'image/png' },

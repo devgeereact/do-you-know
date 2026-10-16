@@ -1,5 +1,10 @@
 # Custom Hooks Specification — Do You Know
 
+Transition note, 15 October 2026: existing Supabase hooks continue to own guest
+play and game records. The isolated adult `/account` flow uses Clerk's `useAuth`,
+guarded by `isLoaded`. A Clerk sign-in must not mark `useGuestSession` ready or
+authorise calls to Supabase as that identity. PHP-backed replacements are pending.
+
 Contracts for every reusable hook in `src/hooks`. Signatures here are the source
 of truth — implementations must match.
 
@@ -102,6 +107,8 @@ interface UseQuizAttempt {
   error: string | null;            // friendly copy
   answerOption: (optionId: string) => Promise<void>;
   answerValue: (value: number) => Promise<void>;   // slider
+  timeUp: () => Promise<void>;     // display timer hit zero: waits out the server's
+                                   // 1.5 s grace, then asks the server to mark it timed out
   next: () => Promise<void>;       // next_question, or finish_attempt after the last
   restart: () => Promise<void>;    // new attempt, same quiz/mode
 }
@@ -143,6 +150,33 @@ interface UseQuizCatalog {
   refresh: () => Promise<void>;
 }
 export function useQuizCatalog(filters?: CatalogFilters): UseQuizCatalog;
+```
+
+### 9a. `useQuiz`
+`src/hooks/useQuiz.ts`
+One published quiz by slug for its landing page (`/q/:slug`). Quiz row only, never questions.
+```ts
+interface UseQuiz {
+  quiz: Quiz | null;
+  notFound: boolean;               // loaded, but not published or no such slug
+  loading: boolean;
+  error: string | null;
+}
+export function useQuiz(slug: string | undefined): UseQuiz;
+```
+
+### 9b. `useMyGames`
+`src/hooks/useMyGames.ts`
+The current player's finished games (newest first) and daily streak, for `/me`. Scores are
+read back from rows the server wrote; RLS limits them to the player's own attempts.
+```ts
+interface UseMyGames {
+  games: GameHistoryItem[];        // from gameService.listMyGames
+  streak: { current: number; best: number };
+  loading: boolean;
+  error: string | null;
+}
+export function useMyGames(): UseMyGames;
 ```
 
 ### 10. `useDailyChallenge`
@@ -191,6 +225,7 @@ The current player's profile and the protected actions that change it.
 ```ts
 interface UseProfile {
   profile: Profile | null;
+  avatarUrl: string | null;        // active avatar image once it is ready
   isChild: boolean;                // age_band === 'under_13'
   loading: boolean;
   error: string | null;
@@ -219,9 +254,12 @@ interface UseAvatarBuilder {
   remainingToday: number;
   error: string | null;            // e.g. "Someone already has that exact look!"
   useAvatar: () => Promise<boolean>; // set_active_avatar
+  ready: boolean;                  // options loaded (get_avatar_options, 0006)
 }
 export function useAvatarBuilder(): UseAvatarBuilder;
 ```
+Mount it only once the player has an age band: `request_avatar` refuses without one (0007),
+and the filtered options depend on it. `/me/avatar` asks for the age band first.
 
 ### 15. `useAnalyticsConsent`
 `src/hooks/useAnalyticsConsent.ts`

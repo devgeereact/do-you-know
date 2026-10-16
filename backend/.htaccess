@@ -1,0 +1,2 @@
+# Defence if somebody accidentally uploads the private package under a webroot.
+Require all denied

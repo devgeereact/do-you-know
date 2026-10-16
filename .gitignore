@@ -31,3 +31,13 @@ supabase/functions/.env
 
 # GEE OS scaffold extras
 build/
+
+# Playwright MCP scratch output
+.playwright-mcp/
+
+# PHP API dependencies and private runtime configuration
+backend/vendor/
+backend/config.php
+backend/config.*.php
+!backend/config.example.php
+backend/.phpunit.cache/

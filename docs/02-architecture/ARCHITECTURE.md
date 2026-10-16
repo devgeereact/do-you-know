@@ -1,5 +1,22 @@
 # System Architecture — Do You Know
 
+## Approved migration, 15 October 2026
+
+The owner approved a staged move to Clerk adult accounts and a PHP/MySQL API on
+cPanel. The implementation plan is `docs/07-operations/CPANEL-MIGRATION.md`.
+Existing Supabase game services remain authoritative until equivalent PHP contracts
+pass behavioural tests. Clerk sessions must not be treated as Supabase sessions.
+The adult account route mounts Clerk separately from guest play. No child identity
+is sent to Clerk by the game flow. Account linking and backend cutover are pending.
+The topology below describes the existing game backend during this transition.
+
+The approved PHP package lives in `backend/`: `public/` contains only `api.php`
+and API `.htaccess`; `src/` holds request, identity and game services; `migrations/`
+holds numbered MySQL migrations; `bin/` holds CLI migration tools; `tests/` holds
+PHP/HTTP checks. `config.example.php` documents server configuration. Composer's
+`vendor/` and live `config.php` are ignored. Deploy everything except `public/`
+outside every webroot. The frontend remains a separately built `dist/` artefact.
+
 ## 1. Topology
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
@@ -59,6 +76,8 @@ src/
 └── index.css      # Tailwind layers + theme CSS variables
 scripts/
 └── prerender.mjs  # build-time: static HTML for public pages + sitemap.xml
+.github/
+└── workflows/     # secret-free build and isolated backend checks before merging
 supabase/
 ├── migrations/    # 0001 base · 0002 core tables + RLS · 0003 game RPCs · 0004 jobs
 ├── functions/     # Edge Functions (inngest handler, trigger-rebuild) + server-only .env.example

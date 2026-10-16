@@ -17,7 +17,9 @@ Input `{ avatar_id }`. Steps (each retried up to 3× with backoff):
    head-and-shoulders portrait, large expressive eyes, warm plain background, everyday
    clothing, friendly expression, no text, no logos, not resembling any real person or
    existing character).
-3. Call OpenRouter with the image model from `site_config.ai_models.image`.
+3. Call OpenRouter with the image model from `site_config.ai_models.image`
+   (`google/gemini-3.1-flash-image` after migration 0008), preferring the
+   lowest-priced provider for that model.
 4. Safety check the result (OpenRouter moderation or a vision model yes/no); on fail →
    `rejected` (frees the trait combination).
 5. Upload to ImageKit `/avatars/<user_id>/<avatar_id>.webp` (512×512).
@@ -40,5 +42,25 @@ supabase functions deploy trigger-rebuild --no-verify-jwt  # checked by x-rebuil
 ```
 Then register `https://<ref>.supabase.co/functions/v1/inngest` as the Inngest app URL.
 
-> Status: contracts are specified here; the function code is built in Milestone 2
-> (see the README build plan).
+> Status: `inngest` serves `generate-avatar` (Milestone 2): `inngest/index.ts`,
+> `inngest/avatar.ts`, prompt builder `inngest/prompt.ts` (+ `prompt_test.ts`).
+> `draft-questions` and `trigger-rebuild` come with the CMS in Milestone 3.
+
+### Secrets for `inngest`
+`OPENROUTER_API_KEY`, `IMAGEKIT_PRIVATE_KEY`, `INNGEST_SIGNING_KEY` (set with
+`supabase secrets set`, never in the repo). `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+are provided by Supabase. Model ids come from `site_config.ai_models`.
+
+### Check and test locally (no paid keys needed)
+```bash
+cd supabase/functions/inngest && deno task check && deno task test
+# Full pipeline against the local stack (runs until the missing OpenRouter key, then
+# the failure handler marks the avatar 'failed'):
+printf 'INNGEST_DEV=1\nINNGEST_BASE_URL=http://host.docker.internal:8288\nINNGEST_SERVE_HOST=http://host.docker.internal:55421\n' > /tmp/fn.env
+supabase functions serve inngest --env-file /tmp/fn.env
+docker run --rm -p 8288:8288 inngest/inngest inngest dev --no-discovery \
+  -u http://host.docker.internal:55421/functions/v1/inngest
+```
+`INNGEST_SERVE_HOST` is needed locally because the edge runtime reports its internal
+port (8081) when it registers. Confirm on the first production deploy that Inngest
+records `https://<ref>.supabase.co/functions/v1/inngest`; if not, set the same secret.
