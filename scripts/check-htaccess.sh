@@ -61,6 +61,19 @@ check "missing static file is 404" 404 /assets/missing.js
 check "API routes to api.php" 200 /api/v1/health
 check "HSTS on HTTPS" 200 / "strict-transport-security"
 check "nosniff" 200 / "x-content-type-options: nosniff"
+check "CSP report-only sent" 200 / "content-security-policy-report-only: default-src 'self'"
+# The CSP allows the inline theme script by hash; a changed script needs a new hash.
+inline_hash=$(python3 - "$root/dist/index.html" <<'PY2'
+import base64, hashlib, re, sys
+html = open(sys.argv[1]).read()
+for body in re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>', html, re.S):
+    print('sha256-' + base64.b64encode(hashlib.sha256(body.encode()).digest()).decode())
+PY2
+)
+for h in $inline_hash; do
+  if grep -q "'$h'" "$root/.htaccess"; then pass=$((pass+1)); echo "PASS CSP hash $h"
+  else fail=$((fail+1)); echo "FAIL inline script $h missing from CSP in .htaccess"; fi
+done
 hdr="X-None: 1"
 check "plain HTTP redirects" 301 /play "location: https://"
 check "ACME challenge over HTTP" 200 /.well-known/acme-challenge/t
