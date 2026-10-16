@@ -37,6 +37,32 @@ PASS: 4 browser timer checks using a temporary development harness: server remai
 time, single expiry, already-expired deadline under StrictMode and legacy fallback.
 The harness was removed after verification. Typecheck/lint/static build PASS.
 No hosted migration/deployment or full frontend cutover in this batch.
-Clerk CLI confirms production state not_started, no production instance/domain.
-Its interactive deploy setup has been requested from the owner, without asking for
-credentials through chat. Backend work continues independently.
+GitHub CI PASS at e176957: frontend and PHP 8.2/8.4 jobs, run 38865109314.
+
+## Clerk production DNS, 16 October 2026
+
+PASS: existing Clerk application app_3KkAGkEUg8ST1ts6ydvb9DWKhI9 now has production
+instance ins_3Kla98MIcql96UMCix0F4nkMef9, domain doyouknow.soulrefresh.net.
+Confirmed Cloudflare zone soulrefresh.net and its account before mutation. No
+conflicting records existed. Added these five CNAMEs with automatic TTL and proxy
+disabled. Existing proxied app A record and unrelated records were preserved.
+
+| Host under doyouknow.soulrefresh.net | Target |
+| --- | --- |
+| clerk | frontend-api.clerk.services |
+| accounts | accounts.clerk.services |
+| clkmail | mail.02snqjrmihkh.clerk.services |
+| clk._domainkey | dkim1.02snqjrmihkh.clerk.services |
+| clk2._domainkey | dkim2.02snqjrmihkh.clerk.services |
+
+PASS: all five public CNAME answers returned their expected targets through 1.1.1.1.
+Clerk deploy status confirms dns=complete, mail=complete, no pending DNS records.
+PARTIAL: automatic SSL issuance remains pending; Google OAuth is pending custom
+production credentials. A completed Google sign-in is NOT TESTED. No keys were
+read, replaced or committed, and no full production cutover occurred.
+
+Rollback for this DNS batch: remove only these newly created records by their
+Cloudflare IDs if the Clerk production configuration is withdrawn:
+0cad6597a4cde56ad036e67b17191767, 185f35a74bf372d83861d39eb642f0ee,
+9aeb210711146f248856cb577552de00, 919007b9bf6a49ed6b997bf25263d57c,
+2c40326a75e812fa62360b18c6c11376. Recheck the app A record and preview afterwards.

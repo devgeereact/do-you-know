@@ -21,8 +21,11 @@
   Hosted preview is not switched to this batch.
 - Competition migration 0004 and PHP port pass 63 extra mode checks plus 9 real
   multi-worker race checks. React accepts server deadlines; 4 browser timer checks
-  PASS. CLI production auth remains not_started; owner asked to run interactive
-  Clerk deploy while backend/frontend work continues.
+  PASS. Owner has provisioned the existing app's production instance
+  ins_3Kla98MIcql96UMCix0F4nkMef9 for doyouknow.soulrefresh.net. All five Clerk
+  CNAMEs added in Cloudflare as DNS only; Clerk DNS/mail verification PASS.
+  Automatic SSL issuance and Google OAuth remain pending. No production keys
+  replaced and no frontend/backend cutover performed.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
   remain server-side; each computer keeps its own configuration. Actual Ubuntu
   checkout/local configuration remains NOT TESTED until that machine is available.
