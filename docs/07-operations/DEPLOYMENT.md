@@ -26,6 +26,19 @@ redirect, SPA rewrite to `index.html`, MIME types, cache + security headers).
 
 ---
 
+### Check the root `.htaccess` before every release
+
+```bash
+npm run build && npm run check:htaccess
+```
+
+`scripts/check-htaccess.sh` serves `dist/` through a throwaway local Apache 2.4 on
+127.0.0.1:8089 and checks 18 rules: shell and service worker revalidated, hashed assets
+and icons immutable, deep links served by the shell, missing static files return 404,
+source maps, dotfiles, `config.php` and stray PHP denied, `/api/v1` routed to
+`api/api.php`, HSTS and nosniff on HTTPS, plain HTTP redirected, ACME challenges open.
+It does not test LiteSpeed or Cloudflare; check the live site after deploy.
+
 ## 2. Ship the artifacts — into THIS app's own docroot
 
 Deploy `dist/*` and `.htaccess` into **the target site's own document root or a
