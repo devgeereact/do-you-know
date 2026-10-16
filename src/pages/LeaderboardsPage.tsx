@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { LeaderboardTable } from '@/components/game/LeaderboardTable';
-import { SiteHeader } from '@/components/SiteHeader';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn } from '@/lib/utils';
@@ -21,15 +20,16 @@ export function LeaderboardsPage(): JSX.Element {
   const [params, setParams] = useSearchParams();
   const boardParam = params.get('board');
   const board: Board = isBoard(boardParam) ? boardParam : 'all_time';
-  const { quizzes, loading: catalogLoading } = useQuizCatalog();
+  const { quizzes, loading: catalogLoading, error: catalogError } = useQuizCatalog();
   const ranked = quizzes.filter((q) => q.is_ranked);
   const quizSlug = params.get('quiz') ?? ranked[0]?.slug ?? null;
 
   const { data, loading, error } = useLeaderboard(board === 'daily' ? null : quizSlug, board, 50);
 
-  useEffect(() => {
-    document.title = 'Leaderboards · Do You Know';
-  }, []);
+  useDocumentMeta({
+    title: 'Leaderboards',
+    description: 'Top scores for every ranked quiz, this week’s best and today’s challenge.',
+  });
 
   const update = (key: 'board' | 'quiz', value: string): void => {
     const next = new URLSearchParams(params);
@@ -39,7 +39,6 @@ export function LeaderboardsPage(): JSX.Element {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
         <h1 className="text-4xl font-semibold text-content">Leaderboards</h1>
         <p className="mt-2 text-content-muted">
@@ -89,9 +88,14 @@ export function LeaderboardsPage(): JSX.Element {
               Loading…
             </p>
           )}
-          {error && (
+          {(error ?? catalogError) && (
             <p role="alert" className="text-content">
-              {error}
+              {error ?? catalogError}
+            </p>
+          )}
+          {board !== 'daily' && !catalogLoading && !catalogError && ranked.length === 0 && (
+            <p className="text-content-muted">
+              No ranked quizzes yet, so there’s no board to show.
             </p>
           )}
           {data && (

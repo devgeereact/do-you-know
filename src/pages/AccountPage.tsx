@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { ClerkProvider } from '@clerk/react';
 import { Link } from 'react-router-dom';
 import { AdultAccountControls } from '@/components/AdultAccountControls';
-import { SiteHeader } from '@/components/SiteHeader';
+import { BackLink } from '@/components/BackLink';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { env } from '@/lib/env';
@@ -10,12 +11,13 @@ import { env } from '@/lib/env';
 /** Clerk loads only after an adult enters this account flow, never during play. */
 export function AccountPage(): JSX.Element {
   const [adultConfirmed, setAdultConfirmed] = useState(false);
+  useDocumentMeta({ title: 'Parent and staff accounts', noindex: true });
 
   return (
     <>
-      <SiteHeader />
-      <main className="mx-auto max-w-2xl px-4 py-8 md:px-8">
-        <h1 className="text-3xl font-semibold text-content">Parent and staff accounts</h1>
+      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+        <BackLink to="/me" label="My games" />
+        <h1 className="mt-2 text-4xl font-semibold text-content">Parent and staff accounts</h1>
         <p className="mt-3 text-content-muted">
           This sign-in is for adults. Children can keep playing as guests without an account.
         </p>
@@ -29,10 +31,7 @@ export function AccountPage(): JSX.Element {
               Adult account sign-in is not available yet. You can still play quizzes.
             </p>
           ) : adultConfirmed ? (
-            <ClerkProvider
-              publishableKey={env.clerkPublishableKey}
-              afterSignOutUrl="/account"
-            >
+            <ClerkProvider publishableKey={env.clerkPublishableKey} afterSignOutUrl="/account">
               <AdultAccountControls />
             </ClerkProvider>
           ) : (

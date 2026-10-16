@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { buttonClasses } from '@/components/ui/buttonClasses';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 
 export function NotFoundPage(): JSX.Element {
+  useDocumentMeta({ title: 'Page not found', noindex: true });
   return (
-    <main className="grid min-h-dvh place-items-center px-6 text-center">
+    <main className="grid min-h-[60dvh] place-items-center px-4 py-12 text-center md:px-8">
       <div className="animate-fade-up">
         <p
           aria-hidden="true"
@@ -15,9 +17,14 @@ export function NotFoundPage(): JSX.Element {
         <p className="mx-auto mb-8 mt-3 max-w-xs text-content-muted">
           The link might be old, or there might be a typo in it.
         </p>
-        <Link to="/" className={buttonClasses('primary')}>
-          Back to the start
-        </Link>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Link to="/" className={buttonClasses('primary')}>
+            Find a quiz
+          </Link>
+          <Link to="/daily" className={buttonClasses('ghost')}>
+            Today’s challenge
+          </Link>
+        </div>
       </div>
     </main>
   );

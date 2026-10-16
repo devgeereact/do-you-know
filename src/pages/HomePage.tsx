@@ -4,6 +4,7 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { QuizCard } from '@/components/game/QuizCard';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 
 // A taste of the game, not a live question: nothing here is marked right or wrong,
 // so no answer reaches the browser (see AGENTS.md §8).
@@ -17,6 +18,7 @@ export function HomePage(): JSX.Element {
   const reduceMotion = useReducedMotion();
   const { categories, quizzes, loading, error, refresh } = useQuizCatalog();
   const daily = useDailyChallenge();
+  useDocumentMeta({});
 
   const rise = (delay: number) =>
     reduceMotion
@@ -29,20 +31,9 @@ export function HomePage(): JSX.Element {
 
   return (
     <main className="overflow-x-clip">
-      <div className="mx-auto grid min-h-[85dvh] max-w-5xl items-center gap-12 px-4 py-12 md:grid-cols-[1.1fr_1fr] md:px-8 landscape:max-md:grid-cols-2 landscape:max-md:gap-6 landscape:max-md:py-6">
+      <div className="mx-auto grid max-w-5xl items-center gap-12 px-4 py-10 md:grid-cols-[1.1fr_1fr] md:px-8 md:py-16 landscape:max-md:grid-cols-2 landscape:max-md:gap-6 landscape:max-md:py-6">
         <motion.section {...rise(0)} className="text-center md:text-left">
-          <div className="mb-6 flex items-center justify-center gap-3 md:justify-start">
-            <img
-              src={`${import.meta.env.BASE_URL}favicon.svg`}
-              alt=""
-              width={48}
-              height={48}
-              className="h-12 w-12"
-            />
-            <span className="font-display text-xl font-semibold text-content">Do You Know</span>
-          </div>
-
-          <h1 className="text-balance text-5xl font-semibold leading-[1.05] tracking-tight text-content md:text-6xl">
+          <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-content sm:text-5xl md:text-6xl">
             Quick quizzes for <span className="text-primary">curious</span> minds
           </h1>
           <p className="mx-auto mt-5 max-w-md text-pretty text-lg text-content-muted md:mx-0">
@@ -54,9 +45,12 @@ export function HomePage(): JSX.Element {
             <a href="#quizzes" className={buttonClasses('primary', 'lg')}>
               Play a quiz
             </a>
-            <Link to="/me" className={buttonClasses('ghost', 'lg')}>
-              My games
-            </Link>
+            {/* The yellow banner below already offers today's challenge when there is one. */}
+            {!daily.today && (
+              <Link to="/leaderboards" className={buttonClasses('ghost', 'lg')}>
+                See the leaderboards
+              </Link>
+            )}
           </div>
           <p className="mt-4 text-sm text-content-muted">
             No account needed to play. Built to be safe for kids.
@@ -66,7 +60,7 @@ export function HomePage(): JSX.Element {
         <motion.figure
           {...rise(0.08)}
           aria-label="Example question"
-          className="relative mx-auto w-full max-w-sm"
+          className="relative mx-auto hidden w-full max-w-sm sm:block"
         >
           <div
             aria-hidden="true"
@@ -96,7 +90,7 @@ export function HomePage(): JSX.Element {
         </motion.figure>
       </div>
 
-      <section id="quizzes" className="mx-auto max-w-5xl scroll-mt-4 px-4 pb-16 md:px-8">
+      <section id="quizzes" className="mx-auto max-w-5xl scroll-mt-4 px-4 pb-8 md:px-8">
         {daily.today && (
           <Link
             to="/daily"
@@ -162,7 +156,7 @@ export function HomePage(): JSX.Element {
         )}
 
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {quizzes.slice(0, 9).map((quiz) => (
+          {quizzes.map((quiz) => (
             <li key={quiz.id}>
               <QuizCard quiz={quiz} />
             </li>

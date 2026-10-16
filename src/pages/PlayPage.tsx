@@ -9,9 +9,11 @@ import { SliderAnswer } from '@/components/game/SliderAnswer';
 import { TimerBadge } from '@/components/game/TimerBadge';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useQuizAttempt } from '@/hooks/useQuizAttempt';
+import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn, isWebUrl } from '@/lib/utils';
-import type { AnswerResult } from '@/types/game';
+import type { AnswerResult, AttemptSummary } from '@/types/game';
 
 function optionState(
   optionId: string,
@@ -31,6 +33,54 @@ function headline(result: AnswerResult): string {
 
 function Centered({ children }: { children: ReactNode }): JSX.Element {
   return <div className="grid min-h-[60dvh] place-items-center text-center">{children}</div>;
+}
+
+/**
+ * Results plus where to go next. The catalogue loads only once the game is over,
+ * so play itself makes no extra requests.
+ */
+function ResultsWithNext({
+  summary,
+  slug,
+  title,
+  isGuest,
+  restarting,
+  onPlayAgain,
+}: {
+  summary: AttemptSummary;
+  slug: string;
+  title: string;
+  isGuest: boolean;
+  restarting: boolean;
+  onPlayAgain?: () => void;
+}): JSX.Element {
+  const { categories, quizzes } = useQuizCatalog();
+  const current = quizzes.find((q) => q.slug === slug);
+  const others = quizzes.filter((q) => q.slug !== slug);
+  // Prefer the next quiz in the same category, in catalogue order, then any other.
+  const sameCategory = current ? others.filter((q) => q.category_id === current.category_id) : [];
+  const after = current
+    ? sameCategory.find((q) => quizzes.indexOf(q) > quizzes.indexOf(current))
+    : undefined;
+  const next = after ?? sameCategory[0] ?? others[0] ?? null;
+  const category = current ? categories.find((c) => c.id === current.category_id) : undefined;
+
+  return (
+    <ResultsView
+      summary={summary}
+      quizSlug={slug}
+      quizTitle={title}
+      isGuest={isGuest}
+      restarting={restarting}
+      onPlayAgain={onPlayAgain}
+      nextQuiz={next ? { slug: next.slug, title: next.title } : null}
+      moreTo={
+        category
+          ? { to: `/c/${category.slug}`, label: `More ${category.name} quizzes` }
+          : { to: '/', label: 'All quizzes' }
+      }
+    />
+  );
 }
 
 interface PlayPageProps {
@@ -79,6 +129,12 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
   const title = state?.quiz.title ?? (daily ? "Today's challenge" : 'Quiz');
   const slug = state?.quiz.slug ?? routeSlug;
   const leaveTo = daily ? '/daily' : challenge ? `/challenge/${code}` : `/q/${slug}`;
+  const backLabel = daily
+    ? 'Today’s challenge'
+    : challenge
+      ? 'Back to the challenge'
+      : 'Back to quiz';
+  useDocumentMeta({ title, noindex: true });
 
   return (
     <main className="mx-auto min-h-dvh max-w-3xl px-4 pb-12 pt-4 md:px-8 lg:max-w-5xl">
@@ -87,7 +143,8 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
           to={leaveTo}
           className="inline-flex min-h-tap items-center rounded-full px-2 font-semibold text-primary"
         >
-          <span aria-hidden="true">←&nbsp;</span>Leave
+          <span aria-hidden="true">←&nbsp;</span>
+          {phase === 'results' ? backLabel : 'Leave'}
         </Link>
         <p className="truncate font-display text-lg font-semibold text-content">{title}</p>
         {timer.secondsLeft !== null && phase === 'question' ? (
@@ -131,10 +188,10 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
       )}
 
       {phase === 'results' && summary && (
-        <ResultsView
+        <ResultsWithNext
           summary={summary}
-          quizSlug={slug}
-          quizTitle={title}
+          slug={slug}
+          title={title}
           isGuest={isGuest}
           restarting={submitting}
           onPlayAgain={kind === 'quiz' ? () => void game.restart() : undefined}

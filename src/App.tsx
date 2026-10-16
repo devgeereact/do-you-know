@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { SessionProvider } from '@/context/SessionContext';
 import { ThemeProvider } from '@/context/ThemeContext';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { AppLayout } from '@/components/AppLayout';
 import { InstallPrompt } from '@/components/InstallPrompt';
 import { UpdatePrompt } from '@/components/UpdatePrompt';
 import { OfflineBanner } from '@/components/OfflineBanner';
 import { HomePage } from '@/pages/HomePage';
-import { DashboardPage } from '@/pages/DashboardPage';
+import { SettingsPage } from '@/pages/SettingsPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { CategoryPage } from '@/pages/CategoryPage';
 import { QuizPage } from '@/pages/QuizPage';
@@ -28,42 +28,42 @@ export function App(): JSX.Element {
       <SessionProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/preview" element={<Navigate to="/" replace />} />
-            <Route path="/c/:slug" element={<CategoryPage />} />
-            <Route path="/q/:slug" element={<QuizPage />} />
+            {/* Browse pages share the header, footer and phone tab bar. */}
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/c/:slug" element={<CategoryPage />} />
+              <Route path="/q/:slug" element={<QuizPage />} />
+              <Route path="/daily" element={<DailyPage />} />
+              <Route path="/leaderboards" element={<LeaderboardsPage />} />
+              <Route path="/challenge/:code" element={<ChallengePage />} />
+              <Route path="/me" element={<MePage />} />
+              <Route path="/me/avatar" element={<AvatarPage />} />
+              <Route path="/me/settings" element={<SettingsPage />} />
+              <Route
+                path="/account"
+                element={
+                  <Suspense
+                    fallback={
+                      <p role="status" className="px-4 py-16 text-center text-content-muted">
+                        Loading account…
+                      </p>
+                    }
+                  >
+                    <AccountPage />
+                  </Suspense>
+                }
+              />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+
+            {/* Play screens are full focus: their own Leave link, no site chrome. */}
             <Route path="/play/:slug" element={<PlayPage />} />
-            <Route path="/me" element={<MePage />} />
-            <Route path="/me/avatar" element={<AvatarPage />} />
-            <Route path="/leaderboards" element={<LeaderboardsPage />} />
-            <Route path="/daily" element={<DailyPage />} />
             <Route path="/daily/play" element={<PlayPage kind="daily" />} />
-            <Route path="/challenge/:code" element={<ChallengePage />} />
             <Route path="/challenge/:code/play" element={<PlayPage kind="challenge" />} />
+
+            <Route path="/preview" element={<Navigate to="/" replace />} />
             <Route path="/login" element={<Navigate to="/account" replace />} />
-            <Route
-              path="/account"
-              element={
-                <Suspense
-                  fallback={
-                    <p role="status" className="p-6">
-                      Loading account…
-                    </p>
-                  }
-                >
-                  <AccountPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/dashboard" element={<Navigate to="/me/settings" replace />} />
           </Routes>
 
           {/* Global PWA affordances */}

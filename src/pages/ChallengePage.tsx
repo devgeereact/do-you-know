@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { SiteHeader } from '@/components/SiteHeader';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useFriendChallenge } from '@/hooks/useFriendChallenge';
 import { AvatarBadge } from '@/components/AvatarBadge';
@@ -10,15 +9,12 @@ export function ChallengePage(): JSX.Element {
   const { code = '' } = useParams<{ code: string }>();
   const { preview, loading, error } = useFriendChallenge(code);
 
-  useEffect(() => {
-    document.title = 'Can you beat your friend? · Do You Know';
-  }, []);
+  useDocumentMeta({ title: 'Can you beat your friend?', noindex: true });
 
   const usable = preview !== null && !preview.expired;
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-xl px-4 pb-16 pt-6 text-center md:px-8">
         {loading && (
           <p role="status" className="py-16 text-content-muted">

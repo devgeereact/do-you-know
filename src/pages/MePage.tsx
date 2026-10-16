@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NicknamePicker } from '@/components/game/NicknamePicker';
-import { SiteHeader } from '@/components/SiteHeader';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -117,10 +117,10 @@ function when(iso: string): string {
 
 export function MePage(): JSX.Element {
   const { games, streak, loading, error } = useMyGames();
+  useDocumentMeta({ title: 'My games', noindex: true });
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
         <h1 className="text-4xl font-semibold text-content">My games</h1>
 
@@ -141,7 +141,7 @@ export function MePage(): JSX.Element {
           <p className="text-content">
             You play as a guest, so no email is needed and your games live on this device.
           </p>
-          <Link to="/dashboard" className={buttonClasses('ghost', 'md', 'mt-4')}>
+          <Link to="/me/settings" className={buttonClasses('ghost', 'md', 'mt-4')}>
             Settings
           </Link>
         </Card>

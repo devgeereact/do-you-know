@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { QuizCard } from '@/components/game/QuizCard';
-import { SiteHeader } from '@/components/SiteHeader';
+import { BackLink } from '@/components/BackLink';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { Button } from '@/components/ui/Button';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn } from '@/lib/utils';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 
 // Age chips map to one representative age; quizzes match when it falls in their range.
 const AGE_CHIPS = [
@@ -30,9 +31,13 @@ export function CategoryPage(): JSX.Element {
   });
   const category = categories.find((c) => c.slug === slug) ?? null;
 
-  useEffect(() => {
-    if (category) document.title = `${category.name} quizzes · Do You Know`;
-  }, [category]);
+  useDocumentMeta({
+    title: category ? `${category.name} quizzes` : 'Quizzes',
+    description: category?.description ?? undefined,
+  });
+
+  // An unknown slug gets the real not-found page, not an empty category.
+  if (!loading && !error && !category) return <NotFoundPage />;
 
   const setFilter = (key: 'age' | 'curriculum', value: string | undefined): void => {
     const next = new URLSearchParams(params);
@@ -43,10 +48,10 @@ export function CategoryPage(): JSX.Element {
 
   return (
     <>
-      <SiteHeader />
       <main className="mx-auto max-w-5xl px-4 pb-16 pt-4 md:px-8">
-        <h1 className="text-4xl font-semibold text-content md:text-5xl">
-          {category?.name ?? (loading ? 'Quizzes' : 'Category not found')}
+        <BackLink to="/" label="All quizzes" />
+        <h1 className="mt-2 text-4xl font-semibold text-content md:text-5xl">
+          {category?.name ?? 'Quizzes'}
         </h1>
         {category?.description && (
           <p className="mt-3 max-w-prose text-lg text-content-muted">{category.description}</p>
