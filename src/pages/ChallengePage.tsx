@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { SiteHeader } from '@/components/SiteHeader';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useFriendChallenge } from '@/hooks/useFriendChallenge';
-import { isWebUrl } from '@/lib/utils';
+import { AvatarBadge } from '@/components/AvatarBadge';
 
 /** A friend's challenge: nickname and score only, then the exact same questions. */
 export function ChallengePage(): JSX.Element {
@@ -40,20 +40,13 @@ export function ChallengePage(): JSX.Element {
 
         {usable && (
           <article className="animate-fade-up rounded-2xl border-2 border-surface-border bg-surface p-6 shadow-lift md:p-8">
-            {isWebUrl(preview.creator.avatar_url) ? (
-              <img
-                src={preview.creator.avatar_url}
-                alt=""
-                className="mx-auto h-24 w-24 rounded-full object-cover"
+            <div className="flex justify-center">
+              <AvatarBadge
+                avatarId={preview.creator.avatar_id}
+                nickname={preview.creator.nickname}
+                size="lg"
               />
-            ) : (
-              <span
-                aria-hidden="true"
-                className="mx-auto grid h-24 w-24 place-items-center rounded-full bg-secondary font-display text-4xl font-semibold text-secondary-fg"
-              >
-                {preview.creator.nickname.charAt(0).toUpperCase()}
-              </span>
-            )}
+            </div>
             <p className="mt-4 font-bold text-content-muted">{preview.quiz.title}</p>
             <h1 className="mt-1 text-balance text-3xl font-semibold text-content md:text-4xl">
               {preview.creator.nickname} scored {preview.creator_correct}/{preview.total}.

@@ -1,50 +1,44 @@
 import { useCallback, useEffect, useState } from 'react';
 import { gameErrorMessage, isGameError } from '@/lib/gameErrors';
 import { reportError } from '@/lib/sentry';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useSession } from '@/hooks/useSession';
 import {
   assignRandomNickname,
-  confirmParentalConsent,
   deleteMyAccount,
-  getAvatar,
   getProfile,
-  setAgeBand as setAgeBandRpc,
-  setNickname as setNicknameRpc,
+  setAgeBand as setAgeBandApi,
+  setAvatar as setAvatarApi,
+  setNickname as setNicknameApi,
 } from '@/services/profileService';
 import type { AgeBand, Profile } from '@/types';
 
 interface UseProfile {
   profile: Profile | null;
-  avatarUrl: string | null; // the active avatar once it is ready
   isChild: boolean; // age_band === 'under_13'
   loading: boolean;
   error: string | null;
   setAgeBand: (band: AgeBand) => Promise<boolean>; // once only
   shuffleNickname: () => Promise<string | null>; // generated; kids' only option
   setNickname: (nickname: string) => Promise<boolean>; // 13+ only
-  confirmParentalConsent: () => Promise<boolean>;
+  setAvatar: (avatarId: string) => Promise<boolean>;
   deleteAccount: () => Promise<boolean>;
+  refresh: () => Promise<void>; // reload after another component changed the profile
 }
 
 /** The current player's profile and the protected actions that change it. */
 export function useProfile(): UseProfile {
-  const { user, loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading, signOut } = useSession();
   const userId = user?.id ?? null;
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const reload = useCallback(async (): Promise<void> => {
     if (!userId) {
       setProfile(null);
-      setAvatarUrl(null);
       return;
     }
-    const next = await getProfile(userId);
-    setProfile(next);
-    const active = next?.avatar_id ? await getAvatar(next.avatar_id) : null;
-    setAvatarUrl(active?.status === 'ready' ? active.image_url : null);
+    setProfile(await getProfile());
   }, [userId]);
 
   useEffect(() => {
@@ -87,7 +81,7 @@ export function useProfile(): UseProfile {
 
   const setAgeBand = useCallback(
     async (band: AgeBand): Promise<boolean> =>
-      (await run('age-band', () => setAgeBandRpc(band).then(() => true))) === true,
+      (await run('age-band', () => setAgeBandApi(band).then(() => true))) === true,
     [run],
   );
 
@@ -98,32 +92,44 @@ export function useProfile(): UseProfile {
 
   const setNickname = useCallback(
     async (nickname: string): Promise<boolean> =>
-      (await run('nickname', () => setNicknameRpc(nickname))) !== null,
+      (await run('nickname', () => setNicknameApi(nickname))) !== null,
     [run],
   );
 
-  const confirmConsent = useCallback(
-    async (): Promise<boolean> =>
-      (await run('consent', () => confirmParentalConsent().then(() => true))) === true,
+  const setAvatar = useCallback(
+    async (avatarId: string): Promise<boolean> =>
+      (await run('avatar', () => setAvatarApi(avatarId).then(() => true))) === true,
     [run],
   );
 
   const deleteAccount = useCallback(
-    async (): Promise<boolean> =>
-      (await run('delete', () => deleteMyAccount().then(() => true))) === true,
-    [run],
+    async (): Promise<boolean> => {
+      // No reload afterwards: the profile and its session no longer exist.
+      setError(null);
+      try {
+        await deleteMyAccount();
+      } catch (err) {
+        reportError(err, { area: 'profile:delete' });
+        setError(gameErrorMessage(err as { message?: string }));
+        return false;
+      }
+      setProfile(null);
+      await signOut();
+      return true;
+    },
+    [signOut],
   );
 
   return {
     profile,
-    avatarUrl,
     isChild: profile?.age_band === 'under_13',
     loading,
     error,
     setAgeBand,
     shuffleNickname,
     setNickname,
-    confirmParentalConsent: confirmConsent,
+    setAvatar,
     deleteAccount,
+    refresh: reload,
   };
 }

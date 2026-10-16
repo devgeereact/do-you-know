@@ -17,13 +17,9 @@ export default defineConfig({
     'VITE_APP_URL',
     'VITE_CLERK_PUBLISHABLE_KEY',
     'VITE_CPANEL_API_URL',
-    'VITE_CPANEL_PREVIEW',
-    'VITE_SUPABASE_URL',
-    'VITE_SUPABASE_ANON_KEY',
     'VITE_IMAGEKIT_URL_ENDPOINT',
     'VITE_IMAGEKIT_PUBLIC_KEY',
     'VITE_SENTRY_DSN',
-    'VITE_INNGEST_EVENT_KEY',
     'VITE_POSTHOG_KEY',
     'VITE_POSTHOG_HOST',
   ],
@@ -35,7 +31,7 @@ export default defineConfig({
   },
 
   // Dedicated port (block 20 in the dev-server registry). strictPort makes a clash
-  // fail loudly instead of drifting to another port and breaking Supabase redirects.
+  // fail loudly instead of drifting to another port and breaking the API's allowed origins.
   server: { port: 5202, strictPort: true },
   preview: { port: 5202, strictPort: true },
 
@@ -99,15 +95,18 @@ export default defineConfig({
             },
           },
           {
-            // Supabase REST reads (published quizzes, categories) — network-first with
-            // short fallback. Game RPCs are POSTs and are never cached.
-            urlPattern: /^https:\/\/.*\.supabase\.co\/rest\/v1\/.*/i,
+            // Public catalogue reads from the PHP API (categories, quizzes, tags, daily).
+            // Network-first with a short fallback for offline browsing. Player routes
+            // (/me, /attempts, /session) are never cached.
+            urlPattern: ({ url, request }) =>
+              request.method === 'GET' &&
+              /^\/api\/v1\/(categories|quizzes|curriculum-tags|daily)(\/|$)/.test(url.pathname),
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'supabase-api',
+              cacheName: 'catalogue-api',
               networkTimeoutSeconds: 5,
               expiration: { maxEntries: 50, maxAgeSeconds: 60 * 5 },
-              cacheableResponse: { statuses: [0, 200] },
+              cacheableResponse: { statuses: [200] },
             },
           },
         ],
@@ -128,7 +127,6 @@ export default defineConfig({
         // Split vendors so the app shell stays tiny and cache-stable.
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          supabase: ['@supabase/supabase-js'],
           motion: ['framer-motion'],
         },
       },

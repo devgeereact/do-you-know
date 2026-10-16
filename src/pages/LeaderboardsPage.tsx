@@ -5,7 +5,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn } from '@/lib/utils';
-import type { Board } from '@/types/database.types';
+import type { Board } from '@/types/domain';
 
 const TABS: { board: Board; label: string }[] = [
   { board: 'all_time', label: 'All time' },

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LeaderboardTable } from '@/components/game/LeaderboardTable';
 import { NicknamePicker } from '@/components/game/NicknamePicker';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
-import type { Board } from '@/types/database.types';
+import type { Board } from '@/types/domain';
 
 interface ResultsBoardProps {
   quizSlug: string;

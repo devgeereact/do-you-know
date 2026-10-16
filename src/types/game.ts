@@ -1,9 +1,9 @@
 /**
- * Shapes of the JSON returned by the game RPCs in
- * supabase/migrations/0003_game_functions.sql. Keep in sync with that file.
+ * Shapes of the JSON returned by the game routes of the PHP API
+ * (backend/src/Game.php and Competition.php). Keep in sync with that code.
  * None of these ever contain an answer before the player has answered.
  */
-import type { AttemptMode, AttemptStatus } from '@/types/database.types';
+import type { AttemptMode, AttemptStatus } from '@/types/domain';
 
 export type QuestionType = 'choice' | 'boolean' | 'slider';
 
@@ -44,7 +44,7 @@ export interface AttemptState {
   time_limit_seconds: number | null;
   question: PublicQuestion | null;
   server_now: string;
-  /** PHP-issued display deadline; optional while legacy Supabase remains supported. */
+  /** Server-issued display deadline for the current question. */
   question_deadline?: string | null;
 }
 
@@ -99,7 +99,7 @@ export interface AttemptSummary {
 export interface LeaderboardRow {
   rank: number;
   nickname: string;
-  avatar_url: string | null;
+  avatar_id: string | null;
   correct: number;
   total: number;
   answer_time_ms: number;
@@ -107,38 +107,24 @@ export interface LeaderboardRow {
   is_me: boolean;
 }
 
-/** get_leaderboard */
+/** GET /leaderboards */
 export interface Leaderboard {
   top: LeaderboardRow[];
   me: { rank: number | null; correct: number; total: number; answer_time_ms: number } | null;
 }
 
-/** get_friend_challenge */
+/** GET /challenges/{code} */
 export interface FriendChallengePreview {
   code: string;
   expired: boolean;
   quiz: { slug: string; title: string; cover_image_url: string | null };
-  creator: { nickname: string; avatar_url: string | null };
+  creator: { nickname: string; avatar_id: string | null };
   creator_correct: number;
   total: number;
   creator_time_ms: number;
 }
 
-/** Avatar traits — allowed values live in site_config.avatar_traits (server-validated). */
-export interface AvatarTraits {
-  age_look: 'child' | 'teen' | 'adult';
-  skin_tone: string;
-  face_shape: string;
-  hair_style: string;
-  hair_colour: string;
-  eye_colour: string;
-  outfit: string;
-  outfit_colour: string;
-  accessory: string;
-  facial_hair: string;
-}
-
-/** Error codes raised by the RPCs, mapped to friendly copy in src/lib/gameErrors.ts. */
+/** Error codes raised by the API, mapped to friendly copy in src/lib/gameErrors.ts. */
 export type GameErrorCode =
   | 'not_signed_in'
   | 'invalid_mode'
@@ -163,8 +149,5 @@ export type GameErrorCode =
   | 'kids_use_generated_nickname'
   | 'invalid_nickname'
   | 'nickname_not_allowed'
-  | 'no_pending_consent'
-  | 'invalid_trait'
-  | 'avatar_limit_reached'
-  | 'avatar_combo_taken'
-  | 'avatar_not_ready';
+  | 'invalid_avatar'
+  | 'network_error';

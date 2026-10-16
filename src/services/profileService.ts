@@ -1,109 +1,33 @@
-import { supabase } from '@/lib/supabase';
-import type { AgeBand, Avatar, AvatarTraits, Profile, ProfileUpdate } from '@/types';
-import type { Json } from '@/types/database.types';
+import { api, clearSession } from '@/lib/api';
+import type { AgeBand, Profile } from '@/types';
 
-/** Fetch the current user's profile (RLS restricts this to their own row). */
-export async function getProfile(userId: string): Promise<Profile | null> {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .maybeSingle();
-
-  if (error) throw error;
-  return data;
+/** The player's own profile. The server only ever returns the caller's row. */
+export function getProfile(): Promise<Profile> {
+  return api<Profile>('/me');
 }
-
-/** Patch the current user's profile. */
-export async function updateProfile(userId: string, patch: ProfileUpdate): Promise<Profile> {
-  const { data, error } = await supabase
-    .from('profiles')
-    .update(patch)
-    .eq('id', userId)
-    .select('*')
-    .single();
-
-  if (error) throw error;
-  return data;
-}
-
-/*
- * Protected profile actions. Age band, nickname and consent can only change
- * through these RPCs (a trigger blocks direct updates to those columns).
- */
 
 /** Sets the age band once; the server refuses a change afterwards. */
 export async function setAgeBand(band: AgeBand): Promise<void> {
-  const { error } = await supabase.rpc('set_age_band', { p_band: band });
-  if (error) throw error;
+  await api<unknown>('/me/age-band', { body: { band } });
 }
 
 /** A friendly generated nickname such as "BraveOtter42". The only option for under-13s. */
 export async function assignRandomNickname(): Promise<string> {
-  const { data, error } = await supabase.rpc('assign_random_nickname');
-  if (error) throw error;
-  return data as string;
+  return (await api<{ nickname: string }>('/me/nickname/random', { body: {} })).nickname;
 }
 
 /** A chosen nickname (13+ only), checked against the blocked-words list. */
 export async function setNickname(nickname: string): Promise<string> {
-  const { data, error } = await supabase.rpc('set_nickname', { p_nickname: nickname });
-  if (error) throw error;
-  return data as string;
+  return (await api<{ nickname: string }>('/me/nickname', { body: { nickname } })).nickname;
 }
 
-export async function confirmParentalConsent(): Promise<void> {
-  const { error } = await supabase.rpc('confirm_parental_consent');
-  if (error) throw error;
+/** Picks one of the preset avatars in src/lib/avatars.ts. */
+export async function setAvatar(avatarId: string): Promise<void> {
+  await api<unknown>('/me/avatar', { body: { avatar_id: avatarId } });
 }
 
-/** Removes the account; profile, attempts, avatars and board rows cascade. */
+/** Removes the player; attempts, settings and board rows go with it. */
 export async function deleteMyAccount(): Promise<void> {
-  const { error } = await supabase.rpc('delete_my_account');
-  if (error) throw error;
-  // The user no longer exists server-side, so only clear this device's session.
-  await supabase.auth.signOut({ scope: 'local' });
-}
-
-/* ---------- Avatars ---------- */
-
-export interface AvatarOptions {
-  traits: Record<keyof AvatarTraits, string[]>; // allowed values, server-owned
-  daily_limit: number;
-  used_today: number;
-}
-
-/** Allowed trait values and today's allowance (0006 get_avatar_options). */
-export async function getAvatarOptions(): Promise<AvatarOptions> {
-  const { data, error } = await supabase.rpc('get_avatar_options');
-  if (error) throw error;
-  return data as unknown as AvatarOptions;
-}
-
-/**
- * Reserves a unique trait combination and creates a pending avatar. The image
- * is painted later by the background job (Inngest → Edge Function).
- */
-export async function requestAvatar(traits: AvatarTraits): Promise<{ avatar_id: string }> {
-  const { data, error } = await supabase.rpc('request_avatar', {
-    p_traits: traits as unknown as Json,
-  });
-  if (error) throw error;
-  return data as unknown as { avatar_id: string };
-}
-
-/** One of the player's own avatars (RLS: owner only). */
-export async function getAvatar(avatarId: string): Promise<Avatar | null> {
-  const { data, error } = await supabase
-    .from('avatars')
-    .select('*')
-    .eq('id', avatarId)
-    .maybeSingle();
-  if (error) throw error;
-  return data;
-}
-
-export async function setActiveAvatar(avatarId: string): Promise<void> {
-  const { error } = await supabase.rpc('set_active_avatar', { p_avatar_id: avatarId });
-  if (error) throw error;
+  await api<unknown>('/me/delete', { body: { confirmed: true } });
+  clearSession(); // the server already revoked this guest token
 }

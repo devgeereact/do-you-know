@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { gameErrorMessage, isGameError } from '@/lib/gameErrors';
 import { reportError } from '@/lib/sentry';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useSession } from '@/hooks/useSession';
 import { getLeaderboard } from '@/services/gameService';
-import type { Board } from '@/types/database.types';
+import type { Board } from '@/types/domain';
 import type { Leaderboard } from '@/types/game';
 
 interface UseLeaderboard {
@@ -16,7 +16,7 @@ interface UseLeaderboard {
 /** A public board for one quiz (or today's daily when the slug is null). */
 export function useLeaderboard(quizSlug: string | null, board: Board, limit = 50): UseLeaderboard {
   // "Your rank" depends on who is signed in, so reload when the user changes.
-  const { user, loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSession();
   const userId = user?.id ?? null;
   const [data, setData] = useState<Leaderboard | null>(null);
   const [loading, setLoading] = useState(true);

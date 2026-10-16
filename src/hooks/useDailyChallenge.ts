@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { reportError } from '@/lib/sentry';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useSession } from '@/hooks/useSession';
 import { getProfile } from '@/services/profileService';
 import { getDailyToday, hasFinishedDaily, londonToday } from '@/services/gameService';
 import type { Quiz } from '@/types';
@@ -23,7 +23,7 @@ function londonYesterday(): string {
  * their streak. A streak only counts while the last daily was today or yesterday.
  */
 export function useDailyChallenge(): UseDailyChallenge {
-  const { user, loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSession();
   const userId = user?.id ?? null;
   const [today, setToday] = useState<UseDailyChallenge['today']>(null);
   const [playedToday, setPlayedToday] = useState(false);
@@ -43,8 +43,8 @@ export function useDailyChallenge(): UseDailyChallenge {
       let days = 0;
       if (userId) {
         const [finished, profile] = await Promise.all([
-          daily ? hasFinishedDaily(userId, daily.id) : Promise.resolve(false),
-          getProfile(userId),
+          daily ? hasFinishedDaily(daily.id) : Promise.resolve(false),
+          getProfile(),
         ]);
         played = finished;
         const last = profile?.last_daily_date ?? null;

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { buttonClasses } from '@/components/ui/buttonClasses';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { QuizCard } from '@/components/game/QuizCard';
@@ -15,8 +14,6 @@ const TEASER = {
 } as const;
 
 export function HomePage(): JSX.Element {
-  const { user } = useSupabaseAuth();
-  const signedIn = user !== null && user.is_anonymous !== true;
   const reduceMotion = useReducedMotion();
   const { categories, quizzes, loading, error, refresh } = useQuizCatalog();
   const daily = useDailyChallenge();
@@ -57,15 +54,9 @@ export function HomePage(): JSX.Element {
             <a href="#quizzes" className={buttonClasses('primary', 'lg')}>
               Play a quiz
             </a>
-            {signedIn ? (
-              <Link to="/me" className={buttonClasses('ghost', 'lg')}>
-                My games
-              </Link>
-            ) : (
-              <Link to="/login" className={buttonClasses('ghost', 'lg')}>
-                Save my progress
-              </Link>
-            )}
+            <Link to="/me" className={buttonClasses('ghost', 'lg')}>
+              My games
+            </Link>
           </div>
           <p className="mt-4 text-sm text-content-muted">
             No account needed to play. Built to be safe for kids.

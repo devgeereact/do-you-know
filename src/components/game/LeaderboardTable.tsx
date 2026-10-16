@@ -1,5 +1,6 @@
-import { cn, isWebUrl } from '@/lib/utils';
-import type { Leaderboard, LeaderboardRow } from '@/types/game';
+import { AvatarBadge } from '@/components/AvatarBadge';
+import { cn } from '@/lib/utils';
+import type { Leaderboard } from '@/types/game';
 
 interface LeaderboardTableProps {
   data: Leaderboard;
@@ -9,27 +10,6 @@ interface LeaderboardTableProps {
 
 function seconds(ms: number): string {
   return `${(ms / 1000).toLocaleString('en-GB', { maximumFractionDigits: 1 })} s`;
-}
-
-function Avatar({ row }: { row: Pick<LeaderboardRow, 'nickname' | 'avatar_url'> }): JSX.Element {
-  if (isWebUrl(row.avatar_url)) {
-    return (
-      <img
-        src={row.avatar_url}
-        alt=""
-        loading="lazy"
-        className="h-10 w-10 shrink-0 rounded-full object-cover"
-      />
-    );
-  }
-  return (
-    <span
-      aria-hidden="true"
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-sky/30 font-display font-semibold text-primary"
-    >
-      {row.nickname.charAt(0).toUpperCase()}
-    </span>
-  );
 }
 
 /** Ranked rows: nickname, avatar, score and time only. Never ids or emails. */
@@ -64,7 +44,7 @@ export function LeaderboardTable({
               <span className="sr-only">Rank </span>
               {row.rank}
             </span>
-            <Avatar row={row} />
+            <AvatarBadge avatarId={row.avatar_id} nickname={row.nickname} />
             <span className="flex min-w-0 flex-1 items-center gap-2">
               <span className="truncate font-semibold text-content">{row.nickname}</span>
               {row.is_me && <span className="shrink-0 text-sm font-bold text-primary">You</span>}

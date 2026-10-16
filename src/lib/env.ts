@@ -7,14 +7,10 @@ interface AppEnv {
   appName: string;
   appUrl: string;
   clerkPublishableKey: string;
-  cpanelApiUrl: string;
-  cpanelPreview: boolean;
-  supabaseUrl: string;
-  supabaseAnonKey: string;
+  apiUrl: string; // PHP API base, same origin in production
   imagekitUrlEndpoint: string;
   imagekitPublicKey: string;
   sentryDsn: string;
-  inngestEventKey: string;
   posthogKey: string; // optional: empty disables analytics
   posthogHost: string;
   isProd: boolean;
@@ -40,20 +36,16 @@ function requireKeys(keys: (keyof ImportMetaEnv)[]): void {
   }
 }
 
-requireKeys(['VITE_SUPABASE_URL', 'VITE_SUPABASE_ANON_KEY']);
+requireKeys(['VITE_CPANEL_API_URL']);
 
 export const env: AppEnv = {
   appName: read('VITE_APP_NAME', 'Do You Know'),
   appUrl: read('VITE_APP_URL'),
   clerkPublishableKey: read('VITE_CLERK_PUBLISHABLE_KEY'),
-  cpanelApiUrl: read('VITE_CPANEL_API_URL', '/api/v1'),
-  cpanelPreview: read('VITE_CPANEL_PREVIEW') === 'true',
-  supabaseUrl: read('VITE_SUPABASE_URL'),
-  supabaseAnonKey: read('VITE_SUPABASE_ANON_KEY'),
+  apiUrl: read('VITE_CPANEL_API_URL', '/api/v1'),
   imagekitUrlEndpoint: read('VITE_IMAGEKIT_URL_ENDPOINT'),
   imagekitPublicKey: read('VITE_IMAGEKIT_PUBLIC_KEY'),
   sentryDsn: read('VITE_SENTRY_DSN'),
-  inngestEventKey: read('VITE_INNGEST_EVENT_KEY'),
   posthogKey: read('VITE_POSTHOG_KEY'),
   posthogHost: read('VITE_POSTHOG_HOST', 'https://eu.i.posthog.com'),
   isProd: import.meta.env.PROD,
