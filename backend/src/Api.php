@@ -58,7 +58,7 @@ final class Api
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
             $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/settings','/me/games','/me/delete','/attempts'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/delete','/attempts'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -79,6 +79,7 @@ final class Api
             if ($path==='/me/age-band') { $player->ageBand($body['band']??null);self::reply(['ok'=>true]);return; }
             if ($path==='/me/nickname') { self::reply(['nickname'=>$player->nickname($body['nickname']??null)]);return; }
             if ($path==='/me/nickname/random') { self::reply(['nickname'=>$player->randomNickname()]);return; }
+            if ($path==='/me/avatar') { $player->avatar($body['avatar_id']??null);self::reply(['avatar_id'=>$body['avatar_id']]);return; }
             if ($path==='/me/settings') { self::reply($player->updateSettings($body));return; }
             if ($path==='/me/delete') { $player->delete($body);self::reply(['deleted'=>true]);return; }
             $game=new Game($db,$profile['id']);

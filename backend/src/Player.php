@@ -6,6 +6,9 @@ namespace Dyk;
 /** Owner-only profile actions. Identity always comes from the verified session. */
 final class Player
 {
+    /** Preset avatars. Keep identical to src/lib/avatars.ts. */
+    public const AVATARS = ['fox', 'owl', 'panda', 'lion', 'frog', 'octopus', 'penguin', 'unicorn', 'dragon', 'robot', 'rocket', 'star'];
+
     public function __construct(private readonly \PDO $db, private readonly string $userId) {}
 
     public function own(): array
@@ -73,6 +76,14 @@ final class Player
         }
         Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=?', [$nickname, $this->userId]);
         return $nickname;
+    }
+
+    public function avatar(mixed $id): void
+    {
+        if (!is_string($id) || !in_array($id, self::AVATARS, true)) {
+            throw new ApiError('invalid_avatar');
+        }
+        Database::execute($this->db, 'UPDATE profiles SET avatar_id=? WHERE id=?', [$id, $this->userId]);
     }
 
     public function settings(): array

@@ -44,7 +44,7 @@ final class Competition
             return null;
         }
         $row = Database::one($this->db,
-            "SELECT f.code,f.expires_at,p.nickname,q.slug,q.title,q.cover_image_url,
+            "SELECT f.code,f.expires_at,p.nickname,p.avatar_id,q.slug,q.title,q.cover_image_url,
              a.correct_count,a.answered_count,a.answer_time_ms FROM friend_challenges f
              JOIN profiles p ON p.id=f.creator_id JOIN attempts a ON a.id=f.creator_attempt_id
              JOIN quizzes q ON q.id=f.quiz_id AND q.status='published' WHERE f.code=?", [$code]);
@@ -54,7 +54,7 @@ final class Competition
         return [
             'code' => $row['code'], 'expired' => strtotime($row['expires_at'] . ' UTC') <= time(),
             'quiz' => ['slug' => $row['slug'], 'title' => $row['title'], 'cover_image_url' => $row['cover_image_url']],
-            'creator' => ['nickname' => $row['nickname'] ?? 'A friend', 'avatar_url' => null],
+            'creator' => ['nickname' => $row['nickname'] ?? 'A friend', 'avatar_id' => $row['avatar_id']],
             'creator_correct' => (int) $row['correct_count'], 'total' => (int) $row['answered_count'],
             'creator_time_ms' => (int) $row['answer_time_ms'],
         ];
@@ -165,7 +165,7 @@ final class Competition
         $period = $board === 'daily' ? $daily['date'] : ($board === 'weekly' ? self::weekStart() : '1970-01-01');
         $statement = $this->db->prepare(
             'SELECT RANK() OVER (ORDER BY e.correct_count DESC,e.answer_time_ms,e.achieved_at) AS place,
-             p.nickname,e.user_id,e.correct_count,e.total,e.answer_time_ms,e.achieved_at FROM leaderboard_entries e
+             p.nickname,p.avatar_id,e.user_id,e.correct_count,e.total,e.answer_time_ms,e.achieved_at FROM leaderboard_entries e
              JOIN profiles p ON p.id=e.user_id WHERE e.board=? AND e.quiz_id=? AND e.period_start=? AND e.is_hidden=0 AND p.nickname IS NOT NULL
              ORDER BY e.correct_count DESC,e.answer_time_ms,e.achieved_at,e.user_id LIMIT ?');
         $statement->bindValue(1, $board);
@@ -174,7 +174,7 @@ final class Competition
         $statement->bindValue(4, max(1, min(100, $limit)), \PDO::PARAM_INT);
         $statement->execute();
         $top = array_map(fn(array $row): array => [
-            'rank' => (int) $row['place'], 'nickname' => $row['nickname'], 'avatar_url' => null,
+            'rank' => (int) $row['place'], 'nickname' => $row['nickname'], 'avatar_id' => $row['avatar_id'],
             'correct' => (int) $row['correct_count'], 'total' => (int) $row['total'],
             'answer_time_ms' => (int) $row['answer_time_ms'], 'achieved_at' => Database::utc($row['achieved_at']),
             'is_me' => $row['user_id'] === $this->userId,

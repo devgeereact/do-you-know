@@ -78,6 +78,9 @@ $r=request('POST','/me/age-band',['band'=>'under_13','role'=>'admin'],$guest['to
 $r=request('POST','/me/age-band',['band'=>'18_plus'],$guest['token']);check('child cannot change age band',$r['status']===400&&$r['body']['error']['code']==='age_band_locked');
 $r=request('POST','/me/nickname',['nickname'=>'ChosenName'],$guest['token']);check('child cannot choose free-text nickname',$r['status']===400&&$r['body']['error']['code']==='kids_use_generated_nickname');
 $r=request('POST','/me/nickname/random',[],$guest['token']);check('child can receive generated nickname',$r['status']===200&&preg_match('/^[A-Za-z]+[0-9]{2}$/D',$r['body']['nickname'])===1);
+$r=request('POST','/me/avatar',['avatar_id'=>'owl'],$guest['token']);check('preset avatar accepted',$r['status']===200&&$r['body']['avatar_id']==='owl');
+$r=request('GET','/me',null,$guest['token']);check('own profile shows chosen avatar',$r['status']===200&&$r['body']['avatar_id']==='owl');
+$r=request('POST','/me/avatar',['avatar_id'=>'https://example.com/x.png'],$guest['token']);check('unknown avatar refused',$r['status']===400&&$r['body']['error']['code']==='invalid_avatar');
 $r=request('GET','/me',null,$guest['token']);check('profile has no real name email or external identity',$r['body']['role']==='guest'&&!isset($r['body']['email'])&&!isset($r['body']['full_name'])&&!isset($r['body']['subject']));
 $r=request('POST','/me/age-band',['band'=>'13_17'],$other['token']);check('older player may set age band',$r['status']===200);
 Database::execute($db,'INSERT IGNORE INTO blocked_words (word) VALUES (?)',['forbiddenfixture']);
