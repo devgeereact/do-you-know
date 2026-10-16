@@ -56,7 +56,10 @@ disabled. Existing proxied app A record and unrelated records were preserved.
 | clk2._domainkey | dkim2.02snqjrmihkh.clerk.services |
 
 PASS: all five public CNAME answers returned their expected targets through 1.1.1.1.
-Clerk deploy status confirms dns=complete, mail=complete, no pending DNS records.
+Clerk initially reported dns=complete, mail=complete, no pending DNS records. A
+subsequent check kept dns=complete but returned mail=pending for the same three
+email CNAMEs. Treat Clerk mail verification as PARTIAL during propagation, despite
+correct public DNS answers. Do not recreate the records.
 PARTIAL: automatic SSL issuance remains pending; Google OAuth is pending custom
 production credentials. A completed Google sign-in is NOT TESTED. No keys were
 read, replaced or committed, and no full production cutover occurred.

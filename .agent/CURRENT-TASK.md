@@ -23,7 +23,8 @@
   multi-worker race checks. React accepts server deadlines; 4 browser timer checks
   PASS. Owner has provisioned the existing app's production instance
   ins_3Kla98MIcql96UMCix0F4nkMef9 for doyouknow.soulrefresh.net. All five Clerk
-  CNAMEs added in Cloudflare as DNS only; Clerk DNS/mail verification PASS.
+  CNAMEs added in Cloudflare as DNS only; public DNS PASS. Clerk mail checks
+  fluctuate between complete and pending during propagation.
   Automatic SSL issuance and Google OAuth remain pending. No production keys
   replaced and no frontend/backend cutover performed.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
