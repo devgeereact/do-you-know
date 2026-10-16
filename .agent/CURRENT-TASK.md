@@ -20,9 +20,10 @@
 - Found and fixed: cron's bare `php` is the CGI build, so the cleanup cron added earlier
   had never run (scripts answered 404, exit 0). Both lines now use `/usr/local/bin/php`;
   a manual cleanup run then PASS.
-- Left in production: one throwaway guest from the live check (no nickname, one
-  unfinished daily attempt, not on any board). Its token was not kept, so it was not
-  deleted through the API.
+- Cleaned up: the throwaway guest from the live check (`bb428f02-…`, no nickname, one
+  unfinished daily attempt, no board rows) was deleted on 16 October 2026 with the app's
+  own cascading profile delete, limited to that one row. Profiles 18 to 17; its attempts,
+  sessions and board rows all 0 afterwards.
 - No migration needed: the activator uses the 0004 `daily_challenges` table as it is.
 
 ## Active task, 16 October 2026: cPanel only, Supabase removed (branch feat/cpanel-only)
