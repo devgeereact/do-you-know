@@ -37,6 +37,8 @@ Remaining steps, in order:
 
 Sections below are history.
 
+- DONE 16 Oct 2026: `.env.example` trimmed to VITE_CPANEL_API_URL, VITE_CLERK_PUBLISHABLE_KEY, VITE_SENTRY_DSN, VITE_IMAGEKIT_URL_ENDPOINT (commit 2a21115). Each computer's `.env.local` follows the same four names (owner confirmed). No content import needed: the old Supabase was never run on this Mac and no questions were added; MySQL already holds the seed content.
+
 ## 16 October 2026: GEE OS 1.4 cpanel contract audit (branch chore/gee-os-cpanel-contract)
 
 - Owner asked to verify every GEE OS cpanel profile file: create what is missing, update
