@@ -44,6 +44,8 @@ export interface AttemptState {
   time_limit_seconds: number | null;
   question: PublicQuestion | null;
   server_now: string;
+  /** PHP-issued display deadline; optional while legacy Supabase remains supported. */
+  question_deadline?: string | null;
 }
 
 /** answer_question */

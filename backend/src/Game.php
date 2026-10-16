@@ -18,9 +18,12 @@ final class Game
 
     private function transaction(callable $fn): array
     {
-        $this->db->beginTransaction();
-        try { $value = $fn(); $this->db->commit(); return $value; }
-        catch (\Throwable $error) { if ($this->db->inTransaction()) { $this->db->rollBack(); } throw $error; }
+        return Database::transaction($this->db, function () use ($fn): array {
+            // Consistent profile-before-attempt lock order across every game action.
+            $profile = Database::one($this->db, 'SELECT id FROM profiles WHERE id=? FOR UPDATE', [$this->userId]);
+            if (!$profile) { throw new ApiError('not_signed_in', 401); }
+            return $fn();
+        });
     }
 
     private function attempt(string $id): array
@@ -42,50 +45,106 @@ final class Game
 
     private function state(array $a): array
     {
-        $quiz = Database::one($this->db, 'SELECT slug,title,time_limit_seconds FROM quizzes WHERE id=?', [$a['quiz_id']]);
+        $quiz = Database::one($this->db, 'SELECT slug,title FROM quizzes WHERE id=?', [$a['quiz_id']]);
         $total = count(json_decode($a['question_order'], true, 512, JSON_THROW_ON_ERROR));
         $complete = (int)$a['answered_count'] >= $total;
         $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a)) : null;
+        if ($q && $a['shuffle_options']) {
+            usort($q['options'], static fn(array $left, array $right): int =>
+                strcmp(hash('sha256', $a['id'] . $left['id']), hash('sha256', $a['id'] . $right['id'])));
+        }
+        $deadline = $a['current_sent_at'] !== null && $a['time_limit_seconds'] !== null
+            ? (new \DateTimeImmutable($a['current_sent_at'], new \DateTimeZone('UTC')))->modify('+' . (int) $a['time_limit_seconds'] . ' seconds')->format('Y-m-d\TH:i:s.v\Z')
+            : null;
+        $clock = Database::one($this->db, 'SELECT UTC_TIMESTAMP(6) AS now');
         return [
             'attempt_id' => $a['id'], 'mode' => $a['mode'], 'status' => $a['status'],
             'quiz' => ['slug' => $quiz['slug'], 'title' => $quiz['title']],
             'position' => min((int)$a['current_index']+1, $total), 'total' => $total,
             'answered' => (int)$a['answered_count'], 'correct' => (int)$a['correct_count'],
             'awaiting_next' => !$complete && $a['current_sent_at'] === null,
-            'complete' => $complete, 'time_limit_seconds' => $quiz['time_limit_seconds'],
-            'question' => $q, 'server_now' => gmdate('c'),
+            'complete' => $complete, 'time_limit_seconds' => $a['time_limit_seconds'],
+            'question' => $q, 'server_now' => Database::utc($clock['now']), 'question_deadline' => $deadline,
         ];
     }
 
     public function start(array $input): array
     {
-        if (($input['mode'] ?? 'practice') !== 'practice') {
-            throw new ApiError('mode_not_migrated', 501);
+        $mode = $input['mode'] ?? 'practice';
+        if (!in_array($mode, ['practice', 'ranked', 'daily', 'challenge'], true)) {
+            throw new ApiError('invalid_mode');
         }
-        $slug = $input['quiz_slug'] ?? null;
-        if (!is_string($slug) || !preg_match('/^[a-z0-9-]{1,100}$/D', $slug)) { throw new ApiError('quiz_not_found', 404); }
-        return $this->transaction(function () use ($slug): array {
-            // Serialise starts per player, including starts for different quizzes.
-            Database::one($this->db, 'SELECT id FROM profiles WHERE id=? FOR UPDATE', [$this->userId]);
-            $quiz = Database::one($this->db, "SELECT * FROM quizzes WHERE slug=? AND status='published'", [$slug]);
-            if (!$quiz || !$quiz['current_version_id']) { throw new ApiError('quiz_not_found', 404); }
-            $existing = Database::one($this->db, "SELECT * FROM attempts WHERE user_id=? AND quiz_version_id=? AND mode='practice' AND status='in_progress' AND started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 24 HOUR) ORDER BY started_at DESC LIMIT 1 FOR UPDATE", [$this->userId, $quiz['current_version_id']]);
+        return $this->transaction(function () use ($input, $mode): array {
+            $daily = null;
+            $challenge = null;
+            if ($mode === 'daily') {
+                $daily = Database::one($this->db,
+                    "SELECT * FROM daily_challenges WHERE challenge_date=? AND status='live'", [Competition::londonDate()]);
+                if (!$daily) { throw new ApiError('no_daily_today'); }
+                $quizId = $daily['quiz_id'];
+                $versionId = $daily['quiz_version_id'];
+            } elseif ($mode === 'challenge') {
+                $code = $input['challenge_code'] ?? null;
+                if (!is_string($code) || !preg_match('/^[A-Za-z0-9]{8}$/D', $code)) {
+                    throw new ApiError('challenge_not_found');
+                }
+                $challenge = Database::one($this->db,
+                    'SELECT * FROM friend_challenges WHERE code=? AND expires_at>UTC_TIMESTAMP(6)', [$code]);
+                if (!$challenge) { throw new ApiError('challenge_not_found'); }
+                if ($challenge['creator_id'] === $this->userId) { throw new ApiError('own_challenge'); }
+                $quizId = $challenge['quiz_id'];
+                $versionId = $challenge['quiz_version_id'];
+            } else {
+                $slug = $input['quiz_slug'] ?? null;
+                if (!is_string($slug) || !preg_match('/^[a-z0-9-]{1,100}$/D', $slug)) {
+                    throw new ApiError('quiz_not_found', 404);
+                }
+                $found = Database::one($this->db, "SELECT id,current_version_id FROM quizzes WHERE slug=? AND status='published'", [$slug]);
+                if (!$found || !$found['current_version_id']) { throw new ApiError('quiz_not_found', 404); }
+                $quizId = $found['id'];
+                $versionId = $found['current_version_id'];
+            }
+            $quiz = Database::one($this->db, "SELECT * FROM quizzes WHERE id=? AND status='published'", [$quizId]);
+            if (!$quiz) { throw new ApiError('quiz_not_found', 404); }
+            if ($mode === 'ranked' && !$quiz['is_ranked']) { $mode = 'practice'; }
+            $existing = $daily
+                ? Database::one($this->db, 'SELECT * FROM attempts WHERE user_id=? AND daily_challenge_id=? FOR UPDATE', [$this->userId, $daily['id']])
+                : Database::one($this->db,
+                    "SELECT * FROM attempts WHERE user_id=? AND quiz_version_id=? AND mode=? AND friend_challenge_id <=> ?
+                     AND status='in_progress' AND started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 24 HOUR) ORDER BY started_at DESC LIMIT 1 FOR UPDATE",
+                    [$this->userId, $versionId, $mode, $challenge['id'] ?? null]);
             if ($existing) {
-                if ($existing['current_sent_at'] === null && (int)$existing['current_index'] < count(json_decode($existing['question_order'], true))) {
+                if ($existing['status'] !== 'in_progress') { throw new ApiError('daily_already_played'); }
+                if ($existing['current_sent_at'] === null && (int) $existing['current_index'] < count(json_decode($existing['question_order'], true))) {
                     Database::execute($this->db, 'UPDATE attempts SET current_sent_at=UTC_TIMESTAMP(6) WHERE id=?', [$existing['id']]);
                 }
                 return $this->state($this->attempt($existing['id']));
             }
             $count = Database::one($this->db, 'SELECT COUNT(*) AS n FROM attempts WHERE user_id=? AND started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 1 MINUTE)', [$this->userId]);
-            if ((int)$count['n'] >= 5) { throw new ApiError('too_many_attempts', 429); }
-            $version = Database::one($this->db, 'SELECT * FROM quiz_versions WHERE id=? AND quiz_id=?', [$quiz['current_version_id'], $quiz['id']]);
+            if ((int) $count['n'] >= 5) { throw new ApiError('too_many_attempts', 429); }
+            $version = Database::one($this->db, 'SELECT * FROM quiz_versions WHERE id=? AND quiz_id=?', [$versionId, $quizId]);
             if (!$version) { throw new \RuntimeException('quiz_version_missing'); }
             $snapshot = json_decode($version['snapshot'], true, 512, JSON_THROW_ON_ERROR);
-            if (count($snapshot) < (int)$version['question_count'] || (int)$version['question_count'] < 3) { throw new \RuntimeException('quiz_snapshot_invalid'); }
-            shuffle($snapshot);
-            $order = array_column(array_slice($snapshot, 0, (int)$version['question_count']), 'id');
+            if (count($snapshot) < (int) $version['question_count'] || (int) $version['question_count'] < 3 || (int) $version['question_count'] > 50) {
+                throw new \RuntimeException('quiz_snapshot_invalid');
+            }
+            if ($challenge) {
+                $creator = Database::one($this->db, "SELECT question_order,time_limit_seconds,shuffle_options FROM attempts WHERE id=? AND status='finished'", [$challenge['creator_attempt_id']]);
+                if (!$creator) { throw new ApiError('challenge_not_found'); }
+                $order = json_decode($creator['question_order'], true, 512, JSON_THROW_ON_ERROR);
+                $timer = $creator['time_limit_seconds'];
+                $shuffle = $creator['shuffle_options'];
+            } else {
+                if (!$daily) { shuffle($snapshot); }
+                $order = array_column(array_slice($snapshot, 0, (int) $version['question_count']), 'id');
+                $timer = $quiz['time_limit_seconds'];
+                $shuffle = $quiz['shuffle_options'];
+            }
             $id = Database::uuid();
-            Database::execute($this->db, "INSERT INTO attempts (id,user_id,quiz_id,quiz_version_id,question_order,current_sent_at) VALUES (?,?,?,?,?,UTC_TIMESTAMP(6))", [$id,$this->userId,$quiz['id'],$version['id'],json_encode($order, JSON_THROW_ON_ERROR)]);
+            Database::execute($this->db,
+                'INSERT INTO attempts (id,user_id,quiz_id,quiz_version_id,mode,daily_challenge_id,friend_challenge_id,time_limit_seconds,shuffle_options,question_order,current_sent_at)
+                 VALUES (?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(6))',
+                [$id, $this->userId, $quizId, $versionId, $mode, $daily['id'] ?? null, $challenge['id'] ?? null, $timer, (int) $shuffle, json_encode($order, JSON_THROW_ON_ERROR)]);
             return $this->state($this->attempt($id));
         });
     }
@@ -108,10 +167,9 @@ final class Game
             if ($a['status'] !== 'in_progress') { throw new ApiError('attempt_closed'); }
             if ($a['current_sent_at'] === null) { throw new ApiError('question_not_shown'); }
             $q = $this->question($a);
-            $quiz = Database::one($this->db, 'SELECT time_limit_seconds FROM quizzes WHERE id=?', [$a['quiz_id']]);
             $clock = Database::one($this->db, 'SELECT GREATEST(0,ROUND(TIMESTAMPDIFF(MICROSECOND,?,UTC_TIMESTAMP(6))/1000)) AS elapsed', [$a['current_sent_at']]);
             $elapsed = (int)$clock['elapsed'];
-            $limit = $quiz['time_limit_seconds'] !== null ? (int)$quiz['time_limit_seconds']*1000 : null;
+            $limit = $a['time_limit_seconds'] !== null ? (int)$a['time_limit_seconds']*1000 : null;
             $timedOut = $limit !== null && $elapsed > $limit+1500;
             $correct = false; $option = null; $value = null; $correctIds = [];
             if (in_array($q['type'], ['choice','boolean'], true)) {
@@ -149,6 +207,7 @@ final class Game
             if (!in_array($a['status'], ['in_progress','finished'], true)) { throw new ApiError('attempt_closed'); }
             if ($a['status'] === 'in_progress') {
                 Database::execute($this->db, "UPDATE attempts SET status='finished',finished_at=UTC_TIMESTAMP(6) WHERE id=?", [$id]);
+                (new Competition($this->db, $this->userId))->record($a, $total);
             }
             $version = Database::one($this->db, 'SELECT snapshot FROM quiz_versions WHERE id=?', [$a['quiz_version_id']]);
             $questions = array_column(json_decode($version['snapshot'], true), null, 'id');
@@ -164,9 +223,31 @@ final class Game
                     'explanation'=>$q['explanation']??null,'source_url'=>$q['source_url']??null,'time_ms'=>(int)$answer['time_ms']];
             }
             $profile=Database::one($this->db,'SELECT nickname,streak_current FROM profiles WHERE id=?',[$this->userId]);
-            return ['attempt_id'=>$id,'mode'=>'practice','correct'=>(int)$a['correct_count'],'total'=>$total,
-                'answer_time_ms'=>(int)$a['answer_time_ms'],'review'=>$review,'ranks'=>(object)[],
-                'versus'=>null,'needs_nickname'=>$profile['nickname']===null,'streak'=>(int)$profile['streak_current']];
+            $competition = new Competition($this->db, $this->userId);
+            $ranks = [];
+            if (in_array($a['mode'], ['ranked', 'daily'], true)) {
+                $ranks['all_time'] = $competition->rank('all_time', $a['quiz_id'], '1970-01-01');
+                $ranks['weekly'] = $competition->rank('weekly', $a['quiz_id'], Competition::weekStart());
+                if ($a['daily_challenge_id']) {
+                    $daily = Database::one($this->db, 'SELECT challenge_date FROM daily_challenges WHERE id=?', [$a['daily_challenge_id']]);
+                    $ranks['daily'] = $competition->rank('daily', $a['quiz_id'], $daily['challenge_date']);
+                }
+            }
+            $versus = null;
+            if ($a['friend_challenge_id']) {
+                $creator = Database::one($this->db,
+                    'SELECT p.nickname,c.correct_count,c.answer_time_ms FROM friend_challenges f JOIN attempts c ON c.id=f.creator_attempt_id JOIN profiles p ON p.id=f.creator_id WHERE f.id=?',
+                    [$a['friend_challenge_id']]);
+                if ($creator) {
+                    $versus = ['creator_nickname' => $creator['nickname'] ?? 'Your friend',
+                        'creator_correct' => (int) $creator['correct_count'], 'creator_time_ms' => (int) $creator['answer_time_ms'],
+                        'you_won' => (int) $a['correct_count'] > (int) $creator['correct_count'] || ((int) $a['correct_count'] === (int) $creator['correct_count'] && (int) $a['answer_time_ms'] < (int) $creator['answer_time_ms']),
+                        'tie' => (int) $a['correct_count'] === (int) $creator['correct_count'] && (int) $a['answer_time_ms'] === (int) $creator['answer_time_ms']];
+                }
+            }
+            return ['attempt_id'=>$id,'mode'=>$a['mode'],'correct'=>(int)$a['correct_count'],'total'=>$total,
+                'answer_time_ms'=>(int)$a['answer_time_ms'],'review'=>$review,'ranks'=>(object)$ranks,
+                'versus'=>$versus,'needs_nickname'=>$profile['nickname']===null,'streak'=>(int)$profile['streak_current']];
         });
     }
 }

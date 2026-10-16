@@ -17,8 +17,12 @@
   Production implementation now uses feat/cpanel-production, with its own PR.
 - First production batch: migration 0003, catalogue filters, owner-only profiles,
   settings, history and confirmed app deletion. Local MariaDB 11.4: 73 HTTP plus
-  14 unit checks PASS. Frontend/competition/Clerk production work remains pending.
+  14 unit checks PASS. Frontend and Clerk production work remains pending.
   Hosted preview is not switched to this batch.
+- Competition migration 0004 and PHP port pass 63 extra mode checks plus 9 real
+  multi-worker race checks. React accepts server deadlines; 4 browser timer checks
+  PASS. CLI production auth remains not_started; owner asked to run interactive
+  Clerk deploy while backend/frontend work continues.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
   remain server-side; each computer keeps its own configuration. Actual Ubuntu
   checkout/local configuration remains NOT TESTED until that machine is available.

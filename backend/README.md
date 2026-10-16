@@ -2,9 +2,9 @@
 
 Status: tested local foundation, not a complete Supabase replacement. Do not switch
 all frontend services to this API yet. Profile actions, settings, catalogue filters
-and history now have tested endpoints; frontend adapters are pending. Competition,
-parent-child linking, content authoring and avatar workers still need migration.
-Unimplemented routes return JSON 404; non-practice game modes return 501.
+and history now have tested endpoints; ranked/daily/friend competition is also
+ported. Frontend adapters, parent-child linking, content authoring and avatar workers
+still need migration. Unimplemented routes return JSON 404.
 
 ## Files and deployment layout
 
@@ -97,7 +97,12 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | GET /categories | Active category metadata |
 | GET /quizzes | Published metadata; category_id/age/curriculum_tag/search filters, literal wildcards |
 | GET /quizzes/:slug | One published quiz |
-| POST /attempts | `{ "quiz_slug": "…", "mode": "practice" }`; starts/resumes |
+| GET /daily | Today's published challenge, London server date |
+| GET /leaderboards | board/quiz_slug/limit, public nickname/score rows only |
+| GET /challenges/:code | Public nickname/score preview, labels expiry |
+| GET /me/daily/:id/finished | Owner-only daily completion |
+| POST /attempts/:id/challenge | `{}`, creates/reuses a 30-day friend link |
+| POST /attempts | practice/ranked with quiz_slug, daily, or challenge with challenge_code |
 | POST /attempts/:id/next | `{}`; original server clock retained on repeated next |
 | POST /attempts/:id/answer | `{ "option_id": "…" }` or `{ "value": 5 }`; server grades/times |
 | POST /attempts/:id/finish | `{}`; owner-only result/review, idempotent |
@@ -145,3 +150,19 @@ must be integrated before promising complete account deletion in the frontend.
 Owner-only DTOs omit legacy personal-data fields. Timestamps use explicit UTC ISO.
 The blocked_words table needs the owner's approved moderation policy before launch.
 No content/user import or hosted deployment happens merely by running these tests.
+
+Migration 0004 adds daily/friend challenges and leaderboard entries. Every game
+operation takes the profile lock before its attempt lock. Finish, daily starts and
+share creation are idempotent under concurrent requests. Time limits are frozen
+per attempt; friend challenges reuse the creator's frozen timer and question order.
+Daily starts use the pinned version in snapshot order for all players. A published
+quiz remains required for new starts. Public scoreboards omit user IDs and ages.
+The API sends a display-only question_deadline and database server_now; PHP still
+grades every answer and owns elapsed time. The React timer accepts this clock while
+retaining its legacy fallback, with duplicate-expiry protection under StrictMode.
+
+Tests: tests/http.php supplies a guarded localhost/test-database harness.
+tests/integration.php covers ownership/metadata/practice, tests/competition.php
+covers all game modes, tests/concurrency.php requires four local PHP workers and
+sends parallel requests. CI uses PHP_CLI_SERVER_WORKERS=4; this development server
+is never used for cPanel production.

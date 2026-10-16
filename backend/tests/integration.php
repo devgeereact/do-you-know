@@ -1,26 +1,7 @@
 <?php
 declare(strict_types=1);
-require dirname(__DIR__).'/vendor/autoload.php';
-use Dyk\Config;
+require __DIR__.'/http.php';
 use Dyk\Database;
-$config=Config::load(dirname(__DIR__));
-if ($config['environment']!=='test' || !str_ends_with($config['database']['name'],'_test')) {
-    fwrite(STDERR,"Tests require environment=test and a dedicated database ending _test.\n");exit(1);
-}
-$base=getenv('DYK_TEST_API')?:'http://127.0.0.1:55438/api/v1';
-if (!preg_match('~^http://127\.0\.0\.1:\d+/api/v1$~D',$base)) { throw new RuntimeException('local_test_api_required'); }
-$db=Database::connect($config);$count=0;
-// Only this isolated test database may have its throttling fixtures reset.
-$db->exec("DELETE FROM rate_limits");
-function check(string $name,bool $ok): void {global $count;$count++;if(!$ok){fwrite(STDERR,'FAIL '.$name.PHP_EOL);exit(1);}fwrite(STDOUT,'PASS '.$name.PHP_EOL);}
-function request(string $method,string $path,?array $body=null,?string $token=null,string $origin='http://localhost:5202',?string $raw=null): array {
-    global $base;$c=curl_init($base.$path);$headers=['Origin: '.$origin,'Content-Type: application/json'];if($token){$headers[]='Authorization: Bearer '.$token;}
-    curl_setopt_array($c,[CURLOPT_CUSTOMREQUEST=>$method,CURLOPT_HTTPHEADER=>$headers,CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>15,CURLOPT_HEADER=>true]);
-    if($body!==null||$raw!==null){curl_setopt($c,CURLOPT_POSTFIELDS,$raw??json_encode((object)$body));}
-    $reply=curl_exec($c);if($reply===false){throw new RuntimeException('test_api_unreachable');}
-    $status=curl_getinfo($c,CURLINFO_RESPONSE_CODE);$size=curl_getinfo($c,CURLINFO_HEADER_SIZE);$h=substr($reply,0,$size);$j=json_decode(substr($reply,$size),true);
-    return ['status'=>$status,'body'=>$j,'headers'=>$h];
-}
 // Fixtures are original test content in a fresh private database, never public production seed.
 $category=Database::uuid();$quiz=Database::uuid();$version=Database::uuid();$snapshot=[];
 foreach (['choice','boolean','slider'] as $type) {
@@ -66,7 +47,7 @@ $r=request('GET','/curriculum-tags');check('curriculum tags readable',$r['status
 $r=request('GET','/questions');check('no generic question table endpoint',$r['status']===404);
 $r=request('GET','/quizzes/not-published');check('missing quiz returns JSON 404',$r['status']===404);
 $r=request('POST','/account/session',['adult_confirmed'=>true],$guest['token']);check('guest cannot become Clerk account',$r['status']!==200);
-$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$guest['token']);check('unmigrated modes fail explicitly',$r['status']===501);
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'forged'],$guest['token']);check('unknown modes fail explicitly',$r['status']===400);
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$state=$r['body'];$id=$state['attempt_id'];check('starts practice with three questions',$r['status']===200&&$state['total']===3);
 check('first question has no explanation or answers',!isset($state['question']['explanation'])&&!str_contains(json_encode($state['question']),'is_correct')&&!str_contains(json_encode($state['question']),'accept_min'));
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);check('reload resumes original attempt',$r['body']['attempt_id']===$id);

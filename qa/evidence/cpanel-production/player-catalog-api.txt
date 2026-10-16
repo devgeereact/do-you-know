@@ -24,7 +24,7 @@ PASS curriculum tags readable
 PASS no generic question table endpoint
 PASS missing quiz returns JSON 404
 PASS guest cannot become Clerk account
-PASS unmigrated modes fail explicitly
+PASS unknown modes fail explicitly
 PASS starts practice with three questions
 PASS first question has no explanation or answers
 PASS reload resumes original attempt

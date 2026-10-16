@@ -3,10 +3,25 @@ declare(strict_types=1);
 namespace Dyk;
 final class Database
 {
+    public static function transaction(\PDO $db, callable $action): mixed
+    {
+        $db->beginTransaction();
+        try {
+            $result = $action();
+            $db->commit();
+            return $result;
+        } catch (\Throwable $error) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            throw $error;
+        }
+    }
+
     public static function utc(?string $value): ?string
     {
         return $value === null ? null : (new \DateTimeImmutable($value, new \DateTimeZone('UTC')))
-            ->format('Y-m-d\TH:i:s.u\Z');
+            ->format('Y-m-d\TH:i:s.v\Z');
     }
 
     public static function connect(array $config): \PDO

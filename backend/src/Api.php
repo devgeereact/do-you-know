@@ -30,6 +30,19 @@ final class Api
                 self::reply(Identity::adult($db,$config,$token)); return;
             }
             $catalog = new Catalog($db);
+            if ($method==='GET' && $path==='/daily') { self::reply((new Competition($db,null))->daily());return; }
+            if ($method==='GET' && preg_match('~^/challenges/([A-Za-z0-9]{8})$~D',$path,$challengeCode)) {
+                self::reply((new Competition($db,null))->challenge($challengeCode[1]));return;
+            }
+            if ($method==='GET' && $path==='/leaderboards') {
+                $board = $_GET['board'] ?? 'all_time';
+                $slug = $_GET['quiz_slug'] ?? null;
+                $limit = $_GET['limit'] ?? '50';
+                if (!is_string($board) || ($slug!==null && (!is_string($slug) || !preg_match('/^[a-z0-9-]{1,100}$/D',$slug)))
+                    || !is_string($limit) || !preg_match('/^[0-9]{1,3}$/D',$limit)) { throw new ApiError('invalid_board'); }
+                $viewer = $token==='' ? null : Identity::profile($db,$config,$token);
+                self::reply((new Competition($db,$viewer['id']??null))->leaderboard($slug,$board,(int)$limit));return;
+            }
             if ($method==='GET' && $path==='/curriculum-tags') { self::reply($catalog->tags());return; }
             if ($method==='GET' && ($path==='/categories' || preg_match('~^/categories/([a-z0-9-]{1,100})$~D',$path,$category))) {
                 $rows = $catalog->categories($path==='/categories' ? null : $category[1]);
@@ -43,8 +56,9 @@ final class Api
                 else { self::reply($rows); } return;
             }
             // Unknown routes must never become a generic table reader or SPA HTML.
-            $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish)$~D',$path,$parts);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/settings','/me/games','/me/delete','/attempts'],true) && !$gameRoute) { throw new ApiError('not_found',404); }
+            $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
+            $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/settings','/me/games','/me/delete','/attempts'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -53,6 +67,7 @@ final class Api
                 self::reply(['signed_out'=>true]);return;
             }
             $player = new Player($db, $profile['id']);
+            if ($dailyFinished && $method==='GET') { self::reply(['finished'=>(new Competition($db,$profile['id']))->dailyFinished($dailyId[1])]);return; }
             if ($path==='/me' && $method==='GET') { self::reply($player->own());return; }
             if ($path==='/me/settings' && $method==='GET') { self::reply($player->settings());return; }
             if ($path==='/me/games' && $method==='GET') {
@@ -69,7 +84,7 @@ final class Api
             $game=new Game($db,$profile['id']);
             if ($path==='/attempts') { self::reply($game->start($body));return; }
             if ($gameRoute) {
-                $result=match($parts[2]) { 'next'=>$game->next($parts[1]),'answer'=>$game->answer($parts[1],$body),'finish'=>$game->finish($parts[1]) };
+                $result=match($parts[2]) { 'next'=>$game->next($parts[1]),'answer'=>$game->answer($parts[1],$body),'finish'=>$game->finish($parts[1]),'challenge'=>(new Competition($db,$profile['id']))->createChallenge($parts[1]) };
                 self::reply($result);return;
             }
             throw new ApiError('not_found',404);
