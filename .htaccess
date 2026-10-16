@@ -1,57 +1,82 @@
-# cPanel static hosting: HTTPS, SPA routing, caching, security headers
-Options -Indexes
-RewriteEngine On
+# Do You Know: Apache and LiteSpeed rules for the app's own cPanel document root.
+# GEE OS cpanel profile. The API folder (api/) carries its own .htaccess that only
+# allows api.php. Change this file, then re-run the local Apache check before release.
 
-# Reject private-looking paths before SPA rewrites, including absent files.
-RewriteRule (^|/)(\.(?!well-known(/|$))|config[^/]*\.php(/|$)|composer\.(json|lock)(/|$)) - [F,L,NC]
-RewriteRule \.(map|bak|sql|zip|env|log|ini|phar)(/|$) - [F,L,NC]
-
-# Force HTTPS
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Real files and folders are served as-is
-# Route API calls before the SPA fallback and preserve bearer authentication.
-RewriteCond %{HTTP:Authorization} .
-RewriteRule ^api(?:/|$) - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-RewriteRule ^api/v1(?:/.*)?$ api/api.php [END]
-
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# Everything else → the SPA shell
-RewriteRule ^ index.html [L]
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+ServerSignature Off
 
 <IfModule mod_mime.c>
   AddType application/manifest+json .webmanifest
-  AddType application/javascript .js .mjs
+  AddType text/javascript .js .mjs
   AddType font/woff2 .woff2
 </IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Private files are refused first, even when they do not exist: dotfiles (except
+  #    .well-known), source maps, backups, dumps, archives, logs and configuration.
+  RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L,NC]
+  RewriteRule \.(map|bak|sql|sql\.gz|zip|tgz|tar|env|log|ini|phar)$ - [F,L,NC]
+  RewriteRule (^|/)(composer\.[^/]*|config[^/]*\.php)$ - [F,L,NC]
+  # No PHP runs here except api/api.php.
+  RewriteCond %{REQUEST_URI} !^/api/api\.php$
+  RewriteRule \.(php[0-9]?|phtml|phar|cgi|pl|py)$ - [F,L,NC]
+
+  # 2. HTTPS. Behind Cloudflare a forwarded https scheme counts as secure, which
+  #    prevents redirect loops. Certificate checks under .well-known stay on HTTP.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # 3. Bearer tokens: some cPanel PHP handlers drop the Authorization header.
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  # 4. API: /api/v1 goes to the API entry point, never to the app shell.
+  RewriteRule ^api/v1(?:/.*)?$ api/api.php [END]
+
+  # 5. Content-hashed build output and icons may be cached for a year.
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^(assets|icons)/ - [E=DYK_IMMUTABLE:1]
+
+  # 6. Real files and folders are served as they are.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 7. A missing file with a static extension is a real 404, not the app shell.
+  RewriteRule \.(js|mjs|css|json|webmanifest|png|jpe?g|gif|svg|webp|avif|ico|woff2?|txt|xml)$ - [R=404,L,NC]
+
+  # 8. Everything else is a client-side route: serve the app shell.
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# The same deny list for servers that check file sections before rewrites.
+<FilesMatch "(^\.|\.(map|bak|sql|zip|tgz|tar|env|log|ini|phar)$|^composer\.|^config.*\.php$)">
+  Require all denied
+</FilesMatch>
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  Header always unset X-Powered-By
+  # HSTS on secure responses only, one year, no preload.
+  Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on' || req('X-Forwarded-Proto') == 'https'"
 
-  # Hashed assets are immutable
-  <FilesMatch "\.(js|css|woff2|png|svg|webp|jpg)$">
-    Header set Cache-Control "public, max-age=31536000, immutable"
-  </FilesMatch>
-  # Apply after the generic JS rule so service workers are revalidated.
-  <FilesMatch "^(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest)$">
-    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-    Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
+  # Hashed assets and icons never change at the same URL.
+  Header set Cache-Control "public, max-age=31536000, immutable" env=DYK_IMMUTABLE
+  Header set Cache-Control "public, max-age=31536000, immutable" env=REDIRECT_DYK_IMMUTABLE
+
+  # The shell, service worker, Workbox runtime, manifest and offline page must always be
+  # revalidated, or players stay on an old release. This block comes last, so it wins.
+  <FilesMatch "^(index\.html|offline\.html|sw\.js|registerSW\.js|workbox-[^/]*\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Expires "0"
   </FilesMatch>
 </IfModule>
-
-# Never serve source maps or backups publicly
-<FilesMatch "\.(map|bak|sql|zip|env)$">
-  Require all denied
-</FilesMatch>
-
-# Configuration and dependency metadata are never public assets.
-<FilesMatch "(^\.|^config.*\.php$|^composer\.(json|lock)$|\.(log|ini|phar)$)">
-  Require all denied
-</FilesMatch>
