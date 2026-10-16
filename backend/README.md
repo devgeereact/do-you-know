@@ -118,11 +118,11 @@ contain no child email/name/photo. No cookie/CSRF protocol is implied by this be
 API. The frontend keeps the opaque `guest_` token in localStorage key `dyk-guest`, sends
 it as a bearer token and forgets it on a 401 or after `DELETE /session`.
 Rate limits use a keyed hash of the network address, not a stored raw address;
-shared networks may share an allowance. Schedule `php /home/CPANEL_USER/dyk-backend/bin/cleanup.php` at a frequency
+shared networks may share an allowance. Schedule `/usr/local/bin/php /home/CPANEL_USER/dyk-backend/current/bin/cleanup.php` at a frequency
 allowed by your host. It removes up to 1000 expired sessions and throttle buckets
 per run, never profiles or gameplay records.
 
-Schedule `php /home/CPANEL_USER/dyk-backend/current/bin/daily.php` every hour. It works
+Schedule `/usr/local/bin/php /home/CPANEL_USER/dyk-backend/current/bin/daily.php` every hour. It works
 on the London date and is safe to run again: it marks earlier `live` (and missed
 `scheduled`) daily rows `done`, makes today's `scheduled` row `live`, and when nothing is
 scheduled it picks the least recently used published quiz that has a current version and
@@ -130,6 +130,10 @@ pins that version. A scheduled row whose quiz is no longer published is swapped 
 published one. A row an owner set to `done` stays closed. It exits 2 when no published
 quiz exists, so no daily runs that day. Until the first run after London midnight,
 `GET /daily` returns `null`.
+
+Use the absolute CLI path in cron. On this host a bare `php` in cron's PATH is
+`/usr/bin/php`, the CGI build: both scripts then answer `404` and exit 0 without doing
+anything. Check with `/usr/local/bin/php -r 'echo PHP_SAPI;'` (must print `cli`).
 
 ## Verification
 
