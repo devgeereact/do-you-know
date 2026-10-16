@@ -48,7 +48,7 @@ deploy. CI does not run this check, so run it before any release that touches
 
 The root `.htaccess` sends `Content-Security-Policy-Report-Only`, added 16 October 2026.
 Browsers log violations to the console and block nothing. It allows `'self'`, the inline
-theme script by hash, Clerk (`clerk.soulrefresh.net`, `*.protect.clerk.com`,
+theme script by hash, Clerk (`clerk.doyouknow.soulrefresh.net`, `*.protect.clerk.com`,
 `challenges.cloudflare.com`, `img.clerk.com`, Clerk telemetry), Sentry ingest and ImageKit
 images, as in Clerk's CSP guide. There is no report endpoint yet. Before switching the
 header name to `Content-Security-Policy` (enforcing): browse every journey, including an
