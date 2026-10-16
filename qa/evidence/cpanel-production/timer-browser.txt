@@ -1,0 +1,4 @@
+PASS uses server remaining time instead of resetting to full limit
+PASS countdown expires once
+PASS already expired server deadline fires once under StrictMode
+PASS legacy timer fallback retained

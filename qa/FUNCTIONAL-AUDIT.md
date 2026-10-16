@@ -1,5 +1,9 @@
 # Functional Audit
 
+> Historical record. Supabase was removed from the code on 16 October 2026 (see
+> docs/08-change-management/DECISIONS.md). Current architecture:
+> docs/02-architecture/ARCHITECTURE.md.
+
 | Requirement or journey | Environment | Test | Expected | Observed | Status | Evidence |
 |---|---|---|---|---|---|---|
 | M1 browse: home lists categories and published quizzes | Mac, local Supabase (CLI 2.116, Postgres 17) + `vite` dev, Chromium via Playwright | Open `/` | Categories + 2 seeded quizzes | Shown | PASS | snapshot in session log |

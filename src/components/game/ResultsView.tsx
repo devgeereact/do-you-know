@@ -130,9 +130,9 @@ export function ResultsView({
         )}
         {isGuest && (
           <p className="mt-5 text-sm text-content-muted">
-            Playing as a guest.{' '}
-            <Link to="/login" className="font-semibold text-primary underline underline-offset-2">
-              Save my progress
+            Playing as a guest. Your games are saved on this device.{' '}
+            <Link to="/me" className="font-semibold text-primary underline underline-offset-2">
+              My games
             </Link>
           </p>
         )}

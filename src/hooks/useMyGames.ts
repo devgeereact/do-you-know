@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { reportError } from '@/lib/sentry';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useSession } from '@/hooks/useSession';
 import { getProfile } from '@/services/profileService';
 import { listMyGames, type GameHistoryItem } from '@/services/gameService';
 
@@ -13,7 +13,7 @@ interface UseMyGames {
 
 /** The current player's finished games and daily streak, for /me. */
 export function useMyGames(): UseMyGames {
-  const { user, loading: authLoading } = useSupabaseAuth();
+  const { user, loading: authLoading } = useSession();
   const [games, setGames] = useState<GameHistoryItem[]>([]);
   const [streak, setStreak] = useState({ current: 0, best: 0 });
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export function useMyGames(): UseMyGames {
     let active = true;
     setLoading(true);
     setError(null);
-    Promise.all([listMyGames(user.id), getProfile(user.id)])
+    Promise.all([listMyGames(), getProfile()])
       .then(([list, profile]) => {
         if (!active) return;
         setGames(list);

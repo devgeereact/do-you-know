@@ -1,0 +1,113 @@
+name: Deploy to cPanel
+
+# Runs only after "Verify application" passes on main, or by hand. Pull requests and
+# feature branches never deploy. Database migrations are NOT run here: apply them by
+# hand on the server (backend/README.md step 6) after a backup.
+on:
+  workflow_run:
+    workflows: [Verify application]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-cpanel
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # Add required reviewers to this environment in GitHub to approve each release.
+    environment: production
+    env:
+      SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+      APP_URL: https://doyouknow.soulrefresh.net
+      # Paths on the cPanel account (no secrets). See docs/07-operations/DEPLOYMENT.md.
+      DOCROOT: doyouknow.soulrefresh.net
+      BACKEND: dyk-backend
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ env.SHA }}
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Build the static app
+        run: |
+          npm ci
+          npm run build
+        env:
+          # Public browser values only, from repository variables (never secrets).
+          VITE_APP_URL: ${{ vars.VITE_APP_URL }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
+          VITE_SENTRY_DSN: ${{ vars.VITE_SENTRY_DSN }}
+          VITE_POSTHOG_KEY: ${{ vars.VITE_POSTHOG_KEY }}
+          VITE_IMAGEKIT_URL_ENDPOINT: ${{ vars.VITE_IMAGEKIT_URL_ENDPOINT }}
+
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_mysql, curl, openssl
+          tools: composer:v2
+          coverage: none
+
+      - name: Package release
+        run: |
+          (cd backend && composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader)
+          node scripts/package-cpanel.mjs
+          release=$(ls -d build/cpanel-* | tail -n 1)
+          echo "RELEASE=$release" >> "$GITHUB_ENV"
+
+      - name: Prepare SSH with a pinned host key
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$CPANEL_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<CFG
+          Host cpanel
+            HostName $CPANEL_HOST
+            User $CPANEL_USER
+            Port $CPANEL_PORT
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+          CFG
+        env:
+          CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          CPANEL_KNOWN_HOSTS: ${{ secrets.CPANEL_KNOWN_HOSTS }}
+          CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+          CPANEL_USER: ${{ secrets.CPANEL_USER }}
+          CPANEL_PORT: ${{ secrets.CPANEL_PORT }}
+
+      - name: Upload the private backend as a new release
+        run: |
+          ssh cpanel "mkdir -p ~/$BACKEND/releases/$SHA ~/$BACKEND/shared && test -f ~/$BACKEND/shared/config.php"
+          rsync -az --exclude config.php "$RELEASE/private/" "cpanel:$BACKEND/releases/$SHA/"
+          ssh cpanel "cd ~/$BACKEND && ln -sfn ../../shared/config.php releases/$SHA/config.php \
+            && ln -sfn releases/$SHA current.next && mv -Tf current.next current"
+
+      - name: Upload the public app
+        # No --delete: the docroot keeps old hashed assets, cgi-bin and the live
+        # api/.htaccess (which holds the server-specific DYK_BACKEND_DIR line).
+        run: rsync -az --exclude 'api/.htaccess' "$RELEASE/public/" "cpanel:$DOCROOT/"
+
+      - name: Check the live site
+        run: |
+          sleep 5
+          curl --fail --silent "$APP_URL/api/v1/health" | grep -q '"status":"ok"'
+          curl --fail --silent --output /dev/null "$APP_URL/"
+          echo "Deployed $SHA"
+
+      - name: Keep the last five backend releases
+        if: success()
+        run: ssh cpanel "cd ~/$BACKEND/releases && ls -1t | tail -n +6 | xargs -r rm -rf --"

@@ -1,0 +1,10 @@
+PASS parallel starts both succeed
+PASS parallel starts share a single attempt
+PASS database contains one started attempt
+PASS simultaneous answer accepts exactly one submission
+PASS simultaneous answer increments once
+PASS simultaneous finish returns one consistent score
+PASS simultaneous finish writes one result per board
+PASS parallel daily starts resume one attempt
+PASS parallel share creation reuses one code
+9 concurrency checks passed

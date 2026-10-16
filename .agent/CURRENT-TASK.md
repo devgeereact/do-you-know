@@ -1,6 +1,59 @@
 # Current Task
 
-## Active task, 16 October 2026: full merge and production transition
+## Active task, 16 October 2026: cPanel only, Supabase removed (branch feat/cpanel-only)
+
+- Done: Supabase removed from the code. The app is a static Vite/React/TypeScript PWA
+  built in CI and served from cPanel (`doyouknow.soulrefresh.net`, own docroot
+  `/home/devgeereact/doyouknow.soulrefresh.net`, proxied Cloudflare record, Full (strict)
+  TLS). The only server is the private PHP API in `backend/` with MySQL/MariaDB. The
+  frontend calls it only through `src/lib/api.ts`. Players are guests; adults use Clerk
+  on `/account` only. Avatars are 12 presets. Decision: ADR-003.
+- Owner decisions today: preset avatars; move content only (categories, quizzes,
+  questions, daily challenges) into MySQL, players start fresh; delete the Supabase
+  project only after the content export and the live app are verified, with the owner's
+  explicit yes at that time; releases through a GitHub Actions SSH deploy.
+- Checks today: typecheck, lint, build PASS. Backend 14 unit, 76 HTTP/database, 63
+  competition, 9 concurrency PASS on local MariaDB. `npm run check:htaccess` 18/18 PASS.
+  Browser run against the local PHP API PASS for catalogue, practice and ranked play,
+  grading, review, history, age group, nickname, preset avatar, settings, leaderboard
+  with avatar and account deletion.
+- Not yet tested: content import, live deploy, real adult Clerk sign-in, GitHub Actions
+  deploy.
+
+Remaining steps, in order:
+
+1. Content import: export categories, quizzes, questions and daily challenges from the
+   old Supabase project and load them into MySQL. Needs the owner's approval before any
+   read of the old project or write to the cPanel database. Verify counts and play a
+   sample of imported quizzes. How daily rows become `live` after import is UNKNOWN
+   (owner: Gideon, next check: during import).
+2. GitHub Actions SSH deploy: needs the owner's approval of the deploy key and secrets
+   before setup. Rules in `docs/07-operations/DEPLOYMENT.md` §7.
+3. Live verification on `doyouknow.soulrefresh.net`: health check, guest play, daily,
+   friend challenge, leaderboards, deletion, offline and update prompt, and a real adult
+   Clerk sign-in. Confirm the cleanup cron on the server.
+4. Supabase project deletion: only after steps 1 and 3 are verified, and only with the
+   owner's explicit yes at that time.
+
+Sections below are history.
+
+- DONE 16 Oct 2026: `.env.example` trimmed to VITE_CPANEL_API_URL, VITE_CLERK_PUBLISHABLE_KEY, VITE_SENTRY_DSN, VITE_IMAGEKIT_URL_ENDPOINT (commit 2a21115). Each computer's `.env.local` follows the same four names (owner confirmed). No content import needed: the old Supabase was never run on this Mac and no questions were added; MySQL already holds the seed content.
+
+## 16 October 2026: GEE OS 1.4 cpanel contract audit (branch chore/gee-os-cpanel-contract)
+
+- Owner asked to verify every GEE OS cpanel profile file: create what is missing, update
+  what exists. Local work only; nothing pushed, deployed or changed on any account.
+- Created: `.claude/settings.json` agent hook, `.githooks/pre-commit`, `scripts/agent_guard.py`,
+  `scripts/guard.py`, `scripts/verify.py`, `scripts/check-htaccess.sh`.
+- Updated: root `.htaccess` (proxy-aware HTTPS, caching scoped to hashed assets and icons,
+  stray PHP denied, HSTS, real 404 for missing static files), AGENTS.md, CLAUDE.md,
+  CODEX.md, `.agent/PROJECT.yml` (stack_profile cpanel), DEPLOYMENT.md, scripts/README.md.
+- Kept: frontend at the repo root (moving it under `app/` would touch CI and packaging for
+  no user benefit), existing docs set, backend layout (already matches the profile).
+- Open, needs the owner: automated GitHub Actions deploy (deploy key and secrets),
+  confirming the cleanup cron on the server, pushing this branch and opening a PR.
+
+## Previous task, 16 October 2026: full merge and production transition (superseded by ADR-003)
 
 - Owner requested full merge/build and shared access from both computers.
 - Continue the Clerk/PHP migration, preserving grading and child privacy. The live
@@ -13,8 +66,20 @@
 - Secret-free Linux CI now PASS: frontend build/lint/types and isolated MariaDB
   contracts on PHP 8.2/8.4, run 38860929591. PR #4 is ready for review. Its previous
   CodeRabbit SUCCESS was a skipped draft review, not approval.
-- Consolidate PR #4 into main after checks, retaining alternative branches.
-  Continue production implementation in a separate reviewed branch afterwards.
+- PR #4 merged into main after all checks at ec51f70. Alternate branches retained.
+  Production implementation now uses feat/cpanel-production, with its own PR.
+- First production batch: migration 0003, catalogue filters, owner-only profiles,
+  settings, history and confirmed app deletion. Local MariaDB 11.4: 73 HTTP plus
+  14 unit checks PASS. Frontend and Clerk production work remains pending.
+  Hosted preview is not switched to this batch.
+- Competition migration 0004 and PHP port pass 63 extra mode checks plus 9 real
+  multi-worker race checks. React accepts server deadlines; 4 browser timer checks
+  PASS. Owner has provisioned the existing app's production instance
+  ins_3Kla98MIcql96UMCix0F4nkMef9 for doyouknow.soulrefresh.net. All five Clerk
+  CNAMEs added in Cloudflare as DNS only; public DNS PASS. Clerk mail checks
+  fluctuate between complete and pending during propagation.
+  Automatic SSL issuance and Google OAuth remain pending. No production keys
+  replaced and no frontend/backend cutover performed.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
   remain server-side; each computer keeps its own configuration. Actual Ubuntu
   checkout/local configuration remains NOT TESTED until that machine is available.
@@ -66,7 +131,7 @@
   - C. Friend challenges: link + share/copy, `/challenge/:code`, exact same questions, head to head. PASS.
   - D. Avatars on `feat/m2-avatars` (stacked on `feat/m2-compete`): migrations 0006 (avatar options) and 0007 (age band required), builder at `/me/avatar`, `inngest` Edge Function with `generate-avatar`. Verified locally up to the missing OpenRouter key. Real painting NOT TESTED.
 - Evidence: `qa/FUNCTIONAL-AUDIT.md`, `qa/evidence/m1-play/`, `qa/evidence/m2-compete/`.
-- Local stack: `supabase start` (ports 5542x). App against it:
+- SUPERSEDED 16 October 2026 (ADR-003), do not use. Former local stack: `supabase start` (ports 5542x). App against it:
   `VITE_SUPABASE_URL=http://127.0.0.1:55421 VITE_SUPABASE_ANON_KEY=<local anon key> npx vite --port 5212`.
 
 ## Next

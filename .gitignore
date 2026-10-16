@@ -9,9 +9,6 @@ dist-ssr/
 .env.*
 !.env.example
 
-# supabase local
-supabase/.temp/
-supabase/.branches/
 
 # logs & editors
 npm-debug.log*
@@ -27,7 +24,6 @@ playwright-report/
 test-results/
 
 # edge function secrets
-supabase/functions/.env
 
 # GEE OS scaffold extras
 build/

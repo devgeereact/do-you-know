@@ -1,5 +1,9 @@
 # Avatar configuration check, 15 October 2026
 
+> Historical record. Supabase was removed from the code on 16 October 2026 (see
+> docs/08-change-management/DECISIONS.md). Current architecture:
+> docs/02-architecture/ARCHITECTURE.md.
+
 Scope: select the requested avatar model, check supplied credentials without recording
 values, and prevent private Vite settings from entering browser builds.
 

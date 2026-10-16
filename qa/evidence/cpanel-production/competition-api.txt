@@ -1,0 +1,64 @@
+PASS ranked mode starts
+PASS deadline matches frozen server timer
+PASS reload retains deadline and option order
+PASS metadata edit cannot extend an open attempt
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition result is server-written
+PASS ranked finish returns ranks
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition result is server-written
+PASS server time breaks equal-score ties
+PASS public board omits identity and age
+PASS anonymous board has no private me row
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition result is server-written
+PASS worse replay does not replace best result
+PASS unknown board rejected
+PASS daily uses London server date
+PASS daily players receive identical question order
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition result is server-written
+PASS daily finish updates streak once
+PASS daily finish retry does not increment streak
+PASS daily cannot be replayed for rank
+PASS own daily progress readable
+PASS daily progress cannot impersonate another player
+PASS creates random challenge code with original lifetime
+PASS challenge creation is idempotent
+PASS cannot share another player result
+PASS challenge preview contains no private identity
+PASS creator cannot play own challenge
+PASS friend gets exact original question order
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition result is server-written
+PASS versus result calculated on server
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition advances without answer keys
+PASS server grades competition answer
+PASS competition result is server-written
+PASS practice does not enter ranked boards
+PASS expired challenge cannot start
+PASS public expired preview is labelled
+63 competition checks passed

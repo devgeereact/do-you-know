@@ -1,6 +1,17 @@
 # Production cutover
 
+> Historical record. Supabase was removed from the code on 16 October 2026 (see
+> docs/08-change-management/DECISIONS.md). Current architecture:
+> docs/02-architecture/ARCHITECTURE.md.
+
 Status: IN PROGRESS, 16 October 2026. Release decision: NO-GO for full production.
+Update 16 October 2026: on branch feat/cpanel-only the frontend now runs only on the
+PHP API; Supabase code is removed. Remaining gates, in order: (1) content import of
+categories, quizzes, questions and daily challenges from the old Supabase project into
+MySQL, with owner approval; (2) GitHub Actions SSH deploy, with owner approval of the
+deploy key and secrets; (3) live verification on doyouknow.soulrefresh.net, including a
+real adult Clerk sign-in; (4) deletion of the Supabase project only after (1) and (3)
+are verified and the owner gives an explicit yes at that time.
 Owner requested full merge/build using Clerk and cPanel, with both computers able
 to work against shared data. The existing public practice preview stays available.
 

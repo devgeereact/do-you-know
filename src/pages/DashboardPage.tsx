@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
-import { useInngestDispatch } from '@/hooks/useInngestDispatch';
+import { useSession } from '@/hooks/useSession';
 import { getSettings, updateSettings } from '@/services/settingsService';
 import { getProfile } from '@/services/profileService';
 import { reportError } from '@/lib/sentry';
@@ -9,8 +8,7 @@ import { Card } from '@/components/ui/Card';
 import type { AppSettings, Profile } from '@/types';
 
 export function DashboardPage(): JSX.Element {
-  const { user, signOut } = useSupabaseAuth();
-  const { send } = useInngestDispatch();
+  const { user, signOut } = useSession();
 
   const [profile, setProfile] = useState<Profile | null>(null);
   const [settings, setSettings] = useState<AppSettings | null>(null);
@@ -19,7 +17,7 @@ export function DashboardPage(): JSX.Element {
   const load = useCallback(async (): Promise<void> => {
     if (!user) return;
     try {
-      const [p, s] = await Promise.all([getProfile(user.id), getSettings(user.id)]);
+      const [p, s] = await Promise.all([getProfile(), getSettings()]);
       setProfile(p);
       setSettings(s);
     } catch (error) {
@@ -38,14 +36,12 @@ export function DashboardPage(): JSX.Element {
     const next = !settings.notifications_enabled;
     setSettings({ ...settings, notifications_enabled: next }); // optimistic
     try {
-      await updateSettings(user.id, { notifications_enabled: next });
-      // Fire a background event (fire-and-forget).
-      void send('settings/updated', { userId: user.id, notifications_enabled: next });
+      await updateSettings({ notifications_enabled: next });
     } catch (error) {
       setSettings({ ...settings, notifications_enabled: !next }); // rollback
       reportError(error, { area: 'dashboard:toggle' });
     }
-  }, [user, settings, send]);
+  }, [user, settings]);
 
   const notificationsOn = settings?.notifications_enabled === true;
 

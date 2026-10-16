@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useMyGames } from '@/hooks/useMyGames';
 import { useProfile } from '@/hooks/useProfile';
-import { isWebUrl } from '@/lib/utils';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { AvatarBadge } from '@/components/AvatarBadge';
 
 const AGE_BAND_LABEL = {
   under_13: 'Under 13',
@@ -18,7 +17,7 @@ const AGE_BAND_LABEL = {
 
 /** Nickname, age group and account deletion. Shown once a session exists. */
 function ProfileCard(): JSX.Element | null {
-  const { profile, avatarUrl, error, deleteAccount } = useProfile();
+  const { profile, error, deleteAccount, refresh } = useProfile();
   const navigate = useNavigate();
   const [confirming, setConfirming] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -27,23 +26,19 @@ function ProfileCard(): JSX.Element | null {
   return (
     <Card className="mt-6 p-5">
       <div className="flex items-center gap-4">
-        {isWebUrl(avatarUrl) ? (
-          <img src={avatarUrl} alt="Your avatar" className="h-16 w-16 rounded-full object-cover" />
-        ) : (
-          <span
-            aria-hidden="true"
-            className="grid h-16 w-16 place-items-center rounded-full bg-sky/30 font-display text-2xl font-semibold text-primary"
-          >
-            ?
-          </span>
-        )}
+        <AvatarBadge
+          avatarId={profile.avatar_id}
+          nickname={profile.nickname}
+          size="md"
+          label="Your avatar"
+        />
         <div>
           <h2 className="text-xl font-semibold text-content">Your profile</h2>
           <Link
             to="/me/avatar"
             className="text-sm font-semibold text-primary underline underline-offset-2"
           >
-            {avatarUrl ? 'Change my avatar' : 'Make my avatar'}
+            {profile.avatar_id ? 'Change my avatar' : 'Pick my avatar'}
           </Link>
         </div>
       </div>
@@ -62,7 +57,7 @@ function ProfileCard(): JSX.Element | null {
         </dl>
       ) : (
         <div className="mt-4">
-          <NicknamePicker />
+          <NicknamePicker onDone={() => void refresh()} />
         </div>
       )}
 
@@ -121,9 +116,7 @@ function when(iso: string): string {
 }
 
 export function MePage(): JSX.Element {
-  const { user } = useSupabaseAuth();
   const { games, streak, loading, error } = useMyGames();
-  const isGuest = user === null || user.is_anonymous === true;
 
   return (
     <>
@@ -144,20 +137,14 @@ export function MePage(): JSX.Element {
 
         <ProfileCard />
 
-        {isGuest ? (
-          <Card className="mt-6 p-5">
-            <p className="text-content">
-              You’re playing as a guest, so your games live on this device only.
-            </p>
-            <Link to="/login" className={buttonClasses('primary', 'md', 'mt-4')}>
-              Save my progress
-            </Link>
-          </Card>
-        ) : (
-          <Link to="/dashboard" className={buttonClasses('ghost', 'md', 'mt-6')}>
+        <Card className="mt-6 p-5">
+          <p className="text-content">
+            You play as a guest, so no email is needed and your games live on this device.
+          </p>
+          <Link to="/dashboard" className={buttonClasses('ghost', 'md', 'mt-4')}>
             Settings
           </Link>
-        )}
+        </Card>
 
         <Link
           to="/account"

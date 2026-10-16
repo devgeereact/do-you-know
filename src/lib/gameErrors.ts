@@ -1,7 +1,7 @@
 import type { GameErrorCode } from '@/types/game';
 
 /**
- * Friendly, child-safe copy for the short error codes raised by the game RPCs.
+ * Friendly, child-safe copy for the short error codes raised by the PHP API.
  * Keep messages short, kind and actionable. All strings will move to the i18n
  * catalogue when a second language is added.
  */
@@ -29,16 +29,13 @@ const MESSAGES: Record<GameErrorCode, string> = {
   kids_use_generated_nickname: 'Pick one of our fun nicknames — tap shuffle to see more!',
   invalid_nickname: 'Nicknames need 3–20 letters or numbers.',
   nickname_not_allowed: "That nickname isn't allowed. Please try another.",
-  no_pending_consent: 'There’s nothing waiting for a parent to confirm.',
-  invalid_trait: 'One of those avatar choices isn’t available. Please change it.',
-  avatar_limit_reached: "You've made 3 avatars today — come back tomorrow for more.",
-  avatar_combo_taken: 'Someone already has that exact look! Change one thing to make it yours.',
-  avatar_not_ready: 'Your avatar is still being painted. Hang tight!',
+  invalid_avatar: 'That avatar isn’t available. Please pick another.',
+  network_error: "We couldn't reach the game. Check your connection and try again.",
 };
 
 const FALLBACK = 'Oops — something went wrong. Please try again.';
 
-/** Turn a Supabase RPC error into friendly copy. */
+/** Turn an API error into friendly copy. */
 export function gameErrorMessage(error: { message?: string } | null | undefined): string {
   const code = error?.message?.trim() as GameErrorCode | undefined;
   return (code && MESSAGES[code]) || FALLBACK;

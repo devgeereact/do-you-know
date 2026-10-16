@@ -1,26 +1,7 @@
 <?php
 declare(strict_types=1);
-require dirname(__DIR__).'/vendor/autoload.php';
-use Dyk\Config;
+require __DIR__.'/http.php';
 use Dyk\Database;
-$config=Config::load(dirname(__DIR__));
-if ($config['environment']!=='test' || !str_ends_with($config['database']['name'],'_test')) {
-    fwrite(STDERR,"Tests require environment=test and a dedicated database ending _test.\n");exit(1);
-}
-$base=getenv('DYK_TEST_API')?:'http://127.0.0.1:55438/api/v1';
-if (!preg_match('~^http://127\.0\.0\.1:\d+/api/v1$~D',$base)) { throw new RuntimeException('local_test_api_required'); }
-$db=Database::connect($config);$count=0;
-// Only this isolated test database may have its throttling fixtures reset.
-$db->exec("DELETE FROM rate_limits");
-function check(string $name,bool $ok): void {global $count;$count++;if(!$ok){fwrite(STDERR,'FAIL '.$name.PHP_EOL);exit(1);}fwrite(STDOUT,'PASS '.$name.PHP_EOL);}
-function request(string $method,string $path,?array $body=null,?string $token=null,string $origin='http://localhost:5202',?string $raw=null): array {
-    global $base;$c=curl_init($base.$path);$headers=['Origin: '.$origin,'Content-Type: application/json'];if($token){$headers[]='Authorization: Bearer '.$token;}
-    curl_setopt_array($c,[CURLOPT_CUSTOMREQUEST=>$method,CURLOPT_HTTPHEADER=>$headers,CURLOPT_RETURNTRANSFER=>true,CURLOPT_TIMEOUT=>15,CURLOPT_HEADER=>true]);
-    if($body!==null||$raw!==null){curl_setopt($c,CURLOPT_POSTFIELDS,$raw??json_encode((object)$body));}
-    $reply=curl_exec($c);if($reply===false){throw new RuntimeException('test_api_unreachable');}
-    $status=curl_getinfo($c,CURLINFO_RESPONSE_CODE);$size=curl_getinfo($c,CURLINFO_HEADER_SIZE);$h=substr($reply,0,$size);$j=json_decode(substr($reply,$size),true);
-    return ['status'=>$status,'body'=>$j,'headers'=>$h];
-}
 // Fixtures are original test content in a fresh private database, never public production seed.
 $category=Database::uuid();$quiz=Database::uuid();$version=Database::uuid();$snapshot=[];
 foreach (['choice','boolean','slider'] as $type) {
@@ -54,10 +35,19 @@ $r=request('GET','/me');check('profile requires identity',$r['status']===401);
 $r=request('GET','/me',null,'guest_forged');check('rejects forged guest token',$r['status']===401);
 $r=request('GET','/categories');check('published categories readable',$r['status']===200&&count($r['body'])>0);
 $r=request('GET','/quizzes/'.$slug);check('catalogue contains no snapshot',$r['status']===200&&!array_key_exists('snapshot',$r['body'])&&!array_key_exists('current_version_id',$r['body']));
+check('catalogue JSON uses typed booleans and arrays',is_bool($r['body']['shuffle_options'])&&is_bool($r['body']['is_ranked'])&&is_array($r['body']['curriculum_tags']));
+Database::execute($db,'UPDATE quizzes SET age_min=8,age_max=12,curriculum_tags=? WHERE id=?',[json_encode(['fixture-tag']),$quiz]);
+$r=request('GET','/quizzes?category_id='.$category.'&age=10&curriculum_tag=fixture-tag&search=Test');
+check('catalogue filters published metadata',$r['status']===200&&count($r['body'])===1&&$r['body'][0]['id']===$quiz);
+$r=request('GET','/quizzes?category_id='.$category.'&age=13');check('age filter excludes out-of-range quiz',$r['status']===200&&$r['body']===[]);
+$r=request('GET','/quizzes?category_id='.$category.'&search=%25');check('search wildcard treated literally',$r['status']===200&&$r['body']===[]);
+$r=request('GET','/quizzes?age[]=10');check('catalogue rejects array filter',$r['status']===400);
+$r=request('GET','/categories/'.$slug);check('category detail uses public metadata',$r['status']===200&&$r['body']['id']===$category&&$r['body']['is_active']===true);
+$r=request('GET','/curriculum-tags');check('curriculum tags readable',$r['status']===200&&is_array($r['body']));
 $r=request('GET','/questions');check('no generic question table endpoint',$r['status']===404);
 $r=request('GET','/quizzes/not-published');check('missing quiz returns JSON 404',$r['status']===404);
 $r=request('POST','/account/session',['adult_confirmed'=>true],$guest['token']);check('guest cannot become Clerk account',$r['status']!==200);
-$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$guest['token']);check('unmigrated modes fail explicitly',$r['status']===501);
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'forged'],$guest['token']);check('unknown modes fail explicitly',$r['status']===400);
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$state=$r['body'];$id=$state['attempt_id'];check('starts practice with three questions',$r['status']===200&&$state['total']===3);
 check('first question has no explanation or answers',!isset($state['question']['explanation'])&&!str_contains(json_encode($state['question']),'is_correct')&&!str_contains(json_encode($state['question']),'accept_min'));
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);check('reload resumes original attempt',$r['body']['attempt_id']===$id);
@@ -74,6 +64,40 @@ for($i=0;$i<3;$i++) {
 $r=request('POST','/attempts/'.$id.'/finish',[],$guest['token']);check('server result ignores submitted scores',$r['status']===200&&$r['body']['correct']===3&&$r['body']['total']===3&&count($r['body']['review'])===3);$summary=$r['body'];
 $r=request('POST','/attempts/'.$id.'/finish',[],$guest['token']);check('finish is idempotent',$r['body']===$summary);
 $r=request('POST','/attempts/'.$id.'/finish',[],$other['token']);check('another player cannot read review',$r['status']===404);
+$r=request('GET','/me/games?user_id='.$other['profile_id'].'&limit=1',null,$guest['token']);
+check('history contains only own finished server results',$r['status']===200&&count($r['body'])===1&&$r['body'][0]['attemptId']===$id&&$r['body'][0]['correct']===3);
+$r=request('GET','/me/games',null,$other['token']);check('other player cannot see history',$r['status']===200&&$r['body']===[]);
+$r=request('GET','/me/games?limit=1%20OR%201=1',null,$guest['token']);check('history limit rejects non-numeric input',$r['status']===400);
+$r=request('GET','/me/settings',null,$guest['token']);check('settings default to light with notifications off',$r['status']===200&&$r['body']['theme']==='light'&&$r['body']['notifications_enabled']===false);
+$r=request('POST','/me/settings',['theme'=>'dark','notifications_enabled'=>true],$guest['token']);check('updates own settings with real boolean',$r['status']===200&&$r['body']['theme']==='dark'&&$r['body']['notifications_enabled']===true);
+$r=request('POST','/me/settings',['theme'=>'light','user_id'=>$other['profile_id']],$guest['token']);check('settings reject identity overrides',$r['status']===400);
+$r=request('POST','/me/settings',['notifications_enabled'=>'false'],$guest['token']);check('settings reject string booleans',$r['status']===400);
+$r=request('GET','/me/settings',null,$other['token']);check('settings are isolated between players',$r['body']['theme']==='light'&&$r['body']['notifications_enabled']===false);
+$r=request('POST','/me/nickname',['nickname'=>'ValidName'],$guest['token']);check('age band required before chosen nickname',$r['status']===400&&$r['body']['error']['code']==='age_band_required');
+$r=request('POST','/me/age-band',['band'=>'under_13','role'=>'admin'],$guest['token']);check('sets child age band without granting role',$r['status']===200);
+$r=request('POST','/me/age-band',['band'=>'18_plus'],$guest['token']);check('child cannot change age band',$r['status']===400&&$r['body']['error']['code']==='age_band_locked');
+$r=request('POST','/me/nickname',['nickname'=>'ChosenName'],$guest['token']);check('child cannot choose free-text nickname',$r['status']===400&&$r['body']['error']['code']==='kids_use_generated_nickname');
+$r=request('POST','/me/nickname/random',[],$guest['token']);check('child can receive generated nickname',$r['status']===200&&preg_match('/^[A-Za-z]+[0-9]{2}$/D',$r['body']['nickname'])===1);
+$r=request('POST','/me/avatar',['avatar_id'=>'owl'],$guest['token']);check('preset avatar accepted',$r['status']===200&&$r['body']['avatar_id']==='owl');
+$r=request('GET','/me',null,$guest['token']);check('own profile shows chosen avatar',$r['status']===200&&$r['body']['avatar_id']==='owl');
+$r=request('POST','/me/avatar',['avatar_id'=>'https://example.com/x.png'],$guest['token']);check('unknown avatar refused',$r['status']===400&&$r['body']['error']['code']==='invalid_avatar');
+$r=request('GET','/me',null,$guest['token']);check('profile has no real name email or external identity',$r['body']['role']==='guest'&&!isset($r['body']['email'])&&!isset($r['body']['full_name'])&&!isset($r['body']['subject']));
+$r=request('POST','/me/age-band',['band'=>'13_17'],$other['token']);check('older player may set age band',$r['status']===200);
+Database::execute($db,'INSERT IGNORE INTO blocked_words (word) VALUES (?)',['forbiddenfixture']);
+$r=request('POST','/me/nickname',['nickname'=>'ForbiddenFixture'],$other['token']);check('nickname moderation ignores case',$r['status']===400&&$r['body']['error']['code']==='nickname_not_allowed');
+$r=request('POST','/me/nickname',['nickname'=>'Safe Player'],$other['token']);check('older player may choose permitted nickname',$r['status']===200&&$r['body']['nickname']==='Safe Player');
+$r=request('POST','/me/delete',[],$guest['token']);check('deletion requires explicit confirmation',$r['status']===400);
+$r=request('POST','/guest-sessions',[]);$deletable=$r['body'];
+$r=request('POST','/attempts',['quiz_slug'=>$slug],$deletable['token']);$deletedAttempt=$r['body']['attempt_id'];
+$r=request('GET','/me/settings',null,$deletable['token']);
+$extraToken='guest_'.bin2hex(random_bytes(32));
+Database::execute($db,'INSERT INTO guest_sessions (token_hash,profile_id,expires_at) VALUES (?,?,DATE_ADD(UTC_TIMESTAMP(),INTERVAL 1 DAY))',[hash('sha256',$extraToken),$deletable['profile_id']]);
+$r=request('POST','/me/delete',['confirmed'=>true,'user_id'=>$guest['profile_id']],$deletable['token']);check('deletion is scoped to current session',$r['status']===200);
+$r=request('GET','/me',null,$deletable['token']);check('deletion revokes session',$r['status']===401);
+$r=request('GET','/me',null,$extraToken);check('deletion revokes all profile sessions',$r['status']===401);
+$remaining=Database::one($db,'SELECT (SELECT COUNT(*) FROM attempts WHERE id=?) + (SELECT COUNT(*) FROM app_settings WHERE user_id=?) AS n',[$deletedAttempt,$deletable['profile_id']]);
+check('deletion removes attempts and preferences',(int)$remaining['n']===0);
+$r=request('GET','/me',null,$guest['token']);check('deletion cannot target another player',$r['status']===200);
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$id2=$r['body']['attempt_id'];
 Database::execute($db,'UPDATE attempts SET current_sent_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 10 SECOND) WHERE id=?',[$id2]);
 $r=request('POST','/attempts/'.$id2.'/answer',[],$guest['token']);check('server enforces time limit',$r['status']===200&&$r['body']['timed_out']===true&&$r['body']['is_correct']===false);

@@ -66,6 +66,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     state?.time_limit_seconds ?? null,
     phase === 'question' ? (question?.id ?? null) : null,
     () => void game.timeUp(),
+    { deadline: state?.question_deadline, serverNow: state?.server_now },
   );
 
   const promptRef = useRef<HTMLHeadingElement>(null);

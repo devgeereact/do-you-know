@@ -1,13 +1,24 @@
-import type { ReactNode } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useSupabaseAuth } from '@/hooks/useSupabaseAuth';
+import { useEffect, type ReactNode } from 'react';
+import { useGuestSession } from '@/hooks/useGuestSession';
+import { useSession } from '@/hooks/useSession';
 
-/** Gate a route on an authenticated session; redirect to /login otherwise. */
+/** Pages that need a player (settings) start a guest session; no email is ever asked for. */
 export function ProtectedRoute({ children }: { children: ReactNode }): JSX.Element {
-  const { user, loading } = useSupabaseAuth();
-  const location = useLocation();
+  const { user, loading } = useSession();
+  const { ensureSession, error } = useGuestSession();
 
-  if (loading) {
+  useEffect(() => {
+    if (!loading && !user) ensureSession().catch(() => undefined);
+  }, [loading, user, ensureSession]);
+
+  if (error) {
+    return (
+      <p role="alert" className="p-6 text-content">
+        {error}
+      </p>
+    );
+  }
+  if (loading || !user) {
     return (
       <div className="grid min-h-screen place-items-center bg-background">
         <div
@@ -18,10 +29,5 @@ export function ProtectedRoute({ children }: { children: ReactNode }): JSX.Eleme
       </div>
     );
   }
-
-  if (!user) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
-  }
-
   return <>{children}</>;
 }

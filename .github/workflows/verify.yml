@@ -93,7 +93,7 @@ jobs:
           php backend/bin/migrate.php
       - name: Verify HTTP, ownership and grading contracts
         run: |
-          php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > "$RUNNER_TEMP/dyk-php.log" 2>&1 &
+          PHP_CLI_SERVER_WORKERS=4 php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > "$RUNNER_TEMP/dyk-php.log" 2>&1 &
           api_pid=$!
           trap 'kill "$api_pid" 2>/dev/null || true' EXIT
           for attempt in {1..30}; do
@@ -101,3 +101,5 @@ jobs:
             sleep 0.2
           done
           php backend/tests/integration.php
+          php backend/tests/competition.php
+          php backend/tests/concurrency.php
