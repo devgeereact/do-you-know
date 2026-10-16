@@ -131,6 +131,19 @@ directory. Upload its `public/` contents to the app docroot (the API entry
 the deployed `api/.htaccess`, then run `php bin/migrate.php` with the migration user.
 Exact paths, config fields, endpoint contracts and checks: `backend/README.md`.
 
+**Server settings overrides (since 16 October 2026).** On the host,
+`~/dyk-backend/shared/config.php` is a thin loader: it returns `config.base.php` (the
+original filled-in array) with any key set in `shared/.env` (600) laid over it. An empty
+`.env` gives exactly the base config (checked on the host at install). Override names:
+`DYK_ENVIRONMENT`, `DYK_ALLOWED_ORIGINS` and `CLERK_AUTHORIZED_PARTIES` (comma lists),
+`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `CLERK_ISSUER`, `CLERK_JWT_KEY`
+(write line breaks as `\n`), `CLERK_SECRET_KEY` (`sk_live_` only), `GUEST_TTL_SECONDS`,
+`RATE_LIMIT_KEY`. Set them from the Mac with `~/.claude/bin/push-env dyk [file]` (dry run;
+add `--go` to send) or on the host with `ssh -t cpanel 'bin/set-secret dyk NAME'`.
+`shared/migration.php` is unchanged. Backup of the pre-loader file:
+`~/private_backups/dyk/config.php.20261016T234705Z`. Rollback: copy `config.base.php`
+back over `config.php`.
+
 After each release: check `/api/v1/health`, check `/api/v1/daily` returns today's quiz,
 play one quiz as a guest, and confirm API errors are JSON, not `index.html`.
 
