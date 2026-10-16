@@ -35,11 +35,24 @@ npm run build && npm run check:htaccess
 ```
 
 `scripts/check-htaccess.sh` serves `dist/` through a throwaway local Apache 2.4 on
-127.0.0.1:8089 and checks 18 rules: shell and service worker revalidated, hashed assets
+127.0.0.1:8089 and checks 20 rules: shell and service worker revalidated, hashed assets
 and icons immutable, deep links served by the shell, missing static files return 404,
 source maps, dotfiles, `config.php` and stray PHP denied, `/api/v1` routed to
-`api/api.php`, HSTS and nosniff on HTTPS, plain HTTP redirected, ACME challenges open.
-It does not test LiteSpeed or Cloudflare; check the live site after deploy.
+`api/api.php`, HSTS and nosniff on HTTPS, the report-only CSP header sent, every inline
+script in `dist/index.html` allowed by its sha256 in that CSP, plain HTTP redirected, ACME
+challenges open. It does not test LiteSpeed or Cloudflare; check the live site after
+deploy. CI does not run this check, so run it before any release that touches
+`.htaccess` or the inline script in `index.html`.
+
+### Content-Security-Policy (report-only)
+
+The root `.htaccess` sends `Content-Security-Policy-Report-Only`, added 16 October 2026.
+Browsers log violations to the console and block nothing. It allows `'self'`, the inline
+theme script by hash, Clerk (`clerk.soulrefresh.net`, `*.protect.clerk.com`,
+`challenges.cloudflare.com`, `img.clerk.com`, Clerk telemetry), Sentry ingest and ImageKit
+images, as in Clerk's CSP guide. There is no report endpoint yet. Before switching the
+header name to `Content-Security-Policy` (enforcing): browse every journey, including an
+adult sign-in on `/account`, with the console open and see no CSP violations.
 
 ## 2. Ship the artifacts — into THIS app's own docroot
 
