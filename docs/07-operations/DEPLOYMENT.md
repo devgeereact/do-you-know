@@ -118,8 +118,11 @@ directory. Upload its `public/` contents to the app docroot (the API entry
 the deployed `api/.htaccess`, then run `php bin/migrate.php` with the migration user.
 Exact paths, config fields, endpoint contracts and checks: `backend/README.md`.
 
-After each release: check `/api/v1/health`, play one quiz as a guest, and confirm API
-errors are JSON, not `index.html`.
+After each release: check `/api/v1/health`, check `/api/v1/daily` returns today's quiz,
+play one quiz as a guest, and confirm API errors are JSON, not `index.html`.
+
+cPanel cron runs two hourly jobs against `~/dyk-backend/current`, so each release picks
+them up without a cron edit: `bin/cleanup.php` (minute 17) and `bin/daily.php` (minute 5).
 
 ## 7. Automated deploy (`.github/workflows/deploy.yml`)
 

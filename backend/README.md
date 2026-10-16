@@ -122,6 +122,15 @@ shared networks may share an allowance. Schedule `php /home/CPANEL_USER/dyk-back
 allowed by your host. It removes up to 1000 expired sessions and throttle buckets
 per run, never profiles or gameplay records.
 
+Schedule `php /home/CPANEL_USER/dyk-backend/current/bin/daily.php` every hour. It works
+on the London date and is safe to run again: it marks earlier `live` (and missed
+`scheduled`) daily rows `done`, makes today's `scheduled` row `live`, and when nothing is
+scheduled it picks the least recently used published quiz that has a current version and
+pins that version. A scheduled row whose quiz is no longer published is swapped for a
+published one. A row an owner set to `done` stays closed. It exits 2 when no published
+quiz exists, so no daily runs that day. Until the first run after London midnight,
+`GET /daily` returns `null`.
+
 ## Verification
 
 ```sh
@@ -166,6 +175,6 @@ retaining a local fallback, with duplicate-expiry protection under StrictMode.
 
 Tests: tests/http.php supplies a guarded localhost/test-database harness.
 tests/integration.php covers ownership/metadata/practice, tests/competition.php
-covers all game modes, tests/concurrency.php requires four local PHP workers and
+covers all game modes, tests/daily.php covers the daily activator and its cron script, tests/concurrency.php requires four local PHP workers and
 sends parallel requests. CI uses PHP_CLI_SERVER_WORKERS=4; this development server
 is never used for cPanel production.
