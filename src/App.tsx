@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
@@ -18,6 +18,7 @@ import { LeaderboardsPage } from '@/pages/LeaderboardsPage';
 import { DailyPage } from '@/pages/DailyPage';
 import { ChallengePage } from '@/pages/ChallengePage';
 import { AvatarPage } from '@/pages/AvatarPage';
+import { env } from '@/lib/env';
 
 const AccountPage = lazy(() =>
   import('@/pages/AccountPage').then((m) => ({ default: m.AccountPage })),
@@ -32,7 +33,10 @@ export function App(): JSX.Element {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/"
+              element={env.cpanelPreview ? <Navigate to="/preview" replace /> : <HomePage />}
+            />
             <Route
               path="/preview"
               element={

@@ -8,6 +8,7 @@ interface AppEnv {
   appUrl: string;
   clerkPublishableKey: string;
   cpanelApiUrl: string;
+  cpanelPreview: boolean;
   supabaseUrl: string;
   supabaseAnonKey: string;
   imagekitUrlEndpoint: string;
@@ -46,6 +47,7 @@ export const env: AppEnv = {
   appUrl: read('VITE_APP_URL'),
   clerkPublishableKey: read('VITE_CLERK_PUBLISHABLE_KEY'),
   cpanelApiUrl: read('VITE_CPANEL_API_URL', '/api/v1'),
+  cpanelPreview: read('VITE_CPANEL_PREVIEW') === 'true',
   supabaseUrl: read('VITE_SUPABASE_URL'),
   supabaseAnonKey: read('VITE_SUPABASE_ANON_KEY'),
   imagekitUrlEndpoint: read('VITE_IMAGEKIT_URL_ENDPOINT'),

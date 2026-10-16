@@ -35,13 +35,14 @@ RewriteRule ^ index.html [L]
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 
-  # Never cache the shell, service worker or manifest
-  <FilesMatch "(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest)$">
-    Header set Cache-Control "no-cache"
-  </FilesMatch>
   # Hashed assets are immutable
   <FilesMatch "\.(js|css|woff2|png|svg|webp|jpg)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Apply after the generic JS rule so service workers are revalidated.
+  <FilesMatch "^(index\.html|sw\.js|registerSW\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
   </FilesMatch>
 </IfModule>
 
