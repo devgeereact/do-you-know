@@ -29,21 +29,22 @@ final class Api
                 if ($token==='') { throw new ApiError('not_signed_in',401); }
                 self::reply(Identity::adult($db,$config,$token)); return;
             }
-            if ($method==='GET' && $path==='/categories') {
-                $s=$db->query('SELECT id,slug,name,description,kind,icon,scene,sort_order,is_active FROM categories WHERE is_active=1 ORDER BY sort_order,name LIMIT 100');
-                self::reply($s->fetchAll()); return;
+            $catalog = new Catalog($db);
+            if ($method==='GET' && $path==='/curriculum-tags') { self::reply($catalog->tags());return; }
+            if ($method==='GET' && ($path==='/categories' || preg_match('~^/categories/([a-z0-9-]{1,100})$~D',$path,$category))) {
+                $rows = $catalog->categories($path==='/categories' ? null : $category[1]);
+                if ($path==='/categories') { self::reply($rows); }
+                else { if (!$rows) { throw new ApiError('category_not_found',404); } self::reply($rows[0]); }
+                return;
             }
             if ($method==='GET' && ($path==='/quizzes' || preg_match('~^/quizzes/([a-z0-9-]{1,100})$~D',$path,$slug))) {
-                $sql="SELECT id,slug,title,intro,category_id,difficulty,cover_image_url,question_count,time_limit_seconds,shuffle_options,status,updated_at FROM quizzes WHERE status='published'";
-                $args=[];
-                if ($path!=='/quizzes') { $sql.=' AND slug=?'; $args[]=$slug[1]; }
-                $s=$db->prepare($sql.' ORDER BY updated_at DESC LIMIT 100');$s->execute($args);$rows=$s->fetchAll();
+                $rows = $catalog->quizzes($_GET, $path==='/quizzes' ? null : $slug[1]);
                 if ($path!=='/quizzes') { if (!$rows) { throw new ApiError('quiz_not_found',404); } self::reply($rows[0]); }
                 else { self::reply($rows); } return;
             }
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish)$~D',$path,$parts);
-            if (!in_array($path,['/session','/me','/attempts'],true) && !$gameRoute) { throw new ApiError('not_found',404); }
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/settings','/me/games','/me/delete','/attempts'],true) && !$gameRoute) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -51,8 +52,20 @@ final class Api
                 Database::execute($db,'DELETE FROM guest_sessions WHERE token_hash=?',[hash('sha256',$token)]);
                 self::reply(['signed_out'=>true]);return;
             }
-            if ($path==='/me' && $method==='GET') { self::reply(['id'=>$profile['id'],'role'=>$profile['role'],'nickname'=>$profile['nickname'],'age_band'=>$profile['age_band'],'streak_current'=>(int)$profile['streak_current']]);return; }
+            $player = new Player($db, $profile['id']);
+            if ($path==='/me' && $method==='GET') { self::reply($player->own());return; }
+            if ($path==='/me/settings' && $method==='GET') { self::reply($player->settings());return; }
+            if ($path==='/me/games' && $method==='GET') {
+                $limit = $_GET['limit'] ?? '20';
+                if (!is_string($limit) || !preg_match('/^[0-9]{1,3}$/D', $limit)) { throw new ApiError('invalid_limit'); }
+                self::reply($player->history((int) $limit));return;
+            }
             if ($method!=='POST') { throw new ApiError('method_not_allowed',405); }
+            if ($path==='/me/age-band') { $player->ageBand($body['band']??null);self::reply(['ok'=>true]);return; }
+            if ($path==='/me/nickname') { self::reply(['nickname'=>$player->nickname($body['nickname']??null)]);return; }
+            if ($path==='/me/nickname/random') { self::reply(['nickname'=>$player->randomNickname()]);return; }
+            if ($path==='/me/settings') { self::reply($player->updateSettings($body));return; }
+            if ($path==='/me/delete') { $player->delete($body);self::reply(['deleted'=>true]);return; }
             $game=new Game($db,$profile['id']);
             if ($path==='/attempts') { self::reply($game->start($body));return; }
             if ($gameRoute) {

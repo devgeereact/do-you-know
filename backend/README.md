@@ -1,7 +1,8 @@
 # cPanel API package
 
 Status: tested local foundation, not a complete Supabase replacement. Do not switch
-all frontend services to this API yet. Competition, profile edits/deletion, history,
+all frontend services to this API yet. Profile actions, settings, catalogue filters
+and history now have tested endpoints; frontend adapters are pending. Competition,
 parent-child linking, content authoring and avatar workers still need migration.
 Unimplemented routes return JSON 404; non-practice game modes return 501.
 
@@ -83,9 +84,18 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | POST /guest-sessions | `{}`; returns unguessable token, expiry and own profile ID |
 | DELETE /session | Revokes the current guest token; Clerk sign-out stays in Clerk |
 | POST /account/session | `{ "adult_confirmed": true }` plus a verified Clerk session token; creates/resolves adult identity, no staff grant |
-| GET /me | Own minimal profile; never a public user directory |
+| GET /me | Own profile, no real name/email/external identity |
+| POST /me/age-band | `{ "band": "under_13" }`, one-time age band |
+| POST /me/nickname/random | `{}`, server-generated nickname |
+| POST /me/nickname | `{ "nickname": "…" }`, moderated, 13+ only |
+| GET /me/settings | Own preferences, safe defaults |
+| POST /me/settings | Strict theme/notifications whitelist, real booleans |
+| GET /me/games?limit=20 | Own server-written finished results, capped at 100 |
+| POST /me/delete | `{ "confirmed": true }`, cascades own app data and sessions |
+| GET /curriculum-tags | Public filter options |
+| GET /categories/:slug | Active category detail |
 | GET /categories | Active category metadata |
-| GET /quizzes | Published quiz metadata, no answer snapshots |
+| GET /quizzes | Published metadata; category_id/age/curriculum_tag/search filters, literal wildcards |
 | GET /quizzes/:slug | One published quiz |
 | POST /attempts | `{ "quiz_slug": "…", "mode": "practice" }`; starts/resumes |
 | POST /attempts/:id/next | `{}`; original server clock retained on repeated next |
@@ -123,3 +133,15 @@ Actual Clerk sign-in and cPanel runtime checks are separate.
 
 Full migration, import, competition, avatar queues, rollback and release steps:
 [CPANEL-MIGRATION.md](../docs/07-operations/CPANEL-MIGRATION.md).
+
+## Production port progress
+
+Migration 0003_player_metadata.sql is additive, preserving the original applied
+migration files. Profile changes derive identity from verified sessions. Submitted
+user IDs/roles never choose a target. Under-13s cannot choose free-text nicknames
+or change their age band. Confirmed app-profile deletion revokes all its guest
+sessions and cascades attempts/settings. Clerk account deletion is separate and
+must be integrated before promising complete account deletion in the frontend.
+Owner-only DTOs omit legacy personal-data fields. Timestamps use explicit UTC ISO.
+The blocked_words table needs the owner's approved moderation policy before launch.
+No content/user import or hosted deployment happens merely by running these tests.

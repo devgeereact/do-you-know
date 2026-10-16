@@ -1,0 +1,74 @@
+PASS health responds without exposing config
+PASS API responses are never cached
+PASS preflight allows bearer header
+PASS rejects unapproved origin
+PASS rejects malformed JSON
+PASS requires JSON object
+PASS caps body size
+PASS creates guest without personal data
+PASS Clerk subjects remain case-sensitive
+PASS stores only hash of guest token
+PASS guest sees own profile
+PASS submitted profile ID cannot change identity
+PASS profile requires identity
+PASS rejects forged guest token
+PASS published categories readable
+PASS catalogue contains no snapshot
+PASS catalogue JSON uses typed booleans and arrays
+PASS catalogue filters published metadata
+PASS age filter excludes out-of-range quiz
+PASS search wildcard treated literally
+PASS catalogue rejects array filter
+PASS category detail uses public metadata
+PASS curriculum tags readable
+PASS no generic question table endpoint
+PASS missing quiz returns JSON 404
+PASS guest cannot become Clerk account
+PASS unmigrated modes fail explicitly
+PASS starts practice with three questions
+PASS first question has no explanation or answers
+PASS reload resumes original attempt
+PASS cannot finish early
+PASS another player cannot answer
+PASS invalid answer refused
+PASS server grades answer 1
+PASS rejects duplicate answer 1
+PASS advances without answer fields 1
+PASS server grades answer 2
+PASS rejects duplicate answer 2
+PASS advances without answer fields 2
+PASS server grades answer 3
+PASS rejects duplicate answer 3
+PASS server result ignores submitted scores
+PASS finish is idempotent
+PASS another player cannot read review
+PASS history contains only own finished server results
+PASS other player cannot see history
+PASS history limit rejects non-numeric input
+PASS settings default to light with notifications off
+PASS updates own settings with real boolean
+PASS settings reject identity overrides
+PASS settings reject string booleans
+PASS settings are isolated between players
+PASS age band required before chosen nickname
+PASS sets child age band without granting role
+PASS child cannot change age band
+PASS child cannot choose free-text nickname
+PASS child can receive generated nickname
+PASS profile has no real name email or external identity
+PASS older player may set age band
+PASS nickname moderation ignores case
+PASS older player may choose permitted nickname
+PASS deletion requires explicit confirmation
+PASS deletion is scoped to current session
+PASS deletion revokes session
+PASS deletion revokes all profile sessions
+PASS deletion removes attempts and preferences
+PASS deletion cannot target another player
+PASS server enforces time limit
+PASS time is capped and explanation clock stopped
+PASS sign-out revokes guest token
+PASS revoked token no longer works
+PASS expired session rejected
+PASS rate limits enforced
+73 HTTP/database checks passed

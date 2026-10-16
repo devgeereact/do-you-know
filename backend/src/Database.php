@@ -3,6 +3,12 @@ declare(strict_types=1);
 namespace Dyk;
 final class Database
 {
+    public static function utc(?string $value): ?string
+    {
+        return $value === null ? null : (new \DateTimeImmutable($value, new \DateTimeZone('UTC')))
+            ->format('Y-m-d\TH:i:s.u\Z');
+    }
+
     public static function connect(array $config): \PDO
     {
         $d = $config['database'];

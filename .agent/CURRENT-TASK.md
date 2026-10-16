@@ -13,8 +13,12 @@
 - Secret-free Linux CI now PASS: frontend build/lint/types and isolated MariaDB
   contracts on PHP 8.2/8.4, run 38860929591. PR #4 is ready for review. Its previous
   CodeRabbit SUCCESS was a skipped draft review, not approval.
-- Consolidate PR #4 into main after checks, retaining alternative branches.
-  Continue production implementation in a separate reviewed branch afterwards.
+- PR #4 merged into main after all checks at ec51f70. Alternate branches retained.
+  Production implementation now uses feat/cpanel-production, with its own PR.
+- First production batch: migration 0003, catalogue filters, owner-only profiles,
+  settings, history and confirmed app deletion. Local MariaDB 11.4: 73 HTTP plus
+  14 unit checks PASS. Frontend/competition/Clerk production work remains pending.
+  Hosted preview is not switched to this batch.
 - Shared development: both computers call the cPanel HTTPS API. MySQL credentials
   remain server-side; each computer keeps its own configuration. Actual Ubuntu
   checkout/local configuration remains NOT TESTED until that machine is available.
