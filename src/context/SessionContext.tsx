@@ -51,6 +51,12 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
     if (hasSession() && userRef.current) return;
     await ensureGuest();
     await load();
+    // A stored code that has expired is only discovered by that load (its 401 clears the code),
+    // so make a fresh guest once instead of starting the game with no session.
+    if (!hasSession()) {
+      await ensureGuest();
+      await load();
+    }
   }, [load]);
 
   const value = useMemo<SessionContextValue>(

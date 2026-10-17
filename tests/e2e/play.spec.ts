@@ -109,3 +109,23 @@ test.describe('playing a quiz', () => {
     }
   });
 });
+
+test.describe('an expired device code', () => {
+  // The first /me is expected to answer 401 for the stale code.
+  test.use({ allowConsoleErrors: [/status of 401/] });
+
+  test('a cold link straight into play starts a fresh guest instead of failing', async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem(
+        'dyk-guest',
+        JSON.stringify({ token: `guest_${'0'.repeat(64)}`, expires_at: '2000-01-01T00:00:00Z' }),
+      );
+    });
+    await page.goto(`/play/${QUIZ.slug}?mode=practice`);
+    await expect(page.getByText('Question 1 of 3')).toBeVisible();
+    const stored = await page.evaluate(() => localStorage.getItem('dyk-guest'));
+    expect(stored).not.toContain('0'.repeat(64));
+  });
+});
