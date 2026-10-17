@@ -46,6 +46,7 @@ not done. Unimplemented routes return JSON 404.
 
    Leave the repository template generic. If your host forbids SetEnv, have the host
    configure DYK_BACKEND_DIR or change only the public entry point's private path.
+
 6. Run on the host (SSH/Terminal), with the runtime configuration in place:
 
    ```sh
@@ -58,6 +59,7 @@ not done. Unimplemented routes return JSON 404.
    reads/writes (no global privileges). MySQL DDL is not transactionally reversible.
    If it fails, stop deployment and inspect the private migration state. Never edit
    a migration recorded in schema_migrations. Back up outside every webroot first.
+
 7. Build the frontend on the Mac/CI and run `npm run package:cpanel`. It creates a
    new ignored build/cpanel-* release directory with public/ and private/ sections.
    The package includes a blank private/config.php generated from the example,
@@ -79,35 +81,38 @@ All responses are JSON and `Cache-Control: no-store, private`. POST requires an
 object-shaped application/json body, at most 32 KiB. Public reads are capped at 100.
 Private endpoints require `Authorization: Bearer <token>`; no credentials in URLs.
 
-| Method/path (prefix /api/v1) | Body / behaviour |
-| --- | --- |
-| GET /health | Liveness only, no database or secrets disclosed |
-| POST /guest-sessions | `{}`; returns unguessable token, expiry and own profile ID |
-| DELETE /session | Revokes the current guest token; Clerk sign-out stays in Clerk |
-| POST /account/session | `{ "adult_confirmed": true }` plus a verified Clerk session token; creates/resolves adult identity, no staff grant |
-| GET /me | Own profile, no real name/email/external identity |
-| POST /me/age-band | `{ "band": "under_13" }`, one-time age band |
-| POST /me/nickname/random | `{}`, server-generated nickname |
-| POST /me/nickname | `{ "nickname": "…" }`, moderated, 13+ only |
-| POST /me/avatar | `{ "avatar_id": "fox" }`, one of the 12 presets in `Player::AVATARS` |
-| GET /me/settings | Own preferences, safe defaults |
-| POST /me/settings | Strict theme/notifications whitelist, real booleans |
-| GET /me/games?limit=20 | Own server-written finished results, capped at 100 |
-| POST /me/delete | `{ "confirmed": true }`, cascades own app data and sessions |
-| GET /curriculum-tags | Public filter options |
-| GET /categories/:slug | Active category detail |
-| GET /categories | Active category metadata |
-| GET /quizzes | Published metadata; category_id/age/curriculum_tag/search filters, literal wildcards |
-| GET /quizzes/:slug | One published quiz |
-| GET /daily | Today's published challenge, London server date |
-| GET /leaderboards | board/quiz_slug/limit, public nickname/avatar_id/score rows only |
-| GET /challenges/:code | Public nickname/avatar_id/score preview, labels expiry |
-| GET /me/daily/:id/finished | Owner-only daily completion |
-| POST /attempts/:id/challenge | `{}`, creates/reuses a 30-day friend link |
-| POST /attempts | practice/ranked with quiz_slug, daily, or challenge with challenge_code |
-| POST /attempts/:id/next | `{}`; original server clock retained on repeated next |
-| POST /attempts/:id/answer | `{ "option_id": "…" }` or `{ "value": 5 }`; server grades/times |
-| POST /attempts/:id/finish | `{}`; owner-only result/review, idempotent |
+| Method/path (prefix /api/v1) | Body / behaviour                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| GET /health                  | Liveness only, no database or secrets disclosed                                                                    |
+| POST /guest-sessions         | `{}`; returns unguessable token, expiry and own profile ID                                                         |
+| DELETE /session              | Revokes the current guest token; Clerk sign-out stays in Clerk                                                     |
+| POST /account/session        | `{ "adult_confirmed": true }` plus a verified Clerk session token; creates/resolves adult identity, no staff grant |
+| GET /me                      | Own profile, no real name/email/external identity                                                                  |
+| POST /me/age-band            | `{ "band": "under_13" }`, one-time age band                                                                        |
+| POST /me/nickname/random     | `{}`, server-generated nickname                                                                                    |
+| POST /me/nickname            | `{ "nickname": "…" }`, moderated, 13+ only                                                                         |
+| POST /me/avatar              | `{ "avatar_id": "fox" }`, one of the 12 presets in `Player::AVATARS`                                               |
+| GET /me/settings             | Own preferences, safe defaults                                                                                     |
+| POST /me/settings            | Strict theme/notifications whitelist, real booleans                                                                |
+| GET /me/games?limit=20       | Own server-written finished results, capped at 100                                                                 |
+| GET /me/continue             | Own unfinished attempts that would still resume (same rules as POST /attempts), max 5                              |
+| GET /me/best                 | Own best finished result per published quiz (most correct, then lowest time), max 50                               |
+| POST /me/delete              | `{ "confirmed": true }`, cascades own app data and sessions                                                        |
+| GET /curriculum-tags         | Public filter options                                                                                              |
+| GET /categories/:slug        | Active category detail                                                                                             |
+| GET /categories              | Active category metadata                                                                                           |
+| GET /quizzes                 | Published metadata; category_id/age/curriculum_tag/search filters, literal wildcards                               |
+| GET /quizzes/trending        | Up to 6 published quizzes by finished plays in the last 7 days, then newest; catalogue fields only                 |
+| GET /quizzes/:slug           | One published quiz                                                                                                 |
+| GET /daily                   | Today's published challenge, London server date                                                                    |
+| GET /leaderboards            | board/quiz_slug/limit, public nickname/avatar_id/score rows only                                                   |
+| GET /challenges/:code        | Public nickname/avatar_id/score preview, labels expiry                                                             |
+| GET /me/daily/:id/finished   | Owner-only daily completion                                                                                        |
+| POST /attempts/:id/challenge | `{}`, creates/reuses a 30-day friend link                                                                          |
+| POST /attempts               | practice/ranked with quiz_slug, daily, or challenge with challenge_code                                            |
+| POST /attempts/:id/next      | `{}`; original server clock retained on repeated next                                                              |
+| POST /attempts/:id/answer    | `{ "option_id": "…" }` or `{ "value": 5 }`; server grades/times                                                    |
+| POST /attempts/:id/finish    | `{}`; owner-only result/review, idempotent                                                                         |
 
 Do not expose generic SELECT * readers, question tables or quiz version snapshots.
 A submitted score, role or profile ID is never an authority. Public question payloads
