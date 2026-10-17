@@ -108,7 +108,16 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
   php(['backend/bin/migrate.php'], env);
   php([FIXTURE_PHP, 'seed'], env);
 
-  // 4. The API, as the cPanel entry point serves it.
+  // 4. The API, as the cPanel entry point serves it. A server left over from another checkout
+  // would answer health checks with old code, so refuse to run rather than test the wrong API.
+  if (
+    await fetch(`${API_URL}/health`).then(
+      () => true,
+      () => false,
+    )
+  ) {
+    throw new Error(`Port ${API_PORT} is already serving an API. Stop that process and retry.`);
+  }
   const log = openSync(path.join(WORK_DIR, 'php.log'), 'w');
   const server = spawn(
     'php',
@@ -117,6 +126,8 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
       cwd: REPO_ROOT,
       env: { ...env, PHP_CLI_SERVER_WORKERS: '4' },
       stdio: ['ignore', log, log],
+      // Own process group, so teardown also stops the PHP_CLI_SERVER_WORKERS children.
+      detached: true,
     },
   );
   await waitForHealth(`${API_URL}/health`, server);
@@ -125,7 +136,11 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
   process.env.DYK_CONFIG = CONFIG_PATH;
 
   return async () => {
-    server.kill('SIGTERM');
+    try {
+      if (server.pid !== undefined) process.kill(-server.pid, 'SIGTERM');
+    } catch {
+      server.kill('SIGTERM');
+    }
     try {
       mysqlAdmin(
         `DROP DATABASE IF EXISTS ${DB_NAME}; DROP USER IF EXISTS '${DB_USER}'@'${DB_USER_HOST}';`,

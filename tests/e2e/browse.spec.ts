@@ -8,7 +8,10 @@ test.describe('browse', () => {
     );
     await expect(page.getByRole('heading', { name: 'Pick a quiz' })).toBeVisible();
 
-    const card = page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) });
+    // The quiz shows twice: in "Trending this week" and in the full list below it.
+    const trending = page.getByRole('region', { name: /Trending/ });
+    await expect(trending.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) })).toBeVisible();
+    const card = page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) }).last();
     await expect(card).toBeVisible();
     await expect(card).toContainText('3 questions');
     await expect(
@@ -34,7 +37,10 @@ test.describe('browse', () => {
 
   test('the quiz landing page shows the facts and both ways to play', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) }).click();
+    await page
+      .getByRole('link', { name: new RegExp(`^${QUIZ.title}`) })
+      .last()
+      .click();
     await expect(page).toHaveURL(new RegExp(`/q/${QUIZ.slug}$`));
     await expect(page.getByRole('heading', { level: 1, name: QUIZ.title })).toBeVisible();
     await expect(page.getByText('3 questions')).toBeVisible();
@@ -97,7 +103,9 @@ test.describe('browse', () => {
   }) => {
     await page.goto('/');
     // Wait for the catalogue to finish loading so no request is still in flight when we cut off.
-    await expect(page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) })).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) }).last(),
+    ).toBeVisible();
     await expect(page.getByRole('link', { name: /Today’s challenge/ }).first()).toBeVisible();
     await page.waitForLoadState('networkidle');
     await expect(page.getByText('You’re offline')).toHaveCount(0);
