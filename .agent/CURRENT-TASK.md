@@ -68,8 +68,12 @@ sign-in, the new CI jobs on GitHub, production `guest_ttl_seconds` value.
   health-check line; the 1-line state is saved as
   `crontab.bak-20261016212924-before-restore`. Do You Know lines now use the CLI path and
   log to `~/dyk-backend/shared/logs/cron.log`.
-- Open for the owner: `/home/devgeereact/vitalcare.uk/api/cron.php` no longer exists, so
-  its restored 07:15 line will fail until that site's owner fixes or removes it.
+- Open for the owner: `/home/devgeereact/vitalcare.uk/api/cron.php` no longer exists
+  (that `api/` folder holds only `uploads/` since 21 August), and `~/vc_cron.log` shows it
+  failing daily long before this incident. The restore only put the line back; fixing or
+  removing it belongs to the vitalcare project.
+- Verified after restore: real cron runs logged at 02:05 UTC (daily) and 02:17 and
+  03:17 UTC (cleanup).
 - Prevention: `scripts/cron-ensure.sh` (`npm run cron:ensure`) only adds missing lines,
   backs up first and proves nothing was lost; `npm run test:cron` runs in CI.
 
