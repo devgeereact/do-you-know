@@ -1,4 +1,4 @@
-export type ShareOutcome = 'shared' | 'copied' | 'failed';
+export type ShareOutcome = 'shared' | 'copied' | 'cancelled' | 'failed';
 
 /**
  * Web Share where the browser has it, otherwise copy "text url" to the clipboard.
@@ -10,7 +10,7 @@ export async function shareOrCopy(url: string, text: string): Promise<ShareOutco
       await navigator.share({ title: 'Do You Know', text, url });
       return 'shared';
     } catch (err) {
-      if (err instanceof DOMException && err.name === 'AbortError') return 'failed';
+      if (err instanceof DOMException && err.name === 'AbortError') return 'cancelled';
     }
   }
   try {

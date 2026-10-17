@@ -76,7 +76,10 @@ export function PrivacyPage(): JSX.Element {
       </InfoSection>
 
       <InfoSection heading="What is kept on your device">
-        <p>The app saves a few small things in your browser’s storage. We do not set cookies.</p>
+        <p>
+          The app saves a few small things in your browser’s storage. Players get no cookies from
+          us; only the grown-ups’ sign-in on the Parents and staff page sets sign-in cookies.
+        </p>
         <ul>
           <li>the code that lets this device carry on as the same player</li>
           <li>whether you chose light or dark colours</li>
@@ -141,8 +144,9 @@ export function PrivacyPage(): JSX.Element {
           <li>
             <strong>Sentry</strong> receives a report when the app breaks: the error, the page
             address, and the browser and device type. Like any website it can see your IP address.
-            Screen recording (“session replay”) is switched off, and reports do not include
-            nicknames or player numbers.
+            Screen recording (“session replay”) and performance tracking are switched off, so
+            nothing is sent while the app works normally, and reports do not include nicknames or
+            player numbers.
           </li>
           <li>
             <strong>ImageKit</strong> may deliver some quiz pictures. Like any website that sends a

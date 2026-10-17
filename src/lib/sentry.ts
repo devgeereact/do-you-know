@@ -9,10 +9,10 @@ export function initSentry(): void {
     dsn: env.sentryDsn,
     environment: env.mode,
     enabled: env.isProd, // don't spam Sentry from local dev
-    // Children use this app: no session replay at all (ADR-005). The replay
-    // integration is not loaded and both replay sample rates stay at zero.
-    integrations: [Sentry.browserTracingIntegration()],
-    tracesSampleRate: 0.2,
+    // Children use this app: errors only (ADR-005). No session replay and no performance
+    // tracing, whose page and request URLs carry attempt ids and challenge codes.
+    integrations: [],
+    tracesSampleRate: 0,
     replaysSessionSampleRate: 0,
     replaysOnErrorSampleRate: 0,
     sendDefaultPii: false, // no IP addresses, cookies or user details from the SDK
