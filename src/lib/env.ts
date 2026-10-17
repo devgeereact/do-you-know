@@ -11,6 +11,7 @@ interface AppEnv {
   imagekitUrlEndpoint: string;
   imagekitPublicKey: string;
   sentryDsn: string;
+  contactEmail: string; // optional: empty hides the mailto link
   posthogKey: string; // optional: empty disables analytics
   posthogHost: string;
   isProd: boolean;
@@ -46,6 +47,7 @@ export const env: AppEnv = {
   imagekitUrlEndpoint: read('VITE_IMAGEKIT_URL_ENDPOINT'),
   imagekitPublicKey: read('VITE_IMAGEKIT_PUBLIC_KEY'),
   sentryDsn: read('VITE_SENTRY_DSN'),
+  contactEmail: read('VITE_CONTACT_EMAIL').trim(),
   posthogKey: read('VITE_POSTHOG_KEY'),
   posthogHost: read('VITE_POSTHOG_HOST', 'https://eu.i.posthog.com'),
   isProd: import.meta.env.PROD,
