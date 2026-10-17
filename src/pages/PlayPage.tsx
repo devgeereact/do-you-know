@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { AnswerButton, type AnswerButtonState } from '@/components/game/AnswerButton';
+import { FeedbackPanel } from '@/components/game/FeedbackPanel';
 import { ProgressDots } from '@/components/game/ProgressDots';
 import { ResultsView } from '@/components/game/ResultsView';
 import { SliderAnswer } from '@/components/game/SliderAnswer';
 import { TimerBadge } from '@/components/game/TimerBadge';
 import { useGuestSession } from '@/hooks/useGuestSession';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useQuizAttempt } from '@/hooks/useQuizAttempt';
@@ -25,11 +28,6 @@ function optionState(
   if (result.correct_option_ids.includes(optionId)) return 'right';
   if (optionId === chosenId) return 'wrong';
   return 'dimmed';
-}
-
-function headline(result: AnswerResult): string {
-  if (result.timed_out) return "Time's up!";
-  return result.is_correct ? 'Correct!' : 'So close!';
 }
 
 function Centered({ children }: { children: ReactNode }): JSX.Element {
@@ -106,7 +104,9 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     challengeCode: challenge ? code : undefined,
   });
   const { isGuest } = useGuestSession();
-  const { phase, state, lastResult, summary, submitting, error } = game;
+  const online = useOnlineStatus();
+  const reduceMotion = useReducedMotion() ?? false;
+  const { phase, state, lastResult, summary, submitting, error, restart } = game;
   const question = state?.question ?? null;
 
   // The player's own pick, kept only to colour their button after grading.
@@ -126,6 +126,13 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     if (phase === 'question') promptRef.current?.focus();
     if (phase === 'feedback') feedbackRef.current?.focus();
   }, [phase, question?.id]);
+
+  // Coming back online after a failed start or answer: ask the server where we were.
+  const wasOnline = useRef(online);
+  useEffect(() => {
+    if (online && !wasOnline.current && phase === 'error') void restart();
+    wasOnline.current = online;
+  }, [online, phase, restart]);
 
   const title = state?.quiz.title ?? (daily ? "Today's challenge" : 'Quiz');
   const slug = state?.quiz.slug ?? routeSlug;
@@ -155,6 +162,15 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
         )}
       </header>
 
+      {!online && phase !== 'results' && (
+        <p
+          role="status"
+          className="mb-4 rounded-2xl border-2 border-warning bg-surface p-4 text-center font-semibold text-content"
+        >
+          Playing needs an internet connection, because answers are checked on our server.
+        </p>
+      )}
+
       {(phase === 'loading' || phase === 'finishing') && (
         <Centered>
           <p
@@ -174,7 +190,9 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
               {error}
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button onClick={() => void game.restart()}>Try again</Button>
+              <Button disabled={!online} onClick={() => void game.restart()}>
+                Try again
+              </Button>
               {daily && (
                 <Link to="/leaderboards?board=daily" className={buttonClasses('ghost')}>
                   Today's leaderboard
@@ -231,7 +249,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                   prompt={question.prompt}
                   questionKey={question.id}
                   result={lastResult}
-                  disabled={submitting || phase !== 'question'}
+                  disabled={submitting || phase !== 'question' || !online}
                   onSubmit={(value) => void game.answerValue(value)}
                 />
               ) : (
@@ -241,7 +259,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                       <AnswerButton
                         state={optionState(option.id, chosenId, lastResult)}
                         chosen={option.id === chosenId}
-                        disabled={submitting || phase !== 'question'}
+                        disabled={submitting || phase !== 'question' || !online}
                         onClick={() => {
                           setChosenId(option.id);
                           void game.answerOption(option.id);
@@ -261,52 +279,13 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
               )}
 
               {phase === 'feedback' && lastResult && (
-                <div
-                  className={cn(
-                    'mt-5 animate-fade-up rounded-2xl border-2 bg-surface p-5',
-                    lastResult.is_correct ? 'border-correct' : 'border-wrong',
-                  )}
-                >
-                  <h2
-                    ref={feedbackRef}
-                    tabIndex={-1}
-                    className="flex items-center gap-3 font-display text-2xl font-semibold text-content focus:outline-none"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        'grid h-10 w-10 shrink-0 place-items-center rounded-full text-xl',
-                        lastResult.is_correct
-                          ? 'bg-correct text-correct-fg'
-                          : 'bg-wrong text-wrong-fg',
-                      )}
-                    >
-                      {lastResult.is_correct ? '✓' : '✕'}
-                    </span>
-                    {headline(lastResult)}
-                  </h2>
-                  {lastResult.explanation && (
-                    <p className="mt-2 text-content">{lastResult.explanation}</p>
-                  )}
-                  {isWebUrl(lastResult.source_url) && (
-                    <a
-                      href={lastResult.source_url}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="mt-1 inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
-                    >
-                      Where this comes from
-                    </a>
-                  )}
-                  <Button
-                    size="lg"
-                    className="mt-5 w-full"
-                    disabled={submitting}
-                    onClick={() => void game.next()}
-                  >
-                    {lastResult.is_last ? 'See my score' : 'Next question'}
-                  </Button>
-                </div>
+                <FeedbackPanel
+                  result={lastResult}
+                  headingRef={feedbackRef}
+                  blocked={submitting || !online}
+                  reduceMotion={reduceMotion}
+                  onNext={() => void game.next()}
+                />
               )}
             </section>
           </div>
