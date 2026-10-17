@@ -57,6 +57,9 @@ final class Identity
             $row = Database::one($db, "SELECT p.* FROM profiles p JOIN identities i ON i.profile_id=p.id WHERE i.provider='clerk' AND i.subject=?", [$subject]);
         }
         if (!$row) { throw new ApiError('not_signed_in', 401); }
+        // Per verified player as well, so one device cannot use up a shared address's allowance.
+        // Keyed on the profile, never on the raw bearer string, so made-up tokens add no rows.
+        RateLimit::check($db, $config, 'api-player', $row['id'], 120, 60);
         return $row;
     }
 

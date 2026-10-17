@@ -37,6 +37,10 @@ $before=Database::one($db,'SELECT expires_at FROM guest_sessions WHERE profile_i
 check('fresh guest session is not rewritten on every request',$before['expires_at']===$after['expires_at']);
 $r=request('GET','/me?user_id='.$other['profile_id'],null,$guest['token']);check('submitted profile ID cannot change identity',$r['status']===200&&$r['body']['id']===$guest['profile_id']);
 $r=request('GET','/me');check('profile requires identity',$r['status']===401);
+$beforeBuckets=(int)Database::one($db,'SELECT COUNT(*) AS n FROM rate_limits')['n'];
+for($i=0;$i<5;$i++){request('GET','/me',null,'guest_'.bin2hex(random_bytes(32)));}
+$afterBuckets=(int)Database::one($db,'SELECT COUNT(*) AS n FROM rate_limits')['n'];
+check('made-up bearer tokens add no throttle rows',$afterBuckets-$beforeBuckets<=1);
 $r=request('GET','/me',null,'guest_forged');check('rejects forged guest token',$r['status']===401);
 $r=request('GET','/categories');check('published categories readable',$r['status']===200&&count($r['body'])>0);
 $r=request('GET','/quizzes/'.$slug);check('catalogue contains no snapshot',$r['status']===200&&!array_key_exists('snapshot',$r['body'])&&!array_key_exists('current_version_id',$r['body']));

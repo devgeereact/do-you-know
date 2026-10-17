@@ -22,8 +22,6 @@ final class Api
             $body = $method === 'POST' ? self::body() : [];
             $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
             $token = preg_match('/^Bearer ([^\s]{1,8192})$/D', $auth, $m) ? $m[1] : '';
-            // Per player as well, so one device cannot use up a shared address's allowance.
-            if ($token !== '') { RateLimit::check($db,$config,'api-token',hash('sha256',$token),120,60); }
             if ($path === '/guest-sessions' && $method === 'POST') {
                 RateLimit::check($db,$config,'new-guest',$ip,100,3600);
                 self::reply(Identity::guest($db,$config),201); return;

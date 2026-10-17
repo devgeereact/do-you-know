@@ -29,10 +29,17 @@ final class RateLimit
     {
         $remote = is_string($server['REMOTE_ADDR'] ?? null) ? $server['REMOTE_ADDR'] : 'unknown';
         $forwarded = $server['HTTP_CF_CONNECTING_IP'] ?? null;
-        if (is_string($forwarded) && filter_var($forwarded, FILTER_VALIDATE_IP) && self::fromCloudflare($remote)) {
-            return $forwarded;
-        }
-        return $remote;
+        $ip = is_string($forwarded) && filter_var($forwarded, FILTER_VALIDATE_IP) && self::fromCloudflare($remote)
+            ? $forwarded : $remote;
+        return self::bucketAddress($ip);
+    }
+
+    /** One home or school network usually holds a whole IPv6 /64, so throttle by that prefix. */
+    private static function bucketAddress(string $ip): string
+    {
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) { return $ip; }
+        $packed = inet_pton($ip);
+        return inet_ntop(substr($packed, 0, 8).str_repeat("\0", 8)).'/64';
     }
 
     private static function fromCloudflare(string $ip): bool
