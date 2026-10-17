@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/Card';
 import { useMyGames } from '@/hooks/useMyGames';
 import { useProfile } from '@/hooks/useProfile';
 import { AvatarBadge } from '@/components/AvatarBadge';
+import { Page } from '@/components/ui/Page';
 
 const AGE_BAND_LABEL = {
   under_13: 'Under 13',
@@ -36,7 +37,7 @@ function ProfileCard(): JSX.Element | null {
           <h2 className="text-xl font-semibold text-content">Your profile</h2>
           <Link
             to="/me/avatar"
-            className="text-sm font-semibold text-primary underline underline-offset-2"
+            className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
           >
             {profile.avatar_id ? 'Change my avatar' : 'Pick my avatar'}
           </Link>
@@ -121,7 +122,7 @@ export function MePage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <h1 className="text-4xl font-semibold text-content">My games</h1>
 
         <div className="mt-6 grid grid-cols-2 gap-4">
@@ -199,7 +200,7 @@ export function MePage(): JSX.Element {
             </li>
           ))}
         </ul>
-      </main>
+      </Page>
     </>
   );
 }

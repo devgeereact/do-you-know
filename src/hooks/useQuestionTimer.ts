@@ -29,7 +29,8 @@ export function useQuestionTimer(
       return;
     }
     const remaining = deadline && serverNow ? Date.parse(deadline) - Date.parse(serverNow) : NaN;
-    const endsAt = Date.now() + (Number.isFinite(remaining) ? Math.max(0, remaining) : limitSeconds * 1000);
+    const endsAt =
+      Date.now() + (Number.isFinite(remaining) ? Math.max(0, remaining) : limitSeconds * 1000);
     let fired = false;
     const expiryKey = `${questionKey}:${deadline ?? ''}`;
     let id: number | undefined;

@@ -45,9 +45,7 @@ export function usePWAInstall(): UsePWAInstall {
     };
   }, []);
 
-  const promptInstall = useCallback(async (): Promise<
-    'accepted' | 'dismissed' | 'unavailable'
-  > => {
+  const promptInstall = useCallback(async (): Promise<'accepted' | 'dismissed' | 'unavailable'> => {
     if (!deferred) return 'unavailable';
     await deferred.prompt();
     const { outcome } = await deferred.userChoice;

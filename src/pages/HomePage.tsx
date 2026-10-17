@@ -5,6 +5,7 @@ import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { QuizCard } from '@/components/game/QuizCard';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
+import { Card } from '@/components/ui/Card';
 
 // A taste of the game, not a live question: nothing here is marked right or wrong,
 // so no answer reaches the browser (see AGENTS.md §8).
@@ -66,7 +67,7 @@ export function HomePage(): JSX.Element {
             aria-hidden="true"
             className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-secondary motion-safe:animate-[float_6s_ease-in-out_infinite]"
           />
-          <div className="relative rounded-2xl border-2 border-surface-border bg-surface p-6 shadow-lift">
+          <Card className="relative shadow-lift">
             <figcaption className="mb-4 flex items-center justify-between text-sm font-bold">
               <span className="rounded-full bg-background px-3 py-1 text-primary">
                 {TEASER.category}
@@ -86,7 +87,7 @@ export function HomePage(): JSX.Element {
                 </li>
               ))}
             </ul>
-          </div>
+          </Card>
         </motion.figure>
       </div>
 

@@ -15,7 +15,12 @@ const SIZES = {
 } as const;
 
 /** A preset avatar, or the nickname's first letter when none is chosen. */
-export function AvatarBadge({ avatarId, nickname, size = 'sm', label }: AvatarBadgeProps): JSX.Element {
+export function AvatarBadge({
+  avatarId,
+  nickname,
+  size = 'sm',
+  label,
+}: AvatarBadgeProps): JSX.Element {
   const avatar = findAvatar(avatarId);
   return (
     <span

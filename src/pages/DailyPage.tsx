@@ -5,6 +5,8 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { isWebUrl } from '@/lib/utils';
+import { Card } from '@/components/ui/Card';
+import { Page } from '@/components/ui/Page';
 
 function longDate(iso: string): string {
   return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', {
@@ -27,7 +29,7 @@ export function DailyPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <p className="font-bold text-content-muted">{today ? longDate(today.date) : 'Today'}</p>
         <h1 className="text-4xl font-semibold text-content md:text-5xl">Today’s challenge</h1>
         <p className="mt-2 text-content-muted">
@@ -45,13 +47,18 @@ export function DailyPage(): JSX.Element {
           </p>
         )}
         {!loading && !error && !today && (
-          <p className="mt-8 rounded-2xl bg-surface p-6 text-center text-content">
-            Today’s challenge isn’t ready yet. Try a quiz while you wait!
-          </p>
+          <Card className="mt-8 text-center">
+            <p className="text-content">
+              Today’s challenge isn’t ready yet. It usually appears just after midnight.
+            </p>
+            <Link to="/" className={buttonClasses('primary', 'md', 'mt-4')}>
+              Try a quiz while you wait
+            </Link>
+          </Card>
         )}
 
         {today && (
-          <section className="mt-8 overflow-hidden rounded-2xl border-2 border-surface-border bg-surface shadow-lift">
+          <Card as="section" className="mt-8 overflow-hidden shadow-lift p-0">
             {isWebUrl(today.quiz.cover_image_url) ? (
               <img
                 src={today.quiz.cover_image_url}
@@ -90,7 +97,7 @@ export function DailyPage(): JSX.Element {
                 )}
               </div>
             </div>
-          </section>
+          </Card>
         )}
 
         {today && (
@@ -99,7 +106,7 @@ export function DailyPage(): JSX.Element {
               <h2 className="text-2xl font-semibold text-content">Today’s top 10</h2>
               <Link
                 to="/leaderboards?board=daily"
-                className="text-sm font-semibold text-primary underline underline-offset-2"
+                className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
               >
                 Full leaderboard
               </Link>
@@ -117,7 +124,7 @@ export function DailyPage(): JSX.Element {
             )}
           </section>
         )}
-      </main>
+      </Page>
     </>
   );
 }

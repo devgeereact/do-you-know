@@ -32,10 +32,10 @@ because every live play creates a real guest.
 | P2 | Sentry session replay records every error session on a kids' app | Owner decision: remove replay or gate it |
 | P2 | No social preview image (`og:image`) | Needs a designed 1200 × 630 image |
 | P2 | Sitemap lists fixed pages only | Category and quiz URLs come from the database; needs a server route |
-| P3 | Small buttons (`size="sm"`, 40 px) still used on Update prompt; several inline text links lack 48 px tap height | Polish pass |
-| P3 | Penguin avatar `bg-sky-200` is never generated; avatars use raw palette classes | Design token pass |
-| P3 | Hand-rolled card markup in about 11 places; container widths vary between pages | Refactor with a `PageContainer` primitive |
-| P3 | `npm run format:check` already fails on 9 untouched files on `main` | Separate formatting commit |
+| P3 | ~~Small buttons and short standalone links~~ | Fixed 17 October 2026 (branch `chore/p3-polish`) |
+| P3 | ~~Penguin avatar colour missing; raw palette classes~~ | Fixed 17 October 2026: `bg-avatar-*` tokens |
+| P3 | ~~Hand-rolled card markup; varied container widths~~ | Fixed 17 October 2026: `Page` and `Card as` (two fixed prompts keep their own overlay markup) |
+| P3 | ~~`format:check` failing on 9 files~~ | Fixed 17 October 2026 |
 
 Not tested: real phone hardware, screen reader runs, live deploy of this branch, Clerk
 sign-in on `/account`.

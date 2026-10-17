@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import type { AnswerResult, PublicSlider } from '@/types/game';
+import { Card } from '@/components/ui/Card';
 
 interface SliderAnswerProps {
   slider: PublicSlider;
@@ -33,7 +34,7 @@ export function SliderAnswer({
   useEffect(() => setValue(midpoint), [questionKey, midpoint]);
 
   return (
-    <div className="rounded-2xl border-2 border-surface-border bg-surface p-5">
+    <Card className="p-5">
       <label htmlFor={id} className="sr-only">
         {prompt}
       </label>
@@ -85,6 +86,6 @@ export function SliderAnswer({
           </p>
         )
       )}
-    </div>
+    </Card>
   );
 }

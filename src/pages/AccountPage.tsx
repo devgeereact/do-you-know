@@ -7,6 +7,7 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { env } from '@/lib/env';
+import { Page } from '@/components/ui/Page';
 
 /** Clerk loads only after an adult enters this account flow, never during play. */
 export function AccountPage(): JSX.Element {
@@ -15,7 +16,7 @@ export function AccountPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <BackLink to="/me" label="My games" />
         <h1 className="mt-2 text-4xl font-semibold text-content">Parent and staff accounts</h1>
         <p className="mt-3 text-content-muted">
@@ -44,7 +45,7 @@ export function AccountPage(): JSX.Element {
         >
           Back to my games
         </Link>
-      </main>
+      </Page>
     </>
   );
 }

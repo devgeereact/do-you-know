@@ -9,6 +9,7 @@ import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { ageLabel, difficultyLabel } from '@/lib/quizLabels';
 import { isWebUrl } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { Page } from '@/components/ui/Page';
 
 function TopPlayers({ slug }: { slug: string }): JSX.Element {
   const { data, error } = useLeaderboard(slug, 'all_time', 10);
@@ -18,7 +19,7 @@ function TopPlayers({ slug }: { slug: string }): JSX.Element {
         <h2 className="text-2xl font-semibold text-content">Top players</h2>
         <Link
           to={`/leaderboards?quiz=${slug}`}
-          className="text-sm font-semibold text-primary underline underline-offset-2"
+          className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
         >
           Full leaderboard
         </Link>
@@ -55,7 +56,7 @@ export function QuizPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-3xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <BackLink
           to={category ? `/c/${category.slug}` : '/'}
           label={category ? category.name : 'All quizzes'}
@@ -131,7 +132,7 @@ export function QuizPage(): JSX.Element {
             {quiz.is_ranked && <TopPlayers slug={quiz.slug} />}
           </article>
         )}
-      </main>
+      </Page>
     </>
   );
 }
