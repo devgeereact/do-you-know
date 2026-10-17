@@ -5,4 +5,9 @@
   <url><loc>https://doyouknow.soulrefresh.net/</loc><changefreq>daily</changefreq></url>
   <url><loc>https://doyouknow.soulrefresh.net/daily</loc><changefreq>daily</changefreq></url>
   <url><loc>https://doyouknow.soulrefresh.net/leaderboards</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/how-to-play</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/about</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/contact</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/privacy</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://doyouknow.soulrefresh.net/terms</loc><changefreq>monthly</changefreq></url>
 </urlset>
