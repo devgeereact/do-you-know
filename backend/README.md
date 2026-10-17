@@ -3,10 +3,10 @@
 Status, 16 October 2026: this PHP API with MySQL/MariaDB is the app's only backend
 (ADR-003). The frontend calls it only through `src/lib/api.ts`. Catalogue, guest
 sessions, practice, ranked, daily and friend play, leaderboards, profiles, preset avatars,
-settings, history and deletion are implemented and tested locally. Not built yet: content
-authoring and publishing, linking adult accounts to game history, and a parental consent
-flow. Content will be imported from the old project with owner approval. Live deploy is
-not done. Unimplemented routes return JSON 404.
+settings, history and deletion are implemented and tested locally. Content arrives from
+reviewed JSON files through `bin/import-content.php` (see Content review and publishing).
+Not built yet: a content CMS, linking adult accounts to game history, and a parental
+consent flow. Live deploy is not done. Unimplemented routes return JSON 404.
 
 ## Files and deployment layout
 
@@ -16,7 +16,9 @@ not done. Unimplemented routes return JSON 404.
   vendor/                          Composer dependencies
   src/                             PHP application
   migrations/                      versioned MySQL DDL
+  content/                         reviewed quiz files (JSON), imported as drafts
   bin/migrate.php                   CLI-only migration runner
+  bin/import-content.php            CLI-only content validator, importer and publisher
 /home/CPANEL_USER/APP_DOCROOT/       this app's own webroot
   index.html, assets/, sw.js, ...   built PWA, no public source maps
   .htaccess                        repo-root Apache rules
@@ -137,6 +139,56 @@ anything. Check with `/usr/local/bin/php -r 'echo PHP_SAPI;'` (must print `cli`)
 Install or repair both lines with `npm run cron:ensure` from the repo, never by replacing
 the shared crontab; runs log to `~/dyk-backend/shared/logs/cron.log`.
 
+## Content review and publishing
+
+There is no CMS. Quizzes live as one JSON file per quiz in `content/`, named
+`<slug>.json`, plus `content/categories.json` (categories and curriculum tags).
+Everything is original writing. The first 28 quizzes (16 general, 12 school, 260
+questions) were machine-drafted on 17 October 2026, so they are drafts until a person
+has reviewed them. Nothing is ever published automatically.
+
+Each quiz file has `slug`, `title`, `intro`, `category` (a slug from
+categories.json), `difficulty` (`easy`/`medium`/`hard`), `age_min`, `age_max`,
+`curriculum_tags`, `time_limit_seconds` (null or 5-120), optional `shuffle_options` and
+`is_ranked`, and 3-50 `questions`. Every question needs `prompt`, `explanation`, an
+https `source_url` and a `review_by` date, plus one of:
+
+- `choice`: `options` of 2-6 `{label, correct}` with exactly one correct
+- `boolean`: `answer` true or false (shown as True and False)
+- `slider`: `slider` with `min`, `max`, `step`, `unit`, `correct`, `accept_min`,
+  `accept_max`; `correct` must sit on a step inside the accepted range
+
+Unknown keys, reserved slugs (`trending`) and files not named after their slug are
+rejected. The importer turns each file into a `quiz_versions.snapshot` with stable
+question and option IDs derived from the content, so an unchanged file never makes a
+new version.
+
+1. Edit or add files on a branch and validate them, no database needed:
+   `php bin/import-content.php --dry-run` (CI runs this too).
+2. Review: a named adult reads every question in the file, checks the answer against
+   its `source_url`, the explanation and the kind tone, and fixes anything doubtful.
+   Merge the reviewed files through a pull request.
+3. Import drafts. On a `_test` database: `php bin/import-content.php`. On the cPanel
+   database, back it up outside every webroot first, apply migration 0006 with
+   `bin/migrate.php`, then run
+   `/usr/local/bin/php bin/import-content.php --confirm-production`. New quizzes are
+   created as `draft`; changed drafts get a new version; published quizzes are never
+   changed (reported as "published kept"). New categories are added hidden and existing
+   categories and tags are left as they are.
+4. Publish only what was reviewed, by slug:
+   `/usr/local/bin/php bin/import-content.php --publish=slug-one,slug-two --reviewed-by="Name" --confirm-production`.
+   It is all or nothing: every slug must be an imported draft whose stored version
+   matches its file and has no passed `review_by` date. It sets the quiz `published`,
+   shows its category, and records who reviewed which version in `content_reviews`.
+5. Play each newly published quiz once on the live site.
+
+To change a published quiz later, there is no unpublish command yet: an owner sets it
+back to `draft` in phpMyAdmin, then repeats steps 2 to 4. Past attempts keep their old
+version. The script refuses any environment other than `test` unless
+`--confirm-production` is given, and exits 2 on invalid content or a refused publish.
+When a `review_by` date passes, the dry run warns and publishing that quiz is refused
+until the question is checked and the date moved on.
+
 ## Verification
 
 ```sh
@@ -181,6 +233,8 @@ retaining a local fallback, with duplicate-expiry protection under StrictMode.
 
 Tests: tests/http.php supplies a guarded localhost/test-database harness.
 tests/integration.php covers ownership/metadata/practice, tests/competition.php
-covers all game modes, tests/daily.php covers the daily activator and its cron script, tests/concurrency.php requires four local PHP workers and
+covers all game modes, tests/daily.php covers the daily activator and its cron script,
+tests/content.php covers the content validator, draft import, publish gate and an
+imported quiz played through the API, tests/concurrency.php requires four local PHP workers and
 sends parallel requests. CI uses PHP_CLI_SERVER_WORKERS=4; this development server
 is never used for cPanel production.
