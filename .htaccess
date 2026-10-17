@@ -1,3 +1,12 @@
+# === BEGIN Cloudflare-origin-lock (2026-08-28) ===
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP:CF-RAY} ^$
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule ^ - [F,L]
+</IfModule>
+# === END Cloudflare-origin-lock ===
+
 # Do You Know: Apache and LiteSpeed rules for the app's own cPanel document root.
 # GEE OS cpanel profile. The API folder (api/) carries its own .htaccess that only
 # allows api.php. Change this file, then re-run the local Apache check before release.
