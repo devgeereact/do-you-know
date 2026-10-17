@@ -15,6 +15,7 @@ The runnable source is `backend/migrations/`, applied in order by `backend/bin/m
 | `0004_competition.sql`               | `daily_challenges`, `friend_challenges`, `leaderboard_entries`; attempt links to daily/friend challenges, frozen timer and shuffle settings; mode and status checks  |
 | `0005_blocked_words_seed.sql`        | Starter `blocked_words` list (clear profanity and slurs, plus `admin`, `moderator`, `staff`, `official`) with `INSERT IGNORE`, so re-runs are safe                   |
 | `0006_content_reviews.sql`           | `content_reviews`: who reviewed and published which quiz version (written only by `bin/import-content.php --publish`)                                                |
+| `0007_attempts_finished_index.sql`   | Index `attempts_finished (status, finished_at, quiz_id)` for the 7-day trending query                                                                                |
 
 **Golden rule:** the browser can read a question's public text, **never its answer**.
 Answers live only inside `quiz_versions.snapshot`, which no public endpoint returns. The
