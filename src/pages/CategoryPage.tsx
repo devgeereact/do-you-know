@@ -8,13 +8,15 @@ import { cn } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { Page } from '@/components/ui/Page';
 
-// Age chips map to one representative age; quizzes match when it falls in their range.
+// Age chips follow the spec bands. Each maps to one representative age (the API takes a
+// single integer and matches quizzes whose age range contains it).
 const AGE_CHIPS = [
   { label: 'All ages', age: undefined },
-  { label: '5–7', age: 6 },
-  { label: '8–10', age: 9 },
-  { label: '11–13', age: 12 },
-  { label: '14+', age: 15 },
+  { label: '6–8', age: 7 },
+  { label: '9–11', age: 10 },
+  { label: '12–14', age: 13 },
+  { label: '15–16', age: 15 },
+  { label: 'Adult', age: 18 },
 ] as const;
 
 export function CategoryPage(): JSX.Element {

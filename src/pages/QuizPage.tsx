@@ -42,7 +42,7 @@ function TopPlayers({ slug }: { slug: string }): JSX.Element {
 export function QuizPage(): JSX.Element {
   const { slug } = useParams<{ slug: string }>();
   const { quiz, notFound, loading, error } = useQuiz(slug);
-  const { categories } = useQuizCatalog();
+  const { categories, curriculumTags } = useQuizCatalog();
   const category = quiz ? categories.find((c) => c.id === quiz.category_id) : undefined;
 
   useDocumentMeta({
@@ -105,6 +105,19 @@ export function QuizPage(): JSX.Element {
                   : 'No timer'}
               </li>
             </ul>
+
+            {quiz.curriculum_tags.length > 0 && (
+              <ul aria-label="Curriculum" className="mt-3 flex flex-wrap gap-2 text-sm font-bold">
+                {quiz.curriculum_tags.map((code) => (
+                  <li
+                    key={code}
+                    className="rounded-full border-2 border-surface-border px-3 py-1 text-content"
+                  >
+                    {curriculumTags.find((t) => t.code === code)?.label ?? code}
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to={`/play/${quiz.slug}`} className={buttonClasses('primary', 'lg')}>

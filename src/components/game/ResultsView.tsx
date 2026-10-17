@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { ChallengeFriend } from '@/components/game/ChallengeFriend';
 import { ResultsBoard } from '@/components/game/ResultsBoard';
+import { ShareResult } from '@/components/game/ShareResult';
 import { VersusPanel } from '@/components/game/VersusPanel';
 import { cn, isWebUrl } from '@/lib/utils';
 import type { AttemptSummary, ReviewItem } from '@/types/game';
@@ -49,6 +50,11 @@ function cheer(correct: number, total: number): string {
   if (ratio >= 0.7) return 'Brilliant work!';
   if (ratio >= 0.4) return 'Nice going! Have a look at the ones you missed.';
   return 'Every quiz teaches you something. Have a look at the answers below.';
+}
+
+/** Whole-number percentage of the server's correct/total. Presentation only. */
+function accuracy(correct: number, total: number): number {
+  return total === 0 ? 0 : Math.round((correct / total) * 100);
 }
 
 function seconds(ms: number): string {
@@ -134,6 +140,9 @@ export function ResultsView({
         <p className="mx-auto mt-3 max-w-sm text-lg text-content">
           {cheer(summary.correct, summary.total)}
         </p>
+        <p className="mt-1 text-sm font-semibold text-content">
+          Accuracy {accuracy(summary.correct, summary.total)}%
+        </p>
         <p className="mt-1 text-sm text-content-muted">
           Answer time {seconds(summary.answer_time_ms)}
         </p>
@@ -155,6 +164,12 @@ export function ResultsView({
             </Button>
           )}
         </div>
+        <ShareResult
+          quizSlug={quizSlug}
+          quizTitle={quizTitle}
+          correct={summary.correct}
+          total={summary.total}
+        />
         {summary.mode !== 'challenge' && (
           <ChallengeFriend
             attemptId={summary.attempt_id}

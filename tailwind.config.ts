@@ -84,6 +84,10 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-8px)' },
         },
+        countdown: {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
         shake: {
           '0%, 100%': { transform: 'translateX(0)' },
           '25%': { transform: 'translateX(-6px)' },
@@ -94,6 +98,8 @@ const config: Config = {
         'fade-up': 'fade-up 300ms ease-out both',
         pop: 'pop 250ms ease-out',
         shake: 'shake 250ms ease-in-out',
+        // Fills over the auto-advance delay (keep in step with AUTO_ADVANCE_MS in FeedbackPanel).
+        countdown: 'countdown 2500ms linear forwards',
       },
     },
   },
