@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { gameErrorMessage, isGameError } from '@/lib/gameErrors';
 import { reportError } from '@/lib/sentry';
+import { shareOrCopy, type ShareOutcome } from '@/lib/share';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { createFriendChallenge, getFriendChallenge } from '@/services/gameService';
 import type { FriendChallengePreview } from '@/types/game';
@@ -10,7 +11,7 @@ interface UseFriendChallenge {
   loading: boolean;
   error: string | null;
   create: (attemptId: string) => Promise<{ code: string; url: string } | null>;
-  share: (url: string, text: string) => Promise<'shared' | 'copied' | 'failed'>; // Web Share → clipboard fallback
+  share: (url: string, text: string) => Promise<ShareOutcome>; // Web Share → clipboard fallback
 }
 
 /**
@@ -74,23 +75,7 @@ export function useFriendChallenge(code?: string): UseFriendChallenge {
   );
 
   const share = useCallback(
-    async (url: string, text: string): Promise<'shared' | 'copied' | 'failed'> => {
-      if (typeof navigator.share === 'function') {
-        try {
-          await navigator.share({ title: 'Do You Know', text, url });
-          return 'shared';
-        } catch (err) {
-          // The player closed the share sheet: not an error, and no fallback.
-          if (err instanceof DOMException && err.name === 'AbortError') return 'failed';
-        }
-      }
-      try {
-        await navigator.clipboard.writeText(`${text} ${url}`);
-        return 'copied';
-      } catch {
-        return 'failed';
-      }
-    },
+    (url: string, text: string): Promise<ShareOutcome> => shareOrCopy(url, text),
     [],
   );
 
