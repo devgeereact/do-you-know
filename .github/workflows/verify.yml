@@ -110,6 +110,7 @@ jobs:
           php backend/tests/concurrency.php
           php backend/tests/feeds.php
           php backend/tests/content.php
+          php backend/tests/cleanup.php
 
   unit:
     runs-on: ubuntu-24.04

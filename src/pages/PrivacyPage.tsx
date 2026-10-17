@@ -162,13 +162,12 @@ export function PrivacyPage(): JSX.Element {
       <InfoSection heading="How long we keep it">
         <ul>
           <li>
-            Your player, games and leaderboard results are kept until you delete them. They are
-            needed to show your scores and keep leaderboards fair.
+            Your player, games and leaderboard results are kept while you play, so we can show your
+            scores and keep leaderboards fair. You can delete them yourself at any time.
           </li>
           <li>
             This device’s sign-in code is renewed while you keep playing. It expires after a set
-            time without playing (7 days unless we change it), and an hourly clean-up removes
-            expired codes from our server.
+            time without playing (7 days unless we change it).
           </li>
           <li>
             The scrambled internet address used to stop flooding is removed within about two hours.
@@ -177,8 +176,8 @@ export function PrivacyPage(): JSX.Element {
         </ul>
         <p>
           When this device’s code expires, the app starts a new player and the old one can no longer
-          be reached from the device. We do not yet delete those older players automatically. If you
-          would like one removed, contact us.
+          be reached. Thirty days after the code expires, an hourly clean-up deletes that old player
+          with all its games and leaderboard results. Grown-ups’ accounts are not removed this way.
         </p>
       </InfoSection>
 
