@@ -98,7 +98,7 @@ function ReviewRow({ item }: { item: ReviewItem }): JSX.Element {
           href={item.source_url}
           target="_blank"
           rel="noopener noreferrer nofollow"
-          className="mt-2 inline-block text-sm font-semibold text-primary underline underline-offset-2"
+          className="mt-1 inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
         >
           Where this comes from
         </a>

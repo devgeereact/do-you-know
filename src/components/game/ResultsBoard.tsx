@@ -31,7 +31,7 @@ export function ResultsBoard({ quizSlug, board, needsNickname }: ResultsBoardPro
         </h2>
         <Link
           to={board === 'daily' ? '/leaderboards?board=daily' : `/leaderboards?quiz=${quizSlug}`}
-          className="text-sm font-semibold text-primary underline underline-offset-2"
+          className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
         >
           See all
         </Link>

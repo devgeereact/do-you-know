@@ -99,7 +99,7 @@ export function DailyPage(): JSX.Element {
               <h2 className="text-2xl font-semibold text-content">Today’s top 10</h2>
               <Link
                 to="/leaderboards?board=daily"
-                className="text-sm font-semibold text-primary underline underline-offset-2"
+                className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
               >
                 Full leaderboard
               </Link>

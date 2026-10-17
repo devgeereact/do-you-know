@@ -36,7 +36,7 @@ function ProfileCard(): JSX.Element | null {
           <h2 className="text-xl font-semibold text-content">Your profile</h2>
           <Link
             to="/me/avatar"
-            className="text-sm font-semibold text-primary underline underline-offset-2"
+            className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
           >
             {profile.avatar_id ? 'Change my avatar' : 'Pick my avatar'}
           </Link>

@@ -18,7 +18,7 @@ function TopPlayers({ slug }: { slug: string }): JSX.Element {
         <h2 className="text-2xl font-semibold text-content">Top players</h2>
         <Link
           to={`/leaderboards?quiz=${slug}`}
-          className="text-sm font-semibold text-primary underline underline-offset-2"
+          className="inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
         >
           Full leaderboard
         </Link>
