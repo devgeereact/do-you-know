@@ -47,9 +47,14 @@ export function DailyPage(): JSX.Element {
           </p>
         )}
         {!loading && !error && !today && (
-          <p className="mt-8 rounded-2xl bg-surface p-6 text-center text-content">
-            Today’s challenge isn’t ready yet. Try a quiz while you wait!
-          </p>
+          <Card className="mt-8 text-center">
+            <p className="text-content">
+              Today’s challenge isn’t ready yet. It usually appears just after midnight.
+            </p>
+            <Link to="/" className={buttonClasses('primary', 'md', 'mt-4')}>
+              Try a quiz while you wait
+            </Link>
+          </Card>
         )}
 
         {today && (
