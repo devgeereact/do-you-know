@@ -88,6 +88,8 @@ behind a proxied Cloudflare record with Full (strict) TLS).
 ## 5. Quality gates (a PR must pass all)
 - `npm run typecheck` — zero errors, no implicit `any`.
 - `npm run build` — succeeds.
+- `npm test`: Vitest unit and component tests pass (`tests/unit`).
+- `npm run test:e2e`: Playwright journeys pass on mobile and desktop against a disposable PHP API and database (`tests/e2e/README.md`).
 - `cd backend && composer test` — unit checks pass; integration tests per `backend/README.md`.
 - `python3 scripts/verify.py` — GEE OS contract and guards present.
 - `npm run lint` — zero warnings.

@@ -200,4 +200,4 @@ The server has no Node. Full playbook and safety rules: `docs/07-operations/DEPL
   preset avatars only; boards and challenge previews show nickname, avatar and score only.
 - `.htaccess`: HTTPS redirect, HSTS, `X-Content-Type-Options`, frame and referrer
   policies; denies `*.map`, dotfiles, `config.php` and stray PHP.
-- Tests: `backend/tests/` (unit, HTTP/database, competition, concurrency).
+- Tests: `backend/tests/` (unit, HTTP/database, competition, concurrency); frontend `tests/unit` (Vitest) and `tests/e2e` (Playwright).
