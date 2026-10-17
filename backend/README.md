@@ -134,6 +134,8 @@ quiz exists, so no daily runs that day. Until the first run after London midnigh
 Use the absolute CLI path in cron. On this host a bare `php` in cron's PATH is
 `/usr/bin/php`, the CGI build: both scripts then answer `404` and exit 0 without doing
 anything. Check with `/usr/local/bin/php -r 'echo PHP_SAPI;'` (must print `cli`).
+Install or repair both lines with `npm run cron:ensure` from the repo, never by replacing
+the shared crontab; runs log to `~/dyk-backend/shared/logs/cron.log`.
 
 ## Verification
 
