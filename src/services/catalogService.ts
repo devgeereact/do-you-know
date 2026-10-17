@@ -43,6 +43,11 @@ export function listQuizzes(filters: QuizFilters = {}): Promise<Quiz[]> {
   });
 }
 
+/** Up to six published quizzes, most played in the last 7 days first, then newest. */
+export function listTrendingQuizzes(): Promise<Quiz[]> {
+  return api<Quiz[]>('/quizzes/trending');
+}
+
 export function getQuiz(slug: string): Promise<Quiz | null> {
   return orNull(api<Quiz>(`/quizzes/${encodeURIComponent(slug)}`));
 }

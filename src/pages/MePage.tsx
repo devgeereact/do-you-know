@@ -6,6 +6,7 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useMyGames } from '@/hooks/useMyGames';
+import { useBestScores } from '@/hooks/useBestScores';
 import { useProfile } from '@/hooks/useProfile';
 import { AvatarBadge } from '@/components/AvatarBadge';
 import { Page } from '@/components/ui/Page';
@@ -111,6 +112,57 @@ function ProfileCard(): JSX.Element | null {
   );
 }
 
+function seconds(ms: number): string {
+  return `${(ms / 1000).toFixed(1)}s`;
+}
+
+/** Best server-graded score per quiz, each linking back to the quiz page. */
+function BestScores(): JSX.Element | null {
+  const { scores, loading, error } = useBestScores();
+  if (!loading && !error && scores.length === 0) return null;
+
+  return (
+    <section aria-labelledby="best-title">
+      <h2 id="best-title" className="mb-4 mt-10 text-2xl font-semibold text-content">
+        Best scores
+      </h2>
+      {loading && (
+        <p role="status" className="text-content-muted">
+          Loading…
+        </p>
+      )}
+      {error && (
+        <p role="alert" className="text-content">
+          {error}
+        </p>
+      )}
+      <ul className="grid gap-3">
+        {scores.map((score) => (
+          <li key={score.quiz.slug}>
+            <Card className="flex items-center justify-between gap-4 p-4">
+              <div className="min-w-0">
+                <Link
+                  to={`/q/${score.quiz.slug}`}
+                  className="block truncate font-display text-lg font-semibold text-content hover:text-primary"
+                >
+                  {score.quiz.title}
+                </Link>
+                <p className="text-sm text-content-muted">
+                  {seconds(score.answerTimeMs)} · {when(score.finishedAt)}
+                </p>
+              </div>
+              <p className="shrink-0 font-display text-2xl font-semibold text-content">
+                {score.correct}
+                <span className="text-content-muted">/{score.total}</span>
+              </p>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function when(iso: string): string {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
@@ -153,6 +205,8 @@ export function MePage(): JSX.Element {
         >
           Parent and staff accounts
         </Link>
+
+        <BestScores />
 
         <h2 className="mb-4 mt-10 text-2xl font-semibold text-content">Recent games</h2>
         {loading && (

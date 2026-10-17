@@ -151,3 +151,23 @@ export type GameErrorCode =
   | 'nickname_not_allowed'
   | 'invalid_avatar'
   | 'network_error';
+
+/** GET /me/continue: one of the player's own unfinished games the server would resume. */
+export interface ContinueItem {
+  attemptId: string;
+  mode: AttemptMode;
+  quiz: { slug: string; title: string };
+  position: number; // question n of total
+  total: number;
+  startedAt: string;
+  challengeCode: string | null; // set only for friend challenges, to resume /challenge/:code/play
+}
+
+/** GET /me/best: the player's best finished result for one published quiz. */
+export interface BestScore {
+  quiz: { slug: string; title: string };
+  correct: number;
+  total: number;
+  answerTimeMs: number;
+  finishedAt: string;
+}
