@@ -151,6 +151,16 @@ cPanel cron runs two hourly jobs against `~/dyk-backend/current`, so each releas
 them up without a cron edit: `bin/cleanup.php` (minute 17) and `bin/daily.php` (minute 5). Both run through
 `/usr/local/bin/php` (CLI). A bare `php` in cron is the CGI build and silently does nothing.
 
+The crontab is shared with other sites on the account. Never replace it (for example
+`echo "…" | crontab -`): that deletes every other site's jobs, which happened on 16 October 2026. Use `npm run cron:ensure` (`scripts/cron-ensure.sh`, with `--dry-run` to preview). It
+backs up the crontab to `~/dyk-backend/shared/crontab.bak-*`, adds only missing Do You Know
+lines, reports an older Do You Know line instead of duplicating it, and then proves no
+earlier line was lost. `npm run test:cron` (also in CI) proves that on a fake crontab.
+
+Each run appends a UTC timestamp and the script's one-line result to
+`~/dyk-backend/shared/logs/cron.log` (outside every webroot), so a real cron run can be
+checked with `tail ~/dyk-backend/shared/logs/cron.log`.
+
 ## 7. Automated deploy (`.github/workflows/deploy.yml`)
 
 Status: written and committed, NOT TESTED. It cannot run until the owner approves and

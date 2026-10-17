@@ -71,6 +71,8 @@ jobs:
           composer check-platform-reqs
           composer audit
           composer test
+      - name: Prove the cron helper only adds lines
+        run: bash scripts/cron-ensure.test.sh
       - name: Configure disposable database
         run: |
           export DYK_CONFIG="$RUNNER_TEMP/dyk-ci.php"

@@ -1,5 +1,21 @@
 # Current Task
 
+## Incident, 16 October 2026 (server time): shared crontab replaced
+
+- Found after the PR #15 deploy: the account crontab held one line (a
+  `volume.gakinz.com` health check) instead of 19. Every job on the account had stopped:
+  egolimited.com (5 jobs), vitalcare.uk (1) and both Do You Know jobs. Live `/daily` was
+  `null` on 17 October as a result. Cause: something replaced the whole crontab instead of
+  adding a line; not done from this project's tooling. Owner: Gideon.
+- Restored 21:29 EDT from `~/dyk-backend/shared/crontab.bak-20261016115827` plus the
+  health-check line; the 1-line state is saved as
+  `crontab.bak-20261016212924-before-restore`. Do You Know lines now use the CLI path and
+  log to `~/dyk-backend/shared/logs/cron.log`.
+- Open for the owner: `/home/devgeereact/vitalcare.uk/api/cron.php` no longer exists, so
+  its restored 07:15 line will fail until that site's owner fixes or removes it.
+- Prevention: `scripts/cron-ensure.sh` (`npm run cron:ensure`) only adds missing lines,
+  backs up first and proves nothing was lost; `npm run test:cron` runs in CI.
+
 ## Active task, 17 October 2026: P3 polish (branch chore/p3-polish)
 
 - Done locally: Prettier on the 9 files `format:check` flagged; preset avatars use

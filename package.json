@@ -17,7 +17,9 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/**/*.md\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "package:cpanel": "npm run build && node scripts/package-cpanel.mjs",
-    "check:htaccess": "bash scripts/check-htaccess.sh"
+    "check:htaccess": "bash scripts/check-htaccess.sh",
+    "cron:ensure": "bash scripts/cron-ensure.sh",
+    "test:cron": "bash scripts/cron-ensure.test.sh"
   },
   "dependencies": {
     "@clerk/react": "^6.17.8",
