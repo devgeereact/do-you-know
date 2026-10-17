@@ -47,7 +47,7 @@ export const env: AppEnv = {
   imagekitUrlEndpoint: read('VITE_IMAGEKIT_URL_ENDPOINT'),
   imagekitPublicKey: read('VITE_IMAGEKIT_PUBLIC_KEY'),
   sentryDsn: read('VITE_SENTRY_DSN'),
-  contactEmail: read('VITE_CONTACT_EMAIL').trim(),
+  contactEmail: read('VITE_CONTACT_EMAIL', 'hello@doyouknow.soulrefresh.net').trim(),
   posthogKey: read('VITE_POSTHOG_KEY'),
   posthogHost: read('VITE_POSTHOG_HOST', 'https://eu.i.posthog.com'),
   isProd: import.meta.env.PROD,

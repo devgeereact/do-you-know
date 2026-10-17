@@ -2,7 +2,7 @@ import { env } from '@/lib/env';
 
 /**
  * Public site facts shown on the information pages. The contact address is optional:
- * when VITE_CONTACT_EMAIL is empty the pages say contact details are being set up.
+ * it defaults to hello@doyouknow.soulrefresh.net; an invalid override falls back to the "being set up" copy.
  */
 
 function readContactEmail(): string | undefined {
