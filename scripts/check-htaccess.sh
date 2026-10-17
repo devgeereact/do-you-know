@@ -35,16 +35,19 @@ CONF
 httpd -f "$work/httpd.conf" -k start
 trap 'httpd -f "$work/httpd.conf" -k stop; rm -rf "$work"' EXIT
 sleep 1
-base=http://127.0.0.1:8089; hdr="X-Forwarded-Proto: https"; pass=0; fail=0
+base=http://127.0.0.1:8089; hdr="X-Forwarded-Proto: https"; cf="CF-RAY: local-check"; pass=0; fail=0
 asset=$(cd "$root/dist/assets" && ls | grep '\.js$' | head -1)
 icon=$(cd "$root/dist/icons" && ls | head -1)
 workbox=$(cd "$root/dist" && ls | grep '^workbox-.*\.js$' | head -1)
 check() { # name expected-status path [header text]
-  out=$(curl -s -D - -o /dev/null -H "$hdr" "$base$3" | tr -d '\r')
+  out=$(curl -s -D - -o /dev/null -H "$hdr" ${cf:+-H "$cf"} "$base$3" | tr -d '\r')
   code=$(echo "$out" | head -1 | awk '{print $2}')
   if [ "$code" = "$2" ] && { [ -z "${4:-}" ] || echo "$out" | grep -qi "$4"; }; then
     echo "PASS $1"; pass=$((pass+1)); else echo "FAIL $1 (status $code)"; fail=$((fail+1)); fi
 }
+cf="" check "origin lock: no CF-RAY is refused" 403 /
+mkdir -p "$work/www/.well-known" && echo ok > "$work/www/.well-known/probe.txt"
+cf="" check "origin lock: /.well-known/ stays open" 200 /.well-known/probe.txt
 check "app shell revalidated" 200 / "cache-control: no-cache, no-store"
 check "deep link serves the shell" 200 /play/daily "cache-control: no-cache, no-store"
 check "hashed asset immutable" 200 "/assets/$asset" immutable
