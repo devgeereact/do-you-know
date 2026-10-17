@@ -6,6 +6,16 @@ import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { QuizCard } from '@/components/game/QuizCard';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { Card } from '@/components/ui/Card';
+import { useTrendingQuizzes } from '@/hooks/useTrendingQuizzes';
+import { resumePath, useContinuePlaying } from '@/hooks/useContinuePlaying';
+import type { AttemptMode } from '@/types';
+
+const MODE_LABEL: Record<AttemptMode, string> = {
+  practice: 'Practice',
+  ranked: 'Ranked',
+  daily: 'Today’s challenge',
+  challenge: 'Friend challenge',
+};
 
 // A taste of the game, not a live question: nothing here is marked right or wrong,
 // so no answer reaches the browser (see AGENTS.md §8).
@@ -19,6 +29,8 @@ export function HomePage(): JSX.Element {
   const reduceMotion = useReducedMotion();
   const { categories, quizzes, loading, error, refresh } = useQuizCatalog();
   const daily = useDailyChallenge();
+  const trending = useTrendingQuizzes();
+  const { items: unfinished } = useContinuePlaying();
   useDocumentMeta({});
 
   const rise = (delay: number) =>
@@ -114,6 +126,70 @@ export function HomePage(): JSX.Element {
               {daily.playedToday ? '✓ Done today' : 'Play →'}
             </span>
           </Link>
+        )}
+
+        {unfinished.length > 0 && (
+          <section aria-labelledby="continue-title" className="mb-10">
+            <h2 id="continue-title" className="text-3xl font-semibold text-content">
+              Continue playing
+            </h2>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {unfinished.map((item) => (
+                <li key={item.attemptId}>
+                  <Link
+                    to={resumePath(item)}
+                    className="flex min-h-tap items-center justify-between gap-4 rounded-xl border-2 border-surface-border bg-surface p-4 transition-[transform,border-color] duration-[120ms] hover:-translate-y-0.5 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate font-display text-lg font-semibold text-content">
+                        {item.quiz.title}
+                      </span>
+                      <span className="block text-sm font-bold text-content-muted">
+                        {MODE_LABEL[item.mode]} · Question {item.position} of {item.total}
+                      </span>
+                    </span>
+                    <span className="shrink-0 font-display text-lg font-semibold text-primary">
+                      Resume →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {(trending.loading || trending.error || trending.quizzes.length > 0) && (
+          <section aria-labelledby="trending-title" className="mb-10">
+            <h2 id="trending-title" className="text-3xl font-semibold text-content">
+              Trending this week
+            </h2>
+            {trending.loading && (
+              <p role="status" className="mt-5 text-content-muted">
+                Loading trending quizzes…
+              </p>
+            )}
+            {trending.error && (
+              <div role="alert" className="mt-5">
+                <p className="text-content">{trending.error}</p>
+                <button
+                  type="button"
+                  onClick={() => void trending.refresh()}
+                  className={buttonClasses('ghost', 'md', 'mt-3')}
+                >
+                  Try again
+                </button>
+              </div>
+            )}
+            {!trending.loading && !trending.error && (
+              <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {trending.quizzes.map((quiz) => (
+                  <li key={quiz.id}>
+                    <QuizCard quiz={quiz} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
         )}
 
         <h2 className="text-3xl font-semibold text-content">Pick a quiz</h2>

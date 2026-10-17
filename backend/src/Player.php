@@ -9,6 +9,12 @@ final class Player
     /** Preset avatars. Keep identical to src/lib/avatars.ts. */
     public const AVATARS = ['fox', 'owl', 'panda', 'lion', 'frog', 'octopus', 'penguin', 'unicorn', 'dragon', 'robot', 'rocket', 'star'];
 
+    /** Generated nickname parts. backend/tests/feeds.php proves no combination is blocked. */
+    public const ADJECTIVES = ['Brave','Clever','Happy','Swift','Bright','Lucky','Mighty','Sunny','Jolly','Witty',
+        'Calm','Bold','Cosmic','Curious','Gentle','Quick','Sharp','Speedy','Super','Wise'];
+    public const ANIMALS = ['Otter','Panda','Falcon','Tiger','Koala','Dolphin','Fox','Owl','Lion','Zebra',
+        'Eagle','Gecko','Rhino','Puffin','Turtle','Lynx','Bison','Hedgehog','Penguin','Whale'];
+
     public function __construct(private readonly \PDO $db, private readonly string $userId) {}
 
     public function own(): array
@@ -42,12 +48,8 @@ final class Player
 
     public function randomNickname(): string
     {
-        $adjectives = ['Brave','Clever','Happy','Swift','Bright','Lucky','Mighty','Sunny','Jolly','Witty',
-            'Calm','Bold','Cosmic','Curious','Gentle','Quick','Sharp','Speedy','Super','Wise'];
-        $animals = ['Otter','Panda','Falcon','Tiger','Koala','Dolphin','Fox','Owl','Lion','Zebra',
-            'Eagle','Gecko','Rhino','Puffin','Turtle','Lynx','Bison','Hedgehog','Penguin','Whale'];
-        $nickname = $adjectives[random_int(0, count($adjectives)-1)]
-            . $animals[random_int(0, count($animals)-1)] . random_int(10, 99);
+        $nickname = self::ADJECTIVES[random_int(0, count(self::ADJECTIVES)-1)]
+            . self::ANIMALS[random_int(0, count(self::ANIMALS)-1)] . random_int(10, 99);
         Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=?', [$nickname, $this->userId]);
         return $nickname;
     }
@@ -68,14 +70,23 @@ final class Player
         if (!preg_match('/^[A-Za-z0-9][A-Za-z0-9 ._-]{1,18}[A-Za-z0-9]$/D', $nickname)) {
             throw new ApiError('invalid_nickname');
         }
-        $normal = preg_replace('/[^a-z0-9]/', '', strtolower($nickname));
-        $blocked = Database::one($this->db,
-            'SELECT word FROM blocked_words WHERE LOCATE(word,?)>0 LIMIT 1', [$normal]);
-        if ($blocked) {
+        if (self::isBlocked($this->db, $nickname)) {
             throw new ApiError('nickname_not_allowed');
         }
         Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=?', [$nickname, $this->userId]);
         return $nickname;
+    }
+
+    /**
+     * Substring match against blocked_words on the lower-cased letters and digits, and again
+     * on a leetspeak reading so "sh1t" or "4dmin" are caught too.
+     */
+    public static function isBlocked(\PDO $db, string $nickname): bool
+    {
+        $normal = preg_replace('/[^a-z0-9]/', '', strtolower($nickname));
+        $leet = strtr($normal, '013457', 'oieast');
+        return Database::one($db,
+            'SELECT word FROM blocked_words WHERE LOCATE(word,?)>0 OR LOCATE(word,?)>0 LIMIT 1', [$normal, $leet]) !== null;
     }
 
     public function avatar(mixed $id): void
@@ -141,6 +152,54 @@ final class Player
             'answerTimeMs' => (int) $row['answer_time_ms'],
             'finishedAt' => gmdate('c', strtotime($row['finished_at'] . ' UTC')),
             'quiz' => $row['slug'] === null ? null : ['slug' => $row['slug'], 'title' => $row['title']],
+        ], $statement->fetchAll());
+    }
+
+    /**
+     * Own unfinished attempts that POST /attempts would still resume, newest first, max 5.
+     * Mirrors Game::start: practice and ranked need the same published version within 24 hours,
+     * daily needs today's live challenge, and a friend challenge must not have expired.
+     */
+    public function continuing(): array
+    {
+        $statement = $this->db->prepare(
+            "SELECT a.id,a.mode,a.current_index,JSON_LENGTH(a.question_order) AS total,a.started_at,
+                q.slug,q.title,f.code FROM attempts a
+                JOIN quizzes q ON q.id=a.quiz_id AND q.status='published'
+                LEFT JOIN daily_challenges d ON d.id=a.daily_challenge_id
+                LEFT JOIN friend_challenges f ON f.id=a.friend_challenge_id
+                WHERE a.user_id=? AND a.status='in_progress' AND (
+                    (a.mode IN ('practice','ranked') AND a.daily_challenge_id IS NULL AND a.friend_challenge_id IS NULL
+                        AND q.current_version_id=a.quiz_version_id AND a.started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 24 HOUR))
+                    OR (a.mode='daily' AND d.challenge_date=? AND d.status='live')
+                    OR (a.mode='challenge' AND f.expires_at>UTC_TIMESTAMP(6) AND a.started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 24 HOUR)))
+                ORDER BY a.started_at DESC,a.id DESC LIMIT 5");
+        $statement->execute([$this->userId, Competition::londonDate()]);
+        return array_map(static fn(array $row): array => [
+            'attemptId' => $row['id'], 'mode' => $row['mode'],
+            'quiz' => ['slug' => $row['slug'], 'title' => $row['title']],
+            'position' => min((int) $row['current_index'] + 1, (int) $row['total']), 'total' => (int) $row['total'],
+            'startedAt' => gmdate('c', strtotime($row['started_at'] . ' UTC')),
+            'challengeCode' => $row['mode'] === 'challenge' ? $row['code'] : null,
+        ], $statement->fetchAll());
+    }
+
+    /** Own best finished result per published quiz: most correct, then fastest, then earliest. Max 50. */
+    public function best(): array
+    {
+        $statement = $this->db->prepare(
+            "SELECT b.correct_count,b.answered_count,b.answer_time_ms,b.finished_at,q.slug,q.title FROM (
+                SELECT a.quiz_id,a.correct_count,a.answered_count,a.answer_time_ms,a.finished_at,
+                    ROW_NUMBER() OVER (PARTITION BY a.quiz_id ORDER BY a.correct_count DESC,a.answer_time_ms,a.finished_at,a.id) AS pick
+                FROM attempts a WHERE a.user_id=? AND a.status='finished') b
+                JOIN quizzes q ON q.id=b.quiz_id AND q.status='published'
+                WHERE b.pick=1 ORDER BY b.finished_at DESC,q.slug LIMIT 50");
+        $statement->execute([$this->userId]);
+        return array_map(static fn(array $row): array => [
+            'quiz' => ['slug' => $row['slug'], 'title' => $row['title']],
+            'correct' => (int) $row['correct_count'], 'total' => (int) $row['answered_count'],
+            'answerTimeMs' => (int) $row['answer_time_ms'],
+            'finishedAt' => gmdate('c', strtotime($row['finished_at'] . ' UTC')),
         ], $statement->fetchAll());
     }
 
