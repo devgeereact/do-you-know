@@ -1,0 +1,214 @@
+{
+  "slug": "computers-and-the-internet",
+  "title": "Computers and the Internet",
+  "intro": "Bits, bytes, the web and staying safe online.",
+  "category": "tech",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Who invented the World Wide Web?",
+      "options": [
+        {
+          "label": "Bill Gates",
+          "correct": false
+        },
+        {
+          "label": "Tim Berners-Lee",
+          "correct": true
+        },
+        {
+          "label": "Ada Lovelace",
+          "correct": false
+        },
+        {
+          "label": "Alan Turing",
+          "correct": false
+        }
+      ],
+      "explanation": "Tim Berners-Lee, a British scientist working at CERN, invented the World Wide Web in 1989.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does CPU stand for?",
+      "options": [
+        {
+          "label": "Central Processing Unit",
+          "correct": true
+        },
+        {
+          "label": "Computer Power Unit",
+          "correct": false
+        },
+        {
+          "label": "Core Program Utility",
+          "correct": false
+        },
+        {
+          "label": "Central Picture Unit",
+          "correct": false
+        }
+      ],
+      "explanation": "The CPU, or central processing unit, is the part of a computer that carries out instructions.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The internet and the World Wide Web are exactly the same thing.",
+      "answer": false,
+      "explanation": "The internet is the worldwide network of connected computers. The web is one service that runs on it, made of linked pages.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is an input device?",
+      "options": [
+        {
+          "label": "Monitor",
+          "correct": false
+        },
+        {
+          "label": "Keyboard",
+          "correct": true
+        },
+        {
+          "label": "Speaker",
+          "correct": false
+        },
+        {
+          "label": "Printer",
+          "correct": false
+        }
+      ],
+      "explanation": "A keyboard puts information into a computer, so it is an input device. Monitors and printers are output devices.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is an output device?",
+      "options": [
+        {
+          "label": "Mouse",
+          "correct": false
+        },
+        {
+          "label": "Microphone",
+          "correct": false
+        },
+        {
+          "label": "Speaker",
+          "correct": true
+        },
+        {
+          "label": "Keyboard",
+          "correct": false
+        }
+      ],
+      "explanation": "A speaker gives out sound from the computer, so it is an output device.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Computers store all their data using which two digits?",
+      "options": [
+        {
+          "label": "1 and 2",
+          "correct": false
+        },
+        {
+          "label": "0 and 1",
+          "correct": true
+        },
+        {
+          "label": "0 and 9",
+          "correct": false
+        },
+        {
+          "label": "5 and 10",
+          "correct": false
+        }
+      ],
+      "explanation": "Computers use binary, a number system with only two digits: 0 and 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/1",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these makes a stronger password?",
+      "options": [
+        {
+          "label": "Your first name",
+          "correct": false
+        },
+        {
+          "label": "password123",
+          "correct": false
+        },
+        {
+          "label": "Three random words joined together",
+          "correct": true
+        },
+        {
+          "label": "123456",
+          "correct": false
+        }
+      ],
+      "explanation": "Joining three random words makes a password that is long, easy to remember and hard to guess.",
+      "source_url": "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/three-random-words",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many bits are there in one byte?",
+      "slider": {
+        "min": 0,
+        "max": 16,
+        "step": 1,
+        "unit": "bits",
+        "correct": 8,
+        "accept_min": 8,
+        "accept_max": 8
+      },
+      "explanation": "A byte is a group of eight bits. Each bit is a single 0 or 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/1",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does \"www\" at the start of many web addresses stand for?",
+      "options": [
+        {
+          "label": "World Wide Web",
+          "correct": true
+        },
+        {
+          "label": "Wide Web Window",
+          "correct": false
+        },
+        {
+          "label": "World Web Wire",
+          "correct": false
+        },
+        {
+          "label": "Web Writing Wizard",
+          "correct": false
+        }
+      ],
+      "explanation": "www stands for World Wide Web, the system of linked pages invented by Tim Berners-Lee.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "slug": "oceans-rivers-and-mountains",
+  "title": "Oceans, Rivers and Mountains",
+  "intro": "Dive deep and climb high with questions about the shape of our planet.",
+  "category": "geography",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In which mountain range is Mount Everest?",
+      "options": [
+        {
+          "label": "The Alps",
+          "correct": false
+        },
+        {
+          "label": "The Andes",
+          "correct": false
+        },
+        {
+          "label": "The Himalayas",
+          "correct": true
+        },
+        {
+          "label": "The Rockies",
+          "correct": false
+        }
+      ],
+      "explanation": "Mount Everest is part of the Himalayas, a mountain range in Asia that includes many of the world's highest peaks.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/nepal",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ocean lies between Europe and Africa on one side and the Americas on the other?",
+      "options": [
+        {
+          "label": "Pacific Ocean",
+          "correct": false
+        },
+        {
+          "label": "Atlantic Ocean",
+          "correct": true
+        },
+        {
+          "label": "Indian Ocean",
+          "correct": false
+        },
+        {
+          "label": "Southern Ocean",
+          "correct": false
+        }
+      ],
+      "explanation": "The Atlantic Ocean separates Europe and Africa from North and South America.",
+      "source_url": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Amazon River flows through Brazil.",
+      "answer": true,
+      "explanation": "The Amazon flows across South America, much of it through Brazil and its huge rainforest.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/brazil",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Mount Kilimanjaro?",
+      "options": [
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "Africa",
+          "correct": true
+        },
+        {
+          "label": "South America",
+          "correct": false
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        }
+      ],
+      "explanation": "Kilimanjaro, in Tanzania, is the highest mountain in Africa.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/tanzania",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "About what percentage of all the water on Earth is in the ocean?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "correct": 97,
+        "accept_min": 95,
+        "accept_max": 99
+      },
+      "explanation": "About 97 per cent of Earth's water is in the ocean. Most of the rest is frozen in ice or found in lakes, rivers and underground.",
+      "source_url": "https://oceanservice.noaa.gov/facts/oceanwater.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the deepest known point in the ocean called?",
+      "options": [
+        {
+          "label": "The Grand Canyon",
+          "correct": false
+        },
+        {
+          "label": "Challenger Deep",
+          "correct": true
+        },
+        {
+          "label": "The Dead Sea",
+          "correct": false
+        },
+        {
+          "label": "Lake Baikal",
+          "correct": false
+        }
+      ],
+      "explanation": "Challenger Deep, in the Mariana Trench in the Pacific Ocean, is the deepest known place in the ocean, nearly 11 kilometres down.",
+      "source_url": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest ocean?",
+      "options": [
+        {
+          "label": "Atlantic",
+          "correct": false
+        },
+        {
+          "label": "Indian",
+          "correct": false
+        },
+        {
+          "label": "Arctic",
+          "correct": false
+        },
+        {
+          "label": "Pacific",
+          "correct": true
+        }
+      ],
+      "explanation": "The Pacific is by far the largest ocean and holds more than half of the free water on Earth.",
+      "source_url": "https://oceanservice.noaa.gov/facts/biggestocean.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river flows through Cairo?",
+      "options": [
+        {
+          "label": "The Nile",
+          "correct": true
+        },
+        {
+          "label": "The Thames",
+          "correct": false
+        },
+        {
+          "label": "The Ganges",
+          "correct": false
+        },
+        {
+          "label": "The Danube",
+          "correct": false
+        }
+      ],
+      "explanation": "The River Nile flows north through Egypt and its capital, Cairo, to the Mediterranean Sea.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/egypt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A river's mouth is where it begins.",
+      "answer": false,
+      "explanation": "A river begins at its source. Its mouth is where it ends, usually flowing into the sea, a lake or another river.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

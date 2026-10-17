@@ -1,0 +1,106 @@
+{
+  "categories": [
+    {
+      "slug": "general-knowledge",
+      "name": "General Knowledge",
+      "description": "A bit of everything: numbers, nature, time and record breakers.",
+      "kind": "general",
+      "sort_order": 10
+    },
+    {
+      "slug": "science-nature",
+      "name": "Science & Nature",
+      "description": "Space, animals and the amazing human body.",
+      "kind": "general",
+      "sort_order": 20
+    },
+    {
+      "slug": "geography",
+      "name": "Geography",
+      "description": "Countries, capitals, oceans, rivers and mountains.",
+      "kind": "general",
+      "sort_order": 30
+    },
+    {
+      "slug": "history",
+      "name": "History",
+      "description": "Ancient worlds, kings and queens, and famous moments from the past.",
+      "kind": "general",
+      "sort_order": 40
+    },
+    {
+      "slug": "tech",
+      "name": "Tech",
+      "description": "Computers, the internet and inventions that changed the world.",
+      "kind": "general",
+      "sort_order": 50
+    },
+    {
+      "slug": "bible-faith",
+      "name": "Bible & Faith",
+      "description": "Well-known stories from the Old and New Testaments.",
+      "kind": "general",
+      "sort_order": 60
+    },
+    {
+      "slug": "school-maths",
+      "name": "Maths",
+      "description": "School maths practice: number, times tables and algebra.",
+      "kind": "school",
+      "sort_order": 110
+    },
+    {
+      "slug": "school-english",
+      "name": "English",
+      "description": "School English practice: grammar, punctuation and literary devices.",
+      "kind": "school",
+      "sort_order": 120
+    },
+    {
+      "slug": "school-science",
+      "name": "Science",
+      "description": "School science practice: living things, forces, matter and cells.",
+      "kind": "school",
+      "sort_order": 130
+    },
+    {
+      "slug": "school-geography",
+      "name": "Geography",
+      "description": "School geography practice: the UK, weather and climate.",
+      "kind": "school",
+      "sort_order": 140
+    },
+    {
+      "slug": "school-history",
+      "name": "History",
+      "description": "School history practice: prehistoric Britain and the Tudors.",
+      "kind": "school",
+      "sort_order": 150
+    },
+    {
+      "slug": "school-computing",
+      "name": "Computing",
+      "description": "School computing practice: algorithms, coding and binary.",
+      "kind": "school",
+      "sort_order": 160
+    }
+  ],
+  "curriculum_tags": [
+    {
+      "code": "uk-ks2",
+      "label": "Key Stage 2 (ages 7 to 11)",
+      "system": "UK",
+      "age_min": 7,
+      "age_max": 11,
+      "sort_order": 10
+    },
+    {
+      "code": "uk-ks3",
+      "label": "Key Stage 3 (ages 11 to 14)",
+      "system": "UK",
+      "age_min": 11,
+      "age_max": 14,
+      "sort_order": 20
+    }
+  ]
+}

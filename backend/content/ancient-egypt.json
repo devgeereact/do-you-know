@@ -1,0 +1,197 @@
+{
+  "slug": "ancient-egypt",
+  "title": "Ancient Egypt",
+  "intro": "Pyramids, pharaohs and hieroglyphs. Step back thousands of years along the River Nile.",
+  "category": "history",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Along which river did ancient Egyptian life grow up?",
+      "options": [
+        {
+          "label": "The Amazon",
+          "correct": false
+        },
+        {
+          "label": "The Nile",
+          "correct": true
+        },
+        {
+          "label": "The Thames",
+          "correct": false
+        },
+        {
+          "label": "The Tigris",
+          "correct": false
+        }
+      ],
+      "explanation": "The Nile flooded each year and left rich soil for farming, so most ancient Egyptians lived along its banks.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were the kings of ancient Egypt called?",
+      "options": [
+        {
+          "label": "Emperors",
+          "correct": false
+        },
+        {
+          "label": "Pharaohs",
+          "correct": true
+        },
+        {
+          "label": "Sultans",
+          "correct": false
+        },
+        {
+          "label": "Tsars",
+          "correct": false
+        }
+      ],
+      "explanation": "The rulers of ancient Egypt were called pharaohs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call the ancient Egyptian writing made of pictures and symbols?",
+      "options": [
+        {
+          "label": "Runes",
+          "correct": false
+        },
+        {
+          "label": "Hieroglyphs",
+          "correct": true
+        },
+        {
+          "label": "Braille",
+          "correct": false
+        },
+        {
+          "label": "Cuneiform",
+          "correct": false
+        }
+      ],
+      "explanation": "Hieroglyphs used hundreds of picture symbols to stand for sounds, words and ideas.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Tutankhamun became pharaoh when he was still a child.",
+      "answer": true,
+      "explanation": "Tutankhamun was only about nine years old when he became pharaoh.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/king-tut",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who led the team that found Tutankhamun's tomb?",
+      "options": [
+        {
+          "label": "Howard Carter",
+          "correct": true
+        },
+        {
+          "label": "Charles Darwin",
+          "correct": false
+        },
+        {
+          "label": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "label": "Captain Cook",
+          "correct": false
+        }
+      ],
+      "explanation": "The archaeologist Howard Carter found the tomb in the Valley of the Kings.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/king-tut",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Tutankhamun's tomb discovered?",
+      "slider": {
+        "min": 1900,
+        "max": 2000,
+        "step": 1,
+        "unit": null,
+        "correct": 1922,
+        "accept_min": 1922,
+        "accept_max": 1922
+      },
+      "explanation": "Howard Carter's team discovered the tomb in November 1922, still filled with treasure.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/king-tut",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did the ancient Egyptians make to preserve the bodies of people who had died?",
+      "options": [
+        {
+          "label": "Statues",
+          "correct": false
+        },
+        {
+          "label": "Mummies",
+          "correct": true
+        },
+        {
+          "label": "Fossils",
+          "correct": false
+        },
+        {
+          "label": "Pots",
+          "correct": false
+        }
+      ],
+      "explanation": "They dried and wrapped bodies to make mummies, because they believed the body was needed in the afterlife.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were the great pyramids at Giza built as?",
+      "options": [
+        {
+          "label": "Royal tombs",
+          "correct": true
+        },
+        {
+          "label": "Grain stores",
+          "correct": false
+        },
+        {
+          "label": "Lighthouses",
+          "correct": false
+        },
+        {
+          "label": "Markets",
+          "correct": false
+        }
+      ],
+      "explanation": "The pyramids were built as tombs for pharaohs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The ancient Egyptians made a kind of paper from papyrus reeds.",
+      "answer": true,
+      "explanation": "Papyrus reeds grew along the Nile, and their stems were pressed into sheets for writing on.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

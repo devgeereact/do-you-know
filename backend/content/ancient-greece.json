@@ -1,0 +1,206 @@
+{
+  "slug": "ancient-greece",
+  "title": "Ancient Greece",
+  "intro": "Gods, heroes, theatres and the very first Olympic Games.",
+  "category": "history",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Where were the ancient Olympic Games held?",
+      "options": [
+        {
+          "label": "Athens",
+          "correct": false
+        },
+        {
+          "label": "Sparta",
+          "correct": false
+        },
+        {
+          "label": "Olympia",
+          "correct": true
+        },
+        {
+          "label": "Troy",
+          "correct": false
+        }
+      ],
+      "explanation": "The ancient Olympic Games were held at Olympia, in southern Greece, in honour of the god Zeus.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Greek city-state was famous for its strong army and tough training?",
+      "options": [
+        {
+          "label": "Athens",
+          "correct": false
+        },
+        {
+          "label": "Sparta",
+          "correct": true
+        },
+        {
+          "label": "Corinth",
+          "correct": false
+        },
+        {
+          "label": "Delphi",
+          "correct": false
+        }
+      ],
+      "explanation": "Sparta trained its boys to be soldiers from a young age and was known for its powerful army.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ancient Greek city is known as the birthplace of democracy?",
+      "options": [
+        {
+          "label": "Sparta",
+          "correct": false
+        },
+        {
+          "label": "Athens",
+          "correct": true
+        },
+        {
+          "label": "Olympia",
+          "correct": false
+        },
+        {
+          "label": "Knossos",
+          "correct": false
+        }
+      ],
+      "explanation": "In Athens, citizens could vote on decisions. This early form of democracy is still remembered today.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Greek myths, who was the king of the gods?",
+      "options": [
+        {
+          "label": "Zeus",
+          "correct": true
+        },
+        {
+          "label": "Poseidon",
+          "correct": false
+        },
+        {
+          "label": "Apollo",
+          "correct": false
+        },
+        {
+          "label": "Hermes",
+          "correct": false
+        }
+      ],
+      "explanation": "Zeus ruled the gods from Mount Olympus and was the god of the sky and thunder.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The ancient Greeks watched plays in open-air theatres.",
+      "answer": true,
+      "explanation": "Greek theatres were built outdoors, often into hillsides, so large crowds could see and hear the actors.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the Greek myth, how did the Greeks get soldiers inside the city of Troy?",
+      "options": [
+        {
+          "label": "They dug a tunnel",
+          "correct": false
+        },
+        {
+          "label": "They hid inside a wooden horse",
+          "correct": true
+        },
+        {
+          "label": "They climbed the walls",
+          "correct": false
+        },
+        {
+          "label": "They sailed up a river",
+          "correct": false
+        }
+      ],
+      "explanation": "The story says Greek soldiers hid inside a giant wooden horse, which the people of Troy pulled into their city.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which famous temple stands on the Acropolis in Athens?",
+      "options": [
+        {
+          "label": "The Colosseum",
+          "correct": false
+        },
+        {
+          "label": "The Pantheon",
+          "correct": false
+        },
+        {
+          "label": "The Parthenon",
+          "correct": true
+        },
+        {
+          "label": "Stonehenge",
+          "correct": false
+        }
+      ],
+      "explanation": "The Parthenon was built on the Acropolis hill as a temple to the goddess Athena.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Athena was the Greek goddess of what?",
+      "options": [
+        {
+          "label": "The sea",
+          "correct": false
+        },
+        {
+          "label": "Wisdom",
+          "correct": true
+        },
+        {
+          "label": "Farming",
+          "correct": false
+        },
+        {
+          "label": "The underworld",
+          "correct": false
+        }
+      ],
+      "explanation": "Athena was the goddess of wisdom and was also linked to war and crafts. Athens was named after her.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The ancient Olympic Games were held every four years.",
+      "answer": true,
+      "explanation": "The games took place every four years, a tradition the modern Olympics still follow.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

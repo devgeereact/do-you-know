@@ -1,0 +1,225 @@
+{
+  "slug": "words-and-literary-devices-ks3",
+  "title": "Words and Literary Devices",
+  "intro": "Similes, metaphors, sonnets and Shakespeare.",
+  "category": "school-english",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "\"The wind whispered through the trees.\" Giving the wind a human action like this is called…",
+      "options": [
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Personification",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Rhyme",
+          "correct": false
+        }
+      ],
+      "explanation": "Personification describes something that is not human as if it could act or feel like a living being.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"As brave as a lion\" is an example of which device?",
+      "options": [
+        {
+          "label": "Metaphor",
+          "correct": false
+        },
+        {
+          "label": "Simile",
+          "correct": true
+        },
+        {
+          "label": "Onomatopoeia",
+          "correct": false
+        },
+        {
+          "label": "Hyperbole",
+          "correct": false
+        }
+      ],
+      "explanation": "A simile compares two things using \"as\" or \"like\".",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"The classroom was a zoo\" is an example of which device?",
+      "options": [
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Metaphor",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Personification",
+          "correct": false
+        }
+      ],
+      "explanation": "A metaphor says one thing is another to make a comparison, without using \"like\" or \"as\".",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Words such as \"buzz\", \"crash\" and \"sizzle\" that sound like what they describe are examples of…",
+      "options": [
+        {
+          "label": "Onomatopoeia",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Assonance",
+          "correct": false
+        },
+        {
+          "label": "Irony",
+          "correct": false
+        }
+      ],
+      "explanation": "Onomatopoeia is when a word imitates the sound it describes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"Slippery, slimy snakes\" repeats the same first sound. What is this called?",
+      "options": [
+        {
+          "label": "Rhyme",
+          "correct": false
+        },
+        {
+          "label": "Alliteration",
+          "correct": true
+        },
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Rhythm",
+          "correct": false
+        }
+      ],
+      "explanation": "Alliteration is the repetition of the same sound at the start of nearby words.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who wrote the play Romeo and Juliet?",
+      "options": [
+        {
+          "label": "Charles Dickens",
+          "correct": false
+        },
+        {
+          "label": "William Shakespeare",
+          "correct": true
+        },
+        {
+          "label": "Jane Austen",
+          "correct": false
+        },
+        {
+          "label": "Roald Dahl",
+          "correct": false
+        }
+      ],
+      "explanation": "Romeo and Juliet is one of William Shakespeare's most famous plays.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfdj6sg",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Macbeth is a play by William Shakespeare.",
+      "answer": true,
+      "explanation": "Macbeth is a Shakespeare tragedy about a Scottish nobleman whose ambition leads to disaster.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp982hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which Italian city is Romeo and Juliet set?",
+      "options": [
+        {
+          "label": "Rome",
+          "correct": false
+        },
+        {
+          "label": "Venice",
+          "correct": false
+        },
+        {
+          "label": "Verona",
+          "correct": true
+        },
+        {
+          "label": "Florence",
+          "correct": false
+        }
+      ],
+      "explanation": "The play is set in Verona, where the Montague and Capulet families are feuding.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfdj6sg",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "A poem with 14 lines and a set rhyme pattern is called a…",
+      "options": [
+        {
+          "label": "Haiku",
+          "correct": false
+        },
+        {
+          "label": "Limerick",
+          "correct": false
+        },
+        {
+          "label": "Sonnet",
+          "correct": true
+        },
+        {
+          "label": "Ballad",
+          "correct": false
+        }
+      ],
+      "explanation": "A sonnet has 14 lines. Shakespeare wrote 154 of them.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

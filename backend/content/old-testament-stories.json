@@ -1,0 +1,222 @@
+{
+  "slug": "old-testament-stories",
+  "title": "Old Testament Stories",
+  "intro": "Arks, giants, lions and a big fish. How well do you know these famous stories from the Bible?",
+  "category": "bible-faith",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In Genesis, on which day did God rest after creating the world?",
+      "options": [
+        {
+          "label": "The first day",
+          "correct": false
+        },
+        {
+          "label": "The third day",
+          "correct": false
+        },
+        {
+          "label": "The sixth day",
+          "correct": false
+        },
+        {
+          "label": "The seventh day",
+          "correct": true
+        }
+      ],
+      "explanation": "Genesis 2:2 says that by the seventh day God had finished his work, and on that day he rested.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%202%3A2&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who built an ark to save his family and the animals from the flood?",
+      "options": [
+        {
+          "label": "Moses",
+          "correct": false
+        },
+        {
+          "label": "Noah",
+          "correct": true
+        },
+        {
+          "label": "Abraham",
+          "correct": false
+        },
+        {
+          "label": "David",
+          "correct": false
+        }
+      ],
+      "explanation": "In Genesis 6, God tells Noah to build an ark of cypress wood.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%206%3A14&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was swallowed by a huge fish?",
+      "options": [
+        {
+          "label": "Jonah",
+          "correct": true
+        },
+        {
+          "label": "Elijah",
+          "correct": false
+        },
+        {
+          "label": "Samuel",
+          "correct": false
+        },
+        {
+          "label": "Joseph",
+          "correct": false
+        }
+      ],
+      "explanation": "Jonah 1:17 says that a huge fish swallowed Jonah, and he was inside it for three days and three nights.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Jonah%201%3A17&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which giant did the young shepherd David defeat?",
+      "options": [
+        {
+          "label": "Pharaoh",
+          "correct": false
+        },
+        {
+          "label": "Samson",
+          "correct": false
+        },
+        {
+          "label": "Goliath",
+          "correct": true
+        },
+        {
+          "label": "Nebuchadnezzar",
+          "correct": false
+        }
+      ],
+      "explanation": "In 1 Samuel 17, David defeats the Philistine champion Goliath with a sling and a stone.",
+      "source_url": "https://www.biblegateway.com/passage/?search=1%20Samuel%2017%3A49-50&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who led the Israelites out of Egypt?",
+      "options": [
+        {
+          "label": "Moses",
+          "correct": true
+        },
+        {
+          "label": "Joshua",
+          "correct": false
+        },
+        {
+          "label": "Jacob",
+          "correct": false
+        },
+        {
+          "label": "Solomon",
+          "correct": false
+        }
+      ],
+      "explanation": "In Exodus, Moses leads the Israelites out of Egypt, and God parts the Red Sea for them.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%2014%3A21-22&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was thrown into a den of lions but kept safe?",
+      "options": [
+        {
+          "label": "Daniel",
+          "correct": true
+        },
+        {
+          "label": "Isaac",
+          "correct": false
+        },
+        {
+          "label": "Gideon",
+          "correct": false
+        },
+        {
+          "label": "Elisha",
+          "correct": false
+        }
+      ],
+      "explanation": "In Daniel 6, Daniel is thrown into the lions' den, and God sends an angel to shut the lions' mouths.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Daniel%206%3A16-22&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Jacob gave his son Joseph a special, ornate robe.",
+      "answer": true,
+      "explanation": "Genesis 37:3 tells how Jacob, also called Israel, made an ornate robe for Joseph.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2037%3A3&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many commandments did God write on the stone tablets given to Moses?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Ten",
+          "correct": true
+        },
+        {
+          "label": "Twelve",
+          "correct": false
+        }
+      ],
+      "explanation": "Exodus 34:28 calls them the Ten Commandments.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%2034%3A28&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In the story of Noah, for how many days and nights did it rain?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "days",
+        "correct": 40,
+        "accept_min": 40,
+        "accept_max": 40
+      },
+      "explanation": "Genesis 7:12 says rain fell on the earth for forty days and forty nights.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%207%3A12&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In the story of Noah, a dove returned carrying an olive leaf.",
+      "answer": true,
+      "explanation": "Genesis 8:11 says the dove came back with a freshly plucked olive leaf, showing the water was going down.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%208%3A11&version=NIVUK",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

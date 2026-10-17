@@ -1,0 +1,197 @@
+{
+  "slug": "time-and-calendars",
+  "title": "Time and Calendars",
+  "intro": "Seconds, days, months and years: how well do you know the clock and the calendar?",
+  "category": "general-knowledge",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "How many months of the year have 31 days?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": true
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "January, March, May, July, August, October and December each have 31 days: seven months in all.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many hours are there in one day?",
+      "options": [
+        {
+          "label": "12",
+          "correct": false
+        },
+        {
+          "label": "24",
+          "correct": true
+        },
+        {
+          "label": "48",
+          "correct": false
+        },
+        {
+          "label": "60",
+          "correct": false
+        }
+      ],
+      "explanation": "A whole day, from one midnight to the next, lasts 24 hours.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many days are there in a year that is not a leap year?",
+      "slider": {
+        "min": 300,
+        "max": 400,
+        "step": 1,
+        "unit": "days",
+        "correct": 365,
+        "accept_min": 365,
+        "accept_max": 365
+      },
+      "explanation": "An ordinary year has 365 days. Every fourth year or so is a leap year with 366.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In a leap year, February has 29 days.",
+      "answer": true,
+      "explanation": "February usually has 28 days, but in a leap year it gets an extra day and has 29.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many seconds are there in one minute?",
+      "options": [
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "30",
+          "correct": false
+        },
+        {
+          "label": "60",
+          "correct": true
+        },
+        {
+          "label": "100",
+          "correct": false
+        }
+      ],
+      "explanation": "One minute is made of 60 seconds, and one hour is made of 60 minutes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which month comes straight after June?",
+      "options": [
+        {
+          "label": "May",
+          "correct": false
+        },
+        {
+          "label": "July",
+          "correct": true
+        },
+        {
+          "label": "August",
+          "correct": false
+        },
+        {
+          "label": "September",
+          "correct": false
+        }
+      ],
+      "explanation": "The months run January, February, March, April, May, June, July and so on, so July follows June.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A decade is 100 years long.",
+      "answer": false,
+      "explanation": "A decade is 10 years. A period of 100 years is called a century.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Roughly how long does Earth take to travel once around the Sun?",
+      "options": [
+        {
+          "label": "One day",
+          "correct": false
+        },
+        {
+          "label": "One month",
+          "correct": false
+        },
+        {
+          "label": "One year",
+          "correct": true
+        },
+        {
+          "label": "Ten years",
+          "correct": false
+        }
+      ],
+      "explanation": "Earth takes about 365 days, one year, to orbit the Sun. Its spin on its own axis gives us day and night.",
+      "source_url": "https://science.nasa.gov/earth/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many weeks are there in a year, to the nearest whole number?",
+      "options": [
+        {
+          "label": "12",
+          "correct": false
+        },
+        {
+          "label": "36",
+          "correct": false
+        },
+        {
+          "label": "52",
+          "correct": true
+        },
+        {
+          "label": "100",
+          "correct": false
+        }
+      ],
+      "explanation": "A year of 365 days is 52 weeks and 1 day, so there are about 52 weeks in a year.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

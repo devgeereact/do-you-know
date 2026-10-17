@@ -1,0 +1,189 @@
+{
+  "slug": "inventions-that-changed-the-world",
+  "title": "Inventions That Changed the World",
+  "intro": "Engines, aeroplanes, medicines and machines that made the modern world.",
+  "category": "tech",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which brothers made the first powered aeroplane flight in 1903?",
+      "options": [
+        {
+          "label": "The Grimm brothers",
+          "correct": false
+        },
+        {
+          "label": "The Wright brothers",
+          "correct": true
+        },
+        {
+          "label": "The Marx brothers",
+          "correct": false
+        },
+        {
+          "label": "The Lumière brothers",
+          "correct": false
+        }
+      ],
+      "explanation": "Orville and Wilbur Wright flew their Wright Flyer at Kitty Hawk, North Carolina, on 17 December 1903.",
+      "source_url": "https://airandspace.si.edu/collection-objects/1903-wright-flyer/nasm_A19610048000",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "The Wright brothers' first powered flight lasted about how many seconds?",
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "seconds",
+        "correct": 12,
+        "accept_min": 11,
+        "accept_max": 13
+      },
+      "explanation": "The very first flight on 17 December 1903 lasted only about 12 seconds, but it changed travel for ever.",
+      "source_url": "https://airandspace.si.edu/collection-objects/1903-wright-flyer/nasm_A19610048000",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was Rocket, built by Robert Stephenson's company in 1829?",
+      "options": [
+        {
+          "label": "A steam locomotive",
+          "correct": true
+        },
+        {
+          "label": "A space rocket",
+          "correct": false
+        },
+        {
+          "label": "A sailing ship",
+          "correct": false
+        },
+        {
+          "label": "A hot-air balloon",
+          "correct": false
+        }
+      ],
+      "explanation": "Rocket was a fast steam locomotive that won the Rainhill Trials in 1829 and helped shape early railways.",
+      "source_url": "https://collection.sciencemuseumgroup.org.uk/objects/co26704/rocket-locomotive",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Ada Lovelace is famous for writing about which machine?",
+      "options": [
+        {
+          "label": "The steam engine",
+          "correct": false
+        },
+        {
+          "label": "Charles Babbage's Analytical Engine",
+          "correct": true
+        },
+        {
+          "label": "The printing press",
+          "correct": false
+        },
+        {
+          "label": "The telephone",
+          "correct": false
+        }
+      ],
+      "explanation": "Ada Lovelace wrote notes on Charles Babbage's planned Analytical Engine, including steps now seen as an early computer program.",
+      "source_url": "https://collection.sciencemuseumgroup.org.uk/people/cp38764/ada-lovelace",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which scientist discovered penicillin, one of the first antibiotics?",
+      "options": [
+        {
+          "label": "Marie Curie",
+          "correct": false
+        },
+        {
+          "label": "Alexander Fleming",
+          "correct": true
+        },
+        {
+          "label": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "label": "Louis Pasteur",
+          "correct": false
+        }
+      ],
+      "explanation": "Alexander Fleming noticed in 1928 that a mould called Penicillium killed bacteria, which led to penicillin.",
+      "source_url": "https://www.nobelprize.org/prizes/medicine/1945/fleming/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Penicillin is a medicine used to fight infections caused by bacteria.",
+      "answer": true,
+      "explanation": "Penicillin is an antibiotic, a medicine that kills or stops the growth of bacteria.",
+      "source_url": "https://www.nobelprize.org/prizes/medicine/1945/fleming/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which invention, created by Tim Berners-Lee, lets us visit linked pages on the internet?",
+      "options": [
+        {
+          "label": "Email",
+          "correct": false
+        },
+        {
+          "label": "The World Wide Web",
+          "correct": true
+        },
+        {
+          "label": "Radio",
+          "correct": false
+        },
+        {
+          "label": "The telegraph",
+          "correct": false
+        }
+      ],
+      "explanation": "Tim Berners-Lee invented the World Wide Web while working at CERN in 1989.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What kind of engine powered Rocket and other early railway locomotives?",
+      "options": [
+        {
+          "label": "Petrol engine",
+          "correct": false
+        },
+        {
+          "label": "Electric motor",
+          "correct": false
+        },
+        {
+          "label": "Steam engine",
+          "correct": true
+        },
+        {
+          "label": "Jet engine",
+          "correct": false
+        }
+      ],
+      "explanation": "Early locomotives burned fuel to boil water, and the steam pushed pistons that turned the wheels.",
+      "source_url": "https://collection.sciencemuseumgroup.org.uk/objects/co26704/rocket-locomotive",
+      "review_by": "2027-10-17"
+    }
+  ]
+}
