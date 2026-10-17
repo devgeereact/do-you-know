@@ -1,5 +1,59 @@
 # Current Task
 
+## Active task, 17 October 2026: V1 launch build (branch release/v1-launch)
+
+Owner goal: build the remaining V1 sections, test them, and make the app ready for
+production. Gap audit against PRODUCT-SPEC §4, §5 and §8 done; five feature branches built
+in parallel and merged into `release/v1-launch` with fixes found during integration.
+
+Built:
+- How to play, About, Contact, Privacy and Terms pages, footer links, sitemap entries,
+  1200x630 social preview image. Contact address comes from `VITE_CONTACT_EMAIL`.
+- Session replay off in Sentry (ADR-005).
+- Play: auto-advance after a correct answer (never after a wrong one, on the last question,
+  offline or with reduced motion), "Why?" toggle, accuracy %, Share result, clear offline
+  message on play screens, curriculum chips on quiz pages, spec age bands on category pages.
+- Home "Continue playing" and "Trending this week"; /me "Best scores"
+  (`GET /quizzes/trending`, `/me/continue`, `/me/best`).
+- 0005 blocked-words seed with leetspeak matching; 0006 `content_reviews`; 0007 index for
+  trending.
+- Content: 28 original quizzes (260 questions, every one with explanation, source URL and
+  review-by date) in `backend/content/`, importer `backend/bin/import-content.php`. Imports
+  land as drafts only; publishing needs `--publish=<slugs> --reviewed-by="<name>"`.
+- Tests: Vitest (109) and Playwright journeys at 390 and 1440 px (46) with integrity
+  checks; CI jobs added.
+
+Fixed during integration:
+- Guest sessions had a fixed 7-day life and were never renewed, so players lost nickname,
+  history and streak a week after their first visit. Now sliding.
+- Rate limits keyed on REMOTE_ADDR, which behind Cloudflare is an edge address, and only 10
+  new players an hour per address (a school class would lock out). Now CF-Connecting-IP
+  from Cloudflare ranges only, 600/min and 100 new players/hour per address, plus 120/min
+  per player.
+- Play start posted /attempts three times; error lookups accepted prototype keys; e2e
+  teardown leaked PHP workers.
+
+Evidence (local, 17 October 2026): typecheck, lint, format:check, build PASS; unit 109
+PASS; backend 19 unit, 78 integration, 63 competition, 16 daily, 9 concurrency, 35 feeds,
+62 content PASS on fresh MariaDB `_test`; e2e 46/46 PASS on 5 consecutive runs (one earlier
+run 45/46, not reproduced); headless smoke of every page at 390 and 1440 px PASS;
+check:htaccess 22/22, test:cron 10/10, verify.py PASS.
+
+Waiting on the owner:
+1. Yes to merge and deploy (migrations 0005 to 0007 run on the live database).
+2. Review and publish quizzes: run the importer on the server, read each draft, then
+   publish with your name. Borderline questions are listed in the content PR notes.
+3. Contact email for `VITE_CONTACT_EMAIL`, and legal read of the privacy notice and terms.
+4. Review the blocked-words list (0005). Note "badminton" is blocked because it contains
+   "admin".
+5. Decide guest data retention: expired guest profiles are unreachable but kept. Proposed:
+   the hourly clean-up deletes guest profiles with no live session and no adult identity.
+   Not built, because it deletes player data and changes a business rule.
+6. Turn on "Prevent storing IP addresses" in the Sentry project.
+
+Not tested: real phones, screen readers, live deploy of this branch, real adult Clerk
+sign-in, the new CI jobs on GitHub, production `guest_ttl_seconds` value.
+
 ## Incident, 16 October 2026 (server time): shared crontab replaced
 
 - Found after the PR #15 deploy: the account crontab held one line (a
