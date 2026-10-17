@@ -1,6 +1,14 @@
 # Current Task
 
-## Active task, 16 October 2026: navigation and structure (branch fix/navigation-structure)
+## Active task, 17 October 2026: P3 polish (branch chore/p3-polish)
+
+- Done locally: Prettier on the 9 files `format:check` flagged; preset avatars use
+  `bg-avatar-*` light and dark tokens (the penguin circle was never generated); 48 px
+  tap targets on standalone links and the update button; shared `Page` container and
+  `Card` with an `as` prop replace hand-rolled markup; the empty daily page links to the
+  quizzes. Typecheck, lint, format:check, build PASS; local browser check PASS.
+
+## Done 16 October 2026: navigation and structure (PR #10, CSP PRs #11 and #12)
 
 - Owner request: the UI looks unstructured; back and next navigation are missing. Full
   findings and status: `qa/UX-NAVIGATION-AUDIT.md`.
@@ -10,7 +18,9 @@
   and robots, favicon 404 fixed, robots.txt and sitemap.xml fixed, compact quiz cards,
   missing loading and error states. Typecheck, lint, build and verify PASS; local browser
   run at 320 to 1440 px PASS.
-- Waiting on the owner: approval to merge and deploy; privacy notice text; CSP rollout;
+- Merged and deployed 16 October 2026 (PR #10). Report-only CSP live with 0 violations
+  across browse pages and Clerk loading (PRs #11, #12).
+- Waiting on the owner: privacy notice text; CSP enforcement after a real adult sign-in;
   Sentry replay decision; a social preview image.
 
 ## Active task, 16 October 2026: daily challenge activator (branch feat/daily-activator)

@@ -40,7 +40,7 @@ Updated 16 October 2026. Supabase was removed from the code on this date (ADR-00
 ```text
 src/
 ├── components/
-│   ├── ui/          # Button, Card, buttonClasses
+│   ├── ui/          # Button, Card, Page, buttonClasses
 │   ├── game/        # AnswerButton, SliderAnswer, TimerBadge, ProgressDots, ResultsView,
 │   │                # ResultsBoard, LeaderboardTable, VersusPanel, ChallengeFriend,
 │   │                # NicknamePicker, AgeBandPicker, QuizCard
