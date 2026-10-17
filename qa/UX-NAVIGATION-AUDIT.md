@@ -29,8 +29,8 @@ because every live play creates a real guest.
 | --- | ---- | ------------------------ |
 | P1 | No privacy notice for a children's app (UK GDPR, Age Appropriate Design Code) | Legal text needs the owner and legal review; nothing was invented |
 | P1 | Content-Security-Policy not enforced | Report-only header added 16 October 2026 (`docs/07-operations/DEPLOYMENT.md`). Enforce after a clean run of every journey, including Clerk sign-in |
-| P2 | Sentry session replay records every error session on a kids' app | Owner decision: remove replay or gate it |
-| P2 | No social preview image (`og:image`) | Needs a designed 1200 × 630 image |
+| P2 | ~~Sentry session replay on a kids' app~~ | Fixed 17 October 2026: replay removed, `sendDefaultPii: false` explicit (AGENTS.md §8 data minimisation); main bundle 342 KB to 215 KB |
+| P2 | ~~No social preview image~~ | Fixed 17 October 2026: `public/og-image.png` (1200 × 630, brand fonts and logo), `og:image` and `summary_large_image` |
 | P2 | Sitemap lists fixed pages only | Category and quiz URLs come from the database; needs a server route |
 | P3 | ~~Small buttons and short standalone links~~ | Fixed 17 October 2026 (branch `chore/p3-polish`) |
 | P3 | ~~Penguin avatar colour missing; raw palette classes~~ | Fixed 17 October 2026: `bg-avatar-*` tokens |
