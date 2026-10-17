@@ -265,6 +265,55 @@ interface UseProfile {
 export function useProfile(): UseProfile;
 ```
 
+### 15. `useTrendingQuizzes`
+
+`src/hooks/useTrendingQuizzes.ts`. Up to six published quizzes with the most finished plays
+in the last 7 days, newest first after that (`GET /quizzes/trending`). Public, same fields
+as the catalogue list, no player data.
+
+```ts
+interface UseTrendingQuizzes {
+  quizzes: Quiz[];
+  loading: boolean;
+  error: string | null;
+  refresh: () => Promise<void>;
+}
+export function useTrendingQuizzes(): UseTrendingQuizzes;
+```
+
+### 16. `useContinuePlaying`
+
+`src/hooks/useContinuePlaying.ts`. The player's own unfinished games that `POST /attempts`
+would still resume (`GET /me/continue`, max 5). Empty without a session. `resumePath(item)`
+gives the play route: `/play/:slug` (ranked), `/play/:slug?mode=practice`, `/daily/play` or
+`/challenge/:code/play`. The server resumes the same attempt; no position is trusted from
+the browser.
+
+```ts
+interface UseContinuePlaying {
+  items: ContinueItem[];
+  loading: boolean;
+  error: string | null;
+}
+export function useContinuePlaying(): UseContinuePlaying;
+export function resumePath(item: ContinueItem): string;
+```
+
+### 17. `useBestScores`
+
+`src/hooks/useBestScores.ts`. The player's best finished result per published quiz
+(`GET /me/best`, max 50): most correct, then lowest answer time, the same order as the
+leaderboards. Empty without a session.
+
+```ts
+interface UseBestScores {
+  scores: BestScore[];
+  loading: boolean;
+  error: string | null;
+}
+export function useBestScores(): UseBestScores;
+```
+
 ## Conventions
 
 - Every hook is fully typed with an explicit return interface.

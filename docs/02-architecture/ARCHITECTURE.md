@@ -70,10 +70,11 @@ src/
 └── index.css        # Tailwind layers + theme CSS variables
 backend/
 ├── public/api.php   # public entry, deployed as api/api.php
-├── src/             # Api, Catalog, Game, Competition, Daily, Player, Identity, RateLimit, Database, Config
-├── migrations/      # additive MySQL migrations 0001–0004
-├── bin/             # migrate.php (CLI ledger), cleanup.php and daily.php (cron)
-├── tests/           # unit, HTTP/database, competition, daily, concurrency checks
+├── src/             # Api, Catalog, Game, Competition, Daily, Player, Identity, RateLimit, Database, Config, Content, ContentImporter
+├── migrations/      # additive MySQL migrations (numbered files)
+├── content/         # reviewed quiz JSON files, imported as drafts by bin/import-content.php
+├── bin/             # migrate.php (CLI ledger), cleanup.php and daily.php (cron), import-content.php (CLI)
+├── tests/           # unit, HTTP/database, competition, daily, concurrency, content checks
 └── config.example.php
 scripts/             # package-cpanel.mjs, check-htaccess.sh, agent_guard.py, guard.py, verify.py
 .github/workflows/   # verify.yml: secret-free frontend build and isolated backend checks
@@ -200,4 +201,4 @@ The server has no Node. Full playbook and safety rules: `docs/07-operations/DEPL
   preset avatars only; boards and challenge previews show nickname, avatar and score only.
 - `.htaccess`: HTTPS redirect, HSTS, `X-Content-Type-Options`, frame and referrer
   policies; denies `*.map`, dotfiles, `config.php` and stray PHP.
-- Tests: `backend/tests/` (unit, HTTP/database, competition, concurrency).
+- Tests: `backend/tests/` (unit, HTTP/database, competition, concurrency); frontend `tests/unit` (Vitest) and `tests/e2e` (Playwright).

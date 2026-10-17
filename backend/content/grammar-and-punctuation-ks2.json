@@ -1,0 +1,250 @@
+{
+  "slug": "grammar-and-punctuation-ks2",
+  "title": "Grammar and Punctuation",
+  "intro": "Nouns, verbs, adjectives, apostrophes and more.",
+  "category": "school-english",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which word is a noun in this sentence: \"The happy dog ran quickly\"?",
+      "options": [
+        {
+          "label": "happy",
+          "correct": false
+        },
+        {
+          "label": "dog",
+          "correct": true
+        },
+        {
+          "label": "ran",
+          "correct": false
+        },
+        {
+          "label": "quickly",
+          "correct": false
+        }
+      ],
+      "explanation": "A noun names a person, place or thing. \"Dog\" is the thing in this sentence.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwwp8mn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word is an adjective in this sentence: \"The tall girl sang loudly\"?",
+      "options": [
+        {
+          "label": "tall",
+          "correct": true
+        },
+        {
+          "label": "girl",
+          "correct": false
+        },
+        {
+          "label": "sang",
+          "correct": false
+        },
+        {
+          "label": "loudly",
+          "correct": false
+        }
+      ],
+      "explanation": "An adjective describes a noun. \"Tall\" describes the girl.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwwp8mn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word is a verb in this sentence: \"Sam jumped over the puddle\"?",
+      "options": [
+        {
+          "label": "Sam",
+          "correct": false
+        },
+        {
+          "label": "jumped",
+          "correct": true
+        },
+        {
+          "label": "over",
+          "correct": false
+        },
+        {
+          "label": "puddle",
+          "correct": false
+        }
+      ],
+      "explanation": "A verb is a doing or being word. \"Jumped\" is what Sam did.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwwp8mn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word is an adverb in this sentence: \"She whispered softly\"?",
+      "options": [
+        {
+          "label": "She",
+          "correct": false
+        },
+        {
+          "label": "whispered",
+          "correct": false
+        },
+        {
+          "label": "softly",
+          "correct": true
+        },
+        {
+          "label": "None of them",
+          "correct": false
+        }
+      ],
+      "explanation": "An adverb tells us more about a verb. \"Softly\" tells us how she whispered.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwwp8mn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which punctuation mark goes at the end of a question?",
+      "options": [
+        {
+          "label": "Full stop",
+          "correct": false
+        },
+        {
+          "label": "Comma",
+          "correct": false
+        },
+        {
+          "label": "Question mark",
+          "correct": true
+        },
+        {
+          "label": "Apostrophe",
+          "correct": false
+        }
+      ],
+      "explanation": "A question ends with a question mark, like this: \"Are you ready?\"",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvwwxnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which prefix turns \"happy\" into a word that means the opposite?",
+      "options": [
+        {
+          "label": "re-",
+          "correct": false
+        },
+        {
+          "label": "un-",
+          "correct": true
+        },
+        {
+          "label": "pre-",
+          "correct": false
+        },
+        {
+          "label": "dis-",
+          "correct": false
+        }
+      ],
+      "explanation": "Adding \"un-\" makes \"unhappy\", which means not happy.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqqsw6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A proper noun, such as London, always starts with a capital letter.",
+      "answer": true,
+      "explanation": "Proper nouns are the names of particular people, places and things, so they always begin with a capital letter.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwwp8mn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word is a conjunction in this sentence: \"I wanted to play, but it was raining\"?",
+      "options": [
+        {
+          "label": "wanted",
+          "correct": false
+        },
+        {
+          "label": "play",
+          "correct": false
+        },
+        {
+          "label": "but",
+          "correct": true
+        },
+        {
+          "label": "raining",
+          "correct": false
+        }
+      ],
+      "explanation": "A conjunction joins words or clauses together. \"But\" joins the two parts of this sentence.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwwp8mn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the plural of \"child\"?",
+      "options": [
+        {
+          "label": "childs",
+          "correct": false
+        },
+        {
+          "label": "childes",
+          "correct": false
+        },
+        {
+          "label": "children",
+          "correct": true
+        },
+        {
+          "label": "childrens",
+          "correct": false
+        }
+      ],
+      "explanation": "\"Child\" has an irregular plural: one child, two children.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zt62mnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sentence uses an apostrophe correctly to show that something belongs to one dog?",
+      "options": [
+        {
+          "label": "The dogs bone was buried.",
+          "correct": false
+        },
+        {
+          "label": "The dog's bone was buried.",
+          "correct": true
+        },
+        {
+          "label": "The dogs' bone's was buried.",
+          "correct": false
+        },
+        {
+          "label": "The do'gs bone was buried.",
+          "correct": false
+        }
+      ],
+      "explanation": "For one owner, add an apostrophe and s: the dog's bone.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvwwxnb",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

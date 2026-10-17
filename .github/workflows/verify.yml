@@ -71,6 +71,8 @@ jobs:
           composer check-platform-reqs
           composer audit
           composer test
+      - name: Validate quiz content files
+        run: php backend/bin/import-content.php --dry-run
       - name: Prove the cron helper only adds lines
         run: bash scripts/cron-ensure.test.sh
       - name: Configure disposable database
@@ -106,3 +108,74 @@ jobs:
           php backend/tests/competition.php
           php backend/tests/daily.php
           php backend/tests/concurrency.php
+          php backend/tests/feeds.php
+          php backend/tests/content.php
+          php backend/tests/cleanup.php
+
+  unit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Unit and component tests
+        run: npm test
+
+  e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      database:
+        image: mariadb:11.4
+        env:
+          # Isolated disposable CI fixture, never used on cPanel.
+          MARIADB_ROOT_PASSWORD: ci_test_only
+          MARIADB_ROOT_HOST: '%'
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s --health-timeout=5s --health-retries=10
+    env:
+      # tests/e2e/global-setup.ts creates its own dyk_e2e_test database and user.
+      E2E_DB_ADMIN_HOST: 127.0.0.1
+      E2E_DB_ADMIN_USER: root
+      E2E_DB_ADMIN_PASSWORD: ci_test_only
+      E2E_DB_USER_HOST: '%'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_mysql, curl, openssl
+          tools: composer:v2
+          coverage: none
+      - name: Install backend dependencies
+        working-directory: backend
+        run: composer install --no-dev --no-interaction --prefer-dist
+      - run: npm ci
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Browser journeys (mobile and desktop)
+        run: npm run test:e2e
+      - name: Keep the report when a journey fails
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

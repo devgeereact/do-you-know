@@ -1,0 +1,206 @@
+{
+  "slug": "amazing-animals",
+  "title": "Amazing Animals",
+  "intro": "From octopuses to pandas, test what you know about the wonderful creatures of our planet.",
+  "category": "science-nature",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "How many arms does an octopus have?",
+      "options": [
+        {
+          "label": "Six",
+          "correct": false
+        },
+        {
+          "label": "Eight",
+          "correct": true
+        },
+        {
+          "label": "Ten",
+          "correct": false
+        },
+        {
+          "label": "Twelve",
+          "correct": false
+        }
+      ],
+      "explanation": "An octopus has eight arms covered in suckers, which it uses to grab, taste and move.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/octopus",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A blue whale is a mammal, not a fish.",
+      "answer": true,
+      "explanation": "Whales are mammals. They breathe air through blowholes and feed their babies milk.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/blue-whale",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do giraffes mostly eat?",
+      "options": [
+        {
+          "label": "Fish",
+          "correct": false
+        },
+        {
+          "label": "Leaves",
+          "correct": true
+        },
+        {
+          "label": "Insects",
+          "correct": false
+        },
+        {
+          "label": "Grass seeds",
+          "correct": false
+        }
+      ],
+      "explanation": "Giraffes use their long necks and tongues to reach leaves high up in trees.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/giraffe",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where do emperor penguins live in the wild?",
+      "options": [
+        {
+          "label": "The Arctic",
+          "correct": false
+        },
+        {
+          "label": "Antarctica",
+          "correct": true
+        },
+        {
+          "label": "The Amazon",
+          "correct": false
+        },
+        {
+          "label": "The Sahara",
+          "correct": false
+        }
+      ],
+      "explanation": "Emperor penguins live in and around Antarctica, one of the coldest places on Earth.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/emperor-penguin",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby kangaroo called?",
+      "options": [
+        {
+          "label": "A cub",
+          "correct": false
+        },
+        {
+          "label": "A kid",
+          "correct": false
+        },
+        {
+          "label": "A joey",
+          "correct": true
+        },
+        {
+          "label": "A foal",
+          "correct": false
+        }
+      ],
+      "explanation": "Baby kangaroos are called joeys. They grow inside their mother's pouch.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/kangaroo",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do giant pandas mostly eat?",
+      "options": [
+        {
+          "label": "Bamboo",
+          "correct": true
+        },
+        {
+          "label": "Fish",
+          "correct": false
+        },
+        {
+          "label": "Berries",
+          "correct": false
+        },
+        {
+          "label": "Honey",
+          "correct": false
+        }
+      ],
+      "explanation": "Bamboo makes up almost all of a giant panda's diet, and they eat a lot of it every day.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/giant-panda",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Polar bears have black skin under their fur.",
+      "answer": true,
+      "explanation": "A polar bear's fur looks white, but the skin underneath is black, which helps soak up warmth from the Sun.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/polar-bear",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is a reptile?",
+      "options": [
+        {
+          "label": "Dolphin",
+          "correct": false
+        },
+        {
+          "label": "Frog",
+          "correct": false
+        },
+        {
+          "label": "Komodo dragon",
+          "correct": true
+        },
+        {
+          "label": "Salmon",
+          "correct": false
+        }
+      ],
+      "explanation": "Komodo dragons are lizards, and lizards are reptiles with dry, scaly skin.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/komodo-dragon",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the long, bendy nose of an elephant called?",
+      "options": [
+        {
+          "label": "A tusk",
+          "correct": false
+        },
+        {
+          "label": "A trunk",
+          "correct": true
+        },
+        {
+          "label": "A snout",
+          "correct": false
+        },
+        {
+          "label": "A beak",
+          "correct": false
+        }
+      ],
+      "explanation": "An elephant's trunk is its nose and upper lip joined together. It uses it to breathe, smell, drink and pick things up.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/african-elephant",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

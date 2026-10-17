@@ -1,0 +1,197 @@
+{
+  "slug": "everyday-know-how",
+  "title": "Everyday Know-How",
+  "intro": "Warm up with quick questions about numbers, shapes, nature and the sky.",
+  "category": "general-knowledge",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "How many days are there in a leap year?",
+      "options": [
+        {
+          "label": "364",
+          "correct": false
+        },
+        {
+          "label": "365",
+          "correct": false
+        },
+        {
+          "label": "366",
+          "correct": true
+        },
+        {
+          "label": "367",
+          "correct": false
+        }
+      ],
+      "explanation": "A leap year adds an extra day, 29 February, so it has 366 days instead of 365.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many colours are usually named in a rainbow?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": true
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "Rainbows are usually described as red, orange, yellow, green, blue, indigo and violet: seven colours.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A spider has eight legs.",
+      "answer": true,
+      "explanation": "Spiders have eight legs, which is one way to tell them apart from insects, which have six.",
+      "source_url": "https://www.nhm.ac.uk/discover/spiders.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many minutes are there in two hours?",
+      "slider": {
+        "min": 0,
+        "max": 240,
+        "step": 10,
+        "unit": "minutes",
+        "correct": 120,
+        "accept_min": 120,
+        "accept_max": 120
+      },
+      "explanation": "There are 60 minutes in one hour, so two hours is 60 + 60 = 120 minutes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest planet in our solar system?",
+      "options": [
+        {
+          "label": "Earth",
+          "correct": false
+        },
+        {
+          "label": "Saturn",
+          "correct": false
+        },
+        {
+          "label": "Jupiter",
+          "correct": true
+        },
+        {
+          "label": "Neptune",
+          "correct": false
+        }
+      ],
+      "explanation": "Jupiter is the biggest planet. About 1,000 Earths could fit inside it.",
+      "source_url": "https://science.nasa.gov/jupiter/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many sides does a hexagon have?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": true
+        },
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "A hexagon is a 2D shape with six straight sides. Honeycomb cells are a famous example.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvmxsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Sun is a star.",
+      "answer": true,
+      "explanation": "The Sun is a star, a huge ball of hot glowing gas. It looks bigger than other stars because it is so much closer to us.",
+      "source_url": "https://science.nasa.gov/sun/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest ocean on Earth?",
+      "options": [
+        {
+          "label": "Atlantic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Indian Ocean",
+          "correct": false
+        },
+        {
+          "label": "Arctic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Pacific Ocean",
+          "correct": true
+        }
+      ],
+      "explanation": "The Pacific is the largest and deepest of the world's oceans.",
+      "source_url": "https://oceanservice.noaa.gov/facts/biggestocean.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many sides does a triangle have?",
+      "options": [
+        {
+          "label": "Two",
+          "correct": false
+        },
+        {
+          "label": "Three",
+          "correct": true
+        },
+        {
+          "label": "Four",
+          "correct": false
+        },
+        {
+          "label": "Five",
+          "correct": false
+        }
+      ],
+      "explanation": "A triangle is a shape with three straight sides and three corners.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvmxsbk",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

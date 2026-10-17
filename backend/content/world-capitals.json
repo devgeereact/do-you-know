@@ -1,0 +1,248 @@
+{
+  "slug": "world-capitals",
+  "title": "World Capitals",
+  "intro": "Hop around the globe and match countries to their capital cities.",
+  "category": "geography",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Australia?",
+      "options": [
+        {
+          "label": "Sydney",
+          "correct": false
+        },
+        {
+          "label": "Melbourne",
+          "correct": false
+        },
+        {
+          "label": "Canberra",
+          "correct": true
+        },
+        {
+          "label": "Perth",
+          "correct": false
+        }
+      ],
+      "explanation": "Canberra is Australia's capital, even though Sydney and Melbourne are bigger cities.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/australia",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Canada?",
+      "options": [
+        {
+          "label": "Toronto",
+          "correct": false
+        },
+        {
+          "label": "Ottawa",
+          "correct": true
+        },
+        {
+          "label": "Vancouver",
+          "correct": false
+        },
+        {
+          "label": "Montreal",
+          "correct": false
+        }
+      ],
+      "explanation": "Ottawa, in the province of Ontario, is the capital of Canada.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/canada",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Japan?",
+      "options": [
+        {
+          "label": "Kyoto",
+          "correct": false
+        },
+        {
+          "label": "Osaka",
+          "correct": false
+        },
+        {
+          "label": "Tokyo",
+          "correct": true
+        },
+        {
+          "label": "Hiroshima",
+          "correct": false
+        }
+      ],
+      "explanation": "Tokyo is Japan's capital and one of the biggest cities in the world.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/japan",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of France?",
+      "options": [
+        {
+          "label": "Paris",
+          "correct": true
+        },
+        {
+          "label": "Lyon",
+          "correct": false
+        },
+        {
+          "label": "Marseille",
+          "correct": false
+        },
+        {
+          "label": "Nice",
+          "correct": false
+        }
+      ],
+      "explanation": "Paris, on the River Seine, is the capital of France and home to the Eiffel Tower.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/france",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Kenya?",
+      "options": [
+        {
+          "label": "Mombasa",
+          "correct": false
+        },
+        {
+          "label": "Nairobi",
+          "correct": true
+        },
+        {
+          "label": "Kampala",
+          "correct": false
+        },
+        {
+          "label": "Dodoma",
+          "correct": false
+        }
+      ],
+      "explanation": "Nairobi is the capital of Kenya, in East Africa.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/kenya",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Nigeria?",
+      "options": [
+        {
+          "label": "Lagos",
+          "correct": false
+        },
+        {
+          "label": "Kano",
+          "correct": false
+        },
+        {
+          "label": "Abuja",
+          "correct": true
+        },
+        {
+          "label": "Ibadan",
+          "correct": false
+        }
+      ],
+      "explanation": "Abuja became Nigeria's capital in 1991. Lagos is the country's largest city.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/nigeria",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Brazil?",
+      "options": [
+        {
+          "label": "Rio de Janeiro",
+          "correct": false
+        },
+        {
+          "label": "Brasília",
+          "correct": true
+        },
+        {
+          "label": "São Paulo",
+          "correct": false
+        },
+        {
+          "label": "Salvador",
+          "correct": false
+        }
+      ],
+      "explanation": "Brasília was built as a new capital and opened in 1960. Rio de Janeiro was the capital before that.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/brazil",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Egypt?",
+      "options": [
+        {
+          "label": "Alexandria",
+          "correct": false
+        },
+        {
+          "label": "Luxor",
+          "correct": false
+        },
+        {
+          "label": "Cairo",
+          "correct": true
+        },
+        {
+          "label": "Giza",
+          "correct": false
+        }
+      ],
+      "explanation": "Cairo, on the River Nile, is the capital of Egypt.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/egypt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Italy?",
+      "options": [
+        {
+          "label": "Milan",
+          "correct": false
+        },
+        {
+          "label": "Venice",
+          "correct": false
+        },
+        {
+          "label": "Naples",
+          "correct": false
+        },
+        {
+          "label": "Rome",
+          "correct": true
+        }
+      ],
+      "explanation": "Rome is the capital of Italy and is famous for ancient buildings such as the Colosseum.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/italy",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Wellington is the capital city of New Zealand.",
+      "answer": true,
+      "explanation": "Wellington, at the southern tip of New Zealand's North Island, is the capital. Auckland is the largest city.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/new-zealand",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

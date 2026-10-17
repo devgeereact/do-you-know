@@ -16,12 +16,14 @@ final class Api
             if (!in_array($method, ['GET','POST','DELETE'], true)) { throw new ApiError('method_not_allowed', 405); }
             if ($path === '/health' && $method === 'GET') { self::reply(['status'=>'ok','api_version'=>1]); return; }
             $db = Database::connect($config);
-            RateLimit::check($db,$config,'api',$_SERVER['REMOTE_ADDR']??'unknown',120,60);
+            $ip = RateLimit::clientIp($_SERVER);
+            // Generous per address: a school class can share one address.
+            RateLimit::check($db,$config,'api',$ip,600,60);
             $body = $method === 'POST' ? self::body() : [];
             $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
             $token = preg_match('/^Bearer ([^\s]{1,8192})$/D', $auth, $m) ? $m[1] : '';
             if ($path === '/guest-sessions' && $method === 'POST') {
-                RateLimit::check($db,$config,'new-guest',$_SERVER['REMOTE_ADDR']??'unknown',10,3600);
+                RateLimit::check($db,$config,'new-guest',$ip,100,3600);
                 self::reply(Identity::guest($db,$config),201); return;
             }
             if ($path === '/account/session' && $method === 'POST') {
@@ -43,6 +45,7 @@ final class Api
                 $viewer = $token==='' ? null : Identity::profile($db,$config,$token);
                 self::reply((new Competition($db,$viewer['id']??null))->leaderboard($slug,$board,(int)$limit));return;
             }
+            if ($method==='GET' && $path==='/quizzes/trending') { self::reply($catalog->trending());return; }
             if ($method==='GET' && $path==='/curriculum-tags') { self::reply($catalog->tags());return; }
             if ($method==='GET' && ($path==='/categories' || preg_match('~^/categories/([a-z0-9-]{1,100})$~D',$path,$category))) {
                 $rows = $catalog->categories($path==='/categories' ? null : $category[1]);
@@ -58,7 +61,7 @@ final class Api
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
             $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/delete','/attempts'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/attempts'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -75,6 +78,8 @@ final class Api
                 if (!is_string($limit) || !preg_match('/^[0-9]{1,3}$/D', $limit)) { throw new ApiError('invalid_limit'); }
                 self::reply($player->history((int) $limit));return;
             }
+            if ($path==='/me/continue' && $method==='GET') { self::reply($player->continuing());return; }
+            if ($path==='/me/best' && $method==='GET') { self::reply($player->best());return; }
             if ($method!=='POST') { throw new ApiError('method_not_allowed',405); }
             if ($path==='/me/age-band') { $player->ageBand($body['band']??null);self::reply(['ok'=>true]);return; }
             if ($path==='/me/nickname') { self::reply(['nickname'=>$player->nickname($body['nickname']??null)]);return; }

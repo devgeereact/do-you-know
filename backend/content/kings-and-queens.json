@@ -1,0 +1,214 @@
+{
+  "slug": "kings-and-queens",
+  "title": "Kings and Queens",
+  "intro": "Battles, crowns and famous royal moments from a thousand years of British history.",
+  "category": "history",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In which year was the Battle of Hastings fought?",
+      "options": [
+        {
+          "label": "1066",
+          "correct": true
+        },
+        {
+          "label": "1215",
+          "correct": false
+        },
+        {
+          "label": "1415",
+          "correct": false
+        },
+        {
+          "label": "1666",
+          "correct": false
+        }
+      ],
+      "explanation": "The Battle of Hastings took place in 1066, when the Normans defeated the English army.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zshtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who won the Battle of Hastings?",
+      "options": [
+        {
+          "label": "King Harold",
+          "correct": false
+        },
+        {
+          "label": "William of Normandy",
+          "correct": true
+        },
+        {
+          "label": "Alfred the Great",
+          "correct": false
+        },
+        {
+          "label": "Richard the Lionheart",
+          "correct": false
+        }
+      ],
+      "explanation": "William, Duke of Normandy, won the battle and became known as William the Conqueror.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zshtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which king agreed to Magna Carta?",
+      "options": [
+        {
+          "label": "King John",
+          "correct": true
+        },
+        {
+          "label": "King Henry VIII",
+          "correct": false
+        },
+        {
+          "label": "King Charles I",
+          "correct": false
+        },
+        {
+          "label": "King Alfred",
+          "correct": false
+        }
+      ],
+      "explanation": "King John agreed to Magna Carta, which limited the king's power and said he must follow the law.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcyx2v4/articles/zcg66g8",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Magna Carta agreed?",
+      "slider": {
+        "min": 1000,
+        "max": 1500,
+        "step": 5,
+        "unit": null,
+        "correct": 1215,
+        "accept_min": 1215,
+        "accept_max": 1215
+      },
+      "explanation": "Magna Carta was agreed at Runnymede, near the River Thames, in 1215.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcyx2v4/articles/zcg66g8",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many times did King Henry VIII marry?",
+      "options": [
+        {
+          "label": "Two",
+          "correct": false
+        },
+        {
+          "label": "Four",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": true
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VIII had six wives, one of the most famous facts about the Tudors.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Tudor queen was the daughter of Henry VIII and Anne Boleyn?",
+      "options": [
+        {
+          "label": "Mary I",
+          "correct": false
+        },
+        {
+          "label": "Elizabeth I",
+          "correct": true
+        },
+        {
+          "label": "Victoria",
+          "correct": false
+        },
+        {
+          "label": "Lady Jane Grey",
+          "correct": false
+        }
+      ],
+      "explanation": "Elizabeth I was the daughter of Henry VIII and his second wife, Anne Boleyn.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which year did the Great Fire of London begin?",
+      "options": [
+        {
+          "label": "1066",
+          "correct": false
+        },
+        {
+          "label": "1588",
+          "correct": false
+        },
+        {
+          "label": "1666",
+          "correct": true
+        },
+        {
+          "label": "1805",
+          "correct": false
+        }
+      ],
+      "explanation": "The Great Fire of London started in September 1666 and burned for several days.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zswvcxs/articles/z7j6s82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Great Fire of London started in a bakery on Pudding Lane.",
+      "answer": true,
+      "explanation": "The fire began in Thomas Farriner's bakery on Pudding Lane and spread quickly between the wooden houses.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zswvcxs/articles/z7j6s82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which queen gave her name to an era of British history in the 1800s?",
+      "options": [
+        {
+          "label": "Queen Anne",
+          "correct": false
+        },
+        {
+          "label": "Queen Mary",
+          "correct": false
+        },
+        {
+          "label": "Queen Victoria",
+          "correct": true
+        },
+        {
+          "label": "Queen Matilda",
+          "correct": false
+        }
+      ],
+      "explanation": "Queen Victoria reigned from 1837 to 1901, and that time is called the Victorian era.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zq9ysk7/articles/zhj9cmn",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

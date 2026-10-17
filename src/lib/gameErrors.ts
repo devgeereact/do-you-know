@@ -33,16 +33,18 @@ const MESSAGES: Record<GameErrorCode, string> = {
   network_error: "We couldn't reach the game. Check your connection and try again.",
 };
 
-const FALLBACK = 'Oops — something went wrong. Please try again.';
+const FALLBACK = 'Oops, something went wrong. Please try again.';
 
 /** Turn an API error into friendly copy. */
 export function gameErrorMessage(error: { message?: string } | null | undefined): string {
   const code = error?.message?.trim() as GameErrorCode | undefined;
-  return (code && MESSAGES[code]) || FALLBACK;
+  return (
+    (code && Object.prototype.hasOwnProperty.call(MESSAGES, code) && MESSAGES[code]) || FALLBACK
+  );
 }
 
 /** True when the error is a known game rule (not a network or server failure). */
 export function isGameError(error: { message?: string } | null | undefined): boolean {
   const code = error?.message?.trim();
-  return code !== undefined && code in MESSAGES;
+  return code !== undefined && Object.prototype.hasOwnProperty.call(MESSAGES, code);
 }

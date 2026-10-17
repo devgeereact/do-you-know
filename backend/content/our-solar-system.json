@@ -1,0 +1,206 @@
+{
+  "slug": "our-solar-system",
+  "title": "Our Solar System",
+  "intro": "Blast off on a tour of the Sun, the Moon and the eight planets.",
+  "category": "science-nature",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "How many planets are there in our solar system?",
+      "options": [
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Eight",
+          "correct": true
+        },
+        {
+          "label": "Nine",
+          "correct": false
+        },
+        {
+          "label": "Ten",
+          "correct": false
+        }
+      ],
+      "explanation": "There are eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.",
+      "source_url": "https://science.nasa.gov/solar-system/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is often called the Red Planet?",
+      "options": [
+        {
+          "label": "Mars",
+          "correct": true
+        },
+        {
+          "label": "Venus",
+          "correct": false
+        },
+        {
+          "label": "Jupiter",
+          "correct": false
+        },
+        {
+          "label": "Mercury",
+          "correct": false
+        }
+      ],
+      "explanation": "Mars looks red because iron minerals in its dirt have oxidised, or rusted.",
+      "source_url": "https://science.nasa.gov/mars/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is most famous for its bright, wide rings?",
+      "options": [
+        {
+          "label": "Earth",
+          "correct": false
+        },
+        {
+          "label": "Mars",
+          "correct": false
+        },
+        {
+          "label": "Saturn",
+          "correct": true
+        },
+        {
+          "label": "Mercury",
+          "correct": false
+        }
+      ],
+      "explanation": "Saturn has the most spectacular rings, made of countless pieces of ice and rock.",
+      "source_url": "https://science.nasa.gov/saturn/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Moon makes its own light.",
+      "answer": false,
+      "explanation": "The Moon does not glow by itself. It shines because it reflects light from the Sun.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z7jvf82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is farthest from the Sun?",
+      "options": [
+        {
+          "label": "Uranus",
+          "correct": false
+        },
+        {
+          "label": "Saturn",
+          "correct": false
+        },
+        {
+          "label": "Pluto",
+          "correct": false
+        },
+        {
+          "label": "Neptune",
+          "correct": true
+        }
+      ],
+      "explanation": "Neptune is the eighth and most distant planet. Pluto is now called a dwarf planet.",
+      "source_url": "https://science.nasa.gov/neptune/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the Sun mostly made of?",
+      "options": [
+        {
+          "label": "Hydrogen and helium gas",
+          "correct": true
+        },
+        {
+          "label": "Rock and iron",
+          "correct": false
+        },
+        {
+          "label": "Water and ice",
+          "correct": false
+        },
+        {
+          "label": "Sand and dust",
+          "correct": false
+        }
+      ],
+      "explanation": "The Sun is a hot, glowing ball of hydrogen and helium gas at the centre of our solar system.",
+      "source_url": "https://science.nasa.gov/sun/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Venus is the hottest planet in our solar system.",
+      "answer": true,
+      "explanation": "Venus is wrapped in thick clouds that trap heat, making it the hottest planet.",
+      "source_url": "https://science.nasa.gov/venus/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the smallest planet in our solar system?",
+      "options": [
+        {
+          "label": "Mars",
+          "correct": false
+        },
+        {
+          "label": "Mercury",
+          "correct": true
+        },
+        {
+          "label": "Venus",
+          "correct": false
+        },
+        {
+          "label": "Earth",
+          "correct": false
+        }
+      ],
+      "explanation": "Mercury is the smallest planet, only a little bigger than Earth's Moon.",
+      "source_url": "https://science.nasa.gov/mercury/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was the first person to walk on the Moon?",
+      "options": [
+        {
+          "label": "Buzz Aldrin",
+          "correct": false
+        },
+        {
+          "label": "Yuri Gagarin",
+          "correct": false
+        },
+        {
+          "label": "Neil Armstrong",
+          "correct": true
+        },
+        {
+          "label": "Tim Peake",
+          "correct": false
+        }
+      ],
+      "explanation": "Neil Armstrong stepped onto the Moon in July 1969 during the Apollo 11 mission.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjwvb82/articles/zhx4k2p",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

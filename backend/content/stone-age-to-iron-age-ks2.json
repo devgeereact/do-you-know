@@ -1,0 +1,208 @@
+{
+  "slug": "stone-age-to-iron-age-ks2",
+  "title": "Stone Age to Iron Age",
+  "intro": "Hunter-gatherers, stone circles, bronze tools and hillforts in prehistoric Britain.",
+  "category": "school-history",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which famous prehistoric stone circle stands in Wiltshire?",
+      "options": [
+        {
+          "label": "Hadrian's Wall",
+          "correct": false
+        },
+        {
+          "label": "Stonehenge",
+          "correct": true
+        },
+        {
+          "label": "Skara Brae",
+          "correct": false
+        },
+        {
+          "label": "Maiden Castle",
+          "correct": false
+        }
+      ],
+      "explanation": "Stonehenge is a huge prehistoric monument on Salisbury Plain in Wiltshire.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these periods came first?",
+      "options": [
+        {
+          "label": "The Iron Age",
+          "correct": false
+        },
+        {
+          "label": "The Bronze Age",
+          "correct": false
+        },
+        {
+          "label": "The Stone Age",
+          "correct": true
+        },
+        {
+          "label": "The Roman period",
+          "correct": false
+        }
+      ],
+      "explanation": "The Stone Age came first, then the Bronze Age, then the Iron Age, before the Romans arrived.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Bronze is made by mixing copper with which other metal?",
+      "options": [
+        {
+          "label": "Iron",
+          "correct": false
+        },
+        {
+          "label": "Tin",
+          "correct": true
+        },
+        {
+          "label": "Gold",
+          "correct": false
+        },
+        {
+          "label": "Silver",
+          "correct": false
+        }
+      ],
+      "explanation": "Bronze is an alloy of copper and tin. It is harder than copper alone, so it made better tools.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How did people in the early Stone Age mainly get their food?",
+      "options": [
+        {
+          "label": "By shopping at markets",
+          "correct": false
+        },
+        {
+          "label": "By hunting and gathering",
+          "correct": true
+        },
+        {
+          "label": "By growing rice",
+          "correct": false
+        },
+        {
+          "label": "By fishing from steamships",
+          "correct": false
+        }
+      ],
+      "explanation": "Early Stone Age people were hunter-gatherers who hunted animals and gathered wild plants, nuts and berries.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Skara Brae is a Stone Age village found in which part of the UK?",
+      "options": [
+        {
+          "label": "Cornwall",
+          "correct": false
+        },
+        {
+          "label": "Orkney, in Scotland",
+          "correct": true
+        },
+        {
+          "label": "Kent",
+          "correct": false
+        },
+        {
+          "label": "Anglesey",
+          "correct": false
+        }
+      ],
+      "explanation": "Skara Brae, in Orkney, is a very well-preserved Stone Age village with stone furniture still inside the houses.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Many Iron Age people in Britain lived in roundhouses.",
+      "answer": true,
+      "explanation": "Roundhouses had circular walls and cone-shaped thatched roofs, with a fire in the middle.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which period were many hillforts built in Britain?",
+      "options": [
+        {
+          "label": "The Stone Age",
+          "correct": false
+        },
+        {
+          "label": "The Iron Age",
+          "correct": true
+        },
+        {
+          "label": "The Victorian era",
+          "correct": false
+        },
+        {
+          "label": "The Tudor period",
+          "correct": false
+        }
+      ],
+      "explanation": "Hillforts, protected by banks and ditches, were especially common during the Iron Age.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did Stone Age people often use flint for?",
+      "options": [
+        {
+          "label": "Making tools",
+          "correct": true
+        },
+        {
+          "label": "Making glass windows",
+          "correct": false
+        },
+        {
+          "label": "Building cars",
+          "correct": false
+        },
+        {
+          "label": "Writing books",
+          "correct": false
+        }
+      ],
+      "explanation": "Flint can be chipped to give a sharp edge, so it was used for axes, knives, scrapers and arrowheads.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Stone Age people lived at the same time as the dinosaurs.",
+      "answer": false,
+      "explanation": "The dinosaurs died out about 66 million years ago, long before the first people lived.",
+      "source_url": "https://www.nhm.ac.uk/discover/dino-directory.html",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

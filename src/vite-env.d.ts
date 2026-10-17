@@ -11,6 +11,8 @@ interface ImportMetaEnv {
   readonly VITE_SENTRY_DSN: string;
   readonly VITE_POSTHOG_KEY: string;
   readonly VITE_POSTHOG_HOST: string;
+  /** Optional public contact address for parents, teachers and content corrections. */
+  readonly VITE_CONTACT_EMAIL: string | undefined;
 }
 
 interface ImportMeta {

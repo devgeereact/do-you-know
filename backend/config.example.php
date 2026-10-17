@@ -23,7 +23,7 @@ return [
         'secret_key' => '',
         'authorized_parties' => ['https://doyouknow.soulrefresh.net'],
     ],
-    'guest_ttl_seconds' => 604800, // 7 days
+    'guest_ttl_seconds' => 604800, // 7 days, renewed while the player keeps playing
     // Random server key for hashing rate-limit identifiers, at least 32 characters.
     'rate_limit_key' => '',
 ];

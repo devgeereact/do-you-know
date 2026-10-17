@@ -1,5 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { api, ensureGuest, hasSession, signOutGuest } from '@/lib/api';
 import type { Profile } from '@/types';
 
@@ -35,21 +43,33 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
     void load().finally(() => setLoading(false));
   }, [load]);
 
+  // Read the latest user through a ref so ensureSession keeps one identity. Pages that start a
+  // game depend on it, and a new function each time the user loads restarted their game.
+  const userRef = useRef(user);
+  userRef.current = user;
+  const ensureSession = useCallback(async (): Promise<void> => {
+    if (hasSession() && userRef.current) return;
+    await ensureGuest();
+    await load();
+    // A stored code that has expired is only discovered by that load (its 401 clears the code),
+    // so make a fresh guest once instead of starting the game with no session.
+    if (!hasSession()) {
+      await ensureGuest();
+      await load();
+    }
+  }, [load]);
+
   const value = useMemo<SessionContextValue>(
     () => ({
       user,
       loading,
-      ensureSession: async () => {
-        if (hasSession() && user) return;
-        await ensureGuest();
-        await load();
-      },
+      ensureSession,
       signOut: async () => {
         await signOutGuest();
         setUser(null);
       },
     }),
-    [user, loading, load],
+    [user, loading, ensureSession],
   );
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;

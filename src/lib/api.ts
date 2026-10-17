@@ -30,9 +30,9 @@ let pendingGuest: Promise<string> | null = null;
 function readStoredToken(): string | null {
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null') as StoredGuest | null;
-    if (stored?.token.startsWith('guest_') && Date.parse(stored.expires_at) > Date.now()) {
-      return stored.token;
-    }
+    // The server renews the code while the player keeps playing, so the stored expiry is only
+    // a hint. An expired code gets a 401, which clears it.
+    if (stored?.token.startsWith('guest_')) return stored.token;
   } catch {
     /* Storage may be blocked; the player can still play in memory. */
   }

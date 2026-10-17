@@ -4,6 +4,8 @@ import type {
   AnswerResult,
   AttemptState,
   AttemptSummary,
+  BestScore,
+  ContinueItem,
   FriendChallengePreview,
   Leaderboard,
 } from '@/types/game';
@@ -67,6 +69,16 @@ export interface GameHistoryItem {
 /** The player's own finished games, newest first. */
 export function listMyGames(limit = 20): Promise<GameHistoryItem[]> {
   return api<GameHistoryItem[]>('/me/games', { query: { limit } });
+}
+
+/** The player's own unfinished games that can still be resumed, newest first (max 5). */
+export function listContinuePlaying(): Promise<ContinueItem[]> {
+  return api<ContinueItem[]>('/me/continue');
+}
+
+/** The player's best finished result per quiz: most correct, then fastest (max 50). */
+export function listMyBestScores(): Promise<BestScore[]> {
+  return api<BestScore[]>('/me/best');
 }
 
 /** Top rows plus "your rank". Public: nickname, avatar, score and time only. */

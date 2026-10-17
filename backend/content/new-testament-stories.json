@@ -1,0 +1,239 @@
+{
+  "slug": "new-testament-stories",
+  "title": "New Testament Stories",
+  "intro": "Stories from the life of Jesus and his first followers.",
+  "category": "bible-faith",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In which town was Jesus born?",
+      "options": [
+        {
+          "label": "Nazareth",
+          "correct": false
+        },
+        {
+          "label": "Jerusalem",
+          "correct": false
+        },
+        {
+          "label": "Bethlehem",
+          "correct": true
+        },
+        {
+          "label": "Capernaum",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew 2:1 says Jesus was born in Bethlehem in Judea.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%202%3A1&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many apostles did Jesus choose?",
+      "options": [
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Ten",
+          "correct": false
+        },
+        {
+          "label": "Twelve",
+          "correct": true
+        },
+        {
+          "label": "Forty",
+          "correct": false
+        }
+      ],
+      "explanation": "Luke 6:13 says Jesus chose twelve of his disciples and called them apostles.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%206%3A13&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who baptised Jesus in the River Jordan?",
+      "options": [
+        {
+          "label": "Peter",
+          "correct": false
+        },
+        {
+          "label": "John the Baptist",
+          "correct": true
+        },
+        {
+          "label": "Paul",
+          "correct": false
+        },
+        {
+          "label": "Andrew",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew 3:13 tells how Jesus came to John at the Jordan to be baptised.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%203%3A13-16&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What work did Peter and Andrew do before they followed Jesus?",
+      "options": [
+        {
+          "label": "Fishermen",
+          "correct": true
+        },
+        {
+          "label": "Shepherds",
+          "correct": false
+        },
+        {
+          "label": "Carpenters",
+          "correct": false
+        },
+        {
+          "label": "Tax collectors",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew 4:18 says Peter and Andrew were casting a net into the lake, for they were fishermen.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%204%3A18-20&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Jesus' parable, who stopped to help the injured traveller?",
+      "options": [
+        {
+          "label": "A priest",
+          "correct": false
+        },
+        {
+          "label": "A Levite",
+          "correct": false
+        },
+        {
+          "label": "A Samaritan",
+          "correct": true
+        },
+        {
+          "label": "A soldier",
+          "correct": false
+        }
+      ],
+      "explanation": "In Luke 10, a priest and a Levite pass by, but a Samaritan takes pity on the man and cares for him.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2010%3A33-34&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "When Jesus fed the five thousand, how many loaves did a boy share?",
+      "options": [
+        {
+          "label": "Two",
+          "correct": false
+        },
+        {
+          "label": "Five",
+          "correct": true
+        },
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Twelve",
+          "correct": false
+        }
+      ],
+      "explanation": "John 6:9 says a boy had five small barley loaves and two small fish.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%206%3A9&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Jesus turned water into wine at a wedding in Cana.",
+      "answer": true,
+      "explanation": "John 2 describes this as the first of the signs Jesus performed, at a wedding in Cana in Galilee.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%202%3A1-11&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who climbed a sycamore-fig tree to see Jesus over the crowd?",
+      "options": [
+        {
+          "label": "Zacchaeus",
+          "correct": true
+        },
+        {
+          "label": "Lazarus",
+          "correct": false
+        },
+        {
+          "label": "Thomas",
+          "correct": false
+        },
+        {
+          "label": "Nicodemus",
+          "correct": false
+        }
+      ],
+      "explanation": "Luke 19 says Zacchaeus was short, so he ran ahead and climbed a sycamore-fig tree to see Jesus.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2019%3A1-4&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On the road to which city did Saul see a bright light from heaven?",
+      "options": [
+        {
+          "label": "Rome",
+          "correct": false
+        },
+        {
+          "label": "Damascus",
+          "correct": true
+        },
+        {
+          "label": "Athens",
+          "correct": false
+        },
+        {
+          "label": "Bethlehem",
+          "correct": false
+        }
+      ],
+      "explanation": "Acts 9:3 says that as Saul neared Damascus, a light from heaven flashed around him. He later became known as Paul.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Acts%209%3A3&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In Matthew's Gospel, for how many days and nights did Jesus fast in the wilderness?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "days",
+        "correct": 40,
+        "accept_min": 40,
+        "accept_max": 40
+      },
+      "explanation": "Matthew 4:2 says Jesus fasted for forty days and forty nights.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%204%3A2&version=NIVUK",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

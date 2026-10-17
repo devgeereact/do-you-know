@@ -1,0 +1,225 @@
+{
+  "slug": "the-united-kingdom-ks2",
+  "title": "The United Kingdom",
+  "intro": "Capital cities, mountains, rivers and seas of the UK.",
+  "category": "school-geography",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Scotland?",
+      "options": [
+        {
+          "label": "Glasgow",
+          "correct": false
+        },
+        {
+          "label": "Edinburgh",
+          "correct": true
+        },
+        {
+          "label": "Aberdeen",
+          "correct": false
+        },
+        {
+          "label": "Dundee",
+          "correct": false
+        }
+      ],
+      "explanation": "Edinburgh is the capital of Scotland and is famous for its castle.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Wales?",
+      "options": [
+        {
+          "label": "Swansea",
+          "correct": false
+        },
+        {
+          "label": "Cardiff",
+          "correct": true
+        },
+        {
+          "label": "Newport",
+          "correct": false
+        },
+        {
+          "label": "Bangor",
+          "correct": false
+        }
+      ],
+      "explanation": "Cardiff, in south Wales, is the capital city of Wales.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Northern Ireland?",
+      "options": [
+        {
+          "label": "Belfast",
+          "correct": true
+        },
+        {
+          "label": "Derry",
+          "correct": false
+        },
+        {
+          "label": "Dublin",
+          "correct": false
+        },
+        {
+          "label": "Armagh",
+          "correct": false
+        }
+      ],
+      "explanation": "Belfast is the capital of Northern Ireland. Dublin is the capital of the Republic of Ireland.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the highest mountain in the UK?",
+      "options": [
+        {
+          "label": "Snowdon",
+          "correct": false
+        },
+        {
+          "label": "Scafell Pike",
+          "correct": false
+        },
+        {
+          "label": "Ben Nevis",
+          "correct": true
+        },
+        {
+          "label": "Slieve Donard",
+          "correct": false
+        }
+      ],
+      "explanation": "Ben Nevis, in the Scottish Highlands, is the UK's highest mountain at about 1,345 metres.",
+      "source_url": "https://www.ordnancesurvey.co.uk/blog/britains-tallest-mountain-is-taller",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river flows through London?",
+      "options": [
+        {
+          "label": "The Severn",
+          "correct": false
+        },
+        {
+          "label": "The Thames",
+          "correct": true
+        },
+        {
+          "label": "The Mersey",
+          "correct": false
+        },
+        {
+          "label": "The Tyne",
+          "correct": false
+        }
+      ],
+      "explanation": "The River Thames flows through the middle of London on its way to the North Sea.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The English Channel separates England from France.",
+      "answer": true,
+      "explanation": "The English Channel is the stretch of sea between southern England and northern France.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sea lies to the east of England?",
+      "options": [
+        {
+          "label": "The Irish Sea",
+          "correct": false
+        },
+        {
+          "label": "The North Sea",
+          "correct": true
+        },
+        {
+          "label": "The Red Sea",
+          "correct": false
+        },
+        {
+          "label": "The Black Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The North Sea lies between the east coast of Great Britain and countries such as Norway, Denmark and the Netherlands.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of the four countries of the UK has the most people?",
+      "options": [
+        {
+          "label": "Scotland",
+          "correct": false
+        },
+        {
+          "label": "Wales",
+          "correct": false
+        },
+        {
+          "label": "Northern Ireland",
+          "correct": false
+        },
+        {
+          "label": "England",
+          "correct": true
+        }
+      ],
+      "explanation": "England has by far the largest population of the four countries in the UK.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a compass, which direction is opposite north?",
+      "options": [
+        {
+          "label": "East",
+          "correct": false
+        },
+        {
+          "label": "West",
+          "correct": false
+        },
+        {
+          "label": "South",
+          "correct": true
+        },
+        {
+          "label": "North-east",
+          "correct": false
+        }
+      ],
+      "explanation": "North and south are opposite each other on a compass, as are east and west.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zbkw2hv",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

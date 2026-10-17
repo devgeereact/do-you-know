@@ -17,6 +17,11 @@ import { LeaderboardsPage } from '@/pages/LeaderboardsPage';
 import { DailyPage } from '@/pages/DailyPage';
 import { ChallengePage } from '@/pages/ChallengePage';
 import { AvatarPage } from '@/pages/AvatarPage';
+import { HowToPlayPage } from '@/pages/HowToPlayPage';
+import { AboutPage } from '@/pages/AboutPage';
+import { ContactPage } from '@/pages/ContactPage';
+import { PrivacyPage } from '@/pages/PrivacyPage';
+import { TermsPage } from '@/pages/TermsPage';
 
 const AccountPage = lazy(() =>
   import('@/pages/AccountPage').then((m) => ({ default: m.AccountPage })),
@@ -39,6 +44,11 @@ export function App(): JSX.Element {
               <Route path="/me" element={<MePage />} />
               <Route path="/me/avatar" element={<AvatarPage />} />
               <Route path="/me/settings" element={<SettingsPage />} />
+              <Route path="/how-to-play" element={<HowToPlayPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
               <Route
                 path="/account"
                 element={

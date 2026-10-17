@@ -6,6 +6,11 @@ namespace Dyk;
 /** Published metadata only. Version snapshots and author identities stay private. */
 final class Catalog
 {
+    /** The one public quiz column list. Never add current_version_id or anything from quiz_versions. */
+    private const QUIZ_COLUMNS = 'q.id,q.slug,q.title,q.intro,q.category_id,q.difficulty,q.age_min,q.age_max,q.curriculum_tags,
+        q.cover_image_url,q.question_count,q.time_limit_seconds,q.shuffle_options,q.is_ranked,q.status,
+        q.publish_at,q.seo_title,q.seo_description,q.created_at,q.updated_at';
+
     public function __construct(private readonly \PDO $db) {}
 
     public function categories(?string $slug = null): array
@@ -34,9 +39,7 @@ final class Catalog
 
     public function quizzes(array $filters, ?string $slug = null): array
     {
-        $sql = "SELECT id,slug,title,intro,category_id,difficulty,age_min,age_max,curriculum_tags,
-            cover_image_url,question_count,time_limit_seconds,shuffle_options,is_ranked,status,
-            publish_at,seo_title,seo_description,created_at,updated_at FROM quizzes WHERE status='published'";
+        $sql = 'SELECT ' . self::QUIZ_COLUMNS . " FROM quizzes q WHERE q.status='published'";
         $args = [];
         if ($slug !== null) {
             $sql .= ' AND slug=?';
@@ -73,20 +76,38 @@ final class Catalog
             $sql .= " AND title LIKE ? ESCAPE '!'";
             $args[] = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], trim($filters['search'])) . '%';
         }
-        $statement = $this->db->prepare($sql . ' ORDER BY updated_at DESC,id LIMIT 100');
+        $statement = $this->db->prepare($sql . ' ORDER BY q.updated_at DESC,q.id LIMIT 100');
         $statement->execute($args);
-        return array_map(static function (array $row): array {
-            $row['question_count'] = (int) $row['question_count'];
-            $row['time_limit_seconds'] = $row['time_limit_seconds'] === null ? null : (int) $row['time_limit_seconds'];
-            $row['shuffle_options'] = (bool) $row['shuffle_options'];
-            $row['is_ranked'] = (bool) $row['is_ranked'];
-            $row['age_min'] = $row['age_min'] === null ? null : (int) $row['age_min'];
-            $row['age_max'] = $row['age_max'] === null ? null : (int) $row['age_max'];
-            $row['curriculum_tags'] = $row['curriculum_tags'] === null ? [] : json_decode($row['curriculum_tags'], true, 16, JSON_THROW_ON_ERROR);
-            foreach (['created_at', 'updated_at', 'publish_at'] as $field) {
-                $row[$field] = Database::utc($row[$field]);
-            }
-            return $row;
-        }, $statement->fetchAll());
+        return array_map(self::quizRow(...), $statement->fetchAll());
+    }
+
+    /**
+     * Up to six published quizzes, most finished plays in the last 7 days first. Quizzes with
+     * no recent plays fill the rest newest first, so a quiet week still shows something.
+     * Only an aggregate count is read from attempts; no player data leaves this query.
+     */
+    public function trending(): array
+    {
+        $statement = $this->db->query('SELECT ' . self::QUIZ_COLUMNS . " FROM quizzes q
+            LEFT JOIN (SELECT quiz_id,COUNT(*) AS plays FROM attempts
+                WHERE status='finished' AND finished_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 7 DAY) GROUP BY quiz_id) p
+            ON p.quiz_id=q.id WHERE q.status='published'
+            ORDER BY COALESCE(p.plays,0) DESC,q.updated_at DESC,q.id LIMIT 6");
+        return array_map(self::quizRow(...), $statement->fetchAll());
+    }
+
+    private static function quizRow(array $row): array
+    {
+        $row['question_count'] = (int) $row['question_count'];
+        $row['time_limit_seconds'] = $row['time_limit_seconds'] === null ? null : (int) $row['time_limit_seconds'];
+        $row['shuffle_options'] = (bool) $row['shuffle_options'];
+        $row['is_ranked'] = (bool) $row['is_ranked'];
+        $row['age_min'] = $row['age_min'] === null ? null : (int) $row['age_min'];
+        $row['age_max'] = $row['age_max'] === null ? null : (int) $row['age_max'];
+        $row['curriculum_tags'] = $row['curriculum_tags'] === null ? [] : json_decode($row['curriculum_tags'], true, 16, JSON_THROW_ON_ERROR);
+        foreach (['created_at', 'updated_at', 'publish_at'] as $field) {
+            $row[$field] = Database::utc($row[$field]);
+        }
+        return $row;
     }
 }

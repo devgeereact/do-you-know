@@ -13,6 +13,9 @@ The runnable source is `backend/migrations/`, applied in order by `backend/bin/m
 | `0002_identity_case_sensitivity.sql` | Makes `identities.provider` and `subject` case-sensitive (`ascii_bin`) so different Clerk IDs never merge                                                            |
 | `0003_player_metadata.sql`           | Profile streak, daily date and `avatar_id`; quiz age range, curriculum tags, ranked flag, publish and SEO fields; `curriculum_tags`, `blocked_words`, `app_settings` |
 | `0004_competition.sql`               | `daily_challenges`, `friend_challenges`, `leaderboard_entries`; attempt links to daily/friend challenges, frozen timer and shuffle settings; mode and status checks  |
+| `0005_blocked_words_seed.sql`        | Starter `blocked_words` list (clear profanity and slurs, plus `admin`, `moderator`, `staff`, `official`) with `INSERT IGNORE`, so re-runs are safe                   |
+| `0006_content_reviews.sql`           | `content_reviews`: who reviewed and published which quiz version (written only by `bin/import-content.php --publish`)                                                |
+| `0007_attempts_finished_index.sql`   | Index `attempts_finished (status, finished_at, quiz_id)` for the 7-day trending query                                                                                |
 
 **Golden rule:** the browser can read a question's public text, **never its answer**.
 Answers live only inside `quiz_versions.snapshot`, which no public endpoint returns. The
@@ -48,13 +51,14 @@ blocked_words · rate_limits · schema_migrations (ledger)
 
 ### Content
 
-| Table             | Key columns                                                                                                                                                                                                                                                                                                | Notes                                                                                                                                                       |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `categories`      | `slug` unique, `name`, `description`, `kind`, `icon`, `scene`, `sort_order`, `is_active`                                                                                                                                                                                                                   | Public read of active rows                                                                                                                                  |
-| `curriculum_tags` | `code` PK (for example `uk-ks2`), `label`, `system`, `age_min`, `age_max`, `sort_order`                                                                                                                                                                                                                    | Public filter options                                                                                                                                       |
-| `quizzes`         | `slug` unique, `title`, `intro`, `category_id`, `difficulty`, `cover_image_url`, `status`, `current_version_id`, `time_limit_seconds` (5–120 or null), `shuffle_options`, `question_count` (3–50), `age_min`, `age_max`, `curriculum_tags` JSON, `is_ranked`, `publish_at`, `seo_title`, `seo_description` | Public read only when `status = 'published'`. Ranked starts fall back to practice when `is_ranked` is false                                                 |
-| `quiz_versions`   | (`quiz_id`, `version`) unique, `snapshot` JSON **with answers**, `question_count`                                                                                                                                                                                                                          | Never returned by any endpoint. Questions, options, slider ranges, explanations and source URLs live in the snapshot; there are no separate question tables |
-| `blocked_words`   | `word` PK (lower-case ASCII)                                                                                                                                                                                                                                                                               | Checked for free-text nicknames. Needs the owner's approved list before launch                                                                              |
+| Table             | Key columns                                                                                                                                                                                                                                                                                                | Notes                                                                                                                                                                 |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `categories`      | `slug` unique, `name`, `description`, `kind`, `icon`, `scene`, `sort_order`, `is_active`                                                                                                                                                                                                                   | Public read of active rows                                                                                                                                            |
+| `curriculum_tags` | `code` PK (for example `uk-ks2`), `label`, `system`, `age_min`, `age_max`, `sort_order`                                                                                                                                                                                                                    | Public filter options                                                                                                                                                 |
+| `quizzes`         | `slug` unique, `title`, `intro`, `category_id`, `difficulty`, `cover_image_url`, `status`, `current_version_id`, `time_limit_seconds` (5–120 or null), `shuffle_options`, `question_count` (3–50), `age_min`, `age_max`, `curriculum_tags` JSON, `is_ranked`, `publish_at`, `seo_title`, `seo_description` | Public read only when `status = 'published'`. Ranked starts fall back to practice when `is_ranked` is false                                                           |
+| `quiz_versions`   | (`quiz_id`, `version`) unique, `snapshot` JSON **with answers**, `question_count`                                                                                                                                                                                                                          | Never returned by any endpoint. Questions, options, slider ranges, explanations and source URLs live in the snapshot; there are no separate question tables           |
+| `content_reviews` | `quiz_id`, `quiz_version_id`, `reviewed_by` (staff name, up to 100 characters), `action` (`published`), `reviewed_at`                                                                                                                                                                                      | Never returned by any endpoint. One row per publish, so every live quiz version has a named human reviewer                                                            |
+| `blocked_words`   | `word` PK (lower-case ASCII)                                                                                                                                                                                                                                                                               | Substring match on the lower-cased letters and digits and on a leetspeak reading (`Player::isBlocked`). 0005 seeds a starter list; the owner reviews it before launch |
 
 ### Play
 
@@ -90,10 +94,18 @@ Frontend calls go through `src/lib/api.ts` and `src/services/*`.
 
 ## 5. Versioning
 
-Each quiz version freezes its questions and answers in `quiz_versions.snapshot`.
+Each quiz version freezes its questions and answers in `quiz_versions.snapshot`, a JSON
+list of questions. Each question has `id`, `type` (`choice`, `boolean` or `slider`),
+`prompt`, `image_url`, `options` (`id`, `label`, `is_correct`), `slider` (`min`, `max`,
+`step`, `unit`, `correct`, `accept_min`, `accept_max`) or null, `explanation`,
+`source_url` and `review_by` (ISO date, added 17 October 2026 for imported content).
+Game sends only `id`, `type`, `prompt`, `image_url`, option labels and the slider scale
+before an answer; `review_by` is never sent to players.
 Attempts, daily challenges and friend challenges reference a version, so a later edit
 creates a new version and never changes a past score. No authoring or publishing endpoint
-exists yet; content arrives through the planned import from the old Supabase project.
+exists; content arrives from reviewed JSON files in `backend/content/` through
+`bin/import-content.php`, which creates drafts and publishes only a named, reviewed list
+(see `backend/README.md`, Content review and publishing).
 
 ## 6. TypeScript types
 

@@ -22,6 +22,7 @@ export default defineConfig({
     'VITE_SENTRY_DSN',
     'VITE_POSTHOG_KEY',
     'VITE_POSTHOG_HOST',
+    'VITE_CONTACT_EMAIL',
   ],
 
   resolve: {
@@ -77,7 +78,11 @@ export default defineConfig({
         // Precache the shell so the SPA boots with no network.
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
         // Only Latin font subsets go in the offline cache; others load on demand.
-        globIgnores: ['**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese,hebrew}-*.woff2'],
+        // The social preview image is for link unfurlers, not the app, so skip it too.
+        globIgnores: [
+          '**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese,hebrew}-*.woff2',
+          'og-image.png',
+        ],
         // SPA navigations resolve to the precached index.html.
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
