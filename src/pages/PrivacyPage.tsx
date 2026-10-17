@@ -162,8 +162,9 @@ export function PrivacyPage(): JSX.Element {
             needed to show your scores and keep leaderboards fair.
           </li>
           <li>
-            This device’s sign-in code expires after a set time (7 days unless we change it). An
-            hourly clean-up removes expired codes from our server.
+            This device’s sign-in code is renewed while you keep playing. It expires after a set
+            time without playing (7 days unless we change it), and an hourly clean-up removes
+            expired codes from our server.
           </li>
           <li>
             The scrambled internet address used to stop flooding is removed within about two hours.
