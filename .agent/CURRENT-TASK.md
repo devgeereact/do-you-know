@@ -34,10 +34,13 @@ Fixed during integration:
   teardown leaked PHP workers.
 
 Evidence (local, 17 October 2026): typecheck, lint, format:check, build PASS; unit 109
-PASS; backend 19 unit, 78 integration, 63 competition, 16 daily, 9 concurrency, 35 feeds,
-62 content PASS on fresh MariaDB `_test`; e2e 46/46 PASS on 5 consecutive runs (one earlier
+PASS; backend 20 unit, 79 integration, 63 competition, 16 daily, 9 concurrency, 35 feeds,
+62 content PASS on fresh MariaDB `_test`; e2e 48/48 PASS on consecutive runs (one earlier
 run 45/46, not reproduced); headless smoke of every page at 390 and 1440 px PASS;
-check:htaccess 22/22, test:cron 10/10, verify.py PASS.
+check:htaccess 22/22, test:cron 10/10, verify.py PASS; clean-up drained 2500 expired rows
+in one run. Independent code review: no answer leak or missing owner filter; its medium
+findings (expired-code deep link, unbounded token buckets, Sentry tracing vs the privacy
+notice) are fixed, the deep-link fix proved by a test that fails without it.
 
 Waiting on the owner:
 1. Yes to merge and deploy (migrations 0005 to 0007 run on the live database).
