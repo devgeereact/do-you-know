@@ -5,6 +5,7 @@ import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn } from '@/lib/utils';
 import type { Board } from '@/types/domain';
+import { Page } from '@/components/ui/Page';
 
 const TABS: { board: Board; label: string }[] = [
   { board: 'all_time', label: 'All time' },
@@ -39,7 +40,7 @@ export function LeaderboardsPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <h1 className="text-4xl font-semibold text-content">Leaderboards</h1>
         <p className="mt-2 text-content-muted">
           Most correct wins. If it’s a tie, the faster answer time goes first.
@@ -109,7 +110,7 @@ export function LeaderboardsPage(): JSX.Element {
             />
           )}
         </div>
-      </main>
+      </Page>
     </>
   );
 }

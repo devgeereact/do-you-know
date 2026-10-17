@@ -4,6 +4,7 @@ import { LeaderboardTable } from '@/components/game/LeaderboardTable';
 import { NicknamePicker } from '@/components/game/NicknamePicker';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
 import type { Board } from '@/types/domain';
+import { Card } from '@/components/ui/Card';
 
 interface ResultsBoardProps {
   quizSlug: string;
@@ -24,7 +25,7 @@ export function ResultsBoard({ quizSlug, board, needsNickname }: ResultsBoardPro
   );
 
   return (
-    <section className="mt-8 rounded-2xl border-2 border-surface-border bg-surface p-6">
+    <Card as="section" className="mt-8">
       <div className="mb-4 flex items-baseline justify-between gap-3">
         <h2 className="text-2xl font-semibold text-content">
           {board === 'daily' ? "Today's leaderboard" : 'Leaderboard'}
@@ -59,6 +60,6 @@ export function ResultsBoard({ quizSlug, board, needsNickname }: ResultsBoardPro
         </p>
       )}
       {data && <LeaderboardTable data={data} showMe={named} />}
-    </section>
+    </Card>
   );
 }

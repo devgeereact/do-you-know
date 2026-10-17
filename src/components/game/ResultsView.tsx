@@ -7,6 +7,7 @@ import { ResultsBoard } from '@/components/game/ResultsBoard';
 import { VersusPanel } from '@/components/game/VersusPanel';
 import { cn, isWebUrl } from '@/lib/utils';
 import type { AttemptSummary, ReviewItem } from '@/types/game';
+import { Card } from '@/components/ui/Card';
 
 interface ResultsViewProps {
   summary: AttemptSummary;
@@ -26,10 +27,7 @@ function NextSteps({
   moreTo,
 }: Pick<ResultsViewProps, 'nextQuiz' | 'moreTo'>): JSX.Element {
   return (
-    <nav
-      aria-label="What next"
-      className="mt-10 rounded-2xl border-2 border-surface-border bg-surface p-6 text-center"
-    >
+    <Card as="nav" aria-label="What next" className="mt-10 text-center">
       <h2 className="text-2xl font-semibold text-content">What next?</h2>
       <div className="mt-4 flex flex-wrap justify-center gap-3">
         {nextQuiz && (
@@ -41,7 +39,7 @@ function NextSteps({
           {moreTo.label}
         </Link>
       </div>
-    </nav>
+    </Card>
   );
 }
 
@@ -123,7 +121,7 @@ export function ResultsView({
 
   return (
     <div className="animate-fade-up">
-      <section className="rounded-2xl border-2 border-surface-border bg-surface p-6 text-center shadow-lift">
+      <Card as="section" className="text-center shadow-lift">
         <p className="text-sm font-bold text-content-muted">{quizTitle}</p>
         <h1
           ref={headingRef}
@@ -173,7 +171,7 @@ export function ResultsView({
             </Link>
           </p>
         )}
-      </section>
+      </Card>
 
       {summary.versus && (
         <VersusPanel

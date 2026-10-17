@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/Card';
 import { useMyGames } from '@/hooks/useMyGames';
 import { useProfile } from '@/hooks/useProfile';
 import { AvatarBadge } from '@/components/AvatarBadge';
+import { Page } from '@/components/ui/Page';
 
 const AGE_BAND_LABEL = {
   under_13: 'Under 13',
@@ -121,7 +122,7 @@ export function MePage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <h1 className="text-4xl font-semibold text-content">My games</h1>
 
         <div className="mt-6 grid grid-cols-2 gap-4">
@@ -199,7 +200,7 @@ export function MePage(): JSX.Element {
             </li>
           ))}
         </ul>
-      </main>
+      </Page>
     </>
   );
 }

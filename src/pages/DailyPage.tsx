@@ -5,6 +5,8 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
 import { isWebUrl } from '@/lib/utils';
+import { Card } from '@/components/ui/Card';
+import { Page } from '@/components/ui/Page';
 
 function longDate(iso: string): string {
   return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-GB', {
@@ -27,7 +29,7 @@ export function DailyPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <p className="font-bold text-content-muted">{today ? longDate(today.date) : 'Today'}</p>
         <h1 className="text-4xl font-semibold text-content md:text-5xl">Today’s challenge</h1>
         <p className="mt-2 text-content-muted">
@@ -51,7 +53,7 @@ export function DailyPage(): JSX.Element {
         )}
 
         {today && (
-          <section className="mt-8 overflow-hidden rounded-2xl border-2 border-surface-border bg-surface shadow-lift">
+          <Card as="section" className="mt-8 overflow-hidden shadow-lift p-0">
             {isWebUrl(today.quiz.cover_image_url) ? (
               <img
                 src={today.quiz.cover_image_url}
@@ -90,7 +92,7 @@ export function DailyPage(): JSX.Element {
                 )}
               </div>
             </div>
-          </section>
+          </Card>
         )}
 
         {today && (
@@ -117,7 +119,7 @@ export function DailyPage(): JSX.Element {
             )}
           </section>
         )}
-      </main>
+      </Page>
     </>
   );
 }

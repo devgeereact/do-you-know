@@ -5,6 +5,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { cn } from '@/lib/utils';
 import type { ThemeMode } from '@/types';
+import { Page } from '@/components/ui/Page';
 
 const THEMES: { mode: ThemeMode; label: string; hint: string }[] = [
   { mode: 'light', label: 'Light', hint: 'Bright and sunny' },
@@ -17,7 +18,7 @@ export function SettingsPage(): JSX.Element {
   useDocumentMeta({ title: 'Settings', noindex: true });
 
   return (
-    <main className="mx-auto max-w-2xl px-4 pb-16 pt-4 md:px-8">
+    <Page>
       <BackLink to="/me" label="My games" />
       <h1 className="mt-2 text-4xl font-semibold text-content">Settings</h1>
 
@@ -60,6 +61,6 @@ export function SettingsPage(): JSX.Element {
         </Link>
         .
       </p>
-    </main>
+    </Page>
   );
 }

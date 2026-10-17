@@ -1,4 +1,5 @@
 import type { AttemptSummary } from '@/types/game';
+import { Card } from '@/components/ui/Card';
 
 interface VersusPanelProps {
   versus: NonNullable<AttemptSummary['versus']>;
@@ -25,10 +26,7 @@ export function VersusPanel({
       : `${versus.creator_nickname} wins this time`;
 
   return (
-    <section
-      aria-label="Head to head"
-      className="mt-6 rounded-2xl border-2 border-surface-border bg-surface p-6 text-center"
-    >
+    <Card as="section" aria-label="Head to head" className="mt-6 text-center">
       <h2 className="text-2xl font-semibold text-content">{headline}</h2>
       <div className="mt-4 grid grid-cols-2 gap-3">
         <div className="rounded-xl bg-background p-4">
@@ -49,6 +47,6 @@ export function VersusPanel({
       {!versus.tie && versus.creator_correct === correct && (
         <p className="mt-3 text-sm text-content-muted">Same score, so the faster time wins.</p>
       )}
-    </section>
+    </Card>
   );
 }

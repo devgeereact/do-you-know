@@ -14,6 +14,7 @@ import { useQuizAttempt } from '@/hooks/useQuizAttempt';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn, isWebUrl } from '@/lib/utils';
 import type { AnswerResult, AttemptSummary } from '@/types/game';
+import { Card } from '@/components/ui/Card';
 
 function optionState(
   optionId: string,
@@ -203,7 +204,10 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
           <ProgressDots position={state.position} total={state.total} />
 
           <div className="mt-4 grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-8 landscape:max-lg:grid-cols-2 landscape:max-lg:items-start landscape:max-lg:gap-4">
-            <section className="rounded-2xl border-2 border-surface-border bg-surface p-6 shadow-lift md:p-8 lg:sticky lg:top-4 landscape:max-lg:sticky landscape:max-lg:top-4">
+            <Card
+              as="section"
+              className="shadow-lift md:p-8 lg:sticky lg:top-4 landscape:max-lg:sticky landscape:max-lg:top-4"
+            >
               {isWebUrl(question.image_url) && (
                 <img
                   src={question.image_url}
@@ -218,7 +222,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
               >
                 {question.prompt}
               </h1>
-            </section>
+            </Card>
 
             <section aria-label="Answers">
               {question.type === 'slider' && question.slider ? (

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { Page } from '@/components/ui/Page';
 
 // Age chips map to one representative age; quizzes match when it falls in their range.
 const AGE_CHIPS = [
@@ -48,7 +49,7 @@ export function CategoryPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-5xl px-4 pb-16 pt-4 md:px-8">
+      <Page width="wide">
         <BackLink to="/" label="All quizzes" />
         <h1 className="mt-2 text-4xl font-semibold text-content md:text-5xl">
           {category?.name ?? 'Quizzes'}
@@ -124,7 +125,7 @@ export function CategoryPage(): JSX.Element {
             </li>
           ))}
         </ul>
-      </main>
+      </Page>
     </>
   );
 }

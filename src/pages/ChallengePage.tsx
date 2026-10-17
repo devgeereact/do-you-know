@@ -3,6 +3,8 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useFriendChallenge } from '@/hooks/useFriendChallenge';
 import { AvatarBadge } from '@/components/AvatarBadge';
+import { Card } from '@/components/ui/Card';
+import { Page } from '@/components/ui/Page';
 
 /** A friend's challenge: nickname and score only, then the exact same questions. */
 export function ChallengePage(): JSX.Element {
@@ -15,7 +17,7 @@ export function ChallengePage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-xl px-4 pb-16 pt-6 text-center md:px-8">
+      <Page className="pt-6 text-center">
         {loading && (
           <p role="status" className="py-16 text-content-muted">
             Loading the challenge…
@@ -35,7 +37,7 @@ export function ChallengePage(): JSX.Element {
         )}
 
         {usable && (
-          <article className="animate-fade-up rounded-2xl border-2 border-surface-border bg-surface p-6 shadow-lift md:p-8">
+          <Card as="article" className="animate-fade-up shadow-lift md:p-8">
             <div className="flex justify-center">
               <AvatarBadge
                 avatarId={preview.creator.avatar_id}
@@ -57,9 +59,9 @@ export function ChallengePage(): JSX.Element {
             >
               Accept the challenge
             </Link>
-          </article>
+          </Card>
         )}
-      </main>
+      </Page>
     </>
   );
 }

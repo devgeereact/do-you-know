@@ -7,6 +7,7 @@ import { useGuestSession } from '@/hooks/useGuestSession';
 import { useProfile } from '@/hooks/useProfile';
 import { AVATARS } from '@/lib/avatars';
 import { cn } from '@/lib/utils';
+import { Page } from '@/components/ui/Page';
 
 /** Pick a preset avatar. Nothing is uploaded or generated, so it is safe for every age. */
 export function AvatarPage(): JSX.Element {
@@ -30,7 +31,7 @@ export function AvatarPage(): JSX.Element {
 
   return (
     <>
-      <main className="mx-auto max-w-xl px-4 pb-16 pt-4 md:px-8">
+      <Page>
         <BackLink to="/me" label="My games" />
         <h1 className="mt-4 text-4xl font-semibold text-content">Pick your avatar</h1>
         <p className="mt-2 text-content-muted">It shows next to your name on the leaderboards.</p>
@@ -63,7 +64,7 @@ export function AvatarPage(): JSX.Element {
             );
           })}
         </ul>
-      </main>
+      </Page>
     </>
   );
 }
