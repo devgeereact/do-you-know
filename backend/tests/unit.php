@@ -34,4 +34,9 @@ check('public question whitelists top-level fields',array_keys($publicQuestion)=
 check('public options contain no answer key',array_keys($publicQuestion['options'][0])===['id','label']);
 check('public slider strips answer and accepted range',array_keys($publicQuestion['slider'])===['min','max','step','unit']);
 check('UUIDs are distinct v4 identifiers',preg_match('/^[a-f0-9-]{14}4[a-f0-9-]{21}$/D',Dyk\Database::uuid())===1 && Dyk\Database::uuid()!==Dyk\Database::uuid());
+check('client IP uses CF-Connecting-IP from a Cloudflare edge',Dyk\RateLimit::clientIp(['REMOTE_ADDR'=>'172.70.1.2','HTTP_CF_CONNECTING_IP'=>'81.2.69.160'])==='81.2.69.160');
+check('client IP uses CF-Connecting-IP from a Cloudflare IPv6 edge',Dyk\RateLimit::clientIp(['REMOTE_ADDR'=>'2a06:98c1::5','HTTP_CF_CONNECTING_IP'=>'2001:db8::1'])==='2001:db8::1');
+check('client IP ignores a forged header from a non-Cloudflare address',Dyk\RateLimit::clientIp(['REMOTE_ADDR'=>'81.2.69.160','HTTP_CF_CONNECTING_IP'=>'1.2.3.4'])==='81.2.69.160');
+check('client IP ignores an invalid forwarded value',Dyk\RateLimit::clientIp(['REMOTE_ADDR'=>'172.70.1.2','HTTP_CF_CONNECTING_IP'=>'nope'])==='172.70.1.2');
+check('client IP edge of range is excluded',Dyk\RateLimit::clientIp(['REMOTE_ADDR'=>'172.72.0.1','HTTP_CF_CONNECTING_IP'=>'81.2.69.160'])==='172.72.0.1');
 fwrite(STDOUT,"$count checks passed\n");

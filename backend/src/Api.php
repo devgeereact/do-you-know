@@ -16,12 +16,16 @@ final class Api
             if (!in_array($method, ['GET','POST','DELETE'], true)) { throw new ApiError('method_not_allowed', 405); }
             if ($path === '/health' && $method === 'GET') { self::reply(['status'=>'ok','api_version'=>1]); return; }
             $db = Database::connect($config);
-            RateLimit::check($db,$config,'api',$_SERVER['REMOTE_ADDR']??'unknown',120,60);
+            $ip = RateLimit::clientIp($_SERVER);
+            // Generous per address: a school class can share one address.
+            RateLimit::check($db,$config,'api',$ip,600,60);
             $body = $method === 'POST' ? self::body() : [];
             $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
             $token = preg_match('/^Bearer ([^\s]{1,8192})$/D', $auth, $m) ? $m[1] : '';
+            // Per player as well, so one device cannot use up a shared address's allowance.
+            if ($token !== '') { RateLimit::check($db,$config,'api-token',hash('sha256',$token),120,60); }
             if ($path === '/guest-sessions' && $method === 'POST') {
-                RateLimit::check($db,$config,'new-guest',$_SERVER['REMOTE_ADDR']??'unknown',10,3600);
+                RateLimit::check($db,$config,'new-guest',$ip,100,3600);
                 self::reply(Identity::guest($db,$config),201); return;
             }
             if ($path === '/account/session' && $method === 'POST') {
