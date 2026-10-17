@@ -33,3 +33,10 @@ describe('isGameError', () => {
     expect(isGameError({})).toBe(false);
   });
 });
+
+describe('prototype keys from the server', () => {
+  it.each(['constructor', 'toString', '__proto__'])('treats %s as unknown', (code) => {
+    expect(typeof gameErrorMessage({ message: code })).toBe('string');
+    expect(isGameError({ message: code })).toBe(false);
+  });
+});
