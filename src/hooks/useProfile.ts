@@ -102,23 +102,20 @@ export function useProfile(): UseProfile {
     [run],
   );
 
-  const deleteAccount = useCallback(
-    async (): Promise<boolean> => {
-      // No reload afterwards: the profile and its session no longer exist.
-      setError(null);
-      try {
-        await deleteMyAccount();
-      } catch (err) {
-        reportError(err, { area: 'profile:delete' });
-        setError(gameErrorMessage(err as { message?: string }));
-        return false;
-      }
-      setProfile(null);
-      await signOut();
-      return true;
-    },
-    [signOut],
-  );
+  const deleteAccount = useCallback(async (): Promise<boolean> => {
+    // No reload afterwards: the profile and its session no longer exist.
+    setError(null);
+    try {
+      await deleteMyAccount();
+    } catch (err) {
+      reportError(err, { area: 'profile:delete' });
+      setError(gameErrorMessage(err as { message?: string }));
+      return false;
+    }
+    setProfile(null);
+    await signOut();
+    return true;
+  }, [signOut]);
 
   return {
     profile,

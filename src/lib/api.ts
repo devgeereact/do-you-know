@@ -71,8 +71,7 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
     throw new ApiError('network_error', 0);
   }
   const data = (await response.json().catch(() => null)) as
-    | (T & { error?: { code?: string } })
-    | null;
+    (T & { error?: { code?: string } }) | null;
   if (!response.ok) {
     if (response.status === 401) clearSession();
     throw new ApiError(data?.error?.code ?? 'request_failed', response.status);
