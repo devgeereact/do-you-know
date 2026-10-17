@@ -155,14 +155,25 @@ describe('guest session', () => {
     expect(lastCall().init.headers).toMatchObject({ Authorization: 'Bearer guest_abc' });
   });
 
-  it.each([
-    ['an expired token', { token: 'guest_old', expires_at: '2000-01-01T00:00:00Z' }],
-    ['a token without the guest_ prefix', { token: 'user_abc', expires_at: future() }],
-    ['an unparseable expiry', { token: 'guest_abc', expires_at: 'never' }],
-  ])('ignores %s in storage', async (_name, stored) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+  it('ignores a token without the guest_ prefix in storage', async () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ token: 'user_abc', expires_at: future() }));
     const { hasSession } = await load();
     expect(hasSession()).toBe(false);
+  });
+
+  // The server slides the expiry while the player keeps playing, so the stored date is only a
+  // hint: the token is kept and the server's 401 decides.
+  it.each([
+    ['a past expiry', { token: 'guest_old', expires_at: '2000-01-01T00:00:00Z' }],
+    ['an unparseable expiry', { token: 'guest_abc', expires_at: 'never' }],
+  ])('keeps a guest token with %s until the server rejects it', async (_name, stored) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    fetchMock.mockResolvedValue(jsonResponse({ error: { code: 'not_signed_in' } }, 401));
+    const { api, hasSession } = await load();
+    expect(hasSession()).toBe(true);
+    await expect(api('/me')).rejects.toMatchObject({ status: 401 });
+    expect(hasSession()).toBe(false);
+    expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
   });
 
   it('ignores corrupt storage rather than crashing at import time', async () => {
