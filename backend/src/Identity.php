@@ -41,7 +41,17 @@ final class Identity
     public static function profile(\PDO $db, array $config, string $token): array
     {
         if (str_starts_with($token, 'guest_')) {
-            $row = Database::one($db, 'SELECT p.* FROM profiles p JOIN guest_sessions s ON s.profile_id=p.id WHERE s.token_hash=? AND s.expires_at>UTC_TIMESTAMP(6)', [hash('sha256', $token)]);
+            $hash = hash('sha256', $token);
+            $row = Database::one($db, 'SELECT p.*, s.expires_at AS session_expires_at FROM profiles p JOIN guest_sessions s ON s.profile_id=p.id WHERE s.token_hash=? AND s.expires_at>UTC_TIMESTAMP(6)', [$hash]);
+            if ($row) {
+                // Sliding expiry: a player who keeps playing keeps their nickname, history and
+                // streak. Renew only once half the lifetime has passed, so most requests skip the write.
+                $ttl = (int) $config['guest_ttl_seconds'];
+                if (strtotime($row['session_expires_at'].' UTC') < time() + intdiv($ttl, 2)) {
+                    Database::execute($db, 'UPDATE guest_sessions SET expires_at=? WHERE token_hash=?', [gmdate('Y-m-d H:i:s', time() + $ttl), $hash]);
+                }
+                unset($row['session_expires_at']);
+            }
         } else {
             $subject = self::clerkSubject($token, $config);
             $row = Database::one($db, "SELECT p.* FROM profiles p JOIN identities i ON i.profile_id=p.id WHERE i.provider='clerk' AND i.subject=?", [$subject]);
