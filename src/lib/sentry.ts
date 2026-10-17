@@ -9,13 +9,13 @@ export function initSentry(): void {
     dsn: env.sentryDsn,
     environment: env.mode,
     enabled: env.isProd, // don't spam Sentry from local dev
-    integrations: [
-      Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration({ maskAllText: true, blockAllMedia: true }),
-    ],
+    // Children use this app: no session replay at all (ADR-005). The replay
+    // integration is not loaded and both replay sample rates stay at zero.
+    integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: 0.2,
-    replaysSessionSampleRate: 0.0,
-    replaysOnErrorSampleRate: 1.0,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 0,
+    sendDefaultPii: false, // no IP addresses, cookies or user details from the SDK
   });
 }
 
