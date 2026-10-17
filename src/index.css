@@ -25,6 +25,19 @@
     --correct: 23 128 79; /* #17804F */
     --wrong: 201 54 59; /* #C9363B */
     --warning: 245 158 11; /* #F59E0B, dark text only */
+    /* Preset avatar circles (src/lib/avatars.ts): soft pastels. */
+    --avatar-fox: 254 215 170;
+    --avatar-owl: 253 230 138;
+    --avatar-panda: 226 232 240;
+    --avatar-lion: 254 240 138;
+    --avatar-frog: 187 247 208;
+    --avatar-octopus: 251 207 232;
+    --avatar-penguin: 186 230 253;
+    --avatar-unicorn: 233 213 255;
+    --avatar-dragon: 167 243 208;
+    --avatar-robot: 228 228 231;
+    --avatar-rocket: 199 210 254;
+    --avatar-star: 254 249 195;
     color-scheme: light;
   }
 
@@ -44,6 +57,19 @@
     --correct: 23 128 79;
     --wrong: 201 54 59;
     --warning: 245 158 11;
+    /* Deeper avatar circles so emoji still stand out on navy. */
+    --avatar-fox: 124 45 18;
+    --avatar-owl: 120 53 15;
+    --avatar-panda: 51 65 85;
+    --avatar-lion: 113 63 18;
+    --avatar-frog: 20 83 45;
+    --avatar-octopus: 131 24 67;
+    --avatar-penguin: 12 74 110;
+    --avatar-unicorn: 88 28 135;
+    --avatar-dragon: 6 78 59;
+    --avatar-robot: 63 63 70;
+    --avatar-rocket: 49 46 129;
+    --avatar-star: 133 77 14;
     color-scheme: dark;
   }
 
