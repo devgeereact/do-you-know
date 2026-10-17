@@ -1,0 +1,223 @@
+{
+  "slug": "continents-and-countries",
+  "title": "Continents and Countries",
+  "intro": "Find your way around the world's continents and the countries within them.",
+  "category": "geography",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which is the largest country in the world by area?",
+      "options": [
+        {
+          "label": "China",
+          "correct": false
+        },
+        {
+          "label": "Canada",
+          "correct": false
+        },
+        {
+          "label": "Russia",
+          "correct": true
+        },
+        {
+          "label": "United States",
+          "correct": false
+        }
+      ],
+      "explanation": "Russia is the largest country by area. It stretches across both Europe and Asia.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/russia",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Egypt?",
+      "options": [
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Africa",
+          "correct": true
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "Egypt is in the north-east corner of Africa.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/egypt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which continent is the coldest?",
+      "options": [
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Antarctica",
+          "correct": true
+        },
+        {
+          "label": "North America",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        }
+      ],
+      "explanation": "Antarctica is the coldest, windiest continent and is almost completely covered in ice.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsk4r2p",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "The United Kingdom is made up of England, Scotland, Wales and which other country?",
+      "options": [
+        {
+          "label": "Ireland",
+          "correct": false
+        },
+        {
+          "label": "Northern Ireland",
+          "correct": true
+        },
+        {
+          "label": "Isle of Man",
+          "correct": false
+        },
+        {
+          "label": "Cornwall",
+          "correct": false
+        }
+      ],
+      "explanation": "The UK is made up of four countries: England, Scotland, Wales and Northern Ireland.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Peru?",
+      "options": [
+        {
+          "label": "Africa",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "South America",
+          "correct": true
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        }
+      ],
+      "explanation": "Peru is on the west coast of South America and includes part of the Andes mountains.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/peru",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which European country is shaped a little like a boot?",
+      "options": [
+        {
+          "label": "Spain",
+          "correct": false
+        },
+        {
+          "label": "Italy",
+          "correct": true
+        },
+        {
+          "label": "Greece",
+          "correct": false
+        },
+        {
+          "label": "Norway",
+          "correct": false
+        }
+      ],
+      "explanation": "Italy is a long peninsula in southern Europe that is often said to look like a boot.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/italy",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Japan is made up of islands.",
+      "answer": true,
+      "explanation": "Japan is an island country in East Asia, made up of four main islands and thousands of smaller ones.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/japan",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ocean lies to the south of India?",
+      "options": [
+        {
+          "label": "Atlantic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Arctic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Indian Ocean",
+          "correct": true
+        },
+        {
+          "label": "Pacific Ocean",
+          "correct": false
+        }
+      ],
+      "explanation": "India sits on a peninsula that juts out into the Indian Ocean.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/india",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Canada?",
+      "options": [
+        {
+          "label": "North America",
+          "correct": true
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "Canada is in North America. It is the second-largest country in the world by area.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/canada",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

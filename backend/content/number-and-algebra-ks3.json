@@ -1,0 +1,241 @@
+{
+  "slug": "number-and-algebra-ks3",
+  "title": "Number and Algebra",
+  "intro": "Equations, powers, percentages, sequences and averages.",
+  "category": "school-maths",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Solve: 3x + 4 = 19",
+      "options": [
+        {
+          "label": "x = 3",
+          "correct": false
+        },
+        {
+          "label": "x = 5",
+          "correct": true
+        },
+        {
+          "label": "x = 6",
+          "correct": false
+        },
+        {
+          "label": "x = 15",
+          "correct": false
+        }
+      ],
+      "explanation": "Take 4 from both sides to get 3x = 15, then divide both sides by 3: x = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z83rkqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is −3 − 5?",
+      "options": [
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "−2",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "−8",
+          "correct": true
+        }
+      ],
+      "explanation": "Starting at −3 and going down 5 more on the number line takes you to −8.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp26n39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the square root of 81?",
+      "options": [
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": true
+        },
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "40.5",
+          "correct": false
+        }
+      ],
+      "explanation": "9 × 9 = 81, so the square root of 81 is 9.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztqmhyc",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 2 to the power of 3 (2³)?",
+      "options": [
+        {
+          "label": "5",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "9",
+          "correct": false
+        }
+      ],
+      "explanation": "2³ means 2 × 2 × 2, which equals 8.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztqmhyc",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 25% of 80?",
+      "options": [
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "20",
+          "correct": true
+        },
+        {
+          "label": "25",
+          "correct": false
+        },
+        {
+          "label": "40",
+          "correct": false
+        }
+      ],
+      "explanation": "25% is one quarter, and one quarter of 80 is 20.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf6pyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "The angles inside a triangle add up to how many degrees?",
+      "slider": {
+        "min": 0,
+        "max": 360,
+        "step": 10,
+        "unit": "°",
+        "correct": 180,
+        "accept_min": 180,
+        "accept_max": 180
+      },
+      "explanation": "The three interior angles of any triangle always add up to 180 degrees.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr9wmn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the next term in the sequence 3, 7, 11, 15, …?",
+      "options": [
+        {
+          "label": "17",
+          "correct": false
+        },
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "19",
+          "correct": true
+        },
+        {
+          "label": "21",
+          "correct": false
+        }
+      ],
+      "explanation": "The sequence goes up by 4 each time, so the next term is 15 + 4 = 19.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwg4d2p",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In the expression 4a + 3, the number 4 is called the coefficient of a.",
+      "answer": true,
+      "explanation": "A coefficient is the number that multiplies a letter. In 4a, the coefficient is 4.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9yb4wx",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the ratio 12:18 in its simplest form?",
+      "options": [
+        {
+          "label": "2:3",
+          "correct": true
+        },
+        {
+          "label": "3:4",
+          "correct": false
+        },
+        {
+          "label": "4:6",
+          "correct": false
+        },
+        {
+          "label": "6:9",
+          "correct": false
+        }
+      ],
+      "explanation": "Both numbers divide by 6, their highest common factor: 12 ÷ 6 = 2 and 18 ÷ 6 = 3, giving 2:3.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpq3r2p",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the mean of 2, 4, 6 and 8?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "5",
+          "correct": true
+        },
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "20",
+          "correct": false
+        }
+      ],
+      "explanation": "Add them up (2 + 4 + 6 + 8 = 20), then divide by how many there are (4): 20 ÷ 4 = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbsvr82",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

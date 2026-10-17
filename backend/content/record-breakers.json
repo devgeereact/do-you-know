@@ -1,0 +1,222 @@
+{
+  "slug": "record-breakers",
+  "title": "Record Breakers",
+  "intro": "The biggest, fastest and tallest things in nature and space. Can you spot the champions?",
+  "category": "general-knowledge",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the tallest mountain on Earth, measured from sea level?",
+      "options": [
+        {
+          "label": "K2",
+          "correct": false
+        },
+        {
+          "label": "Kilimanjaro",
+          "correct": false
+        },
+        {
+          "label": "Mount Everest",
+          "correct": true
+        },
+        {
+          "label": "Ben Nevis",
+          "correct": false
+        }
+      ],
+      "explanation": "Mount Everest, on the border of Nepal and China, rises about 8,850 metres above sea level, higher than any other mountain.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/nepal",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest animal known to have ever lived?",
+      "options": [
+        {
+          "label": "African elephant",
+          "correct": false
+        },
+        {
+          "label": "Blue whale",
+          "correct": true
+        },
+        {
+          "label": "Diplodocus",
+          "correct": false
+        },
+        {
+          "label": "Giant squid",
+          "correct": false
+        }
+      ],
+      "explanation": "The blue whale is the largest animal known to have lived on Earth, bigger even than the largest dinosaurs.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/blue-whale",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the fastest land animal?",
+      "options": [
+        {
+          "label": "Lion",
+          "correct": false
+        },
+        {
+          "label": "Horse",
+          "correct": false
+        },
+        {
+          "label": "Cheetah",
+          "correct": true
+        },
+        {
+          "label": "Greyhound",
+          "correct": false
+        }
+      ],
+      "explanation": "Cheetahs are the fastest land mammals and can reach 60 to 70 miles an hour over short distances.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/cheetah",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the tallest animal alive today?",
+      "options": [
+        {
+          "label": "Giraffe",
+          "correct": true
+        },
+        {
+          "label": "Elephant",
+          "correct": false
+        },
+        {
+          "label": "Ostrich",
+          "correct": false
+        },
+        {
+          "label": "Camel",
+          "correct": false
+        }
+      ],
+      "explanation": "Giraffes are the world's tallest mammals. Their legs alone can be taller than many adult people.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/giraffe",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is closest to the Sun?",
+      "options": [
+        {
+          "label": "Venus",
+          "correct": false
+        },
+        {
+          "label": "Mercury",
+          "correct": true
+        },
+        {
+          "label": "Mars",
+          "correct": false
+        },
+        {
+          "label": "Earth",
+          "correct": false
+        }
+      ],
+      "explanation": "Mercury is the smallest planet and the one closest to the Sun.",
+      "source_url": "https://science.nasa.gov/mercury/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The emperor penguin is the largest kind of penguin.",
+      "answer": true,
+      "explanation": "Emperor penguins are the tallest and heaviest of all penguins, standing about 115 centimetres tall.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/emperor-penguin",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest lizard in the world?",
+      "options": [
+        {
+          "label": "Iguana",
+          "correct": false
+        },
+        {
+          "label": "Komodo dragon",
+          "correct": true
+        },
+        {
+          "label": "Chameleon",
+          "correct": false
+        },
+        {
+          "label": "Gecko",
+          "correct": false
+        }
+      ],
+      "explanation": "The Komodo dragon is the biggest lizard alive and can grow up to about 3 metres long.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/komodo-dragon",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "A day on Jupiter, one full spin, lasts about how many Earth hours?",
+      "slider": {
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "hours",
+        "correct": 10,
+        "accept_min": 9,
+        "accept_max": 11
+      },
+      "explanation": "Jupiter spins once about every 10 hours, faster than any other planet, so its days are very short.",
+      "source_url": "https://science.nasa.gov/jupiter/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is the hottest in our solar system?",
+      "options": [
+        {
+          "label": "Mercury",
+          "correct": false
+        },
+        {
+          "label": "Venus",
+          "correct": true
+        },
+        {
+          "label": "Mars",
+          "correct": false
+        },
+        {
+          "label": "Jupiter",
+          "correct": false
+        }
+      ],
+      "explanation": "Venus is the hottest planet. Its thick clouds trap heat, so it is even hotter than Mercury, which is closer to the Sun.",
+      "source_url": "https://science.nasa.gov/venus/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The African elephant is the largest animal living on land.",
+      "answer": true,
+      "explanation": "African elephants are the biggest land animals on Earth. Large adults can weigh several tonnes.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/african-elephant",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

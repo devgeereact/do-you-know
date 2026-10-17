@@ -1,0 +1,216 @@
+{
+  "slug": "binary-and-data-ks3",
+  "title": "Binary and Data",
+  "intro": "Bits, bytes, binary numbers, memory and staying safe online.",
+  "category": "school-computing",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Binary is a number system that uses which base?",
+      "options": [
+        {
+          "label": "Base 2",
+          "correct": true
+        },
+        {
+          "label": "Base 8",
+          "correct": false
+        },
+        {
+          "label": "Base 10",
+          "correct": false
+        },
+        {
+          "label": "Base 16",
+          "correct": false
+        }
+      ],
+      "explanation": "Binary is base 2: it uses only the digits 0 and 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/1",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the binary number 101 in denary (base 10)?",
+      "slider": {
+        "min": 0,
+        "max": 16,
+        "step": 1,
+        "unit": null,
+        "correct": 5,
+        "accept_min": 5,
+        "accept_max": 5
+      },
+      "explanation": "Binary 101 means one 4, no 2s and one 1: 4 + 0 + 1 = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the binary number 1000 in denary?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "1,000",
+          "correct": false
+        }
+      ],
+      "explanation": "The place values in binary are 8, 4, 2 and 1, so 1000 means one 8 and nothing else.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the largest number you can store using 4 bits?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": true
+        },
+        {
+          "label": "16",
+          "correct": false
+        }
+      ],
+      "explanation": "Four bits set to 1111 give 8 + 4 + 2 + 1 = 15, the biggest 4-bit number.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does RAM stand for?",
+      "options": [
+        {
+          "label": "Random Access Memory",
+          "correct": true
+        },
+        {
+          "label": "Read And Memorise",
+          "correct": false
+        },
+        {
+          "label": "Rapid Application Mode",
+          "correct": false
+        },
+        {
+          "label": "Remote Access Machine",
+          "correct": false
+        }
+      ],
+      "explanation": "RAM, random access memory, holds the programs and data a computer is using right now.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "RAM keeps its data after the computer is switched off.",
+      "answer": false,
+      "explanation": "RAM is volatile memory: its contents are lost when the power goes off. Files are saved to storage instead.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which logic gate gives an output of 1 only when both inputs are 1?",
+      "options": [
+        {
+          "label": "OR",
+          "correct": false
+        },
+        {
+          "label": "NOT",
+          "correct": false
+        },
+        {
+          "label": "AND",
+          "correct": true
+        },
+        {
+          "label": "XOR",
+          "correct": false
+        }
+      ],
+      "explanation": "An AND gate outputs 1 only when input A and input B are both 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does HTML stand for?",
+      "options": [
+        {
+          "label": "HyperText Markup Language",
+          "correct": true
+        },
+        {
+          "label": "High Tech Modern Language",
+          "correct": false
+        },
+        {
+          "label": "Home Tool Making Language",
+          "correct": false
+        },
+        {
+          "label": "Hyperlink Text Mode Line",
+          "correct": false
+        }
+      ],
+      "explanation": "HTML, HyperText Markup Language, is used to structure the content of web pages.",
+      "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a phishing message?",
+      "options": [
+        {
+          "label": "A message about fishing trips",
+          "correct": false
+        },
+        {
+          "label": "A trick message trying to get you to share private information",
+          "correct": true
+        },
+        {
+          "label": "A message that speeds up your computer",
+          "correct": false
+        },
+        {
+          "label": "A thank-you note",
+          "correct": false
+        }
+      ],
+      "explanation": "Phishing messages pretend to be from someone you trust to trick you into clicking links or sharing details. Tell a trusted adult if you get one.",
+      "source_url": "https://www.ncsc.gov.uk/collection/phishing-scams",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

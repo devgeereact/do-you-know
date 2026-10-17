@@ -1,0 +1,224 @@
+{
+  "slug": "the-tudors-ks3",
+  "title": "The Tudors",
+  "intro": "From Bosworth to the Armada: kings, queens and big changes in Tudor England.",
+  "category": "school-history",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Who was the first Tudor king?",
+      "options": [
+        {
+          "label": "Henry VII",
+          "correct": true
+        },
+        {
+          "label": "Henry VIII",
+          "correct": false
+        },
+        {
+          "label": "Edward VI",
+          "correct": false
+        },
+        {
+          "label": "Richard III",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VII became the first Tudor king after the Battle of Bosworth.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "At which battle did Henry Tudor defeat Richard III?",
+      "options": [
+        {
+          "label": "Hastings",
+          "correct": false
+        },
+        {
+          "label": "Bosworth",
+          "correct": true
+        },
+        {
+          "label": "Agincourt",
+          "correct": false
+        },
+        {
+          "label": "Culloden",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry Tudor defeated Richard III at the Battle of Bosworth and became King Henry VII.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was the Battle of Bosworth?",
+      "slider": {
+        "min": 1400,
+        "max": 1600,
+        "step": 5,
+        "unit": null,
+        "correct": 1485,
+        "accept_min": 1485,
+        "accept_max": 1485
+      },
+      "explanation": "The Battle of Bosworth was fought in 1485 and is often seen as the start of the Tudor period.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was Henry VIII's first wife?",
+      "options": [
+        {
+          "label": "Anne Boleyn",
+          "correct": false
+        },
+        {
+          "label": "Jane Seymour",
+          "correct": false
+        },
+        {
+          "label": "Catherine of Aragon",
+          "correct": true
+        },
+        {
+          "label": "Catherine Parr",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VIII's first wife was Catherine of Aragon, a Spanish princess.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Henry VIII broke away from the authority of which church leader to create the Church of England?",
+      "options": [
+        {
+          "label": "The Pope",
+          "correct": true
+        },
+        {
+          "label": "The Archbishop of York",
+          "correct": false
+        },
+        {
+          "label": "The Patriarch of Constantinople",
+          "correct": false
+        },
+        {
+          "label": "The Dalai Lama",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VIII broke with the Pope in Rome and made himself head of the Church of England.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was the last Tudor monarch?",
+      "options": [
+        {
+          "label": "Mary I",
+          "correct": false
+        },
+        {
+          "label": "Elizabeth I",
+          "correct": true
+        },
+        {
+          "label": "Edward VI",
+          "correct": false
+        },
+        {
+          "label": "James I",
+          "correct": false
+        }
+      ],
+      "explanation": "Elizabeth I was the last Tudor monarch. When she died in 1603, James VI of Scotland became king of England.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the large Spanish fleet that tried to invade England in 1588 called?",
+      "options": [
+        {
+          "label": "The Armada",
+          "correct": true
+        },
+        {
+          "label": "The Mayflower",
+          "correct": false
+        },
+        {
+          "label": "The Mary Rose",
+          "correct": false
+        },
+        {
+          "label": "The Golden Hind",
+          "correct": false
+        }
+      ],
+      "explanation": "The Spanish Armada was defeated in 1588, during the reign of Elizabeth I.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Edward VI was the son of Henry VIII.",
+      "answer": true,
+      "explanation": "Edward VI was the son of Henry VIII and Jane Seymour. He became king at the age of nine.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which English sailor travelled all the way around the world between 1577 and 1580?",
+      "options": [
+        {
+          "label": "Walter Raleigh",
+          "correct": false
+        },
+        {
+          "label": "Francis Drake",
+          "correct": true
+        },
+        {
+          "label": "Horatio Nelson",
+          "correct": false
+        },
+        {
+          "label": "James Cook",
+          "correct": false
+        }
+      ],
+      "explanation": "Francis Drake sailed around the world in his ship, the Golden Hind, during Elizabeth I's reign.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Elizabeth I never married.",
+      "answer": true,
+      "explanation": "Elizabeth I never married and had no children, which is why the Tudor line ended with her.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

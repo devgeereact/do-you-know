@@ -71,6 +71,8 @@ jobs:
           composer check-platform-reqs
           composer audit
           composer test
+      - name: Validate quiz content files
+        run: php backend/bin/import-content.php --dry-run
       - name: Prove the cron helper only adds lines
         run: bash scripts/cron-ensure.test.sh
       - name: Configure disposable database
@@ -107,3 +109,4 @@ jobs:
           php backend/tests/daily.php
           php backend/tests/concurrency.php
           php backend/tests/feeds.php
+          php backend/tests/content.php

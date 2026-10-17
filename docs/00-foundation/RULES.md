@@ -95,9 +95,10 @@ do not merge.
 
 ### Content
 
-- Every question needs an explanation and a `source_url` before publishing.
-  Time-sensitive facts get a short review date. No PHP publishing step exists yet, so how
-  this is enforced for imported content is UNKNOWN (owner: Gideon, next check: content import).
+- Every question needs an explanation, an https `source_url` and a `review_by` date.
+  `backend/bin/import-content.php` enforces this: files that miss any of them do not
+  import, imported quizzes are drafts, and only `--publish` with a named `--reviewed-by`
+  makes them public. Time-sensitive facts get a short review date.
 - AI drafts, if ever added, never publish themselves: a human reviews and an admin publishes.
 - Never reuse questions, art or text from other quiz sites. Original content only.
 

@@ -1,0 +1,225 @@
+{
+  "slug": "plants-and-living-things-ks2",
+  "title": "Plants and Living Things",
+  "intro": "How plants grow, what animals eat and how living things are grouped.",
+  "category": "school-science",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which gas do plants take in from the air to make their food?",
+      "options": [
+        {
+          "label": "Oxygen",
+          "correct": false
+        },
+        {
+          "label": "Carbon dioxide",
+          "correct": true
+        },
+        {
+          "label": "Helium",
+          "correct": false
+        },
+        {
+          "label": "Nitrogen",
+          "correct": false
+        }
+      ],
+      "explanation": "Plants take in carbon dioxide from the air and use it, with water and sunlight, to make food.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which gas do plants give out that people and animals need to breathe?",
+      "options": [
+        {
+          "label": "Oxygen",
+          "correct": true
+        },
+        {
+          "label": "Carbon dioxide",
+          "correct": false
+        },
+        {
+          "label": "Steam",
+          "correct": false
+        },
+        {
+          "label": "Smoke",
+          "correct": false
+        }
+      ],
+      "explanation": "When plants make food by photosynthesis, they release oxygen into the air.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a plant takes in water from the soil?",
+      "options": [
+        {
+          "label": "Petals",
+          "correct": false
+        },
+        {
+          "label": "Leaves",
+          "correct": false
+        },
+        {
+          "label": "Roots",
+          "correct": true
+        },
+        {
+          "label": "Flowers",
+          "correct": false
+        }
+      ],
+      "explanation": "Roots take up water and nutrients from the soil and hold the plant firmly in the ground.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for the way plants make their own food using sunlight?",
+      "options": [
+        {
+          "label": "Digestion",
+          "correct": false
+        },
+        {
+          "label": "Photosynthesis",
+          "correct": true
+        },
+        {
+          "label": "Evaporation",
+          "correct": false
+        },
+        {
+          "label": "Pollination",
+          "correct": false
+        }
+      ],
+      "explanation": "Photosynthesis uses sunlight, water and carbon dioxide to make food for the plant, and releases oxygen.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a caterpillar become after its time inside a chrysalis?",
+      "options": [
+        {
+          "label": "A beetle",
+          "correct": false
+        },
+        {
+          "label": "A butterfly",
+          "correct": true
+        },
+        {
+          "label": "A spider",
+          "correct": false
+        },
+        {
+          "label": "A dragonfly",
+          "correct": false
+        }
+      ],
+      "explanation": "A caterpillar forms a chrysalis, and inside it changes into a butterfly. This change is called metamorphosis.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A frog is an amphibian.",
+      "answer": true,
+      "explanation": "Frogs are amphibians: they usually start life in water as tadpoles and can live on land as adults.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is a herbivore, eating only plants?",
+      "options": [
+        {
+          "label": "Lion",
+          "correct": false
+        },
+        {
+          "label": "Rabbit",
+          "correct": true
+        },
+        {
+          "label": "Shark",
+          "correct": false
+        },
+        {
+          "label": "Owl",
+          "correct": false
+        }
+      ],
+      "explanation": "Rabbits eat plants such as grass and leaves, so they are herbivores.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What usually comes first in a food chain?",
+      "options": [
+        {
+          "label": "A plant",
+          "correct": true
+        },
+        {
+          "label": "A predator",
+          "correct": false
+        },
+        {
+          "label": "A fungus",
+          "correct": false
+        },
+        {
+          "label": "A rock",
+          "correct": false
+        }
+      ],
+      "explanation": "Food chains usually begin with a green plant, called a producer, because it makes its own food.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is a mammal?",
+      "options": [
+        {
+          "label": "Shark",
+          "correct": false
+        },
+        {
+          "label": "Trout",
+          "correct": false
+        },
+        {
+          "label": "Dolphin",
+          "correct": true
+        },
+        {
+          "label": "Crocodile",
+          "correct": false
+        }
+      ],
+      "explanation": "Dolphins are mammals. They breathe air and feed their young on milk.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

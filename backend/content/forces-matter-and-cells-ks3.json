@@ -1,0 +1,241 @@
+{
+  "slug": "forces-matter-and-cells-ks3",
+  "title": "Forces, Matter and Cells",
+  "intro": "Gravity, particles, cells and the science of everyday things.",
+  "category": "school-science",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which state of matter keeps a fixed shape?",
+      "options": [
+        {
+          "label": "Solid",
+          "correct": true
+        },
+        {
+          "label": "Liquid",
+          "correct": false
+        },
+        {
+          "label": "Gas",
+          "correct": false
+        },
+        {
+          "label": "None of them",
+          "correct": false
+        }
+      ],
+      "explanation": "In a solid, the particles are held tightly in place, so a solid keeps its shape.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "At sea level, pure water boils at what temperature?",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "unit": "°C",
+        "correct": 100,
+        "accept_min": 100,
+        "accept_max": 100
+      },
+      "explanation": "At normal air pressure, pure water boils at 100 °C and freezes at 0 °C.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the force that pulls objects towards Earth?",
+      "options": [
+        {
+          "label": "Friction",
+          "correct": false
+        },
+        {
+          "label": "Magnetism",
+          "correct": false
+        },
+        {
+          "label": "Gravity",
+          "correct": true
+        },
+        {
+          "label": "Upthrust",
+          "correct": false
+        }
+      ],
+      "explanation": "Gravity is a non-contact force that pulls objects with mass towards each other, so things fall to the ground.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zs3896f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What unit is force measured in?",
+      "options": [
+        {
+          "label": "Kilograms",
+          "correct": false
+        },
+        {
+          "label": "Newtons",
+          "correct": true
+        },
+        {
+          "label": "Metres",
+          "correct": false
+        },
+        {
+          "label": "Joules",
+          "correct": false
+        }
+      ],
+      "explanation": "Force is measured in newtons (N), named after the scientist Isaac Newton.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zs3896f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the basic building block of all living things?",
+      "options": [
+        {
+          "label": "The atom",
+          "correct": false
+        },
+        {
+          "label": "The cell",
+          "correct": true
+        },
+        {
+          "label": "The organ",
+          "correct": false
+        },
+        {
+          "label": "The molecule",
+          "correct": false
+        }
+      ],
+      "explanation": "All living things are made of cells, the smallest units of life.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z4882hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a cell controls its activities and holds its genetic material?",
+      "options": [
+        {
+          "label": "Cell membrane",
+          "correct": false
+        },
+        {
+          "label": "Nucleus",
+          "correct": true
+        },
+        {
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "label": "Cell wall",
+          "correct": false
+        }
+      ],
+      "explanation": "The nucleus contains genetic material and controls what happens in the cell.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z4882hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Sound can travel through empty space, where there is no air.",
+      "answer": false,
+      "explanation": "Sound needs particles to vibrate, so it cannot travel through a vacuum. Light can.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zmxrbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the chemical formula for water?",
+      "options": [
+        {
+          "label": "CO₂",
+          "correct": false
+        },
+        {
+          "label": "H₂O",
+          "correct": true
+        },
+        {
+          "label": "O₂",
+          "correct": false
+        },
+        {
+          "label": "NaCl",
+          "correct": false
+        }
+      ],
+      "explanation": "Each water molecule has two hydrogen atoms and one oxygen atom, so its formula is H₂O.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these metals is attracted to a magnet?",
+      "options": [
+        {
+          "label": "Copper",
+          "correct": false
+        },
+        {
+          "label": "Aluminium",
+          "correct": false
+        },
+        {
+          "label": "Iron",
+          "correct": true
+        },
+        {
+          "label": "Gold",
+          "correct": false
+        }
+      ],
+      "explanation": "Iron is a magnetic metal. Copper, aluminium and gold are not attracted to magnets.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zh2xsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is it called when a liquid turns into a gas at its surface?",
+      "options": [
+        {
+          "label": "Melting",
+          "correct": false
+        },
+        {
+          "label": "Freezing",
+          "correct": false
+        },
+        {
+          "label": "Evaporation",
+          "correct": true
+        },
+        {
+          "label": "Condensation",
+          "correct": false
+        }
+      ],
+      "explanation": "Evaporation is when particles escape from the surface of a liquid and become a gas.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

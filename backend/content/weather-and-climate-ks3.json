@@ -1,0 +1,225 @@
+{
+  "slug": "weather-and-climate-ks3",
+  "title": "Weather and Climate",
+  "intro": "Clouds, rainfall, storms and the atmosphere above us.",
+  "category": "school-geography",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which instrument measures how much rain has fallen?",
+      "options": [
+        {
+          "label": "Barometer",
+          "correct": false
+        },
+        {
+          "label": "Thermometer",
+          "correct": false
+        },
+        {
+          "label": "Rain gauge",
+          "correct": true
+        },
+        {
+          "label": "Anemometer",
+          "correct": false
+        }
+      ],
+      "explanation": "A rain gauge collects rain so it can be measured, usually in millimetres.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which instrument measures air pressure?",
+      "options": [
+        {
+          "label": "Barometer",
+          "correct": true
+        },
+        {
+          "label": "Rain gauge",
+          "correct": false
+        },
+        {
+          "label": "Wind vane",
+          "correct": false
+        },
+        {
+          "label": "Thermometer",
+          "correct": false
+        }
+      ],
+      "explanation": "A barometer measures air pressure. Falling pressure often means wetter, windier weather is on the way.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What type of rainfall happens when moist air is forced to rise over hills and mountains?",
+      "options": [
+        {
+          "label": "Convectional rainfall",
+          "correct": false
+        },
+        {
+          "label": "Relief rainfall",
+          "correct": true
+        },
+        {
+          "label": "Frontal rainfall",
+          "correct": false
+        },
+        {
+          "label": "Acid rain",
+          "correct": false
+        }
+      ],
+      "explanation": "Relief rainfall forms when air rises over high ground, cools and condenses into clouds and rain.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of cloud is white, fluffy and heaped, often seen on sunny days?",
+      "options": [
+        {
+          "label": "Cirrus",
+          "correct": false
+        },
+        {
+          "label": "Stratus",
+          "correct": false
+        },
+        {
+          "label": "Cumulus",
+          "correct": true
+        },
+        {
+          "label": "Fog",
+          "correct": false
+        }
+      ],
+      "explanation": "Cumulus clouds are puffy, heaped clouds that often look like cotton wool.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the difference between weather and climate?",
+      "options": [
+        {
+          "label": "They mean the same thing",
+          "correct": false
+        },
+        {
+          "label": "Climate is the average weather over many years",
+          "correct": true
+        },
+        {
+          "label": "Weather lasts longer than climate",
+          "correct": false
+        },
+        {
+          "label": "Climate only means temperature",
+          "correct": false
+        }
+      ],
+      "explanation": "Weather is what happens day to day. Climate describes the typical weather of a place over a long time, often 30 years.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Hurricanes, typhoons and cyclones are names for the same type of storm in different parts of the world.",
+      "answer": true,
+      "explanation": "All three are tropical cyclones. The name used depends on which ocean the storm forms over.",
+      "source_url": "https://www.metoffice.gov.uk/research/weather/tropical-cyclones/hurricane",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the source of a river?",
+      "options": [
+        {
+          "label": "Where it meets the sea",
+          "correct": false
+        },
+        {
+          "label": "Where it begins",
+          "correct": true
+        },
+        {
+          "label": "Its widest point",
+          "correct": false
+        },
+        {
+          "label": "A bend in the river",
+          "correct": false
+        }
+      ],
+      "explanation": "A river's source is where it starts, often in hills or mountains.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the place where a river flows into the sea called?",
+      "options": [
+        {
+          "label": "The mouth",
+          "correct": true
+        },
+        {
+          "label": "The source",
+          "correct": false
+        },
+        {
+          "label": "The tributary",
+          "correct": false
+        },
+        {
+          "label": "The meander",
+          "correct": false
+        }
+      ],
+      "explanation": "The mouth is the end of a river, where it flows into a sea, lake or larger river.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which layer of the atmosphere does almost all of our weather happen?",
+      "options": [
+        {
+          "label": "Troposphere",
+          "correct": true
+        },
+        {
+          "label": "Stratosphere",
+          "correct": false
+        },
+        {
+          "label": "Mesosphere",
+          "correct": false
+        },
+        {
+          "label": "Thermosphere",
+          "correct": false
+        }
+      ],
+      "explanation": "The troposphere is the lowest layer of the atmosphere, where we live and where nearly all weather takes place.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-17"
+    }
+  ]
+}

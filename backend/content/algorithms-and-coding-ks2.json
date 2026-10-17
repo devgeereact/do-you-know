@@ -1,0 +1,208 @@
+{
+  "slug": "algorithms-and-coding-ks2",
+  "title": "Algorithms and Coding",
+  "intro": "Algorithms, bugs, loops and how computers follow instructions.",
+  "category": "school-computing",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is an algorithm?",
+      "options": [
+        {
+          "label": "A type of computer",
+          "correct": false
+        },
+        {
+          "label": "A set of step-by-step instructions to solve a problem",
+          "correct": true
+        },
+        {
+          "label": "A computer game",
+          "correct": false
+        },
+        {
+          "label": "A broken program",
+          "correct": false
+        }
+      ],
+      "explanation": "An algorithm is a list of steps, in the right order, for completing a task or solving a problem.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call a mistake in a computer program?",
+      "options": [
+        {
+          "label": "A bug",
+          "correct": true
+        },
+        {
+          "label": "A byte",
+          "correct": false
+        },
+        {
+          "label": "A pixel",
+          "correct": false
+        },
+        {
+          "label": "A loop",
+          "correct": false
+        }
+      ],
+      "explanation": "A mistake in a program is called a bug.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is it called when you find and fix mistakes in a program?",
+      "options": [
+        {
+          "label": "Coding",
+          "correct": false
+        },
+        {
+          "label": "Debugging",
+          "correct": true
+        },
+        {
+          "label": "Downloading",
+          "correct": false
+        },
+        {
+          "label": "Typing",
+          "correct": false
+        }
+      ],
+      "explanation": "Debugging means finding and fixing the bugs in a program so it works properly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call a part of a program that repeats instructions?",
+      "options": [
+        {
+          "label": "A loop",
+          "correct": true
+        },
+        {
+          "label": "A sprite",
+          "correct": false
+        },
+        {
+          "label": "A variable",
+          "correct": false
+        },
+        {
+          "label": "An input",
+          "correct": false
+        }
+      ],
+      "explanation": "A loop repeats instructions, which saves writing the same steps again and again.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Carrying out instructions one after another, in order, is called…",
+      "options": [
+        {
+          "label": "Selection",
+          "correct": false
+        },
+        {
+          "label": "Sequence",
+          "correct": true
+        },
+        {
+          "label": "Repetition",
+          "correct": false
+        },
+        {
+          "label": "Variable",
+          "correct": false
+        }
+      ],
+      "explanation": "Sequence means following steps in the right order. Getting the order wrong can change the result.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Using \"if\" to choose what a program does next is called…",
+      "options": [
+        {
+          "label": "Selection",
+          "correct": true
+        },
+        {
+          "label": "Sequence",
+          "correct": false
+        },
+        {
+          "label": "Debugging",
+          "correct": false
+        },
+        {
+          "label": "Saving",
+          "correct": false
+        }
+      ],
+      "explanation": "Selection lets a program make a choice: if something is true, do one thing; otherwise do another.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A computer can only follow the instructions it has been given.",
+      "answer": true,
+      "explanation": "Computers do exactly what their programs tell them, which is why clear, correct algorithms matter.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a block-based programming language often used in schools?",
+      "options": [
+        {
+          "label": "Scratch",
+          "correct": true
+        },
+        {
+          "label": "Paint",
+          "correct": false
+        },
+        {
+          "label": "Calculator",
+          "correct": false
+        },
+        {
+          "label": "Notepad",
+          "correct": false
+        }
+      ],
+      "explanation": "Scratch lets you snap together coding blocks to make animations, stories and games.",
+      "source_url": "https://scratch.mit.edu/parents/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In an algorithm, the order of the steps never matters.",
+      "answer": false,
+      "explanation": "The order matters. Putting on your shoes before your socks would not work!",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    }
+  ]
+}
