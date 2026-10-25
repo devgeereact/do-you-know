@@ -1,0 +1,653 @@
+{
+  "slug": "words-and-language-challenge",
+  "title": "Words and Language Challenge",
+  "intro": "Word origins, rare vocabulary, grammar terms, idioms and the languages of the world. Pure word nerd heaven.",
+  "category": "general-knowledge",
+  "difficulty": "hard",
+  "age_min": 16,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "The word 'salary' comes from the Latin word for which substance?",
+      "options": [
+        {
+          "label": "Salt",
+          "correct": true
+        },
+        {
+          "label": "Silver",
+          "correct": false
+        },
+        {
+          "label": "Grain",
+          "correct": false
+        },
+        {
+          "label": "Wine",
+          "correct": false
+        }
+      ],
+      "explanation": "Salary comes from the Latin salarium, linked to sal, meaning salt. Salt was precious in the ancient world.",
+      "source_url": "https://www.etymonline.com/word/salary",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does 'sesquipedalian' describe?",
+      "options": [
+        {
+          "label": "Using long words",
+          "correct": true
+        },
+        {
+          "label": "Walking on tiptoe",
+          "correct": false
+        },
+        {
+          "label": "Lasting a century and a half",
+          "correct": false
+        },
+        {
+          "label": "Having many feet",
+          "correct": false
+        }
+      ],
+      "explanation": "Sesquipedalian comes from Latin for 'a foot and a half long', a joke about very long words. Fittingly, it is one itself.",
+      "source_url": "https://www.merriam-webster.com/dictionary/sesquipedalian",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A word made from the first letters of other words and spoken as a word, such as NATO or scuba, is called what?",
+      "options": [
+        {
+          "label": "An acronym",
+          "correct": true
+        },
+        {
+          "label": "An initialism",
+          "correct": false
+        },
+        {
+          "label": "A portmanteau",
+          "correct": false
+        },
+        {
+          "label": "An anagram",
+          "correct": false
+        }
+      ],
+      "explanation": "Acronyms are said as words. Abbreviations such as BBC, where each letter is spoken separately, are initialisms.",
+      "source_url": "https://www.merriam-webster.com/dictionary/acronym",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Words such as 'brunch' and 'smog', made by blending two words together, are called what?",
+      "options": [
+        {
+          "label": "Portmanteau words",
+          "correct": true
+        },
+        {
+          "label": "Palindromes",
+          "correct": false
+        },
+        {
+          "label": "Homographs",
+          "correct": false
+        },
+        {
+          "label": "Spoonerisms",
+          "correct": false
+        }
+      ],
+      "explanation": "Lewis Carroll used 'portmanteau', a type of suitcase with two halves, to describe words that pack two meanings into one.",
+      "source_url": "https://www.merriam-webster.com/dictionary/portmanteau",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Words such as 'sandwich', 'cardigan' and 'wellington' come from people's names. What is such a word called?",
+      "options": [
+        {
+          "label": "An eponym",
+          "correct": true
+        },
+        {
+          "label": "A synonym",
+          "correct": false
+        },
+        {
+          "label": "A toponym",
+          "correct": false
+        },
+        {
+          "label": "A pseudonym",
+          "correct": false
+        }
+      ],
+      "explanation": "An eponym is a word named after a person. The sandwich is said to be named after the 4th Earl of Sandwich.",
+      "source_url": "https://www.merriam-webster.com/dictionary/eponym",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does it mean to take 'a busman's holiday'?",
+      "options": [
+        {
+          "label": "To spend free time doing much the same as your usual job",
+          "correct": true
+        },
+        {
+          "label": "To travel somewhere very cheaply",
+          "correct": false
+        },
+        {
+          "label": "To take a very short break",
+          "correct": false
+        },
+        {
+          "label": "To go on holiday with a large group",
+          "correct": false
+        }
+      ],
+      "explanation": "The phrase pictures a bus driver who spends a day off riding on buses.",
+      "source_url": "https://www.collinsdictionary.com/dictionary/english/busmans-holiday",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which language has the most native speakers in the world?",
+      "options": [
+        {
+          "label": "Mandarin Chinese",
+          "correct": true
+        },
+        {
+          "label": "English",
+          "correct": false
+        },
+        {
+          "label": "Spanish",
+          "correct": false
+        },
+        {
+          "label": "Hindi",
+          "correct": false
+        }
+      ],
+      "explanation": "Mandarin has far more native speakers than any other language, although English has more people who speak it as an extra language.",
+      "source_url": "https://www.britannica.com/topic/Mandarin-language",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Basque, a language unrelated to any other known language, is spoken in parts of Spain and which other country?",
+      "options": [
+        {
+          "label": "France",
+          "correct": true
+        },
+        {
+          "label": "Portugal",
+          "correct": false
+        },
+        {
+          "label": "Italy",
+          "correct": false
+        },
+        {
+          "label": "Andorra",
+          "correct": false
+        }
+      ],
+      "explanation": "Basque is a language isolate, spoken around the western Pyrenees on both sides of the Spanish-French border.",
+      "source_url": "https://www.britannica.com/topic/Basque-language",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does the borrowed German word 'zeitgeist' mean?",
+      "options": [
+        {
+          "label": "The spirit of the age",
+          "correct": true
+        },
+        {
+          "label": "A ghost that appears at midnight",
+          "correct": false
+        },
+        {
+          "label": "A fear of time passing",
+          "correct": false
+        },
+        {
+          "label": "A feeling of having been somewhere before",
+          "correct": false
+        }
+      ],
+      "explanation": "Zeitgeist joins Zeit (time) and Geist (spirit). It describes the ideas and mood typical of a period.",
+      "source_url": "https://www.merriam-webster.com/dictionary/zeitgeist",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the grammatical term for a verb form ending in -ing that acts as a noun, as in 'Swimming is fun'?",
+      "options": [
+        {
+          "label": "A gerund",
+          "correct": true
+        },
+        {
+          "label": "An infinitive",
+          "correct": false
+        },
+        {
+          "label": "A participle adjective",
+          "correct": false
+        },
+        {
+          "label": "A modal verb",
+          "correct": false
+        }
+      ],
+      "explanation": "In 'Swimming is fun', swimming names an activity and works as the subject, which makes it a gerund.",
+      "source_url": "https://www.merriam-webster.com/dictionary/gerund",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does 'ubiquitous' mean?",
+      "options": [
+        {
+          "label": "Found everywhere",
+          "correct": true
+        },
+        {
+          "label": "Very old",
+          "correct": false
+        },
+        {
+          "label": "Impossible to understand",
+          "correct": false
+        },
+        {
+          "label": "Completely unique",
+          "correct": false
+        }
+      ],
+      "explanation": "Ubiquitous comes from the Latin ubique, meaning everywhere. Mobile phones have become ubiquitous.",
+      "source_url": "https://www.merriam-webster.com/dictionary/ubiquitous",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 'petrichor'?",
+      "options": [
+        {
+          "label": "The earthy smell after rain falls on dry ground",
+          "correct": true
+        },
+        {
+          "label": "A rock formed from fossilised wood",
+          "correct": false
+        },
+        {
+          "label": "The sound of distant thunder",
+          "correct": false
+        },
+        {
+          "label": "A shimmering heat haze over a road",
+          "correct": false
+        }
+      ],
+      "explanation": "The word was coined in 1964 from Greek petra (stone) and ichor, the fluid said to flow in the veins of the gods.",
+      "source_url": "https://www.merriam-webster.com/dictionary/petrichor",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which alphabet is used to write Russian?",
+      "options": [
+        {
+          "label": "Cyrillic",
+          "correct": true
+        },
+        {
+          "label": "Greek",
+          "correct": false
+        },
+        {
+          "label": "Latin",
+          "correct": false
+        },
+        {
+          "label": "Georgian",
+          "correct": false
+        }
+      ],
+      "explanation": "The Cyrillic alphabet developed in the 800s and 900s, based mainly on Greek letters. It is also used for Ukrainian, Bulgarian and Serbian.",
+      "source_url": "https://www.britannica.com/topic/Cyrillic-alphabet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The word 'robot' first appeared in a 1920 play by Karel Čapek. Which language did the word come from?",
+      "options": [
+        {
+          "label": "Czech",
+          "correct": true
+        },
+        {
+          "label": "Russian",
+          "correct": false
+        },
+        {
+          "label": "German",
+          "correct": false
+        },
+        {
+          "label": "Polish",
+          "correct": false
+        }
+      ],
+      "explanation": "In Čapek's play R.U.R., robot came from the Czech robota, meaning forced labour.",
+      "source_url": "https://www.britannica.com/biography/Karel-Capek",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does the Latin phrase 'ad hoc' mean?",
+      "options": [
+        {
+          "label": "For one particular purpose",
+          "correct": true
+        },
+        {
+          "label": "Again and again",
+          "correct": false
+        },
+        {
+          "label": "By the way",
+          "correct": false
+        },
+        {
+          "label": "From the beginning",
+          "correct": false
+        }
+      ],
+      "explanation": "An ad hoc committee is set up for a single job, rather than as a permanent group.",
+      "source_url": "https://www.merriam-webster.com/dictionary/ad%20hoc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Someone described as 'quixotic' is…",
+      "options": [
+        {
+          "label": "Idealistic in an unrealistic way",
+          "correct": true
+        },
+        {
+          "label": "Quick-tempered",
+          "correct": false
+        },
+        {
+          "label": "Very easily fooled",
+          "correct": false
+        },
+        {
+          "label": "Extremely cautious",
+          "correct": false
+        }
+      ],
+      "explanation": "Quixotic comes from Don Quixote, Cervantes's hero, who sets out on noble but hopeless adventures.",
+      "source_url": "https://www.merriam-webster.com/dictionary/quixotic",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Finnish and Hungarian belong to which language family?",
+      "options": [
+        {
+          "label": "Uralic",
+          "correct": true
+        },
+        {
+          "label": "Germanic",
+          "correct": false
+        },
+        {
+          "label": "Slavic",
+          "correct": false
+        },
+        {
+          "label": "Romance",
+          "correct": false
+        }
+      ],
+      "explanation": "Finnish, Estonian and Hungarian are Uralic languages, unlike most European languages, which are Indo-European.",
+      "source_url": "https://www.britannica.com/topic/Uralic-languages",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the small hook placed under the letter c in 'façade'?",
+      "options": [
+        {
+          "label": "A cedilla",
+          "correct": true
+        },
+        {
+          "label": "A tilde",
+          "correct": false
+        },
+        {
+          "label": "A circumflex",
+          "correct": false
+        },
+        {
+          "label": "An umlaut",
+          "correct": false
+        }
+      ],
+      "explanation": "A cedilla tells you to say the c softly, like an s, before the letters a, o or u.",
+      "source_url": "https://www.merriam-webster.com/dictionary/cedilla",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The word 'fortnight' is a shortened form of which older phrase?",
+      "options": [
+        {
+          "label": "Fourteen nights",
+          "correct": true
+        },
+        {
+          "label": "Fortified night",
+          "correct": false
+        },
+        {
+          "label": "Forty nights",
+          "correct": false
+        },
+        {
+          "label": "Fourth night",
+          "correct": false
+        }
+      ],
+      "explanation": "Fortnight comes from the Old English for fourteen nights, meaning two weeks.",
+      "source_url": "https://www.etymonline.com/word/fortnight",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "If you are 'on tenterhooks', how do you feel?",
+      "options": [
+        {
+          "label": "Anxiously waiting to find out what happens",
+          "correct": true
+        },
+        {
+          "label": "Very relaxed and calm",
+          "correct": false
+        },
+        {
+          "label": "Stuck in one place",
+          "correct": false
+        },
+        {
+          "label": "Hurt by unkind words",
+          "correct": false
+        }
+      ],
+      "explanation": "Tenterhooks were hooks that held wet cloth stretched tight on a frame, called a tenter, as it dried.",
+      "source_url": "https://www.merriam-webster.com/dictionary/tenterhook",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a pangram?",
+      "options": [
+        {
+          "label": "A sentence that uses every letter of the alphabet",
+          "correct": true
+        },
+        {
+          "label": "A word spelled the same backwards",
+          "correct": false
+        },
+        {
+          "label": "A poem with no letter e",
+          "correct": false
+        },
+        {
+          "label": "A word with every vowel in order",
+          "correct": false
+        }
+      ],
+      "explanation": "'The quick brown fox jumps over the lazy dog' is a famous pangram, often used to test typefaces.",
+      "source_url": "https://www.merriam-webster.com/dictionary/pangram",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a phrase like 'deafening silence', which joins two words that seem to contradict each other?",
+      "options": [
+        {
+          "label": "An oxymoron",
+          "correct": true
+        },
+        {
+          "label": "A tautology",
+          "correct": false
+        },
+        {
+          "label": "A euphemism",
+          "correct": false
+        },
+        {
+          "label": "A malapropism",
+          "correct": false
+        }
+      ],
+      "explanation": "Oxymoron comes from Greek words meaning 'sharp' and 'dull', so the word is itself an oxymoron.",
+      "source_url": "https://www.merriam-webster.com/dictionary/oxymoron",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The word 'alphabet' comes from the names of the first two letters of the Greek alphabet.",
+      "answer": true,
+      "explanation": "Alphabet comes from alpha and beta, the first two Greek letters.",
+      "source_url": "https://www.etymonline.com/word/alphabet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Welsh and Irish are both Celtic languages.",
+      "answer": true,
+      "explanation": "Welsh, Irish, Scottish Gaelic, Breton, Cornish and Manx all belong to the Celtic branch of languages.",
+      "source_url": "https://www.britannica.com/topic/Celtic-languages",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Centuries ago, the English word 'nice' meant 'foolish' or 'ignorant'.",
+      "answer": true,
+      "explanation": "Nice comes from the Latin nescius, meaning not knowing. Its meaning shifted many times before it came to mean pleasant.",
+      "source_url": "https://www.etymonline.com/word/nice",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Esperanto is a language that was deliberately invented in the 1800s.",
+      "answer": true,
+      "explanation": "L. L. Zamenhof published Esperanto in 1887, hoping an easy shared language would help people understand each other.",
+      "source_url": "https://www.britannica.com/topic/Esperanto",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In formal English, 'whom' is used as the subject of a verb, as in 'Whom is coming?'",
+      "answer": false,
+      "explanation": "Whom is the object form. The subject form is who, so it should be 'Who is coming?' but 'To whom did you write?'",
+      "source_url": "https://www.merriam-webster.com/dictionary/whom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many letters are there in the modern Greek alphabet?",
+      "slider": {
+        "min": 10,
+        "max": 40,
+        "step": 1,
+        "unit": "letters",
+        "correct": 24,
+        "accept_min": 24,
+        "accept_max": 24
+      },
+      "explanation": "The Greek alphabet has 24 letters, from alpha to omega.",
+      "source_url": "https://www.britannica.com/topic/Greek-alphabet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many letters are there in the modern Russian alphabet?",
+      "slider": {
+        "min": 20,
+        "max": 40,
+        "step": 1,
+        "unit": "letters",
+        "correct": 33,
+        "accept_min": 33,
+        "accept_max": 33
+      },
+      "explanation": "Modern Russian uses 33 Cyrillic letters, including two signs that change how the letter before them is said.",
+      "source_url": "https://www.britannica.com/topic/Russian-language",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Samuel Johnson's Dictionary of the English Language published?",
+      "slider": {
+        "min": 1600,
+        "max": 1900,
+        "step": 1,
+        "unit": null,
+        "correct": 1755,
+        "accept_min": 1755,
+        "accept_max": 1755
+      },
+      "explanation": "Johnson's dictionary took about nine years to write and defined more than 40,000 words.",
+      "source_url": "https://www.britannica.com/topic/A-Dictionary-of-the-English-Language-by-Johnson",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

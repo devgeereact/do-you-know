@@ -1,0 +1,653 @@
+{
+  "slug": "the-human-body",
+  "title": "The Human Body",
+  "intro": "Bones, blood, muscles and more. Discover how your amazing body works.",
+  "category": "science-nature",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which organ pumps blood all around your body?",
+      "options": [
+        {
+          "label": "Lungs",
+          "correct": false
+        },
+        {
+          "label": "Heart",
+          "correct": true
+        },
+        {
+          "label": "Stomach",
+          "correct": false
+        },
+        {
+          "label": "Brain",
+          "correct": false
+        }
+      ],
+      "explanation": "Your heart is a strong muscle that pumps blood through blood vessels to every part of your body.",
+      "source_url": "https://kidshealth.org/en/kids/heart.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "About how many bones does an adult human skeleton have?",
+      "options": [
+        {
+          "label": "106",
+          "correct": false
+        },
+        {
+          "label": "206",
+          "correct": true
+        },
+        {
+          "label": "306",
+          "correct": false
+        },
+        {
+          "label": "406",
+          "correct": false
+        }
+      ],
+      "explanation": "An adult skeleton has 206 bones. Babies start with more, and some join together as they grow.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Babies are born with more bones than adults have.",
+      "answer": true,
+      "explanation": "Babies have around 300 bones or bone parts. Many of them fuse together as a child grows, leaving 206 in an adult.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which organs do you use to breathe?",
+      "options": [
+        {
+          "label": "Kidneys",
+          "correct": false
+        },
+        {
+          "label": "Lungs",
+          "correct": true
+        },
+        {
+          "label": "Liver",
+          "correct": false
+        },
+        {
+          "label": "Heart",
+          "correct": false
+        }
+      ],
+      "explanation": "Your lungs take in oxygen from the air you breathe and get rid of carbon dioxide when you breathe out.",
+      "source_url": "https://kidshealth.org/en/kids/lungs.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the largest organ of the human body?",
+      "options": [
+        {
+          "label": "Brain",
+          "correct": false
+        },
+        {
+          "label": "Liver",
+          "correct": false
+        },
+        {
+          "label": "Skin",
+          "correct": true
+        },
+        {
+          "label": "Heart",
+          "correct": false
+        }
+      ],
+      "explanation": "Your skin is your largest organ. It protects your body and helps keep you at the right temperature.",
+      "source_url": "https://kidshealth.org/en/kids/skin.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of your body sends and receives messages to control what you do?",
+      "options": [
+        {
+          "label": "Brain",
+          "correct": true
+        },
+        {
+          "label": "Stomach",
+          "correct": false
+        },
+        {
+          "label": "Lungs",
+          "correct": false
+        },
+        {
+          "label": "Kidneys",
+          "correct": false
+        }
+      ],
+      "explanation": "Your brain is the control centre of your body, sending and receiving messages through your nerves.",
+      "source_url": "https://kidshealth.org/en/kids/brain.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Your heart is a muscle.",
+      "answer": true,
+      "explanation": "The heart is made of a special kind of muscle that keeps squeezing to pump blood, without you having to think about it.",
+      "source_url": "https://kidshealth.org/en/kids/heart.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "When a child is resting, about how many times a minute does their heart beat?",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "beats",
+        "correct": 85,
+        "accept_min": 70,
+        "accept_max": 100
+      },
+      "explanation": "At rest, a child's heart usually beats between about 70 and 100 times a minute. Exercise makes it beat faster.",
+      "source_url": "https://kidshealth.org/en/kids/heart.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which blood cells carry oxygen around the body?",
+      "options": [
+        {
+          "label": "White blood cells",
+          "correct": false
+        },
+        {
+          "label": "Red blood cells",
+          "correct": true
+        },
+        {
+          "label": "Platelets",
+          "correct": false
+        },
+        {
+          "label": "Nerve cells",
+          "correct": false
+        }
+      ],
+      "explanation": "Red blood cells pick up oxygen in the lungs and carry it around the body.",
+      "source_url": "https://kidshealth.org/en/kids/blood.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the smallest bone in the human body, found inside the ear?",
+      "options": [
+        {
+          "label": "Stapes",
+          "correct": true
+        },
+        {
+          "label": "Femur",
+          "correct": false
+        },
+        {
+          "label": "Patella",
+          "correct": false
+        },
+        {
+          "label": "Radius",
+          "correct": false
+        }
+      ],
+      "explanation": "The stapes, also called the stirrup, sits deep inside your ear. It is smaller than a grain of rice and helps you hear.",
+      "source_url": "https://kidshealth.org/en/kids/ears.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the longest bone in the human body?",
+      "options": [
+        {
+          "label": "Femur",
+          "correct": true
+        },
+        {
+          "label": "Spine",
+          "correct": false
+        },
+        {
+          "label": "Humerus",
+          "correct": false
+        },
+        {
+          "label": "Tibia",
+          "correct": false
+        }
+      ],
+      "explanation": "The femur is your thigh bone. It is the longest and strongest bone, running from your hip to your knee.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which organs clean your blood and make urine?",
+      "options": [
+        {
+          "label": "Kidneys",
+          "correct": true
+        },
+        {
+          "label": "Lungs",
+          "correct": false
+        },
+        {
+          "label": "Stomach",
+          "correct": false
+        },
+        {
+          "label": "Heart",
+          "correct": false
+        }
+      ],
+      "explanation": "Your two kidneys filter waste and extra water out of your blood. That waste leaves your body as urine.",
+      "source_url": "https://kidshealth.org/en/kids/kidneys.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which part of the body is most food broken down and taken into the blood?",
+      "options": [
+        {
+          "label": "Small intestine",
+          "correct": true
+        },
+        {
+          "label": "Large intestine",
+          "correct": false
+        },
+        {
+          "label": "Mouth",
+          "correct": false
+        },
+        {
+          "label": "Food pipe",
+          "correct": false
+        }
+      ],
+      "explanation": "The small intestine is a long, coiled tube. Most of the goodness from your food passes through its walls into your blood.",
+      "source_url": "https://kidshealth.org/en/kids/digestive-system.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are the blood vessels that carry blood back to the heart called?",
+      "options": [
+        {
+          "label": "Veins",
+          "correct": true
+        },
+        {
+          "label": "Arteries",
+          "correct": false
+        },
+        {
+          "label": "Nerves",
+          "correct": false
+        },
+        {
+          "label": "Tendons",
+          "correct": false
+        }
+      ],
+      "explanation": "Veins carry blood back to your heart. Arteries do the opposite job, carrying blood away from the heart.",
+      "source_url": "https://kidshealth.org/en/kids/heart.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many teeth does a full set of adult teeth have, including wisdom teeth?",
+      "options": [
+        {
+          "label": "32",
+          "correct": true
+        },
+        {
+          "label": "20",
+          "correct": false
+        },
+        {
+          "label": "28",
+          "correct": false
+        },
+        {
+          "label": "40",
+          "correct": false
+        }
+      ],
+      "explanation": "Adults can have 32 teeth. The last four, called wisdom teeth, often do not appear until the late teens or later.",
+      "source_url": "https://kidshealth.org/en/kids/teeth.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of your body has an iris and a pupil?",
+      "options": [
+        {
+          "label": "Eye",
+          "correct": true
+        },
+        {
+          "label": "Ear",
+          "correct": false
+        },
+        {
+          "label": "Nose",
+          "correct": false
+        },
+        {
+          "label": "Tongue",
+          "correct": false
+        }
+      ],
+      "explanation": "The iris is the coloured part of your eye, and the pupil is the dark circle in the middle that lets light in.",
+      "source_url": "https://kidshealth.org/en/kids/eyes.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which blood cells help your body fight germs?",
+      "options": [
+        {
+          "label": "White blood cells",
+          "correct": true
+        },
+        {
+          "label": "Red blood cells",
+          "correct": false
+        },
+        {
+          "label": "Platelets",
+          "correct": false
+        },
+        {
+          "label": "Plasma",
+          "correct": false
+        }
+      ],
+      "explanation": "White blood cells are like a tiny army. They find germs that get into your body and help destroy them.",
+      "source_url": "https://kidshealth.org/en/kids/blood.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which tiny parts of your blood stick together to help make a scab?",
+      "options": [
+        {
+          "label": "Platelets",
+          "correct": true
+        },
+        {
+          "label": "White blood cells",
+          "correct": false
+        },
+        {
+          "label": "Red blood cells",
+          "correct": false
+        },
+        {
+          "label": "Plasma",
+          "correct": false
+        }
+      ],
+      "explanation": "When you cut yourself, platelets rush to the spot and clump together to plug the gap. This helps form a scab.",
+      "source_url": "https://kidshealth.org/en/kids/blood.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the dome-shaped muscle under your lungs that helps you breathe?",
+      "options": [
+        {
+          "label": "Diaphragm",
+          "correct": true
+        },
+        {
+          "label": "Biceps",
+          "correct": false
+        },
+        {
+          "label": "Abdomen",
+          "correct": false
+        },
+        {
+          "label": "Oesophagus",
+          "correct": false
+        }
+      ],
+      "explanation": "Your diaphragm tightens and flattens to pull air into your lungs, then relaxes to push it back out.",
+      "source_url": "https://kidshealth.org/en/kids/lungs.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the hardest material in the human body?",
+      "options": [
+        {
+          "label": "Tooth enamel",
+          "correct": true
+        },
+        {
+          "label": "Bone",
+          "correct": false
+        },
+        {
+          "label": "Fingernail",
+          "correct": false
+        },
+        {
+          "label": "Cartilage",
+          "correct": false
+        }
+      ],
+      "explanation": "Enamel is the shiny outer coat of your teeth. It is harder than bone, which is why brushing to protect it matters.",
+      "source_url": "https://kidshealth.org/en/kids/teeth.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where in your body would you find the snail-shaped cochlea?",
+      "options": [
+        {
+          "label": "In your ear",
+          "correct": true
+        },
+        {
+          "label": "In your nose",
+          "correct": false
+        },
+        {
+          "label": "In your knee",
+          "correct": false
+        },
+        {
+          "label": "In your stomach",
+          "correct": false
+        }
+      ],
+      "explanation": "The cochlea is deep inside your ear. It is shaped like a snail shell and turns sound vibrations into signals for your brain.",
+      "source_url": "https://kidshealth.org/en/kids/ears.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest solid organ inside your body?",
+      "options": [
+        {
+          "label": "Liver",
+          "correct": true
+        },
+        {
+          "label": "Heart",
+          "correct": false
+        },
+        {
+          "label": "Brain",
+          "correct": false
+        },
+        {
+          "label": "Stomach",
+          "correct": false
+        }
+      ],
+      "explanation": "Your liver sits under your ribs on the right side. It does hundreds of jobs, like storing energy and cleaning your blood.",
+      "source_url": "https://kidshealth.org/en/kids/liver.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "About how many muscles are in the human body?",
+      "options": [
+        {
+          "label": "More than 600",
+          "correct": true
+        },
+        {
+          "label": "About 60",
+          "correct": false
+        },
+        {
+          "label": "About 200",
+          "correct": false
+        },
+        {
+          "label": "More than 6,000",
+          "correct": false
+        }
+      ],
+      "explanation": "You have more than 600 muscles. They help you do everything from smiling and blinking to running and jumping.",
+      "source_url": "https://kidshealth.org/en/kids/muscles.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the bony case that protects your brain?",
+      "options": [
+        {
+          "label": "Skull",
+          "correct": true
+        },
+        {
+          "label": "Ribcage",
+          "correct": false
+        },
+        {
+          "label": "Pelvis",
+          "correct": false
+        },
+        {
+          "label": "Spine",
+          "correct": false
+        }
+      ],
+      "explanation": "Your skull is made of bones that join together like a strong helmet, keeping your brain safe.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are the small bones that stack up to make your backbone called?",
+      "options": [
+        {
+          "label": "Vertebrae",
+          "correct": true
+        },
+        {
+          "label": "Ribs",
+          "correct": false
+        },
+        {
+          "label": "Knuckles",
+          "correct": false
+        },
+        {
+          "label": "Tendons",
+          "correct": false
+        }
+      ],
+      "explanation": "Your backbone is a column of small bones called vertebrae. It lets you bend and twist while protecting the nerves inside.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Your stomach makes acid to help break down food.",
+      "answer": true,
+      "explanation": "Your stomach mixes food with strong acid and juices. This turns it into a thick mush before it moves on to your small intestine.",
+      "source_url": "https://kidshealth.org/en/kids/digestive-system.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Your hair and your fingernails are made of the same tough material, called keratin.",
+      "answer": true,
+      "explanation": "Keratin is a strong protein. It makes up your hair and nails, and also animal horns, hooves and claws.",
+      "source_url": "https://kidshealth.org/en/kids/hair.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The blood inside your veins is blue.",
+      "answer": false,
+      "explanation": "Blood is always red. Veins can look blue through your skin because of the way light passes through it, but the blood itself is red.",
+      "source_url": "https://kidshealth.org/en/kids/blood.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many pairs of ribs do most people have?",
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "pairs",
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "Most people have 12 pairs of ribs, making 24 ribs in all. They curve round like a cage to protect your heart and lungs.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A healthy person's normal body temperature is about how many degrees Celsius?",
+      "slider": {
+        "min": 30,
+        "max": 45,
+        "step": 1,
+        "unit": "°C",
+        "correct": 37,
+        "accept_min": 36,
+        "accept_max": 38
+      },
+      "explanation": "Your body works best at around 37 °C. A temperature of 38 °C or more usually means you have a fever.",
+      "source_url": "https://www.nhs.uk/conditions/fever-in-children/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

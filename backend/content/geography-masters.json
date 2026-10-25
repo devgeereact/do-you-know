@@ -1,0 +1,653 @@
+{
+  "slug": "geography-masters",
+  "title": "Geography Masters",
+  "intro": "Hidden capitals, mighty rivers, tricky borders and flags in words. Only true map lovers need apply.",
+  "category": "geography",
+  "difficulty": "hard",
+  "age_min": 16,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the capital of Kazakhstan?",
+      "options": [
+        {
+          "label": "Astana",
+          "correct": true
+        },
+        {
+          "label": "Almaty",
+          "correct": false
+        },
+        {
+          "label": "Tashkent",
+          "correct": false
+        },
+        {
+          "label": "Bishkek",
+          "correct": false
+        }
+      ],
+      "explanation": "Astana replaced Almaty as capital in 1997. Almaty is still Kazakhstan's largest city.",
+      "source_url": "https://www.britannica.com/place/Astana",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital of Bhutan?",
+      "options": [
+        {
+          "label": "Thimphu",
+          "correct": true
+        },
+        {
+          "label": "Kathmandu",
+          "correct": false
+        },
+        {
+          "label": "Paro",
+          "correct": false
+        },
+        {
+          "label": "Dhaka",
+          "correct": false
+        }
+      ],
+      "explanation": "Thimphu sits high in a Himalayan valley. Kathmandu is the capital of neighbouring Nepal.",
+      "source_url": "https://www.britannica.com/place/Thimphu",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital of Myanmar?",
+      "options": [
+        {
+          "label": "Naypyidaw",
+          "correct": true
+        },
+        {
+          "label": "Yangon",
+          "correct": false
+        },
+        {
+          "label": "Mandalay",
+          "correct": false
+        },
+        {
+          "label": "Vientiane",
+          "correct": false
+        }
+      ],
+      "explanation": "Myanmar moved its capital from Yangon to the purpose-built city of Naypyidaw in 2005 and 2006.",
+      "source_url": "https://www.britannica.com/place/Nay-Pyi-Taw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital of Morocco?",
+      "options": [
+        {
+          "label": "Rabat",
+          "correct": true
+        },
+        {
+          "label": "Casablanca",
+          "correct": false
+        },
+        {
+          "label": "Marrakesh",
+          "correct": false
+        },
+        {
+          "label": "Fez",
+          "correct": false
+        }
+      ],
+      "explanation": "Rabat, on the Atlantic coast, is the capital, although Casablanca is the largest city.",
+      "source_url": "https://www.britannica.com/place/Rabat",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the official capital of Tanzania?",
+      "options": [
+        {
+          "label": "Dodoma",
+          "correct": true
+        },
+        {
+          "label": "Dar es Salaam",
+          "correct": false
+        },
+        {
+          "label": "Zanzibar City",
+          "correct": false
+        },
+        {
+          "label": "Arusha",
+          "correct": false
+        }
+      ],
+      "explanation": "Dodoma was named the capital in the 1970s, but Dar es Salaam remains the largest city and main port.",
+      "source_url": "https://www.britannica.com/place/Dodoma",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which city is the constitutional capital of Bolivia?",
+      "options": [
+        {
+          "label": "Sucre",
+          "correct": true
+        },
+        {
+          "label": "La Paz",
+          "correct": false
+        },
+        {
+          "label": "Santa Cruz",
+          "correct": false
+        },
+        {
+          "label": "Cochabamba",
+          "correct": false
+        }
+      ],
+      "explanation": "Sucre is the constitutional capital and home of the supreme court, while La Paz is the seat of government.",
+      "source_url": "https://www.britannica.com/place/Sucre",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river forms much of the border between the United States and Mexico?",
+      "options": [
+        {
+          "label": "The Rio Grande",
+          "correct": true
+        },
+        {
+          "label": "The Colorado",
+          "correct": false
+        },
+        {
+          "label": "The Mississippi",
+          "correct": false
+        },
+        {
+          "label": "The Pecos",
+          "correct": false
+        }
+      ],
+      "explanation": "The Rio Grande marks the border for about 2,000 km, from El Paso to the Gulf of Mexico. In Mexico it is called the Río Bravo.",
+      "source_url": "https://www.britannica.com/place/Rio-Grande-river-United-States-Mexico",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Into which body of water does the River Volga, Europe's longest river, flow?",
+      "options": [
+        {
+          "label": "The Caspian Sea",
+          "correct": true
+        },
+        {
+          "label": "The Black Sea",
+          "correct": false
+        },
+        {
+          "label": "The Baltic Sea",
+          "correct": false
+        },
+        {
+          "label": "The White Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Volga flows through western Russia and ends in a wide delta on the Caspian Sea.",
+      "source_url": "https://www.britannica.com/place/Volga-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "China borders 14 countries, a joint world record. Which other country shares that record?",
+      "options": [
+        {
+          "label": "Russia",
+          "correct": true
+        },
+        {
+          "label": "Brazil",
+          "correct": false
+        },
+        {
+          "label": "India",
+          "correct": false
+        },
+        {
+          "label": "Germany",
+          "correct": false
+        }
+      ],
+      "explanation": "Both China and Russia have 14 neighbouring countries, more than any other nation.",
+      "source_url": "https://www.britannica.com/place/Russia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country is completely surrounded by South Africa?",
+      "options": [
+        {
+          "label": "Lesotho",
+          "correct": true
+        },
+        {
+          "label": "Eswatini",
+          "correct": false
+        },
+        {
+          "label": "Botswana",
+          "correct": false
+        },
+        {
+          "label": "Namibia",
+          "correct": false
+        }
+      ],
+      "explanation": "Lesotho is an enclave inside South Africa. All of its land lies above 1,000 metres, the highest low point of any country.",
+      "source_url": "https://www.britannica.com/place/Lesotho",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country's flag has a green cedar tree in the centre, between two red horizontal stripes?",
+      "options": [
+        {
+          "label": "Lebanon",
+          "correct": true
+        },
+        {
+          "label": "Cyprus",
+          "correct": false
+        },
+        {
+          "label": "Canada",
+          "correct": false
+        },
+        {
+          "label": "Jordan",
+          "correct": false
+        }
+      ],
+      "explanation": "The cedar of Lebanon has been a symbol of the land since ancient times and is mentioned many times in the Bible.",
+      "source_url": "https://www.britannica.com/topic/flag-of-Lebanon",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country has the only national flag that is not a rectangle, shaped like two stacked pennants?",
+      "options": [
+        {
+          "label": "Nepal",
+          "correct": true
+        },
+        {
+          "label": "Bhutan",
+          "correct": false
+        },
+        {
+          "label": "Switzerland",
+          "correct": false
+        },
+        {
+          "label": "Qatar",
+          "correct": false
+        }
+      ],
+      "explanation": "Nepal's flag is two crimson triangles, one above the other, bordered in blue with a moon and sun.",
+      "source_url": "https://www.britannica.com/topic/flag-of-Nepal",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country's flag is a green field with a red disc set slightly towards the flagpole?",
+      "options": [
+        {
+          "label": "Bangladesh",
+          "correct": true
+        },
+        {
+          "label": "Japan",
+          "correct": false
+        },
+        {
+          "label": "Palau",
+          "correct": false
+        },
+        {
+          "label": "Pakistan",
+          "correct": false
+        }
+      ],
+      "explanation": "On Bangladesh's flag, the green stands for the land and the red disc is often said to represent the sun rising over Bengal.",
+      "source_url": "https://www.britannica.com/topic/flag-of-Bangladesh",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the deepest lake in the world?",
+      "options": [
+        {
+          "label": "Lake Baikal",
+          "correct": true
+        },
+        {
+          "label": "Lake Tanganyika",
+          "correct": false
+        },
+        {
+          "label": "Lake Superior",
+          "correct": false
+        },
+        {
+          "label": "The Caspian Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "Lake Baikal in Siberia is over 1,600 metres deep and holds about a fifth of the world's unfrozen fresh surface water.",
+      "source_url": "https://www.britannica.com/place/Lake-Baikal",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the longest continental mountain range in the world?",
+      "options": [
+        {
+          "label": "The Andes",
+          "correct": true
+        },
+        {
+          "label": "The Rocky Mountains",
+          "correct": false
+        },
+        {
+          "label": "The Himalayas",
+          "correct": false
+        },
+        {
+          "label": "The Great Dividing Range",
+          "correct": false
+        }
+      ],
+      "explanation": "The Andes run for about 7,000 km down the western side of South America.",
+      "source_url": "https://www.britannica.com/place/Andes-Mountains",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Atacama, one of the driest deserts on Earth, lies mostly in which country?",
+      "options": [
+        {
+          "label": "Chile",
+          "correct": true
+        },
+        {
+          "label": "Peru",
+          "correct": false
+        },
+        {
+          "label": "Argentina",
+          "correct": false
+        },
+        {
+          "label": "Bolivia",
+          "correct": false
+        }
+      ],
+      "explanation": "Parts of the Atacama can go years without measurable rain. Its clear, dry skies make it a favourite place for big telescopes.",
+      "source_url": "https://www.britannica.com/place/Atacama-Desert",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which strait separates Europe from Africa at the western end of the Mediterranean?",
+      "options": [
+        {
+          "label": "The Strait of Gibraltar",
+          "correct": true
+        },
+        {
+          "label": "The Bosporus",
+          "correct": false
+        },
+        {
+          "label": "The Strait of Messina",
+          "correct": false
+        },
+        {
+          "label": "The Strait of Hormuz",
+          "correct": false
+        }
+      ],
+      "explanation": "At its narrowest the Strait of Gibraltar is only about 13 km wide, between Spain and Morocco.",
+      "source_url": "https://www.britannica.com/place/Strait-of-Gibraltar",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Into which sea does the River Danube flow?",
+      "options": [
+        {
+          "label": "The Black Sea",
+          "correct": true
+        },
+        {
+          "label": "The Adriatic Sea",
+          "correct": false
+        },
+        {
+          "label": "The North Sea",
+          "correct": false
+        },
+        {
+          "label": "The Aegean Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Danube rises in Germany's Black Forest and reaches the Black Sea in Romania, passing through or along ten countries.",
+      "source_url": "https://www.britannica.com/place/Danube-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a long, narrow, steep-sided sea inlet carved out by a glacier called?",
+      "options": [
+        {
+          "label": "A fjord",
+          "correct": true
+        },
+        {
+          "label": "An estuary",
+          "correct": false
+        },
+        {
+          "label": "A lagoon",
+          "correct": false
+        },
+        {
+          "label": "A delta",
+          "correct": false
+        }
+      ],
+      "explanation": "Fjords form when glaciers carve deep valleys that the sea floods after the ice melts. Norway is famous for them.",
+      "source_url": "https://www.britannica.com/science/fjord",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which African river, the deepest known river in the world, crosses the equator twice?",
+      "options": [
+        {
+          "label": "The Congo",
+          "correct": true
+        },
+        {
+          "label": "The Niger",
+          "correct": false
+        },
+        {
+          "label": "The Zambezi",
+          "correct": false
+        },
+        {
+          "label": "The Nile",
+          "correct": false
+        }
+      ],
+      "explanation": "The Congo curves north across the equator and then back south. In places it is over 200 metres deep.",
+      "source_url": "https://www.britannica.com/place/Congo-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Aconcagua, the highest mountain outside Asia, is in which country?",
+      "options": [
+        {
+          "label": "Argentina",
+          "correct": true
+        },
+        {
+          "label": "Chile",
+          "correct": false
+        },
+        {
+          "label": "Peru",
+          "correct": false
+        },
+        {
+          "label": "Ecuador",
+          "correct": false
+        }
+      ],
+      "explanation": "Aconcagua rises to about 6,960 metres in the Andes of western Argentina, close to the Chilean border.",
+      "source_url": "https://www.britannica.com/place/Mount-Aconcagua",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Apart from Vatican City, which independent country lies entirely inside Italy?",
+      "options": [
+        {
+          "label": "San Marino",
+          "correct": true
+        },
+        {
+          "label": "Monaco",
+          "correct": false
+        },
+        {
+          "label": "Andorra",
+          "correct": false
+        },
+        {
+          "label": "Liechtenstein",
+          "correct": false
+        }
+      ],
+      "explanation": "San Marino, on the slopes of Monte Titano, claims to be the world's oldest surviving republic.",
+      "source_url": "https://www.britannica.com/place/San-Marino-republic-Europe",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The city of Istanbul lies on two continents, Europe and Asia.",
+      "answer": true,
+      "explanation": "The Bosporus strait runs through Istanbul, with part of the city in Europe and part in Asia.",
+      "source_url": "https://www.britannica.com/place/Istanbul",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The shore of the Dead Sea is the lowest point on dry land on Earth.",
+      "answer": true,
+      "explanation": "The Dead Sea's shore lies over 400 metres below sea level, and its water is so salty that people float easily.",
+      "source_url": "https://www.britannica.com/place/Dead-Sea",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The equator passes through Brazil.",
+      "answer": true,
+      "explanation": "The equator crosses northern Brazil near the mouth of the Amazon, so the country lies in both hemispheres.",
+      "source_url": "https://www.britannica.com/place/Brazil",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Switzerland has four national languages.",
+      "answer": true,
+      "explanation": "Switzerland's national languages are German, French, Italian and Romansh.",
+      "source_url": "https://www.britannica.com/place/Switzerland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Amazon River flows into the Pacific Ocean.",
+      "answer": false,
+      "explanation": "The Amazon rises in the Andes but flows east across South America into the Atlantic Ocean.",
+      "source_url": "https://www.britannica.com/place/Amazon-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many countries share a land border with Germany?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "countries",
+        "correct": 9,
+        "accept_min": 9,
+        "accept_max": 9
+      },
+      "explanation": "Germany borders nine countries: Denmark, Poland, Czechia, Austria, Switzerland, France, Luxembourg, Belgium and the Netherlands.",
+      "source_url": "https://www.britannica.com/place/Germany",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many time zones does Russia span?",
+      "slider": {
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "unit": "time zones",
+        "correct": 11,
+        "accept_min": 11,
+        "accept_max": 11
+      },
+      "explanation": "Russia stretches across 11 time zones, from Kaliningrad in the west to Kamchatka in the far east.",
+      "source_url": "https://www.britannica.com/place/Russia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "To the nearest whole degree, at what latitude north is the Tropic of Cancer?",
+      "slider": {
+        "min": 0,
+        "max": 90,
+        "step": 1,
+        "unit": "°N",
+        "correct": 23,
+        "accept_min": 23,
+        "accept_max": 24
+      },
+      "explanation": "The Tropic of Cancer lies at about 23.4° north. It marks the most northerly place where the Sun can be directly overhead.",
+      "source_url": "https://www.britannica.com/place/Tropic-of-Cancer",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

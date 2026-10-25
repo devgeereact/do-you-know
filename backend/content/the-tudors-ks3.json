@@ -1,0 +1,655 @@
+{
+  "slug": "the-tudors-ks3",
+  "title": "The Tudors",
+  "intro": "From Bosworth to the Armada: kings, queens and big changes in Tudor England.",
+  "category": "school-history",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Who was the first Tudor king?",
+      "options": [
+        {
+          "label": "Henry VII",
+          "correct": true
+        },
+        {
+          "label": "Henry VIII",
+          "correct": false
+        },
+        {
+          "label": "Edward VI",
+          "correct": false
+        },
+        {
+          "label": "Richard III",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VII became the first Tudor king after the Battle of Bosworth.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "At which battle did Henry Tudor defeat Richard III?",
+      "options": [
+        {
+          "label": "Hastings",
+          "correct": false
+        },
+        {
+          "label": "Bosworth",
+          "correct": true
+        },
+        {
+          "label": "Agincourt",
+          "correct": false
+        },
+        {
+          "label": "Culloden",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry Tudor defeated Richard III at the Battle of Bosworth and became King Henry VII.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was the Battle of Bosworth?",
+      "slider": {
+        "min": 1400,
+        "max": 1600,
+        "step": 5,
+        "unit": null,
+        "correct": 1485,
+        "accept_min": 1485,
+        "accept_max": 1485
+      },
+      "explanation": "The Battle of Bosworth was fought in 1485 and is often seen as the start of the Tudor period.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was Henry VIII's first wife?",
+      "options": [
+        {
+          "label": "Anne Boleyn",
+          "correct": false
+        },
+        {
+          "label": "Jane Seymour",
+          "correct": false
+        },
+        {
+          "label": "Catherine of Aragon",
+          "correct": true
+        },
+        {
+          "label": "Catherine Parr",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VIII's first wife was Catherine of Aragon, a Spanish princess.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Henry VIII broke away from the authority of which church leader to create the Church of England?",
+      "options": [
+        {
+          "label": "The Pope",
+          "correct": true
+        },
+        {
+          "label": "The Archbishop of York",
+          "correct": false
+        },
+        {
+          "label": "The Patriarch of Constantinople",
+          "correct": false
+        },
+        {
+          "label": "The Dalai Lama",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VIII broke with the Pope in Rome and made himself head of the Church of England.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was the last Tudor monarch?",
+      "options": [
+        {
+          "label": "Mary I",
+          "correct": false
+        },
+        {
+          "label": "Elizabeth I",
+          "correct": true
+        },
+        {
+          "label": "Edward VI",
+          "correct": false
+        },
+        {
+          "label": "James I",
+          "correct": false
+        }
+      ],
+      "explanation": "Elizabeth I was the last Tudor monarch. When she died in 1603, James VI of Scotland became king of England.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the large Spanish fleet that tried to invade England in 1588 called?",
+      "options": [
+        {
+          "label": "The Armada",
+          "correct": true
+        },
+        {
+          "label": "The Mayflower",
+          "correct": false
+        },
+        {
+          "label": "The Mary Rose",
+          "correct": false
+        },
+        {
+          "label": "The Golden Hind",
+          "correct": false
+        }
+      ],
+      "explanation": "The Spanish Armada was defeated in 1588, during the reign of Elizabeth I.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Edward VI was the son of Henry VIII.",
+      "answer": true,
+      "explanation": "Edward VI was the son of Henry VIII and Jane Seymour. He became king at the age of nine.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which English sailor travelled all the way around the world between 1577 and 1580?",
+      "options": [
+        {
+          "label": "Walter Raleigh",
+          "correct": false
+        },
+        {
+          "label": "Francis Drake",
+          "correct": true
+        },
+        {
+          "label": "Horatio Nelson",
+          "correct": false
+        },
+        {
+          "label": "James Cook",
+          "correct": false
+        }
+      ],
+      "explanation": "Francis Drake sailed around the world in his ship, the Golden Hind, during Elizabeth I's reign.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Elizabeth I never married.",
+      "answer": true,
+      "explanation": "Elizabeth I never married and had no children, which is why the Tudor line ended with her.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What name is given to the long struggle for the throne between the royal houses of Lancaster and York in the 1400s?",
+      "options": [
+        {
+          "label": "The Wars of the Roses",
+          "correct": true
+        },
+        {
+          "label": "The Hundred Years' War",
+          "correct": false
+        },
+        {
+          "label": "The English Civil War",
+          "correct": false
+        },
+        {
+          "label": "The Crusades",
+          "correct": false
+        }
+      ],
+      "explanation": "The two families had rose badges, red for Lancaster and white for York. Henry VII later combined them in the Tudor rose.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of Henry VIII's wives was the mother of Edward VI?",
+      "options": [
+        {
+          "label": "Jane Seymour",
+          "correct": true
+        },
+        {
+          "label": "Anne Boleyn",
+          "correct": false
+        },
+        {
+          "label": "Catherine Parr",
+          "correct": false
+        },
+        {
+          "label": "Anne of Cleves",
+          "correct": false
+        }
+      ],
+      "explanation": "Jane Seymour gave birth to Edward in 1537. He was the son Henry had long hoped for.",
+      "source_url": "https://www.royal.uk/edward-vi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of Henry VIII's wives outlived him?",
+      "options": [
+        {
+          "label": "Catherine Parr",
+          "correct": true
+        },
+        {
+          "label": "Catherine Howard",
+          "correct": false
+        },
+        {
+          "label": "Jane Seymour",
+          "correct": false
+        },
+        {
+          "label": "Catherine of Aragon",
+          "correct": false
+        }
+      ],
+      "explanation": "Catherine Parr was Henry's sixth wife. Henry died in 1547 and she lived until the following year.",
+      "source_url": "https://www.royal.uk/henry-viii",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which minister helped Henry VIII close England's monasteries in the 1530s?",
+      "options": [
+        {
+          "label": "Thomas Cromwell",
+          "correct": true
+        },
+        {
+          "label": "Thomas Wolsey",
+          "correct": false
+        },
+        {
+          "label": "William Cecil",
+          "correct": false
+        },
+        {
+          "label": "Francis Walsingham",
+          "correct": false
+        }
+      ],
+      "explanation": "Thomas Cromwell organised the closures. The monasteries' land and riches went to the Crown.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the closing of England's religious houses between 1536 and 1541 known as?",
+      "options": [
+        {
+          "label": "The Dissolution of the Monasteries",
+          "correct": true
+        },
+        {
+          "label": "The Pilgrimage of Grace",
+          "correct": false
+        },
+        {
+          "label": "The Act of Union",
+          "correct": false
+        },
+        {
+          "label": "The Glorious Revolution",
+          "correct": false
+        }
+      ],
+      "explanation": "Over about five years, hundreds of monasteries, abbeys and priories were shut down and their wealth taken by the king.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the 1536 rising in the north of England against Henry VIII's religious changes called?",
+      "options": [
+        {
+          "label": "The Pilgrimage of Grace",
+          "correct": true
+        },
+        {
+          "label": "The Peasants' Revolt",
+          "correct": false
+        },
+        {
+          "label": "The Gunpowder Plot",
+          "correct": false
+        },
+        {
+          "label": "The Babington Plot",
+          "correct": false
+        }
+      ],
+      "explanation": "Thousands of people in the north marched in protest at the closing of the monasteries and other changes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who is often called the 'Nine Days' Queen' after her very short reign in 1553?",
+      "options": [
+        {
+          "label": "Lady Jane Grey",
+          "correct": true
+        },
+        {
+          "label": "Mary I",
+          "correct": false
+        },
+        {
+          "label": "Anne Boleyn",
+          "correct": false
+        },
+        {
+          "label": "Mary, Queen of Scots",
+          "correct": false
+        }
+      ],
+      "explanation": "When Edward VI died, Lady Jane Grey was declared queen, but Mary I won wide support and took the throne within days.",
+      "source_url": "https://www.royal.uk/lady-jane-grey",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Mary I tried to bring back which form of Christianity in England?",
+      "options": [
+        {
+          "label": "Roman Catholicism",
+          "correct": true
+        },
+        {
+          "label": "Protestantism",
+          "correct": false
+        },
+        {
+          "label": "Puritanism",
+          "correct": false
+        },
+        {
+          "label": "Methodism",
+          "correct": false
+        }
+      ],
+      "explanation": "Mary I was a devout Catholic and restored the Pope's authority over the English Church during her reign.",
+      "source_url": "https://www.royal.uk/mary-i",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of Henry VIII's warships sank in 1545 and was raised from the seabed in 1982?",
+      "options": [
+        {
+          "label": "The Mary Rose",
+          "correct": true
+        },
+        {
+          "label": "The Golden Hind",
+          "correct": false
+        },
+        {
+          "label": "HMS Victory",
+          "correct": false
+        },
+        {
+          "label": "The Revenge",
+          "correct": false
+        }
+      ],
+      "explanation": "The Mary Rose sank in the Solent. Raised in 1982, she and thousands of objects from on board now tell us about Tudor life at sea.",
+      "source_url": "https://maryrose.org/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of Francis Drake's ship on his voyage around the world?",
+      "options": [
+        {
+          "label": "The Golden Hind",
+          "correct": true
+        },
+        {
+          "label": "The Mary Rose",
+          "correct": false
+        },
+        {
+          "label": "The Mayflower",
+          "correct": false
+        },
+        {
+          "label": "The Endeavour",
+          "correct": false
+        }
+      ],
+      "explanation": "Drake set out in a ship called the Pelican and renamed it the Golden Hind during the voyage.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Henry VII was born at Pembroke Castle. In which country is it?",
+      "options": [
+        {
+          "label": "Wales",
+          "correct": true
+        },
+        {
+          "label": "Scotland",
+          "correct": false
+        },
+        {
+          "label": "England",
+          "correct": false
+        },
+        {
+          "label": "Ireland",
+          "correct": false
+        }
+      ],
+      "explanation": "The Tudor family had Welsh roots, and Henry landed in Wales in 1485 before marching to Bosworth.",
+      "source_url": "https://www.royal.uk/henry-vii",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Elizabethan courtier organised expeditions to set up an English colony at Roanoke in North America?",
+      "options": [
+        {
+          "label": "Walter Raleigh",
+          "correct": true
+        },
+        {
+          "label": "Francis Drake",
+          "correct": false
+        },
+        {
+          "label": "John Cabot",
+          "correct": false
+        },
+        {
+          "label": "Henry Hudson",
+          "correct": false
+        }
+      ],
+      "explanation": "Raleigh sponsored voyages in the 1580s, and named the area Virginia after Elizabeth I, the 'Virgin Queen'.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who became king of England when Elizabeth I died, ending the Tudor era?",
+      "options": [
+        {
+          "label": "James VI of Scotland",
+          "correct": true
+        },
+        {
+          "label": "Charles I",
+          "correct": false
+        },
+        {
+          "label": "William of Orange",
+          "correct": false
+        },
+        {
+          "label": "Henry IX",
+          "correct": false
+        }
+      ],
+      "explanation": "James VI of Scotland became James I of England in 1603, the first Stuart king of England.",
+      "source_url": "https://www.royal.uk/elizabeth-i",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Cardinal Thomas Wolsey lost Henry VIII's favour after failing to get the Pope to agree to what?",
+      "options": [
+        {
+          "label": "Ending Henry's marriage to Catherine of Aragon",
+          "correct": true
+        },
+        {
+          "label": "A peace treaty with France",
+          "correct": false
+        },
+        {
+          "label": "Henry's coronation",
+          "correct": false
+        },
+        {
+          "label": "The building of a new navy",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry wanted his first marriage cancelled so he could marry Anne Boleyn. When Wolsey could not achieve this, he fell from power.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Under Edward VI, the Book of Common Prayer meant church services were held in which language?",
+      "options": [
+        {
+          "label": "English",
+          "correct": true
+        },
+        {
+          "label": "Latin",
+          "correct": false
+        },
+        {
+          "label": "French",
+          "correct": false
+        },
+        {
+          "label": "Greek",
+          "correct": false
+        }
+      ],
+      "explanation": "Before this, services were in Latin. The 1549 Prayer Book let ordinary people understand the words of worship.",
+      "source_url": "https://www.royal.uk/edward-vi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Mary I was the daughter of Henry VIII and Catherine of Aragon.",
+      "answer": true,
+      "explanation": "Mary was born in 1516, the only child of Henry and Catherine to survive into adulthood.",
+      "source_url": "https://www.royal.uk/mary-i",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Henry VII was the father of Henry VIII.",
+      "answer": true,
+      "explanation": "Henry VIII was Henry VII's second son. He became heir after his older brother Arthur died.",
+      "source_url": "https://www.royal.uk/henry-vii",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Spanish Armada successfully landed an army in England in 1588.",
+      "answer": false,
+      "explanation": "The Armada never landed. English fire ships broke up its formation and storms scattered the fleet as it sailed home.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did Elizabeth I become queen?",
+      "slider": {
+        "min": 1500,
+        "max": 1600,
+        "step": 1,
+        "unit": null,
+        "correct": 1558,
+        "accept_min": 1558,
+        "accept_max": 1558
+      },
+      "explanation": "Elizabeth became queen in 1558 when her half-sister Mary I died.",
+      "source_url": "https://www.royal.uk/elizabeth-i",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did Elizabeth I die, bringing the Tudor period to an end?",
+      "slider": {
+        "min": 1550,
+        "max": 1650,
+        "step": 1,
+        "unit": null,
+        "correct": 1603,
+        "accept_min": 1603,
+        "accept_max": 1603
+      },
+      "explanation": "Elizabeth died in 1603 after reigning for over 44 years, and the crown passed to the Stuarts.",
+      "source_url": "https://www.westminster-abbey.org/abbey-commemorations/royals/elizabeth-i",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

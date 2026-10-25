@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-biology",
+  "title": "GCSE Biology",
+  "intro": "Exam-style questions on cells, organisation, disease, bioenergetics, homeostasis, inheritance and ecology.",
+  "category": "school-science",
+  "difficulty": "medium",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which cell structure is the site of aerobic respiration?",
+      "options": [
+        {
+          "label": "Mitochondria",
+          "correct": true
+        },
+        {
+          "label": "Ribosomes",
+          "correct": false
+        },
+        {
+          "label": "Chloroplasts",
+          "correct": false
+        },
+        {
+          "label": "Cell membrane",
+          "correct": false
+        }
+      ],
+      "explanation": "Aerobic respiration takes place in the mitochondria, releasing energy from glucose for the cell to use.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which structure is found in bacterial cells but not in animal cells?",
+      "options": [
+        {
+          "label": "Plasmids",
+          "correct": true
+        },
+        {
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "label": "Mitochondria",
+          "correct": false
+        },
+        {
+          "label": "Cell membrane",
+          "correct": false
+        }
+      ],
+      "explanation": "Bacteria are prokaryotes. They have small rings of DNA called plasmids and no nucleus, while animal cells have a nucleus and no plasmids.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which cell structure are proteins made?",
+      "options": [
+        {
+          "label": "Ribosomes",
+          "correct": true
+        },
+        {
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "label": "Vacuole",
+          "correct": false
+        },
+        {
+          "label": "Cell wall",
+          "correct": false
+        }
+      ],
+      "explanation": "Ribosomes are the site of protein synthesis. The nucleus holds the genetic code, but proteins are assembled on ribosomes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Under a microscope, an image of a cell is 10 mm across. The real cell is 0.02 mm across. What is the magnification?",
+      "slider": {
+        "min": 0,
+        "max": 1000,
+        "step": 50,
+        "unit": "×",
+        "correct": 500,
+        "accept_min": 500,
+        "accept_max": 500
+      },
+      "explanation": "Magnification = image size ÷ real size, so 10 ÷ 0.02 = 500. Always use the same units for both sizes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many genetically identical daughter cells does mitosis produce from one cell?",
+      "options": [
+        {
+          "label": "Two",
+          "correct": true
+        },
+        {
+          "label": "One",
+          "correct": false
+        },
+        {
+          "label": "Four",
+          "correct": false
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "Mitosis produces two daughter cells, each with the same chromosomes as the parent cell. It is used for growth and repair.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for the diffusion of water from a dilute solution to a more concentrated solution through a partially permeable membrane?",
+      "options": [
+        {
+          "label": "Osmosis",
+          "correct": true
+        },
+        {
+          "label": "Active transport",
+          "correct": false
+        },
+        {
+          "label": "Respiration",
+          "correct": false
+        },
+        {
+          "label": "Transpiration",
+          "correct": false
+        }
+      ],
+      "explanation": "Osmosis is the movement of water across a partially permeable membrane, from a dilute solution to a more concentrated one.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which process uses energy from respiration to move substances against a concentration gradient?",
+      "options": [
+        {
+          "label": "Active transport",
+          "correct": true
+        },
+        {
+          "label": "Diffusion",
+          "correct": false
+        },
+        {
+          "label": "Osmosis",
+          "correct": false
+        },
+        {
+          "label": "Evaporation",
+          "correct": false
+        }
+      ],
+      "explanation": "Active transport moves substances from a low to a high concentration, so it needs energy from respiration. Root hair cells use it to absorb mineral ions.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvtvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which enzyme breaks down starch into sugars?",
+      "options": [
+        {
+          "label": "Amylase",
+          "correct": true
+        },
+        {
+          "label": "Protease",
+          "correct": false
+        },
+        {
+          "label": "Lipase",
+          "correct": false
+        },
+        {
+          "label": "Catalase",
+          "correct": false
+        }
+      ],
+      "explanation": "Amylase is a carbohydrase that breaks starch down into sugars. It is made in the salivary glands, pancreas and small intestine.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbdgs82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which organ produces bile?",
+      "options": [
+        {
+          "label": "Liver",
+          "correct": true
+        },
+        {
+          "label": "Gall bladder",
+          "correct": false
+        },
+        {
+          "label": "Stomach",
+          "correct": false
+        },
+        {
+          "label": "Pancreas",
+          "correct": false
+        }
+      ],
+      "explanation": "Bile is made in the liver and stored in the gall bladder before it is released into the small intestine.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbdgs82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Bile is an enzyme that breaks fats down into fatty acids and glycerol.",
+      "answer": false,
+      "explanation": "Bile is not an enzyme. It emulsifies fats into small droplets, giving lipase a bigger surface area, and neutralises stomach acid.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbdgs82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of blood vessel has thick, muscular and elastic walls to cope with blood at high pressure?",
+      "options": [
+        {
+          "label": "Artery",
+          "correct": true
+        },
+        {
+          "label": "Vein",
+          "correct": false
+        },
+        {
+          "label": "Capillary",
+          "correct": false
+        },
+        {
+          "label": "Lymph vessel",
+          "correct": false
+        }
+      ],
+      "explanation": "Arteries carry blood away from the heart at high pressure, so they have thick layers of muscle and elastic fibres.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbdgs82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The heart's natural pacemaker is a group of cells found in which chamber?",
+      "options": [
+        {
+          "label": "Right atrium",
+          "correct": true
+        },
+        {
+          "label": "Left atrium",
+          "correct": false
+        },
+        {
+          "label": "Right ventricle",
+          "correct": false
+        },
+        {
+          "label": "Left ventricle",
+          "correct": false
+        }
+      ],
+      "explanation": "The natural pacemaker sits in the wall of the right atrium and controls the resting heart rate.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbdgs82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which plant tissue transports dissolved sugars around the plant?",
+      "options": [
+        {
+          "label": "Phloem",
+          "correct": true
+        },
+        {
+          "label": "Xylem",
+          "correct": false
+        },
+        {
+          "label": "Stomata",
+          "correct": false
+        },
+        {
+          "label": "Root hair cells",
+          "correct": false
+        }
+      ],
+      "explanation": "Phloem carries dissolved sugars from the leaves to the rest of the plant. This movement is called translocation.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbdgs82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What type of pathogen causes measles?",
+      "options": [
+        {
+          "label": "A virus",
+          "correct": true
+        },
+        {
+          "label": "A bacterium",
+          "correct": false
+        },
+        {
+          "label": "A fungus",
+          "correct": false
+        },
+        {
+          "label": "A protist",
+          "correct": false
+        }
+      ],
+      "explanation": "Measles is a viral disease spread by droplets from sneezes and coughs. Most young children are vaccinated against it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdgds82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which disease is caused by a protist and spread by mosquitoes?",
+      "options": [
+        {
+          "label": "Malaria",
+          "correct": true
+        },
+        {
+          "label": "Measles",
+          "correct": false
+        },
+        {
+          "label": "Salmonella food poisoning",
+          "correct": false
+        },
+        {
+          "label": "Rose black spot",
+          "correct": false
+        }
+      ],
+      "explanation": "Malaria is caused by a protist. Mosquitoes act as vectors, carrying it from person to person.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdgds82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Antibiotics can be used to cure illnesses caused by viruses.",
+      "answer": false,
+      "explanation": "Antibiotics kill bacteria but do not affect viruses, because viruses live and reproduce inside the body's own cells.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdgds82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The heart drug digitalis was first extracted from which plant?",
+      "options": [
+        {
+          "label": "Foxglove",
+          "correct": true
+        },
+        {
+          "label": "Willow",
+          "correct": false
+        },
+        {
+          "label": "Poppy",
+          "correct": false
+        },
+        {
+          "label": "Nettle",
+          "correct": false
+        }
+      ],
+      "explanation": "Digitalis comes from foxgloves. Aspirin, by contrast, was developed from a chemical found in willow bark.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdgds82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is NOT a limiting factor for the rate of photosynthesis?",
+      "options": [
+        {
+          "label": "Oxygen concentration",
+          "correct": true
+        },
+        {
+          "label": "Light intensity",
+          "correct": false
+        },
+        {
+          "label": "Carbon dioxide concentration",
+          "correct": false
+        },
+        {
+          "label": "Temperature",
+          "correct": false
+        }
+      ],
+      "explanation": "Light intensity, carbon dioxide concentration, temperature and the amount of chlorophyll can limit photosynthesis. Oxygen is a product, not a limiting factor.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjcf6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is produced by anaerobic respiration in human muscle cells?",
+      "options": [
+        {
+          "label": "Lactic acid",
+          "correct": true
+        },
+        {
+          "label": "Ethanol and carbon dioxide",
+          "correct": false
+        },
+        {
+          "label": "Carbon dioxide and water",
+          "correct": false
+        },
+        {
+          "label": "Glucose",
+          "correct": false
+        }
+      ],
+      "explanation": "Without enough oxygen, muscles break glucose down to lactic acid. This creates an oxygen debt that must be repaid afterwards.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjcf6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are the products of anaerobic respiration in yeast cells?",
+      "options": [
+        {
+          "label": "Ethanol and carbon dioxide",
+          "correct": true
+        },
+        {
+          "label": "Lactic acid only",
+          "correct": false
+        },
+        {
+          "label": "Oxygen and glucose",
+          "correct": false
+        },
+        {
+          "label": "Water and carbon dioxide",
+          "correct": false
+        }
+      ],
+      "explanation": "Yeast carries out fermentation, making ethanol and carbon dioxide. This is used in bread making and brewing.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjcf6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which hormone, made by the pancreas, lowers blood glucose concentration?",
+      "options": [
+        {
+          "label": "Insulin",
+          "correct": true
+        },
+        {
+          "label": "Glucagon",
+          "correct": false
+        },
+        {
+          "label": "Adrenaline",
+          "correct": false
+        },
+        {
+          "label": "Thyroxine",
+          "correct": false
+        }
+      ],
+      "explanation": "Insulin makes cells take in glucose and makes the liver and muscles store it as glycogen, so blood glucose falls.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhq4vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which gland is often called the master gland because it controls many other glands?",
+      "options": [
+        {
+          "label": "Pituitary gland",
+          "correct": true
+        },
+        {
+          "label": "Adrenal gland",
+          "correct": false
+        },
+        {
+          "label": "Thyroid gland",
+          "correct": false
+        },
+        {
+          "label": "Pancreas",
+          "correct": false
+        }
+      ],
+      "explanation": "The pituitary gland in the brain releases hormones that cause other glands to release their own hormones.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhq4vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which hormone, released by the thyroid gland, helps control the body's metabolic rate?",
+      "options": [
+        {
+          "label": "Thyroxine",
+          "correct": true
+        },
+        {
+          "label": "Insulin",
+          "correct": false
+        },
+        {
+          "label": "Adrenaline",
+          "correct": false
+        },
+        {
+          "label": "Testosterone",
+          "correct": false
+        }
+      ],
+      "explanation": "Thyroxine from the thyroid gland stimulates the basal metabolic rate. It is controlled by negative feedback.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhq4vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Type 1 diabetes is caused by the pancreas producing too little insulin.",
+      "answer": true,
+      "explanation": "In type 1 diabetes the pancreas makes little or no insulin, so it is usually treated with insulin injections.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhq4vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many chromosomes are found in the nucleus of a normal human body cell?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": null,
+        "correct": 46,
+        "accept_min": 46,
+        "accept_max": 46
+      },
+      "explanation": "Human body cells have 23 pairs of chromosomes, making 46 in total. Gametes have 23.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zt2kb7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Two parents with the genotypes Bb and bb have a child. What is the probability the child has the genotype bb?",
+      "options": [
+        {
+          "label": "50%",
+          "correct": true
+        },
+        {
+          "label": "25%",
+          "correct": false
+        },
+        {
+          "label": "75%",
+          "correct": false
+        },
+        {
+          "label": "100%",
+          "correct": false
+        }
+      ],
+      "explanation": "A Punnett square gives Bb, Bb, bb and bb. Two out of four outcomes are bb, which is a probability of 50%.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zt2kb7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What term describes an organism that has two identical alleles for a gene?",
+      "options": [
+        {
+          "label": "Homozygous",
+          "correct": true
+        },
+        {
+          "label": "Heterozygous",
+          "correct": false
+        },
+        {
+          "label": "Recessive",
+          "correct": false
+        },
+        {
+          "label": "Phenotype",
+          "correct": false
+        }
+      ],
+      "explanation": "Homozygous means both alleles are the same, such as BB or bb. Heterozygous means they are different, such as Bb.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zt2kb7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A human male normally has the sex chromosomes XX.",
+      "answer": false,
+      "explanation": "Males normally have XY sex chromosomes and females normally have XX.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zt2kb7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is an abiotic factor in an ecosystem?",
+      "options": [
+        {
+          "label": "Soil pH",
+          "correct": true
+        },
+        {
+          "label": "Number of predators",
+          "correct": false
+        },
+        {
+          "label": "New pathogens",
+          "correct": false
+        },
+        {
+          "label": "Competition between species",
+          "correct": false
+        }
+      ],
+      "explanation": "Abiotic factors are non-living, such as soil pH, light intensity and temperature. The others are biotic, caused by living things.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zby6jfr",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A field is 200 m². Quadrats show a mean of 3 daisies per m². Estimate the daisy population of the field.",
+      "slider": {
+        "min": 0,
+        "max": 1200,
+        "step": 50,
+        "unit": null,
+        "correct": 600,
+        "accept_min": 600,
+        "accept_max": 600
+      },
+      "explanation": "Population estimate = mean per m² × total area, so 3 × 200 = 600 daisies.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zby6jfr",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

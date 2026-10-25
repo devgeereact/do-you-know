@@ -1,0 +1,653 @@
+{
+  "slug": "great-minds-and-masterpieces",
+  "title": "Great Minds and Masterpieces",
+  "intro": "Paintings, symphonies, novels, buildings and big ideas. How well do you know the people who made them?",
+  "category": "general-knowledge",
+  "difficulty": "hard",
+  "age_min": 16,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which Dutch artist painted 'The Night Watch'?",
+      "options": [
+        {
+          "label": "Rembrandt",
+          "correct": true
+        },
+        {
+          "label": "Vermeer",
+          "correct": false
+        },
+        {
+          "label": "Frans Hals",
+          "correct": false
+        },
+        {
+          "label": "Van Gogh",
+          "correct": false
+        }
+      ],
+      "explanation": "Rembrandt finished The Night Watch in 1642. The huge group portrait hangs in the Rijksmuseum in Amsterdam.",
+      "source_url": "https://www.britannica.com/topic/The-Night-Watch",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which artist painted 'The Persistence of Memory', with its famous melting clocks?",
+      "options": [
+        {
+          "label": "Salvador Dalí",
+          "correct": true
+        },
+        {
+          "label": "René Magritte",
+          "correct": false
+        },
+        {
+          "label": "Pablo Picasso",
+          "correct": false
+        },
+        {
+          "label": "Joan Miró",
+          "correct": false
+        }
+      ],
+      "explanation": "Dalí painted it in 1931. It is one of the best-known works of Surrealism, the art of dreams.",
+      "source_url": "https://www.britannica.com/topic/The-Persistence-of-Memory",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who painted 'Girl with a Pearl Earring'?",
+      "options": [
+        {
+          "label": "Johannes Vermeer",
+          "correct": true
+        },
+        {
+          "label": "Rembrandt",
+          "correct": false
+        },
+        {
+          "label": "Peter Paul Rubens",
+          "correct": false
+        },
+        {
+          "label": "Jan van Eyck",
+          "correct": false
+        }
+      ],
+      "explanation": "Vermeer painted it in about 1665 in Delft. He is famous for his soft, glowing light.",
+      "source_url": "https://www.britannica.com/biography/Johannes-Vermeer",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which composer wrote 'The Four Seasons'?",
+      "options": [
+        {
+          "label": "Antonio Vivaldi",
+          "correct": true
+        },
+        {
+          "label": "Johann Sebastian Bach",
+          "correct": false
+        },
+        {
+          "label": "George Frideric Handel",
+          "correct": false
+        },
+        {
+          "label": "Joseph Haydn",
+          "correct": false
+        }
+      ],
+      "explanation": "Vivaldi's four violin concertos, published in 1725, paint pictures of spring, summer, autumn and winter.",
+      "source_url": "https://www.britannica.com/biography/Antonio-Vivaldi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Beethoven's Ninth Symphony ends with a choir singing which poem?",
+      "options": [
+        {
+          "label": "'Ode to Joy'",
+          "correct": true
+        },
+        {
+          "label": "'The Raven'",
+          "correct": false
+        },
+        {
+          "label": "'Kubla Khan'",
+          "correct": false
+        },
+        {
+          "label": "'Ozymandias'",
+          "correct": false
+        }
+      ],
+      "explanation": "Beethoven set Friedrich Schiller's 'Ode to Joy'. The melody is now the anthem of the European Union.",
+      "source_url": "https://www.britannica.com/topic/Symphony-No-9-in-D-Minor",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which child prodigy from Salzburg wrote the opera 'The Magic Flute'?",
+      "options": [
+        {
+          "label": "Wolfgang Amadeus Mozart",
+          "correct": true
+        },
+        {
+          "label": "Franz Schubert",
+          "correct": false
+        },
+        {
+          "label": "Joseph Haydn",
+          "correct": false
+        },
+        {
+          "label": "Felix Mendelssohn",
+          "correct": false
+        }
+      ],
+      "explanation": "Mozart was composing by the age of five. The Magic Flute was first performed in 1791, shortly before he died.",
+      "source_url": "https://www.britannica.com/biography/Wolfgang-Amadeus-Mozart",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who wrote the novel 'Middlemarch'?",
+      "options": [
+        {
+          "label": "George Eliot",
+          "correct": true
+        },
+        {
+          "label": "Charlotte Brontë",
+          "correct": false
+        },
+        {
+          "label": "Elizabeth Gaskell",
+          "correct": false
+        },
+        {
+          "label": "Thomas Hardy",
+          "correct": false
+        }
+      ],
+      "explanation": "George Eliot was the pen name of Mary Ann Evans. Middlemarch was published in parts in 1871 and 1872.",
+      "source_url": "https://www.britannica.com/topic/Middlemarch",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Russian author wrote 'War and Peace'?",
+      "options": [
+        {
+          "label": "Leo Tolstoy",
+          "correct": true
+        },
+        {
+          "label": "Fyodor Dostoevsky",
+          "correct": false
+        },
+        {
+          "label": "Anton Chekhov",
+          "correct": false
+        },
+        {
+          "label": "Alexander Pushkin",
+          "correct": false
+        }
+      ],
+      "explanation": "Tolstoy's huge novel follows several families during Napoleon's invasion of Russia in 1812.",
+      "source_url": "https://www.britannica.com/biography/Leo-Tolstoy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which architect designed St Paul's Cathedral in London?",
+      "options": [
+        {
+          "label": "Sir Christopher Wren",
+          "correct": true
+        },
+        {
+          "label": "Inigo Jones",
+          "correct": false
+        },
+        {
+          "label": "Nicholas Hawksmoor",
+          "correct": false
+        },
+        {
+          "label": "John Nash",
+          "correct": false
+        }
+      ],
+      "explanation": "Wren designed the new St Paul's after the Great Fire of 1666. It was finished in 1711.",
+      "source_url": "https://www.britannica.com/biography/Christopher-Wren",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which architect designed the Sagrada Família basilica in Barcelona?",
+      "options": [
+        {
+          "label": "Antoni Gaudí",
+          "correct": true
+        },
+        {
+          "label": "Le Corbusier",
+          "correct": false
+        },
+        {
+          "label": "Frank Lloyd Wright",
+          "correct": false
+        },
+        {
+          "label": "Oscar Niemeyer",
+          "correct": false
+        }
+      ],
+      "explanation": "Gaudí worked on the Sagrada Família from 1883 until his death in 1926. Building work has continued ever since.",
+      "source_url": "https://www.britannica.com/biography/Antoni-Gaudi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which astronomer worked out the three laws of planetary motion, including that planets move in ellipses?",
+      "options": [
+        {
+          "label": "Johannes Kepler",
+          "correct": true
+        },
+        {
+          "label": "Nicolaus Copernicus",
+          "correct": false
+        },
+        {
+          "label": "Tycho Brahe",
+          "correct": false
+        },
+        {
+          "label": "Galileo Galilei",
+          "correct": false
+        }
+      ],
+      "explanation": "Kepler used Tycho Brahe's careful observations to show that planets travel in ellipses, not perfect circles.",
+      "source_url": "https://www.britannica.com/biography/Johannes-Kepler",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Whose X-ray image, known as Photo 51, was key to discovering the double-helix structure of DNA?",
+      "options": [
+        {
+          "label": "Rosalind Franklin",
+          "correct": true
+        },
+        {
+          "label": "Dorothy Hodgkin",
+          "correct": false
+        },
+        {
+          "label": "Barbara McClintock",
+          "correct": false
+        },
+        {
+          "label": "Lise Meitner",
+          "correct": false
+        }
+      ],
+      "explanation": "Rosalind Franklin's team took Photo 51 in 1952. It gave Watson and Crick vital evidence for their model.",
+      "source_url": "https://www.britannica.com/biography/Rosalind-Franklin",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which ship did Charles Darwin sail around the world in the 1830s?",
+      "options": [
+        {
+          "label": "HMS Beagle",
+          "correct": true
+        },
+        {
+          "label": "HMS Endeavour",
+          "correct": false
+        },
+        {
+          "label": "HMS Victory",
+          "correct": false
+        },
+        {
+          "label": "HMS Bounty",
+          "correct": false
+        }
+      ],
+      "explanation": "Darwin's five-year voyage on HMS Beagle, including his visit to the Galápagos Islands, shaped his ideas on evolution.",
+      "source_url": "https://www.britannica.com/biography/Charles-Darwin",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which two elements did Marie and Pierre Curie discover?",
+      "options": [
+        {
+          "label": "Polonium and radium",
+          "correct": true
+        },
+        {
+          "label": "Uranium and thorium",
+          "correct": false
+        },
+        {
+          "label": "Helium and neon",
+          "correct": false
+        },
+        {
+          "label": "Radon and francium",
+          "correct": false
+        }
+      ],
+      "explanation": "The Curies discovered both in 1898. Marie named polonium after Poland, the country where she was born.",
+      "source_url": "https://www.britannica.com/biography/Marie-Curie",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which art movement took its name from Claude Monet's painting 'Impression, Sunrise'?",
+      "options": [
+        {
+          "label": "Impressionism",
+          "correct": true
+        },
+        {
+          "label": "Expressionism",
+          "correct": false
+        },
+        {
+          "label": "Cubism",
+          "correct": false
+        },
+        {
+          "label": "Romanticism",
+          "correct": false
+        }
+      ],
+      "explanation": "A critic mocked Monet's painting in 1874 by calling the group 'Impressionists'. The artists adopted the name.",
+      "source_url": "https://www.britannica.com/art/Impressionism-art",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which French sculptor created 'The Thinker'?",
+      "options": [
+        {
+          "label": "Auguste Rodin",
+          "correct": true
+        },
+        {
+          "label": "Edgar Degas",
+          "correct": false
+        },
+        {
+          "label": "Camille Claudel",
+          "correct": false
+        },
+        {
+          "label": "Henri Matisse",
+          "correct": false
+        }
+      ],
+      "explanation": "The Thinker began as part of Rodin's huge doorway The Gates of Hell, inspired by Dante's poem.",
+      "source_url": "https://www.britannica.com/biography/Auguste-Rodin",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Michelangelo painted the ceiling of which chapel in Vatican City?",
+      "options": [
+        {
+          "label": "The Sistine Chapel",
+          "correct": true
+        },
+        {
+          "label": "The Pauline Chapel",
+          "correct": false
+        },
+        {
+          "label": "The Scrovegni Chapel",
+          "correct": false
+        },
+        {
+          "label": "The Brancacci Chapel",
+          "correct": false
+        }
+      ],
+      "explanation": "Michelangelo painted the ceiling between 1508 and 1512, including the famous Creation of Adam.",
+      "source_url": "https://www.britannica.com/topic/Sistine-Chapel",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Italian poet wrote 'The Divine Comedy'?",
+      "options": [
+        {
+          "label": "Dante Alighieri",
+          "correct": true
+        },
+        {
+          "label": "Petrarch",
+          "correct": false
+        },
+        {
+          "label": "Giovanni Boccaccio",
+          "correct": false
+        },
+        {
+          "label": "Virgil",
+          "correct": false
+        }
+      ],
+      "explanation": "Dante's long poem, finished around 1321, follows a journey through Hell, Purgatory and Paradise.",
+      "source_url": "https://www.britannica.com/biography/Dante-Alighieri",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which composer wrote the music for the ballet 'The Nutcracker'?",
+      "options": [
+        {
+          "label": "Pyotr Ilyich Tchaikovsky",
+          "correct": true
+        },
+        {
+          "label": "Sergei Prokofiev",
+          "correct": false
+        },
+        {
+          "label": "Igor Stravinsky",
+          "correct": false
+        },
+        {
+          "label": "Nikolai Rimsky-Korsakov",
+          "correct": false
+        }
+      ],
+      "explanation": "The Nutcracker was first performed in St Petersburg in 1892. Tchaikovsky also wrote Swan Lake and The Sleeping Beauty.",
+      "source_url": "https://www.britannica.com/biography/Pyotr-Ilyich-Tchaikovsky",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The painter Frida Kahlo came from which country?",
+      "options": [
+        {
+          "label": "Mexico",
+          "correct": true
+        },
+        {
+          "label": "Spain",
+          "correct": false
+        },
+        {
+          "label": "Argentina",
+          "correct": false
+        },
+        {
+          "label": "Cuba",
+          "correct": false
+        }
+      ],
+      "explanation": "Frida Kahlo is known for bold self-portraits full of Mexican colour and folk art.",
+      "source_url": "https://www.britannica.com/biography/Frida-Kahlo",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ancient Greek mathematician is said to have shouted 'Eureka!' in his bath?",
+      "options": [
+        {
+          "label": "Archimedes",
+          "correct": true
+        },
+        {
+          "label": "Pythagoras",
+          "correct": false
+        },
+        {
+          "label": "Euclid",
+          "correct": false
+        },
+        {
+          "label": "Aristotle",
+          "correct": false
+        }
+      ],
+      "explanation": "The story goes that Archimedes realised how to measure volume when he saw his bath water rise.",
+      "source_url": "https://www.britannica.com/biography/Archimedes",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which Jane Austen novel do Elizabeth Bennet and Mr Darcy appear?",
+      "options": [
+        {
+          "label": "Pride and Prejudice",
+          "correct": true
+        },
+        {
+          "label": "Emma",
+          "correct": false
+        },
+        {
+          "label": "Sense and Sensibility",
+          "correct": false
+        },
+        {
+          "label": "Persuasion",
+          "correct": false
+        }
+      ],
+      "explanation": "Pride and Prejudice was published in 1813. Austen's working title was First Impressions.",
+      "source_url": "https://www.britannica.com/topic/Pride-and-Prejudice",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Leonardo da Vinci painted 'The Last Supper' on a wall in Milan.",
+      "answer": true,
+      "explanation": "Leonardo painted it in the 1490s on a wall of the convent of Santa Maria delle Grazie in Milan.",
+      "source_url": "https://www.britannica.com/topic/Last-Supper-fresco-by-Leonardo-da-Vinci",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Johann Sebastian Bach and George Frideric Handel were born in the same year.",
+      "answer": true,
+      "explanation": "Both great Baroque composers were born in Germany in 1685, yet they never met.",
+      "source_url": "https://www.britannica.com/biography/George-Frideric-Handel",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Albert Einstein won his Nobel Prize for the theory of relativity.",
+      "answer": false,
+      "explanation": "Einstein's 1921 Nobel Prize in Physics was for explaining the photoelectric effect, not relativity.",
+      "source_url": "https://www.nobelprize.org/prizes/physics/1921/einstein/facts/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Sydney Opera House was designed by a Danish architect.",
+      "answer": true,
+      "explanation": "Jørn Utzon of Denmark won the design competition in 1957. The building opened in 1973.",
+      "source_url": "https://www.britannica.com/topic/Sydney-Opera-House",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Charles Dickens wrote 'Wuthering Heights'.",
+      "answer": false,
+      "explanation": "Wuthering Heights was written by Emily Brontë and published in 1847.",
+      "source_url": "https://www.britannica.com/topic/Wuthering-Heights",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many symphonies did Beethoven complete?",
+      "slider": {
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "unit": "symphonies",
+        "correct": 9,
+        "accept_min": 9,
+        "accept_max": 9
+      },
+      "explanation": "Beethoven completed nine symphonies. The Ninth, finished in 1824, was written when he was almost completely deaf.",
+      "source_url": "https://www.britannica.com/biography/Ludwig-van-Beethoven",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did Isaac Newton publish his Principia, setting out his laws of motion and gravity?",
+      "slider": {
+        "min": 1600,
+        "max": 1800,
+        "step": 1,
+        "unit": null,
+        "correct": 1687,
+        "accept_min": 1687,
+        "accept_max": 1687
+      },
+      "explanation": "Newton's Principia, published in 1687, is one of the most important science books ever written.",
+      "source_url": "https://www.britannica.com/topic/Principia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Charles Darwin's 'On the Origin of Species' published?",
+      "slider": {
+        "min": 1800,
+        "max": 1900,
+        "step": 1,
+        "unit": null,
+        "correct": 1859,
+        "accept_min": 1859,
+        "accept_max": 1859
+      },
+      "explanation": "On the Origin of Species came out in November 1859 and set out the theory of evolution by natural selection.",
+      "source_url": "https://www.britannica.com/topic/Origin-of-Species",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

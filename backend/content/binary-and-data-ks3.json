@@ -1,0 +1,651 @@
+{
+  "slug": "binary-and-data-ks3",
+  "title": "Binary and Data",
+  "intro": "Bits, bytes, binary numbers, memory and staying safe online.",
+  "category": "school-computing",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Binary is a number system that uses which base?",
+      "options": [
+        {
+          "label": "Base 2",
+          "correct": true
+        },
+        {
+          "label": "Base 8",
+          "correct": false
+        },
+        {
+          "label": "Base 10",
+          "correct": false
+        },
+        {
+          "label": "Base 16",
+          "correct": false
+        }
+      ],
+      "explanation": "Binary is base 2: it uses only the digits 0 and 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/1",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the binary number 101 in denary (base 10)?",
+      "slider": {
+        "min": 0,
+        "max": 16,
+        "step": 1,
+        "unit": null,
+        "correct": 5,
+        "accept_min": 5,
+        "accept_max": 5
+      },
+      "explanation": "Binary 101 means one 4, no 2s and one 1: 4 + 0 + 1 = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the binary number 1000 in denary?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "1,000",
+          "correct": false
+        }
+      ],
+      "explanation": "The place values in binary are 8, 4, 2 and 1, so 1000 means one 8 and nothing else.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the largest number you can store using 4 bits?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": true
+        },
+        {
+          "label": "16",
+          "correct": false
+        }
+      ],
+      "explanation": "Four bits set to 1111 give 8 + 4 + 2 + 1 = 15, the biggest 4-bit number.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does RAM stand for?",
+      "options": [
+        {
+          "label": "Random Access Memory",
+          "correct": true
+        },
+        {
+          "label": "Read And Memorise",
+          "correct": false
+        },
+        {
+          "label": "Rapid Application Mode",
+          "correct": false
+        },
+        {
+          "label": "Remote Access Machine",
+          "correct": false
+        }
+      ],
+      "explanation": "RAM, random access memory, holds the programs and data a computer is using right now.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "RAM keeps its data after the computer is switched off.",
+      "answer": false,
+      "explanation": "RAM is volatile memory: its contents are lost when the power goes off. Files are saved to storage instead.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which logic gate gives an output of 1 only when both inputs are 1?",
+      "options": [
+        {
+          "label": "OR",
+          "correct": false
+        },
+        {
+          "label": "NOT",
+          "correct": false
+        },
+        {
+          "label": "AND",
+          "correct": true
+        },
+        {
+          "label": "XOR",
+          "correct": false
+        }
+      ],
+      "explanation": "An AND gate outputs 1 only when input A and input B are both 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does HTML stand for?",
+      "options": [
+        {
+          "label": "HyperText Markup Language",
+          "correct": true
+        },
+        {
+          "label": "High Tech Modern Language",
+          "correct": false
+        },
+        {
+          "label": "Home Tool Making Language",
+          "correct": false
+        },
+        {
+          "label": "Hyperlink Text Mode Line",
+          "correct": false
+        }
+      ],
+      "explanation": "HTML, HyperText Markup Language, is used to structure the content of web pages.",
+      "source_url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a phishing message?",
+      "options": [
+        {
+          "label": "A message about fishing trips",
+          "correct": false
+        },
+        {
+          "label": "A trick message trying to get you to share private information",
+          "correct": true
+        },
+        {
+          "label": "A message that speeds up your computer",
+          "correct": false
+        },
+        {
+          "label": "A thank-you note",
+          "correct": false
+        }
+      ],
+      "explanation": "Phishing messages pretend to be from someone you trust to trick you into clicking links or sharing details. Tell a trusted adult if you get one.",
+      "source_url": "https://www.ncsc.gov.uk/collection/phishing-scams",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the denary number 13 written in binary?",
+      "options": [
+        {
+          "label": "1101",
+          "correct": true
+        },
+        {
+          "label": "1011",
+          "correct": false
+        },
+        {
+          "label": "1110",
+          "correct": false
+        },
+        {
+          "label": "1001",
+          "correct": false
+        }
+      ],
+      "explanation": "13 is one 8, one 4, no 2s and one 1: 8 + 4 + 1 = 13, so it is written 1101.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the binary number 10110 in denary?",
+      "slider": {
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": null,
+        "correct": 22,
+        "accept_min": 22,
+        "accept_max": 22
+      },
+      "explanation": "The place values are 16, 8, 4, 2 and 1. Binary 10110 means 16 + 4 + 2, which makes 22.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Add these two binary numbers: 0110 + 0011. What is the answer in binary?",
+      "options": [
+        {
+          "label": "1001",
+          "correct": true
+        },
+        {
+          "label": "1010",
+          "correct": false
+        },
+        {
+          "label": "0111",
+          "correct": false
+        },
+        {
+          "label": "1100",
+          "correct": false
+        }
+      ],
+      "explanation": "0110 is 6 and 0011 is 3. Their total is 9, and 9 in binary is 1001 (one 8 and one 1).",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/4",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many different values can be stored using 8 bits?",
+      "options": [
+        {
+          "label": "256",
+          "correct": true
+        },
+        {
+          "label": "255",
+          "correct": false
+        },
+        {
+          "label": "128",
+          "correct": false
+        },
+        {
+          "label": "512",
+          "correct": false
+        }
+      ],
+      "explanation": "Each extra bit doubles the number of patterns, so 8 bits give 2⁸ = 256 different values, from 0 to 255.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In an 8-bit binary number, what is the place value of the leftmost bit?",
+      "slider": {
+        "min": 0,
+        "max": 256,
+        "step": 1,
+        "unit": null,
+        "correct": 128,
+        "accept_min": 128,
+        "accept_max": 128
+      },
+      "explanation": "Reading from the right, the place values double each time: 1, 2, 4, 8, 16, 32, 64 and finally 128.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these units is the largest?",
+      "options": [
+        {
+          "label": "Terabyte",
+          "correct": true
+        },
+        {
+          "label": "Gigabyte",
+          "correct": false
+        },
+        {
+          "label": "Megabyte",
+          "correct": false
+        },
+        {
+          "label": "Kilobyte",
+          "correct": false
+        }
+      ],
+      "explanation": "The units grow in this order: kilobyte, megabyte, gigabyte, then terabyte, with each one about a thousand times bigger than the last.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Hexadecimal is a number system that uses which base?",
+      "options": [
+        {
+          "label": "Base 16",
+          "correct": true
+        },
+        {
+          "label": "Base 2",
+          "correct": false
+        },
+        {
+          "label": "Base 8",
+          "correct": false
+        },
+        {
+          "label": "Base 12",
+          "correct": false
+        }
+      ],
+      "explanation": "Hexadecimal is base 16. It uses the digits 0 to 9 and then the letters A to F.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zpfdwmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for a set of rules that devices follow so they can communicate over a network?",
+      "options": [
+        {
+          "label": "A protocol",
+          "correct": true
+        },
+        {
+          "label": "An algorithm",
+          "correct": false
+        },
+        {
+          "label": "A compiler",
+          "correct": false
+        },
+        {
+          "label": "A variable",
+          "correct": false
+        }
+      ],
+      "explanation": "A protocol is an agreed set of rules for sending data, so that different devices can understand each other.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zc6rcdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is ASCII used for?",
+      "options": [
+        {
+          "label": "Giving each text character its own binary code",
+          "correct": true
+        },
+        {
+          "label": "Storing the colours in a photo",
+          "correct": false
+        },
+        {
+          "label": "Recording sound from a microphone",
+          "correct": false
+        },
+        {
+          "label": "Finding websites on the internet",
+          "correct": false
+        }
+      ],
+      "explanation": "ASCII is a character set: every letter, digit and symbol gets a number, which the computer stores in binary.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zpfdwmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for one tiny dot of colour in a digital image?",
+      "options": [
+        {
+          "label": "Pixel",
+          "correct": true
+        },
+        {
+          "label": "Bit",
+          "correct": false
+        },
+        {
+          "label": "Byte",
+          "correct": false
+        },
+        {
+          "label": "Vector",
+          "correct": false
+        }
+      ],
+      "explanation": "A bitmap image is a grid of pixels, short for 'picture elements', and each one stores a colour as binary.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zpfdwmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the general name for software designed to harm a computer or steal data?",
+      "options": [
+        {
+          "label": "Malware",
+          "correct": true
+        },
+        {
+          "label": "Firmware",
+          "correct": false
+        },
+        {
+          "label": "Freeware",
+          "correct": false
+        },
+        {
+          "label": "Hardware",
+          "correct": false
+        }
+      ],
+      "explanation": "Malware is short for 'malicious software'. Viruses, worms and spyware are all types of malware.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z9p9kqt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In binary, 1 + 1 = 10.",
+      "answer": true,
+      "explanation": "Binary has no digit 2, so 1 + 1 is written as 10: a 0 in the ones column and a 1 carried into the twos column.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/4",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which logic gate gives an output of 1 when at least one of its inputs is 1?",
+      "options": [
+        {
+          "label": "OR",
+          "correct": true
+        },
+        {
+          "label": "AND",
+          "correct": false
+        },
+        {
+          "label": "NOT",
+          "correct": false
+        }
+      ],
+      "explanation": "An OR gate outputs 1 if input A or input B (or both) is 1. It only outputs 0 when both inputs are 0.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zqp9kqt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A search engine looks through every page on the internet, live, each time you search.",
+      "answer": false,
+      "explanation": "Search engines search their own index, a huge list of pages their crawlers have already visited and recorded. This is why results appear so fast.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zpkhpv4",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is software rather than hardware?",
+      "options": [
+        {
+          "label": "An operating system",
+          "correct": true
+        },
+        {
+          "label": "A keyboard",
+          "correct": false
+        },
+        {
+          "label": "A processor",
+          "correct": false
+        },
+        {
+          "label": "A hard disk drive",
+          "correct": false
+        }
+      ],
+      "explanation": "Hardware is the physical parts you can touch. Software is the programs, such as an operating system, that tell the hardware what to do.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zcxgr82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does ROM stand for?",
+      "options": [
+        {
+          "label": "Read-Only Memory",
+          "correct": true
+        },
+        {
+          "label": "Random Online Memory",
+          "correct": false
+        },
+        {
+          "label": "Rapid Output Module",
+          "correct": false
+        },
+        {
+          "label": "Remote Operating Memory",
+          "correct": false
+        }
+      ],
+      "explanation": "ROM is Read-Only Memory. It keeps the instructions a computer needs to start up, even when the power is off.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zxb72hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Copying someone else's photo from the internet and passing it off as your own work can break copyright law.",
+      "answer": true,
+      "explanation": "Photos, music and writing are protected by copyright. You need permission, or a licence, to use other people's work.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z9nk87h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which UK law makes it illegal to get into a computer system without permission?",
+      "options": [
+        {
+          "label": "The Computer Misuse Act",
+          "correct": true
+        },
+        {
+          "label": "The Equality Act",
+          "correct": false
+        },
+        {
+          "label": "The Highway Code",
+          "correct": false
+        },
+        {
+          "label": "The Consumer Rights Act",
+          "correct": false
+        }
+      ],
+      "explanation": "The Computer Misuse Act 1990 makes hacking into computers, and spreading programs that damage them, a crime.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z9nk87h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the main job of a router?",
+      "options": [
+        {
+          "label": "To pass data between different networks",
+          "correct": true
+        },
+        {
+          "label": "To store files permanently",
+          "correct": false
+        },
+        {
+          "label": "To print documents",
+          "correct": false
+        },
+        {
+          "label": "To cool down the processor",
+          "correct": false
+        }
+      ],
+      "explanation": "A router reads where each piece of data is going and forwards it towards the right network, such as from your home to the internet.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/zc6rcdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Data sent across the internet is split into small pieces called packets.",
+      "answer": true,
+      "explanation": "Files and messages are broken into packets, which travel separately and are put back together when they arrive.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z8nk87h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is two-factor authentication?",
+      "options": [
+        {
+          "label": "Proving it is you with two different checks, such as a password and a code",
+          "correct": true
+        },
+        {
+          "label": "Typing your password twice",
+          "correct": false
+        },
+        {
+          "label": "Two people sharing one account",
+          "correct": false
+        },
+        {
+          "label": "Logging in on two devices at once",
+          "correct": false
+        }
+      ],
+      "explanation": "Two-factor authentication adds a second check, like a code sent to a trusted device, so a stolen password alone is not enough.",
+      "source_url": "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

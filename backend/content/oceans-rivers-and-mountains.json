@@ -1,0 +1,653 @@
+{
+  "slug": "oceans-rivers-and-mountains",
+  "title": "Oceans, Rivers and Mountains",
+  "intro": "Dive deep and climb high with questions about the shape of our planet.",
+  "category": "geography",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In which mountain range is Mount Everest?",
+      "options": [
+        {
+          "label": "The Alps",
+          "correct": false
+        },
+        {
+          "label": "The Andes",
+          "correct": false
+        },
+        {
+          "label": "The Himalayas",
+          "correct": true
+        },
+        {
+          "label": "The Rockies",
+          "correct": false
+        }
+      ],
+      "explanation": "Mount Everest is part of the Himalayas, a mountain range in Asia that includes many of the world's highest peaks.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/nepal",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ocean lies between Europe and Africa on one side and the Americas on the other?",
+      "options": [
+        {
+          "label": "Pacific Ocean",
+          "correct": false
+        },
+        {
+          "label": "Atlantic Ocean",
+          "correct": true
+        },
+        {
+          "label": "Indian Ocean",
+          "correct": false
+        },
+        {
+          "label": "Southern Ocean",
+          "correct": false
+        }
+      ],
+      "explanation": "The Atlantic Ocean separates Europe and Africa from North and South America.",
+      "source_url": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Amazon River flows through Brazil.",
+      "answer": true,
+      "explanation": "The Amazon flows across South America, much of it through Brazil and its huge rainforest.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/brazil",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Mount Kilimanjaro?",
+      "options": [
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "Africa",
+          "correct": true
+        },
+        {
+          "label": "South America",
+          "correct": false
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        }
+      ],
+      "explanation": "Kilimanjaro, in Tanzania, is the highest mountain in Africa.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/tanzania",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "About what percentage of all the water on Earth is in the ocean?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "correct": 97,
+        "accept_min": 95,
+        "accept_max": 99
+      },
+      "explanation": "About 97 per cent of Earth's water is in the ocean. Most of the rest is frozen in ice or found in lakes, rivers and underground.",
+      "source_url": "https://oceanservice.noaa.gov/facts/oceanwater.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the deepest known point in the ocean called?",
+      "options": [
+        {
+          "label": "The Grand Canyon",
+          "correct": false
+        },
+        {
+          "label": "Challenger Deep",
+          "correct": true
+        },
+        {
+          "label": "The Dead Sea",
+          "correct": false
+        },
+        {
+          "label": "Lake Baikal",
+          "correct": false
+        }
+      ],
+      "explanation": "Challenger Deep, in the Mariana Trench in the Pacific Ocean, is the deepest known place in the ocean, nearly 11 kilometres down.",
+      "source_url": "https://oceanservice.noaa.gov/facts/oceandepth.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest ocean?",
+      "options": [
+        {
+          "label": "Atlantic",
+          "correct": false
+        },
+        {
+          "label": "Indian",
+          "correct": false
+        },
+        {
+          "label": "Arctic",
+          "correct": false
+        },
+        {
+          "label": "Pacific",
+          "correct": true
+        }
+      ],
+      "explanation": "The Pacific is by far the largest ocean and holds more than half of the free water on Earth.",
+      "source_url": "https://oceanservice.noaa.gov/facts/biggestocean.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river flows through Cairo?",
+      "options": [
+        {
+          "label": "The Nile",
+          "correct": true
+        },
+        {
+          "label": "The Thames",
+          "correct": false
+        },
+        {
+          "label": "The Ganges",
+          "correct": false
+        },
+        {
+          "label": "The Danube",
+          "correct": false
+        }
+      ],
+      "explanation": "The River Nile flows north through Egypt and its capital, Cairo, to the Mediterranean Sea.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/egypt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A river's mouth is where it begins.",
+      "answer": false,
+      "explanation": "A river begins at its source. Its mouth is where it ends, usually flowing into the sea, a lake or another river.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many named oceans are there on Earth?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": true
+        },
+        {
+          "label": "Three",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Ten",
+          "correct": false
+        }
+      ],
+      "explanation": "The five oceans are the Pacific, Atlantic, Indian, Southern and Arctic. They are all joined together as one global ocean.",
+      "source_url": "https://oceanservice.noaa.gov/facts/howmanyoceans.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the smallest ocean?",
+      "options": [
+        {
+          "label": "The Arctic Ocean",
+          "correct": true
+        },
+        {
+          "label": "The Indian Ocean",
+          "correct": false
+        },
+        {
+          "label": "The Atlantic Ocean",
+          "correct": false
+        },
+        {
+          "label": "The Southern Ocean",
+          "correct": false
+        }
+      ],
+      "explanation": "The Arctic Ocean, around the North Pole, is the smallest and shallowest of the five oceans.",
+      "source_url": "https://www.britannica.com/place/Arctic-Ocean",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ocean surrounds Antarctica?",
+      "options": [
+        {
+          "label": "The Southern Ocean",
+          "correct": true
+        },
+        {
+          "label": "The Arctic Ocean",
+          "correct": false
+        },
+        {
+          "label": "The Pacific Ocean",
+          "correct": false
+        },
+        {
+          "label": "The Indian Ocean",
+          "correct": false
+        }
+      ],
+      "explanation": "The Southern Ocean circles all the way around Antarctica and is very cold.",
+      "source_url": "https://oceanservice.noaa.gov/facts/southern-ocean.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The sea is salty because rain and rivers wash salts out of rocks on land and carry them to the ocean.",
+      "answer": true,
+      "explanation": "Rivers carry tiny amounts of dissolved salts into the sea. When seawater evaporates, the salt stays behind.",
+      "source_url": "https://oceanservice.noaa.gov/facts/whysalty.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What mainly causes the tides in the ocean?",
+      "options": [
+        {
+          "label": "The pull of the Moon",
+          "correct": true
+        },
+        {
+          "label": "The wind",
+          "correct": false
+        },
+        {
+          "label": "Whales swimming",
+          "correct": false
+        },
+        {
+          "label": "Rivers flowing into the sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Moon's gravity pulls on Earth's oceans, making the water rise and fall. The Sun's pull helps too, but less.",
+      "source_url": "https://oceanservice.noaa.gov/facts/moon-tide.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Most coasts have how many high tides each day?",
+      "slider": {
+        "min": 0,
+        "max": 6,
+        "step": 1,
+        "unit": null,
+        "correct": 2,
+        "accept_min": 2,
+        "accept_max": 2
+      },
+      "explanation": "Most coastal places have two high tides and two low tides roughly every day.",
+      "source_url": "https://oceanservice.noaa.gov/facts/hightide.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river flows through the city of Rome?",
+      "options": [
+        {
+          "label": "The Tiber",
+          "correct": true
+        },
+        {
+          "label": "The Po",
+          "correct": false
+        },
+        {
+          "label": "The Rhône",
+          "correct": false
+        },
+        {
+          "label": "The Elbe",
+          "correct": false
+        }
+      ],
+      "explanation": "Ancient Rome grew up beside the Tiber, and the river still flows through the middle of the city today.",
+      "source_url": "https://www.britannica.com/place/Tiber-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "The Nile is about how many kilometres long?",
+      "slider": {
+        "min": 5000,
+        "max": 8000,
+        "step": 50,
+        "unit": "km",
+        "correct": 6650,
+        "accept_min": 6400,
+        "accept_max": 6900
+      },
+      "explanation": "The Nile is about 6,650 kilometres long and is often called the longest river in the world.",
+      "source_url": "https://www.britannica.com/place/Nile-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which mountain range is often used as the dividing line between Europe and Asia?",
+      "options": [
+        {
+          "label": "The Ural Mountains",
+          "correct": true
+        },
+        {
+          "label": "The Pyrenees",
+          "correct": false
+        },
+        {
+          "label": "The Atlas Mountains",
+          "correct": false
+        },
+        {
+          "label": "The Appalachians",
+          "correct": false
+        }
+      ],
+      "explanation": "The Ural Mountains run from north to south across Russia and are usually taken as part of the border between Europe and Asia.",
+      "source_url": "https://www.britannica.com/place/Ural-Mountains",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river flows through Paris?",
+      "options": [
+        {
+          "label": "The Seine",
+          "correct": true
+        },
+        {
+          "label": "The Danube",
+          "correct": false
+        },
+        {
+          "label": "The Loire",
+          "correct": false
+        },
+        {
+          "label": "The Thames",
+          "correct": false
+        }
+      ],
+      "explanation": "The Seine winds through the middle of Paris, crossed by many famous bridges.",
+      "source_url": "https://www.britannica.com/place/Seine-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Mississippi River is in which country?",
+      "options": [
+        {
+          "label": "The United States",
+          "correct": true
+        },
+        {
+          "label": "Canada",
+          "correct": false
+        },
+        {
+          "label": "Mexico",
+          "correct": false
+        },
+        {
+          "label": "Brazil",
+          "correct": false
+        }
+      ],
+      "explanation": "The Mississippi flows south through the middle of the United States into the Gulf of Mexico.",
+      "source_url": "https://www.britannica.com/place/Mississippi-River",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a smaller river or stream that flows into a bigger river called?",
+      "options": [
+        {
+          "label": "A tributary",
+          "correct": true
+        },
+        {
+          "label": "A delta",
+          "correct": false
+        },
+        {
+          "label": "An estuary",
+          "correct": false
+        },
+        {
+          "label": "A meander",
+          "correct": false
+        }
+      ],
+      "explanation": "Tributaries join the main river and add more water to it as it flows towards the sea.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for flat land where a river splits into many channels before it reaches the sea?",
+      "options": [
+        {
+          "label": "A delta",
+          "correct": true
+        },
+        {
+          "label": "A source",
+          "correct": false
+        },
+        {
+          "label": "A waterfall",
+          "correct": false
+        },
+        {
+          "label": "A gorge",
+          "correct": false
+        }
+      ],
+      "explanation": "A delta forms where a river drops the mud and sand it carries, building up new land at its mouth.",
+      "source_url": "https://www.britannica.com/science/delta-river-system-component",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Rivers flow downhill.",
+      "answer": true,
+      "explanation": "Gravity pulls water downhill, so rivers flow from high ground towards lower ground and the sea.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which mountain range runs down the west side of South America?",
+      "options": [
+        {
+          "label": "The Andes",
+          "correct": true
+        },
+        {
+          "label": "The Alps",
+          "correct": false
+        },
+        {
+          "label": "The Rockies",
+          "correct": false
+        },
+        {
+          "label": "The Urals",
+          "correct": false
+        }
+      ],
+      "explanation": "The Andes stretch for about 7,000 kilometres along the western edge of South America.",
+      "source_url": "https://www.britannica.com/place/Andes-Mountains",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Mont Blanc is the highest peak in which mountain range?",
+      "options": [
+        {
+          "label": "The Alps",
+          "correct": true
+        },
+        {
+          "label": "The Pyrenees",
+          "correct": false
+        },
+        {
+          "label": "The Himalayas",
+          "correct": false
+        },
+        {
+          "label": "The Andes",
+          "correct": false
+        }
+      ],
+      "explanation": "Mont Blanc stands on the border of France and Italy and is the highest mountain in the Alps.",
+      "source_url": "https://www.britannica.com/place/Mont-Blanc-mountain-Europe",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Mount Fuji, a famous snow-capped volcano, is in which country?",
+      "options": [
+        {
+          "label": "Japan",
+          "correct": true
+        },
+        {
+          "label": "China",
+          "correct": false
+        },
+        {
+          "label": "Chile",
+          "correct": false
+        },
+        {
+          "label": "Iceland",
+          "correct": false
+        }
+      ],
+      "explanation": "Mount Fuji is the highest mountain in Japan and is a volcano that last erupted in 1707.",
+      "source_url": "https://www.britannica.com/place/Mount-Fuji",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the highest mountain in North America?",
+      "options": [
+        {
+          "label": "Denali",
+          "correct": true
+        },
+        {
+          "label": "Mount Rushmore",
+          "correct": false
+        },
+        {
+          "label": "Mont Blanc",
+          "correct": false
+        },
+        {
+          "label": "Mount Fuji",
+          "correct": false
+        }
+      ],
+      "explanation": "Denali, in Alaska, rises to about 6,190 metres, higher than any other peak in North America.",
+      "source_url": "https://www.britannica.com/place/Denali",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the highest mountain in Wales?",
+      "options": [
+        {
+          "label": "Yr Wyddfa (Snowdon)",
+          "correct": true
+        },
+        {
+          "label": "Scafell Pike",
+          "correct": false
+        },
+        {
+          "label": "Ben Nevis",
+          "correct": false
+        },
+        {
+          "label": "Pen y Fan",
+          "correct": false
+        }
+      ],
+      "explanation": "Yr Wyddfa, also called Snowdon, is about 1,085 metres high and is in Eryri (Snowdonia) National Park.",
+      "source_url": "https://www.britannica.com/place/Yr-Wyddfa",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sea between Israel and Jordan is so salty that people float easily in it?",
+      "options": [
+        {
+          "label": "The Dead Sea",
+          "correct": true
+        },
+        {
+          "label": "The Red Sea",
+          "correct": false
+        },
+        {
+          "label": "The Black Sea",
+          "correct": false
+        },
+        {
+          "label": "The Caspian Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Dead Sea is many times saltier than the ocean, and all that salt makes the water push swimmers up.",
+      "source_url": "https://www.britannica.com/place/Dead-Sea",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A glacier is a fast-flowing river of liquid water high in the mountains.",
+      "answer": false,
+      "explanation": "A glacier is a huge mass of ice that moves very slowly downhill, often only a few centimetres a day.",
+      "source_url": "https://www.britannica.com/science/glacier",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

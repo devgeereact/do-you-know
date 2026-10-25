@@ -1,0 +1,75 @@
+# Manual only. Repository secrets support private free-account setups without assuming Environments.
+name: Manual public FTPS deployment
+'on':
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Public artifact to publish
+        type: choice
+        options:
+        - coming-soon
+        - application
+        default: coming-soon
+      confirm_domain:
+        description: Type doyouknow.space after reviewing target and recovery
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: do-you-know-public-deployment
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - name: Check target confirmation
+      env:
+        CONFIRM: ${{ inputs.confirm_domain }}
+        PAYLOAD: ${{ inputs.payload }}
+        BACKEND_READY: ${{ vars.PUBLIC_BACKEND_READY }}
+      run: "test \"$CONFIRM\" = doyouknow.space\nif [ \"$PAYLOAD\" = application ]; then\n  test \"$BACKEND_READY\"\
+        \ = true || { echo 'BLOCKED: verify private backend/auth/database and restore first.'; exit 1; }\nfi"
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+      if: inputs.payload == 'application'
+      with:
+        node-version: '24'
+        cache: npm
+    - name: Check and build application once
+      if: inputs.payload == 'application'
+      env:
+        VITE_APP_URL: https://doyouknow.space
+        VITE_CPANEL_API_URL: /api/v1
+        VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
+        VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+        PRERENDER: '0'
+      run: 'npm ci --ignore-scripts
+
+        npm run typecheck
+
+        npm run lint
+
+        npm test
+
+        npm run build
+
+        node scripts/prepare-public-release.mjs'
+    - name: Stamp coming-soon artifact
+      if: inputs.payload == 'coming-soon'
+      run: 'python3 -c ''import os,pathlib; p=pathlib.Path("deployment/coming-soon/index.html"); p.write_text(p.read_text().replace("BUILD_ID",os.environ["GITHUB_SHA"]))'' '
+    - name: Upload public artifact and verify HTTPS
+      env:
+        FTPS_HOST: ${{ secrets.FTPS_HOST }}
+        FTPS_PORT: ${{ secrets.FTPS_PORT }}
+        FTPS_USERNAME: ${{ secrets.FTPS_USERNAME }}
+        FTPS_PASSWORD: ${{ secrets.FTPS_PASSWORD }}
+        FTPS_REMOTE_DIR: ${{ secrets.FTPS_REMOTE_DIR }}
+        DEPLOY_CONFIRM_DOMAIN: ${{ inputs.confirm_domain }}
+        PAYLOAD: ${{ inputs.payload }}
+      run: 'if [ "$PAYLOAD" = coming-soon ]; then folder=deployment/coming-soon; else folder=.release-public; fi
+
+        python3 scripts/deploy-ftps.py --payload "$folder" --publish --build-id "$GITHUB_SHA"'

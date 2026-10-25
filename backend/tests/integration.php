@@ -1,0 +1,121 @@
+<?php
+declare(strict_types=1);
+require __DIR__.'/http.php';
+use Dyk\Database;
+// Fixtures are original test content in a fresh private database, never public production seed.
+$category=Database::uuid();$quiz=Database::uuid();$version=Database::uuid();$snapshot=[];
+foreach (['choice','boolean','slider'] as $type) {
+    $q=['id'=>Database::uuid(),'type'=>$type,'prompt'=>'Test '.$type,'image_url'=>null,'explanation'=>'Test explanation','source_url'=>'https://example.org/source','options'=>[],'slider'=>null];
+    if($type==='slider'){$q['slider']=['min'=>0,'max'=>10,'step'=>1,'unit'=>null,'correct'=>5,'accept_min'=>4,'accept_max'=>6];}
+    else{$q['options']=[['id'=>Database::uuid(),'label'=>'Right','is_correct'=>true],['id'=>Database::uuid(),'label'=>'Other','is_correct'=>false]];}
+    $snapshot[]=$q;
+}
+$slug='test-'.substr($quiz,0,8);
+Database::execute($db,'INSERT INTO categories (id,slug,name) VALUES (?,?,?)',[$category,$slug,'Test category']);
+Database::execute($db,"INSERT INTO quizzes (id,slug,title,category_id,status,current_version_id,time_limit_seconds) VALUES (?,?,?,?,'published',?,5)",[$quiz,$slug,'Test quiz',$category,$version]);
+Database::execute($db,'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',[$version,$quiz,json_encode($snapshot)]);
+$keys=array_column($snapshot,null,'id');
+$r=request('GET','/health');check('health responds without exposing config',$r['status']===200&&$r['body']===['status'=>'ok','api_version'=>1]);
+check('API responses are never cached',str_contains(strtolower($r['headers']),'no-store'));
+$r=request('OPTIONS','/attempts');check('preflight allows bearer header',$r['status']===204&&str_contains($r['headers'],'Authorization'));
+$r=request('GET','/health',null,null,'https://attacker.example');check('rejects unapproved origin',$r['status']===403&&!str_contains($r['headers'],'Access-Control-Allow-Origin'));
+$r=request('POST','/guest-sessions',null,null,'http://localhost:5202','{broken');check('rejects malformed JSON',$r['status']===400);
+$r=request('POST','/guest-sessions',null,null,'http://localhost:5202','[]');check('requires JSON object',$r['status']===400);
+$r=request('POST','/guest-sessions',null,null,'http://localhost:5202',str_repeat('x',32769));check('caps body size',$r['status']===413);
+$r=request('POST','/guest-sessions',[]);$guest=$r['body'];check('creates guest without personal data',$r['status']===201&&str_starts_with($guest['token'],'guest_'));
+$r=request('POST','/guest-sessions',[]);$other=$r['body'];
+$suffix=str_replace('-','',Database::uuid());
+Database::execute($db,"INSERT INTO identities (provider,subject,profile_id) VALUES ('clerk',?,?),('clerk',?,?)",['user_Case'.$suffix,$guest['profile_id'],'user_case'.$suffix,$other['profile_id']]);
+$caseCount=Database::one($db,'SELECT COUNT(*) AS n FROM identities WHERE subject IN (?,?)',['user_Case'.$suffix,'user_case'.$suffix]);
+check('Clerk subjects remain case-sensitive',(int)$caseCount['n']===2);
+$stored=Database::one($db,'SELECT token_hash FROM guest_sessions WHERE profile_id=?',[$guest['profile_id']]);check('stores only hash of guest token',$stored['token_hash']===hash('sha256',$guest['token']));
+$r=request('GET','/me',null,$guest['token']);check('guest sees own profile',$r['body']['id']===$guest['profile_id']&&$r['body']['role']==='guest');
+Database::execute($db,'UPDATE guest_sessions SET expires_at=DATE_ADD(UTC_TIMESTAMP(),INTERVAL 1 HOUR) WHERE profile_id=?',[$guest['profile_id']]);
+$r=request('GET','/me',null,$guest['token']);$renewed=Database::one($db,'SELECT TIMESTAMPDIFF(HOUR,UTC_TIMESTAMP(),expires_at) AS h FROM guest_sessions WHERE profile_id=?',[$guest['profile_id']]);
+check('active guest session slides forward instead of expiring',$r['status']===200&&(int)$renewed['h']>24);
+$before=Database::one($db,'SELECT expires_at FROM guest_sessions WHERE profile_id=?',[$guest['profile_id']]);request('GET','/me',null,$guest['token']);$after=Database::one($db,'SELECT expires_at FROM guest_sessions WHERE profile_id=?',[$guest['profile_id']]);
+check('fresh guest session is not rewritten on every request',$before['expires_at']===$after['expires_at']);
+$r=request('GET','/me?user_id='.$other['profile_id'],null,$guest['token']);check('submitted profile ID cannot change identity',$r['status']===200&&$r['body']['id']===$guest['profile_id']);
+$r=request('GET','/me');check('profile requires identity',$r['status']===401);
+$beforeBuckets=(int)Database::one($db,'SELECT COUNT(*) AS n FROM rate_limits')['n'];
+for($i=0;$i<5;$i++){request('GET','/me',null,'guest_'.bin2hex(random_bytes(32)));}
+$afterBuckets=(int)Database::one($db,'SELECT COUNT(*) AS n FROM rate_limits')['n'];
+check('made-up bearer tokens add no throttle rows',$afterBuckets-$beforeBuckets<=1);
+$r=request('GET','/me',null,'guest_forged');check('rejects forged guest token',$r['status']===401);
+$r=request('GET','/categories');check('published categories readable',$r['status']===200&&count($r['body'])>0);
+$r=request('GET','/quizzes/'.$slug);check('catalogue contains no snapshot',$r['status']===200&&!array_key_exists('snapshot',$r['body'])&&!array_key_exists('current_version_id',$r['body']));
+check('catalogue JSON uses typed booleans and arrays',is_bool($r['body']['shuffle_options'])&&is_bool($r['body']['is_ranked'])&&is_array($r['body']['curriculum_tags']));
+Database::execute($db,'UPDATE quizzes SET age_min=8,age_max=12,curriculum_tags=? WHERE id=?',[json_encode(['fixture-tag']),$quiz]);
+$r=request('GET','/quizzes?category_id='.$category.'&age=10&curriculum_tag=fixture-tag&search=Test');
+check('catalogue filters published metadata',$r['status']===200&&count($r['body'])===1&&$r['body'][0]['id']===$quiz);
+$r=request('GET','/quizzes?category_id='.$category.'&age=13');check('age filter excludes out-of-range quiz',$r['status']===200&&$r['body']===[]);
+$r=request('GET','/quizzes?category_id='.$category.'&search=%25');check('search wildcard treated literally',$r['status']===200&&$r['body']===[]);
+$r=request('GET','/quizzes?age[]=10');check('catalogue rejects array filter',$r['status']===400);
+$r=request('GET','/categories/'.$slug);check('category detail uses public metadata',$r['status']===200&&$r['body']['id']===$category&&$r['body']['is_active']===true);
+$r=request('GET','/curriculum-tags');check('curriculum tags readable',$r['status']===200&&is_array($r['body']));
+$r=request('GET','/questions');check('no generic question table endpoint',$r['status']===404);
+$r=request('GET','/quizzes/not-published');check('missing quiz returns JSON 404',$r['status']===404);
+$r=request('POST','/account/session',['adult_confirmed'=>true],$guest['token']);check('guest cannot become Clerk account',$r['status']!==200);
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'forged'],$guest['token']);check('unknown modes fail explicitly',$r['status']===400);
+$r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$state=$r['body'];$id=$state['attempt_id'];check('starts practice with three questions',$r['status']===200&&$state['total']===3);
+check('first question has no explanation or answers',!isset($state['question']['explanation'])&&!str_contains(json_encode($state['question']),'is_correct')&&!str_contains(json_encode($state['question']),'accept_min'));
+$r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);check('reload resumes original attempt',$r['body']['attempt_id']===$id);
+$r=request('POST','/attempts/'.$id.'/finish',[],$guest['token']);check('cannot finish early',$r['status']===400&&$r['body']['error']['code']==='not_all_answered');
+$r=request('POST','/attempts/'.$id.'/answer',['option_id'=>'forged'],$other['token']);check('another player cannot answer',$r['status']===404);
+$r=request('POST','/attempts/'.$id.'/answer',['option_id'=>'forged','value'=>'bad'],$guest['token']);check('invalid answer refused',$r['status']===400);
+for($i=0;$i<3;$i++) {
+    $q=$keys[$state['question']['id']];$body=$q['type']==='slider'?['value'=>5]:['option_id'=>$q['options'][0]['id']];
+    $r=request('POST','/attempts/'.$id.'/answer',$body+['correct'=>999,'score'=>999,'time_ms'=>0],$guest['token']);
+    check('server grades answer '.($i+1),$r['status']===200&&$r['body']['is_correct']===true&&$r['body']['explanation']==='Test explanation');
+    $r=request('POST','/attempts/'.$id.'/answer',$body,$guest['token']);check('rejects duplicate answer '.($i+1),$r['status']===400);
+    if($i<2){$r=request('POST','/attempts/'.$id.'/next',[],$guest['token']);$state=$r['body'];check('advances without answer fields '.($i+1),$r['status']===200&&!str_contains(json_encode($state['question']),'is_correct'));}
+}
+$r=request('POST','/attempts/'.$id.'/finish',[],$guest['token']);check('server result ignores submitted scores',$r['status']===200&&$r['body']['correct']===3&&$r['body']['total']===3&&count($r['body']['review'])===3);$summary=$r['body'];
+$r=request('POST','/attempts/'.$id.'/finish',[],$guest['token']);check('finish is idempotent',$r['body']===$summary);
+$r=request('POST','/attempts/'.$id.'/finish',[],$other['token']);check('another player cannot read review',$r['status']===404);
+$r=request('GET','/me/games?user_id='.$other['profile_id'].'&limit=1',null,$guest['token']);
+check('history contains only own finished server results',$r['status']===200&&count($r['body'])===1&&$r['body'][0]['attemptId']===$id&&$r['body'][0]['correct']===3);
+$r=request('GET','/me/games',null,$other['token']);check('other player cannot see history',$r['status']===200&&$r['body']===[]);
+$r=request('GET','/me/games?limit=1%20OR%201=1',null,$guest['token']);check('history limit rejects non-numeric input',$r['status']===400);
+$r=request('GET','/me/settings',null,$guest['token']);check('settings default to light with notifications off',$r['status']===200&&$r['body']['theme']==='light'&&$r['body']['notifications_enabled']===false);
+$r=request('POST','/me/settings',['theme'=>'dark','notifications_enabled'=>true],$guest['token']);check('updates own settings with real boolean',$r['status']===200&&$r['body']['theme']==='dark'&&$r['body']['notifications_enabled']===true);
+$r=request('POST','/me/settings',['theme'=>'light','user_id'=>$other['profile_id']],$guest['token']);check('settings reject identity overrides',$r['status']===400);
+$r=request('POST','/me/settings',['notifications_enabled'=>'false'],$guest['token']);check('settings reject string booleans',$r['status']===400);
+$r=request('GET','/me/settings',null,$other['token']);check('settings are isolated between players',$r['body']['theme']==='light'&&$r['body']['notifications_enabled']===false);
+$r=request('POST','/me/nickname',['nickname'=>'ValidName'],$guest['token']);check('age band required before chosen nickname',$r['status']===400&&$r['body']['error']['code']==='age_band_required');
+$r=request('POST','/me/age-band',['band'=>'under_13','role'=>'admin'],$guest['token']);check('sets child age band without granting role',$r['status']===200);
+$r=request('POST','/me/age-band',['band'=>'18_plus'],$guest['token']);check('child cannot change age band',$r['status']===400&&$r['body']['error']['code']==='age_band_locked');
+$r=request('POST','/me/nickname',['nickname'=>'ChosenName'],$guest['token']);check('child cannot choose free-text nickname',$r['status']===400&&$r['body']['error']['code']==='kids_use_generated_nickname');
+$r=request('POST','/me/nickname/random',[],$guest['token']);check('child can receive generated nickname',$r['status']===200&&preg_match('/^[A-Za-z]+[0-9]{2}$/D',$r['body']['nickname'])===1);
+$r=request('POST','/me/avatar',['avatar_id'=>'owl'],$guest['token']);check('preset avatar accepted',$r['status']===200&&$r['body']['avatar_id']==='owl');
+$r=request('GET','/me',null,$guest['token']);check('own profile shows chosen avatar',$r['status']===200&&$r['body']['avatar_id']==='owl');
+$r=request('POST','/me/avatar',['avatar_id'=>'https://example.com/x.png'],$guest['token']);check('unknown avatar refused',$r['status']===400&&$r['body']['error']['code']==='invalid_avatar');
+$r=request('GET','/me',null,$guest['token']);check('profile has no real name email or external identity',$r['body']['role']==='guest'&&!isset($r['body']['email'])&&!isset($r['body']['full_name'])&&!isset($r['body']['subject']));
+$r=request('POST','/me/age-band',['band'=>'13_17'],$other['token']);check('older player may set age band',$r['status']===200);
+Database::execute($db,'INSERT IGNORE INTO blocked_words (word) VALUES (?)',['forbiddenfixture']);
+$r=request('POST','/me/nickname',['nickname'=>'ForbiddenFixture'],$other['token']);check('nickname moderation ignores case',$r['status']===400&&$r['body']['error']['code']==='nickname_not_allowed');
+$r=request('POST','/me/nickname',['nickname'=>'Safe Player'],$other['token']);check('older player may choose permitted nickname',$r['status']===200&&$r['body']['nickname']==='Safe Player');
+$r=request('POST','/me/delete',[],$guest['token']);check('deletion requires explicit confirmation',$r['status']===400);
+$r=request('POST','/guest-sessions',[]);$deletable=$r['body'];
+$r=request('POST','/attempts',['quiz_slug'=>$slug],$deletable['token']);$deletedAttempt=$r['body']['attempt_id'];
+$r=request('GET','/me/settings',null,$deletable['token']);
+$extraToken='guest_'.bin2hex(random_bytes(32));
+Database::execute($db,'INSERT INTO guest_sessions (token_hash,profile_id,expires_at) VALUES (?,?,DATE_ADD(UTC_TIMESTAMP(),INTERVAL 1 DAY))',[hash('sha256',$extraToken),$deletable['profile_id']]);
+$r=request('POST','/me/delete',['confirmed'=>true,'user_id'=>$guest['profile_id']],$deletable['token']);check('deletion is scoped to current session',$r['status']===200);
+$r=request('GET','/me',null,$deletable['token']);check('deletion revokes session',$r['status']===401);
+$r=request('GET','/me',null,$extraToken);check('deletion revokes all profile sessions',$r['status']===401);
+$remaining=Database::one($db,'SELECT (SELECT COUNT(*) FROM attempts WHERE id=?) + (SELECT COUNT(*) FROM app_settings WHERE user_id=?) AS n',[$deletedAttempt,$deletable['profile_id']]);
+check('deletion removes attempts and preferences',(int)$remaining['n']===0);
+$r=request('GET','/me',null,$guest['token']);check('deletion cannot target another player',$r['status']===200);
+$r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$id2=$r['body']['attempt_id'];
+Database::execute($db,'UPDATE attempts SET current_sent_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 10 SECOND) WHERE id=?',[$id2]);
+$r=request('POST','/attempts/'.$id2.'/answer',[],$guest['token']);check('server enforces time limit',$r['status']===200&&$r['body']['timed_out']===true&&$r['body']['is_correct']===false);
+$a=Database::one($db,'SELECT answer_time_ms,current_sent_at FROM attempts WHERE id=?',[$id2]);check('time is capped and explanation clock stopped',(int)$a['answer_time_ms']===5000&&$a['current_sent_at']===null);
+$r=request('DELETE','/session',null,$guest['token']);check('sign-out revokes guest token',$r['status']===200);
+$r=request('GET','/me',null,$guest['token']);check('revoked token no longer works',$r['status']===401);
+Database::execute($db,'UPDATE guest_sessions SET expires_at=DATE_SUB(UTC_TIMESTAMP(),INTERVAL 1 SECOND) WHERE profile_id=?',[$other['profile_id']]);
+$r=request('GET','/me',null,$other['token']);check('expired session rejected',$r['status']===401);
+Dyk\RateLimit::check($db,$config,'test-limit','fixture',1,60);
+$limited=false;try{Dyk\RateLimit::check($db,$config,'test-limit','fixture',1,60);}catch(Dyk\ApiError $error){$limited=$error->status===429;}
+check('rate limits enforced',$limited);
+fwrite(STDOUT,"$count HTTP/database checks passed\n");

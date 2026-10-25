@@ -1,0 +1,647 @@
+{
+  "slug": "weather-and-climate-ks3",
+  "title": "Weather and Climate",
+  "intro": "Clouds, rainfall, storms and the atmosphere above us.",
+  "category": "school-geography",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which instrument measures how much rain has fallen?",
+      "options": [
+        {
+          "label": "Barometer",
+          "correct": false
+        },
+        {
+          "label": "Thermometer",
+          "correct": false
+        },
+        {
+          "label": "Rain gauge",
+          "correct": true
+        },
+        {
+          "label": "Anemometer",
+          "correct": false
+        }
+      ],
+      "explanation": "A rain gauge collects rain so it can be measured, usually in millimetres.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which instrument measures air pressure?",
+      "options": [
+        {
+          "label": "Barometer",
+          "correct": true
+        },
+        {
+          "label": "Rain gauge",
+          "correct": false
+        },
+        {
+          "label": "Wind vane",
+          "correct": false
+        },
+        {
+          "label": "Thermometer",
+          "correct": false
+        }
+      ],
+      "explanation": "A barometer measures air pressure. Falling pressure often means wetter, windier weather is on the way.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What type of rainfall happens when moist air is forced to rise over hills and mountains?",
+      "options": [
+        {
+          "label": "Convectional rainfall",
+          "correct": false
+        },
+        {
+          "label": "Relief rainfall",
+          "correct": true
+        },
+        {
+          "label": "Frontal rainfall",
+          "correct": false
+        },
+        {
+          "label": "Acid rain",
+          "correct": false
+        }
+      ],
+      "explanation": "Relief rainfall forms when air rises over high ground, cools and condenses into clouds and rain.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of cloud is white, fluffy and heaped, often seen on sunny days?",
+      "options": [
+        {
+          "label": "Cirrus",
+          "correct": false
+        },
+        {
+          "label": "Stratus",
+          "correct": false
+        },
+        {
+          "label": "Cumulus",
+          "correct": true
+        },
+        {
+          "label": "Fog",
+          "correct": false
+        }
+      ],
+      "explanation": "Cumulus clouds are puffy, heaped clouds that often look like cotton wool.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the difference between weather and climate?",
+      "options": [
+        {
+          "label": "They mean the same thing",
+          "correct": false
+        },
+        {
+          "label": "Climate is the average weather over many years",
+          "correct": true
+        },
+        {
+          "label": "Weather lasts longer than climate",
+          "correct": false
+        },
+        {
+          "label": "Climate only means temperature",
+          "correct": false
+        }
+      ],
+      "explanation": "Weather is what happens day to day. Climate describes the typical weather of a place over a long time, often 30 years.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Hurricanes, typhoons and cyclones are names for the same type of storm in different parts of the world.",
+      "answer": true,
+      "explanation": "All three are tropical cyclones. The name used depends on which ocean the storm forms over.",
+      "source_url": "https://www.metoffice.gov.uk/research/weather/tropical-cyclones/hurricane",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the source of a river?",
+      "options": [
+        {
+          "label": "Where it meets the sea",
+          "correct": false
+        },
+        {
+          "label": "Where it begins",
+          "correct": true
+        },
+        {
+          "label": "Its widest point",
+          "correct": false
+        },
+        {
+          "label": "A bend in the river",
+          "correct": false
+        }
+      ],
+      "explanation": "A river's source is where it starts, often in hills or mountains.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the place where a river flows into the sea called?",
+      "options": [
+        {
+          "label": "The mouth",
+          "correct": true
+        },
+        {
+          "label": "The source",
+          "correct": false
+        },
+        {
+          "label": "The tributary",
+          "correct": false
+        },
+        {
+          "label": "The meander",
+          "correct": false
+        }
+      ],
+      "explanation": "The mouth is the end of a river, where it flows into a sea, lake or larger river.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs92tfr",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which layer of the atmosphere does almost all of our weather happen?",
+      "options": [
+        {
+          "label": "Troposphere",
+          "correct": true
+        },
+        {
+          "label": "Stratosphere",
+          "correct": false
+        },
+        {
+          "label": "Mesosphere",
+          "correct": false
+        },
+        {
+          "label": "Thermosphere",
+          "correct": false
+        }
+      ],
+      "explanation": "The troposphere is the lowest layer of the atmosphere, where we live and where nearly all weather takes place.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which instrument measures wind speed?",
+      "options": [
+        {
+          "label": "Anemometer",
+          "correct": true
+        },
+        {
+          "label": "Barometer",
+          "correct": false
+        },
+        {
+          "label": "Thermometer",
+          "correct": false
+        },
+        {
+          "label": "Hygrometer",
+          "correct": false
+        }
+      ],
+      "explanation": "An anemometer usually has spinning cups. The faster they turn, the stronger the wind.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which instrument measures humidity?",
+      "options": [
+        {
+          "label": "Hygrometer",
+          "correct": true
+        },
+        {
+          "label": "Anemometer",
+          "correct": false
+        },
+        {
+          "label": "Rain gauge",
+          "correct": false
+        },
+        {
+          "label": "Wind vane",
+          "correct": false
+        }
+      ],
+      "explanation": "A hygrometer measures how much water vapour is in the air.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of rainfall happens when the Sun heats the ground and warm air rises quickly, often bringing thunderstorms?",
+      "options": [
+        {
+          "label": "Convectional rainfall",
+          "correct": true
+        },
+        {
+          "label": "Frontal rainfall",
+          "correct": false
+        },
+        {
+          "label": "Relief rainfall",
+          "correct": false
+        }
+      ],
+      "explanation": "Hot ground warms the air above it, which rises, cools and condenses into towering clouds. It is common on hot summer afternoons.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/rain",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of rainfall happens when warm air meets colder air and is forced to rise over it?",
+      "options": [
+        {
+          "label": "Frontal rainfall",
+          "correct": true
+        },
+        {
+          "label": "Convectional rainfall",
+          "correct": false
+        },
+        {
+          "label": "Relief rainfall",
+          "correct": false
+        }
+      ],
+      "explanation": "Where warm and cold air masses meet is called a front. The lighter warm air rises over the cold air, cools and forms rain.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/rain",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is an area of high air pressure called?",
+      "options": [
+        {
+          "label": "Anticyclone",
+          "correct": true
+        },
+        {
+          "label": "Depression",
+          "correct": false
+        },
+        {
+          "label": "Front",
+          "correct": false
+        },
+        {
+          "label": "Monsoon",
+          "correct": false
+        }
+      ],
+      "explanation": "In an anticyclone air sinks, which stops clouds forming, so the weather is usually calm and settled.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/how-weather-works/high-and-low-pressure",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "From which direction does the UK's prevailing wind usually blow?",
+      "options": [
+        {
+          "label": "South-west",
+          "correct": true
+        },
+        {
+          "label": "North-east",
+          "correct": false
+        },
+        {
+          "label": "South-east",
+          "correct": false
+        },
+        {
+          "label": "North",
+          "correct": false
+        }
+      ],
+      "explanation": "Most of the time the UK's wind comes from the south-west, across the Atlantic Ocean, which is why it often brings mild, wet weather.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/wind",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are balls of ice that fall from thunderclouds called?",
+      "options": [
+        {
+          "label": "Hail",
+          "correct": true
+        },
+        {
+          "label": "Sleet",
+          "correct": false
+        },
+        {
+          "label": "Snow",
+          "correct": false
+        },
+        {
+          "label": "Dew",
+          "correct": false
+        }
+      ],
+      "explanation": "Hailstones grow as they are carried up and down inside tall storm clouds, gaining layers of ice until they are heavy enough to fall.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/hail",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which tall, towering cloud brings thunder, lightning and heavy showers?",
+      "options": [
+        {
+          "label": "Cumulonimbus",
+          "correct": true
+        },
+        {
+          "label": "Cirrus",
+          "correct": false
+        },
+        {
+          "label": "Stratus",
+          "correct": false
+        },
+        {
+          "label": "Altostratus",
+          "correct": false
+        }
+      ],
+      "explanation": "Cumulonimbus clouds can stretch up to the top of the troposphere and often have a flat, anvil-shaped top.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which high, thin, wispy clouds are made of ice crystals?",
+      "options": [
+        {
+          "label": "Cirrus",
+          "correct": true
+        },
+        {
+          "label": "Cumulonimbus",
+          "correct": false
+        },
+        {
+          "label": "Stratus",
+          "correct": false
+        },
+        {
+          "label": "Nimbostratus",
+          "correct": false
+        }
+      ],
+      "explanation": "Cirrus clouds form very high up where it is freezing cold, so they are made of ice crystals rather than water droplets.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which gas, released by burning fossil fuels, adds most to the enhanced greenhouse effect?",
+      "options": [
+        {
+          "label": "Carbon dioxide",
+          "correct": true
+        },
+        {
+          "label": "Oxygen",
+          "correct": false
+        },
+        {
+          "label": "Nitrogen",
+          "correct": false
+        },
+        {
+          "label": "Helium",
+          "correct": false
+        }
+      ],
+      "explanation": "Burning coal, oil and gas releases carbon dioxide, which traps extra heat in the atmosphere and warms the planet.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3fv4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which layer of the atmosphere is the ozone layer found?",
+      "options": [
+        {
+          "label": "Stratosphere",
+          "correct": true
+        },
+        {
+          "label": "Troposphere",
+          "correct": false
+        },
+        {
+          "label": "Mesosphere",
+          "correct": false
+        },
+        {
+          "label": "Thermosphere",
+          "correct": false
+        }
+      ],
+      "explanation": "The ozone layer sits in the stratosphere, above the layer where our weather happens, and absorbs harmful ultraviolet light from the Sun.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/atmosphere",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of climate does the UK have?",
+      "options": [
+        {
+          "label": "Temperate maritime",
+          "correct": true
+        },
+        {
+          "label": "Tropical",
+          "correct": false
+        },
+        {
+          "label": "Hot desert",
+          "correct": false
+        },
+        {
+          "label": "Polar",
+          "correct": false
+        }
+      ],
+      "explanation": "The UK's climate is mild and wet, without extreme heat or cold, because the sea surrounding it warms up and cools down slowly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which warm ocean current helps keep the UK's winters milder than other places as far north?",
+      "options": [
+        {
+          "label": "The Gulf Stream",
+          "correct": true
+        },
+        {
+          "label": "The Humboldt Current",
+          "correct": false
+        },
+        {
+          "label": "The Labrador Current",
+          "correct": false
+        },
+        {
+          "label": "The Benguela Current",
+          "correct": false
+        }
+      ],
+      "explanation": "The Gulf Stream and its extension, the North Atlantic Drift, carry warm water from the Gulf of Mexico across the Atlantic towards Europe.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a weather map, what are lines joining places with equal air pressure called?",
+      "options": [
+        {
+          "label": "Isobars",
+          "correct": true
+        },
+        {
+          "label": "Isotherms",
+          "correct": false
+        },
+        {
+          "label": "Contour lines",
+          "correct": false
+        },
+        {
+          "label": "Grid lines",
+          "correct": false
+        }
+      ],
+      "explanation": "Isobars show the pattern of pressure. The closer together they are, the stronger the wind.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/how-weather-works/high-and-low-pressure",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A depression is an area of low pressure that often brings wind and rain to the UK.",
+      "answer": true,
+      "explanation": "In a depression air rises, cools and forms clouds, so depressions bring unsettled, wet and windy weather.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/how-weather-works/high-and-low-pressure",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Fog is cloud that forms at ground level.",
+      "answer": true,
+      "explanation": "Fog forms when the air near the ground cools enough for water vapour to condense into tiny droplets, just like a cloud.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/fog",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The west of the UK usually gets more rain than the east.",
+      "answer": true,
+      "explanation": "Wet winds arrive from the Atlantic and rise over the western hills and mountains, dropping much of their rain before they reach the east.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx38q6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Clouds form when water vapour in rising air cools and condenses into tiny droplets.",
+      "answer": true,
+      "explanation": "As air rises it cools. Cooler air cannot hold as much water vapour, so the vapour condenses into droplets or ice crystals that we see as cloud.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/clouds",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "On the Beaufort scale of wind force, what number means hurricane force?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "The Beaufort scale runs from 0, which is calm, up to 12, which is hurricane force.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/wind",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Roughly what percentage of the air is nitrogen?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "correct": 78,
+        "accept_min": 75,
+        "accept_max": 81
+      },
+      "explanation": "Dry air is about 78% nitrogen and about 21% oxygen. Carbon dioxide makes up only a tiny fraction.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3fv4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "On average, by roughly how many °C does the air cool for every 1,000 metres you climb in the troposphere?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 0.5,
+        "unit": "°C",
+        "correct": 6.5,
+        "accept_min": 6,
+        "accept_max": 7
+      },
+      "explanation": "Air temperature falls by about 6.5 °C per kilometre on average, which is why mountain tops are colder than valleys.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/atmosphere",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

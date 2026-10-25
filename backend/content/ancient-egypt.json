@@ -1,0 +1,653 @@
+{
+  "slug": "ancient-egypt",
+  "title": "Ancient Egypt",
+  "intro": "Pyramids, pharaohs and hieroglyphs. Step back thousands of years along the River Nile.",
+  "category": "history",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Along which river did ancient Egyptian life grow up?",
+      "options": [
+        {
+          "label": "The Amazon",
+          "correct": false
+        },
+        {
+          "label": "The Nile",
+          "correct": true
+        },
+        {
+          "label": "The Thames",
+          "correct": false
+        },
+        {
+          "label": "The Tigris",
+          "correct": false
+        }
+      ],
+      "explanation": "The Nile flooded each year and left rich soil for farming, so most ancient Egyptians lived along its banks.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were the kings of ancient Egypt called?",
+      "options": [
+        {
+          "label": "Emperors",
+          "correct": false
+        },
+        {
+          "label": "Pharaohs",
+          "correct": true
+        },
+        {
+          "label": "Sultans",
+          "correct": false
+        },
+        {
+          "label": "Tsars",
+          "correct": false
+        }
+      ],
+      "explanation": "The rulers of ancient Egypt were called pharaohs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call the ancient Egyptian writing made of pictures and symbols?",
+      "options": [
+        {
+          "label": "Runes",
+          "correct": false
+        },
+        {
+          "label": "Hieroglyphs",
+          "correct": true
+        },
+        {
+          "label": "Braille",
+          "correct": false
+        },
+        {
+          "label": "Cuneiform",
+          "correct": false
+        }
+      ],
+      "explanation": "Hieroglyphs used hundreds of picture symbols to stand for sounds, words and ideas.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Tutankhamun became pharaoh when he was still a child.",
+      "answer": true,
+      "explanation": "Tutankhamun was only about nine years old when he became pharaoh.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/king-tut",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who led the team that found Tutankhamun's tomb?",
+      "options": [
+        {
+          "label": "Howard Carter",
+          "correct": true
+        },
+        {
+          "label": "Charles Darwin",
+          "correct": false
+        },
+        {
+          "label": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "label": "Captain Cook",
+          "correct": false
+        }
+      ],
+      "explanation": "The archaeologist Howard Carter found the tomb in the Valley of the Kings.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/king-tut",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Tutankhamun's tomb discovered?",
+      "slider": {
+        "min": 1900,
+        "max": 2000,
+        "step": 1,
+        "unit": null,
+        "correct": 1922,
+        "accept_min": 1922,
+        "accept_max": 1922
+      },
+      "explanation": "Howard Carter's team discovered the tomb in November 1922, still filled with treasure.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/king-tut",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did the ancient Egyptians make to preserve the bodies of people who had died?",
+      "options": [
+        {
+          "label": "Statues",
+          "correct": false
+        },
+        {
+          "label": "Mummies",
+          "correct": true
+        },
+        {
+          "label": "Fossils",
+          "correct": false
+        },
+        {
+          "label": "Pots",
+          "correct": false
+        }
+      ],
+      "explanation": "They dried and wrapped bodies to make mummies, because they believed the body was needed in the afterlife.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were the great pyramids at Giza built as?",
+      "options": [
+        {
+          "label": "Royal tombs",
+          "correct": true
+        },
+        {
+          "label": "Grain stores",
+          "correct": false
+        },
+        {
+          "label": "Lighthouses",
+          "correct": false
+        },
+        {
+          "label": "Markets",
+          "correct": false
+        }
+      ],
+      "explanation": "The pyramids were built as tombs for pharaohs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The ancient Egyptians made a kind of paper from papyrus reeds.",
+      "answer": true,
+      "explanation": "Papyrus reeds grew along the Nile, and their stems were pressed into sheets for writing on.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which huge stone statue at Giza has the body of a lion and the head of a human?",
+      "options": [
+        {
+          "label": "The Great Sphinx",
+          "correct": true
+        },
+        {
+          "label": "The Colossus",
+          "correct": false
+        },
+        {
+          "label": "The Statue of Zeus",
+          "correct": false
+        },
+        {
+          "label": "The Lion Gate",
+          "correct": false
+        }
+      ],
+      "explanation": "The Great Sphinx lies near the pyramids at Giza. It was carved from the rock with a lion's body and a human head.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zg87xnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which famous stone helped experts finally work out how to read hieroglyphs?",
+      "options": [
+        {
+          "label": "The Rosetta Stone",
+          "correct": true
+        },
+        {
+          "label": "The Blarney Stone",
+          "correct": false
+        },
+        {
+          "label": "The Stone of Scone",
+          "correct": false
+        },
+        {
+          "label": "The Kingstone",
+          "correct": false
+        }
+      ],
+      "explanation": "The Rosetta Stone has the same message carved in three scripts. Because scholars could read the Greek, they could work out the hieroglyphs.",
+      "source_url": "https://www.britishmuseum.org/learn/schools/ages-7-11/ancient-egypt/examine-rosetta-stone",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which museum can you see the Rosetta Stone today?",
+      "options": [
+        {
+          "label": "The British Museum",
+          "correct": true
+        },
+        {
+          "label": "The Louvre",
+          "correct": false
+        },
+        {
+          "label": "The Natural History Museum",
+          "correct": false
+        },
+        {
+          "label": "The Science Museum",
+          "correct": false
+        }
+      ],
+      "explanation": "The Rosetta Stone has been on display at the British Museum in London since 1802.",
+      "source_url": "https://www.britishmuseum.org/collection/egypt/explore-rosetta-stone",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which French scholar made the big breakthrough in reading Egyptian hieroglyphs?",
+      "options": [
+        {
+          "label": "Jean-François Champollion",
+          "correct": true
+        },
+        {
+          "label": "Louis Pasteur",
+          "correct": false
+        },
+        {
+          "label": "Victor Hugo",
+          "correct": false
+        },
+        {
+          "label": "Napoleon Bonaparte",
+          "correct": false
+        }
+      ],
+      "explanation": "Jean-François Champollion studied the Rosetta Stone and, in 1822, showed how hieroglyphs could be read.",
+      "source_url": "https://www.britishmuseum.org/blog/eureka-finding-key-ancient-egypt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which famous queen is known as the last pharaoh of ancient Egypt?",
+      "options": [
+        {
+          "label": "Nefertiti",
+          "correct": false
+        },
+        {
+          "label": "Cleopatra",
+          "correct": true
+        },
+        {
+          "label": "Hatshepsut",
+          "correct": false
+        },
+        {
+          "label": "Boudicca",
+          "correct": false
+        }
+      ],
+      "explanation": "Cleopatra VII was the last pharaoh to rule ancient Egypt. After her reign, Egypt became part of the Roman Empire.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/cleopatra-snake-scientists-impossible/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Ra was the ancient Egyptian god of what?",
+      "options": [
+        {
+          "label": "The sea",
+          "correct": false
+        },
+        {
+          "label": "The Sun",
+          "correct": true
+        },
+        {
+          "label": "Music",
+          "correct": false
+        },
+        {
+          "label": "Snow",
+          "correct": false
+        }
+      ],
+      "explanation": "Ra was the sun god, one of the most important gods in ancient Egypt. He was often shown with the head of a falcon.",
+      "source_url": "https://www.britishmuseum.org/learn/schools/ages-7-11/ancient-egypt/ancient-egyptian-gods-and-goddesses",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which animal did many ancient Egyptian families keep as a pet and treat as sacred?",
+      "options": [
+        {
+          "label": "The cat",
+          "correct": true
+        },
+        {
+          "label": "The rabbit",
+          "correct": false
+        },
+        {
+          "label": "The hamster",
+          "correct": false
+        },
+        {
+          "label": "The parrot",
+          "correct": false
+        }
+      ],
+      "explanation": "Cats were sacred to the ancient Egyptians. Many families kept one, believing it would bring the household good luck.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/ten-facts-about-ancient-egypt/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Why was the yearly flooding of the Nile good for Egyptian farmers?",
+      "options": [
+        {
+          "label": "It washed away the weeds",
+          "correct": false
+        },
+        {
+          "label": "It left behind rich, fertile soil",
+          "correct": true
+        },
+        {
+          "label": "It brought fish into the fields",
+          "correct": false
+        },
+        {
+          "label": "It kept the desert cool",
+          "correct": false
+        }
+      ],
+      "explanation": "When the Nile flooded, it left a layer of dark, fertile mud on the land, perfect for growing crops like wheat and barley.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/ancient-egypt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The largest pyramid at Giza was built for which pharaoh?",
+      "options": [
+        {
+          "label": "Tutankhamun",
+          "correct": false
+        },
+        {
+          "label": "Khufu",
+          "correct": true
+        },
+        {
+          "label": "Ramesses II",
+          "correct": false
+        },
+        {
+          "label": "Cleopatra",
+          "correct": false
+        }
+      ],
+      "explanation": "The Great Pyramid was built for the pharaoh Khufu. It is the largest of all the Egyptian pyramids.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/ten-facts-about-ancient-egypt/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "During mummification, what were canopic jars used for?",
+      "options": [
+        {
+          "label": "Storing grain",
+          "correct": false
+        },
+        {
+          "label": "Holding the body's organs",
+          "correct": true
+        },
+        {
+          "label": "Carrying water from the Nile",
+          "correct": false
+        },
+        {
+          "label": "Mixing paint",
+          "correct": false
+        }
+      ],
+      "explanation": "Embalmers removed organs such as the lungs and stomach and kept them in special containers called canopic jars, buried with the mummy.",
+      "source_url": "https://www.britishmuseum.org/learn/schools/ages-7-11/ancient-egypt/mummification",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which valley were many pharaohs, including Tutankhamun, buried?",
+      "options": [
+        {
+          "label": "The Valley of the Kings",
+          "correct": true
+        },
+        {
+          "label": "The Valley of the Giants",
+          "correct": false
+        },
+        {
+          "label": "The Rift Valley",
+          "correct": false
+        },
+        {
+          "label": "The Valley of the Sun",
+          "correct": false
+        }
+      ],
+      "explanation": "The Valley of the Kings, near the ancient city of Thebes, holds the tombs of many New Kingdom pharaohs.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/tutankhamun-facts/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What famous object was found covering the head of Tutankhamun's mummy?",
+      "options": [
+        {
+          "label": "A golden mask",
+          "correct": true
+        },
+        {
+          "label": "A silver helmet",
+          "correct": false
+        },
+        {
+          "label": "A wooden crown",
+          "correct": false
+        },
+        {
+          "label": "A stone shield",
+          "correct": false
+        }
+      ],
+      "explanation": "Tutankhamun's golden burial mask is one of the most famous treasures ever found. It is made of gold and precious stones.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/tutankhamun-facts/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Egyptian god ruled over the afterlife and is often shown wrapped like a mummy?",
+      "options": [
+        {
+          "label": "Osiris",
+          "correct": true
+        },
+        {
+          "label": "Ra",
+          "correct": false
+        },
+        {
+          "label": "Bastet",
+          "correct": false
+        },
+        {
+          "label": "Hapy",
+          "correct": false
+        }
+      ],
+      "explanation": "Osiris was the god of the dead and the afterlife. Pictures often show him wrapped like a mummy and wearing a tall white crown.",
+      "source_url": "https://www.britishmuseum.org/learn/schools/ages-7-11/ancient-egypt/ancient-egyptian-gods-and-goddesses",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Egyptian god Anubis is usually shown with the head of which animal?",
+      "options": [
+        {
+          "label": "A jackal",
+          "correct": true
+        },
+        {
+          "label": "A crocodile",
+          "correct": false
+        },
+        {
+          "label": "A cat",
+          "correct": false
+        },
+        {
+          "label": "An eagle",
+          "correct": false
+        }
+      ],
+      "explanation": "Anubis had the head of a jackal, a wild dog. He was the god who looked after the process of mummification.",
+      "source_url": "https://www.britishmuseum.org/learn/schools/ages-7-11/ancient-egypt/ancient-egyptian-gods-and-goddesses",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were the people called whose job was to read and write hieroglyphs?",
+      "options": [
+        {
+          "label": "Scribes",
+          "correct": true
+        },
+        {
+          "label": "Knights",
+          "correct": false
+        },
+        {
+          "label": "Monks",
+          "correct": false
+        },
+        {
+          "label": "Bards",
+          "correct": false
+        }
+      ],
+      "explanation": "Scribes trained for years to learn hundreds of signs. They kept records, wrote letters and copied important texts.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/ancient-egypt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was Senet, which ancient Egyptians enjoyed for more than 2,000 years?",
+      "options": [
+        {
+          "label": "A board game",
+          "correct": true
+        },
+        {
+          "label": "A kind of bread",
+          "correct": false
+        },
+        {
+          "label": "A boat race",
+          "correct": false
+        },
+        {
+          "label": "A musical instrument",
+          "correct": false
+        }
+      ],
+      "explanation": "Senet was a board game. Players threw sticks, a bit like dice, to see how many squares to move their pieces.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/ten-facts-about-ancient-egypt/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In ancient Egypt, both men and women wore eye make-up.",
+      "answer": true,
+      "explanation": "Men and women both wore eye paint, usually green or black. They thought it protected their eyes from the sun and had healing powers.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/ten-facts-about-ancient-egypt/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Hatshepsut was a woman who ruled ancient Egypt as pharaoh.",
+      "answer": true,
+      "explanation": "Hatshepsut was one of only a few female pharaohs. She ruled for about 20 years and built grand temples.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/hatshepsut",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The River Nile flows from south to north.",
+      "answer": true,
+      "explanation": "The Nile flows north into the Mediterranean Sea. That is why southern Egypt was called Upper Egypt and northern Egypt Lower Egypt.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/ten-facts-about-ancient-egypt/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Roughly how many years ago was the Great Pyramid of Giza built?",
+      "slider": {
+        "min": 0,
+        "max": 10000,
+        "step": 500,
+        "unit": "years",
+        "correct": 4500,
+        "accept_min": 4000,
+        "accept_max": 5000
+      },
+      "explanation": "The Great Pyramid was built around 2500 BC, which is about 4,500 years ago.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/ancient-egypt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "The ancient Egyptians believed in more than how many gods and goddesses?",
+      "slider": {
+        "min": 0,
+        "max": 5000,
+        "step": 100,
+        "unit": "gods",
+        "correct": 2000,
+        "accept_min": 1500,
+        "accept_max": 2500
+      },
+      "explanation": "The ancient Egyptians believed in more than 2,000 gods and goddesses, with gods for almost everything in daily life.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/egypt/ten-facts-about-ancient-egypt/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,670 @@
+{
+  "slug": "record-breakers",
+  "title": "Record Breakers",
+  "intro": "The biggest, fastest and tallest things in nature and space. Can you spot the champions?",
+  "category": "general-knowledge",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the tallest mountain on Earth, measured from sea level?",
+      "options": [
+        {
+          "label": "K2",
+          "correct": false
+        },
+        {
+          "label": "Kilimanjaro",
+          "correct": false
+        },
+        {
+          "label": "Mount Everest",
+          "correct": true
+        },
+        {
+          "label": "Ben Nevis",
+          "correct": false
+        }
+      ],
+      "explanation": "Mount Everest, on the border of Nepal and China, rises about 8,850 metres above sea level, higher than any other mountain.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/nepal",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest animal known to have ever lived?",
+      "options": [
+        {
+          "label": "African elephant",
+          "correct": false
+        },
+        {
+          "label": "Blue whale",
+          "correct": true
+        },
+        {
+          "label": "Diplodocus",
+          "correct": false
+        },
+        {
+          "label": "Giant squid",
+          "correct": false
+        }
+      ],
+      "explanation": "The blue whale is the largest animal known to have lived on Earth, bigger even than the largest dinosaurs.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/blue-whale",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the fastest land animal?",
+      "options": [
+        {
+          "label": "Lion",
+          "correct": false
+        },
+        {
+          "label": "Horse",
+          "correct": false
+        },
+        {
+          "label": "Cheetah",
+          "correct": true
+        },
+        {
+          "label": "Greyhound",
+          "correct": false
+        }
+      ],
+      "explanation": "Cheetahs are the fastest land mammals and can reach 60 to 70 miles an hour over short distances.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/cheetah",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the tallest animal alive today?",
+      "options": [
+        {
+          "label": "Giraffe",
+          "correct": true
+        },
+        {
+          "label": "Elephant",
+          "correct": false
+        },
+        {
+          "label": "Ostrich",
+          "correct": false
+        },
+        {
+          "label": "Camel",
+          "correct": false
+        }
+      ],
+      "explanation": "Giraffes are the world's tallest mammals. Their legs alone can be taller than many adult people.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/giraffe",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is closest to the Sun?",
+      "options": [
+        {
+          "label": "Venus",
+          "correct": false
+        },
+        {
+          "label": "Mercury",
+          "correct": true
+        },
+        {
+          "label": "Mars",
+          "correct": false
+        },
+        {
+          "label": "Earth",
+          "correct": false
+        }
+      ],
+      "explanation": "Mercury is the smallest planet and the one closest to the Sun.",
+      "source_url": "https://science.nasa.gov/mercury/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The emperor penguin is the largest kind of penguin.",
+      "answer": true,
+      "explanation": "Emperor penguins are the tallest and heaviest of all penguins, standing about 115 centimetres tall.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/emperor-penguin",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest lizard in the world?",
+      "options": [
+        {
+          "label": "Iguana",
+          "correct": false
+        },
+        {
+          "label": "Komodo dragon",
+          "correct": true
+        },
+        {
+          "label": "Chameleon",
+          "correct": false
+        },
+        {
+          "label": "Gecko",
+          "correct": false
+        }
+      ],
+      "explanation": "The Komodo dragon is the biggest lizard alive and can grow up to about 3 metres long.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/komodo-dragon",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "A day on Jupiter, one full spin, lasts about how many Earth hours?",
+      "slider": {
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "hours",
+        "correct": 10,
+        "accept_min": 9,
+        "accept_max": 11
+      },
+      "explanation": "Jupiter spins once about every 10 hours, faster than any other planet, so its days are very short.",
+      "source_url": "https://science.nasa.gov/jupiter/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which planet is the hottest in our solar system?",
+      "options": [
+        {
+          "label": "Mercury",
+          "correct": false
+        },
+        {
+          "label": "Venus",
+          "correct": true
+        },
+        {
+          "label": "Mars",
+          "correct": false
+        },
+        {
+          "label": "Jupiter",
+          "correct": false
+        }
+      ],
+      "explanation": "Venus is the hottest planet. Its thick clouds trap heat, so it is even hotter than Mercury, which is closer to the Sun.",
+      "source_url": "https://science.nasa.gov/venus/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The African elephant is the largest animal living on land.",
+      "answer": true,
+      "explanation": "African elephants are the biggest land animals on Earth. Large adults can weigh several tonnes.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/african-elephant",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest bird alive today?",
+      "options": [
+        {
+          "label": "Ostrich",
+          "correct": true
+        },
+        {
+          "label": "Emu",
+          "correct": false
+        },
+        {
+          "label": "Albatross",
+          "correct": false
+        },
+        {
+          "label": "Bald eagle",
+          "correct": false
+        }
+      ],
+      "explanation": "The ostrich is the biggest bird on Earth. It can grow taller than a grown-up person, but it is far too heavy to fly.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/ostrich",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest rodent in the world?",
+      "options": [
+        {
+          "label": "Capybara",
+          "correct": true
+        },
+        {
+          "label": "Beaver",
+          "correct": false
+        },
+        {
+          "label": "Porcupine",
+          "correct": false
+        },
+        {
+          "label": "Brown rat",
+          "correct": false
+        }
+      ],
+      "explanation": "The capybara lives in South America and can be as big as a large dog. It loves water and has slightly webbed feet for swimming.",
+      "source_url": "https://www.nationalgeographic.com/animals/mammals/facts/capybara",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest fish in the sea?",
+      "options": [
+        {
+          "label": "Whale shark",
+          "correct": true
+        },
+        {
+          "label": "Great white shark",
+          "correct": false
+        },
+        {
+          "label": "Blue whale",
+          "correct": false
+        },
+        {
+          "label": "Giant tuna",
+          "correct": false
+        }
+      ],
+      "explanation": "The whale shark is the biggest fish of all. Despite its size, it eats tiny plankton. The blue whale is bigger, but it is a mammal, not a fish.",
+      "source_url": "https://kids.nationalgeographic.com/animals/fish/facts/whale-sharks",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which animal is the fastest of all when it dives through the air?",
+      "options": [
+        {
+          "label": "Peregrine falcon",
+          "correct": true
+        },
+        {
+          "label": "Golden eagle",
+          "correct": false
+        },
+        {
+          "label": "Swift",
+          "correct": false
+        },
+        {
+          "label": "Barn owl",
+          "correct": false
+        }
+      ],
+      "explanation": "When a peregrine falcon swoops down from high up, it reaches amazing speeds, making it the fastest animal on the planet.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/peregrine-falcon",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the largest hot desert in the world?",
+      "options": [
+        {
+          "label": "Sahara",
+          "correct": true
+        },
+        {
+          "label": "Gobi",
+          "correct": false
+        },
+        {
+          "label": "Kalahari",
+          "correct": false
+        },
+        {
+          "label": "Mojave",
+          "correct": false
+        }
+      ],
+      "explanation": "The Sahara stretches across much of North Africa. It is the largest hot desert, almost as big as the whole of the United States.",
+      "source_url": "https://education.nationalgeographic.org/resource/desert/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest moon in our solar system?",
+      "options": [
+        {
+          "label": "Ganymede",
+          "correct": true
+        },
+        {
+          "label": "Titan",
+          "correct": false
+        },
+        {
+          "label": "Io",
+          "correct": false
+        },
+        {
+          "label": "Europa",
+          "correct": false
+        }
+      ],
+      "explanation": "Ganymede circles Jupiter and is the biggest moon of all. It is even wider than the planet Mercury!",
+      "source_url": "https://science.nasa.gov/jupiter/jupiter-moons/ganymede/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the largest tropical rainforest in the world?",
+      "options": [
+        {
+          "label": "The Amazon rainforest",
+          "correct": true
+        },
+        {
+          "label": "The Congo rainforest",
+          "correct": false
+        },
+        {
+          "label": "The Daintree rainforest",
+          "correct": false
+        },
+        {
+          "label": "The Borneo rainforest",
+          "correct": false
+        }
+      ],
+      "explanation": "The Amazon rainforest covers a huge part of South America and is home to an incredible number of plants and animals.",
+      "source_url": "https://education.nationalgeographic.org/resource/rain-forest/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which kind of tree grows the tallest?",
+      "options": [
+        {
+          "label": "Coast redwood",
+          "correct": true
+        },
+        {
+          "label": "Oak",
+          "correct": false
+        },
+        {
+          "label": "Baobab",
+          "correct": false
+        },
+        {
+          "label": "Weeping willow",
+          "correct": false
+        }
+      ],
+      "explanation": "Coast redwoods grow in California and can grow more than 100 metres tall, higher than a 30-storey building.",
+      "source_url": "https://www.nps.gov/redw/learn/nature/about-the-trees.htm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest reptile alive today?",
+      "options": [
+        {
+          "label": "Saltwater crocodile",
+          "correct": true
+        },
+        {
+          "label": "Green anaconda",
+          "correct": false
+        },
+        {
+          "label": "Leatherback turtle",
+          "correct": false
+        },
+        {
+          "label": "Nile monitor",
+          "correct": false
+        }
+      ],
+      "explanation": "Saltwater crocodiles are the biggest reptiles on Earth. Large males can grow longer than a family car.",
+      "source_url": "https://www.nationalgeographic.com/animals/reptiles/facts/saltwater-crocodile",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest of the great apes?",
+      "options": [
+        {
+          "label": "Gorilla",
+          "correct": true
+        },
+        {
+          "label": "Chimpanzee",
+          "correct": false
+        },
+        {
+          "label": "Orangutan",
+          "correct": false
+        },
+        {
+          "label": "Bonobo",
+          "correct": false
+        }
+      ],
+      "explanation": "Gorillas are the biggest apes. A grown male gorilla can weigh more than two adult people put together, yet gorillas mostly munch on plants.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/mountain-gorilla",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest member of the deer family?",
+      "options": [
+        {
+          "label": "Moose",
+          "correct": true
+        },
+        {
+          "label": "Red deer",
+          "correct": false
+        },
+        {
+          "label": "Reindeer",
+          "correct": false
+        },
+        {
+          "label": "Roe deer",
+          "correct": false
+        }
+      ],
+      "explanation": "The moose is the biggest deer of all. A large male can weigh as much as a small car, and its antlers can be wider than a door.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/moose",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the highest waterfall in the world, found in Venezuela?",
+      "options": [
+        {
+          "label": "Angel Falls",
+          "correct": true
+        },
+        {
+          "label": "Niagara Falls",
+          "correct": false
+        },
+        {
+          "label": "Victoria Falls",
+          "correct": false
+        },
+        {
+          "label": "Iguazu Falls",
+          "correct": false
+        }
+      ],
+      "explanation": "Angel Falls in Venezuela drops almost a kilometre. The water falls so far that much of it turns to mist before it reaches the bottom.",
+      "source_url": "https://education.nationalgeographic.org/resource/waterfall/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest lake in the world by surface area?",
+      "options": [
+        {
+          "label": "Caspian Sea",
+          "correct": true
+        },
+        {
+          "label": "Lake Superior",
+          "correct": false
+        },
+        {
+          "label": "Lake Victoria",
+          "correct": false
+        },
+        {
+          "label": "Loch Ness",
+          "correct": false
+        }
+      ],
+      "explanation": "Even though it is called a sea, the Caspian Sea is a lake surrounded by land. It is the largest lake on Earth by area.",
+      "source_url": "https://education.nationalgeographic.org/resource/lake/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the largest single object in our solar system?",
+      "options": [
+        {
+          "label": "The Sun",
+          "correct": true
+        },
+        {
+          "label": "Jupiter",
+          "correct": false
+        },
+        {
+          "label": "Saturn",
+          "correct": false
+        },
+        {
+          "label": "Earth",
+          "correct": false
+        }
+      ],
+      "explanation": "The Sun is by far the biggest thing in our solar system. It is so huge that about a million Earths could fit inside it.",
+      "source_url": "https://science.nasa.gov/sun/facts/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest island in the world?",
+      "options": [
+        {
+          "label": "Greenland",
+          "correct": true
+        },
+        {
+          "label": "Madagascar",
+          "correct": false
+        },
+        {
+          "label": "Borneo",
+          "correct": false
+        },
+        {
+          "label": "Great Britain",
+          "correct": false
+        }
+      ],
+      "explanation": "Greenland is the largest island. Australia is bigger, but it is counted as a continent rather than an island.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/greenland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The tallest volcano in our solar system, Olympus Mons, is on which planet?",
+      "options": [
+        {
+          "label": "Mars",
+          "correct": true
+        },
+        {
+          "label": "Venus",
+          "correct": false
+        },
+        {
+          "label": "Earth",
+          "correct": false
+        },
+        {
+          "label": "Mercury",
+          "correct": false
+        }
+      ],
+      "explanation": "Olympus Mons on Mars is about two and a half times as tall as Mount Everest. It is the biggest volcano we know of.",
+      "source_url": "https://science.nasa.gov/mars/facts/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Antarctica counts as the largest desert on Earth.",
+      "answer": true,
+      "explanation": "A desert is a place that gets very little rain or snow, not just somewhere hot. Antarctica is so dry that it is the biggest desert of all.",
+      "source_url": "https://education.nationalgeographic.org/resource/desert/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The lion is the largest kind of wild cat.",
+      "answer": false,
+      "explanation": "Lions are big, but tigers are bigger. The tiger is the largest wild cat in the world.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/tiger",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "An ostrich can run at about how many kilometres per hour?",
+      "slider": {
+        "min": 0,
+        "max": 120,
+        "step": 5,
+        "unit": "km/h",
+        "correct": 70,
+        "accept_min": 60,
+        "accept_max": 80
+      },
+      "explanation": "Ostriches cannot fly, but their long, strong legs let them run at about 70 kilometres per hour, faster than any other bird on land.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/ostrich",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "The Great Barrier Reef, the largest coral reef system, stretches for about how many kilometres?",
+      "slider": {
+        "min": 0,
+        "max": 5000,
+        "step": 100,
+        "unit": "km",
+        "correct": 2300,
+        "accept_min": 2000,
+        "accept_max": 2600
+      },
+      "explanation": "The Great Barrier Reef runs for about 2,300 kilometres along the coast of Australia. It is so big that it can be seen from space.",
+      "source_url": "https://education.nationalgeographic.org/resource/great-barrier-reef/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

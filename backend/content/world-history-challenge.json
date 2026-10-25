@@ -1,0 +1,653 @@
+{
+  "slug": "world-history-challenge",
+  "title": "World History Challenge",
+  "intro": "From ancient empires to the modern age, a tougher tour of world history beyond the basics.",
+  "category": "history",
+  "difficulty": "hard",
+  "age_min": 16,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which empire was ruled from the city of Cuzco?",
+      "options": [
+        {
+          "label": "The Inca Empire",
+          "correct": true
+        },
+        {
+          "label": "The Aztec Empire",
+          "correct": false
+        },
+        {
+          "label": "The Maya",
+          "correct": false
+        },
+        {
+          "label": "The Olmec",
+          "correct": false
+        }
+      ],
+      "explanation": "Cuzco, high in the Andes of Peru, was the Inca capital. Their empire stretched along much of western South America.",
+      "source_url": "https://www.britannica.com/topic/Inca",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Mughal emperor had the Taj Mahal built?",
+      "options": [
+        {
+          "label": "Shah Jahan",
+          "correct": true
+        },
+        {
+          "label": "Akbar",
+          "correct": false
+        },
+        {
+          "label": "Babur",
+          "correct": false
+        },
+        {
+          "label": "Aurangzeb",
+          "correct": false
+        }
+      ],
+      "explanation": "Shah Jahan built the Taj Mahal in Agra as a tomb for his wife Mumtaz Mahal. Work began in about 1632.",
+      "source_url": "https://www.britannica.com/topic/Taj-Mahal",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Code of Hammurabi, one of the oldest written law codes, comes from which ancient kingdom?",
+      "options": [
+        {
+          "label": "Babylon",
+          "correct": true
+        },
+        {
+          "label": "Assyria",
+          "correct": false
+        },
+        {
+          "label": "Persia",
+          "correct": false
+        },
+        {
+          "label": "The Hittite kingdom",
+          "correct": false
+        }
+      ],
+      "explanation": "King Hammurabi of Babylon had about 282 laws carved on a stone pillar in the 1700s BC.",
+      "source_url": "https://www.britannica.com/topic/Code-of-Hammurabi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which peace settlement of 1648 ended the Thirty Years' War?",
+      "options": [
+        {
+          "label": "The Peace of Westphalia",
+          "correct": true
+        },
+        {
+          "label": "The Treaty of Utrecht",
+          "correct": false
+        },
+        {
+          "label": "The Treaty of Versailles",
+          "correct": false
+        },
+        {
+          "label": "The Congress of Vienna",
+          "correct": false
+        }
+      ],
+      "explanation": "The Peace of Westphalia was agreed in the towns of Münster and Osnabrück and reshaped the map of Europe.",
+      "source_url": "https://www.britannica.com/event/Peace-of-Westphalia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who became the first emperor of a unified China, founding the Qin dynasty?",
+      "options": [
+        {
+          "label": "Qin Shi Huang",
+          "correct": true
+        },
+        {
+          "label": "Kublai Khan",
+          "correct": false
+        },
+        {
+          "label": "Confucius",
+          "correct": false
+        },
+        {
+          "label": "Sun Yat-sen",
+          "correct": false
+        }
+      ],
+      "explanation": "Qin Shi Huang united China in 221 BC and standardised writing, coins and weights. He is also known for the Terracotta Army.",
+      "source_url": "https://www.britannica.com/biography/Shihuangdi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which empire captured Constantinople in 1453?",
+      "options": [
+        {
+          "label": "The Ottoman Empire",
+          "correct": true
+        },
+        {
+          "label": "The Mongol Empire",
+          "correct": false
+        },
+        {
+          "label": "The Holy Roman Empire",
+          "correct": false
+        },
+        {
+          "label": "The Persian Empire",
+          "correct": false
+        }
+      ],
+      "explanation": "Sultan Mehmed II took the city, ending the Byzantine Empire. It became the Ottoman capital and is now Istanbul.",
+      "source_url": "https://www.britannica.com/event/Fall-of-Constantinople-1453",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who led the first expedition to reach the South Pole, in December 1911?",
+      "options": [
+        {
+          "label": "Roald Amundsen",
+          "correct": true
+        },
+        {
+          "label": "Robert Falcon Scott",
+          "correct": false
+        },
+        {
+          "label": "Ernest Shackleton",
+          "correct": false
+        },
+        {
+          "label": "Fridtjof Nansen",
+          "correct": false
+        }
+      ],
+      "explanation": "Norwegian explorer Roald Amundsen used dog sleds and reached the Pole about five weeks before Scott's team.",
+      "source_url": "https://www.britannica.com/biography/Roald-Amundsen",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Mansa Musa, famed for his great wealth, ruled which West African empire?",
+      "options": [
+        {
+          "label": "The Mali Empire",
+          "correct": true
+        },
+        {
+          "label": "The Songhai Empire",
+          "correct": false
+        },
+        {
+          "label": "The Kingdom of Kush",
+          "correct": false
+        },
+        {
+          "label": "The Benin Kingdom",
+          "correct": false
+        }
+      ],
+      "explanation": "Mansa Musa ruled Mali in the 1300s. His pilgrimage to Mecca, with huge amounts of gold, made him famous across the world.",
+      "source_url": "https://www.britannica.com/biography/Musa-I-of-Mali",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Meiji Restoration of 1868 began a period of rapid modernisation in which country?",
+      "options": [
+        {
+          "label": "Japan",
+          "correct": true
+        },
+        {
+          "label": "China",
+          "correct": false
+        },
+        {
+          "label": "Korea",
+          "correct": false
+        },
+        {
+          "label": "Thailand",
+          "correct": false
+        }
+      ],
+      "explanation": "The Meiji Restoration returned power to the Japanese emperor and transformed Japan into an industrial nation within decades.",
+      "source_url": "https://www.britannica.com/event/Meiji-Restoration",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Carthaginian general famously crossed the Alps with war elephants to invade Italy?",
+      "options": [
+        {
+          "label": "Hannibal",
+          "correct": true
+        },
+        {
+          "label": "Hamilcar",
+          "correct": false
+        },
+        {
+          "label": "Scipio",
+          "correct": false
+        },
+        {
+          "label": "Vercingetorix",
+          "correct": false
+        }
+      ],
+      "explanation": "Hannibal crossed the Alps in 218 BC during the Second Punic War against Rome.",
+      "source_url": "https://www.britannica.com/biography/Hannibal-Carthaginian-general-247-183-BCE",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of the Seven Wonders of the Ancient World stood at the harbour of Alexandria?",
+      "options": [
+        {
+          "label": "The Lighthouse (Pharos)",
+          "correct": true
+        },
+        {
+          "label": "The Colossus",
+          "correct": false
+        },
+        {
+          "label": "The Hanging Gardens",
+          "correct": false
+        },
+        {
+          "label": "The Mausoleum",
+          "correct": false
+        }
+      ],
+      "explanation": "The Pharos of Alexandria was one of the tallest structures of the ancient world and guided ships for centuries.",
+      "source_url": "https://www.britannica.com/topic/lighthouse-of-Alexandria",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which king was crowned emperor by the Pope in Rome on Christmas Day in the year 800?",
+      "options": [
+        {
+          "label": "Charlemagne",
+          "correct": true
+        },
+        {
+          "label": "Clovis",
+          "correct": false
+        },
+        {
+          "label": "Otto the Great",
+          "correct": false
+        },
+        {
+          "label": "Alfred the Great",
+          "correct": false
+        }
+      ],
+      "explanation": "Charlemagne, king of the Franks, ruled much of western Europe. His crowning revived the idea of an emperor in the West.",
+      "source_url": "https://www.britannica.com/biography/Charlemagne",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Rosetta Stone carries the same text in hieroglyphs, demotic script and which other language?",
+      "options": [
+        {
+          "label": "Ancient Greek",
+          "correct": true
+        },
+        {
+          "label": "Latin",
+          "correct": false
+        },
+        {
+          "label": "Aramaic",
+          "correct": false
+        },
+        {
+          "label": "Hebrew",
+          "correct": false
+        }
+      ],
+      "explanation": "Because scholars could read the Greek, the stone helped Jean-François Champollion crack Egyptian hieroglyphs in 1822.",
+      "source_url": "https://www.britannica.com/topic/Rosetta-Stone",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Russian ruler founded the city of St Petersburg in 1703?",
+      "options": [
+        {
+          "label": "Peter the Great",
+          "correct": true
+        },
+        {
+          "label": "Ivan the Terrible",
+          "correct": false
+        },
+        {
+          "label": "Catherine the Great",
+          "correct": false
+        },
+        {
+          "label": "Alexander I",
+          "correct": false
+        }
+      ],
+      "explanation": "Peter the Great built St Petersburg on the Baltic coast as his 'window on Europe' and made it Russia's capital.",
+      "source_url": "https://www.britannica.com/biography/Peter-the-Great",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Simón Bolívar led independence movements across much of which continent?",
+      "options": [
+        {
+          "label": "South America",
+          "correct": true
+        },
+        {
+          "label": "Africa",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "North America",
+          "correct": false
+        }
+      ],
+      "explanation": "Known as 'the Liberator', Bolívar helped free Venezuela, Colombia, Ecuador, Peru and Bolivia from Spanish rule.",
+      "source_url": "https://www.britannica.com/biography/Simon-Bolivar",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Hanseatic League was a powerful trading alliance of towns based mainly around which seas?",
+      "options": [
+        {
+          "label": "The Baltic and North Seas",
+          "correct": true
+        },
+        {
+          "label": "The Mediterranean and Black Seas",
+          "correct": false
+        },
+        {
+          "label": "The Red and Arabian Seas",
+          "correct": false
+        },
+        {
+          "label": "The Caribbean Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Hanseatic League, centred on towns such as Lübeck, dominated northern European trade from the 1200s to the 1400s.",
+      "source_url": "https://www.britannica.com/topic/Hanseatic-League",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The ancient city of Carthage lay in which modern country?",
+      "options": [
+        {
+          "label": "Tunisia",
+          "correct": true
+        },
+        {
+          "label": "Libya",
+          "correct": false
+        },
+        {
+          "label": "Morocco",
+          "correct": false
+        },
+        {
+          "label": "Egypt",
+          "correct": false
+        }
+      ],
+      "explanation": "Carthage stood on the coast near modern Tunis. It was Rome's great rival until it was destroyed in 146 BC.",
+      "source_url": "https://www.britannica.com/place/Carthage-ancient-city-Tunisia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was the first Roman emperor?",
+      "options": [
+        {
+          "label": "Augustus",
+          "correct": true
+        },
+        {
+          "label": "Julius Caesar",
+          "correct": false
+        },
+        {
+          "label": "Nero",
+          "correct": false
+        },
+        {
+          "label": "Constantine",
+          "correct": false
+        }
+      ],
+      "explanation": "Octavian took the title Augustus in 27 BC. Julius Caesar held great power but was never emperor.",
+      "source_url": "https://www.britannica.com/biography/Augustus-Roman-emperor",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which people built the city of Tenochtitlan, on the site of modern Mexico City?",
+      "options": [
+        {
+          "label": "The Aztecs",
+          "correct": true
+        },
+        {
+          "label": "The Maya",
+          "correct": false
+        },
+        {
+          "label": "The Inca",
+          "correct": false
+        },
+        {
+          "label": "The Toltecs",
+          "correct": false
+        }
+      ],
+      "explanation": "The Aztecs (Mexica) built Tenochtitlan on an island in Lake Texcoco in the 1300s, linked to land by causeways.",
+      "source_url": "https://www.britannica.com/place/Tenochtitlan",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Whose expedition of 1519 to 1522 made the first voyage around the world, though he did not survive the journey?",
+      "options": [
+        {
+          "label": "Ferdinand Magellan",
+          "correct": true
+        },
+        {
+          "label": "Vasco da Gama",
+          "correct": false
+        },
+        {
+          "label": "Christopher Columbus",
+          "correct": false
+        },
+        {
+          "label": "James Cook",
+          "correct": false
+        }
+      ],
+      "explanation": "Magellan died in the Philippines in 1521. Juan Sebastián Elcano led the last surviving ship home to Spain.",
+      "source_url": "https://www.britannica.com/biography/Ferdinand-Magellan",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Florentine writer and diplomat wrote The Prince, a famous book on political power?",
+      "options": [
+        {
+          "label": "Niccolò Machiavelli",
+          "correct": true
+        },
+        {
+          "label": "Dante Alighieri",
+          "correct": false
+        },
+        {
+          "label": "Lorenzo de' Medici",
+          "correct": false
+        },
+        {
+          "label": "Galileo Galilei",
+          "correct": false
+        }
+      ],
+      "explanation": "Machiavelli wrote The Prince in 1513. The word 'Machiavellian', meaning cunning, comes from his name.",
+      "source_url": "https://www.britannica.com/biography/Niccolo-Machiavelli",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Silk Road trade routes chiefly linked China with which region?",
+      "options": [
+        {
+          "label": "The Mediterranean world",
+          "correct": true
+        },
+        {
+          "label": "Scandinavia",
+          "correct": false
+        },
+        {
+          "label": "West Africa",
+          "correct": false
+        },
+        {
+          "label": "The Americas",
+          "correct": false
+        }
+      ],
+      "explanation": "For centuries, silk, spices, ideas and religions travelled along the Silk Road between East Asia and the Mediterranean.",
+      "source_url": "https://www.britannica.com/topic/Silk-Road-trade-route",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Cleopatra lived closer in time to the first Moon landing than to the building of the Great Pyramid of Giza.",
+      "answer": true,
+      "explanation": "The Great Pyramid was built around 2560 BC. Cleopatra died in 30 BC, about 2,500 years later, but under 2,000 years before 1969.",
+      "source_url": "https://www.britannica.com/biography/Cleopatra-queen-of-Egypt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Hundred Years' War between England and France lasted exactly 100 years.",
+      "answer": false,
+      "explanation": "It ran from 1337 to 1453, about 116 years, with long periods of truce in between.",
+      "source_url": "https://www.britannica.com/event/Hundred-Years-War",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Byzantine Empire was the eastern part of the Roman Empire, which carried on for centuries after Rome itself fell.",
+      "answer": true,
+      "explanation": "Ruled from Constantinople, the Byzantine Empire lasted until 1453, almost a thousand years after the western empire ended.",
+      "source_url": "https://www.britannica.com/place/Byzantine-Empire",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Nelson Mandela became president of South Africa in 1994.",
+      "answer": true,
+      "explanation": "After 27 years in prison, Mandela was elected in South Africa's first fully democratic election in 1994.",
+      "source_url": "https://www.britannica.com/biography/Nelson-Mandela",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Napoleon Bonaparte was born on the island of Corsica.",
+      "answer": true,
+      "explanation": "Napoleon was born in Ajaccio, Corsica, in 1769, just a year after the island passed from Genoa to France.",
+      "source_url": "https://www.britannica.com/biography/Napoleon-I",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did the Berlin Wall fall?",
+      "slider": {
+        "min": 1940,
+        "max": 2000,
+        "step": 1,
+        "unit": null,
+        "correct": 1989,
+        "accept_min": 1989,
+        "accept_max": 1989
+      },
+      "explanation": "The Berlin Wall opened on 9 November 1989, and Germany was reunified the following year.",
+      "source_url": "https://www.britannica.com/topic/Berlin-Wall",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did the French Revolution begin with the storming of the Bastille?",
+      "slider": {
+        "min": 1700,
+        "max": 1850,
+        "step": 1,
+        "unit": null,
+        "correct": 1789,
+        "accept_min": 1789,
+        "accept_max": 1789
+      },
+      "explanation": "Crowds stormed the Bastille prison in Paris on 14 July 1789, now celebrated as France's national day.",
+      "source_url": "https://www.britannica.com/event/French-Revolution",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did the First World War end?",
+      "slider": {
+        "min": 1900,
+        "max": 1950,
+        "step": 1,
+        "unit": null,
+        "correct": 1918,
+        "accept_min": 1918,
+        "accept_max": 1918
+      },
+      "explanation": "Fighting stopped with the Armistice on 11 November 1918, remembered each year on Armistice Day.",
+      "source_url": "https://www.britannica.com/event/World-War-I",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

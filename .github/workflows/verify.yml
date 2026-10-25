@@ -1,0 +1,160 @@
+# Manual checks only; fuller backend/e2e jobs remain opt-in.
+name: Manual application verification
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  frontend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+      with:
+        node-version: '24'
+        cache: npm
+    - run: npm ci
+    - run: npm run typecheck
+    - run: npm run lint
+    - run: npm run build
+      env:
+        VITE_SENTRY_DSN: ''
+        VITE_POSTHOG_KEY: ''
+    - name: Rebrand and deployment guard boundaries
+      run: 'python3 scripts/check-rebrand.py
+
+        python3 tests/unit/deploy-ftps.test.py
+
+        python3 tests/unit/guard.test.py'
+  backend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      database:
+        image: mariadb:11.4
+        env:
+          MARIADB_DATABASE: dyk_ci_test
+          MARIADB_ROOT_PASSWORD: ci_test_only
+          MARIADB_ROOT_HOST: '%'
+        ports:
+        - 3306:3306
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s
+          --health-retries=10
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
+      with:
+        php-version: '8.4'
+        extensions: pdo_mysql, curl, openssl
+        tools: composer:v2
+        coverage: none
+    - name: Install and validate locked dependencies
+      working-directory: backend
+      run: 'composer validate --strict
+
+        composer install --no-dev --no-interaction --prefer-dist
+
+        composer check-platform-reqs
+
+        composer audit
+
+        composer test
+
+        '
+    - name: Validate quiz content files
+      run: php backend/bin/import-content.php --dry-run
+    - name: Prove the cron helper only adds lines
+      run: bash scripts/cron-ensure.test.sh
+    - name: Configure disposable database
+      run: "export DYK_CONFIG=\"$RUNNER_TEMP/dyk-ci.php\"\necho \"DYK_CONFIG=$DYK_CONFIG\" >> \"$GITHUB_ENV\"\n\
+        php <<'PHP'\n<?php\n$config = require 'backend/config.example.php';\n$config['environment'] = 'test';\n\
+        $config['allowed_origins'] = ['http://localhost:5202'];\n$config['database'] = [\n    'host' => '127.0.0.1',\
+        \ 'port' => 3306, 'name' => 'dyk_ci_test',\n    'user' => 'root', 'password' => 'ci_test_only',\n];\n$config['rate_limit_key']\
+        \ = bin2hex(random_bytes(32));\n$file = getenv('DYK_CONFIG');\nfile_put_contents($file, '<?php return '\
+        \ . var_export($config, true) . ';');\nchmod($file, 0600);\nPHP\nphp backend/bin/migrate.php\nphp backend/bin/migrate.php\n"
+    - name: Verify HTTP, ownership and grading contracts
+      run: "PHP_CLI_SERVER_WORKERS=4 php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > \"$RUNNER_TEMP/dyk-php.log\"\
+        \ 2>&1 &\napi_pid=$!\ntrap 'kill \"$api_pid\" 2>/dev/null || true' EXIT\nfor attempt in {1..30}; do\n  if\
+        \ curl --silent --fail http://127.0.0.1:55438/api/v1/health > /dev/null; then break; fi\n  sleep 0.2\ndone\n\
+        php backend/tests/integration.php\nphp backend/tests/competition.php\nphp backend/tests/daily.php\nphp backend/tests/concurrency.php\n\
+        php backend/tests/feeds.php\nphp backend/tests/content.php\nphp backend/tests/cleanup.php\nphp backend/tests/seo.php\n"
+    if: inputs.full_backend
+  unit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+      with:
+        node-version: '24'
+        cache: npm
+    - run: npm ci
+    - name: Unit and component tests
+      run: npm test
+  e2e:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      database:
+        image: mariadb:11.4
+        env:
+          MARIADB_ROOT_PASSWORD: ci_test_only
+          MARIADB_ROOT_HOST: '%'
+        ports:
+        - 3306:3306
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s
+          --health-retries=10
+    env:
+      E2E_DB_ADMIN_HOST: 127.0.0.1
+      E2E_DB_ADMIN_USER: root
+      E2E_DB_ADMIN_PASSWORD: ci_test_only
+      E2E_DB_USER_HOST: '%'
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+      with:
+        node-version: '24'
+        cache: npm
+    - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
+      with:
+        php-version: '8.4'
+        extensions: pdo_mysql, curl, openssl
+        tools: composer:v2
+        coverage: none
+    - name: Install backend dependencies
+      working-directory: backend
+      run: composer install --no-dev --no-interaction --prefer-dist
+    - run: npm ci
+    - name: Install Chromium for Playwright
+      run: npx playwright install --with-deps chromium
+    - name: Browser journeys (mobile and desktop)
+      run: npm run test:e2e
+    - name: Keep the report when a journey fails
+      if: failure()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: playwright-report
+        path: 'playwright-report/
+
+          test-results/
+
+          '
+        retention-days: 7
+    if: inputs.full_backend
+'on':
+  workflow_dispatch:
+    inputs:
+      full_backend:
+        description: Also run disposable-database/PHP/browser checks (uses more Actions minutes)
+        type: boolean
+        default: false

@@ -1,0 +1,653 @@
+{
+  "slug": "kings-and-queens",
+  "title": "Kings and Queens",
+  "intro": "Battles, crowns and famous royal moments from a thousand years of British history.",
+  "category": "history",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In which year was the Battle of Hastings fought?",
+      "options": [
+        {
+          "label": "1066",
+          "correct": true
+        },
+        {
+          "label": "1215",
+          "correct": false
+        },
+        {
+          "label": "1415",
+          "correct": false
+        },
+        {
+          "label": "1666",
+          "correct": false
+        }
+      ],
+      "explanation": "The Battle of Hastings took place in 1066, when the Normans defeated the English army.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zshtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who won the Battle of Hastings?",
+      "options": [
+        {
+          "label": "King Harold",
+          "correct": false
+        },
+        {
+          "label": "William of Normandy",
+          "correct": true
+        },
+        {
+          "label": "Alfred the Great",
+          "correct": false
+        },
+        {
+          "label": "Richard the Lionheart",
+          "correct": false
+        }
+      ],
+      "explanation": "William, Duke of Normandy, won the battle and became known as William the Conqueror.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zshtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which king agreed to Magna Carta?",
+      "options": [
+        {
+          "label": "King John",
+          "correct": true
+        },
+        {
+          "label": "King Henry VIII",
+          "correct": false
+        },
+        {
+          "label": "King Charles I",
+          "correct": false
+        },
+        {
+          "label": "King Alfred",
+          "correct": false
+        }
+      ],
+      "explanation": "King John agreed to Magna Carta, which limited the king's power and said he must follow the law.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcyx2v4/articles/zcg66g8",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Magna Carta agreed?",
+      "slider": {
+        "min": 1000,
+        "max": 1500,
+        "step": 5,
+        "unit": null,
+        "correct": 1215,
+        "accept_min": 1215,
+        "accept_max": 1215
+      },
+      "explanation": "Magna Carta was agreed at Runnymede, near the River Thames, in 1215.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcyx2v4/articles/zcg66g8",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many times did King Henry VIII marry?",
+      "options": [
+        {
+          "label": "Two",
+          "correct": false
+        },
+        {
+          "label": "Four",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": true
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "Henry VIII had six wives, one of the most famous facts about the Tudors.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Tudor queen was the daughter of Henry VIII and Anne Boleyn?",
+      "options": [
+        {
+          "label": "Mary I",
+          "correct": false
+        },
+        {
+          "label": "Elizabeth I",
+          "correct": true
+        },
+        {
+          "label": "Victoria",
+          "correct": false
+        },
+        {
+          "label": "Lady Jane Grey",
+          "correct": false
+        }
+      ],
+      "explanation": "Elizabeth I was the daughter of Henry VIII and his second wife, Anne Boleyn.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwcsp4j",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which year did the Great Fire of London begin?",
+      "options": [
+        {
+          "label": "1066",
+          "correct": false
+        },
+        {
+          "label": "1588",
+          "correct": false
+        },
+        {
+          "label": "1666",
+          "correct": true
+        },
+        {
+          "label": "1805",
+          "correct": false
+        }
+      ],
+      "explanation": "The Great Fire of London started in September 1666 and burned for several days.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zswvcxs/articles/z7j6s82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Great Fire of London started in a bakery on Pudding Lane.",
+      "answer": true,
+      "explanation": "The fire began in Thomas Farriner's bakery on Pudding Lane and spread quickly between the wooden houses.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zswvcxs/articles/z7j6s82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which queen gave her name to an era of British history in the 1800s?",
+      "options": [
+        {
+          "label": "Queen Anne",
+          "correct": false
+        },
+        {
+          "label": "Queen Mary",
+          "correct": false
+        },
+        {
+          "label": "Queen Victoria",
+          "correct": true
+        },
+        {
+          "label": "Queen Matilda",
+          "correct": false
+        }
+      ],
+      "explanation": "Queen Victoria reigned from 1837 to 1901, and that time is called the Victorian era.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zq9ysk7/articles/zhj9cmn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Alfred the Great was king of which Anglo-Saxon kingdom?",
+      "options": [
+        {
+          "label": "Wessex",
+          "correct": true
+        },
+        {
+          "label": "Mercia",
+          "correct": false
+        },
+        {
+          "label": "Northumbria",
+          "correct": false
+        },
+        {
+          "label": "East Anglia",
+          "correct": false
+        }
+      ],
+      "explanation": "Alfred ruled Wessex in the south of England in the 800s and is remembered for defending it against Viking armies.",
+      "source_url": "https://www.britannica.com/biography/Alfred-king-of-Wessex",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which English king died at the Battle of Hastings?",
+      "options": [
+        {
+          "label": "Harold II",
+          "correct": true
+        },
+        {
+          "label": "Edward the Confessor",
+          "correct": false
+        },
+        {
+          "label": "William II",
+          "correct": false
+        },
+        {
+          "label": "Henry I",
+          "correct": false
+        }
+      ],
+      "explanation": "King Harold II died during the battle in 1066, and William of Normandy went on to become king of England.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zshtyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the long embroidery that tells the story of the Norman Conquest?",
+      "options": [
+        {
+          "label": "The Bayeux Tapestry",
+          "correct": true
+        },
+        {
+          "label": "The Domesday Book",
+          "correct": false
+        },
+        {
+          "label": "The Magna Carta",
+          "correct": false
+        },
+        {
+          "label": "The Lindisfarne Gospels",
+          "correct": false
+        }
+      ],
+      "explanation": "The Bayeux Tapestry is about 70 metres long and shows the events leading up to and including the Battle of Hastings.",
+      "source_url": "https://www.britannica.com/topic/Bayeux-Tapestry",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "William the Conqueror ordered a great survey of who owned land in England. What is it called?",
+      "options": [
+        {
+          "label": "The Domesday Book",
+          "correct": true
+        },
+        {
+          "label": "The Bayeux Tapestry",
+          "correct": false
+        },
+        {
+          "label": "The Anglo-Saxon Chronicle",
+          "correct": false
+        },
+        {
+          "label": "The Bill of Rights",
+          "correct": false
+        }
+      ],
+      "explanation": "The Domesday Book recorded land, people and animals across much of England, so the king knew what taxes could be paid.",
+      "source_url": "https://www.britannica.com/topic/Domesday-Book",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was the Domesday survey carried out?",
+      "slider": {
+        "min": 1000,
+        "max": 1200,
+        "step": 1,
+        "unit": null,
+        "correct": 1086,
+        "accept_min": 1084,
+        "accept_max": 1088
+      },
+      "explanation": "The survey was made in 1086, twenty years after the Norman Conquest.",
+      "source_url": "https://www.britannica.com/topic/Domesday-Book",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which English king was known as \"the Lionheart\"?",
+      "options": [
+        {
+          "label": "Richard I",
+          "correct": true
+        },
+        {
+          "label": "Henry II",
+          "correct": false
+        },
+        {
+          "label": "John",
+          "correct": false
+        },
+        {
+          "label": "Edward I",
+          "correct": false
+        }
+      ],
+      "explanation": "Richard I earned the name Lionheart because of his reputation for bravery.",
+      "source_url": "https://www.britannica.com/biography/Richard-I-king-of-England",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Richard the Lionheart spent most of his ten-year reign living in England.",
+      "answer": false,
+      "explanation": "Richard spent only about six months of his reign in England. He was away on crusade or defending his lands in France.",
+      "source_url": "https://www.britannica.com/biography/Richard-I-king-of-England",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Scottish king won the Battle of Bannockburn in 1314?",
+      "options": [
+        {
+          "label": "Robert the Bruce",
+          "correct": true
+        },
+        {
+          "label": "Macbeth",
+          "correct": false
+        },
+        {
+          "label": "Kenneth MacAlpin",
+          "correct": false
+        },
+        {
+          "label": "James IV",
+          "correct": false
+        }
+      ],
+      "explanation": "Robert the Bruce defeated the English army of Edward II at Bannockburn, a famous moment in Scottish history.",
+      "source_url": "https://www.britannica.com/biography/Robert-the-Bruce",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which queen of the Iceni tribe led a rebellion against the Romans in Britain?",
+      "options": [
+        {
+          "label": "Boudicca",
+          "correct": true
+        },
+        {
+          "label": "Cartimandua",
+          "correct": false
+        },
+        {
+          "label": "Matilda",
+          "correct": false
+        },
+        {
+          "label": "Eleanor",
+          "correct": false
+        }
+      ],
+      "explanation": "Boudicca led the Iceni and other tribes against Roman rule around AD 60 to 61.",
+      "source_url": "https://www.britannica.com/biography/Boudicca",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "King Cnut ruled England as well as Denmark.",
+      "answer": true,
+      "explanation": "Cnut, sometimes spelled Canute, was a Danish king who also ruled England from 1016 until 1035.",
+      "source_url": "https://www.britannica.com/biography/Canute-I",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When Elizabeth I died in 1603, which Scottish king also became king of England?",
+      "options": [
+        {
+          "label": "James VI",
+          "correct": true
+        },
+        {
+          "label": "Charles I",
+          "correct": false
+        },
+        {
+          "label": "Robert II",
+          "correct": false
+        },
+        {
+          "label": "David II",
+          "correct": false
+        }
+      ],
+      "explanation": "James VI of Scotland became James I of England, so for the first time one king ruled both kingdoms.",
+      "source_url": "https://www.britannica.com/biography/James-I-king-of-England-and-Scotland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who ruled as Lord Protector in the 1650s, when England had no king?",
+      "options": [
+        {
+          "label": "Oliver Cromwell",
+          "correct": true
+        },
+        {
+          "label": "Thomas Cromwell",
+          "correct": false
+        },
+        {
+          "label": "Francis Drake",
+          "correct": false
+        },
+        {
+          "label": "Walter Raleigh",
+          "correct": false
+        }
+      ],
+      "explanation": "After the English Civil War, Oliver Cromwell led the country as Lord Protector from 1653 until 1658.",
+      "source_url": "https://www.britannica.com/biography/Oliver-Cromwell",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for the time in 1660 when Charles II became king and the monarchy returned?",
+      "options": [
+        {
+          "label": "The Restoration",
+          "correct": true
+        },
+        {
+          "label": "The Reformation",
+          "correct": false
+        },
+        {
+          "label": "The Renaissance",
+          "correct": false
+        },
+        {
+          "label": "The Revolution",
+          "correct": false
+        }
+      ],
+      "explanation": "The Restoration means the return of the monarchy, when Charles II came back to rule after years without a king.",
+      "source_url": "https://www.britannica.com/topic/Restoration-English-history-1660",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Queen Anne was the last monarch from the Stuart family.",
+      "answer": true,
+      "explanation": "Anne died in 1714 without any surviving children, and the crown passed to George I from Hanover.",
+      "source_url": "https://www.britannica.com/biography/Anne-queen-of-Great-Britain-and-Ireland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was Queen Victoria's husband?",
+      "options": [
+        {
+          "label": "Prince Albert",
+          "correct": true
+        },
+        {
+          "label": "Prince Philip",
+          "correct": false
+        },
+        {
+          "label": "Prince Edward",
+          "correct": false
+        },
+        {
+          "label": "Prince George",
+          "correct": false
+        }
+      ],
+      "explanation": "Victoria married Prince Albert in 1840. The Royal Albert Hall in London is named after him.",
+      "source_url": "https://www.britannica.com/biography/Victoria-queen-of-United-Kingdom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Queen Victoria reigned for more than 60 years.",
+      "answer": true,
+      "explanation": "Victoria reigned for over 63 years, from 1837 to 1901.",
+      "source_url": "https://www.britannica.com/biography/Victoria-queen-of-United-Kingdom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "For about how many years was Elizabeth II queen?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "years",
+        "correct": 70,
+        "accept_min": 69,
+        "accept_max": 71
+      },
+      "explanation": "Elizabeth II became queen in 1952 and reigned until 2022, about 70 years, the longest of any British monarch.",
+      "source_url": "https://www.britannica.com/biography/Elizabeth-II",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was the father of Queen Elizabeth II?",
+      "options": [
+        {
+          "label": "George VI",
+          "correct": true
+        },
+        {
+          "label": "George V",
+          "correct": false
+        },
+        {
+          "label": "Edward VII",
+          "correct": false
+        },
+        {
+          "label": "Edward VIII",
+          "correct": false
+        }
+      ],
+      "explanation": "George VI became king in 1936, and his elder daughter Elizabeth became queen after him in 1952.",
+      "source_url": "https://www.britannica.com/biography/George-VI",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which royal family name did King George V choose in 1917?",
+      "options": [
+        {
+          "label": "Windsor",
+          "correct": true
+        },
+        {
+          "label": "York",
+          "correct": false
+        },
+        {
+          "label": "Lancaster",
+          "correct": false
+        },
+        {
+          "label": "Hanover",
+          "correct": false
+        }
+      ],
+      "explanation": "George V changed the family name to Windsor, after Windsor Castle, during the First World War.",
+      "source_url": "https://www.britannica.com/topic/house-of-Windsor",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where in London are the Crown Jewels kept?",
+      "options": [
+        {
+          "label": "The Tower of London",
+          "correct": true
+        },
+        {
+          "label": "Buckingham Palace",
+          "correct": false
+        },
+        {
+          "label": "The British Museum",
+          "correct": false
+        },
+        {
+          "label": "St Paul's Cathedral",
+          "correct": false
+        }
+      ],
+      "explanation": "The Crown Jewels, including crowns worn at coronations, are kept safe and shown to visitors at the Tower of London.",
+      "source_url": "https://www.hrp.org.uk/tower-of-london/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which London church have most English and British monarchs been crowned since 1066?",
+      "options": [
+        {
+          "label": "Westminster Abbey",
+          "correct": true
+        },
+        {
+          "label": "St Paul's Cathedral",
+          "correct": false
+        },
+        {
+          "label": "Canterbury Cathedral",
+          "correct": false
+        },
+        {
+          "label": "Southwark Cathedral",
+          "correct": false
+        }
+      ],
+      "explanation": "Coronations have taken place at Westminster Abbey since William the Conqueror was crowned there on Christmas Day 1066.",
+      "source_url": "https://www.britannica.com/topic/Westminster-Abbey",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

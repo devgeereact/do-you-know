@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-physics",
+  "title": "GCSE Physics",
+  "intro": "Tough exam-style questions on energy, electricity, particles, radioactivity, forces, waves and magnetism.",
+  "category": "school-science",
+  "difficulty": "hard",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "slider",
+      "prompt": "What is the kinetic energy of a 4 kg object moving at 5 m/s?",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "J",
+        "correct": 50,
+        "accept_min": 50,
+        "accept_max": 50
+      },
+      "explanation": "Kinetic energy = ½ × m × v² = 0.5 × 4 × 5² = 50 J. Remember to square the speed first.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4xt46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A 5 kg box is lifted 2 m. How much gravitational potential energy does it gain? (g = 9.8 N/kg)",
+      "options": [
+        {
+          "label": "98 J",
+          "correct": true
+        },
+        {
+          "label": "10 J",
+          "correct": false
+        },
+        {
+          "label": "49 J",
+          "correct": false
+        },
+        {
+          "label": "196 J",
+          "correct": false
+        }
+      ],
+      "explanation": "Ep = m × g × h = 5 × 9.8 × 2 = 98 J.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4xt46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A motor is supplied with 200 J and transfers 50 J usefully. What is its efficiency?",
+      "options": [
+        {
+          "label": "25%",
+          "correct": true
+        },
+        {
+          "label": "4%",
+          "correct": false
+        },
+        {
+          "label": "40%",
+          "correct": false
+        },
+        {
+          "label": "75%",
+          "correct": false
+        }
+      ],
+      "explanation": "Efficiency = useful output ÷ total input = 50 ÷ 200 = 0.25, or 25%.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4xt46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is meant by the specific heat capacity of a material?",
+      "options": [
+        {
+          "label": "The energy needed to raise the temperature of 1 kg by 1 °C",
+          "correct": true
+        },
+        {
+          "label": "The energy needed to melt 1 kg with no temperature change",
+          "correct": false
+        },
+        {
+          "label": "The temperature at which it boils",
+          "correct": false
+        },
+        {
+          "label": "The total energy stored in 1 kg",
+          "correct": false
+        }
+      ],
+      "explanation": "Specific heat capacity is the energy needed to raise 1 kg of a substance by 1 °C. Water's is high, about 4,200 J/kg °C.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4xt46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A device transfers 600 J of energy in 2 minutes. What is its power?",
+      "options": [
+        {
+          "label": "5 W",
+          "correct": true
+        },
+        {
+          "label": "300 W",
+          "correct": false
+        },
+        {
+          "label": "1,200 W",
+          "correct": false
+        },
+        {
+          "label": "50 W",
+          "correct": false
+        }
+      ],
+      "explanation": "Power = energy ÷ time, and time must be in seconds: 600 ÷ 120 = 5 W.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4xt46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A current of 2 A flows for 30 s. How much charge flows?",
+      "options": [
+        {
+          "label": "60 C",
+          "correct": true
+        },
+        {
+          "label": "15 C",
+          "correct": false
+        },
+        {
+          "label": "32 C",
+          "correct": false
+        },
+        {
+          "label": "0.07 C",
+          "correct": false
+        }
+      ],
+      "explanation": "Charge = current × time, so Q = 2 × 30 = 60 coulombs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A potential difference of 12 V is applied across a 4 Ω resistor. What current flows?",
+      "options": [
+        {
+          "label": "3 A",
+          "correct": true
+        },
+        {
+          "label": "48 A",
+          "correct": false
+        },
+        {
+          "label": "0.33 A",
+          "correct": false
+        },
+        {
+          "label": "16 A",
+          "correct": false
+        }
+      ],
+      "explanation": "V = I × R, so I = V ÷ R = 12 ÷ 4 = 3 A.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In a series circuit, the current is the same at every point.",
+      "answer": true,
+      "explanation": "There is only one path for charge in a series circuit, so the current is the same through each component.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Two 6 Ω resistors are connected in parallel. What is their total resistance?",
+      "options": [
+        {
+          "label": "3 Ω",
+          "correct": true
+        },
+        {
+          "label": "12 Ω",
+          "correct": false
+        },
+        {
+          "label": "6 Ω",
+          "correct": false
+        },
+        {
+          "label": "36 Ω",
+          "correct": false
+        }
+      ],
+      "explanation": "Adding resistors in parallel lowers the total resistance. For two equal resistors it is half of one: 3 Ω.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "UK mains electricity is an alternating current supply at 50 Hz and about 230 V.",
+      "answer": true,
+      "explanation": "UK mains is a.c., changing direction 50 times a second, with a potential difference of about 230 V.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What colour is the insulation on the earth wire in a UK three-core cable?",
+      "options": [
+        {
+          "label": "Green and yellow stripes",
+          "correct": true
+        },
+        {
+          "label": "Blue",
+          "correct": false
+        },
+        {
+          "label": "Brown",
+          "correct": false
+        },
+        {
+          "label": "Black",
+          "correct": false
+        }
+      ],
+      "explanation": "The earth wire is green and yellow, the live wire is brown and the neutral wire is blue.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What happens to the resistance of a thermistor as its temperature increases?",
+      "options": [
+        {
+          "label": "It decreases",
+          "correct": true
+        },
+        {
+          "label": "It increases",
+          "correct": false
+        },
+        {
+          "label": "It stays the same",
+          "correct": false
+        },
+        {
+          "label": "It drops to zero",
+          "correct": false
+        }
+      ],
+      "explanation": "A thermistor's resistance falls as temperature rises, so it is used in thermostats and temperature sensors.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A metal block has a mass of 400 g and a volume of 50 cm³. What is its density?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 0.5,
+        "unit": "g/cm³",
+        "correct": 8,
+        "accept_min": 8,
+        "accept_max": 8
+      },
+      "explanation": "Density = mass ÷ volume = 400 ÷ 50 = 8 g/cm³.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z46h9ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the specific latent heat of a substance?",
+      "options": [
+        {
+          "label": "The energy needed to change the state of 1 kg with no change in temperature",
+          "correct": true
+        },
+        {
+          "label": "The energy needed to raise 1 kg by 1 °C",
+          "correct": false
+        },
+        {
+          "label": "The temperature at which it changes state",
+          "correct": false
+        },
+        {
+          "label": "The energy released when 1 kg cools by 1 °C",
+          "correct": false
+        }
+      ],
+      "explanation": "Specific latent heat is the energy to change the state of 1 kg without changing its temperature, for example melting ice at 0 °C.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z46h9ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "While a pure substance is melting, its temperature stays constant.",
+      "answer": true,
+      "explanation": "During melting, energy breaks bonds between particles instead of raising the temperature, so the temperature stays the same until it has all melted.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z46h9ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does an alpha particle consist of?",
+      "options": [
+        {
+          "label": "Two protons and two neutrons",
+          "correct": true
+        },
+        {
+          "label": "One electron",
+          "correct": false
+        },
+        {
+          "label": "Two electrons and two protons",
+          "correct": false
+        },
+        {
+          "label": "A high-energy electromagnetic wave",
+          "correct": false
+        }
+      ],
+      "explanation": "An alpha particle is the same as a helium nucleus: two protons and two neutrons.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3228p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A radioactive sample has a mass of 80 g and a half-life of 5 days. How much remains undecayed after 15 days?",
+      "options": [
+        {
+          "label": "10 g",
+          "correct": true
+        },
+        {
+          "label": "20 g",
+          "correct": false
+        },
+        {
+          "label": "40 g",
+          "correct": false
+        },
+        {
+          "label": "5 g",
+          "correct": false
+        }
+      ],
+      "explanation": "15 days is three half-lives: 80 → 40 → 20 → 10 g.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3228p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of nuclear radiation is the most ionising?",
+      "options": [
+        {
+          "label": "Alpha",
+          "correct": true
+        },
+        {
+          "label": "Beta",
+          "correct": false
+        },
+        {
+          "label": "Gamma",
+          "correct": false
+        },
+        {
+          "label": "Neutron",
+          "correct": false
+        }
+      ],
+      "explanation": "Alpha particles are the most ionising but least penetrating. They are stopped by a sheet of paper.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3228p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Gamma emission changes the atomic number of the nucleus.",
+      "answer": false,
+      "explanation": "Gamma rays are electromagnetic waves with no mass or charge, so the atomic number and mass number stay the same.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3228p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did the alpha scattering experiment show about the atom?",
+      "options": [
+        {
+          "label": "Most of its mass is in a tiny, positively charged nucleus",
+          "correct": true
+        },
+        {
+          "label": "It is a ball of positive charge with electrons spread through it",
+          "correct": false
+        },
+        {
+          "label": "It has no charge at all",
+          "correct": false
+        },
+        {
+          "label": "Electrons are found in the nucleus",
+          "correct": false
+        }
+      ],
+      "explanation": "Most alpha particles passed straight through but a few bounced back. This showed a small, dense, positive nucleus and replaced the plum pudding model.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3228p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the weight of a 60 kg person on Earth? (g = 9.8 N/kg)",
+      "options": [
+        {
+          "label": "588 N",
+          "correct": true
+        },
+        {
+          "label": "60 N",
+          "correct": false
+        },
+        {
+          "label": "6.1 N",
+          "correct": false
+        },
+        {
+          "label": "600 kg",
+          "correct": false
+        }
+      ],
+      "explanation": "Weight = mass × gravitational field strength = 60 × 9.8 = 588 N.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztc9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a vector quantity?",
+      "options": [
+        {
+          "label": "Velocity",
+          "correct": true
+        },
+        {
+          "label": "Speed",
+          "correct": false
+        },
+        {
+          "label": "Distance",
+          "correct": false
+        },
+        {
+          "label": "Mass",
+          "correct": false
+        }
+      ],
+      "explanation": "A vector has both size and direction. Velocity is speed in a given direction; speed, distance and mass are scalars.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztc9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A 1,200 kg car accelerates at 2.5 m/s². What resultant force acts on it?",
+      "options": [
+        {
+          "label": "3,000 N",
+          "correct": true
+        },
+        {
+          "label": "480 N",
+          "correct": false
+        },
+        {
+          "label": "1,202.5 N",
+          "correct": false
+        },
+        {
+          "label": "300 N",
+          "correct": false
+        }
+      ],
+      "explanation": "Resultant force = mass × acceleration = 1,200 × 2.5 = 3,000 N.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztc9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of Newton's laws says that when two objects interact, they exert equal and opposite forces on each other?",
+      "options": [
+        {
+          "label": "Newton's third law",
+          "correct": true
+        },
+        {
+          "label": "Newton's first law",
+          "correct": false
+        },
+        {
+          "label": "Newton's second law",
+          "correct": false
+        },
+        {
+          "label": "Hooke's law",
+          "correct": false
+        }
+      ],
+      "explanation": "Newton's third law: the forces in an interaction pair are equal in size, opposite in direction and act on different objects.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztc9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these increases a driver's thinking distance?",
+      "options": [
+        {
+          "label": "Tiredness",
+          "correct": true
+        },
+        {
+          "label": "An icy road",
+          "correct": false
+        },
+        {
+          "label": "Worn brakes",
+          "correct": false
+        },
+        {
+          "label": "Worn tyres",
+          "correct": false
+        }
+      ],
+      "explanation": "Thinking distance depends on speed and reaction time, which tiredness, alcohol and distractions increase. Road and brake conditions affect braking distance.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztc9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the momentum of a 3 kg ball moving at 4 m/s?",
+      "options": [
+        {
+          "label": "12 kg m/s",
+          "correct": true
+        },
+        {
+          "label": "7 kg m/s",
+          "correct": false
+        },
+        {
+          "label": "0.75 kg m/s",
+          "correct": false
+        },
+        {
+          "label": "24 kg m/s",
+          "correct": false
+        }
+      ],
+      "explanation": "Momentum = mass × velocity = 3 × 4 = 12 kg m/s.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztc9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A wave has a frequency of 50 Hz and a wavelength of 4 m. What is its wave speed?",
+      "slider": {
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "m/s",
+        "correct": 200,
+        "accept_min": 200,
+        "accept_max": 200
+      },
+      "explanation": "Wave speed = frequency × wavelength = 50 × 4 = 200 m/s.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8wfdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a longitudinal wave?",
+      "options": [
+        {
+          "label": "A sound wave",
+          "correct": true
+        },
+        {
+          "label": "Visible light",
+          "correct": false
+        },
+        {
+          "label": "A radio wave",
+          "correct": false
+        },
+        {
+          "label": "A ripple on water",
+          "correct": false
+        }
+      ],
+      "explanation": "In a longitudinal wave, the vibrations are parallel to the direction of travel. Sound waves are longitudinal; light and water ripples are transverse.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8wfdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of the electromagnetic spectrum has the shortest wavelength?",
+      "options": [
+        {
+          "label": "Gamma rays",
+          "correct": true
+        },
+        {
+          "label": "Radio waves",
+          "correct": false
+        },
+        {
+          "label": "Ultraviolet",
+          "correct": false
+        },
+        {
+          "label": "X-rays",
+          "correct": false
+        }
+      ],
+      "explanation": "Gamma rays have the shortest wavelength and highest frequency. Radio waves have the longest wavelength.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8wfdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Fleming's left-hand rule, what does the thumb represent?",
+      "options": [
+        {
+          "label": "The direction of the force (motion)",
+          "correct": true
+        },
+        {
+          "label": "The direction of the magnetic field",
+          "correct": false
+        },
+        {
+          "label": "The direction of the current",
+          "correct": false
+        },
+        {
+          "label": "The strength of the magnet",
+          "correct": false
+        }
+      ],
+      "explanation": "In Fleming's left-hand rule, the First finger shows the Field, the seCond finger the Current and the thuMb the Motion, or force.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2bbnk7",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

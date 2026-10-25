@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+# Play screens and personal pages hold nothing worth indexing.
+Disallow: /play/
+Disallow: /daily/play
+Disallow: /challenge/
+Disallow: /me
+Disallow: /account
+Disallow: /dashboard
+
+Sitemap: https://doyouknow.space/sitemap.xml

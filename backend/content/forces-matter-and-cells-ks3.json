@@ -1,0 +1,655 @@
+{
+  "slug": "forces-matter-and-cells-ks3",
+  "title": "Forces, Matter and Cells",
+  "intro": "Gravity, particles, cells and the science of everyday things.",
+  "category": "school-science",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which state of matter keeps a fixed shape?",
+      "options": [
+        {
+          "label": "Solid",
+          "correct": true
+        },
+        {
+          "label": "Liquid",
+          "correct": false
+        },
+        {
+          "label": "Gas",
+          "correct": false
+        },
+        {
+          "label": "None of them",
+          "correct": false
+        }
+      ],
+      "explanation": "In a solid, the particles are held tightly in place, so a solid keeps its shape.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "At sea level, pure water boils at what temperature?",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "unit": "°C",
+        "correct": 100,
+        "accept_min": 100,
+        "accept_max": 100
+      },
+      "explanation": "At normal air pressure, pure water boils at 100 °C and freezes at 0 °C.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the force that pulls objects towards Earth?",
+      "options": [
+        {
+          "label": "Friction",
+          "correct": false
+        },
+        {
+          "label": "Magnetism",
+          "correct": false
+        },
+        {
+          "label": "Gravity",
+          "correct": true
+        },
+        {
+          "label": "Upthrust",
+          "correct": false
+        }
+      ],
+      "explanation": "Gravity is a non-contact force that pulls objects with mass towards each other, so things fall to the ground.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zs3896f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What unit is force measured in?",
+      "options": [
+        {
+          "label": "Kilograms",
+          "correct": false
+        },
+        {
+          "label": "Newtons",
+          "correct": true
+        },
+        {
+          "label": "Metres",
+          "correct": false
+        },
+        {
+          "label": "Joules",
+          "correct": false
+        }
+      ],
+      "explanation": "Force is measured in newtons (N), named after the scientist Isaac Newton.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zs3896f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the basic building block of all living things?",
+      "options": [
+        {
+          "label": "The atom",
+          "correct": false
+        },
+        {
+          "label": "The cell",
+          "correct": true
+        },
+        {
+          "label": "The organ",
+          "correct": false
+        },
+        {
+          "label": "The molecule",
+          "correct": false
+        }
+      ],
+      "explanation": "All living things are made of cells, the smallest units of life.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z4882hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a cell controls its activities and holds its genetic material?",
+      "options": [
+        {
+          "label": "Cell membrane",
+          "correct": false
+        },
+        {
+          "label": "Nucleus",
+          "correct": true
+        },
+        {
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "label": "Cell wall",
+          "correct": false
+        }
+      ],
+      "explanation": "The nucleus contains genetic material and controls what happens in the cell.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z4882hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Sound can travel through empty space, where there is no air.",
+      "answer": false,
+      "explanation": "Sound needs particles to vibrate, so it cannot travel through a vacuum. Light can.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zmxrbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the chemical formula for water?",
+      "options": [
+        {
+          "label": "CO₂",
+          "correct": false
+        },
+        {
+          "label": "H₂O",
+          "correct": true
+        },
+        {
+          "label": "O₂",
+          "correct": false
+        },
+        {
+          "label": "NaCl",
+          "correct": false
+        }
+      ],
+      "explanation": "Each water molecule has two hydrogen atoms and one oxygen atom, so its formula is H₂O.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these metals is attracted to a magnet?",
+      "options": [
+        {
+          "label": "Copper",
+          "correct": false
+        },
+        {
+          "label": "Aluminium",
+          "correct": false
+        },
+        {
+          "label": "Iron",
+          "correct": true
+        },
+        {
+          "label": "Gold",
+          "correct": false
+        }
+      ],
+      "explanation": "Iron is a magnetic metal. Copper, aluminium and gold are not attracted to magnets.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zh2xsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is it called when a liquid turns into a gas at its surface?",
+      "options": [
+        {
+          "label": "Melting",
+          "correct": false
+        },
+        {
+          "label": "Freezing",
+          "correct": false
+        },
+        {
+          "label": "Evaporation",
+          "correct": true
+        },
+        {
+          "label": "Condensation",
+          "correct": false
+        }
+      ],
+      "explanation": "Evaporation is when particles escape from the surface of a liquid and become a gas.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/znxtyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which part of a plant cell does photosynthesis take place?",
+      "options": [
+        {
+          "label": "Chloroplast",
+          "correct": true
+        },
+        {
+          "label": "Mitochondrion",
+          "correct": false
+        },
+        {
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "label": "Cell membrane",
+          "correct": false
+        }
+      ],
+      "explanation": "Chloroplasts contain green chlorophyll, which traps light energy so the plant can make glucose.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znyycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a plant cell is filled with cell sap and helps keep the cell firm?",
+      "options": [
+        {
+          "label": "Permanent vacuole",
+          "correct": true
+        },
+        {
+          "label": "Ribosome",
+          "correct": false
+        },
+        {
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "label": "Chloroplast",
+          "correct": false
+        }
+      ],
+      "explanation": "The permanent vacuole stores cell sap. When it is full of water it pushes outwards, keeping the plant cell firm.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znyycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is found in plant cells but not in animal cells?",
+      "options": [
+        {
+          "label": "Cell wall",
+          "correct": true
+        },
+        {
+          "label": "Cell membrane",
+          "correct": false
+        },
+        {
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "label": "Cytoplasm",
+          "correct": false
+        }
+      ],
+      "explanation": "Plant cells have a tough cell wall made of cellulose that gives them strength. Animal cells do not have one.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znyycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Plant cells and animal cells both have a nucleus.",
+      "answer": true,
+      "explanation": "Both kinds of cell have a nucleus, cytoplasm and a cell membrane. The differences are extras like the cell wall and chloroplasts.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znyycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the job of the cell membrane?",
+      "options": [
+        {
+          "label": "It controls what goes into and out of the cell",
+          "correct": true
+        },
+        {
+          "label": "It makes food using light",
+          "correct": false
+        },
+        {
+          "label": "It stores the cell's genetic material",
+          "correct": false
+        },
+        {
+          "label": "It makes the cell rigid",
+          "correct": false
+        }
+      ],
+      "explanation": "The cell membrane is a thin barrier around the cell that lets some substances in and out but keeps others back.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znyycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A cyclist travels 100 metres in 5 seconds. What is her average speed in metres per second?",
+      "slider": {
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "m/s",
+        "correct": 20,
+        "accept_min": 20,
+        "accept_max": 20
+      },
+      "explanation": "Speed = distance ÷ time, so 100 m ÷ 5 s = 20 metres per second.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4brd2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which formula is used to work out pressure?",
+      "options": [
+        {
+          "label": "Force ÷ area",
+          "correct": true
+        },
+        {
+          "label": "Force × area",
+          "correct": false
+        },
+        {
+          "label": "Mass ÷ volume",
+          "correct": false
+        },
+        {
+          "label": "Distance ÷ time",
+          "correct": false
+        }
+      ],
+      "explanation": "Pressure is force divided by area. That is why a sharp knife, with a tiny area, cuts more easily than a blunt one.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4brd2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which statement about mass and weight is correct?",
+      "options": [
+        {
+          "label": "Weight is a force caused by gravity, but mass is the amount of matter",
+          "correct": true
+        },
+        {
+          "label": "Mass is a force measured in newtons",
+          "correct": false
+        },
+        {
+          "label": "Mass and weight are exactly the same thing",
+          "correct": false
+        },
+        {
+          "label": "Your weight is the same on every planet",
+          "correct": false
+        }
+      ],
+      "explanation": "Mass is measured in kilograms and stays the same everywhere. Weight is the pull of gravity on that mass, measured in newtons.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4brd2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "An astronaut has the same mass on the Moon as on Earth.",
+      "answer": true,
+      "explanation": "Mass does not change with location. The astronaut weighs less on the Moon only because the Moon's gravity is weaker.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4brd2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which force acts against motion when two surfaces rub together?",
+      "options": [
+        {
+          "label": "Friction",
+          "correct": true
+        },
+        {
+          "label": "Magnetism",
+          "correct": false
+        },
+        {
+          "label": "Upthrust",
+          "correct": false
+        },
+        {
+          "label": "Tension",
+          "correct": false
+        }
+      ],
+      "explanation": "Friction acts in the opposite direction to movement. It helps shoes grip the ground but also slows moving things down.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4brd2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A moving object has balanced forces acting on it. What happens to its motion?",
+      "options": [
+        {
+          "label": "It keeps moving at the same speed in the same direction",
+          "correct": true
+        },
+        {
+          "label": "It speeds up",
+          "correct": false
+        },
+        {
+          "label": "It slows down and stops",
+          "correct": false
+        },
+        {
+          "label": "It changes direction",
+          "correct": false
+        }
+      ],
+      "explanation": "Balanced forces cancel out, so they cause no change in motion. Only an unbalanced force can speed up, slow down or turn an object.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z4brd2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these substances is a compound?",
+      "options": [
+        {
+          "label": "Carbon dioxide",
+          "correct": true
+        },
+        {
+          "label": "Oxygen",
+          "correct": false
+        },
+        {
+          "label": "Iron",
+          "correct": false
+        },
+        {
+          "label": "Gold",
+          "correct": false
+        }
+      ],
+      "explanation": "A compound contains two or more elements chemically joined. Carbon dioxide is made of carbon and oxygen atoms bonded together.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zstp34j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A solution has a pH of exactly 7. What is it?",
+      "options": [
+        {
+          "label": "Neutral",
+          "correct": true
+        },
+        {
+          "label": "A strong acid",
+          "correct": false
+        },
+        {
+          "label": "A strong alkali",
+          "correct": false
+        },
+        {
+          "label": "A weak acid",
+          "correct": false
+        }
+      ],
+      "explanation": "On the pH scale, below 7 is acidic, above 7 is alkaline and exactly 7 is neutral, like pure water.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zn6hvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the reaction between an acid and an alkali that makes a salt and water called?",
+      "options": [
+        {
+          "label": "Neutralisation",
+          "correct": true
+        },
+        {
+          "label": "Combustion",
+          "correct": false
+        },
+        {
+          "label": "Evaporation",
+          "correct": false
+        },
+        {
+          "label": "Corrosion",
+          "correct": false
+        }
+      ],
+      "explanation": "In neutralisation the acid and alkali cancel each other out, producing a salt and water.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zn6hvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for particles spreading out from where there are lots of them to where there are fewer?",
+      "options": [
+        {
+          "label": "Diffusion",
+          "correct": true
+        },
+        {
+          "label": "Condensation",
+          "correct": false
+        },
+        {
+          "label": "Melting",
+          "correct": false
+        },
+        {
+          "label": "Filtration",
+          "correct": false
+        }
+      ],
+      "explanation": "Diffusion is why the smell of toast spreads across a kitchen: particles move from high to low concentration.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9r4jxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "At sea level, at what temperature in °C does pure water freeze?",
+      "slider": {
+        "min": -20,
+        "max": 20,
+        "step": 1,
+        "unit": "°C",
+        "correct": 0,
+        "accept_min": 0,
+        "accept_max": 0
+      },
+      "explanation": "Pure water freezes, and ice melts, at 0 °C. Adding salt lowers this temperature, which is why salt is spread on icy roads.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkr4jxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Light travels faster than sound.",
+      "answer": true,
+      "explanation": "Light is about a million times faster than sound in air. That is why you see lightning before you hear the thunder.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zw982hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call it when light bounces off a mirror?",
+      "options": [
+        {
+          "label": "Reflection",
+          "correct": true
+        },
+        {
+          "label": "Refraction",
+          "correct": false
+        },
+        {
+          "label": "Absorption",
+          "correct": false
+        },
+        {
+          "label": "Dispersion",
+          "correct": false
+        }
+      ],
+      "explanation": "Reflection is light bouncing off a surface. Smooth, shiny surfaces like mirrors reflect light very evenly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zw982hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The particles in a solid do not move at all.",
+      "answer": false,
+      "explanation": "Particles in a solid are held in fixed positions, but they still vibrate. Heating makes them vibrate more.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9r4jxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these metals is the most reactive?",
+      "options": [
+        {
+          "label": "Potassium",
+          "correct": true
+        },
+        {
+          "label": "Iron",
+          "correct": false
+        },
+        {
+          "label": "Copper",
+          "correct": false
+        },
+        {
+          "label": "Gold",
+          "correct": false
+        }
+      ],
+      "explanation": "Potassium is near the top of the reactivity series and reacts violently with water. Gold is near the bottom and hardly reacts at all.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3ksp4j",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

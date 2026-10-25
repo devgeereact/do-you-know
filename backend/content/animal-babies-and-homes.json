@@ -1,0 +1,658 @@
+{
+  "slug": "animal-babies-and-homes",
+  "title": "Animal Babies and Homes",
+  "intro": "Kittens, cubs and tadpoles! Find out what baby animals are called, where animals live and what they eat.",
+  "category": "science-nature",
+  "difficulty": "easy",
+  "age_min": 5,
+  "age_max": 8,
+  "curriculum_tags": [],
+  "time_limit_seconds": 45,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is a baby cat called?",
+      "options": [
+        {
+          "label": "Puppy",
+          "correct": false
+        },
+        {
+          "label": "Cub",
+          "correct": false
+        },
+        {
+          "label": "Foal",
+          "correct": false
+        },
+        {
+          "label": "Kitten",
+          "correct": true
+        }
+      ],
+      "explanation": "A baby cat is a kitten. Kittens love to play.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/kitten",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby dog called?",
+      "options": [
+        {
+          "label": "Kitten",
+          "correct": false
+        },
+        {
+          "label": "Calf",
+          "correct": false
+        },
+        {
+          "label": "Lamb",
+          "correct": false
+        },
+        {
+          "label": "Puppy",
+          "correct": true
+        }
+      ],
+      "explanation": "A baby dog is a puppy.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/puppy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby cow called?",
+      "options": [
+        {
+          "label": "Foal",
+          "correct": false
+        },
+        {
+          "label": "Calf",
+          "correct": true
+        },
+        {
+          "label": "Kid",
+          "correct": false
+        },
+        {
+          "label": "Piglet",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby cow is a calf. Baby elephants and whales are called calves too!",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/calf_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby sheep called?",
+      "options": [
+        {
+          "label": "Kid",
+          "correct": false
+        },
+        {
+          "label": "Lamb",
+          "correct": true
+        },
+        {
+          "label": "Cub",
+          "correct": false
+        },
+        {
+          "label": "Duckling",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby sheep is a lamb. Lots of lambs are born in spring.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/lamb_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby horse called?",
+      "options": [
+        {
+          "label": "Calf",
+          "correct": false
+        },
+        {
+          "label": "Lamb",
+          "correct": false
+        },
+        {
+          "label": "Foal",
+          "correct": true
+        },
+        {
+          "label": "Puppy",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby horse is a foal. A foal can stand up soon after it is born.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/foal_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby duck called?",
+      "options": [
+        {
+          "label": "Chick",
+          "correct": false
+        },
+        {
+          "label": "Cygnet",
+          "correct": false
+        },
+        {
+          "label": "Duckling",
+          "correct": true
+        },
+        {
+          "label": "Gosling",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby duck is a duckling. Ducklings follow their mother in a line.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/duckling",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby frog called before it grows legs?",
+      "options": [
+        {
+          "label": "Caterpillar",
+          "correct": false
+        },
+        {
+          "label": "Tadpole",
+          "correct": true
+        },
+        {
+          "label": "Puppy",
+          "correct": false
+        },
+        {
+          "label": "Owlet",
+          "correct": false
+        }
+      ],
+      "explanation": "A frog starts life as a tadpole. It swims with a tail, then grows legs.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/tadpole",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby bear called?",
+      "options": [
+        {
+          "label": "Kitten",
+          "correct": false
+        },
+        {
+          "label": "Foal",
+          "correct": false
+        },
+        {
+          "label": "Cub",
+          "correct": true
+        },
+        {
+          "label": "Lamb",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby bear is a cub. Baby lions and foxes are cubs too.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/brown-bear",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby goat called?",
+      "options": [
+        {
+          "label": "Kid",
+          "correct": true
+        },
+        {
+          "label": "Lamb",
+          "correct": false
+        },
+        {
+          "label": "Calf",
+          "correct": false
+        },
+        {
+          "label": "Foal",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby goat is called a kid.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/kid_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby swan called?",
+      "options": [
+        {
+          "label": "Duckling",
+          "correct": false
+        },
+        {
+          "label": "Owlet",
+          "correct": false
+        },
+        {
+          "label": "Cygnet",
+          "correct": true
+        },
+        {
+          "label": "Tadpole",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby swan is a cygnet. Cygnets are fluffy and grey.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/cygnet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby owl called?",
+      "options": [
+        {
+          "label": "Cub",
+          "correct": false
+        },
+        {
+          "label": "Kitten",
+          "correct": false
+        },
+        {
+          "label": "Owlet",
+          "correct": true
+        },
+        {
+          "label": "Calf",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby owl is an owlet.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/owlet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby pig called?",
+      "options": [
+        {
+          "label": "Puppy",
+          "correct": false
+        },
+        {
+          "label": "Piglet",
+          "correct": true
+        },
+        {
+          "label": "Kid",
+          "correct": false
+        },
+        {
+          "label": "Cub",
+          "correct": false
+        }
+      ],
+      "explanation": "A baby pig is a piglet.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/piglet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where do honeybees live?",
+      "options": [
+        {
+          "label": "In a burrow",
+          "correct": false
+        },
+        {
+          "label": "In a hive",
+          "correct": true
+        },
+        {
+          "label": "In a web",
+          "correct": false
+        },
+        {
+          "label": "In a pond",
+          "correct": false
+        }
+      ],
+      "explanation": "Honeybees live together in a hive, where they make honey.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/hive_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a rabbit's underground home called?",
+      "options": [
+        {
+          "label": "A nest",
+          "correct": false
+        },
+        {
+          "label": "A hive",
+          "correct": false
+        },
+        {
+          "label": "A web",
+          "correct": false
+        },
+        {
+          "label": "A burrow",
+          "correct": true
+        }
+      ],
+      "explanation": "Rabbits dig burrows under the ground to stay safe and warm.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/burrow_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where do most birds lay their eggs?",
+      "options": [
+        {
+          "label": "In a nest",
+          "correct": true
+        },
+        {
+          "label": "In a web",
+          "correct": false
+        },
+        {
+          "label": "In a hive",
+          "correct": false
+        },
+        {
+          "label": "In a burrow",
+          "correct": false
+        }
+      ],
+      "explanation": "Most birds build a nest to keep their eggs and chicks safe.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/nest_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a spider spin to catch its food?",
+      "options": [
+        {
+          "label": "A nest",
+          "correct": false
+        },
+        {
+          "label": "A hive",
+          "correct": false
+        },
+        {
+          "label": "A shell",
+          "correct": false
+        },
+        {
+          "label": "A web",
+          "correct": true
+        }
+      ],
+      "explanation": "Many spiders spin a sticky web to catch flies and other insects.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/web",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a beaver's home called?",
+      "options": [
+        {
+          "label": "A hive",
+          "correct": false
+        },
+        {
+          "label": "A stable",
+          "correct": false
+        },
+        {
+          "label": "A web",
+          "correct": false
+        },
+        {
+          "label": "A lodge",
+          "correct": true
+        }
+      ],
+      "explanation": "Beavers build a home called a lodge from sticks and mud in the water.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/beaver",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where do polar bears live?",
+      "options": [
+        {
+          "label": "A hot desert",
+          "correct": false
+        },
+        {
+          "label": "The icy Arctic",
+          "correct": true
+        },
+        {
+          "label": "A rainforest",
+          "correct": false
+        }
+      ],
+      "explanation": "Polar bears live in the cold, icy Arctic, near the North Pole.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/polar-bear",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do koalas eat?",
+      "options": [
+        {
+          "label": "Fish",
+          "correct": false
+        },
+        {
+          "label": "Carrots",
+          "correct": false
+        },
+        {
+          "label": "Insects",
+          "correct": false
+        },
+        {
+          "label": "Eucalyptus leaves",
+          "correct": true
+        }
+      ],
+      "explanation": "Koalas eat the leaves of eucalyptus trees.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/koala",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which animal says \"moo\"?",
+      "options": [
+        {
+          "label": "Cow",
+          "correct": true
+        },
+        {
+          "label": "Duck",
+          "correct": false
+        },
+        {
+          "label": "Pig",
+          "correct": false
+        },
+        {
+          "label": "Sheep",
+          "correct": false
+        }
+      ],
+      "explanation": "Cows say moo! Ducks quack, pigs oink and sheep baa.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx882hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which animal hoots at night?",
+      "options": [
+        {
+          "label": "Lion",
+          "correct": false
+        },
+        {
+          "label": "Frog",
+          "correct": false
+        },
+        {
+          "label": "Owl",
+          "correct": true
+        },
+        {
+          "label": "Cow",
+          "correct": false
+        }
+      ],
+      "explanation": "Many owls hoot. They are busy at night and sleep in the day.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/snowy-owl",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which animal roars?",
+      "options": [
+        {
+          "label": "Mouse",
+          "correct": false
+        },
+        {
+          "label": "Lion",
+          "correct": true
+        },
+        {
+          "label": "Duck",
+          "correct": false
+        },
+        {
+          "label": "Rabbit",
+          "correct": false
+        }
+      ],
+      "explanation": "A lion's roar is very loud. It can be heard a long way away.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/lion",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which big bird cannot fly?",
+      "options": [
+        {
+          "label": "Owl",
+          "correct": false
+        },
+        {
+          "label": "Swan",
+          "correct": false
+        },
+        {
+          "label": "Ostrich",
+          "correct": true
+        },
+        {
+          "label": "Duck",
+          "correct": false
+        }
+      ],
+      "explanation": "The ostrich is too heavy to fly, but it can run very fast.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/ostrich",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A chick hatches out of an egg.",
+      "answer": true,
+      "explanation": "Yes! A baby bird grows inside an egg and then hatches out.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/nest_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A puppy grows up to be a cat.",
+      "answer": false,
+      "explanation": "A puppy grows up to be a dog. A kitten grows up to be a cat.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/puppy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Fish breathe underwater using gills.",
+      "answer": true,
+      "explanation": "Fish have gills that take in oxygen from the water.",
+      "source_url": "https://kids.nationalgeographic.com/animals/fish",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Hedgehogs sleep through the winter.",
+      "answer": true,
+      "explanation": "Hedgehogs hibernate in winter, sleeping in a cosy nest of leaves.",
+      "source_url": "https://www.woodlandtrust.org.uk/trees-woods-and-wildlife/animals/mammals/hedgehog/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Sea turtles lay their eggs on sandy beaches.",
+      "answer": true,
+      "explanation": "Mother sea turtles crawl up the beach and dig a hole in the sand for their eggs.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/green-sea-turtle",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many legs does a cow have?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 4,
+        "accept_min": 4,
+        "accept_max": 4
+      },
+      "explanation": "A cow has 4 legs, like a horse, a dog and a cat.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx882hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many legs does an insect have?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 6,
+        "accept_min": 6,
+        "accept_max": 6
+      },
+      "explanation": "All insects, like ants, bees and ladybirds, have 6 legs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zx882hv",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,656 @@
+{
+  "slug": "counting-and-adding-ks1",
+  "title": "Counting and Adding",
+  "intro": "Count, add and take away! Try number bonds, shapes and halves in this friendly maths quiz.",
+  "category": "maths",
+  "difficulty": "easy",
+  "age_min": 5,
+  "age_max": 7,
+  "curriculum_tags": [
+    "uk-ks1"
+  ],
+  "time_limit_seconds": 45,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is 2 + 3?",
+      "options": [
+        {
+          "label": "5",
+          "correct": true
+        },
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        }
+      ],
+      "explanation": "Start at 2 and count on 3 more: 3, 4, 5. So 2 + 3 = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 10 take away 4?",
+      "options": [
+        {
+          "label": "5",
+          "correct": false
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "14",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": true
+        }
+      ],
+      "explanation": "Start at 10 and count back 4: 9, 8, 7, 6. So 10 − 4 = 6.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "7 and what number make 10?",
+      "options": [
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "3",
+          "correct": true
+        }
+      ],
+      "explanation": "7 + 3 = 10. 7 and 3 are a number bond to 10.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "6 and what number make 10?",
+      "options": [
+        {
+          "label": "3",
+          "correct": false
+        },
+        {
+          "label": "4",
+          "correct": true
+        },
+        {
+          "label": "5",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        }
+      ],
+      "explanation": "6 + 4 = 10. Learning bonds to 10 helps you add quickly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 4 + 4?",
+      "options": [
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": false
+        }
+      ],
+      "explanation": "4 + 4 = 8. Adding a number to itself is called doubling.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which number comes after 19?",
+      "options": [
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "21",
+          "correct": false
+        },
+        {
+          "label": "20",
+          "correct": true
+        },
+        {
+          "label": "29",
+          "correct": false
+        }
+      ],
+      "explanation": "When you count on from 19, the next number is 20.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zknsgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which number comes just before 50?",
+      "options": [
+        {
+          "label": "40",
+          "correct": false
+        },
+        {
+          "label": "49",
+          "correct": true
+        },
+        {
+          "label": "48",
+          "correct": false
+        },
+        {
+          "label": "51",
+          "correct": false
+        }
+      ],
+      "explanation": "Counting back from 50, the number just before it is 49.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zknsgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which number is bigger, 31 or 13?",
+      "options": [
+        {
+          "label": "13",
+          "correct": false
+        },
+        {
+          "label": "31",
+          "correct": true
+        }
+      ],
+      "explanation": "31 has 3 tens and 13 has only 1 ten, so 31 is bigger.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zknsgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Count in twos: 2, 4, 6, ... What comes next?",
+      "options": [
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        }
+      ],
+      "explanation": "When you count in twos, you add 2 each time. 6 + 2 = 8.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqbg87h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Count in tens: 10, 20, 30, ... What comes next?",
+      "options": [
+        {
+          "label": "31",
+          "correct": false
+        },
+        {
+          "label": "40",
+          "correct": true
+        },
+        {
+          "label": "35",
+          "correct": false
+        },
+        {
+          "label": "50",
+          "correct": false
+        }
+      ],
+      "explanation": "Counting in tens adds 10 each time. 30 + 10 = 40.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqbg87h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Count in fives: 5, 10, 15, ... What comes next?",
+      "options": [
+        {
+          "label": "16",
+          "correct": false
+        },
+        {
+          "label": "20",
+          "correct": true
+        },
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "25",
+          "correct": false
+        }
+      ],
+      "explanation": "Counting in fives adds 5 each time. 15 + 5 = 20.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqbg87h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which shape has 4 sides that are all the same length?",
+      "options": [
+        {
+          "label": "Circle",
+          "correct": false
+        },
+        {
+          "label": "Square",
+          "correct": true
+        },
+        {
+          "label": "Triangle",
+          "correct": false
+        },
+        {
+          "label": "Oval",
+          "correct": false
+        }
+      ],
+      "explanation": "A square has 4 straight sides, and they are all the same length.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which flat shape is round with no corners?",
+      "options": [
+        {
+          "label": "Square",
+          "correct": false
+        },
+        {
+          "label": "Rectangle",
+          "correct": false
+        },
+        {
+          "label": "Triangle",
+          "correct": false
+        },
+        {
+          "label": "Circle",
+          "correct": true
+        }
+      ],
+      "explanation": "A circle is perfectly round. It has one curved side and no corners.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which solid shape is round like a ball?",
+      "options": [
+        {
+          "label": "Cube",
+          "correct": false
+        },
+        {
+          "label": "Cone",
+          "correct": false
+        },
+        {
+          "label": "Cylinder",
+          "correct": false
+        },
+        {
+          "label": "Sphere",
+          "correct": true
+        }
+      ],
+      "explanation": "A sphere is round all over, just like a ball.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which solid shape looks like a dice?",
+      "options": [
+        {
+          "label": "Sphere",
+          "correct": false
+        },
+        {
+          "label": "Cone",
+          "correct": false
+        },
+        {
+          "label": "Cube",
+          "correct": true
+        },
+        {
+          "label": "Pyramid",
+          "correct": false
+        }
+      ],
+      "explanation": "A cube has 6 square faces, just like a dice.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is half of 8?",
+      "options": [
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "3",
+          "correct": false
+        },
+        {
+          "label": "4",
+          "correct": true
+        },
+        {
+          "label": "6",
+          "correct": false
+        }
+      ],
+      "explanation": "Share 8 into 2 equal groups and each group has 4. So half of 8 is 4.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3rbg82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A cake is cut into 2 equal parts. What is each part called?",
+      "options": [
+        {
+          "label": "A half",
+          "correct": true
+        },
+        {
+          "label": "A quarter",
+          "correct": false
+        },
+        {
+          "label": "A third",
+          "correct": false
+        },
+        {
+          "label": "A whole",
+          "correct": false
+        }
+      ],
+      "explanation": "When something is cut into 2 equal parts, each part is one half.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3rbg82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is double 5?",
+      "options": [
+        {
+          "label": "10",
+          "correct": true
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": false
+        }
+      ],
+      "explanation": "Double means two lots of the same number. 5 + 5 = 10.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "12 and what number make 20?",
+      "options": [
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "10",
+          "correct": false
+        }
+      ],
+      "explanation": "12 + 8 = 20. It works like 2 + 8 = 10, with an extra ten.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many tens are in the number 34?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "3",
+          "correct": true
+        },
+        {
+          "label": "34",
+          "correct": false
+        }
+      ],
+      "explanation": "34 is made of 3 tens and 4 ones.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zknsgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 9 take away 9?",
+      "options": [
+        {
+          "label": "0",
+          "correct": true
+        },
+        {
+          "label": "1",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": false
+        },
+        {
+          "label": "18",
+          "correct": false
+        }
+      ],
+      "explanation": "If you take away all 9, there are none left. 9 − 9 = 0.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which coin is worth the most?",
+      "options": [
+        {
+          "label": "1p",
+          "correct": false
+        },
+        {
+          "label": "2p",
+          "correct": false
+        },
+        {
+          "label": "10p",
+          "correct": true
+        },
+        {
+          "label": "5p",
+          "correct": false
+        }
+      ],
+      "explanation": "A 10p coin is worth ten pennies, more than 1p, 2p or 5p.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp8dmp3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many pennies make one pound?",
+      "options": [
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "50",
+          "correct": false
+        },
+        {
+          "label": "1,000",
+          "correct": false
+        },
+        {
+          "label": "100",
+          "correct": true
+        }
+      ],
+      "explanation": "There are 100 pence in £1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp8dmp3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "5 + 5 = 10.",
+      "answer": true,
+      "explanation": "Yes! 5 and 5 make 10. It is a double and a number bond to 10.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "3 is an even number.",
+      "answer": false,
+      "explanation": "3 is odd. Even numbers can be shared into 2 equal groups: 2, 4, 6, 8 and so on.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zknsgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A circle has corners.",
+      "answer": false,
+      "explanation": "A circle has no corners at all. It is round all the way around.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "6 + 1 gives the same answer as 1 + 6.",
+      "answer": true,
+      "explanation": "You can add numbers in any order and get the same answer. Both make 7.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Add 7 and 8. What do you get?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 15,
+        "accept_min": 15,
+        "accept_max": 15
+      },
+      "explanation": "7 + 8 = 15. A trick: 7 + 7 = 14, then add 1 more.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is 20 take away 6?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 14,
+        "accept_min": 14,
+        "accept_max": 14
+      },
+      "explanation": "Start at 20 and count back 6: you land on 14. So 20 − 6 = 14.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwv39j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "You have 5 pairs of socks. How many socks is that?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 10,
+        "accept_min": 10,
+        "accept_max": 10
+      },
+      "explanation": "A pair is 2. Count in twos five times: 2, 4, 6, 8, 10.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqbg87h",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

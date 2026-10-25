@@ -1,0 +1,664 @@
+{
+  "slug": "stone-age-to-iron-age-ks2",
+  "title": "Stone Age to Iron Age",
+  "intro": "Hunter-gatherers, stone circles, bronze tools and hillforts in prehistoric Britain.",
+  "category": "school-history",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which famous prehistoric stone circle stands in Wiltshire?",
+      "options": [
+        {
+          "label": "Hadrian's Wall",
+          "correct": false
+        },
+        {
+          "label": "Stonehenge",
+          "correct": true
+        },
+        {
+          "label": "Skara Brae",
+          "correct": false
+        },
+        {
+          "label": "Maiden Castle",
+          "correct": false
+        }
+      ],
+      "explanation": "Stonehenge is a huge prehistoric monument on Salisbury Plain in Wiltshire.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these periods came first?",
+      "options": [
+        {
+          "label": "The Iron Age",
+          "correct": false
+        },
+        {
+          "label": "The Bronze Age",
+          "correct": false
+        },
+        {
+          "label": "The Stone Age",
+          "correct": true
+        },
+        {
+          "label": "The Roman period",
+          "correct": false
+        }
+      ],
+      "explanation": "The Stone Age came first, then the Bronze Age, then the Iron Age, before the Romans arrived.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Bronze is made by mixing copper with which other metal?",
+      "options": [
+        {
+          "label": "Iron",
+          "correct": false
+        },
+        {
+          "label": "Tin",
+          "correct": true
+        },
+        {
+          "label": "Gold",
+          "correct": false
+        },
+        {
+          "label": "Silver",
+          "correct": false
+        }
+      ],
+      "explanation": "Bronze is an alloy of copper and tin. It is harder than copper alone, so it made better tools.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How did people in the early Stone Age mainly get their food?",
+      "options": [
+        {
+          "label": "By shopping at markets",
+          "correct": false
+        },
+        {
+          "label": "By hunting and gathering",
+          "correct": true
+        },
+        {
+          "label": "By growing rice",
+          "correct": false
+        },
+        {
+          "label": "By fishing from steamships",
+          "correct": false
+        }
+      ],
+      "explanation": "Early Stone Age people were hunter-gatherers who hunted animals and gathered wild plants, nuts and berries.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Skara Brae is a Stone Age village found in which part of the UK?",
+      "options": [
+        {
+          "label": "Cornwall",
+          "correct": false
+        },
+        {
+          "label": "Orkney, in Scotland",
+          "correct": true
+        },
+        {
+          "label": "Kent",
+          "correct": false
+        },
+        {
+          "label": "Anglesey",
+          "correct": false
+        }
+      ],
+      "explanation": "Skara Brae, in Orkney, is a very well-preserved Stone Age village with stone furniture still inside the houses.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Many Iron Age people in Britain lived in roundhouses.",
+      "answer": true,
+      "explanation": "Roundhouses had circular walls and cone-shaped thatched roofs, with a fire in the middle.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which period were many hillforts built in Britain?",
+      "options": [
+        {
+          "label": "The Stone Age",
+          "correct": false
+        },
+        {
+          "label": "The Iron Age",
+          "correct": true
+        },
+        {
+          "label": "The Victorian era",
+          "correct": false
+        },
+        {
+          "label": "The Tudor period",
+          "correct": false
+        }
+      ],
+      "explanation": "Hillforts, protected by banks and ditches, were especially common during the Iron Age.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did Stone Age people often use flint for?",
+      "options": [
+        {
+          "label": "Making tools",
+          "correct": true
+        },
+        {
+          "label": "Making glass windows",
+          "correct": false
+        },
+        {
+          "label": "Building cars",
+          "correct": false
+        },
+        {
+          "label": "Writing books",
+          "correct": false
+        }
+      ],
+      "explanation": "Flint can be chipped to give a sharp edge, so it was used for axes, knives, scrapers and arrowheads.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Stone Age people lived at the same time as the dinosaurs.",
+      "answer": false,
+      "explanation": "The dinosaurs died out about 66 million years ago, long before the first people lived.",
+      "source_url": "https://www.nhm.ac.uk/discover/dino-directory.html",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Stone Age is split into Old, Middle and New. What is the New Stone Age also called?",
+      "options": [
+        {
+          "label": "The Neolithic",
+          "correct": true
+        },
+        {
+          "label": "The Jurassic",
+          "correct": false
+        },
+        {
+          "label": "The Mesolithic",
+          "correct": false
+        },
+        {
+          "label": "The Palaeolithic",
+          "correct": false
+        }
+      ],
+      "explanation": "Neolithic means \"New Stone Age\". It was the time when people in Britain began to farm.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/neolithic",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What big change in the way people got food began in the Neolithic period in Britain?",
+      "options": [
+        {
+          "label": "People stopped eating meat",
+          "correct": false
+        },
+        {
+          "label": "People began buying food in shops",
+          "correct": false
+        },
+        {
+          "label": "People began growing crops and keeping animals",
+          "correct": true
+        },
+        {
+          "label": "People began fishing for the first time",
+          "correct": false
+        }
+      ],
+      "explanation": "Neolithic people started farming. Growing crops and keeping animals meant they could stay in one place and build homes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Why were iron tools easier for many people to get than bronze tools?",
+      "options": [
+        {
+          "label": "Iron ore was much easier to find than copper and tin",
+          "correct": true
+        },
+        {
+          "label": "Iron was made from wood",
+          "correct": false
+        },
+        {
+          "label": "Bronze had not been invented yet",
+          "correct": false
+        },
+        {
+          "label": "Iron could be picked from trees",
+          "correct": false
+        }
+      ],
+      "explanation": "To make bronze you need both copper and tin, which are found in only a few places. Iron ore is found in many places across Britain.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What helped to protect the people living inside an Iron Age hillfort?",
+      "options": [
+        {
+          "label": "Tall brick towers",
+          "correct": false
+        },
+        {
+          "label": "Electric fences",
+          "correct": false
+        },
+        {
+          "label": "A moat full of crocodiles",
+          "correct": false
+        },
+        {
+          "label": "High banks of earth and deep ditches",
+          "correct": true
+        }
+      ],
+      "explanation": "Hillforts were built on high ground and ringed with banks and ditches, which made them hard to attack.",
+      "source_url": "https://www.english-heritage.org.uk/visit/places/maiden-castle/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the roof of an Iron Age roundhouse usually made from?",
+      "options": [
+        {
+          "label": "Metal sheets",
+          "correct": false
+        },
+        {
+          "label": "Plastic tiles",
+          "correct": false
+        },
+        {
+          "label": "Glass panels",
+          "correct": false
+        },
+        {
+          "label": "Thatch made of straw or reeds",
+          "correct": true
+        }
+      ],
+      "explanation": "Roundhouses had cone-shaped thatched roofs. Smoke from the fire inside slowly escaped through the thatch.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/roundhouse",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Many roundhouse walls were made of woven sticks covered in a mixture of mud and straw. What is this called?",
+      "options": [
+        {
+          "label": "Stone and slate",
+          "correct": false
+        },
+        {
+          "label": "Concrete",
+          "correct": false
+        },
+        {
+          "label": "Brick and mortar",
+          "correct": false
+        },
+        {
+          "label": "Wattle and daub",
+          "correct": true
+        }
+      ],
+      "explanation": "Wattle is the woven sticks and daub is the sticky mud mixture spread over it. It made strong, warm walls.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Work on Stonehenge began about how long ago?",
+      "options": [
+        {
+          "label": "About 2,000 years ago",
+          "correct": false
+        },
+        {
+          "label": "About 50,000 years ago",
+          "correct": false
+        },
+        {
+          "label": "About 5,000 years ago",
+          "correct": true
+        },
+        {
+          "label": "About 500 years ago",
+          "correct": false
+        }
+      ],
+      "explanation": "The first stage of Stonehenge was built around 3000 BC, about 5,000 years ago. It was changed and added to over many centuries.",
+      "source_url": "https://www.english-heritage.org.uk/visit/places/stonehenge/history-and-stories/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The smaller 'bluestones' at Stonehenge were brought from which country?",
+      "options": [
+        {
+          "label": "Wales",
+          "correct": true
+        },
+        {
+          "label": "Norway",
+          "correct": false
+        },
+        {
+          "label": "Ireland",
+          "correct": false
+        },
+        {
+          "label": "France",
+          "correct": false
+        }
+      ],
+      "explanation": "The bluestones came from the Preseli Hills in Wales, more than 200 kilometres away. Nobody knows exactly how they were moved.",
+      "source_url": "https://www.english-heritage.org.uk/visit/places/stonehenge/history-and-stories/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Stonehenge lines up with the Sun on which special days of the year?",
+      "options": [
+        {
+          "label": "Only on leap days",
+          "correct": false
+        },
+        {
+          "label": "Every birthday",
+          "correct": false
+        },
+        {
+          "label": "Midsummer and midwinter (the solstices)",
+          "correct": true
+        },
+        {
+          "label": "The first day of each month",
+          "correct": false
+        }
+      ],
+      "explanation": "Stonehenge is lined up with the sunrise on midsummer's day and the sunset on midwinter's day.",
+      "source_url": "https://www.english-heritage.org.uk/visit/places/stonehenge/history-and-stories/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is Cheddar Man?",
+      "options": [
+        {
+          "label": "A Bronze Age gold statue",
+          "correct": false
+        },
+        {
+          "label": "A giant carved into a hillside",
+          "correct": false
+        },
+        {
+          "label": "A Roman soldier's helmet",
+          "correct": false
+        },
+        {
+          "label": "The skeleton of a man who lived in Britain about 10,000 years ago",
+          "correct": true
+        }
+      ],
+      "explanation": "Cheddar Man was found in a cave in Cheddar Gorge, Somerset. He is the oldest almost complete skeleton of a modern human found in Britain.",
+      "source_url": "https://www.nhm.ac.uk/discover/cheddar-man-mesolithic-britain-blue-eyed-boy.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which people from Rome arrived in Britain in AD 43 and brought the Iron Age to an end in much of the land?",
+      "options": [
+        {
+          "label": "The Normans",
+          "correct": false
+        },
+        {
+          "label": "The Romans",
+          "correct": true
+        },
+        {
+          "label": "The Vikings",
+          "correct": false
+        },
+        {
+          "label": "The Tudors",
+          "correct": false
+        }
+      ],
+      "explanation": "The Romans arrived in AD 43. Much of Britain then became part of the Roman Empire, which is where the Iron Age story ends.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did Bronze Age metalworkers use moulds for?",
+      "options": [
+        {
+          "label": "Making clay pots spin",
+          "correct": false
+        },
+        {
+          "label": "Baking bread",
+          "correct": false
+        },
+        {
+          "label": "Storing water",
+          "correct": false
+        },
+        {
+          "label": "Shaping hot, liquid metal into tools",
+          "correct": true
+        }
+      ],
+      "explanation": "Metalworkers melted copper and tin, then poured the liquid bronze into a mould. When it cooled, it kept the mould's shape.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/bronze_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were Neolithic long barrows built for?",
+      "options": [
+        {
+          "label": "Storing grain",
+          "correct": false
+        },
+        {
+          "label": "Racing chariots",
+          "correct": false
+        },
+        {
+          "label": "Keeping animals",
+          "correct": false
+        },
+        {
+          "label": "Burying people who had died",
+          "correct": true
+        }
+      ],
+      "explanation": "Long barrows are long mounds of earth and stone built over tombs. Many can still be seen in the countryside today.",
+      "source_url": "https://www.english-heritage.org.uk/learn/story-of-england/prehistory/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was a quern stone used for?",
+      "options": [
+        {
+          "label": "Sharpening swords",
+          "correct": false
+        },
+        {
+          "label": "Building walls",
+          "correct": false
+        },
+        {
+          "label": "Lighting fires",
+          "correct": false
+        },
+        {
+          "label": "Grinding grain into flour",
+          "correct": true
+        }
+      ],
+      "explanation": "Grain was placed on a quern and crushed with another stone to make flour for bread.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/quern",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which famous chalk figure on a hillside in Oxfordshire is thought to be about 3,000 years old?",
+      "options": [
+        {
+          "label": "The Angel of the North",
+          "correct": false
+        },
+        {
+          "label": "The Uffington White Horse",
+          "correct": true
+        },
+        {
+          "label": "The Long Man of Wilmington",
+          "correct": false
+        },
+        {
+          "label": "The Kelpies",
+          "correct": false
+        }
+      ],
+      "explanation": "The Uffington White Horse was made by cutting trenches and filling them with chalk. It dates from the late Bronze Age or early Iron Age.",
+      "source_url": "https://www.english-heritage.org.uk/visit/places/uffington-castle-white-horse-and-dragon-hill/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who were the Druids in Iron Age Britain?",
+      "options": [
+        {
+          "label": "Roman soldiers",
+          "correct": false
+        },
+        {
+          "label": "Viking sailors",
+          "correct": false
+        },
+        {
+          "label": "Religious leaders and teachers",
+          "correct": true
+        },
+        {
+          "label": "Traders from Egypt",
+          "correct": false
+        }
+      ],
+      "explanation": "Druids were important people in Iron Age society. They led religious ceremonies and passed on knowledge by memory, not writing.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/druid",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The houses at Skara Brae had furniture made of stone, such as beds and dressers.",
+      "answer": true,
+      "explanation": "Wood was scarce on Orkney, so the villagers used flat stones to build beds, shelves and dressers that still survive.",
+      "source_url": "https://www.historicenvironment.scot/visit-a-place/places/skara-brae/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Iron Age in Britain came before the Bronze Age.",
+      "answer": false,
+      "explanation": "The order is Stone Age, then Bronze Age, then Iron Age. People learned to make bronze before they learned to work iron.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Prehistory means the time before people wrote things down.",
+      "answer": true,
+      "explanation": "Because there are no written records from prehistory, we learn about it from things people left behind, such as tools and buildings.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/prehistory",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "The Iron Age began in Britain around 800 BC. Roughly how many years ago is that?",
+      "slider": {
+        "min": 0,
+        "max": 5000,
+        "step": 100,
+        "unit": "years",
+        "correct": 2800,
+        "accept_min": 2600,
+        "accept_max": 3000
+      },
+      "explanation": "800 years before AD 1 plus about 2,000 years since then makes roughly 2,800 years ago.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z82hsbk",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Bronze is mostly copper. Out of every 10 parts of bronze, about how many parts are copper?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "parts",
+        "correct": 9,
+        "accept_min": 8,
+        "accept_max": 9
+      },
+      "explanation": "Bronze is usually about 9 parts copper to 1 part tin. Adding a little tin makes it much harder than copper alone.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/bronze_1",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

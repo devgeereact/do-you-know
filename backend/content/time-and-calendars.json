@@ -1,0 +1,653 @@
+{
+  "slug": "time-and-calendars",
+  "title": "Time and Calendars",
+  "intro": "Seconds, days, months and years: how well do you know the clock and the calendar?",
+  "category": "general-knowledge",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "How many months of the year have 31 days?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": true
+        },
+        {
+          "label": "Eight",
+          "correct": false
+        }
+      ],
+      "explanation": "January, March, May, July, August, October and December each have 31 days: seven months in all.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many hours are there in one day?",
+      "options": [
+        {
+          "label": "12",
+          "correct": false
+        },
+        {
+          "label": "24",
+          "correct": true
+        },
+        {
+          "label": "48",
+          "correct": false
+        },
+        {
+          "label": "60",
+          "correct": false
+        }
+      ],
+      "explanation": "A whole day, from one midnight to the next, lasts 24 hours.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many days are there in a year that is not a leap year?",
+      "slider": {
+        "min": 300,
+        "max": 400,
+        "step": 1,
+        "unit": "days",
+        "correct": 365,
+        "accept_min": 365,
+        "accept_max": 365
+      },
+      "explanation": "An ordinary year has 365 days. Every fourth year or so is a leap year with 366.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In a leap year, February has 29 days.",
+      "answer": true,
+      "explanation": "February usually has 28 days, but in a leap year it gets an extra day and has 29.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many seconds are there in one minute?",
+      "options": [
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "30",
+          "correct": false
+        },
+        {
+          "label": "60",
+          "correct": true
+        },
+        {
+          "label": "100",
+          "correct": false
+        }
+      ],
+      "explanation": "One minute is made of 60 seconds, and one hour is made of 60 minutes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which month comes straight after June?",
+      "options": [
+        {
+          "label": "May",
+          "correct": false
+        },
+        {
+          "label": "July",
+          "correct": true
+        },
+        {
+          "label": "August",
+          "correct": false
+        },
+        {
+          "label": "September",
+          "correct": false
+        }
+      ],
+      "explanation": "The months run January, February, March, April, May, June, July and so on, so July follows June.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A decade is 100 years long.",
+      "answer": false,
+      "explanation": "A decade is 10 years. A period of 100 years is called a century.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Roughly how long does Earth take to travel once around the Sun?",
+      "options": [
+        {
+          "label": "One day",
+          "correct": false
+        },
+        {
+          "label": "One month",
+          "correct": false
+        },
+        {
+          "label": "One year",
+          "correct": true
+        },
+        {
+          "label": "Ten years",
+          "correct": false
+        }
+      ],
+      "explanation": "Earth takes about 365 days, one year, to orbit the Sun. Its spin on its own axis gives us day and night.",
+      "source_url": "https://science.nasa.gov/earth/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many weeks are there in a year, to the nearest whole number?",
+      "options": [
+        {
+          "label": "12",
+          "correct": false
+        },
+        {
+          "label": "36",
+          "correct": false
+        },
+        {
+          "label": "52",
+          "correct": true
+        },
+        {
+          "label": "100",
+          "correct": false
+        }
+      ],
+      "explanation": "A year of 365 days is 52 weeks and 1 day, so there are about 52 weeks in a year.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the UK, the longest day of the year falls in which month?",
+      "options": [
+        {
+          "label": "June",
+          "correct": true
+        },
+        {
+          "label": "March",
+          "correct": false
+        },
+        {
+          "label": "July",
+          "correct": false
+        },
+        {
+          "label": "December",
+          "correct": false
+        }
+      ],
+      "explanation": "The longest day, called the summer solstice, is around 21 June. After that, the days slowly start getting shorter again.",
+      "source_url": "https://www.rmg.co.uk/stories/time/summer-solstice",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many years are there in a century?",
+      "options": [
+        {
+          "label": "100",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "50",
+          "correct": false
+        },
+        {
+          "label": "1,000",
+          "correct": false
+        }
+      ],
+      "explanation": "A century is 100 years. The word comes from 'centum', the Latin for one hundred, just like 'cent' and 'centimetre'.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call a period of 1,000 years?",
+      "options": [
+        {
+          "label": "A millennium",
+          "correct": true
+        },
+        {
+          "label": "A century",
+          "correct": false
+        },
+        {
+          "label": "A decade",
+          "correct": false
+        },
+        {
+          "label": "An era",
+          "correct": false
+        }
+      ],
+      "explanation": "A millennium is 1,000 years. The year 2000 was a big celebration because a new millennium was about to begin.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many seconds are there in one hour?",
+      "options": [
+        {
+          "label": "3,600",
+          "correct": true
+        },
+        {
+          "label": "360",
+          "correct": false
+        },
+        {
+          "label": "600",
+          "correct": false
+        },
+        {
+          "label": "6,000",
+          "correct": false
+        }
+      ],
+      "explanation": "There are 60 seconds in a minute and 60 minutes in an hour. 60 lots of 60 makes 3,600 seconds.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many days are there in September?",
+      "options": [
+        {
+          "label": "30",
+          "correct": true
+        },
+        {
+          "label": "28",
+          "correct": false
+        },
+        {
+          "label": "29",
+          "correct": false
+        },
+        {
+          "label": "31",
+          "correct": false
+        }
+      ],
+      "explanation": "September has 30 days. The rhyme 'Thirty days has September, April, June and November' helps you remember.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the UK, which season comes straight after summer?",
+      "options": [
+        {
+          "label": "Autumn",
+          "correct": true
+        },
+        {
+          "label": "Spring",
+          "correct": false
+        },
+        {
+          "label": "Winter",
+          "correct": false
+        },
+        {
+          "label": "Monsoon",
+          "correct": false
+        }
+      ],
+      "explanation": "The four seasons go spring, summer, autumn and winter. In autumn, many trees drop their leaves.",
+      "source_url": "https://www.metoffice.gov.uk/weather/learn-about/met-office-for-schools/other-content/other-resources/our-seasons",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a 24-hour clock, how is 3 o'clock in the afternoon written?",
+      "options": [
+        {
+          "label": "15:00",
+          "correct": true
+        },
+        {
+          "label": "03:00",
+          "correct": false
+        },
+        {
+          "label": "13:00",
+          "correct": false
+        },
+        {
+          "label": "18:00",
+          "correct": false
+        }
+      ],
+      "explanation": "On a 24-hour clock you keep counting after midday, so 1 pm is 13:00, 2 pm is 14:00 and 3 pm is 15:00.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does 'am' after a time tell you?",
+      "options": [
+        {
+          "label": "It is between midnight and midday",
+          "correct": true
+        },
+        {
+          "label": "It is between midday and midnight",
+          "correct": false
+        },
+        {
+          "label": "It is exactly midday",
+          "correct": false
+        },
+        {
+          "label": "It is the weekend",
+          "correct": false
+        }
+      ],
+      "explanation": "'am' means the morning half of the day, from midnight until midday. 'pm' is used from midday until midnight.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a clock with hands, what does the short hand show?",
+      "options": [
+        {
+          "label": "The hour",
+          "correct": true
+        },
+        {
+          "label": "The minutes",
+          "correct": false
+        },
+        {
+          "label": "The seconds",
+          "correct": false
+        },
+        {
+          "label": "The date",
+          "correct": false
+        }
+      ],
+      "explanation": "The short hand points to the hour and the long hand points to the minutes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many minutes are there in a quarter of an hour?",
+      "options": [
+        {
+          "label": "15",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "25",
+          "correct": false
+        },
+        {
+          "label": "30",
+          "correct": false
+        }
+      ],
+      "explanation": "An hour has 60 minutes. One quarter of 60 is 15, so a quarter of an hour is 15 minutes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many days are there in a fortnight?",
+      "options": [
+        {
+          "label": "14",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "12",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": false
+        }
+      ],
+      "explanation": "A fortnight is two weeks. Two lots of seven days makes 14 days.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "If today is Monday, what day will it be in three days' time?",
+      "options": [
+        {
+          "label": "Thursday",
+          "correct": true
+        },
+        {
+          "label": "Wednesday",
+          "correct": false
+        },
+        {
+          "label": "Friday",
+          "correct": false
+        },
+        {
+          "label": "Sunday",
+          "correct": false
+        }
+      ],
+      "explanation": "Count on from Monday: Tuesday is one day, Wednesday is two and Thursday is three.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Leap years usually come around once every how many years?",
+      "options": [
+        {
+          "label": "4",
+          "correct": true
+        },
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "3",
+          "correct": false
+        },
+        {
+          "label": "10",
+          "correct": false
+        }
+      ],
+      "explanation": "A leap year usually happens every four years, when an extra day is added to the end of February.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many hours are there from midday to midnight?",
+      "options": [
+        {
+          "label": "12",
+          "correct": true
+        },
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "24",
+          "correct": false
+        }
+      ],
+      "explanation": "Midday is 12 noon and midnight is 12 hours later. A whole day, from midnight to midnight, is 24 hours.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What causes day and night on Earth?",
+      "options": [
+        {
+          "label": "Earth spinning around",
+          "correct": true
+        },
+        {
+          "label": "The Sun going around Earth",
+          "correct": false
+        },
+        {
+          "label": "The Moon blocking the Sun",
+          "correct": false
+        },
+        {
+          "label": "Clouds covering the sky",
+          "correct": false
+        }
+      ],
+      "explanation": "Earth spins once about every 24 hours. The side facing the Sun has day, and the side facing away has night.",
+      "source_url": "https://spaceplace.nasa.gov/days/en/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The 'G' in GMT, the time used in the UK in winter, stands for which place?",
+      "options": [
+        {
+          "label": "Greenwich",
+          "correct": true
+        },
+        {
+          "label": "Glasgow",
+          "correct": false
+        },
+        {
+          "label": "Gloucester",
+          "correct": false
+        },
+        {
+          "label": "Guildford",
+          "correct": false
+        }
+      ],
+      "explanation": "GMT stands for Greenwich Mean Time. It is measured from the Royal Observatory in Greenwich, London.",
+      "source_url": "https://www.rmg.co.uk/stories/topics/greenwich-mean-time-gmt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "April has 31 days.",
+      "answer": false,
+      "explanation": "April has only 30 days. It is one of the four months, with June, September and November, that have 30 days.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "On a 24-hour clock, midnight can be written as 00:00.",
+      "answer": true,
+      "explanation": "At midnight the 24-hour clock starts again from zero, so midnight is written 00:00.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The year 2000 was a leap year.",
+      "answer": true,
+      "explanation": "Years that end in 00 are only leap years if they can be divided by 400. 2000 can, so it had a 29 February.",
+      "source_url": "https://www.rmg.co.uk/stories/time/which-years-are-leap-years-can-you-have-leap-seconds",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "From one full moon to the next takes about how many days?",
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 0.5,
+        "unit": "days",
+        "correct": 29.5,
+        "accept_min": 29,
+        "accept_max": 30
+      },
+      "explanation": "The Moon takes about 29 and a half days to go through all its phases, from full moon back to full moon. That is where the idea of a month comes from.",
+      "source_url": "https://science.nasa.gov/moon/moon-phases/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many minutes are there in one whole day?",
+      "slider": {
+        "min": 1000,
+        "max": 2000,
+        "step": 10,
+        "unit": "minutes",
+        "correct": 1440,
+        "accept_min": 1440,
+        "accept_max": 1440
+      },
+      "explanation": "There are 60 minutes in an hour and 24 hours in a day. 24 lots of 60 makes 1,440 minutes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkfycdm",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

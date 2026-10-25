@@ -1,0 +1,653 @@
+{
+  "slug": "amazing-animals",
+  "title": "Amazing Animals",
+  "intro": "From octopuses to pandas, test what you know about the wonderful creatures of our planet.",
+  "category": "science-nature",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "How many arms does an octopus have?",
+      "options": [
+        {
+          "label": "Six",
+          "correct": false
+        },
+        {
+          "label": "Eight",
+          "correct": true
+        },
+        {
+          "label": "Ten",
+          "correct": false
+        },
+        {
+          "label": "Twelve",
+          "correct": false
+        }
+      ],
+      "explanation": "An octopus has eight arms covered in suckers, which it uses to grab, taste and move.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/octopus",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A blue whale is a mammal, not a fish.",
+      "answer": true,
+      "explanation": "Whales are mammals. They breathe air through blowholes and feed their babies milk.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/blue-whale",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do giraffes mostly eat?",
+      "options": [
+        {
+          "label": "Fish",
+          "correct": false
+        },
+        {
+          "label": "Leaves",
+          "correct": true
+        },
+        {
+          "label": "Insects",
+          "correct": false
+        },
+        {
+          "label": "Grass seeds",
+          "correct": false
+        }
+      ],
+      "explanation": "Giraffes use their long necks and tongues to reach leaves high up in trees.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/giraffe",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where do emperor penguins live in the wild?",
+      "options": [
+        {
+          "label": "The Arctic",
+          "correct": false
+        },
+        {
+          "label": "Antarctica",
+          "correct": true
+        },
+        {
+          "label": "The Amazon",
+          "correct": false
+        },
+        {
+          "label": "The Sahara",
+          "correct": false
+        }
+      ],
+      "explanation": "Emperor penguins live in and around Antarctica, one of the coldest places on Earth.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/emperor-penguin",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a baby kangaroo called?",
+      "options": [
+        {
+          "label": "A cub",
+          "correct": false
+        },
+        {
+          "label": "A kid",
+          "correct": false
+        },
+        {
+          "label": "A joey",
+          "correct": true
+        },
+        {
+          "label": "A foal",
+          "correct": false
+        }
+      ],
+      "explanation": "Baby kangaroos are called joeys. They grow inside their mother's pouch.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/kangaroo",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do giant pandas mostly eat?",
+      "options": [
+        {
+          "label": "Bamboo",
+          "correct": true
+        },
+        {
+          "label": "Fish",
+          "correct": false
+        },
+        {
+          "label": "Berries",
+          "correct": false
+        },
+        {
+          "label": "Honey",
+          "correct": false
+        }
+      ],
+      "explanation": "Bamboo makes up almost all of a giant panda's diet, and they eat a lot of it every day.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/giant-panda",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Polar bears have black skin under their fur.",
+      "answer": true,
+      "explanation": "A polar bear's fur looks white, but the skin underneath is black, which helps soak up warmth from the Sun.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/polar-bear",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is a reptile?",
+      "options": [
+        {
+          "label": "Dolphin",
+          "correct": false
+        },
+        {
+          "label": "Frog",
+          "correct": false
+        },
+        {
+          "label": "Komodo dragon",
+          "correct": true
+        },
+        {
+          "label": "Salmon",
+          "correct": false
+        }
+      ],
+      "explanation": "Komodo dragons are lizards, and lizards are reptiles with dry, scaly skin.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/komodo-dragon",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the long, bendy nose of an elephant called?",
+      "options": [
+        {
+          "label": "A tusk",
+          "correct": false
+        },
+        {
+          "label": "A trunk",
+          "correct": true
+        },
+        {
+          "label": "A snout",
+          "correct": false
+        },
+        {
+          "label": "A beak",
+          "correct": false
+        }
+      ],
+      "explanation": "An elephant's trunk is its nose and upper lip joined together. It uses it to breathe, smell, drink and pick things up.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/african-elephant",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a group of lions called?",
+      "options": [
+        {
+          "label": "A pride",
+          "correct": true
+        },
+        {
+          "label": "A flock",
+          "correct": false
+        },
+        {
+          "label": "A school",
+          "correct": false
+        },
+        {
+          "label": "A swarm",
+          "correct": false
+        }
+      ],
+      "explanation": "Lions live together in groups called prides, usually made up of related females, their cubs and a few males.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/lion",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a honeybee hive, which bee lays all the eggs?",
+      "options": [
+        {
+          "label": "The queen",
+          "correct": true
+        },
+        {
+          "label": "The drone",
+          "correct": false
+        },
+        {
+          "label": "The worker",
+          "correct": false
+        },
+        {
+          "label": "The guard",
+          "correct": false
+        }
+      ],
+      "explanation": "Each hive has one queen bee. Her job is to lay the eggs that become the next generation of bees.",
+      "source_url": "https://www.natgeokids.com/uk/discover/animals/insects/honey-bees/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do honeybees make from the nectar they collect from flowers?",
+      "options": [
+        {
+          "label": "Milk",
+          "correct": false
+        },
+        {
+          "label": "Silk",
+          "correct": false
+        },
+        {
+          "label": "Honey",
+          "correct": true
+        },
+        {
+          "label": "Wax crayons",
+          "correct": false
+        }
+      ],
+      "explanation": "Honeybees carry nectar back to the hive and turn it into honey, which feeds the colony through the winter.",
+      "source_url": "https://www.natgeokids.com/uk/discover/animals/insects/honey-bees/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How does a honeybee tell the others in its hive where to find good flowers?",
+      "options": [
+        {
+          "label": "It sings a song",
+          "correct": false
+        },
+        {
+          "label": "It does a waggle dance",
+          "correct": true
+        },
+        {
+          "label": "It leaves a map",
+          "correct": false
+        },
+        {
+          "label": "It changes colour",
+          "correct": false
+        }
+      ],
+      "explanation": "A honeybee does a waggle dance in a figure-of-eight shape. The way it waggles shows the other bees which way to fly for food.",
+      "source_url": "https://www.natgeokids.com/uk/discover/animals/insects/honey-bees/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a group of zebras called?",
+      "options": [
+        {
+          "label": "A herd",
+          "correct": true
+        },
+        {
+          "label": "A pride",
+          "correct": false
+        },
+        {
+          "label": "A pod",
+          "correct": false
+        },
+        {
+          "label": "A flock",
+          "correct": false
+        }
+      ],
+      "explanation": "Zebras live and travel together in herds. Staying together helps them spot danger on the African grasslands.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/zebra",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a hedgehog do to protect itself when it feels in danger?",
+      "options": [
+        {
+          "label": "It digs a deep hole",
+          "correct": false
+        },
+        {
+          "label": "It rolls into a spiky ball",
+          "correct": true
+        },
+        {
+          "label": "It climbs a tree",
+          "correct": false
+        },
+        {
+          "label": "It changes colour",
+          "correct": false
+        }
+      ],
+      "explanation": "A hedgehog tucks in its head and legs and curls into a tight ball, so only its prickly spines are showing.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/hedgehog",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Brown bears spend the coldest part of winter in a long, deep sleep in their dens. What is this called?",
+      "options": [
+        {
+          "label": "Migration",
+          "correct": false
+        },
+        {
+          "label": "Hibernation",
+          "correct": true
+        },
+        {
+          "label": "Camouflage",
+          "correct": false
+        },
+        {
+          "label": "Moulting",
+          "correct": false
+        }
+      ],
+      "explanation": "Hibernation is a deep winter rest. Brown bears eat lots in autumn to build up fat, then live off it while they sleep.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/brown-bear",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Brown bears eat berries, roots and fish. What do we call an animal that eats both plants and meat?",
+      "options": [
+        {
+          "label": "A herbivore",
+          "correct": false
+        },
+        {
+          "label": "A carnivore",
+          "correct": false
+        },
+        {
+          "label": "An omnivore",
+          "correct": true
+        },
+        {
+          "label": "An insectivore",
+          "correct": false
+        }
+      ],
+      "explanation": "An omnivore eats both plants and animals. Brown bears will happily munch on berries one day and catch salmon the next.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/brown-bear",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where do flamingos get their pink colour from?",
+      "options": [
+        {
+          "label": "The food they eat",
+          "correct": true
+        },
+        {
+          "label": "Sunburn",
+          "correct": false
+        },
+        {
+          "label": "Pink paint in the water",
+          "correct": false
+        },
+        {
+          "label": "Their parents' feathers",
+          "correct": false
+        }
+      ],
+      "explanation": "Flamingos eat tiny shrimps and algae that contain pink colouring. Without that food, their feathers slowly turn pale.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/flamingo",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Ladybirds belong to which group of insects?",
+      "options": [
+        {
+          "label": "Beetles",
+          "correct": true
+        },
+        {
+          "label": "Butterflies",
+          "correct": false
+        },
+        {
+          "label": "Ants",
+          "correct": false
+        },
+        {
+          "label": "Flies",
+          "correct": false
+        }
+      ],
+      "explanation": "Ladybirds are small beetles. They are also known as lady beetles or ladybird beetles.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/ladybug",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is famous for changing the colour of its skin?",
+      "options": [
+        {
+          "label": "Chameleon",
+          "correct": true
+        },
+        {
+          "label": "Elephant",
+          "correct": false
+        },
+        {
+          "label": "Hippopotamus",
+          "correct": false
+        },
+        {
+          "label": "Kangaroo",
+          "correct": false
+        }
+      ],
+      "explanation": "Chameleons change colour to show their mood, warm up or cool down, and send messages to other chameleons.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/chameleon",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Clownfish make their homes among the stinging tentacles of which sea creature?",
+      "options": [
+        {
+          "label": "Sea anemones",
+          "correct": true
+        },
+        {
+          "label": "Sharks",
+          "correct": false
+        },
+        {
+          "label": "Starfish",
+          "correct": false
+        },
+        {
+          "label": "Crabs",
+          "correct": false
+        }
+      ],
+      "explanation": "Clownfish are covered in a special slime that protects them, so they can hide safely among a sea anemone's stinging tentacles.",
+      "source_url": "https://kids.nationalgeographic.com/animals/fish/facts/clown-anemonefish",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Snowy owls mainly live in which cold part of the world?",
+      "options": [
+        {
+          "label": "The Sahara",
+          "correct": false
+        },
+        {
+          "label": "The Arctic",
+          "correct": true
+        },
+        {
+          "label": "The Amazon",
+          "correct": false
+        },
+        {
+          "label": "Antarctica",
+          "correct": false
+        }
+      ],
+      "explanation": "Snowy owls live mainly in the Arctic, on open treeless land called tundra. Their white feathers help them blend in with the snow.",
+      "source_url": "https://kids.nationalgeographic.com/animals/birds/facts/snowy-owl",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "North American monarch butterflies are famous for doing what every autumn?",
+      "options": [
+        {
+          "label": "Building nests",
+          "correct": false
+        },
+        {
+          "label": "Flying huge distances to warmer places",
+          "correct": true
+        },
+        {
+          "label": "Changing into moths",
+          "correct": false
+        },
+        {
+          "label": "Sleeping underground",
+          "correct": false
+        }
+      ],
+      "explanation": "Every autumn, millions of monarch butterflies make a long migration south to escape the cold, travelling thousands of kilometres.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/monarch-butterfly",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Gardeners like ladybirds because they eat which tiny plant pests?",
+      "options": [
+        {
+          "label": "Aphids",
+          "correct": true
+        },
+        {
+          "label": "Worms",
+          "correct": false
+        },
+        {
+          "label": "Snails",
+          "correct": false
+        },
+        {
+          "label": "Slugs",
+          "correct": false
+        }
+      ],
+      "explanation": "Ladybirds gobble up aphids, tiny insects that suck the juice out of plants. One ladybird can eat thousands in its lifetime.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/ladybug",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "No two zebras have exactly the same pattern of stripes.",
+      "answer": true,
+      "explanation": "Every zebra's stripes are unique, a bit like your fingerprints.",
+      "source_url": "https://kids.nationalgeographic.com/animals/mammals/facts/zebra",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Clownfish are a kind of fish that live on coral reefs.",
+      "answer": true,
+      "explanation": "Clownfish live in warm, shallow coral reefs in the Pacific and Indian oceans, sheltering among sea anemones.",
+      "source_url": "https://kids.nationalgeographic.com/animals/fish/facts/clown-anemonefish",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "If a sea star loses an arm, it can grow a new one.",
+      "answer": true,
+      "explanation": "Sea stars, also called starfish, can regrow lost arms. It takes a long time, but the new arm grows back.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/sea-star",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many hearts does an octopus have?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "hearts",
+        "correct": 3,
+        "accept_min": 3,
+        "accept_max": 3
+      },
+      "explanation": "An octopus has three hearts. Two pump blood through its gills and the third pumps blood around the rest of its body.",
+      "source_url": "https://www.natgeokids.com/uk/discover/animals/sea-life/octopus-facts/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Most sea stars have how many arms?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "arms",
+        "correct": 5,
+        "accept_min": 5,
+        "accept_max": 5
+      },
+      "explanation": "Most sea stars have five arms, although some kinds can have many more.",
+      "source_url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/sea-star",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Galápagos giant tortoises can live to be over how many years old?",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 10,
+        "unit": "years",
+        "correct": 100,
+        "accept_min": 100,
+        "accept_max": 100
+      },
+      "explanation": "Galápagos tortoises are among the longest-living animals, and many live to be over 100 years old.",
+      "source_url": "https://kids.nationalgeographic.com/animals/reptiles/facts/galapagos-tortoise",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

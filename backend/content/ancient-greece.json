@@ -1,0 +1,662 @@
+{
+  "slug": "ancient-greece",
+  "title": "Ancient Greece",
+  "intro": "Gods, heroes, theatres and the very first Olympic Games.",
+  "category": "history",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Where were the ancient Olympic Games held?",
+      "options": [
+        {
+          "label": "Athens",
+          "correct": false
+        },
+        {
+          "label": "Sparta",
+          "correct": false
+        },
+        {
+          "label": "Olympia",
+          "correct": true
+        },
+        {
+          "label": "Troy",
+          "correct": false
+        }
+      ],
+      "explanation": "The ancient Olympic Games were held at Olympia, in southern Greece, in honour of the god Zeus.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Greek city-state was famous for its strong army and tough training?",
+      "options": [
+        {
+          "label": "Athens",
+          "correct": false
+        },
+        {
+          "label": "Sparta",
+          "correct": true
+        },
+        {
+          "label": "Corinth",
+          "correct": false
+        },
+        {
+          "label": "Delphi",
+          "correct": false
+        }
+      ],
+      "explanation": "Sparta trained its boys to be soldiers from a young age and was known for its powerful army.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ancient Greek city is known as the birthplace of democracy?",
+      "options": [
+        {
+          "label": "Sparta",
+          "correct": false
+        },
+        {
+          "label": "Athens",
+          "correct": true
+        },
+        {
+          "label": "Olympia",
+          "correct": false
+        },
+        {
+          "label": "Knossos",
+          "correct": false
+        }
+      ],
+      "explanation": "In Athens, citizens could vote on decisions. This early form of democracy is still remembered today.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Greek myths, who was the king of the gods?",
+      "options": [
+        {
+          "label": "Zeus",
+          "correct": true
+        },
+        {
+          "label": "Poseidon",
+          "correct": false
+        },
+        {
+          "label": "Apollo",
+          "correct": false
+        },
+        {
+          "label": "Hermes",
+          "correct": false
+        }
+      ],
+      "explanation": "Zeus ruled the gods from Mount Olympus and was the god of the sky and thunder.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The ancient Greeks watched plays in open-air theatres.",
+      "answer": true,
+      "explanation": "Greek theatres were built outdoors, often into hillsides, so large crowds could see and hear the actors.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the Greek myth, how did the Greeks get soldiers inside the city of Troy?",
+      "options": [
+        {
+          "label": "They dug a tunnel",
+          "correct": false
+        },
+        {
+          "label": "They hid inside a wooden horse",
+          "correct": true
+        },
+        {
+          "label": "They climbed the walls",
+          "correct": false
+        },
+        {
+          "label": "They sailed up a river",
+          "correct": false
+        }
+      ],
+      "explanation": "The story says Greek soldiers hid inside a giant wooden horse, which the people of Troy pulled into their city.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which famous temple stands on the Acropolis in Athens?",
+      "options": [
+        {
+          "label": "The Colosseum",
+          "correct": false
+        },
+        {
+          "label": "The Pantheon",
+          "correct": false
+        },
+        {
+          "label": "The Parthenon",
+          "correct": true
+        },
+        {
+          "label": "Stonehenge",
+          "correct": false
+        }
+      ],
+      "explanation": "The Parthenon was built on the Acropolis hill as a temple to the goddess Athena.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Athena was the Greek goddess of what?",
+      "options": [
+        {
+          "label": "The sea",
+          "correct": false
+        },
+        {
+          "label": "Wisdom",
+          "correct": true
+        },
+        {
+          "label": "Farming",
+          "correct": false
+        },
+        {
+          "label": "The underworld",
+          "correct": false
+        }
+      ],
+      "explanation": "Athena was the goddess of wisdom and was also linked to war and crafts. Athens was named after her.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The ancient Olympic Games were held every four years.",
+      "answer": true,
+      "explanation": "The games took place every four years, a tradition the modern Olympics still follow.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z87tn39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Poseidon was the Greek god of what?",
+      "options": [
+        {
+          "label": "The sun",
+          "correct": false
+        },
+        {
+          "label": "The sea",
+          "correct": true
+        },
+        {
+          "label": "Love",
+          "correct": false
+        },
+        {
+          "label": "The harvest",
+          "correct": false
+        }
+      ],
+      "explanation": "Poseidon, a brother of Zeus, was god of the sea and of earthquakes. He is often shown holding a three-pronged trident.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "According to Greek myths, where did the main family of gods live?",
+      "options": [
+        {
+          "label": "Mount Olympus",
+          "correct": true
+        },
+        {
+          "label": "Mount Etna",
+          "correct": false
+        },
+        {
+          "label": "The island of Crete",
+          "correct": false
+        },
+        {
+          "label": "Under the sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Greeks believed their gods lived in a palace in the clouds above Mount Olympus, the highest mountain in Greece.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Hephaestus was the Greek god of what?",
+      "options": [
+        {
+          "label": "Metalwork and fire",
+          "correct": true
+        },
+        {
+          "label": "Music and poetry",
+          "correct": false
+        },
+        {
+          "label": "Sleep and dreams",
+          "correct": false
+        },
+        {
+          "label": "Rivers and lakes",
+          "correct": false
+        }
+      ],
+      "explanation": "Hephaestus was the blacksmith of the gods. He worked with fire to make weapons and armour for the other gods.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Greek myths, what kind of creature was Pegasus?",
+      "options": [
+        {
+          "label": "A winged horse",
+          "correct": true
+        },
+        {
+          "label": "A giant eagle",
+          "correct": false
+        },
+        {
+          "label": "A sea serpent",
+          "correct": false
+        },
+        {
+          "label": "A talking lion",
+          "correct": false
+        }
+      ],
+      "explanation": "Pegasus was a flying horse with wings, one of the best-loved creatures in Greek mythology.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-myths/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Greek hero found his way out of the Minotaur's maze by following a trail of string?",
+      "options": [
+        {
+          "label": "Theseus",
+          "correct": true
+        },
+        {
+          "label": "Perseus",
+          "correct": false
+        },
+        {
+          "label": "Jason",
+          "correct": false
+        },
+        {
+          "label": "Achilles",
+          "correct": false
+        }
+      ],
+      "explanation": "Theseus unwound a ball of string as he went into the labyrinth, then followed it back to find his way out.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-myths/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Greek myths, how many eyes did a Cyclops have?",
+      "options": [
+        {
+          "label": "One",
+          "correct": true
+        },
+        {
+          "label": "Two",
+          "correct": false
+        },
+        {
+          "label": "Three",
+          "correct": false
+        },
+        {
+          "label": "A hundred",
+          "correct": false
+        }
+      ],
+      "explanation": "A Cyclops was a giant with a single eye in the middle of its forehead.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/10-facts-about-the-ancient-greeks/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Greek hero spent years at sea trying to sail home after the Trojan War?",
+      "options": [
+        {
+          "label": "Odysseus",
+          "correct": true
+        },
+        {
+          "label": "Heracles",
+          "correct": false
+        },
+        {
+          "label": "Perseus",
+          "correct": false
+        },
+        {
+          "label": "Theseus",
+          "correct": false
+        }
+      ],
+      "explanation": "The poem the Odyssey tells how Odysseus faced monsters and storms on his long journey home to the island of Ithaca.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-myths/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was the wife of Zeus and queen of the gods?",
+      "options": [
+        {
+          "label": "Athena",
+          "correct": false
+        },
+        {
+          "label": "Hera",
+          "correct": true
+        },
+        {
+          "label": "Artemis",
+          "correct": false
+        },
+        {
+          "label": "Aphrodite",
+          "correct": false
+        }
+      ],
+      "explanation": "Hera was Zeus' wife and queen of the gods. She was the goddess of women, marriage and family.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Greek god ruled the underworld?",
+      "options": [
+        {
+          "label": "Apollo",
+          "correct": false
+        },
+        {
+          "label": "Hades",
+          "correct": true
+        },
+        {
+          "label": "Hermes",
+          "correct": false
+        },
+        {
+          "label": "Ares",
+          "correct": false
+        }
+      ],
+      "explanation": "Hades, the elder brother of Zeus and Poseidon, ruled the underworld, where the Greeks believed people went after they died.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ruler united the Greek city-states and built an empire stretching into Egypt and Asia?",
+      "options": [
+        {
+          "label": "Alexander the Great",
+          "correct": true
+        },
+        {
+          "label": "Julius Caesar",
+          "correct": false
+        },
+        {
+          "label": "King Arthur",
+          "correct": false
+        },
+        {
+          "label": "Genghis Khan",
+          "correct": false
+        }
+      ],
+      "explanation": "In the 300s BC, Alexander the Great brought the Greek city-states under one ruler and built a huge empire.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/10-facts-about-the-ancient-greeks/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the long, T-shirt-like piece of clothing that most ancient Greeks wore?",
+      "options": [
+        {
+          "label": "A kilt",
+          "correct": false
+        },
+        {
+          "label": "A chiton",
+          "correct": true
+        },
+        {
+          "label": "A kimono",
+          "correct": false
+        },
+        {
+          "label": "A poncho",
+          "correct": false
+        }
+      ],
+      "explanation": "Most Greeks wore a chiton, a long tunic made from one large piece of cloth.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/10-facts-about-the-ancient-greeks/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did actors in ancient Greek plays wear on their faces?",
+      "options": [
+        {
+          "label": "Masks",
+          "correct": true
+        },
+        {
+          "label": "Face paint only",
+          "correct": false
+        },
+        {
+          "label": "Veils",
+          "correct": false
+        },
+        {
+          "label": "Nothing at all",
+          "correct": false
+        }
+      ],
+      "explanation": "Greek actors wore masks that showed the audience whether a character was happy or sad. Some masks had two sides.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/10-facts-about-the-ancient-greeks/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What were winners at the earliest Olympic Games given?",
+      "options": [
+        {
+          "label": "A gold medal",
+          "correct": false
+        },
+        {
+          "label": "A crown of olive leaves",
+          "correct": true
+        },
+        {
+          "label": "A silver cup",
+          "correct": false
+        },
+        {
+          "label": "A bag of coins",
+          "correct": false
+        }
+      ],
+      "explanation": "Victors at the first Olympics were crowned with a wreath of olive leaves. Medals came much later.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/first-olympics",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The ancient Olympic Games were held in honour of which god?",
+      "options": [
+        {
+          "label": "Zeus",
+          "correct": true
+        },
+        {
+          "label": "Poseidon",
+          "correct": false
+        },
+        {
+          "label": "Hades",
+          "correct": false
+        },
+        {
+          "label": "Dionysus",
+          "correct": false
+        }
+      ],
+      "explanation": "The Olympics were created to honour Zeus, king of the gods, and athletes prayed to him for victory.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/first-olympics",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What name did the Romans give to the Greek hero Heracles?",
+      "options": [
+        {
+          "label": "Hercules",
+          "correct": true
+        },
+        {
+          "label": "Hector",
+          "correct": false
+        },
+        {
+          "label": "Horatius",
+          "correct": false
+        },
+        {
+          "label": "Helios",
+          "correct": false
+        }
+      ],
+      "explanation": "The Romans called Heracles 'Hercules'. He was famous for being incredibly strong and brave.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zgt7mp3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which bird was one of the sacred animals of the goddess Hera?",
+      "options": [
+        {
+          "label": "The peacock",
+          "correct": true
+        },
+        {
+          "label": "The owl",
+          "correct": false
+        },
+        {
+          "label": "The eagle",
+          "correct": false
+        },
+        {
+          "label": "The swan",
+          "correct": false
+        }
+      ],
+      "explanation": "Hera's sacred animals included the cow, the lion and the peacock, with its beautiful tail feathers.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Just before the Olympic Games, the Greek city-states agreed a truce so people could travel safely.",
+      "answer": true,
+      "explanation": "Even though city-states often quarrelled, they called a truce before the Games so athletes and visitors could reach Olympia safely.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/10-facts-about-the-ancient-greeks/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In ancient Greece, only men and boys were allowed to act in plays.",
+      "answer": true,
+      "explanation": "Women and girls could not be actors, so men and boys played every part, including female characters.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/10-facts-about-the-ancient-greeks/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Hermes was the messenger of the gods.",
+      "answer": true,
+      "explanation": "Hermes, a son of Zeus, carried messages for the gods. He is often shown with wings on his sandals.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-gods/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In what year BC are the first known Olympic Games said to have been held?",
+      "slider": {
+        "min": 500,
+        "max": 1000,
+        "step": 1,
+        "unit": "BC",
+        "correct": 776,
+        "accept_min": 770,
+        "accept_max": 780
+      },
+      "explanation": "The first known Olympic Games were held in 776 BC at Olympia, in southern Greece.",
+      "source_url": "https://kids.nationalgeographic.com/history/article/first-olympics",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In the Greek myth, how many difficult tasks did the hero Heracles have to complete?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "tasks",
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "Heracles had to complete twelve tasks, known as his labours, such as defeating the many-headed Hydra.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/greece/greek-myths/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

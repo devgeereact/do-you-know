@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-chemistry",
+  "title": "GCSE Chemistry",
+  "intro": "Exam-style questions on atoms, the periodic table, bonding, moles, rates, organic chemistry and analysis.",
+  "category": "school-science",
+  "difficulty": "medium",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the relative charge of an electron?",
+      "options": [
+        {
+          "label": "−1",
+          "correct": true
+        },
+        {
+          "label": "+1",
+          "correct": false
+        },
+        {
+          "label": "0",
+          "correct": false
+        },
+        {
+          "label": "−2",
+          "correct": false
+        }
+      ],
+      "explanation": "Protons have a relative charge of +1, neutrons 0 and electrons −1. Atoms are neutral because they have equal numbers of protons and electrons.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A sodium atom has a mass number of 23 and an atomic number of 11. How many neutrons does it have?",
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": null,
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "Neutrons = mass number − atomic number, so 23 − 11 = 12.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the electronic structure of a chlorine atom (atomic number 17)?",
+      "options": [
+        {
+          "label": "2, 8, 7",
+          "correct": true
+        },
+        {
+          "label": "2, 8, 8",
+          "correct": false
+        },
+        {
+          "label": "2, 7, 8",
+          "correct": false
+        },
+        {
+          "label": "8, 8, 1",
+          "correct": false
+        }
+      ],
+      "explanation": "The first shell holds up to 2 electrons and the second up to 8, leaving 7 in the outer shell. That is why chlorine is in Group 7.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Isotopes of an element have different numbers of which particle?",
+      "options": [
+        {
+          "label": "Neutrons",
+          "correct": true
+        },
+        {
+          "label": "Protons",
+          "correct": false
+        },
+        {
+          "label": "Electrons",
+          "correct": false
+        },
+        {
+          "label": "Shells",
+          "correct": false
+        }
+      ],
+      "explanation": "Isotopes have the same number of protons but a different number of neutrons, so their mass numbers differ.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which scientist provided evidence for the neutron in 1932?",
+      "options": [
+        {
+          "label": "James Chadwick",
+          "correct": true
+        },
+        {
+          "label": "Niels Bohr",
+          "correct": false
+        },
+        {
+          "label": "Ernest Rutherford",
+          "correct": false
+        },
+        {
+          "label": "J. J. Thomson",
+          "correct": false
+        }
+      ],
+      "explanation": "James Chadwick discovered the neutron in 1932, about 20 years after the nucleus was proposed.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How does the reactivity of the Group 1 metals change going down the group?",
+      "options": [
+        {
+          "label": "It increases",
+          "correct": true
+        },
+        {
+          "label": "It decreases",
+          "correct": false
+        },
+        {
+          "label": "It stays the same",
+          "correct": false
+        },
+        {
+          "label": "It increases then decreases",
+          "correct": false
+        }
+      ],
+      "explanation": "Going down Group 1, the outer electron is further from the nucleus, so it is lost more easily and reactivity increases.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Why are the Group 0 noble gases so unreactive?",
+      "options": [
+        {
+          "label": "Their outer shell of electrons is full",
+          "correct": true
+        },
+        {
+          "label": "They have no electrons",
+          "correct": false
+        },
+        {
+          "label": "They are all liquids",
+          "correct": false
+        },
+        {
+          "label": "Their atoms are too heavy to react",
+          "correct": false
+        }
+      ],
+      "explanation": "Noble gases have a stable arrangement with a full outer shell, so they do not easily gain, lose or share electrons.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is bromine like at room temperature?",
+      "options": [
+        {
+          "label": "A red-brown liquid",
+          "correct": true
+        },
+        {
+          "label": "A pale green gas",
+          "correct": false
+        },
+        {
+          "label": "A grey solid",
+          "correct": false
+        },
+        {
+          "label": "A colourless gas",
+          "correct": false
+        }
+      ],
+      "explanation": "Bromine is a red-brown liquid at room temperature. Chlorine is a green gas and iodine is a dark grey solid.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhwfwsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Ionic bonding usually occurs between which types of element?",
+      "options": [
+        {
+          "label": "A metal and a non-metal",
+          "correct": true
+        },
+        {
+          "label": "Two non-metals",
+          "correct": false
+        },
+        {
+          "label": "Two metals",
+          "correct": false
+        },
+        {
+          "label": "Two noble gases",
+          "correct": false
+        }
+      ],
+      "explanation": "Metal atoms lose electrons to form positive ions and non-metal atoms gain them to form negative ions. The oppositely charged ions attract.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3h9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the charge on an oxide ion?",
+      "options": [
+        {
+          "label": "2−",
+          "correct": true
+        },
+        {
+          "label": "2+",
+          "correct": false
+        },
+        {
+          "label": "1−",
+          "correct": false
+        },
+        {
+          "label": "1+",
+          "correct": false
+        }
+      ],
+      "explanation": "Oxygen is in Group 6, so an oxygen atom gains two electrons to fill its outer shell, forming O²⁻.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3h9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In graphite, each carbon atom is covalently bonded to how many other carbon atoms?",
+      "options": [
+        {
+          "label": "3",
+          "correct": true
+        },
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        }
+      ],
+      "explanation": "Each carbon in graphite bonds to three others in layers, leaving one delocalised electron per atom. That is why graphite conducts electricity.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3h9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Solid ionic compounds conduct electricity.",
+      "answer": false,
+      "explanation": "In a solid the ions are fixed in a lattice and cannot move. Ionic compounds only conduct when melted or dissolved, when the ions are free to move.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z3h9h4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the relative formula mass (Mr) of carbon dioxide, CO₂? (Ar: C = 12, O = 16)",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": null,
+        "correct": 44,
+        "accept_min": 44,
+        "accept_max": 44
+      },
+      "explanation": "Mr = 12 + (2 × 16) = 44.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zy6c6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the value of the Avogadro constant?",
+      "options": [
+        {
+          "label": "6.02 × 10²³ per mole",
+          "correct": true
+        },
+        {
+          "label": "6.02 × 10²³ per gram",
+          "correct": false
+        },
+        {
+          "label": "3.00 × 10⁸ per mole",
+          "correct": false
+        },
+        {
+          "label": "1.60 × 10⁻¹⁹ per mole",
+          "correct": false
+        }
+      ],
+      "explanation": "One mole of any substance contains 6.02 × 10²³ particles, which is the Avogadro constant.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zy6c6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In a closed system, the total mass of the products equals the total mass of the reactants.",
+      "answer": true,
+      "explanation": "This is the law of conservation of mass. Atoms are not made or destroyed in a reaction, only rearranged.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zy6c6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "10 g of a solute is dissolved to make 0.5 dm³ of solution. What is the concentration?",
+      "slider": {
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "g/dm³",
+        "correct": 20,
+        "accept_min": 20,
+        "accept_max": 20
+      },
+      "explanation": "Concentration = mass ÷ volume, so 10 g ÷ 0.5 dm³ = 20 g/dm³.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zy6c6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ion is present in all acidic solutions?",
+      "options": [
+        {
+          "label": "H⁺",
+          "correct": true
+        },
+        {
+          "label": "OH⁻",
+          "correct": false
+        },
+        {
+          "label": "Na⁺",
+          "correct": false
+        },
+        {
+          "label": "Cl⁻",
+          "correct": false
+        }
+      ],
+      "explanation": "Acids release hydrogen ions, H⁺, in water. Alkalis release hydroxide ions, OH⁻.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpfvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "During the electrolysis of molten lead bromide, what forms at the negative electrode (cathode)?",
+      "options": [
+        {
+          "label": "Lead",
+          "correct": true
+        },
+        {
+          "label": "Bromine",
+          "correct": false
+        },
+        {
+          "label": "Hydrogen",
+          "correct": false
+        },
+        {
+          "label": "Oxygen",
+          "correct": false
+        }
+      ],
+      "explanation": "Positive lead ions are attracted to the cathode, where they gain electrons to form lead metal. Bromine forms at the anode.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpfvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A metal carbonate reacts with an acid to make a salt, water and which gas?",
+      "options": [
+        {
+          "label": "Carbon dioxide",
+          "correct": true
+        },
+        {
+          "label": "Hydrogen",
+          "correct": false
+        },
+        {
+          "label": "Oxygen",
+          "correct": false
+        },
+        {
+          "label": "Chlorine",
+          "correct": false
+        }
+      ],
+      "explanation": "Acid + metal carbonate → salt + water + carbon dioxide. The gas turns limewater milky.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpfvqyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In an exothermic reaction, what happens to energy?",
+      "options": [
+        {
+          "label": "It is transferred to the surroundings",
+          "correct": true
+        },
+        {
+          "label": "It is taken in from the surroundings",
+          "correct": false
+        },
+        {
+          "label": "It is destroyed",
+          "correct": false
+        },
+        {
+          "label": "It stays inside the reactants",
+          "correct": false
+        }
+      ],
+      "explanation": "Exothermic reactions transfer energy to the surroundings, so the temperature of the surroundings rises. Combustion is an example.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztrf6rd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Why does raising the temperature increase the rate of a reaction?",
+      "options": [
+        {
+          "label": "Particles collide more often and more collisions have enough energy to react",
+          "correct": true
+        },
+        {
+          "label": "The activation energy becomes lower",
+          "correct": false
+        },
+        {
+          "label": "The particles become larger",
+          "correct": false
+        },
+        {
+          "label": "More reactant particles are created",
+          "correct": false
+        }
+      ],
+      "explanation": "At higher temperature, particles move faster. They collide more frequently and more collisions have at least the activation energy.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How does a catalyst speed up a reaction?",
+      "options": [
+        {
+          "label": "It provides a pathway with a lower activation energy",
+          "correct": true
+        },
+        {
+          "label": "It gives the particles more energy",
+          "correct": false
+        },
+        {
+          "label": "It increases the concentration",
+          "correct": false
+        },
+        {
+          "label": "It is used up in the reaction",
+          "correct": false
+        }
+      ],
+      "explanation": "A catalyst offers a different reaction pathway with a lower activation energy. It is not used up, so it can be reused.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8q2b7h",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Cracking large hydrocarbon molecules produces smaller alkanes and alkenes.",
+      "answer": true,
+      "explanation": "Cracking breaks long-chain hydrocarbons into shorter, more useful alkanes and alkenes. Alkenes are used to make polymers.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zmpmdnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the general formula of the alkanes?",
+      "options": [
+        {
+          "label": "CₙH₂ₙ₊₂",
+          "correct": true
+        },
+        {
+          "label": "CₙH₂ₙ",
+          "correct": false
+        },
+        {
+          "label": "CₙH₂ₙ₋₂",
+          "correct": false
+        },
+        {
+          "label": "CₙHₙ",
+          "correct": false
+        }
+      ],
+      "explanation": "Alkanes are saturated hydrocarbons with the general formula CₙH₂ₙ₊₂, for example methane, CH₄.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zmpmdnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What happens when bromine water is added to an alkene?",
+      "options": [
+        {
+          "label": "It turns from orange to colourless",
+          "correct": true
+        },
+        {
+          "label": "It stays orange",
+          "correct": false
+        },
+        {
+          "label": "It turns from colourless to orange",
+          "correct": false
+        },
+        {
+          "label": "It turns milky",
+          "correct": false
+        }
+      ],
+      "explanation": "Alkenes have a carbon–carbon double bond that reacts with bromine, decolourising the orange bromine water. Alkanes leave it orange.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zmpmdnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which process separates crude oil into fractions?",
+      "options": [
+        {
+          "label": "Fractional distillation",
+          "correct": true
+        },
+        {
+          "label": "Filtration",
+          "correct": false
+        },
+        {
+          "label": "Crystallisation",
+          "correct": false
+        },
+        {
+          "label": "Chromatography",
+          "correct": false
+        }
+      ],
+      "explanation": "Crude oil is heated and the vapours condense at different heights in a fractionating column, depending on their boiling points.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zmpmdnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What colour flame does a lithium compound give in a flame test?",
+      "options": [
+        {
+          "label": "Crimson",
+          "correct": true
+        },
+        {
+          "label": "Yellow",
+          "correct": false
+        },
+        {
+          "label": "Lilac",
+          "correct": false
+        },
+        {
+          "label": "Green",
+          "correct": false
+        }
+      ],
+      "explanation": "Lithium ions give a crimson flame. Sodium gives yellow, potassium lilac and copper green.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrdcywx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the test for chlorine gas?",
+      "options": [
+        {
+          "label": "It bleaches damp litmus paper",
+          "correct": true
+        },
+        {
+          "label": "It relights a glowing splint",
+          "correct": false
+        },
+        {
+          "label": "It makes a squeaky pop",
+          "correct": false
+        },
+        {
+          "label": "It turns limewater milky",
+          "correct": false
+        }
+      ],
+      "explanation": "Chlorine bleaches damp litmus paper, turning it white. A glowing splint tests for oxygen and a squeaky pop for hydrogen.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrdcywx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A pure substance melts at a single, specific temperature.",
+      "answer": true,
+      "explanation": "Pure substances have fixed melting and boiling points. Mixtures melt and boil over a range of temperatures.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrdcywx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In paper chromatography, a spot moves 3 cm while the solvent moves 6 cm. What is the Rf value?",
+      "options": [
+        {
+          "label": "0.5",
+          "correct": true
+        },
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "3",
+          "correct": false
+        },
+        {
+          "label": "0.2",
+          "correct": false
+        }
+      ],
+      "explanation": "Rf = distance moved by substance ÷ distance moved by solvent, so 3 ÷ 6 = 0.5. Rf values are always less than 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrdcywx",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

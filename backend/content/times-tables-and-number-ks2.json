@@ -1,0 +1,655 @@
+{
+  "slug": "times-tables-and-number-ks2",
+  "title": "Times Tables and Number",
+  "intro": "Practise times tables, place value, rounding and fractions.",
+  "category": "maths",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is 7 × 8?",
+      "options": [
+        {
+          "label": "48",
+          "correct": false
+        },
+        {
+          "label": "54",
+          "correct": false
+        },
+        {
+          "label": "56",
+          "correct": true
+        },
+        {
+          "label": "64",
+          "correct": false
+        }
+      ],
+      "explanation": "7 × 8 = 56. A handy trick: 5, 6, 7, 8, so 56 = 7 × 8.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 9 × 6?",
+      "options": [
+        {
+          "label": "45",
+          "correct": false
+        },
+        {
+          "label": "54",
+          "correct": true
+        },
+        {
+          "label": "56",
+          "correct": false
+        },
+        {
+          "label": "63",
+          "correct": false
+        }
+      ],
+      "explanation": "9 × 6 = 54. You can check it: 10 × 6 = 60, then take away one 6.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is 12 × 12?",
+      "slider": {
+        "min": 100,
+        "max": 200,
+        "step": 1,
+        "unit": null,
+        "correct": 144,
+        "accept_min": 144,
+        "accept_max": 144
+      },
+      "explanation": "12 × 12 = 144. This number is also called a square number.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these numbers is a prime number?",
+      "options": [
+        {
+          "label": "9",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": false
+        },
+        {
+          "label": "7",
+          "correct": true
+        },
+        {
+          "label": "21",
+          "correct": false
+        }
+      ],
+      "explanation": "A prime number has exactly two factors: 1 and itself. 7 is prime, but 9, 15 and 21 can all be divided by 3.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfq7hyc",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Every multiple of 10 is also a multiple of 5.",
+      "answer": true,
+      "explanation": "Because 10 = 2 × 5, any number in the 10 times table is also in the 5 times table.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfq7hyc",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 3,456 rounded to the nearest hundred?",
+      "options": [
+        {
+          "label": "3,000",
+          "correct": false
+        },
+        {
+          "label": "3,400",
+          "correct": false
+        },
+        {
+          "label": "3,460",
+          "correct": false
+        },
+        {
+          "label": "3,500",
+          "correct": true
+        }
+      ],
+      "explanation": "Look at the tens digit: it is 5, so we round the hundreds up. 3,456 rounds to 3,500.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zh8dmp3",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the value of the digit 4 in 2,481?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "40",
+          "correct": false
+        },
+        {
+          "label": "400",
+          "correct": true
+        },
+        {
+          "label": "4,000",
+          "correct": false
+        }
+      ],
+      "explanation": "The 4 is in the hundreds column, so its value is 400.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsjqtfr",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is one quarter of 20?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "5",
+          "correct": true
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": false
+        }
+      ],
+      "explanation": "To find a quarter, divide by 4. 20 ÷ 4 = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhdwxnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "0.5 is the same as one half.",
+      "answer": true,
+      "explanation": "0.5 means five tenths, and five tenths is equal to one half.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhdwxnb",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 63 ÷ 7?",
+      "options": [
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": true
+        },
+        {
+          "label": "11",
+          "correct": false
+        }
+      ],
+      "explanation": "63 ÷ 7 = 9, because 7 × 9 = 63.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 11 × 12?",
+      "options": [
+        {
+          "label": "121",
+          "correct": false
+        },
+        {
+          "label": "144",
+          "correct": false
+        },
+        {
+          "label": "122",
+          "correct": false
+        },
+        {
+          "label": "132",
+          "correct": true
+        }
+      ],
+      "explanation": "11 × 12 = 132. One way to check: 10 × 12 = 120, then add one more 12 to get 132.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 6 × 7?",
+      "options": [
+        {
+          "label": "49",
+          "correct": false
+        },
+        {
+          "label": "36",
+          "correct": false
+        },
+        {
+          "label": "42",
+          "correct": true
+        },
+        {
+          "label": "48",
+          "correct": false
+        }
+      ],
+      "explanation": "6 × 7 = 42. Six sevens are the same as seven sixes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 96 ÷ 12?",
+      "options": [
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "9",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "7",
+          "correct": false
+        }
+      ],
+      "explanation": "12 × 8 = 96, so 96 ÷ 12 = 8. Division is the inverse of multiplication.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these numbers is a factor of 24?",
+      "options": [
+        {
+          "label": "6",
+          "correct": true
+        },
+        {
+          "label": "9",
+          "correct": false
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "5",
+          "correct": false
+        }
+      ],
+      "explanation": "A factor divides into a number exactly. 24 ÷ 6 = 4 with nothing left over, so 6 is a factor of 24.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/factor_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a square number?",
+      "options": [
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "24",
+          "correct": false
+        },
+        {
+          "label": "50",
+          "correct": false
+        },
+        {
+          "label": "49",
+          "correct": true
+        }
+      ],
+      "explanation": "A square number is a number multiplied by itself. 7 × 7 = 49.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/square-number",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 3 cubed (3 × 3 × 3)?",
+      "options": [
+        {
+          "label": "27",
+          "correct": true
+        },
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "33",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": false
+        }
+      ],
+      "explanation": "3 × 3 = 9, and 9 × 3 = 27. Cubing a number means multiplying it by itself three times.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/cube_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What number does the Roman numeral XIV stand for?",
+      "options": [
+        {
+          "label": "41",
+          "correct": false
+        },
+        {
+          "label": "12",
+          "correct": false
+        },
+        {
+          "label": "16",
+          "correct": false
+        },
+        {
+          "label": "14",
+          "correct": true
+        }
+      ],
+      "explanation": "X is 10 and IV is 4, so XIV is 14. When I comes before V, you take 1 away from 5.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/roman-numeral",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which number does the Roman numeral L stand for?",
+      "options": [
+        {
+          "label": "100",
+          "correct": false
+        },
+        {
+          "label": "500",
+          "correct": false
+        },
+        {
+          "label": "5",
+          "correct": false
+        },
+        {
+          "label": "50",
+          "correct": true
+        }
+      ],
+      "explanation": "L stands for 50. C is 100 and D is 500.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/roman-numeral",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The temperature is 4°C, then it falls by 6 degrees. What is the new temperature?",
+      "options": [
+        {
+          "label": "−10°C",
+          "correct": false
+        },
+        {
+          "label": "10°C",
+          "correct": false
+        },
+        {
+          "label": "2°C",
+          "correct": false
+        },
+        {
+          "label": "−2°C",
+          "correct": true
+        }
+      ],
+      "explanation": "Count down 4 degrees to reach 0°C, then 2 more to get −2°C, which is 2 degrees below zero.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z826n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which fraction is equivalent to one half?",
+      "options": [
+        {
+          "label": "3/5",
+          "correct": false
+        },
+        {
+          "label": "4/6",
+          "correct": false
+        },
+        {
+          "label": "3/6",
+          "correct": true
+        },
+        {
+          "label": "2/6",
+          "correct": false
+        }
+      ],
+      "explanation": "3 is half of 6, so 3/6 is the same amount as 1/2. Equivalent fractions show the same amount.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhdwxnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 0.7 written as a fraction?",
+      "options": [
+        {
+          "label": "1/7",
+          "correct": false
+        },
+        {
+          "label": "7/10",
+          "correct": true
+        },
+        {
+          "label": "7/100",
+          "correct": false
+        },
+        {
+          "label": "70/10",
+          "correct": false
+        }
+      ],
+      "explanation": "The first digit after the decimal point shows tenths, so 0.7 is seven tenths.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhdwxnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 50% of 30?",
+      "options": [
+        {
+          "label": "20",
+          "correct": false
+        },
+        {
+          "label": "25",
+          "correct": false
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "15",
+          "correct": true
+        }
+      ],
+      "explanation": "50% means one half. Half of 30 is 15.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhdwxnb",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 4.6 rounded to the nearest whole number?",
+      "options": [
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "5",
+          "correct": true
+        },
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "4.5",
+          "correct": false
+        }
+      ],
+      "explanation": "Look at the tenths digit. 6 is 5 or more, so 4.6 rounds up to 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zh8dmp3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 3 + 4 × 2?",
+      "options": [
+        {
+          "label": "14",
+          "correct": false
+        },
+        {
+          "label": "11",
+          "correct": true
+        },
+        {
+          "label": "24",
+          "correct": false
+        },
+        {
+          "label": "10",
+          "correct": false
+        }
+      ],
+      "explanation": "Multiplication comes before addition. 4 × 2 = 8, then 3 + 8 = 11.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z826n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the lowest common multiple of 4 and 6?",
+      "options": [
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "24",
+          "correct": false
+        },
+        {
+          "label": "12",
+          "correct": true
+        }
+      ],
+      "explanation": "Multiples of 4: 4, 8, 12… Multiples of 6: 6, 12… The first number in both lists is 12.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/multiple_2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "An odd number multiplied by an odd number always gives an odd answer.",
+      "answer": true,
+      "explanation": "Try it: 3 × 5 = 15 and 7 × 9 = 63. Odd times odd is always odd.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfq7hyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "1 is a prime number.",
+      "answer": false,
+      "explanation": "A prime number has exactly two factors, 1 and itself. The number 1 has only one factor, so it is not prime.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/prime-number",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "When you multiply a whole number by 10, each digit moves one place to the left.",
+      "answer": true,
+      "explanation": "For example, 34 × 10 = 340. The 3 moves from the tens to the hundreds, and a zero fills the ones place.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsjqtfr",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is 8 × 9?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": null,
+        "correct": 72,
+        "accept_min": 72,
+        "accept_max": 72
+      },
+      "explanation": "8 × 9 = 72. A quick check: 8 × 10 = 80, then take away one 8 to get 72.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many sevens make 84?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "84 ÷ 7 = 12, because 7 × 12 = 84.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z36tyrd",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,664 @@
+{
+  "slug": "the-united-kingdom-ks2",
+  "title": "The United Kingdom",
+  "intro": "Capital cities, mountains, rivers and seas of the UK.",
+  "category": "school-geography",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Scotland?",
+      "options": [
+        {
+          "label": "Glasgow",
+          "correct": false
+        },
+        {
+          "label": "Edinburgh",
+          "correct": true
+        },
+        {
+          "label": "Aberdeen",
+          "correct": false
+        },
+        {
+          "label": "Dundee",
+          "correct": false
+        }
+      ],
+      "explanation": "Edinburgh is the capital of Scotland and is famous for its castle.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Wales?",
+      "options": [
+        {
+          "label": "Swansea",
+          "correct": false
+        },
+        {
+          "label": "Cardiff",
+          "correct": true
+        },
+        {
+          "label": "Newport",
+          "correct": false
+        },
+        {
+          "label": "Bangor",
+          "correct": false
+        }
+      ],
+      "explanation": "Cardiff, in south Wales, is the capital city of Wales.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Northern Ireland?",
+      "options": [
+        {
+          "label": "Belfast",
+          "correct": true
+        },
+        {
+          "label": "Derry",
+          "correct": false
+        },
+        {
+          "label": "Dublin",
+          "correct": false
+        },
+        {
+          "label": "Armagh",
+          "correct": false
+        }
+      ],
+      "explanation": "Belfast is the capital of Northern Ireland. Dublin is the capital of the Republic of Ireland.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the highest mountain in the UK?",
+      "options": [
+        {
+          "label": "Snowdon",
+          "correct": false
+        },
+        {
+          "label": "Scafell Pike",
+          "correct": false
+        },
+        {
+          "label": "Ben Nevis",
+          "correct": true
+        },
+        {
+          "label": "Slieve Donard",
+          "correct": false
+        }
+      ],
+      "explanation": "Ben Nevis, in the Scottish Highlands, is the UK's highest mountain at about 1,345 metres.",
+      "source_url": "https://www.ordnancesurvey.co.uk/blog/britains-tallest-mountain-is-taller",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river flows through London?",
+      "options": [
+        {
+          "label": "The Severn",
+          "correct": false
+        },
+        {
+          "label": "The Thames",
+          "correct": true
+        },
+        {
+          "label": "The Mersey",
+          "correct": false
+        },
+        {
+          "label": "The Tyne",
+          "correct": false
+        }
+      ],
+      "explanation": "The River Thames flows through the middle of London on its way to the North Sea.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The English Channel separates England from France.",
+      "answer": true,
+      "explanation": "The English Channel is the stretch of sea between southern England and northern France.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sea lies to the east of England?",
+      "options": [
+        {
+          "label": "The Irish Sea",
+          "correct": false
+        },
+        {
+          "label": "The North Sea",
+          "correct": true
+        },
+        {
+          "label": "The Red Sea",
+          "correct": false
+        },
+        {
+          "label": "The Black Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The North Sea lies between the east coast of Great Britain and countries such as Norway, Denmark and the Netherlands.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of the four countries of the UK has the most people?",
+      "options": [
+        {
+          "label": "Scotland",
+          "correct": false
+        },
+        {
+          "label": "Wales",
+          "correct": false
+        },
+        {
+          "label": "Northern Ireland",
+          "correct": false
+        },
+        {
+          "label": "England",
+          "correct": true
+        }
+      ],
+      "explanation": "England has by far the largest population of the four countries in the UK.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a compass, which direction is opposite north?",
+      "options": [
+        {
+          "label": "East",
+          "correct": false
+        },
+        {
+          "label": "West",
+          "correct": false
+        },
+        {
+          "label": "South",
+          "correct": true
+        },
+        {
+          "label": "North-east",
+          "correct": false
+        }
+      ],
+      "explanation": "North and south are opposite each other on a compass, as are east and west.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zbkw2hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the longest river in the United Kingdom?",
+      "options": [
+        {
+          "label": "The River Thames",
+          "correct": false
+        },
+        {
+          "label": "The River Trent",
+          "correct": false
+        },
+        {
+          "label": "The River Severn",
+          "correct": true
+        },
+        {
+          "label": "The River Tay",
+          "correct": false
+        }
+      ],
+      "explanation": "The Severn starts in the Welsh mountains and flows through Wales and England into the Bristol Channel.",
+      "source_url": "https://www.britannica.com/place/River-Severn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river forms part of the border between England and Scotland?",
+      "options": [
+        {
+          "label": "The River Mersey",
+          "correct": false
+        },
+        {
+          "label": "The River Severn",
+          "correct": false
+        },
+        {
+          "label": "The River Thames",
+          "correct": false
+        },
+        {
+          "label": "The River Tweed",
+          "correct": true
+        }
+      ],
+      "explanation": "For about 27 kilometres of its journey to the North Sea, the River Tweed forms the border between Scotland and England.",
+      "source_url": "https://www.britannica.com/place/River-Tweed",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the highest mountain in England?",
+      "options": [
+        {
+          "label": "Helvellyn",
+          "correct": false
+        },
+        {
+          "label": "Ben Nevis",
+          "correct": false
+        },
+        {
+          "label": "Yr Wyddfa (Snowdon)",
+          "correct": false
+        },
+        {
+          "label": "Scafell Pike",
+          "correct": true
+        }
+      ],
+      "explanation": "Scafell Pike, in the Lake District in Cumbria, is 978 metres high.",
+      "source_url": "https://www.britannica.com/place/Scafell-Pike",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest lake in the United Kingdom by area?",
+      "options": [
+        {
+          "label": "Windermere",
+          "correct": false
+        },
+        {
+          "label": "Loch Ness",
+          "correct": false
+        },
+        {
+          "label": "Loch Lomond",
+          "correct": false
+        },
+        {
+          "label": "Lough Neagh",
+          "correct": true
+        }
+      ],
+      "explanation": "Lough Neagh, in Northern Ireland, covers more area than any other lake in the UK.",
+      "source_url": "https://www.loughneagh.com/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which range of hills is often called 'the backbone of England'?",
+      "options": [
+        {
+          "label": "The Chilterns",
+          "correct": false
+        },
+        {
+          "label": "The Cotswolds",
+          "correct": false
+        },
+        {
+          "label": "The Pennines",
+          "correct": true
+        },
+        {
+          "label": "The Malvern Hills",
+          "correct": false
+        }
+      ],
+      "explanation": "The Pennines run from north to south through northern England, a bit like a spine down a back.",
+      "source_url": "https://www.britannica.com/place/Pennines",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which famous coastline of about 40,000 rock columns is found in Northern Ireland?",
+      "options": [
+        {
+          "label": "Durdle Door",
+          "correct": false
+        },
+        {
+          "label": "The Giant's Causeway",
+          "correct": true
+        },
+        {
+          "label": "The Jurassic Coast",
+          "correct": false
+        },
+        {
+          "label": "The White Cliffs of Dover",
+          "correct": false
+        }
+      ],
+      "explanation": "The Giant's Causeway was formed when lava from ancient volcanoes cooled and cracked into many-sided columns.",
+      "source_url": "https://www.nationaltrust.org.uk/visit/northern-ireland/giants-causeway",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sea lies between Great Britain and Ireland?",
+      "options": [
+        {
+          "label": "The Red Sea",
+          "correct": false
+        },
+        {
+          "label": "The Irish Sea",
+          "correct": true
+        },
+        {
+          "label": "The Black Sea",
+          "correct": false
+        },
+        {
+          "label": "The North Sea",
+          "correct": false
+        }
+      ],
+      "explanation": "The Irish Sea separates the island of Great Britain from the island of Ireland. Ferries cross it every day.",
+      "source_url": "https://www.britannica.com/place/Irish-Sea",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a county in England?",
+      "options": [
+        {
+          "label": "Kent",
+          "correct": true
+        },
+        {
+          "label": "Bavaria",
+          "correct": false
+        },
+        {
+          "label": "Ontario",
+          "correct": false
+        },
+        {
+          "label": "Texas",
+          "correct": false
+        }
+      ],
+      "explanation": "Kent is a county in south-east England, often called 'the Garden of England' because of its orchards and farms.",
+      "source_url": "https://www.britannica.com/place/Kent-county-England",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a map, what do contour lines show?",
+      "options": [
+        {
+          "label": "The height and shape of the land",
+          "correct": true
+        },
+        {
+          "label": "How deep rivers are",
+          "correct": false
+        },
+        {
+          "label": "Where roads go",
+          "correct": false
+        },
+        {
+          "label": "Where people live",
+          "correct": false
+        }
+      ],
+      "explanation": "Contour lines join places of the same height. When they are close together, the land is steep.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/contour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which compass direction is halfway between north and east?",
+      "options": [
+        {
+          "label": "South-east",
+          "correct": false
+        },
+        {
+          "label": "South-west",
+          "correct": false
+        },
+        {
+          "label": "North-west",
+          "correct": false
+        },
+        {
+          "label": "North-east",
+          "correct": true
+        }
+      ],
+      "explanation": "On an eight-point compass, north-east sits exactly halfway between north and east.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zbkw2hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When you read a grid reference on a map, which numbers do you read first?",
+      "options": [
+        {
+          "label": "The numbers along the bottom of the map",
+          "correct": true
+        },
+        {
+          "label": "The numbers on the key",
+          "correct": false
+        },
+        {
+          "label": "The page number",
+          "correct": false
+        },
+        {
+          "label": "The numbers up the side of the map",
+          "correct": false
+        }
+      ],
+      "explanation": "Remember \"along the corridor, then up the stairs\": read across first (eastings), then up (northings).",
+      "source_url": "https://www.ordnancesurvey.co.uk/mapzone/map-skills",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which city stands on the River Mersey in north-west England?",
+      "options": [
+        {
+          "label": "Leeds",
+          "correct": false
+        },
+        {
+          "label": "Norwich",
+          "correct": false
+        },
+        {
+          "label": "Bristol",
+          "correct": false
+        },
+        {
+          "label": "Liverpool",
+          "correct": true
+        }
+      ],
+      "explanation": "Liverpool grew up on the Mersey estuary and became one of Britain's biggest ports.",
+      "source_url": "https://www.britannica.com/place/Liverpool-England",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the national flag of the United Kingdom called?",
+      "options": [
+        {
+          "label": "The Red Dragon",
+          "correct": false
+        },
+        {
+          "label": "The Stars and Stripes",
+          "correct": false
+        },
+        {
+          "label": "The Saltire",
+          "correct": false
+        },
+        {
+          "label": "The Union Flag, or Union Jack",
+          "correct": true
+        }
+      ],
+      "explanation": "The Union Flag combines the crosses of St George (England), St Andrew (Scotland) and St Patrick (Ireland).",
+      "source_url": "https://www.royal.uk/union-jack",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country of the United Kingdom has a red dragon on its flag?",
+      "options": [
+        {
+          "label": "England",
+          "correct": false
+        },
+        {
+          "label": "Northern Ireland",
+          "correct": false
+        },
+        {
+          "label": "Wales",
+          "correct": true
+        },
+        {
+          "label": "Scotland",
+          "correct": false
+        }
+      ],
+      "explanation": "The Welsh flag shows a red dragon on a background of green and white.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country of the United Kingdom is not on the island of Great Britain?",
+      "options": [
+        {
+          "label": "Northern Ireland",
+          "correct": true
+        },
+        {
+          "label": "Scotland",
+          "correct": false
+        },
+        {
+          "label": "England",
+          "correct": false
+        },
+        {
+          "label": "Wales",
+          "correct": false
+        }
+      ],
+      "explanation": "Great Britain is the island with England, Scotland and Wales. Northern Ireland is on the island of Ireland.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Isle of Man is part of the United Kingdom.",
+      "answer": false,
+      "explanation": "The Isle of Man has its own parliament, called Tynwald. It is a Crown Dependency, not part of the UK.",
+      "source_url": "https://www.gov.im/about-the-isle-of-man/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Lake District is a national park in north-west England.",
+      "answer": true,
+      "explanation": "The Lake District, in Cumbria, is famous for its lakes, valleys and fells, including Scafell Pike.",
+      "source_url": "https://www.lakedistrict.gov.uk/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Scotland has more islands than any other country of the United Kingdom.",
+      "answer": true,
+      "explanation": "Scotland has hundreds of islands, including the Hebrides, Orkney and Shetland.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "London is the capital city of the whole United Kingdom, as well as of England.",
+      "answer": true,
+      "explanation": "London is the capital of England and of the UK. The UK Parliament meets there, in the Palace of Westminster.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Ben Nevis is the highest mountain in the UK. About how high is it, in metres?",
+      "slider": {
+        "min": 0,
+        "max": 2000,
+        "step": 5,
+        "unit": "m",
+        "correct": 1345,
+        "accept_min": 1300,
+        "accept_max": 1400
+      },
+      "explanation": "Ben Nevis is about 1,345 metres high. It stands near the town of Fort William in the Scottish Highlands.",
+      "source_url": "https://www.ordnancesurvey.co.uk/blog/britains-tallest-mountain-is-taller",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "About how long is the River Thames, in kilometres?",
+      "slider": {
+        "min": 0,
+        "max": 1000,
+        "step": 1,
+        "unit": "km",
+        "correct": 346,
+        "accept_min": 300,
+        "accept_max": 400
+      },
+      "explanation": "The Thames is about 346 kilometres long. It flows from the Cotswolds, through London, to the North Sea.",
+      "source_url": "https://www.britannica.com/place/River-Thames",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,655 @@
+{
+  "slug": "number-and-algebra-ks3",
+  "title": "Number and Algebra",
+  "intro": "Equations, powers, percentages, sequences and averages.",
+  "category": "maths",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Solve: 3x + 4 = 19",
+      "options": [
+        {
+          "label": "x = 3",
+          "correct": false
+        },
+        {
+          "label": "x = 5",
+          "correct": true
+        },
+        {
+          "label": "x = 6",
+          "correct": false
+        },
+        {
+          "label": "x = 15",
+          "correct": false
+        }
+      ],
+      "explanation": "Take 4 from both sides to get 3x = 15, then divide both sides by 3: x = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z83rkqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is −3 − 5?",
+      "options": [
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "−2",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "−8",
+          "correct": true
+        }
+      ],
+      "explanation": "Starting at −3 and going down 5 more on the number line takes you to −8.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp26n39",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the square root of 81?",
+      "options": [
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "9",
+          "correct": true
+        },
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "40.5",
+          "correct": false
+        }
+      ],
+      "explanation": "9 × 9 = 81, so the square root of 81 is 9.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztqmhyc",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 2 to the power of 3 (2³)?",
+      "options": [
+        {
+          "label": "5",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "8",
+          "correct": true
+        },
+        {
+          "label": "9",
+          "correct": false
+        }
+      ],
+      "explanation": "2³ means 2 × 2 × 2, which equals 8.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztqmhyc",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 25% of 80?",
+      "options": [
+        {
+          "label": "8",
+          "correct": false
+        },
+        {
+          "label": "20",
+          "correct": true
+        },
+        {
+          "label": "25",
+          "correct": false
+        },
+        {
+          "label": "40",
+          "correct": false
+        }
+      ],
+      "explanation": "25% is one quarter, and one quarter of 80 is 20.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf6pyrd",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "The angles inside a triangle add up to how many degrees?",
+      "slider": {
+        "min": 0,
+        "max": 360,
+        "step": 10,
+        "unit": "°",
+        "correct": 180,
+        "accept_min": 180,
+        "accept_max": 180
+      },
+      "explanation": "The three interior angles of any triangle always add up to 180 degrees.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr9wmn",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the next term in the sequence 3, 7, 11, 15, …?",
+      "options": [
+        {
+          "label": "17",
+          "correct": false
+        },
+        {
+          "label": "18",
+          "correct": false
+        },
+        {
+          "label": "19",
+          "correct": true
+        },
+        {
+          "label": "21",
+          "correct": false
+        }
+      ],
+      "explanation": "The sequence goes up by 4 each time, so the next term is 15 + 4 = 19.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwg4d2p",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In the expression 4a + 3, the number 4 is called the coefficient of a.",
+      "answer": true,
+      "explanation": "A coefficient is the number that multiplies a letter. In 4a, the coefficient is 4.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9yb4wx",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the ratio 12:18 in its simplest form?",
+      "options": [
+        {
+          "label": "2:3",
+          "correct": true
+        },
+        {
+          "label": "3:4",
+          "correct": false
+        },
+        {
+          "label": "4:6",
+          "correct": false
+        },
+        {
+          "label": "6:9",
+          "correct": false
+        }
+      ],
+      "explanation": "Both numbers divide by 6, their highest common factor: 12 ÷ 6 = 2 and 18 ÷ 6 = 3, giving 2:3.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpq3r2p",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the mean of 2, 4, 6 and 8?",
+      "options": [
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "5",
+          "correct": true
+        },
+        {
+          "label": "6",
+          "correct": false
+        },
+        {
+          "label": "20",
+          "correct": false
+        }
+      ],
+      "explanation": "Add them up (2 + 4 + 6 + 8 = 20), then divide by how many there are (4): 20 ÷ 4 = 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbsvr82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Expand the brackets: 3(x + 4)",
+      "options": [
+        {
+          "label": "3x + 12",
+          "correct": true
+        },
+        {
+          "label": "3x + 4",
+          "correct": false
+        },
+        {
+          "label": "x + 12",
+          "correct": false
+        },
+        {
+          "label": "3x + 7",
+          "correct": false
+        }
+      ],
+      "explanation": "Multiply everything inside the brackets by 3: 3 × x = 3x and 3 × 4 = 12.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9yb4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Simplify: 5a + 2b − 3a + b",
+      "options": [
+        {
+          "label": "2a + 3b",
+          "correct": true
+        },
+        {
+          "label": "8a + 3b",
+          "correct": false
+        },
+        {
+          "label": "2a + b",
+          "correct": false
+        },
+        {
+          "label": "5ab",
+          "correct": false
+        }
+      ],
+      "explanation": "Collect like terms: 5a − 3a = 2a and 2b + b = 3b, giving 2a + 3b.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9yb4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Factorise fully: 6x + 9",
+      "options": [
+        {
+          "label": "3(2x + 3)",
+          "correct": true
+        },
+        {
+          "label": "6(x + 9)",
+          "correct": false
+        },
+        {
+          "label": "3(2x + 9)",
+          "correct": false
+        },
+        {
+          "label": "2(3x + 9)",
+          "correct": false
+        }
+      ],
+      "explanation": "The highest common factor of 6x and 9 is 3. Taking it out leaves 2x + 3 in the brackets.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9yb4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the nth term of the sequence 4, 9, 14, 19, …?",
+      "options": [
+        {
+          "label": "5n − 1",
+          "correct": true
+        },
+        {
+          "label": "5n + 4",
+          "correct": false
+        },
+        {
+          "label": "4n + 5",
+          "correct": false
+        },
+        {
+          "label": "n + 5",
+          "correct": false
+        }
+      ],
+      "explanation": "The terms go up by 5, so the rule starts 5n. When n = 1, 5n is 5, but the first term is 4, so take away 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwg4d2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is 15% of 60?",
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": null,
+        "correct": 9,
+        "accept_min": 9,
+        "accept_max": 9
+      },
+      "explanation": "10% of 60 is 6 and 5% is half of that, 3. So 15% is 6 + 3 = 9.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf6pyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 0.35 written as a fraction in its simplest form?",
+      "options": [
+        {
+          "label": "7/20",
+          "correct": true
+        },
+        {
+          "label": "35/10",
+          "correct": false
+        },
+        {
+          "label": "3/5",
+          "correct": false
+        },
+        {
+          "label": "7/10",
+          "correct": false
+        }
+      ],
+      "explanation": "0.35 is 35/100. Dividing the top and bottom by 5 gives 7/20.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsxhfg8",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is 3/4 written as a percentage?",
+      "options": [
+        {
+          "label": "75%",
+          "correct": true
+        },
+        {
+          "label": "34%",
+          "correct": false
+        },
+        {
+          "label": "43%",
+          "correct": false
+        },
+        {
+          "label": "0.75%",
+          "correct": false
+        }
+      ],
+      "explanation": "3/4 is the same as 75/100, which is 75%.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf6pyrd",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the median of 3, 9, 4, 7 and 5?",
+      "options": [
+        {
+          "label": "5",
+          "correct": true
+        },
+        {
+          "label": "4",
+          "correct": false
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "5.6",
+          "correct": false
+        }
+      ],
+      "explanation": "Put the numbers in order: 3, 4, 5, 7, 9. The median is the middle one, 5. (5.6 is the mean.)",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbsvr82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the range of 4, 11, 7, 2 and 9?",
+      "options": [
+        {
+          "label": "9",
+          "correct": true
+        },
+        {
+          "label": "7",
+          "correct": false
+        },
+        {
+          "label": "11",
+          "correct": false
+        },
+        {
+          "label": "2",
+          "correct": false
+        }
+      ],
+      "explanation": "The range is the largest value take away the smallest: 11 − 2 = 9.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zbsvr82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the probability of rolling a 6 on a fair six-sided dice?",
+      "options": [
+        {
+          "label": "1/6",
+          "correct": true
+        },
+        {
+          "label": "1/2",
+          "correct": false
+        },
+        {
+          "label": "1/5",
+          "correct": false
+        },
+        {
+          "label": "6",
+          "correct": false
+        }
+      ],
+      "explanation": "There are 6 equally likely outcomes and only one of them is a 6, so the probability is 1/6.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgf3cdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The probability of an event that is certain to happen is 1.",
+      "answer": true,
+      "explanation": "Probabilities run from 0 (impossible) to 1 (certain). Nothing can have a probability bigger than 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgf3cdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Angles around a point add up to how many degrees?",
+      "options": [
+        {
+          "label": "360°",
+          "correct": true
+        },
+        {
+          "label": "180°",
+          "correct": false
+        },
+        {
+          "label": "90°",
+          "correct": false
+        },
+        {
+          "label": "270°",
+          "correct": false
+        }
+      ],
+      "explanation": "A full turn is 360°, so all the angles meeting at a point always add up to 360°.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr9wmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A triangle has a base of 10 cm and a height of 6 cm. What is its area?",
+      "options": [
+        {
+          "label": "30 cm²",
+          "correct": true
+        },
+        {
+          "label": "60 cm²",
+          "correct": false
+        },
+        {
+          "label": "16 cm²",
+          "correct": false
+        },
+        {
+          "label": "36 cm²",
+          "correct": false
+        }
+      ],
+      "explanation": "Area of a triangle = ½ × base × height, so ½ × 10 × 6 = 30 cm².",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrf3cdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "−4 × −3 = 12",
+      "answer": true,
+      "explanation": "Multiplying two negative numbers gives a positive answer, so −4 × −3 = +12.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Share £30 in the ratio 2:3. How much is the larger share?",
+      "options": [
+        {
+          "label": "£18",
+          "correct": true
+        },
+        {
+          "label": "£12",
+          "correct": false
+        },
+        {
+          "label": "£15",
+          "correct": false
+        },
+        {
+          "label": "£20",
+          "correct": false
+        }
+      ],
+      "explanation": "There are 2 + 3 = 5 parts, so each part is £30 ÷ 5 = £6. The larger share is 3 × £6 = £18.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpq3r2p",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How is 3,000,000 written in standard form?",
+      "options": [
+        {
+          "label": "3 × 10⁶",
+          "correct": true
+        },
+        {
+          "label": "3 × 10⁵",
+          "correct": false
+        },
+        {
+          "label": "3 × 10⁷",
+          "correct": false
+        },
+        {
+          "label": "3 × 10⁸",
+          "correct": false
+        }
+      ],
+      "explanation": "3,000,000 is 3 followed by six zeros, so it is 3 × 10⁶.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2mf9j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Solve: x ÷ 4 = 7. What is x?",
+      "slider": {
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": null,
+        "correct": 28,
+        "accept_min": 28,
+        "accept_max": 28
+      },
+      "explanation": "Undo dividing by 4 by multiplying both sides by 4: x = 7 × 4 = 28.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z83rkqt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Every square number is an even number.",
+      "answer": false,
+      "explanation": "Some square numbers are odd, for example 9 = 3 × 3 and 25 = 5 × 5.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/ztqmhyc",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which formula gives the circumference of a circle with diameter d?",
+      "options": [
+        {
+          "label": "πd",
+          "correct": true
+        },
+        {
+          "label": "πd²",
+          "correct": false
+        },
+        {
+          "label": "2d",
+          "correct": false
+        },
+        {
+          "label": "d ÷ π",
+          "correct": false
+        }
+      ],
+      "explanation": "The circumference is π multiplied by the diameter. π is about 3.14, so it is a bit more than three diameters.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrf3cdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Pi (π) is exactly equal to 3.14.",
+      "answer": false,
+      "explanation": "3.14 is only an approximation. The digits of π go on forever without repeating.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrf3cdm",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

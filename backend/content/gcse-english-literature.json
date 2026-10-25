@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-english-literature",
+  "title": "GCSE English Literature",
+  "intro": "Macbeth, Scrooge, the Birlings and more: test your knowledge of the set texts and the poetry terms examiners love.",
+  "category": "school-english",
+  "difficulty": "medium",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In Macbeth, which character discovers King Duncan's body?",
+      "options": [
+        {
+          "label": "Banquo",
+          "correct": false
+        },
+        {
+          "label": "Fleance",
+          "correct": false
+        },
+        {
+          "label": "Macduff",
+          "correct": true
+        },
+        {
+          "label": "Malcolm",
+          "correct": false
+        }
+      ],
+      "explanation": "Macduff arrives early at the castle to wake the king and is the first to find that Duncan has been murdered.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgq3dmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which character in Macbeth says \"Out, damned spot!\" while sleepwalking?",
+      "options": [
+        {
+          "label": "Macbeth",
+          "correct": false
+        },
+        {
+          "label": "The Porter",
+          "correct": false
+        },
+        {
+          "label": "Lady Macbeth",
+          "correct": true
+        },
+        {
+          "label": "Lady Macduff",
+          "correct": false
+        }
+      ],
+      "explanation": "Lady Macbeth tries to rub away a spot of blood only she can see, showing how guilt has broken her mind.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgq3dmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which new title do the witches promise Macbeth that he is given almost straight away?",
+      "options": [
+        {
+          "label": "Thane of Fife",
+          "correct": false
+        },
+        {
+          "label": "Prince of Cumberland",
+          "correct": false
+        },
+        {
+          "label": "Thane of Cawdor",
+          "correct": true
+        },
+        {
+          "label": "Thane of Ross",
+          "correct": false
+        }
+      ],
+      "explanation": "The witches hail Macbeth as Thane of Cawdor, and soon afterwards Ross tells him King Duncan has given him that title.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgq3dmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do the witches predict for Banquo's descendants?",
+      "options": [
+        {
+          "label": "They will be exiled",
+          "correct": false
+        },
+        {
+          "label": "They will become priests",
+          "correct": false
+        },
+        {
+          "label": "They will be kings",
+          "correct": true
+        },
+        {
+          "label": "They will be thanes of Glamis",
+          "correct": false
+        }
+      ],
+      "explanation": "The witches say Banquo will father kings without being king himself, which makes Macbeth fear and resent him.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgq3dmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "King James I, on the throne when Macbeth was first performed, had written a book about which subject?",
+      "options": [
+        {
+          "label": "Astronomy",
+          "correct": false
+        },
+        {
+          "label": "Witchcraft",
+          "correct": true
+        },
+        {
+          "label": "Farming",
+          "correct": false
+        },
+        {
+          "label": "Shipbuilding",
+          "correct": false
+        }
+      ],
+      "explanation": "James I wrote Daemonologie about witchcraft, so the witches in Macbeth would have fascinated his court.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgq3dmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In A Christmas Carol, who is the first ghost to visit Scrooge?",
+      "options": [
+        {
+          "label": "The Ghost of Christmas Yet to Come",
+          "correct": false
+        },
+        {
+          "label": "The Ghost of Christmas Past",
+          "correct": false
+        },
+        {
+          "label": "Jacob Marley",
+          "correct": true
+        },
+        {
+          "label": "Fezziwig",
+          "correct": false
+        }
+      ],
+      "explanation": "Scrooge's dead business partner, Jacob Marley, appears in chains to warn him to change his ways.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwhkxsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of Bob Cratchit's youngest son, who is unwell?",
+      "options": [
+        {
+          "label": "Peter",
+          "correct": false
+        },
+        {
+          "label": "Tiny Tim",
+          "correct": true
+        },
+        {
+          "label": "Little Fred",
+          "correct": false
+        },
+        {
+          "label": "Young Jacob",
+          "correct": false
+        }
+      ],
+      "explanation": "Tiny Tim's illness and kindness move Scrooge and help show the hardship faced by poor families.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwhkxsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which two children does the Ghost of Christmas Present reveal beneath his robe?",
+      "options": [
+        {
+          "label": "Fear and Doubt",
+          "correct": false
+        },
+        {
+          "label": "Greed and Pride",
+          "correct": false
+        },
+        {
+          "label": "Hope and Charity",
+          "correct": false
+        },
+        {
+          "label": "Ignorance and Want",
+          "correct": true
+        }
+      ],
+      "explanation": "The boy is Ignorance and the girl is Want. Dickens uses them to warn readers about neglecting the poor.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwhkxsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Dickens divided A Christmas Carol into five sections. What did he call them?",
+      "options": [
+        {
+          "label": "Cantos",
+          "correct": false
+        },
+        {
+          "label": "Verses",
+          "correct": false
+        },
+        {
+          "label": "Acts",
+          "correct": false
+        },
+        {
+          "label": "Staves",
+          "correct": true
+        }
+      ],
+      "explanation": "A stave is a verse of a song, which fits the idea of the book being a 'carol'.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwhkxsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the Inspector in An Inspector Calls?",
+      "options": [
+        {
+          "label": "Inspector Goole",
+          "correct": true
+        },
+        {
+          "label": "Inspector Lestrade",
+          "correct": false
+        },
+        {
+          "label": "Inspector Croft",
+          "correct": false
+        },
+        {
+          "label": "Inspector Hound",
+          "correct": false
+        }
+      ],
+      "explanation": "His name, Goole, sounds like 'ghoul', a hint that he may not be an ordinary police officer.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who wrote An Inspector Calls?",
+      "options": [
+        {
+          "label": "Charles Dickens",
+          "correct": false
+        },
+        {
+          "label": "Arthur Miller",
+          "correct": false
+        },
+        {
+          "label": "J. B. Priestley",
+          "correct": true
+        },
+        {
+          "label": "George Orwell",
+          "correct": false
+        }
+      ],
+      "explanation": "J. B. Priestley wrote the play to make audiences think about social responsibility.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In An Inspector Calls, which member of the Birling family is engaged to Gerald Croft?",
+      "options": [
+        {
+          "label": "Eva",
+          "correct": false
+        },
+        {
+          "label": "Sheila",
+          "correct": true
+        },
+        {
+          "label": "Edna",
+          "correct": false
+        },
+        {
+          "label": "Eric",
+          "correct": false
+        }
+      ],
+      "explanation": "The play opens with the Birlings celebrating Sheila's engagement to Gerald Croft.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Mr Birling confidently tells his guests which ship is 'unsinkable'?",
+      "options": [
+        {
+          "label": "The Mary Rose",
+          "correct": false
+        },
+        {
+          "label": "The Cutty Sark",
+          "correct": false
+        },
+        {
+          "label": "The Titanic",
+          "correct": true
+        },
+        {
+          "label": "The Lusitania",
+          "correct": false
+        }
+      ],
+      "explanation": "The audience knows the Titanic sank in 1912, so Priestley uses dramatic irony to show Mr Birling is not as wise as he thinks.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What name does the Inspector first give for the young woman at the centre of his investigation?",
+      "options": [
+        {
+          "label": "Edna Smith",
+          "correct": false
+        },
+        {
+          "label": "Daisy Renton",
+          "correct": false
+        },
+        {
+          "label": "Sybil Birling",
+          "correct": false
+        },
+        {
+          "label": "Eva Smith",
+          "correct": true
+        }
+      ],
+      "explanation": "The Inspector speaks of Eva Smith, who also used the name Daisy Renton later in the play.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Romeo and Juliet, which family does Juliet belong to?",
+      "options": [
+        {
+          "label": "The Capulets",
+          "correct": true
+        },
+        {
+          "label": "The Montagues",
+          "correct": false
+        },
+        {
+          "label": "The Paris family",
+          "correct": false
+        },
+        {
+          "label": "The Escalus family",
+          "correct": false
+        }
+      ],
+      "explanation": "Juliet is a Capulet and Romeo is a Montague, two families locked in a long feud.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zykncwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of Romeo's friends cries \"A plague o' both your houses!\"?",
+      "options": [
+        {
+          "label": "Mercutio",
+          "correct": true
+        },
+        {
+          "label": "Tybalt",
+          "correct": false
+        },
+        {
+          "label": "Benvolio",
+          "correct": false
+        },
+        {
+          "label": "Balthasar",
+          "correct": false
+        }
+      ],
+      "explanation": "Mercutio blames both feuding families for his fate, a key turning point in the play.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zykncwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who secretly marries Romeo and Juliet?",
+      "options": [
+        {
+          "label": "The Nurse",
+          "correct": false
+        },
+        {
+          "label": "Friar John",
+          "correct": false
+        },
+        {
+          "label": "Friar Laurence",
+          "correct": true
+        },
+        {
+          "label": "Prince Escalus",
+          "correct": false
+        }
+      ],
+      "explanation": "Friar Laurence agrees to marry them, hoping the match will end the feud between their families.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zykncwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who wrote Strange Case of Dr Jekyll and Mr Hyde?",
+      "options": [
+        {
+          "label": "Robert Louis Stevenson",
+          "correct": true
+        },
+        {
+          "label": "Bram Stoker",
+          "correct": false
+        },
+        {
+          "label": "Mary Shelley",
+          "correct": false
+        },
+        {
+          "label": "Arthur Conan Doyle",
+          "correct": false
+        }
+      ],
+      "explanation": "Robert Louis Stevenson published the novella in 1886.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8642p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which lawyer and friend of Dr Jekyll investigates the mystery of Mr Hyde?",
+      "options": [
+        {
+          "label": "Poole",
+          "correct": false
+        },
+        {
+          "label": "Dr Lanyon",
+          "correct": false
+        },
+        {
+          "label": "Mr Enfield",
+          "correct": false
+        },
+        {
+          "label": "Mr Utterson",
+          "correct": true
+        }
+      ],
+      "explanation": "Gabriel Utterson, Jekyll's lawyer, follows most of the story and tries to uncover who Hyde is.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8642p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which city is Jekyll and Hyde mainly set?",
+      "options": [
+        {
+          "label": "Manchester",
+          "correct": false
+        },
+        {
+          "label": "Bath",
+          "correct": false
+        },
+        {
+          "label": "London",
+          "correct": true
+        },
+        {
+          "label": "Edinburgh",
+          "correct": false
+        }
+      ],
+      "explanation": "The story takes place in Victorian London, with its foggy streets and contrast between respectable and poorer areas.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8642p3",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When a sentence runs on from one line of poetry into the next without a pause, this is called…",
+      "options": [
+        {
+          "label": "Refrain",
+          "correct": false
+        },
+        {
+          "label": "Assonance",
+          "correct": false
+        },
+        {
+          "label": "Enjambment",
+          "correct": true
+        },
+        {
+          "label": "Caesura",
+          "correct": false
+        }
+      ],
+      "explanation": "Enjambment carries the meaning over the line break and can create pace or surprise.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zprysg8",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a pause in the middle of a line of poetry, often marked by punctuation, called?",
+      "options": [
+        {
+          "label": "Enjambment",
+          "correct": false
+        },
+        {
+          "label": "Stanza",
+          "correct": false
+        },
+        {
+          "label": "Caesura",
+          "correct": true
+        },
+        {
+          "label": "Couplet",
+          "correct": false
+        }
+      ],
+      "explanation": "A caesura breaks up the rhythm of a line and can make the reader stop and think.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zprysg8",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Unrhymed lines of iambic pentameter, as used in much of Shakespeare's writing, are called…",
+      "options": [
+        {
+          "label": "Blank verse",
+          "correct": true
+        },
+        {
+          "label": "Rhyming couplets",
+          "correct": false
+        },
+        {
+          "label": "Ballad metre",
+          "correct": false
+        },
+        {
+          "label": "Free verse",
+          "correct": false
+        }
+      ],
+      "explanation": "Blank verse has a regular rhythm but no rhyme. Shakespeare's noble characters often speak in it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zprysg8",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In Macbeth, Banquo becomes king after Duncan's death.",
+      "answer": false,
+      "explanation": "It is Macbeth who is crowned. Banquo never becomes king, though the witches say his descendants will.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zgq3dmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In An Inspector Calls, Gerald Croft is Mr Birling's son.",
+      "answer": false,
+      "explanation": "Eric is Mr Birling's son. Gerald Croft is Sheila's fiancé and the son of a rival business family.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "At the start of Romeo and Juliet, Juliet is not yet 14 years old.",
+      "answer": true,
+      "explanation": "Her mother and the Nurse both say Juliet will turn 14 in about two weeks.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zykncwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A dramatic monologue is a poem spoken by a single character, often to a listener who does not reply.",
+      "answer": true,
+      "explanation": "In a dramatic monologue one voice speaks, revealing their character through what they say.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zprysg8",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year is An Inspector Calls set?",
+      "slider": {
+        "min": 1880,
+        "max": 1950,
+        "step": 1,
+        "unit": null,
+        "correct": 1912,
+        "accept_min": 1912,
+        "accept_max": 1912
+      },
+      "explanation": "The play is set in spring 1912, just before the Titanic sails and two years before the First World War.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zpr639q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was A Christmas Carol first published?",
+      "slider": {
+        "min": 1800,
+        "max": 1900,
+        "step": 1,
+        "unit": null,
+        "correct": 1843,
+        "accept_min": 1843,
+        "accept_max": 1843
+      },
+      "explanation": "Dickens published A Christmas Carol in December 1843, at a time of great poverty in Victorian Britain.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zwhkxsg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many syllables does a regular line of iambic pentameter have?",
+      "slider": {
+        "min": 4,
+        "max": 16,
+        "step": 1,
+        "unit": "syllables",
+        "correct": 10,
+        "accept_min": 10,
+        "accept_max": 10
+      },
+      "explanation": "Iambic pentameter has five iambs, each an unstressed then a stressed syllable, making ten syllables.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zprysg8",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

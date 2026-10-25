@@ -1,0 +1,635 @@
+{
+  "slug": "my-body-and-senses-ks1",
+  "title": "My Body and Senses",
+  "intro": "Eyes, ears, healthy habits, materials and seasons. A first science quiz about you and your world.",
+  "category": "school-science",
+  "difficulty": "easy",
+  "age_min": 5,
+  "age_max": 7,
+  "curriculum_tags": [
+    "uk-ks1"
+  ],
+  "time_limit_seconds": 45,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which part of your body do you use to see?",
+      "options": [
+        {
+          "label": "Ears",
+          "correct": false
+        },
+        {
+          "label": "Nose",
+          "correct": false
+        },
+        {
+          "label": "Hands",
+          "correct": false
+        },
+        {
+          "label": "Eyes",
+          "correct": true
+        }
+      ],
+      "explanation": "You see with your eyes. They let in light so your brain can make a picture.",
+      "source_url": "https://kidshealth.org/en/kids/eyes.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of your body do you use to hear?",
+      "options": [
+        {
+          "label": "Ears",
+          "correct": true
+        },
+        {
+          "label": "Eyes",
+          "correct": false
+        },
+        {
+          "label": "Feet",
+          "correct": false
+        },
+        {
+          "label": "Mouth",
+          "correct": false
+        }
+      ],
+      "explanation": "You hear with your ears. They catch sounds all around you.",
+      "source_url": "https://kidshealth.org/en/kids/ears.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of your body do you use to smell?",
+      "options": [
+        {
+          "label": "Ears",
+          "correct": false
+        },
+        {
+          "label": "Elbow",
+          "correct": false
+        },
+        {
+          "label": "Nose",
+          "correct": true
+        },
+        {
+          "label": "Tongue",
+          "correct": false
+        }
+      ],
+      "explanation": "You smell with your nose. It can tell you when dinner is cooking!",
+      "source_url": "https://kidshealth.org/en/kids/nose.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of your body helps you taste food?",
+      "options": [
+        {
+          "label": "Nose",
+          "correct": false
+        },
+        {
+          "label": "Tongue",
+          "correct": true
+        },
+        {
+          "label": "Teeth",
+          "correct": false
+        },
+        {
+          "label": "Hair",
+          "correct": false
+        }
+      ],
+      "explanation": "Your tongue is covered in tiny taste buds that tell sweet, salty and sour apart.",
+      "source_url": "https://kidshealth.org/en/kids/tongue.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of your body helps you feel if something is soft or rough?",
+      "options": [
+        {
+          "label": "Hair",
+          "correct": false
+        },
+        {
+          "label": "Eyes",
+          "correct": false
+        },
+        {
+          "label": "Ears",
+          "correct": false
+        },
+        {
+          "label": "Skin",
+          "correct": true
+        }
+      ],
+      "explanation": "Your skin helps you feel touch, like soft fur or rough bark.",
+      "source_url": "https://kidshealth.org/en/kids/skin.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which joint lets your leg bend in the middle?",
+      "options": [
+        {
+          "label": "Elbow",
+          "correct": false
+        },
+        {
+          "label": "Wrist",
+          "correct": false
+        },
+        {
+          "label": "Knee",
+          "correct": true
+        },
+        {
+          "label": "Neck",
+          "correct": false
+        }
+      ],
+      "explanation": "Your knee is in the middle of your leg. It bends when you sit or jump.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/knee_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which joint lets your arm bend in the middle?",
+      "options": [
+        {
+          "label": "Knee",
+          "correct": false
+        },
+        {
+          "label": "Elbow",
+          "correct": true
+        },
+        {
+          "label": "Ankle",
+          "correct": false
+        },
+        {
+          "label": "Hip",
+          "correct": false
+        }
+      ],
+      "explanation": "Your elbow is in the middle of your arm. It bends so you can lift food to your mouth.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/elbow_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When should you wash your hands?",
+      "options": [
+        {
+          "label": "Only at bedtime",
+          "correct": false
+        },
+        {
+          "label": "Before you eat",
+          "correct": true
+        },
+        {
+          "label": "Only on Sundays",
+          "correct": false
+        },
+        {
+          "label": "Never",
+          "correct": false
+        }
+      ],
+      "explanation": "Washing hands before eating helps wash away germs that can make you ill.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z6882hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many times a day should you brush your teeth?",
+      "options": [
+        {
+          "label": "Twice",
+          "correct": true
+        },
+        {
+          "label": "Once a week",
+          "correct": false
+        },
+        {
+          "label": "Never",
+          "correct": false
+        },
+        {
+          "label": "Ten times",
+          "correct": false
+        }
+      ],
+      "explanation": "Brush your teeth twice a day, last thing at night and one other time.",
+      "source_url": "https://www.nhs.uk/live-well/healthy-teeth-and-gums/how-to-keep-your-teeth-clean/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the healthiest snack?",
+      "options": [
+        {
+          "label": "An apple",
+          "correct": true
+        },
+        {
+          "label": "Sweets",
+          "correct": false
+        },
+        {
+          "label": "Crisps",
+          "correct": false
+        },
+        {
+          "label": "A fizzy drink",
+          "correct": false
+        }
+      ],
+      "explanation": "Fruit like apples is good for you. Try to eat lots of fruit and vegetables.",
+      "source_url": "https://www.nhs.uk/live-well/eat-well/5-a-day/why-5-a-day/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which drink is best for your teeth?",
+      "options": [
+        {
+          "label": "Fizzy pop",
+          "correct": false
+        },
+        {
+          "label": "Sugary squash",
+          "correct": false
+        },
+        {
+          "label": "Water",
+          "correct": true
+        }
+      ],
+      "explanation": "Water has no sugar, so it is kind to your teeth.",
+      "source_url": "https://www.nhs.uk/live-well/healthy-teeth-and-gums/how-to-keep-your-teeth-clean/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which body part is at the end of your arm?",
+      "options": [
+        {
+          "label": "Foot",
+          "correct": false
+        },
+        {
+          "label": "Knee",
+          "correct": false
+        },
+        {
+          "label": "Hand",
+          "correct": true
+        },
+        {
+          "label": "Head",
+          "correct": false
+        }
+      ],
+      "explanation": "Your hand is at the end of your arm. It has fingers and a thumb.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z6882hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What material are most windows made of?",
+      "options": [
+        {
+          "label": "Wood",
+          "correct": false
+        },
+        {
+          "label": "Glass",
+          "correct": true
+        },
+        {
+          "label": "Wool",
+          "correct": false
+        },
+        {
+          "label": "Paper",
+          "correct": false
+        }
+      ],
+      "explanation": "Windows are made of glass because you can see through it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsrfvwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which material is stretchy and bendy?",
+      "options": [
+        {
+          "label": "Rubber",
+          "correct": true
+        },
+        {
+          "label": "Glass",
+          "correct": false
+        },
+        {
+          "label": "Stone",
+          "correct": false
+        },
+        {
+          "label": "Wood",
+          "correct": false
+        }
+      ],
+      "explanation": "Rubber can stretch and bend, so it is great for balloons and wellies.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrssgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which material comes from trees?",
+      "options": [
+        {
+          "label": "Metal",
+          "correct": false
+        },
+        {
+          "label": "Plastic",
+          "correct": false
+        },
+        {
+          "label": "Glass",
+          "correct": false
+        },
+        {
+          "label": "Wood",
+          "correct": true
+        }
+      ],
+      "explanation": "Wood comes from trees. We use it to make tables, chairs and pencils.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrssgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which coat would keep you driest in the rain?",
+      "options": [
+        {
+          "label": "A plastic raincoat",
+          "correct": true
+        },
+        {
+          "label": "A paper coat",
+          "correct": false
+        },
+        {
+          "label": "A cotton T-shirt",
+          "correct": false
+        }
+      ],
+      "explanation": "Plastic is waterproof. It does not let water through.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsrfvwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which material is a metal?",
+      "options": [
+        {
+          "label": "Wool",
+          "correct": false
+        },
+        {
+          "label": "Iron",
+          "correct": true
+        },
+        {
+          "label": "Paper",
+          "correct": false
+        },
+        {
+          "label": "Cotton",
+          "correct": false
+        }
+      ],
+      "explanation": "Iron is a metal. Metals are strong and hard.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrssgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which season comes after winter?",
+      "options": [
+        {
+          "label": "Spring",
+          "correct": true
+        },
+        {
+          "label": "Summer",
+          "correct": false
+        },
+        {
+          "label": "Autumn",
+          "correct": false
+        }
+      ],
+      "explanation": "The seasons go spring, summer, autumn, winter. After winter comes spring.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkvv4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which season do many trees lose their leaves?",
+      "options": [
+        {
+          "label": "Autumn",
+          "correct": true
+        },
+        {
+          "label": "Spring",
+          "correct": false
+        },
+        {
+          "label": "Summer",
+          "correct": false
+        }
+      ],
+      "explanation": "In autumn, many leaves turn red, orange and brown and fall to the ground.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkvv4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which season are the days shortest in the UK?",
+      "options": [
+        {
+          "label": "Winter",
+          "correct": true
+        },
+        {
+          "label": "Summer",
+          "correct": false
+        },
+        {
+          "label": "Spring",
+          "correct": false
+        },
+        {
+          "label": "Autumn",
+          "correct": false
+        }
+      ],
+      "explanation": "In winter it gets dark early, so the days are short.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zkvv4wx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do your bones make inside your body?",
+      "options": [
+        {
+          "label": "A muscle",
+          "correct": false
+        },
+        {
+          "label": "A tummy",
+          "correct": false
+        },
+        {
+          "label": "A skeleton",
+          "correct": true
+        },
+        {
+          "label": "A heart",
+          "correct": false
+        }
+      ],
+      "explanation": "All your bones join up to make your skeleton. It holds you up and gives you shape.",
+      "source_url": "https://kidshealth.org/en/kids/bones.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these helps keep you fit and healthy?",
+      "options": [
+        {
+          "label": "Running and playing",
+          "correct": true
+        },
+        {
+          "label": "Sitting all day",
+          "correct": false
+        },
+        {
+          "label": "Eating only sweets",
+          "correct": false
+        }
+      ],
+      "explanation": "Moving about every day keeps your heart, bones and muscles strong.",
+      "source_url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-children-and-young-people/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "You can see through clear glass.",
+      "answer": true,
+      "explanation": "Yes! Clear glass lets light through, which is why we use it for windows.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsrfvwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "It is safe to look straight at the Sun.",
+      "answer": false,
+      "explanation": "Never look at the Sun. It is so bright it can hurt your eyes.",
+      "source_url": "https://kidshealth.org/en/kids/eyes.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Eating fruit and vegetables helps keep you healthy.",
+      "answer": true,
+      "explanation": "Fruit and vegetables are full of good things that help your body grow.",
+      "source_url": "https://www.nhs.uk/live-well/eat-well/5-a-day/why-5-a-day/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A cotton T-shirt is waterproof.",
+      "answer": false,
+      "explanation": "Cotton soaks up water, so it is not waterproof.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsrfvwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many senses do we usually say we have?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 5,
+        "accept_min": 5,
+        "accept_max": 5
+      },
+      "explanation": "Sight, hearing, smell, taste and touch. That makes 5 senses.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z6882hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many fingers and thumbs are on two hands altogether?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 10,
+        "accept_min": 10,
+        "accept_max": 10
+      },
+      "explanation": "Each hand has 4 fingers and 1 thumb. 5 + 5 = 10.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z6882hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many baby teeth (milk teeth) does a child usually have?",
+      "slider": {
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": null,
+        "correct": 20,
+        "accept_min": 20,
+        "accept_max": 20
+      },
+      "explanation": "Most children have 20 baby teeth. Later, grown-up teeth push them out.",
+      "source_url": "https://kidshealth.org/en/kids/teeth.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Your heart beats faster when you run about.",
+      "answer": true,
+      "explanation": "When you run, your muscles need more blood, so your heart pumps faster.",
+      "source_url": "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-children-and-young-people/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

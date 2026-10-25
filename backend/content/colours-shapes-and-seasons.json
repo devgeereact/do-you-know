@@ -1,0 +1,675 @@
+{
+  "slug": "colours-shapes-and-seasons",
+  "title": "Colours, Shapes and Seasons",
+  "intro": "Mix colours, name shapes, learn the days and months and spot the weather. A bright quiz for little learners.",
+  "category": "general-knowledge",
+  "difficulty": "easy",
+  "age_min": 5,
+  "age_max": 8,
+  "curriculum_tags": [],
+  "time_limit_seconds": 45,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which colour do you get if you mix red and yellow paint?",
+      "options": [
+        {
+          "label": "Green",
+          "correct": false
+        },
+        {
+          "label": "Purple",
+          "correct": false
+        },
+        {
+          "label": "Orange",
+          "correct": true
+        },
+        {
+          "label": "Pink",
+          "correct": false
+        }
+      ],
+      "explanation": "Red and yellow make orange, like the colour of a carrot.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/primary-colour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which colour do you get if you mix blue and yellow paint?",
+      "options": [
+        {
+          "label": "Orange",
+          "correct": false
+        },
+        {
+          "label": "Purple",
+          "correct": false
+        },
+        {
+          "label": "Brown",
+          "correct": false
+        },
+        {
+          "label": "Green",
+          "correct": true
+        }
+      ],
+      "explanation": "Blue and yellow make green, like grass and leaves.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/primary-colour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which colour do you get if you mix red and blue paint?",
+      "options": [
+        {
+          "label": "Green",
+          "correct": false
+        },
+        {
+          "label": "Orange",
+          "correct": false
+        },
+        {
+          "label": "Yellow",
+          "correct": false
+        },
+        {
+          "label": "Purple",
+          "correct": true
+        }
+      ],
+      "explanation": "Red and blue make purple, like a bunch of grapes.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/primary-colour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which colour do you get if you mix red and white paint?",
+      "options": [
+        {
+          "label": "Pink",
+          "correct": true
+        },
+        {
+          "label": "Orange",
+          "correct": false
+        },
+        {
+          "label": "Grey",
+          "correct": false
+        },
+        {
+          "label": "Blue",
+          "correct": false
+        }
+      ],
+      "explanation": "Adding white to red makes it lighter. Red and white make pink.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/primary-colour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which colour do you get if you mix black and white paint?",
+      "options": [
+        {
+          "label": "Pink",
+          "correct": false
+        },
+        {
+          "label": "Grey",
+          "correct": true
+        },
+        {
+          "label": "Brown",
+          "correct": false
+        },
+        {
+          "label": "Green",
+          "correct": false
+        }
+      ],
+      "explanation": "Black and white make grey, like a rainy cloud.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/primary-colour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which colour is at the top of a rainbow?",
+      "options": [
+        {
+          "label": "Violet",
+          "correct": false
+        },
+        {
+          "label": "Green",
+          "correct": false
+        },
+        {
+          "label": "Red",
+          "correct": true
+        },
+        {
+          "label": "Blue",
+          "correct": false
+        }
+      ],
+      "explanation": "Red is on the outside, at the top of a rainbow. Violet is on the inside.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a primary colour in painting?",
+      "options": [
+        {
+          "label": "Green",
+          "correct": false
+        },
+        {
+          "label": "Blue",
+          "correct": true
+        },
+        {
+          "label": "Orange",
+          "correct": false
+        },
+        {
+          "label": "Purple",
+          "correct": false
+        }
+      ],
+      "explanation": "Red, yellow and blue are the primary colours. You mix them to make other colours.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/primary-colour",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which day comes after Monday?",
+      "options": [
+        {
+          "label": "Sunday",
+          "correct": false
+        },
+        {
+          "label": "Wednesday",
+          "correct": false
+        },
+        {
+          "label": "Friday",
+          "correct": false
+        },
+        {
+          "label": "Tuesday",
+          "correct": true
+        }
+      ],
+      "explanation": "The days go Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which day comes just before Sunday?",
+      "options": [
+        {
+          "label": "Saturday",
+          "correct": true
+        },
+        {
+          "label": "Monday",
+          "correct": false
+        },
+        {
+          "label": "Friday",
+          "correct": false
+        },
+        {
+          "label": "Thursday",
+          "correct": false
+        }
+      ],
+      "explanation": "Saturday comes just before Sunday. Together they make the weekend.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which two days make the weekend?",
+      "options": [
+        {
+          "label": "Saturday and Sunday",
+          "correct": true
+        },
+        {
+          "label": "Monday and Tuesday",
+          "correct": false
+        },
+        {
+          "label": "Thursday and Friday",
+          "correct": false
+        }
+      ],
+      "explanation": "The weekend is Saturday and Sunday. Many children do not go to school then.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/weekend",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the first month of the year?",
+      "options": [
+        {
+          "label": "March",
+          "correct": false
+        },
+        {
+          "label": "December",
+          "correct": false
+        },
+        {
+          "label": "January",
+          "correct": true
+        },
+        {
+          "label": "June",
+          "correct": false
+        }
+      ],
+      "explanation": "The year starts with January, on New Year's Day.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the last month of the year?",
+      "options": [
+        {
+          "label": "January",
+          "correct": false
+        },
+        {
+          "label": "December",
+          "correct": true
+        },
+        {
+          "label": "November",
+          "correct": false
+        },
+        {
+          "label": "October",
+          "correct": false
+        }
+      ],
+      "explanation": "December is the twelfth and last month of the year.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which month comes after March?",
+      "options": [
+        {
+          "label": "April",
+          "correct": true
+        },
+        {
+          "label": "May",
+          "correct": false
+        },
+        {
+          "label": "February",
+          "correct": false
+        },
+        {
+          "label": "June",
+          "correct": false
+        }
+      ],
+      "explanation": "The months go January, February, March, April, May and so on.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many seasons are there in a year?",
+      "options": [
+        {
+          "label": "2",
+          "correct": false
+        },
+        {
+          "label": "3",
+          "correct": false
+        },
+        {
+          "label": "4",
+          "correct": true
+        },
+        {
+          "label": "6",
+          "correct": false
+        }
+      ],
+      "explanation": "There are 4 seasons: spring, summer, autumn and winter.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is usually the warmest season in the UK?",
+      "options": [
+        {
+          "label": "Summer",
+          "correct": true
+        },
+        {
+          "label": "Winter",
+          "correct": false
+        },
+        {
+          "label": "Autumn",
+          "correct": false
+        },
+        {
+          "label": "Spring",
+          "correct": false
+        }
+      ],
+      "explanation": "Summer is usually the warmest season, with long, sunny days.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the UK, Christmas Day is in which season?",
+      "options": [
+        {
+          "label": "Summer",
+          "correct": false
+        },
+        {
+          "label": "Winter",
+          "correct": true
+        },
+        {
+          "label": "Spring",
+          "correct": false
+        },
+        {
+          "label": "Autumn",
+          "correct": false
+        }
+      ],
+      "explanation": "Christmas Day is on 25 December, which is winter in the UK.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/seasons",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What can you see in the sky when the Sun shines through rain?",
+      "options": [
+        {
+          "label": "A star",
+          "correct": false
+        },
+        {
+          "label": "A rainbow",
+          "correct": true
+        },
+        {
+          "label": "The Moon",
+          "correct": false
+        },
+        {
+          "label": "Snow",
+          "correct": false
+        }
+      ],
+      "explanation": "Sunlight shining through raindrops splits into colours and makes a rainbow.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/optical-effects/rainbows",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is snow made of?",
+      "options": [
+        {
+          "label": "Tiny bits of ice",
+          "correct": true
+        },
+        {
+          "label": "Cotton wool",
+          "correct": false
+        },
+        {
+          "label": "Sugar",
+          "correct": false
+        },
+        {
+          "label": "Salt",
+          "correct": false
+        }
+      ],
+      "explanation": "Snowflakes are made of tiny ice crystals that form high up in cold clouds.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/snow",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a storm, which do you notice first?",
+      "options": [
+        {
+          "label": "Thunder",
+          "correct": false
+        },
+        {
+          "label": "Lightning",
+          "correct": true
+        }
+      ],
+      "explanation": "Light travels faster than sound, so you see the lightning before you hear the thunder.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/thunder-and-lightning",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What falls from clouds as drops of water?",
+      "options": [
+        {
+          "label": "Wind",
+          "correct": false
+        },
+        {
+          "label": "Fog",
+          "correct": false
+        },
+        {
+          "label": "Rain",
+          "correct": true
+        },
+        {
+          "label": "Sunshine",
+          "correct": false
+        }
+      ],
+      "explanation": "Rain is drops of water that fall from clouds.",
+      "source_url": "https://weather.metoffice.gov.uk/learn-about/weather/types-of-weather/rain",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which tool tells you how hot or cold it is?",
+      "options": [
+        {
+          "label": "A thermometer",
+          "correct": true
+        },
+        {
+          "label": "A ruler",
+          "correct": false
+        },
+        {
+          "label": "A clock",
+          "correct": false
+        },
+        {
+          "label": "A torch",
+          "correct": false
+        }
+      ],
+      "explanation": "A thermometer measures temperature, how hot or cold something is.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/thermometer",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which shape is like an egg?",
+      "options": [
+        {
+          "label": "Oval",
+          "correct": true
+        },
+        {
+          "label": "Square",
+          "correct": false
+        },
+        {
+          "label": "Triangle",
+          "correct": false
+        },
+        {
+          "label": "Star",
+          "correct": false
+        }
+      ],
+      "explanation": "An oval is a round shape that is longer one way, like an egg.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/oval_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A tin of beans is shaped like which solid shape?",
+      "options": [
+        {
+          "label": "Cube",
+          "correct": false
+        },
+        {
+          "label": "Cone",
+          "correct": false
+        },
+        {
+          "label": "Sphere",
+          "correct": false
+        },
+        {
+          "label": "Cylinder",
+          "correct": true
+        }
+      ],
+      "explanation": "A tin has two flat round ends and a curved side. That is a cylinder.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/cylinder",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "An ice cream cone is shaped like which solid shape?",
+      "options": [
+        {
+          "label": "Cube",
+          "correct": false
+        },
+        {
+          "label": "Cylinder",
+          "correct": false
+        },
+        {
+          "label": "Sphere",
+          "correct": false
+        },
+        {
+          "label": "Cone",
+          "correct": true
+        }
+      ],
+      "explanation": "A cone has a round end and a point at the other end.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/cone_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Wednesday comes after Tuesday.",
+      "answer": true,
+      "explanation": "Yes! Monday, Tuesday, then Wednesday.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "February is the shortest month of the year.",
+      "answer": true,
+      "explanation": "February has 28 days, or 29 in a leap year. Every other month has 30 or 31.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Ice melts into water when it gets warm.",
+      "answer": true,
+      "explanation": "When ice warms up, it melts and turns back into water.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsrfvwx",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many days are there in a week?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 7,
+        "accept_min": 7,
+        "accept_max": 7
+      },
+      "explanation": "There are 7 days in a week, from Monday to Sunday.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many months are there in a year?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": null,
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "There are 12 months, from January to December.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zhk82hv",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many sides does a rectangle have?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 4,
+        "accept_min": 4,
+        "accept_max": 4
+      },
+      "explanation": "A rectangle has 4 straight sides. The sides opposite each other are the same length.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjv39j6",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

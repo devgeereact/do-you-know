@@ -1,0 +1,690 @@
+{
+  "slug": "plants-and-living-things-ks2",
+  "title": "Plants and Living Things",
+  "intro": "How plants grow, what animals eat and how living things are grouped.",
+  "category": "school-science",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which gas do plants take in from the air to make their food?",
+      "options": [
+        {
+          "label": "Oxygen",
+          "correct": false
+        },
+        {
+          "label": "Carbon dioxide",
+          "correct": true
+        },
+        {
+          "label": "Helium",
+          "correct": false
+        },
+        {
+          "label": "Nitrogen",
+          "correct": false
+        }
+      ],
+      "explanation": "Plants take in carbon dioxide from the air and use it, with water and sunlight, to make food.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which gas do plants give out that people and animals need to breathe?",
+      "options": [
+        {
+          "label": "Oxygen",
+          "correct": true
+        },
+        {
+          "label": "Carbon dioxide",
+          "correct": false
+        },
+        {
+          "label": "Steam",
+          "correct": false
+        },
+        {
+          "label": "Smoke",
+          "correct": false
+        }
+      ],
+      "explanation": "When plants make food by photosynthesis, they release oxygen into the air.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a plant takes in water from the soil?",
+      "options": [
+        {
+          "label": "Petals",
+          "correct": false
+        },
+        {
+          "label": "Leaves",
+          "correct": false
+        },
+        {
+          "label": "Roots",
+          "correct": true
+        },
+        {
+          "label": "Flowers",
+          "correct": false
+        }
+      ],
+      "explanation": "Roots take up water and nutrients from the soil and hold the plant firmly in the ground.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for the way plants make their own food using sunlight?",
+      "options": [
+        {
+          "label": "Digestion",
+          "correct": false
+        },
+        {
+          "label": "Photosynthesis",
+          "correct": true
+        },
+        {
+          "label": "Evaporation",
+          "correct": false
+        },
+        {
+          "label": "Pollination",
+          "correct": false
+        }
+      ],
+      "explanation": "Photosynthesis uses sunlight, water and carbon dioxide to make food for the plant, and releases oxygen.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a caterpillar become after its time inside a chrysalis?",
+      "options": [
+        {
+          "label": "A beetle",
+          "correct": false
+        },
+        {
+          "label": "A butterfly",
+          "correct": true
+        },
+        {
+          "label": "A spider",
+          "correct": false
+        },
+        {
+          "label": "A dragonfly",
+          "correct": false
+        }
+      ],
+      "explanation": "A caterpillar forms a chrysalis, and inside it changes into a butterfly. This change is called metamorphosis.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A frog is an amphibian.",
+      "answer": true,
+      "explanation": "Frogs are amphibians: they usually start life in water as tadpoles and can live on land as adults.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is a herbivore, eating only plants?",
+      "options": [
+        {
+          "label": "Lion",
+          "correct": false
+        },
+        {
+          "label": "Rabbit",
+          "correct": true
+        },
+        {
+          "label": "Shark",
+          "correct": false
+        },
+        {
+          "label": "Owl",
+          "correct": false
+        }
+      ],
+      "explanation": "Rabbits eat plants such as grass and leaves, so they are herbivores.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What usually comes first in a food chain?",
+      "options": [
+        {
+          "label": "A plant",
+          "correct": true
+        },
+        {
+          "label": "A predator",
+          "correct": false
+        },
+        {
+          "label": "A fungus",
+          "correct": false
+        },
+        {
+          "label": "A rock",
+          "correct": false
+        }
+      ],
+      "explanation": "Food chains usually begin with a green plant, called a producer, because it makes its own food.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is a mammal?",
+      "options": [
+        {
+          "label": "Shark",
+          "correct": false
+        },
+        {
+          "label": "Trout",
+          "correct": false
+        },
+        {
+          "label": "Dolphin",
+          "correct": true
+        },
+        {
+          "label": "Crocodile",
+          "correct": false
+        }
+      ],
+      "explanation": "Dolphins are mammals. They breathe air and feed their young on milk.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What job do the brightly coloured petals of many flowers do?",
+      "options": [
+        {
+          "label": "Take in water from the soil",
+          "correct": false
+        },
+        {
+          "label": "Hold the plant up straight",
+          "correct": false
+        },
+        {
+          "label": "Store food for the winter",
+          "correct": false
+        },
+        {
+          "label": "Attract insects to help with pollination",
+          "correct": true
+        }
+      ],
+      "explanation": "Bright petals and sweet smells attract insects such as bees, which carry pollen from flower to flower.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/pollinate",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Moving pollen from one flower to another so that seeds can form is called…",
+      "options": [
+        {
+          "label": "Evaporation",
+          "correct": false
+        },
+        {
+          "label": "Pollination",
+          "correct": true
+        },
+        {
+          "label": "Germination",
+          "correct": false
+        },
+        {
+          "label": "Hibernation",
+          "correct": false
+        }
+      ],
+      "explanation": "Pollination happens when pollen reaches another flower, often carried by insects or the wind. Then seeds can start to form.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/pollinate",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a plant carries water from the roots up to the leaves?",
+      "options": [
+        {
+          "label": "The flowers",
+          "correct": false
+        },
+        {
+          "label": "The stem",
+          "correct": true
+        },
+        {
+          "label": "The petals",
+          "correct": false
+        },
+        {
+          "label": "The seeds",
+          "correct": false
+        }
+      ],
+      "explanation": "The stem holds the plant up and has tiny tubes inside that carry water from the roots to the leaves.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Sycamore seeds have wing shapes. How are they mainly spread?",
+      "options": [
+        {
+          "label": "By the wind",
+          "correct": true
+        },
+        {
+          "label": "By floating on rivers",
+          "correct": false
+        },
+        {
+          "label": "By exploding out of pods",
+          "correct": false
+        },
+        {
+          "label": "By sticking to animal fur",
+          "correct": false
+        }
+      ],
+      "explanation": "Their wings make sycamore seeds spin like tiny helicopters, so the wind can carry them away from the parent tree.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "How are the seeds inside juicy berries often spread?",
+      "options": [
+        {
+          "label": "The seeds dig into the soil",
+          "correct": false
+        },
+        {
+          "label": "The seeds blow away in the wind",
+          "correct": false
+        },
+        {
+          "label": "The seeds stay inside the berry on the plant",
+          "correct": false
+        },
+        {
+          "label": "Animals eat the fruit and the seeds pass out somewhere else",
+          "correct": true
+        }
+      ],
+      "explanation": "Birds and other animals eat the fruit. The seeds pass through them unharmed and end up growing in a new place.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When a seed starts to sprout and grow into a new plant, it is called…",
+      "options": [
+        {
+          "label": "Germination",
+          "correct": true
+        },
+        {
+          "label": "Photosynthesis",
+          "correct": false
+        },
+        {
+          "label": "Pollination",
+          "correct": false
+        },
+        {
+          "label": "Migration",
+          "correct": false
+        }
+      ],
+      "explanation": "During germination, a seed takes in water, then a tiny root and shoot begin to grow.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/germination",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call animals that have a backbone?",
+      "options": [
+        {
+          "label": "Invertebrates",
+          "correct": false
+        },
+        {
+          "label": "Molluscs",
+          "correct": false
+        },
+        {
+          "label": "Insects",
+          "correct": false
+        },
+        {
+          "label": "Vertebrates",
+          "correct": true
+        }
+      ],
+      "explanation": "Vertebrates have a backbone. Fish, amphibians, reptiles, birds and mammals are all vertebrates.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/vertebrate_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these animals is an invertebrate?",
+      "options": [
+        {
+          "label": "Salmon",
+          "correct": false
+        },
+        {
+          "label": "Snail",
+          "correct": true
+        },
+        {
+          "label": "Frog",
+          "correct": false
+        },
+        {
+          "label": "Robin",
+          "correct": false
+        }
+      ],
+      "explanation": "Invertebrates have no backbone. Snails, worms, insects and spiders are all invertebrates.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/invertebrate_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A classification key helps you sort and name living things. How does it work?",
+      "options": [
+        {
+          "label": "It asks yes or no questions about their features",
+          "correct": true
+        },
+        {
+          "label": "It counts how old they are",
+          "correct": false
+        },
+        {
+          "label": "It lists them in alphabetical order",
+          "correct": false
+        },
+        {
+          "label": "It measures how fast they move",
+          "correct": false
+        }
+      ],
+      "explanation": "A classification key asks questions such as \"Does it have legs?\" Each answer leads you to the next question until you find the name.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are the three main body parts of an insect?",
+      "options": [
+        {
+          "label": "Head, thorax and abdomen",
+          "correct": true
+        },
+        {
+          "label": "Head, neck and tail",
+          "correct": false
+        },
+        {
+          "label": "Shell, legs and feelers",
+          "correct": false
+        },
+        {
+          "label": "Head, wings and tail",
+          "correct": false
+        }
+      ],
+      "explanation": "An insect's body has three parts. The legs and wings are joined to the middle part, the thorax.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/thorax",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a plant uses sunlight to make food for the plant?",
+      "options": [
+        {
+          "label": "The seeds",
+          "correct": false
+        },
+        {
+          "label": "The leaves",
+          "correct": true
+        },
+        {
+          "label": "The roots",
+          "correct": false
+        },
+        {
+          "label": "The petals",
+          "correct": false
+        }
+      ],
+      "explanation": "Leaves are where photosynthesis happens. Their broad, flat shape helps them catch plenty of sunlight.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zk43f82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call an animal that hunts other animals for food?",
+      "options": [
+        {
+          "label": "Prey",
+          "correct": false
+        },
+        {
+          "label": "A producer",
+          "correct": false
+        },
+        {
+          "label": "A predator",
+          "correct": true
+        },
+        {
+          "label": "A herbivore",
+          "correct": false
+        }
+      ],
+      "explanation": "A predator hunts other animals. An owl is a predator, and the mice it catches are its prey.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/predator",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the food chain grass → rabbit → fox, which living thing is the prey of the fox?",
+      "options": [
+        {
+          "label": "The Sun",
+          "correct": false
+        },
+        {
+          "label": "The rabbit",
+          "correct": true
+        },
+        {
+          "label": "The grass",
+          "correct": false
+        },
+        {
+          "label": "The fox",
+          "correct": false
+        }
+      ],
+      "explanation": "The arrows show who is eaten by whom. The fox eats the rabbit, so the rabbit is its prey.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/prey_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of a flower makes pollen?",
+      "options": [
+        {
+          "label": "The stamen",
+          "correct": true
+        },
+        {
+          "label": "The stem",
+          "correct": false
+        },
+        {
+          "label": "The leaf",
+          "correct": false
+        },
+        {
+          "label": "The root",
+          "correct": false
+        }
+      ],
+      "explanation": "The stamen is the male part of a flower and makes pollen. Pollen must reach another flower's carpel for seeds to form.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/stamen",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are fossils?",
+      "options": [
+        {
+          "label": "Seeds that never grew",
+          "correct": false
+        },
+        {
+          "label": "Bones of animals alive today",
+          "correct": false
+        },
+        {
+          "label": "Remains or traces of living things from long ago, preserved in rock",
+          "correct": true
+        },
+        {
+          "label": "Shiny stones made by volcanoes",
+          "correct": false
+        }
+      ],
+      "explanation": "Fossils form over millions of years. They help scientists learn about plants and animals that lived long ago.",
+      "source_url": "https://www.nhm.ac.uk/discover/what-is-a-fossil.html",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A cactus stores water in its thick stem so it can survive in the desert. A feature like this is called…",
+      "options": [
+        {
+          "label": "A food chain",
+          "correct": false
+        },
+        {
+          "label": "A habitat",
+          "correct": false
+        },
+        {
+          "label": "A life cycle",
+          "correct": false
+        },
+        {
+          "label": "An adaptation",
+          "correct": true
+        }
+      ],
+      "explanation": "An adaptation is a feature that helps a living thing survive where it lives.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/adaptation",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Bacteria are living things that are too small to see without a microscope. What is the name for these tiny living things?",
+      "options": [
+        {
+          "label": "Microorganisms",
+          "correct": true
+        },
+        {
+          "label": "Magnets",
+          "correct": false
+        },
+        {
+          "label": "Mammals",
+          "correct": false
+        },
+        {
+          "label": "Minerals",
+          "correct": false
+        }
+      ],
+      "explanation": "Microorganisms are tiny living things. Some help us, like those used to make yoghurt, and some can make us ill.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/microorganism",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Mushrooms are plants.",
+      "answer": false,
+      "explanation": "Mushrooms are fungi, not plants. Unlike plants, fungi cannot make their own food from sunlight.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/fungus",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "All mammals give birth to live young.",
+      "answer": false,
+      "explanation": "Nearly all mammals give birth to live young, but the platypus and the echidna are mammals that lay eggs.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/platypus",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Young animals usually look similar to their parents, but not exactly the same.",
+      "answer": true,
+      "explanation": "Offspring inherit features from their parents, but there are always small differences, called variation.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many stages are there in the life cycle of a butterfly?",
+      "slider": {
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "stages",
+        "correct": 4,
+        "accept_min": 4,
+        "accept_max": 4
+      },
+      "explanation": "A butterfly's life cycle has four stages: egg, caterpillar (larva), chrysalis (pupa) and adult butterfly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z2pfb9q",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,653 @@
+{
+  "slug": "old-testament-stories",
+  "title": "Old Testament Stories",
+  "intro": "Arks, giants, lions and a big fish. How well do you know these famous stories from the Bible?",
+  "category": "bible-faith",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In Genesis, on which day did God rest after creating the world?",
+      "options": [
+        {
+          "label": "The first day",
+          "correct": false
+        },
+        {
+          "label": "The third day",
+          "correct": false
+        },
+        {
+          "label": "The sixth day",
+          "correct": false
+        },
+        {
+          "label": "The seventh day",
+          "correct": true
+        }
+      ],
+      "explanation": "Genesis 2:2 says that by the seventh day God had finished his work, and on that day he rested.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%202%3A2&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who built an ark to save his family and the animals from the flood?",
+      "options": [
+        {
+          "label": "Moses",
+          "correct": false
+        },
+        {
+          "label": "Noah",
+          "correct": true
+        },
+        {
+          "label": "Abraham",
+          "correct": false
+        },
+        {
+          "label": "David",
+          "correct": false
+        }
+      ],
+      "explanation": "In Genesis 6, God tells Noah to build an ark of cypress wood.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%206%3A14&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was swallowed by a huge fish?",
+      "options": [
+        {
+          "label": "Jonah",
+          "correct": true
+        },
+        {
+          "label": "Elijah",
+          "correct": false
+        },
+        {
+          "label": "Samuel",
+          "correct": false
+        },
+        {
+          "label": "Joseph",
+          "correct": false
+        }
+      ],
+      "explanation": "Jonah 1:17 says that a huge fish swallowed Jonah, and he was inside it for three days and three nights.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Jonah%201%3A17&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which giant did the young shepherd David defeat?",
+      "options": [
+        {
+          "label": "Pharaoh",
+          "correct": false
+        },
+        {
+          "label": "Samson",
+          "correct": false
+        },
+        {
+          "label": "Goliath",
+          "correct": true
+        },
+        {
+          "label": "Nebuchadnezzar",
+          "correct": false
+        }
+      ],
+      "explanation": "In 1 Samuel 17, David defeats the Philistine champion Goliath with a sling and a stone.",
+      "source_url": "https://www.biblegateway.com/passage/?search=1%20Samuel%2017%3A49-50&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who led the Israelites out of Egypt?",
+      "options": [
+        {
+          "label": "Moses",
+          "correct": true
+        },
+        {
+          "label": "Joshua",
+          "correct": false
+        },
+        {
+          "label": "Jacob",
+          "correct": false
+        },
+        {
+          "label": "Solomon",
+          "correct": false
+        }
+      ],
+      "explanation": "In Exodus, Moses leads the Israelites out of Egypt, and God parts the Red Sea for them.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%2014%3A21-22&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was thrown into a den of lions but kept safe?",
+      "options": [
+        {
+          "label": "Daniel",
+          "correct": true
+        },
+        {
+          "label": "Isaac",
+          "correct": false
+        },
+        {
+          "label": "Gideon",
+          "correct": false
+        },
+        {
+          "label": "Elisha",
+          "correct": false
+        }
+      ],
+      "explanation": "In Daniel 6, Daniel is thrown into the lions' den, and God sends an angel to shut the lions' mouths.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Daniel%206%3A16-22&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Jacob gave his son Joseph a special, ornate robe.",
+      "answer": true,
+      "explanation": "Genesis 37:3 tells how Jacob, also called Israel, made an ornate robe for Joseph.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2037%3A3&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many commandments did God write on the stone tablets given to Moses?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Ten",
+          "correct": true
+        },
+        {
+          "label": "Twelve",
+          "correct": false
+        }
+      ],
+      "explanation": "Exodus 34:28 calls them the Ten Commandments.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%2034%3A28&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In the story of Noah, for how many days and nights did it rain?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "days",
+        "correct": 40,
+        "accept_min": 40,
+        "accept_max": 40
+      },
+      "explanation": "Genesis 7:12 says rain fell on the earth for forty days and forty nights.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%207%3A12&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In the story of Noah, a dove returned carrying an olive leaf.",
+      "answer": true,
+      "explanation": "Genesis 8:11 says the dove came back with a freshly plucked olive leaf, showing the water was going down.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%208%3A11&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Genesis, what was the name of the first woman?",
+      "options": [
+        {
+          "label": "Eve",
+          "correct": true
+        },
+        {
+          "label": "Sarah",
+          "correct": false
+        },
+        {
+          "label": "Ruth",
+          "correct": false
+        },
+        {
+          "label": "Miriam",
+          "correct": false
+        }
+      ],
+      "explanation": "Genesis says Adam named his wife Eve, which sounds like the Hebrew word for living.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%203%3A20&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of the garden where God placed Adam and Eve?",
+      "options": [
+        {
+          "label": "Eden",
+          "correct": true
+        },
+        {
+          "label": "Gethsemane",
+          "correct": false
+        },
+        {
+          "label": "Babylon",
+          "correct": false
+        },
+        {
+          "label": "Canaan",
+          "correct": false
+        }
+      ],
+      "explanation": "Genesis says God planted a garden in Eden, full of trees that were good for food.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%202%3A8-9&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In Genesis, God made people on the first day of creation.",
+      "answer": false,
+      "explanation": "People were made on the sixth day. The first day was when God made light.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%201%3A26-31&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "After the flood, what did God put in the clouds as a sign of his promise?",
+      "options": [
+        {
+          "label": "A rainbow",
+          "correct": true
+        },
+        {
+          "label": "A star",
+          "correct": false
+        },
+        {
+          "label": "A cloud shaped like a dove",
+          "correct": false
+        },
+        {
+          "label": "A bright moon",
+          "correct": false
+        }
+      ],
+      "explanation": "God promised never again to flood the whole earth, and the rainbow was the sign of that promise.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%209%3A12-16&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of the son born to Abraham and Sarah when they were very old?",
+      "options": [
+        {
+          "label": "Isaac",
+          "correct": true
+        },
+        {
+          "label": "Ishmael",
+          "correct": false
+        },
+        {
+          "label": "Jacob",
+          "correct": false
+        },
+        {
+          "label": "Benjamin",
+          "correct": false
+        }
+      ],
+      "explanation": "Sarah laughed with joy when Isaac was born, and his name means \"he laughs\".",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2021%3A1-6&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Abraham's wife was called Sarah.",
+      "answer": true,
+      "explanation": "God gave her the name Sarah and promised that she would have a son.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2017%3A15-16&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of Jacob's twin brother?",
+      "options": [
+        {
+          "label": "Esau",
+          "correct": true
+        },
+        {
+          "label": "Laban",
+          "correct": false
+        },
+        {
+          "label": "Reuben",
+          "correct": false
+        },
+        {
+          "label": "Lot",
+          "correct": false
+        }
+      ],
+      "explanation": "Esau was born first and Jacob was born holding on to his brother's heel.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2025%3A24-26&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many sons did Jacob have?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "sons",
+        "correct": 12,
+        "accept_min": 12,
+        "accept_max": 12
+      },
+      "explanation": "Jacob had twelve sons, and their families became the twelve tribes of Israel.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2035%3A22-26&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Joseph later became a powerful ruler in which country?",
+      "options": [
+        {
+          "label": "Egypt",
+          "correct": true
+        },
+        {
+          "label": "Babylon",
+          "correct": false
+        },
+        {
+          "label": "Persia",
+          "correct": false
+        },
+        {
+          "label": "Greece",
+          "correct": false
+        }
+      ],
+      "explanation": "Pharaoh put Joseph in charge of the whole land of Egypt after Joseph explained his dreams.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%2041%3A41&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When baby Moses was hidden in a basket, where was it placed?",
+      "options": [
+        {
+          "label": "Among the reeds by the Nile",
+          "correct": true
+        },
+        {
+          "label": "In a cave in the hills",
+          "correct": false
+        },
+        {
+          "label": "Under a palm tree",
+          "correct": false
+        },
+        {
+          "label": "On the roof of a house",
+          "correct": false
+        }
+      ],
+      "explanation": "His mother put the basket among the reeds along the Nile, where Pharaoh's daughter found him.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%202%3A3-6&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Moses had a brother called Aaron.",
+      "answer": true,
+      "explanation": "God sent Aaron to help Moses speak to Pharaoh.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%204%3A14-16&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did Moses see on fire that did not burn up?",
+      "options": [
+        {
+          "label": "A bush",
+          "correct": true
+        },
+        {
+          "label": "A tree",
+          "correct": false
+        },
+        {
+          "label": "A tent",
+          "correct": false
+        },
+        {
+          "label": "A boat",
+          "correct": false
+        }
+      ],
+      "explanation": "God spoke to Moses from the burning bush and sent him to lead the Israelites out of Egypt.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%203%3A2-4&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the special food God gave the Israelites in the desert, which they gathered each morning?",
+      "options": [
+        {
+          "label": "Manna",
+          "correct": true
+        },
+        {
+          "label": "Figs",
+          "correct": false
+        },
+        {
+          "label": "Honeycomb",
+          "correct": false
+        },
+        {
+          "label": "Olives",
+          "correct": false
+        }
+      ],
+      "explanation": "Manna appeared on the ground each morning. Exodus says it was white and tasted like wafers made with honey.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Exodus%2016%3A31&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The walls of which city fell down after the people shouted and the trumpets sounded?",
+      "options": [
+        {
+          "label": "Jericho",
+          "correct": true
+        },
+        {
+          "label": "Jerusalem",
+          "correct": false
+        },
+        {
+          "label": "Nineveh",
+          "correct": false
+        },
+        {
+          "label": "Bethel",
+          "correct": false
+        }
+      ],
+      "explanation": "Joshua led the people around Jericho, and when the trumpets sounded and they shouted, the walls fell.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Joshua%206%3A20&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who was very strong as long as his hair was not cut?",
+      "options": [
+        {
+          "label": "Samson",
+          "correct": true
+        },
+        {
+          "label": "Gideon",
+          "correct": false
+        },
+        {
+          "label": "Joshua",
+          "correct": false
+        },
+        {
+          "label": "Elijah",
+          "correct": false
+        }
+      ],
+      "explanation": "Samson told Delilah that his strength would leave him if his head was shaved.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Judges%2016%3A17&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Ruth promised to stay with her mother-in-law. What was her mother-in-law's name?",
+      "options": [
+        {
+          "label": "Naomi",
+          "correct": true
+        },
+        {
+          "label": "Hannah",
+          "correct": false
+        },
+        {
+          "label": "Rachel",
+          "correct": false
+        },
+        {
+          "label": "Rebekah",
+          "correct": false
+        }
+      ],
+      "explanation": "Ruth said to Naomi, \"Where you go I will go\", and went with her to Bethlehem.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Ruth%201%3A16&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which instrument did young David play to comfort King Saul?",
+      "options": [
+        {
+          "label": "The lyre",
+          "correct": true
+        },
+        {
+          "label": "The drum",
+          "correct": false
+        },
+        {
+          "label": "The trumpet",
+          "correct": false
+        },
+        {
+          "label": "The flute",
+          "correct": false
+        }
+      ],
+      "explanation": "A lyre is a small stringed instrument a bit like a harp. David's music helped Saul feel better.",
+      "source_url": "https://www.biblegateway.com/passage/?search=1%20Samuel%2016%3A23&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which king asked God for wisdom and became famous for being wise?",
+      "options": [
+        {
+          "label": "Solomon",
+          "correct": true
+        },
+        {
+          "label": "Saul",
+          "correct": false
+        },
+        {
+          "label": "Ahab",
+          "correct": false
+        },
+        {
+          "label": "Hezekiah",
+          "correct": false
+        }
+      ],
+      "explanation": "God was pleased that Solomon asked for wisdom instead of riches, and gave him a wise and understanding heart.",
+      "source_url": "https://www.biblegateway.com/passage/?search=1%20Kings%203%3A9-12&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which brave queen went to the king to save her people?",
+      "options": [
+        {
+          "label": "Esther",
+          "correct": true
+        },
+        {
+          "label": "Jezebel",
+          "correct": false
+        },
+        {
+          "label": "Vashti",
+          "correct": false
+        },
+        {
+          "label": "Deborah",
+          "correct": false
+        }
+      ],
+      "explanation": "Esther risked going to the king without being called, and asked him to save her people.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Esther%207%3A3&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "According to Genesis, how many years did Methuselah live?",
+      "slider": {
+        "min": 0,
+        "max": 1000,
+        "step": 1,
+        "unit": "years",
+        "correct": 969,
+        "accept_min": 960,
+        "accept_max": 975
+      },
+      "explanation": "Methuselah lived for 969 years, the longest age given for anyone in the Bible.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Genesis%205%3A27&version=NIVUK",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

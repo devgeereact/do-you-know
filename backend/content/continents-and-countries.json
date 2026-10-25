@@ -1,0 +1,679 @@
+{
+  "slug": "continents-and-countries",
+  "title": "Continents and Countries",
+  "intro": "Find your way around the world's continents and the countries within them.",
+  "category": "geography",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which is the largest country in the world by area?",
+      "options": [
+        {
+          "label": "China",
+          "correct": false
+        },
+        {
+          "label": "Canada",
+          "correct": false
+        },
+        {
+          "label": "Russia",
+          "correct": true
+        },
+        {
+          "label": "United States",
+          "correct": false
+        }
+      ],
+      "explanation": "Russia is the largest country by area. It stretches across both Europe and Asia.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/russia",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Egypt?",
+      "options": [
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Africa",
+          "correct": true
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "Egypt is in the north-east corner of Africa.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/egypt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which continent is the coldest?",
+      "options": [
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Antarctica",
+          "correct": true
+        },
+        {
+          "label": "North America",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        }
+      ],
+      "explanation": "Antarctica is the coldest, windiest continent and is almost completely covered in ice.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zsk4r2p",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "The United Kingdom is made up of England, Scotland, Wales and which other country?",
+      "options": [
+        {
+          "label": "Ireland",
+          "correct": false
+        },
+        {
+          "label": "Northern Ireland",
+          "correct": true
+        },
+        {
+          "label": "Isle of Man",
+          "correct": false
+        },
+        {
+          "label": "Cornwall",
+          "correct": false
+        }
+      ],
+      "explanation": "The UK is made up of four countries: England, Scotland, Wales and Northern Ireland.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-kingdom",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Peru?",
+      "options": [
+        {
+          "label": "Africa",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "South America",
+          "correct": true
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        }
+      ],
+      "explanation": "Peru is on the west coast of South America and includes part of the Andes mountains.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/peru",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which European country is shaped a little like a boot?",
+      "options": [
+        {
+          "label": "Spain",
+          "correct": false
+        },
+        {
+          "label": "Italy",
+          "correct": true
+        },
+        {
+          "label": "Greece",
+          "correct": false
+        },
+        {
+          "label": "Norway",
+          "correct": false
+        }
+      ],
+      "explanation": "Italy is a long peninsula in southern Europe that is often said to look like a boot.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/italy",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Japan is made up of islands.",
+      "answer": true,
+      "explanation": "Japan is an island country in East Asia, made up of four main islands and thousands of smaller ones.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/japan",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ocean lies to the south of India?",
+      "options": [
+        {
+          "label": "Atlantic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Arctic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Indian Ocean",
+          "correct": true
+        },
+        {
+          "label": "Pacific Ocean",
+          "correct": false
+        }
+      ],
+      "explanation": "India sits on a peninsula that juts out into the Indian Ocean.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/india",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Canada?",
+      "options": [
+        {
+          "label": "North America",
+          "correct": true
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "Canada is in North America. It is the second-largest country in the world by area.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/canada",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many continents are there on Earth?",
+      "options": [
+        {
+          "label": "Five",
+          "correct": false
+        },
+        {
+          "label": "Six",
+          "correct": false
+        },
+        {
+          "label": "Seven",
+          "correct": true
+        },
+        {
+          "label": "Nine",
+          "correct": false
+        }
+      ],
+      "explanation": "There are seven continents: Asia, Africa, North America, South America, Antarctica, Europe and Australia.",
+      "source_url": "https://education.nationalgeographic.org/resource/Continent/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest continent?",
+      "options": [
+        {
+          "label": "Africa",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": true
+        },
+        {
+          "label": "North America",
+          "correct": false
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        }
+      ],
+      "explanation": "Asia is the biggest continent by far. It covers about 30 percent of all the land on Earth.",
+      "source_url": "https://education.nationalgeographic.org/resource/Continent/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the smallest continent?",
+      "options": [
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Antarctica",
+          "correct": false
+        },
+        {
+          "label": "Australia",
+          "correct": true
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "Australia is the smallest of the seven continents.",
+      "source_url": "https://education.nationalgeographic.org/resource/Continent/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is Thailand?",
+      "options": [
+        {
+          "label": "Africa",
+          "correct": false
+        },
+        {
+          "label": "Asia",
+          "correct": true
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "Thailand is in South-east Asia, in the heart of the Asian continent.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/thailand",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Russia stretches across which two continents?",
+      "options": [
+        {
+          "label": "Europe and Asia",
+          "correct": true
+        },
+        {
+          "label": "Asia and Africa",
+          "correct": false
+        },
+        {
+          "label": "Europe and North America",
+          "correct": false
+        },
+        {
+          "label": "Asia and Australia",
+          "correct": false
+        }
+      ],
+      "explanation": "Russia covers a huge area across both eastern Europe and northern Asia.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/russia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the largest country in South America?",
+      "options": [
+        {
+          "label": "Argentina",
+          "correct": false
+        },
+        {
+          "label": "Peru",
+          "correct": false
+        },
+        {
+          "label": "Brazil",
+          "correct": true
+        },
+        {
+          "label": "Chile",
+          "correct": false
+        }
+      ],
+      "explanation": "Brazil is the largest country in South America and one of the largest countries in the world.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/brazil",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country lies along the southern border of the United States?",
+      "options": [
+        {
+          "label": "Canada",
+          "correct": false
+        },
+        {
+          "label": "Mexico",
+          "correct": true
+        },
+        {
+          "label": "Cuba",
+          "correct": false
+        },
+        {
+          "label": "Brazil",
+          "correct": false
+        }
+      ],
+      "explanation": "Mexico borders the United States to the south, while Canada lies to the north.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-states",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which continent is the Sahara Desert?",
+      "options": [
+        {
+          "label": "Asia",
+          "correct": false
+        },
+        {
+          "label": "Africa",
+          "correct": true
+        },
+        {
+          "label": "Australia",
+          "correct": false
+        },
+        {
+          "label": "South America",
+          "correct": false
+        }
+      ],
+      "explanation": "The Sahara stretches across much of northern Africa and is one of the continent's main physical regions.",
+      "source_url": "https://education.nationalgeographic.org/resource/africa-physical-geography/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which ocean lies along the west coast of the United States?",
+      "options": [
+        {
+          "label": "Atlantic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Indian Ocean",
+          "correct": false
+        },
+        {
+          "label": "Arctic Ocean",
+          "correct": false
+        },
+        {
+          "label": "Pacific Ocean",
+          "correct": true
+        }
+      ],
+      "explanation": "The United States has the Pacific Ocean on its west coast and the Atlantic Ocean on its east coast.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-states",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which South American country is a long, narrow strip of land down the west coast?",
+      "options": [
+        {
+          "label": "Chile",
+          "correct": true
+        },
+        {
+          "label": "Brazil",
+          "correct": false
+        },
+        {
+          "label": "Bolivia",
+          "correct": false
+        },
+        {
+          "label": "Paraguay",
+          "correct": false
+        }
+      ],
+      "explanation": "Chile stretches like a ribbon down the west coast of South America, between the Andes and the Pacific Ocean.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/chile",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which European country does almost half the land lie below sea level, protected by dikes?",
+      "options": [
+        {
+          "label": "Switzerland",
+          "correct": false
+        },
+        {
+          "label": "The Netherlands",
+          "correct": true
+        },
+        {
+          "label": "Austria",
+          "correct": false
+        },
+        {
+          "label": "Hungary",
+          "correct": false
+        }
+      ],
+      "explanation": "Much of the Netherlands is low and flat. Thousands of kilometres of dikes hold back the North Sea.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/netherlands",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which continent has no countries at all?",
+      "options": [
+        {
+          "label": "Antarctica",
+          "correct": true
+        },
+        {
+          "label": "Australia",
+          "correct": false
+        },
+        {
+          "label": "Europe",
+          "correct": false
+        },
+        {
+          "label": "Africa",
+          "correct": false
+        }
+      ],
+      "explanation": "There are no countries in Antarctica. The people living there are mostly scientists and their support teams.",
+      "source_url": "https://education.nationalgeographic.org/resource/antarctica/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Most of India is a peninsula. What does that mean?",
+      "options": [
+        {
+          "label": "It is surrounded by water on three sides",
+          "correct": true
+        },
+        {
+          "label": "It is completely covered in forest",
+          "correct": false
+        },
+        {
+          "label": "It is an island far out at sea",
+          "correct": false
+        },
+        {
+          "label": "It is higher than its neighbours",
+          "correct": false
+        }
+      ],
+      "explanation": "A peninsula is land with water on three sides. India juts out into the Indian Ocean between two seas.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/india",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which mountains form the border between Spain and France?",
+      "options": [
+        {
+          "label": "The Pyrenees",
+          "correct": true
+        },
+        {
+          "label": "The Alps",
+          "correct": false
+        },
+        {
+          "label": "The Urals",
+          "correct": false
+        },
+        {
+          "label": "The Andes",
+          "correct": false
+        }
+      ],
+      "explanation": "The Pyrenees stretch between Spain and France, at the northern edge of the Iberian Peninsula.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/spain",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which imaginary line divides Earth into the Northern and Southern Hemispheres?",
+      "options": [
+        {
+          "label": "The Equator",
+          "correct": true
+        },
+        {
+          "label": "The Prime Meridian",
+          "correct": false
+        },
+        {
+          "label": "The Arctic Circle",
+          "correct": false
+        },
+        {
+          "label": "The Tropic of Cancer",
+          "correct": false
+        }
+      ],
+      "explanation": "The Equator runs around the middle of Earth at 0 degrees latitude, halfway between the North and South Poles.",
+      "source_url": "https://education.nationalgeographic.org/resource/equator/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Spain covers most of which peninsula?",
+      "options": [
+        {
+          "label": "The Iberian Peninsula",
+          "correct": true
+        },
+        {
+          "label": "The Scandinavian Peninsula",
+          "correct": false
+        },
+        {
+          "label": "The Balkan Peninsula",
+          "correct": false
+        },
+        {
+          "label": "The Arabian Peninsula",
+          "correct": false
+        }
+      ],
+      "explanation": "Spain shares the Iberian Peninsula with Portugal, stretching from the Pyrenees Mountains to the Strait of Gibraltar.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/spain",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Europe and Asia are joined together as one enormous piece of land.",
+      "answer": true,
+      "explanation": "Europe and Asia sit on a single landmass called Eurasia. People have long treated them as separate continents.",
+      "source_url": "https://education.nationalgeographic.org/resource/Continent/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Australia is the only country that covers a whole continent.",
+      "answer": true,
+      "explanation": "Australia is both a country and a continent, the only one in the world like that.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/australia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "India is part of the continent of Asia.",
+      "answer": true,
+      "explanation": "India is in southern Asia. Most of the country forms a peninsula jutting into the Indian Ocean.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/india",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Russia has coastlines on how many different oceans?",
+      "slider": {
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "unit": "oceans",
+        "correct": 3,
+        "accept_min": 3,
+        "accept_max": 3
+      },
+      "explanation": "Russia has coasts on three oceans: the Atlantic, the Pacific and the Arctic.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/russia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Roughly what percentage of Earth's land does Asia cover?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "correct": 30,
+        "accept_min": 25,
+        "accept_max": 35
+      },
+      "explanation": "Asia covers about 30 percent of Earth's land, more than any other continent.",
+      "source_url": "https://education.nationalgeographic.org/resource/asia/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

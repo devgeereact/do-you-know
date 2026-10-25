@@ -1,0 +1,664 @@
+{
+  "slug": "words-and-literary-devices-ks3",
+  "title": "Words and Literary Devices",
+  "intro": "Similes, metaphors, sonnets and Shakespeare.",
+  "category": "school-english",
+  "difficulty": "medium",
+  "age_min": 11,
+  "age_max": 14,
+  "curriculum_tags": [
+    "uk-ks3"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "\"The wind whispered through the trees.\" Giving the wind a human action like this is called…",
+      "options": [
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Personification",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Rhyme",
+          "correct": false
+        }
+      ],
+      "explanation": "Personification describes something that is not human as if it could act or feel like a living being.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"As brave as a lion\" is an example of which device?",
+      "options": [
+        {
+          "label": "Metaphor",
+          "correct": false
+        },
+        {
+          "label": "Simile",
+          "correct": true
+        },
+        {
+          "label": "Onomatopoeia",
+          "correct": false
+        },
+        {
+          "label": "Hyperbole",
+          "correct": false
+        }
+      ],
+      "explanation": "A simile compares two things using \"as\" or \"like\".",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"The classroom was a zoo\" is an example of which device?",
+      "options": [
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Metaphor",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Personification",
+          "correct": false
+        }
+      ],
+      "explanation": "A metaphor says one thing is another to make a comparison, without using \"like\" or \"as\".",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Words such as \"buzz\", \"crash\" and \"sizzle\" that sound like what they describe are examples of…",
+      "options": [
+        {
+          "label": "Onomatopoeia",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Assonance",
+          "correct": false
+        },
+        {
+          "label": "Irony",
+          "correct": false
+        }
+      ],
+      "explanation": "Onomatopoeia is when a word imitates the sound it describes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"Slippery, slimy snakes\" repeats the same first sound. What is this called?",
+      "options": [
+        {
+          "label": "Rhyme",
+          "correct": false
+        },
+        {
+          "label": "Alliteration",
+          "correct": true
+        },
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Rhythm",
+          "correct": false
+        }
+      ],
+      "explanation": "Alliteration is the repetition of the same sound at the start of nearby words.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who wrote the play Romeo and Juliet?",
+      "options": [
+        {
+          "label": "Charles Dickens",
+          "correct": false
+        },
+        {
+          "label": "William Shakespeare",
+          "correct": true
+        },
+        {
+          "label": "Jane Austen",
+          "correct": false
+        },
+        {
+          "label": "Roald Dahl",
+          "correct": false
+        }
+      ],
+      "explanation": "Romeo and Juliet is one of William Shakespeare's most famous plays.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfdj6sg",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Macbeth is a play by William Shakespeare.",
+      "answer": true,
+      "explanation": "Macbeth is a Shakespeare tragedy about a Scottish nobleman whose ambition leads to disaster.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zp982hv",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which Italian city is Romeo and Juliet set?",
+      "options": [
+        {
+          "label": "Rome",
+          "correct": false
+        },
+        {
+          "label": "Venice",
+          "correct": false
+        },
+        {
+          "label": "Verona",
+          "correct": true
+        },
+        {
+          "label": "Florence",
+          "correct": false
+        }
+      ],
+      "explanation": "The play is set in Verona, where the Montague and Capulet families are feuding.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zfdj6sg",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "A poem with 14 lines and a set rhyme pattern is called a…",
+      "options": [
+        {
+          "label": "Haiku",
+          "correct": false
+        },
+        {
+          "label": "Limerick",
+          "correct": false
+        },
+        {
+          "label": "Sonnet",
+          "correct": true
+        },
+        {
+          "label": "Ballad",
+          "correct": false
+        }
+      ],
+      "explanation": "A sonnet has 14 lines. Shakespeare wrote 154 of them.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zqsvbqt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"I've told you a million times!\" is an example of which device?",
+      "options": [
+        {
+          "label": "Hyperbole",
+          "correct": true
+        },
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Oxymoron",
+          "correct": false
+        },
+        {
+          "label": "Onomatopoeia",
+          "correct": false
+        }
+      ],
+      "explanation": "Hyperbole is deliberate exaggeration for effect. Nobody has really said something a million times.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/hyperbole",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Putting two opposite ideas together, as in \"deafening silence\", is called…",
+      "options": [
+        {
+          "label": "An oxymoron",
+          "correct": true
+        },
+        {
+          "label": "A simile",
+          "correct": false
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Personification",
+          "correct": false
+        }
+      ],
+      "explanation": "An oxymoron joins contradictory words to create a striking effect, such as 'bittersweet' or 'deafening silence'.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/oxymoron",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Repeating the same vowel sound in words that are close together is called…",
+      "options": [
+        {
+          "label": "Assonance",
+          "correct": true
+        },
+        {
+          "label": "Alliteration",
+          "correct": false
+        },
+        {
+          "label": "Onomatopoeia",
+          "correct": false
+        },
+        {
+          "label": "Hyperbole",
+          "correct": false
+        }
+      ],
+      "explanation": "Assonance repeats vowel sounds inside words, as in 'sweet dreams'. Alliteration repeats the sounds at the start of words.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/assonance",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A speech in a play where a character alone on stage speaks their thoughts aloud is called a…",
+      "options": [
+        {
+          "label": "Soliloquy",
+          "correct": true
+        },
+        {
+          "label": "Dialogue",
+          "correct": false
+        },
+        {
+          "label": "Prologue",
+          "correct": false
+        },
+        {
+          "label": "Chorus",
+          "correct": false
+        }
+      ],
+      "explanation": "A soliloquy lets the audience hear a character's private thoughts. Hamlet's 'To be, or not to be' is a famous one.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/soliloquy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a poem, what is a group of lines forming a section, like a paragraph, called?",
+      "options": [
+        {
+          "label": "A stanza",
+          "correct": true
+        },
+        {
+          "label": "A chapter",
+          "correct": false
+        },
+        {
+          "label": "A footnote",
+          "correct": false
+        },
+        {
+          "label": "A caption",
+          "correct": false
+        }
+      ],
+      "explanation": "Poems are often divided into stanzas, with a gap between each one, in the same way prose is split into paragraphs.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/stanza",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a pair of rhyming lines that follow one after the other called?",
+      "options": [
+        {
+          "label": "A couplet",
+          "correct": true
+        },
+        {
+          "label": "A haiku",
+          "correct": false
+        },
+        {
+          "label": "A limerick",
+          "correct": false
+        },
+        {
+          "label": "A ballad",
+          "correct": false
+        }
+      ],
+      "explanation": "A couplet is two lines that usually rhyme and have the same rhythm, such as 'Twinkle, twinkle, little star, / How I wonder what you are.'",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/couplet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which kind of short, funny poem has the rhyme scheme AABBA?",
+      "options": [
+        {
+          "label": "Limerick",
+          "correct": true
+        },
+        {
+          "label": "Haiku",
+          "correct": false
+        },
+        {
+          "label": "Sonnet",
+          "correct": false
+        },
+        {
+          "label": "Ode",
+          "correct": false
+        }
+      ],
+      "explanation": "Limericks have five lines. Lines 1, 2 and 5 rhyme, and the shorter lines 3 and 4 rhyme with each other.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/limerick",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A writer describes a fierce storm just as a character becomes furious. Which device is this?",
+      "options": [
+        {
+          "label": "Pathetic fallacy",
+          "correct": true
+        },
+        {
+          "label": "Simile",
+          "correct": false
+        },
+        {
+          "label": "Oxymoron",
+          "correct": false
+        },
+        {
+          "label": "Onomatopoeia",
+          "correct": false
+        }
+      ],
+      "explanation": "Pathetic fallacy uses weather or nature to reflect a character's feelings, such as grey drizzle when someone is sad.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/pathetic-fallacy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the main character in a story called?",
+      "options": [
+        {
+          "label": "The protagonist",
+          "correct": true
+        },
+        {
+          "label": "The antagonist",
+          "correct": false
+        },
+        {
+          "label": "The narrator",
+          "correct": false
+        },
+        {
+          "label": "The villain",
+          "correct": false
+        }
+      ],
+      "explanation": "The protagonist is the central character whose journey the story follows. The antagonist works against them.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/protagonist",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When a writer drops hints about something that will happen later in the story, this is called…",
+      "options": [
+        {
+          "label": "Foreshadowing",
+          "correct": true
+        },
+        {
+          "label": "Flashback",
+          "correct": false
+        },
+        {
+          "label": "Dialogue",
+          "correct": false
+        },
+        {
+          "label": "Onomatopoeia",
+          "correct": false
+        }
+      ],
+      "explanation": "Foreshadowing builds suspense by giving the reader clues about future events.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/foreshadow",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "\"Their\", \"there\" and \"they're\" sound the same but have different meanings. What are words like these called?",
+      "options": [
+        {
+          "label": "Homophones",
+          "correct": true
+        },
+        {
+          "label": "Synonyms",
+          "correct": false
+        },
+        {
+          "label": "Antonyms",
+          "correct": false
+        },
+        {
+          "label": "Acronyms",
+          "correct": false
+        }
+      ],
+      "explanation": "Homophones sound alike but differ in meaning and often spelling, so they are easy to mix up in writing.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/homophone",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A play such as Macbeth, which ends in disaster for its main character, is called a…",
+      "options": [
+        {
+          "label": "Tragedy",
+          "correct": true
+        },
+        {
+          "label": "Comedy",
+          "correct": false
+        },
+        {
+          "label": "Pantomime",
+          "correct": false
+        },
+        {
+          "label": "Musical",
+          "correct": false
+        }
+      ],
+      "explanation": "In a tragedy the hero usually has a fatal flaw, such as Macbeth's ambition, that leads to their downfall.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/tragedy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which Shakespeare play features the fairy king Oberon and the mischievous Puck?",
+      "options": [
+        {
+          "label": "A Midsummer Night's Dream",
+          "correct": true
+        },
+        {
+          "label": "The Tempest",
+          "correct": false
+        },
+        {
+          "label": "Hamlet",
+          "correct": false
+        },
+        {
+          "label": "Twelfth Night",
+          "correct": false
+        }
+      ],
+      "explanation": "In A Midsummer Night's Dream, Puck's magic love potion causes chaos among four young lovers in a wood near Athens.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zxgcwmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In The Tempest, who is the magician who lives on an island with his daughter Miranda?",
+      "options": [
+        {
+          "label": "Prospero",
+          "correct": true
+        },
+        {
+          "label": "Oberon",
+          "correct": false
+        },
+        {
+          "label": "Malvolio",
+          "correct": false
+        },
+        {
+          "label": "Banquo",
+          "correct": false
+        }
+      ],
+      "explanation": "Prospero, the rightful Duke of Milan, uses his magic to raise the storm that gives the play its name.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z37mn39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the opening speech that introduces a play, like the one spoken by the Chorus at the start of Romeo and Juliet, called?",
+      "options": [
+        {
+          "label": "A prologue",
+          "correct": true
+        },
+        {
+          "label": "An epilogue",
+          "correct": false
+        },
+        {
+          "label": "An interval",
+          "correct": false
+        },
+        {
+          "label": "An encore",
+          "correct": false
+        }
+      ],
+      "explanation": "A prologue comes before the main action. The prologue to Romeo and Juliet is itself a sonnet that tells the audience how the story will end.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/prologue",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A Shakespearean sonnet ends with a rhyming couplet.",
+      "answer": true,
+      "explanation": "Shakespeare's sonnets have three groups of four lines followed by a final rhyming couplet that often adds a twist.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/sonnet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A rhetorical question is one the speaker expects you to answer out loud.",
+      "answer": false,
+      "explanation": "A rhetorical question is asked for effect, not for an answer, such as 'Who wouldn't want a day off school?'",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/rhetorical",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Many of Shakespeare's plays were first performed at the Globe Theatre in London.",
+      "answer": true,
+      "explanation": "The Globe was built on the south bank of the Thames in 1599. A modern reconstruction stands near the original site today.",
+      "source_url": "https://www.shakespearesglobe.com/discover/about-us/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "An autobiography is the story of a person's life written by someone else.",
+      "answer": false,
+      "explanation": "An autobiography is written by the person themselves. A life story written by someone else is a biography.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/autobiography",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many syllables does a traditional haiku have altogether?",
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": null,
+        "correct": 17,
+        "accept_min": 17,
+        "accept_max": 17
+      },
+      "explanation": "A haiku has three lines of 5, 7 and 5 syllables, which makes 17 in total.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/haiku",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many syllables are in the word \"alliteration\"?",
+      "slider": {
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 5,
+        "accept_min": 5,
+        "accept_max": 5
+      },
+      "explanation": "Clap it out: al-lit-er-a-tion. That makes 5 syllables.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/syllable",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

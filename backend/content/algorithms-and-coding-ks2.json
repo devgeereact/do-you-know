@@ -1,0 +1,664 @@
+{
+  "slug": "algorithms-and-coding-ks2",
+  "title": "Algorithms and Coding",
+  "intro": "Algorithms, bugs, loops and how computers follow instructions.",
+  "category": "school-computing",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": 11,
+  "curriculum_tags": [
+    "uk-ks2"
+  ],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is an algorithm?",
+      "options": [
+        {
+          "label": "A type of computer",
+          "correct": false
+        },
+        {
+          "label": "A set of step-by-step instructions to solve a problem",
+          "correct": true
+        },
+        {
+          "label": "A computer game",
+          "correct": false
+        },
+        {
+          "label": "A broken program",
+          "correct": false
+        }
+      ],
+      "explanation": "An algorithm is a list of steps, in the right order, for completing a task or solving a problem.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call a mistake in a computer program?",
+      "options": [
+        {
+          "label": "A bug",
+          "correct": true
+        },
+        {
+          "label": "A byte",
+          "correct": false
+        },
+        {
+          "label": "A pixel",
+          "correct": false
+        },
+        {
+          "label": "A loop",
+          "correct": false
+        }
+      ],
+      "explanation": "A mistake in a program is called a bug.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is it called when you find and fix mistakes in a program?",
+      "options": [
+        {
+          "label": "Coding",
+          "correct": false
+        },
+        {
+          "label": "Debugging",
+          "correct": true
+        },
+        {
+          "label": "Downloading",
+          "correct": false
+        },
+        {
+          "label": "Typing",
+          "correct": false
+        }
+      ],
+      "explanation": "Debugging means finding and fixing the bugs in a program so it works properly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call a part of a program that repeats instructions?",
+      "options": [
+        {
+          "label": "A loop",
+          "correct": true
+        },
+        {
+          "label": "A sprite",
+          "correct": false
+        },
+        {
+          "label": "A variable",
+          "correct": false
+        },
+        {
+          "label": "An input",
+          "correct": false
+        }
+      ],
+      "explanation": "A loop repeats instructions, which saves writing the same steps again and again.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Carrying out instructions one after another, in order, is called…",
+      "options": [
+        {
+          "label": "Selection",
+          "correct": false
+        },
+        {
+          "label": "Sequence",
+          "correct": true
+        },
+        {
+          "label": "Repetition",
+          "correct": false
+        },
+        {
+          "label": "Variable",
+          "correct": false
+        }
+      ],
+      "explanation": "Sequence means following steps in the right order. Getting the order wrong can change the result.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Using \"if\" to choose what a program does next is called…",
+      "options": [
+        {
+          "label": "Selection",
+          "correct": true
+        },
+        {
+          "label": "Sequence",
+          "correct": false
+        },
+        {
+          "label": "Debugging",
+          "correct": false
+        },
+        {
+          "label": "Saving",
+          "correct": false
+        }
+      ],
+      "explanation": "Selection lets a program make a choice: if something is true, do one thing; otherwise do another.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A computer can only follow the instructions it has been given.",
+      "answer": true,
+      "explanation": "Computers do exactly what their programs tell them, which is why clear, correct algorithms matter.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is a block-based programming language often used in schools?",
+      "options": [
+        {
+          "label": "Scratch",
+          "correct": true
+        },
+        {
+          "label": "Paint",
+          "correct": false
+        },
+        {
+          "label": "Calculator",
+          "correct": false
+        },
+        {
+          "label": "Notepad",
+          "correct": false
+        }
+      ],
+      "explanation": "Scratch lets you snap together coding blocks to make animations, stories and games.",
+      "source_url": "https://scratch.mit.edu/parents/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In an algorithm, the order of the steps never matters.",
+      "answer": false,
+      "explanation": "The order matters. Putting on your shoes before your socks would not work!",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a program, what is a variable?",
+      "options": [
+        {
+          "label": "A named place that stores a value which can change",
+          "correct": true
+        },
+        {
+          "label": "An instruction that repeats forever",
+          "correct": false
+        },
+        {
+          "label": "A mistake in the code",
+          "correct": false
+        },
+        {
+          "label": "A picture on the screen",
+          "correct": false
+        }
+      ],
+      "explanation": "A variable is like a labelled box. A game might use a variable called score and change its value each time you win a point.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/variable_2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Scratch, what are the characters and objects that you program called?",
+      "options": [
+        {
+          "label": "Tabs",
+          "correct": false
+        },
+        {
+          "label": "Pixels",
+          "correct": false
+        },
+        {
+          "label": "Sprites",
+          "correct": true
+        },
+        {
+          "label": "Folders",
+          "correct": false
+        }
+      ],
+      "explanation": "In Scratch, sprites are the characters and objects on the stage. You snap blocks together to tell each sprite what to do.",
+      "source_url": "https://scratch.mit.edu/ideas",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A robot follows this code: repeat 4 times, move forward 2 steps. How many steps does it move in total?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "steps",
+        "correct": 8,
+        "accept_min": 8,
+        "accept_max": 8
+      },
+      "explanation": "The loop runs 4 times and the robot moves 2 steps each time, so it moves 4 × 2 = 8 steps.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which instructions would make a sprite draw a square?",
+      "options": [
+        {
+          "label": "Repeat 6 times: move 50 steps, turn 60 degrees",
+          "correct": false
+        },
+        {
+          "label": "Repeat 3 times: move 50 steps, turn 120 degrees",
+          "correct": false
+        },
+        {
+          "label": "Repeat 4 times: move 50 steps, turn 45 degrees",
+          "correct": false
+        },
+        {
+          "label": "Repeat 4 times: move 50 steps, turn 90 degrees",
+          "correct": true
+        }
+      ],
+      "explanation": "A square has 4 equal sides and 4 right angles, so you repeat 'move, then turn 90 degrees' four times.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a 'forever' loop do?",
+      "options": [
+        {
+          "label": "Repeats its instructions until the program is stopped",
+          "correct": true
+        },
+        {
+          "label": "Deletes the program",
+          "correct": false
+        },
+        {
+          "label": "Waits forever without doing anything",
+          "correct": false
+        },
+        {
+          "label": "Runs its instructions only once",
+          "correct": false
+        }
+      ],
+      "explanation": "A forever loop keeps going round and round. Games often use one to keep checking for key presses.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/loop_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Using a loop can save you from writing the same instruction lots of times.",
+      "answer": true,
+      "explanation": "Instead of writing 'move' ten times, you can put 'move' inside a loop that repeats ten times. It is shorter and easier to fix.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The code says: if it is raining, take an umbrella, else wear sunglasses. What happens when it is NOT raining?",
+      "options": [
+        {
+          "label": "Nothing happens",
+          "correct": false
+        },
+        {
+          "label": "You take an umbrella",
+          "correct": false
+        },
+        {
+          "label": "You wear sunglasses",
+          "correct": true
+        },
+        {
+          "label": "You take both",
+          "correct": false
+        }
+      ],
+      "explanation": "When the 'if' condition is false, the program follows the 'else' part instead. This choosing is called selection.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Breaking a big problem down into smaller, easier parts is called…",
+      "options": [
+        {
+          "label": "Decomposition",
+          "correct": true
+        },
+        {
+          "label": "Animation",
+          "correct": false
+        },
+        {
+          "label": "Debugging",
+          "correct": false
+        },
+        {
+          "label": "Selection",
+          "correct": false
+        }
+      ],
+      "explanation": "Decomposition makes hard problems easier. To program a game, you might work on the player, the score and the levels one at a time.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/decomposition",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A program shows the message 'Well done!' on the screen when you win. This message is an example of…",
+      "options": [
+        {
+          "label": "An input",
+          "correct": false
+        },
+        {
+          "label": "A variable",
+          "correct": false
+        },
+        {
+          "label": "A bug",
+          "correct": false
+        },
+        {
+          "label": "An output",
+          "correct": true
+        }
+      ],
+      "explanation": "An output is what a program gives back to you, such as words on a screen or a sound. What you type or click is the input.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a search engine help you to do?",
+      "options": [
+        {
+          "label": "Fix a broken screen",
+          "correct": false
+        },
+        {
+          "label": "Print a photo",
+          "correct": false
+        },
+        {
+          "label": "Charge a laptop battery",
+          "correct": false
+        },
+        {
+          "label": "Find web pages about a topic",
+          "correct": true
+        }
+      ],
+      "explanation": "A search engine looks through a huge list of web pages and shows you the ones that match the words you typed.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/search-engine",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Everything you read on a website is sure to be true.",
+      "answer": false,
+      "explanation": "Anyone can put things online, so not everything is true. It is smart to check facts on more than one trusted website.",
+      "source_url": "https://www.bbc.co.uk/ownit",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these should you keep private when you are online?",
+      "options": [
+        {
+          "label": "A joke you know",
+          "correct": false
+        },
+        {
+          "label": "Your favourite colour",
+          "correct": false
+        },
+        {
+          "label": "The name of a book you like",
+          "correct": false
+        },
+        {
+          "label": "Your home address",
+          "correct": true
+        }
+      ],
+      "explanation": "Personal details such as your address, school or phone number should stay private. If you are unsure, ask a trusted adult.",
+      "source_url": "https://www.thinkuknow.co.uk/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a computer network?",
+      "options": [
+        {
+          "label": "A game played on one computer",
+          "correct": false
+        },
+        {
+          "label": "Computers joined together so they can share information",
+          "correct": true
+        },
+        {
+          "label": "A computer that has no screen",
+          "correct": false
+        },
+        {
+          "label": "A list of passwords",
+          "correct": false
+        }
+      ],
+      "explanation": "When computers are linked, by cables or wirelessly, they form a network and can share files, printers and messages.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/network_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these best describes the internet?",
+      "options": [
+        {
+          "label": "A program for drawing pictures",
+          "correct": false
+        },
+        {
+          "label": "A type of keyboard",
+          "correct": false
+        },
+        {
+          "label": "A single computer in London",
+          "correct": false
+        },
+        {
+          "label": "A huge network that links computers all around the world",
+          "correct": true
+        }
+      ],
+      "explanation": "The internet joins millions of networks together, so computers on opposite sides of the world can send data to each other.",
+      "source_url": "https://www.khanacademy.org/computing/computers-and-internet",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does a 'repeat until' loop do?",
+      "options": [
+        {
+          "label": "Stops the program straight away",
+          "correct": false
+        },
+        {
+          "label": "Repeats some steps exactly twice",
+          "correct": false
+        },
+        {
+          "label": "Runs the steps backwards",
+          "correct": false
+        },
+        {
+          "label": "Repeats some steps until a condition becomes true",
+          "correct": true
+        }
+      ],
+      "explanation": "A 'repeat until' loop checks a condition each time. For example, 'repeat until touching the wall' stops as soon as the sprite reaches the wall.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a program, what does the condition 'score > 10' check?",
+      "options": [
+        {
+          "label": "Whether the score is 0",
+          "correct": false
+        },
+        {
+          "label": "Whether the score is more than 10",
+          "correct": true
+        },
+        {
+          "label": "Whether the score is less than 10",
+          "correct": false
+        },
+        {
+          "label": "Whether the score is exactly 10",
+          "correct": false
+        }
+      ],
+      "explanation": "The > sign means 'greater than'. The condition is true when the score is 11 or more.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/condition_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "A counter starts at 0. A loop adds 3 to the counter each time it runs. What is the counter after the loop runs 5 times?",
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": null,
+        "correct": 15,
+        "accept_min": 15,
+        "accept_max": 15
+      },
+      "explanation": "The counter goes 3, 6, 9, 12, 15. Adding 3 five times is the same as 5 × 3 = 15.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Your sprite should move right, but it moves left. What is the best thing to do first?",
+      "options": [
+        {
+          "label": "Read through the code step by step to find the bug",
+          "correct": true
+        },
+        {
+          "label": "Delete the whole program",
+          "correct": false
+        },
+        {
+          "label": "Turn the computer off",
+          "correct": false
+        },
+        {
+          "label": "Add more sprites",
+          "correct": false
+        }
+      ],
+      "explanation": "Debugging means carefully checking each step to find what went wrong. Here a direction or number is probably the wrong way round.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3whpv4",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Scratch, which group of blocks contains the 'if … then' block?",
+      "options": [
+        {
+          "label": "Motion",
+          "correct": false
+        },
+        {
+          "label": "Sound",
+          "correct": false
+        },
+        {
+          "label": "Looks",
+          "correct": false
+        },
+        {
+          "label": "Control",
+          "correct": true
+        }
+      ],
+      "explanation": "The orange Control blocks include loops and 'if … then' blocks, which control the order things happen in.",
+      "source_url": "https://scratch.mit.edu/ideas",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Two different algorithms can both solve the same problem correctly.",
+      "answer": true,
+      "explanation": "There is often more than one way to solve a problem. Programmers compare algorithms to find the quickest or simplest one.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/algorithm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does it mean to 'run' a program?",
+      "options": [
+        {
+          "label": "To type the program very fast",
+          "correct": false
+        },
+        {
+          "label": "To make the computer carry out its instructions",
+          "correct": true
+        },
+        {
+          "label": "To print the program on paper",
+          "correct": false
+        },
+        {
+          "label": "To delete the program",
+          "correct": false
+        }
+      ],
+      "explanation": "When you run a program, the computer follows its instructions in order. In Scratch, clicking the green flag runs your project.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvnrq6f",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

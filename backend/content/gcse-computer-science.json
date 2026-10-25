@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-computer-science",
+  "title": "GCSE Computer Science",
+  "intro": "Registers, networks, cyber security, algorithms and binary: see how ready you are for GCSE Computer Science.",
+  "category": "school-computing",
+  "difficulty": "medium",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which CPU register holds the memory address of the next instruction to be fetched?",
+      "options": [
+        {
+          "label": "Memory data register",
+          "correct": false
+        },
+        {
+          "label": "Current instruction register",
+          "correct": false
+        },
+        {
+          "label": "Program counter",
+          "correct": true
+        },
+        {
+          "label": "Accumulator",
+          "correct": false
+        }
+      ],
+      "explanation": "The program counter holds the next instruction's address and usually increases by one after each fetch.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which CPU register holds the address of the memory location currently being read from or written to?",
+      "options": [
+        {
+          "label": "Memory data register (MDR)",
+          "correct": false
+        },
+        {
+          "label": "Memory address register (MAR)",
+          "correct": true
+        },
+        {
+          "label": "Program counter (PC)",
+          "correct": false
+        },
+        {
+          "label": "Accumulator (ACC)",
+          "correct": false
+        }
+      ],
+      "explanation": "The MAR holds an address, while the MDR holds the data or instruction actually fetched from or sent to that address.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which part of the CPU carries out calculations and logical comparisons?",
+      "options": [
+        {
+          "label": "Arithmetic logic unit (ALU)",
+          "correct": true
+        },
+        {
+          "label": "Clock",
+          "correct": false
+        },
+        {
+          "label": "Cache",
+          "correct": false
+        },
+        {
+          "label": "Control unit (CU)",
+          "correct": false
+        }
+      ],
+      "explanation": "The ALU does maths such as addition and logic such as comparing two values.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name of the cycle the CPU repeats to process each instruction?",
+      "options": [
+        {
+          "label": "Input-process-output",
+          "correct": false
+        },
+        {
+          "label": "Load-run-save",
+          "correct": false
+        },
+        {
+          "label": "Read-write-store",
+          "correct": false
+        },
+        {
+          "label": "Fetch-decode-execute",
+          "correct": true
+        }
+      ],
+      "explanation": "The CPU fetches an instruction from memory, decodes what it means, then executes it, billions of times a second.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the small, very fast memory inside or close to the CPU that stores frequently used instructions and data?",
+      "options": [
+        {
+          "label": "Flash storage",
+          "correct": false
+        },
+        {
+          "label": "Cache",
+          "correct": true
+        },
+        {
+          "label": "Virtual memory",
+          "correct": false
+        },
+        {
+          "label": "ROM",
+          "correct": false
+        }
+      ],
+      "explanation": "Cache is faster than RAM, so keeping often-used data there helps the CPU work more quickly.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When RAM is full, which technique uses part of secondary storage as if it were extra RAM?",
+      "options": [
+        {
+          "label": "Compression",
+          "correct": false
+        },
+        {
+          "label": "Defragmentation",
+          "correct": false
+        },
+        {
+          "label": "Virtual memory",
+          "correct": true
+        },
+        {
+          "label": "Cache memory",
+          "correct": false
+        }
+      ],
+      "explanation": "Virtual memory lets more programs run, but it is much slower than real RAM.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of secondary storage uses flash memory and has no moving parts?",
+      "options": [
+        {
+          "label": "Punched card",
+          "correct": false
+        },
+        {
+          "label": "Solid state",
+          "correct": true
+        },
+        {
+          "label": "Optical",
+          "correct": false
+        },
+        {
+          "label": "Magnetic",
+          "correct": false
+        }
+      ],
+      "explanation": "Solid state drives (SSDs) are fast, quiet and robust because they have no spinning disks.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A network that covers a small area, such as a school or a home, is called a…",
+      "options": [
+        {
+          "label": "LAN",
+          "correct": true
+        },
+        {
+          "label": "DNS",
+          "correct": false
+        },
+        {
+          "label": "VPN",
+          "correct": false
+        },
+        {
+          "label": "WAN",
+          "correct": false
+        }
+      ],
+      "explanation": "LAN stands for local area network. A WAN (wide area network) covers a large geographical area.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which unique address is built into a device's network interface card by the manufacturer?",
+      "options": [
+        {
+          "label": "URL",
+          "correct": false
+        },
+        {
+          "label": "MAC address",
+          "correct": true
+        },
+        {
+          "label": "Port number",
+          "correct": false
+        },
+        {
+          "label": "IP address",
+          "correct": false
+        }
+      ],
+      "explanation": "A MAC address is a fixed hardware address. An IP address can change depending on the network a device joins.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which protocol is used to transfer web pages securely, using encryption?",
+      "options": [
+        {
+          "label": "FTP",
+          "correct": false
+        },
+        {
+          "label": "HTTP",
+          "correct": false
+        },
+        {
+          "label": "HTTPS",
+          "correct": true
+        },
+        {
+          "label": "SMTP",
+          "correct": false
+        }
+      ],
+      "explanation": "HTTPS is HTTP with encryption, protecting data such as passwords sent between a browser and a web server.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which attack floods a server with so many requests that real users cannot reach it?",
+      "options": [
+        {
+          "label": "Denial of service",
+          "correct": true
+        },
+        {
+          "label": "Pharming",
+          "correct": false
+        },
+        {
+          "label": "Phishing",
+          "correct": false
+        },
+        {
+          "label": "Shoulder surfing",
+          "correct": false
+        }
+      ],
+      "explanation": "A denial of service (DoS) attack overloads a server. When many computers are used together it is called a DDoS attack.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which attack tries every possible combination of characters until it finds the right password?",
+      "options": [
+        {
+          "label": "SQL injection",
+          "correct": false
+        },
+        {
+          "label": "Malware",
+          "correct": false
+        },
+        {
+          "label": "Brute-force attack",
+          "correct": true
+        },
+        {
+          "label": "Blagging",
+          "correct": false
+        }
+      ],
+      "explanation": "Long passwords with a mix of character types make brute-force attacks take far longer.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the general term for tricking people into revealing information or breaking security rules?",
+      "options": [
+        {
+          "label": "Data mining",
+          "correct": false
+        },
+        {
+          "label": "Social engineering",
+          "correct": true
+        },
+        {
+          "label": "Encryption",
+          "correct": false
+        },
+        {
+          "label": "Hacking",
+          "correct": false
+        }
+      ],
+      "explanation": "Social engineering targets people rather than computers. Phishing and blagging are both examples.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which attack involves typing malicious database code into a website's input box?",
+      "options": [
+        {
+          "label": "Spyware",
+          "correct": false
+        },
+        {
+          "label": "Brute-force attack",
+          "correct": false
+        },
+        {
+          "label": "Denial of service",
+          "correct": false
+        },
+        {
+          "label": "SQL injection",
+          "correct": true
+        }
+      ],
+      "explanation": "Validating user input and using parameterised queries help protect websites from SQL injection.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which searching algorithm only works if the list is already sorted?",
+      "options": [
+        {
+          "label": "Linear search",
+          "correct": false
+        },
+        {
+          "label": "Binary search",
+          "correct": true
+        },
+        {
+          "label": "Insertion sort",
+          "correct": false
+        },
+        {
+          "label": "Bubble sort",
+          "correct": false
+        }
+      ],
+      "explanation": "Binary search keeps checking the middle item and discards half the list each time, which needs the list to be in order.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sorting algorithm repeatedly compares adjacent items and swaps them if they are in the wrong order?",
+      "options": [
+        {
+          "label": "Bubble sort",
+          "correct": true
+        },
+        {
+          "label": "Linear search",
+          "correct": false
+        },
+        {
+          "label": "Binary search",
+          "correct": false
+        },
+        {
+          "label": "Merge sort",
+          "correct": false
+        }
+      ],
+      "explanation": "Bubble sort passes through the list again and again until no swaps are needed.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sorting algorithm splits a list into single items and then joins them back together in order?",
+      "options": [
+        {
+          "label": "Bubble sort",
+          "correct": false
+        },
+        {
+          "label": "Merge sort",
+          "correct": true
+        },
+        {
+          "label": "Linear search",
+          "correct": false
+        },
+        {
+          "label": "Insertion sort",
+          "correct": false
+        }
+      ],
+      "explanation": "Merge sort divides the list repeatedly, then merges the small sorted lists. It is efficient for large lists.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which data type should be used to store a whole number such as 42?",
+      "options": [
+        {
+          "label": "String",
+          "correct": false
+        },
+        {
+          "label": "Integer",
+          "correct": true
+        },
+        {
+          "label": "Real",
+          "correct": false
+        },
+        {
+          "label": "Character",
+          "correct": false
+        }
+      ],
+      "explanation": "Integers store whole numbers. A real (or float) stores numbers with a decimal part.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which data type can only hold one of two values: True or False?",
+      "options": [
+        {
+          "label": "Integer",
+          "correct": false
+        },
+        {
+          "label": "Boolean",
+          "correct": true
+        },
+        {
+          "label": "String",
+          "correct": false
+        },
+        {
+          "label": "Char",
+          "correct": false
+        }
+      ],
+      "explanation": "The Boolean data type is named after the mathematician George Boole.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which logic gate gives an output that is the opposite of its single input?",
+      "options": [
+        {
+          "label": "XOR",
+          "correct": false
+        },
+        {
+          "label": "OR",
+          "correct": false
+        },
+        {
+          "label": "AND",
+          "correct": false
+        },
+        {
+          "label": "NOT",
+          "correct": true
+        }
+      ],
+      "explanation": "A NOT gate inverts its input: 1 becomes 0 and 0 becomes 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the hexadecimal digit F in denary?",
+      "options": [
+        {
+          "label": "15",
+          "correct": true
+        },
+        {
+          "label": "16",
+          "correct": false
+        },
+        {
+          "label": "10",
+          "correct": false
+        },
+        {
+          "label": "14",
+          "correct": false
+        }
+      ],
+      "explanation": "Hexadecimal uses 0 to 9 and then A to F for 10 to 15, so F is 15.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the term for the number of bits used to store the colour of each pixel in an image?",
+      "options": [
+        {
+          "label": "Bit rate",
+          "correct": false
+        },
+        {
+          "label": "Sample rate",
+          "correct": false
+        },
+        {
+          "label": "Resolution",
+          "correct": false
+        },
+        {
+          "label": "Colour depth",
+          "correct": true
+        }
+      ],
+      "explanation": "A greater colour depth means more colours can be shown, but the file gets bigger.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of compression permanently removes some data to make a file smaller?",
+      "options": [
+        {
+          "label": "Lossy",
+          "correct": true
+        },
+        {
+          "label": "Run-length encoding",
+          "correct": false
+        },
+        {
+          "label": "Lossless",
+          "correct": false
+        },
+        {
+          "label": "Huffman coding",
+          "correct": false
+        }
+      ],
+      "explanation": "Lossy compression, used in formats such as JPEG and MP3, throws away detail people are less likely to notice.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A compiler translates the whole of a program into machine code before it is run.",
+      "answer": true,
+      "explanation": "A compiler produces an executable file in one go. An interpreter translates and runs code one line at a time.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Encryption scrambles data so that it cannot be understood without the correct key.",
+      "answer": true,
+      "explanation": "Even if encrypted data is intercepted, it is meaningless without the key needed to decrypt it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A switch sends every piece of data to all devices on the network, not just the intended one.",
+      "answer": false,
+      "explanation": "A switch uses MAC addresses to send data only to the device it is meant for. Older hubs sent data to every device.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Recording sound at a higher sample rate usually produces a larger file.",
+      "answer": true,
+      "explanation": "More samples are taken each second, so more data must be stored, though the sound is closer to the original.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the binary number 11111111 in denary?",
+      "slider": {
+        "min": 0,
+        "max": 300,
+        "step": 1,
+        "unit": null,
+        "correct": 255,
+        "accept_min": 255,
+        "accept_max": 255
+      },
+      "explanation": "Eight 1s add up to 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255, the largest value one byte can hold.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many different colours can be represented with a colour depth of 3 bits?",
+      "slider": {
+        "min": 1,
+        "max": 16,
+        "step": 1,
+        "unit": "colours",
+        "correct": 8,
+        "accept_min": 8,
+        "accept_max": 8
+      },
+      "explanation": "Each extra bit doubles the number of colours. 3 bits give 2 × 2 × 2 = 8 combinations.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many bits are there in a nibble?",
+      "slider": {
+        "min": 1,
+        "max": 16,
+        "step": 1,
+        "unit": "bits",
+        "correct": 4,
+        "accept_min": 4,
+        "accept_max": 4
+      },
+      "explanation": "A nibble is half a byte, so it has 4 bits. One hexadecimal digit can represent exactly one nibble.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/z34k7ty",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

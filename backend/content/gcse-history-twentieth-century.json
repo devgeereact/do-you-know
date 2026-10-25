@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-history-twentieth-century",
+  "title": "GCSE History: The 20th Century",
+  "intro": "From the causes of the First World War to the Cold War and the US civil rights movement, how well do you know the twentieth century?",
+  "category": "school-history",
+  "difficulty": "medium",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Whose assassination in Sarajevo in June 1914 helped to trigger the First World War?",
+      "options": [
+        {
+          "label": "Archduke Franz Ferdinand",
+          "correct": true
+        },
+        {
+          "label": "Tsar Nicholas II",
+          "correct": false
+        },
+        {
+          "label": "Emperor Franz Joseph",
+          "correct": false
+        },
+        {
+          "label": "Kaiser Wilhelm II",
+          "correct": false
+        }
+      ],
+      "explanation": "Archduke Franz Ferdinand was heir to the throne of Austria-Hungary. His assassination set off a chain of alliances that led to war.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Before the First World War, Britain, France and Russia were linked in which alliance?",
+      "options": [
+        {
+          "label": "The Triple Entente",
+          "correct": true
+        },
+        {
+          "label": "The Triple Alliance",
+          "correct": false
+        },
+        {
+          "label": "The Central Powers",
+          "correct": false
+        },
+        {
+          "label": "The Axis",
+          "correct": false
+        }
+      ],
+      "explanation": "The Triple Entente grew from agreements made between 1904 and 1907 and faced the Triple Alliance.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country joined Germany and Austria-Hungary in the Triple Alliance of 1882?",
+      "options": [
+        {
+          "label": "Bulgaria",
+          "correct": false
+        },
+        {
+          "label": "Spain",
+          "correct": false
+        },
+        {
+          "label": "Ottoman Empire",
+          "correct": false
+        },
+        {
+          "label": "Italy",
+          "correct": true
+        }
+      ],
+      "explanation": "Italy signed the Triple Alliance in 1882, although it entered the war against Germany in 1915.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which new type of battleship, launched by Britain in 1906, sped up the naval arms race with Germany?",
+      "options": [
+        {
+          "label": "Ironclad",
+          "correct": false
+        },
+        {
+          "label": "Frigate",
+          "correct": false
+        },
+        {
+          "label": "Dreadnought",
+          "correct": true
+        },
+        {
+          "label": "Galleon",
+          "correct": false
+        }
+      ],
+      "explanation": "HMS Dreadnought was faster and more heavily armed than any earlier battleship, so Germany raced to build its own.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of Germany's plan to defeat France quickly by advancing through Belgium?",
+      "options": [
+        {
+          "label": "The Marshall Plan",
+          "correct": false
+        },
+        {
+          "label": "The Young Plan",
+          "correct": false
+        },
+        {
+          "label": "The Schlieffen Plan",
+          "correct": true
+        },
+        {
+          "label": "The Dawes Plan",
+          "correct": false
+        }
+      ],
+      "explanation": "The Schlieffen Plan aimed to beat France fast, then turn to face Russia. Germany's march through Belgium brought Britain into the war.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which treaty, signed in 1919, set out the peace terms for Germany after the First World War?",
+      "options": [
+        {
+          "label": "The Treaty of Rome",
+          "correct": false
+        },
+        {
+          "label": "The Treaty of Brest-Litovsk",
+          "correct": false
+        },
+        {
+          "label": "The Treaty of Versailles",
+          "correct": true
+        },
+        {
+          "label": "The Treaty of Locarno",
+          "correct": false
+        }
+      ],
+      "explanation": "The Treaty of Versailles was signed in the Hall of Mirrors at Versailles, near Paris, in June 1919.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which article of the Treaty of Versailles is known as the 'war guilt clause'?",
+      "options": [
+        {
+          "label": "Article 50",
+          "correct": false
+        },
+        {
+          "label": "Article 1",
+          "correct": false
+        },
+        {
+          "label": "Article 231",
+          "correct": true
+        },
+        {
+          "label": "Article 160",
+          "correct": false
+        }
+      ],
+      "explanation": "Article 231 made Germany accept responsibility for the war, which was used to justify reparations.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which international organisation was set up after the First World War to help keep world peace?",
+      "options": [
+        {
+          "label": "The Commonwealth",
+          "correct": false
+        },
+        {
+          "label": "The League of Nations",
+          "correct": true
+        },
+        {
+          "label": "NATO",
+          "correct": false
+        },
+        {
+          "label": "The United Nations",
+          "correct": false
+        }
+      ],
+      "explanation": "The League of Nations first met in 1920. The United Nations replaced it after the Second World War.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which country never joined the League of Nations, even though its own president had proposed the idea?",
+      "options": [
+        {
+          "label": "Britain",
+          "correct": false
+        },
+        {
+          "label": "Japan",
+          "correct": false
+        },
+        {
+          "label": "France",
+          "correct": false
+        },
+        {
+          "label": "The United States",
+          "correct": true
+        }
+      ],
+      "explanation": "President Woodrow Wilson championed the League, but the US Senate refused to approve joining it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In 1936, German troops marched into which area, breaking the Treaty of Versailles?",
+      "options": [
+        {
+          "label": "The Ruhr",
+          "correct": false
+        },
+        {
+          "label": "Alsace",
+          "correct": false
+        },
+        {
+          "label": "The Saar",
+          "correct": false
+        },
+        {
+          "label": "The Rhineland",
+          "correct": true
+        }
+      ],
+      "explanation": "The Rhineland was meant to stay demilitarised. Hitler sent troops in during March 1936 and Britain and France did not stop him.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What name is given to the union of Germany and Austria in 1938?",
+      "options": [
+        {
+          "label": "Reichstag",
+          "correct": false
+        },
+        {
+          "label": "Lebensraum",
+          "correct": false
+        },
+        {
+          "label": "Anschluss",
+          "correct": true
+        },
+        {
+          "label": "Blitzkrieg",
+          "correct": false
+        }
+      ],
+      "explanation": "Anschluss means 'connection' or 'joining'. The Treaty of Versailles had banned it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The policy of giving in to some of Hitler's demands to avoid war in the 1930s is known as…",
+      "options": [
+        {
+          "label": "Appeasement",
+          "correct": true
+        },
+        {
+          "label": "Détente",
+          "correct": false
+        },
+        {
+          "label": "Containment",
+          "correct": false
+        },
+        {
+          "label": "Isolationism",
+          "correct": false
+        }
+      ],
+      "explanation": "Appeasement is most linked with British Prime Minister Neville Chamberlain.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which 1938 agreement allowed Germany to take over the Sudetenland?",
+      "options": [
+        {
+          "label": "The Treaty of Trianon",
+          "correct": false
+        },
+        {
+          "label": "The Locarno Treaties",
+          "correct": false
+        },
+        {
+          "label": "The Munich Agreement",
+          "correct": true
+        },
+        {
+          "label": "The Kellogg-Briand Pact",
+          "correct": false
+        }
+      ],
+      "explanation": "Britain, France, Italy and Germany signed the Munich Agreement in September 1938 without Czechoslovakia at the table.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which 1947 US policy promised support to countries resisting the spread of communism?",
+      "options": [
+        {
+          "label": "The New Deal",
+          "correct": false
+        },
+        {
+          "label": "The Monroe Doctrine",
+          "correct": false
+        },
+        {
+          "label": "The Brezhnev Doctrine",
+          "correct": false
+        },
+        {
+          "label": "The Truman Doctrine",
+          "correct": true
+        }
+      ],
+      "explanation": "President Truman's speech set out the idea of containment, a key US policy in the Cold War.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of the US programme of economic aid to rebuild Europe after the Second World War?",
+      "options": [
+        {
+          "label": "The Truman Plan",
+          "correct": false
+        },
+        {
+          "label": "The Schlieffen Plan",
+          "correct": false
+        },
+        {
+          "label": "The Marshall Plan",
+          "correct": true
+        },
+        {
+          "label": "The Five-Year Plan",
+          "correct": false
+        }
+      ],
+      "explanation": "The Marshall Plan gave billions of dollars to Western Europe, partly to make communism less attractive.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In 1948 and 1949, the Western Allies flew supplies into West Berlin to beat a Soviet blockade. What was this called?",
+      "options": [
+        {
+          "label": "The Bay of Pigs",
+          "correct": false
+        },
+        {
+          "label": "Operation Overlord",
+          "correct": false
+        },
+        {
+          "label": "The Berlin Airlift",
+          "correct": true
+        },
+        {
+          "label": "The Berlin Wall",
+          "correct": false
+        }
+      ],
+      "explanation": "For almost a year, aircraft carried food and fuel into West Berlin until the Soviet Union lifted the blockade.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which military alliance did the USA, Canada and several Western European countries form in 1949?",
+      "options": [
+        {
+          "label": "NATO",
+          "correct": true
+        },
+        {
+          "label": "The League of Nations",
+          "correct": false
+        },
+        {
+          "label": "Comecon",
+          "correct": false
+        },
+        {
+          "label": "The Warsaw Pact",
+          "correct": false
+        }
+      ],
+      "explanation": "NATO stands for the North Atlantic Treaty Organization. Members agreed to defend one another.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which military alliance did the Soviet Union and its Eastern European allies form in 1955?",
+      "options": [
+        {
+          "label": "NATO",
+          "correct": false
+        },
+        {
+          "label": "The Warsaw Pact",
+          "correct": true
+        },
+        {
+          "label": "The Triple Entente",
+          "correct": false
+        },
+        {
+          "label": "Cominform",
+          "correct": false
+        }
+      ],
+      "explanation": "The Warsaw Pact was the Soviet bloc's answer to NATO and lasted until 1991.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a 1946 speech, Winston Churchill said what had 'descended across the Continent' of Europe?",
+      "options": [
+        {
+          "label": "An iron curtain",
+          "correct": true
+        },
+        {
+          "label": "A great wall",
+          "correct": false
+        },
+        {
+          "label": "A cold wind",
+          "correct": false
+        },
+        {
+          "label": "A dark cloud",
+          "correct": false
+        }
+      ],
+      "explanation": "Churchill's 'iron curtain' described the divide between the communist East and the democratic West.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Whose refusal to give up her bus seat in Montgomery, Alabama, sparked a famous boycott?",
+      "options": [
+        {
+          "label": "Harriet Tubman",
+          "correct": false
+        },
+        {
+          "label": "Coretta Scott King",
+          "correct": false
+        },
+        {
+          "label": "Rosa Parks",
+          "correct": true
+        },
+        {
+          "label": "Ruby Bridges",
+          "correct": false
+        }
+      ],
+      "explanation": "Rosa Parks's arrest led to the Montgomery Bus Boycott, a major event in the US civil rights movement.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8d9tcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Martin Luther King gave his 'I Have a Dream' speech during which 1963 event?",
+      "options": [
+        {
+          "label": "The Montgomery Bus Boycott",
+          "correct": false
+        },
+        {
+          "label": "The March on Washington",
+          "correct": true
+        },
+        {
+          "label": "The Selma marches",
+          "correct": false
+        },
+        {
+          "label": "The Freedom Rides",
+          "correct": false
+        }
+      ],
+      "explanation": "About 250,000 people gathered in Washington DC for the march in August 1963.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8d9tcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which 1954 US Supreme Court case ruled that segregation in state schools was unconstitutional?",
+      "options": [
+        {
+          "label": "Roe v. Wade",
+          "correct": false
+        },
+        {
+          "label": "Marbury v. Madison",
+          "correct": false
+        },
+        {
+          "label": "Plessy v. Ferguson",
+          "correct": false
+        },
+        {
+          "label": "Brown v. Board of Education",
+          "correct": true
+        }
+      ],
+      "explanation": "Brown v. Board of Education overturned the idea of 'separate but equal' in public schools.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8d9tcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which 1964 US law banned discrimination in public places and in employment?",
+      "options": [
+        {
+          "label": "The Voting Rights Act",
+          "correct": false
+        },
+        {
+          "label": "The Equal Pay Act",
+          "correct": false
+        },
+        {
+          "label": "The Civil Rights Act",
+          "correct": true
+        },
+        {
+          "label": "The Fair Housing Act",
+          "correct": false
+        }
+      ],
+      "explanation": "President Lyndon B. Johnson signed the Civil Rights Act in July 1964.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8d9tcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The United States entered the First World War in 1917.",
+      "answer": true,
+      "explanation": "The USA declared war on Germany in April 1917, partly because of German submarine attacks on shipping.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Treaty of Versailles limited the German army to 100,000 soldiers.",
+      "answer": true,
+      "explanation": "The treaty also banned conscription, tanks and an air force, and limited the German navy.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zj26n39",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Soviet Union was a founding member of NATO.",
+      "answer": false,
+      "explanation": "NATO was formed by Western countries partly to protect against the Soviet Union, which later led the Warsaw Pact.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The Little Rock Nine were nine Black students who enrolled at a previously all-white high school in Arkansas in 1957.",
+      "answer": true,
+      "explanation": "Federal troops were sent to protect the students so that they could attend Central High School.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8d9tcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was the Berlin Wall built?",
+      "slider": {
+        "min": 1945,
+        "max": 1991,
+        "step": 1,
+        "unit": null,
+        "correct": 1961,
+        "accept_min": 1961,
+        "accept_max": 1961
+      },
+      "explanation": "East Germany built the Berlin Wall in August 1961 to stop people leaving for the West.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did the Cuban Missile Crisis take place?",
+      "slider": {
+        "min": 1945,
+        "max": 1991,
+        "step": 1,
+        "unit": null,
+        "correct": 1962,
+        "accept_min": 1962,
+        "accept_max": 1962
+      },
+      "explanation": "In October 1962 the USA and Soviet Union came close to nuclear war over Soviet missiles in Cuba.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/znx7vj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did the Montgomery Bus Boycott begin?",
+      "slider": {
+        "min": 1940,
+        "max": 1975,
+        "step": 1,
+        "unit": null,
+        "correct": 1955,
+        "accept_min": 1955,
+        "accept_max": 1955
+      },
+      "explanation": "The boycott began in December 1955 and lasted over a year until buses in Montgomery were desegregated.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8d9tcw",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,653 @@
+{
+  "slug": "new-testament-stories",
+  "title": "New Testament Stories",
+  "intro": "Stories from the life of Jesus and his first followers.",
+  "category": "bible-faith",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "In which town was Jesus born?",
+      "options": [
+        {
+          "label": "Nazareth",
+          "correct": false
+        },
+        {
+          "label": "Jerusalem",
+          "correct": false
+        },
+        {
+          "label": "Bethlehem",
+          "correct": true
+        },
+        {
+          "label": "Capernaum",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew 2:1 says Jesus was born in Bethlehem in Judea.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%202%3A1&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "How many apostles did Jesus choose?",
+      "options": [
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Ten",
+          "correct": false
+        },
+        {
+          "label": "Twelve",
+          "correct": true
+        },
+        {
+          "label": "Forty",
+          "correct": false
+        }
+      ],
+      "explanation": "Luke 6:13 says Jesus chose twelve of his disciples and called them apostles.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%206%3A13&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who baptised Jesus in the River Jordan?",
+      "options": [
+        {
+          "label": "Peter",
+          "correct": false
+        },
+        {
+          "label": "John the Baptist",
+          "correct": true
+        },
+        {
+          "label": "Paul",
+          "correct": false
+        },
+        {
+          "label": "Andrew",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew 3:13 tells how Jesus came to John at the Jordan to be baptised.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%203%3A13-16&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What work did Peter and Andrew do before they followed Jesus?",
+      "options": [
+        {
+          "label": "Fishermen",
+          "correct": true
+        },
+        {
+          "label": "Shepherds",
+          "correct": false
+        },
+        {
+          "label": "Carpenters",
+          "correct": false
+        },
+        {
+          "label": "Tax collectors",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew 4:18 says Peter and Andrew were casting a net into the lake, for they were fishermen.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%204%3A18-20&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In Jesus' parable, who stopped to help the injured traveller?",
+      "options": [
+        {
+          "label": "A priest",
+          "correct": false
+        },
+        {
+          "label": "A Levite",
+          "correct": false
+        },
+        {
+          "label": "A Samaritan",
+          "correct": true
+        },
+        {
+          "label": "A soldier",
+          "correct": false
+        }
+      ],
+      "explanation": "In Luke 10, a priest and a Levite pass by, but a Samaritan takes pity on the man and cares for him.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2010%3A33-34&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "When Jesus fed the five thousand, how many loaves did a boy share?",
+      "options": [
+        {
+          "label": "Two",
+          "correct": false
+        },
+        {
+          "label": "Five",
+          "correct": true
+        },
+        {
+          "label": "Seven",
+          "correct": false
+        },
+        {
+          "label": "Twelve",
+          "correct": false
+        }
+      ],
+      "explanation": "John 6:9 says a boy had five small barley loaves and two small fish.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%206%3A9&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Jesus turned water into wine at a wedding in Cana.",
+      "answer": true,
+      "explanation": "John 2 describes this as the first of the signs Jesus performed, at a wedding in Cana in Galilee.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%202%3A1-11&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who climbed a sycamore-fig tree to see Jesus over the crowd?",
+      "options": [
+        {
+          "label": "Zacchaeus",
+          "correct": true
+        },
+        {
+          "label": "Lazarus",
+          "correct": false
+        },
+        {
+          "label": "Thomas",
+          "correct": false
+        },
+        {
+          "label": "Nicodemus",
+          "correct": false
+        }
+      ],
+      "explanation": "Luke 19 says Zacchaeus was short, so he ran ahead and climbed a sycamore-fig tree to see Jesus.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2019%3A1-4&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "On the road to which city did Saul see a bright light from heaven?",
+      "options": [
+        {
+          "label": "Rome",
+          "correct": false
+        },
+        {
+          "label": "Damascus",
+          "correct": true
+        },
+        {
+          "label": "Athens",
+          "correct": false
+        },
+        {
+          "label": "Bethlehem",
+          "correct": false
+        }
+      ],
+      "explanation": "Acts 9:3 says that as Saul neared Damascus, a light from heaven flashed around him. He later became known as Paul.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Acts%209%3A3&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "In Matthew's Gospel, for how many days and nights did Jesus fast in the wilderness?",
+      "slider": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "days",
+        "correct": 40,
+        "accept_min": 40,
+        "accept_max": 40
+      },
+      "explanation": "Matthew 4:2 says Jesus fasted for forty days and forty nights.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%204%3A2&version=NIVUK",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which angel visited Mary to tell her she would have a baby called Jesus?",
+      "options": [
+        {
+          "label": "Gabriel",
+          "correct": true
+        },
+        {
+          "label": "Michael",
+          "correct": false
+        },
+        {
+          "label": "Raphael",
+          "correct": false
+        },
+        {
+          "label": "Peter",
+          "correct": false
+        }
+      ],
+      "explanation": "Luke's Gospel says the angel Gabriel was sent by God to Mary in Nazareth with the news.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%201%3A26-31&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where did Mary lay baby Jesus because there was no room for them?",
+      "options": [
+        {
+          "label": "In a manger",
+          "correct": true
+        },
+        {
+          "label": "In a boat",
+          "correct": false
+        },
+        {
+          "label": "In a basket by a river",
+          "correct": false
+        },
+        {
+          "label": "In a palace bed",
+          "correct": false
+        }
+      ],
+      "explanation": "A manger is a feeding trough for animals. Luke says Mary laid Jesus there because there was no guest room.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%202%3A7&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who did angels visit in the fields at night to share the news of Jesus' birth?",
+      "options": [
+        {
+          "label": "Shepherds",
+          "correct": true
+        },
+        {
+          "label": "Fishermen",
+          "correct": false
+        },
+        {
+          "label": "Soldiers",
+          "correct": false
+        },
+        {
+          "label": "Farmers picking grapes",
+          "correct": false
+        }
+      ],
+      "explanation": "Shepherds were watching their sheep when angels appeared and told them a saviour had been born.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%202%3A8-11&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What did the wise men follow to find the young Jesus?",
+      "options": [
+        {
+          "label": "A star",
+          "correct": true
+        },
+        {
+          "label": "A rainbow",
+          "correct": false
+        },
+        {
+          "label": "A river",
+          "correct": false
+        },
+        {
+          "label": "A flock of birds",
+          "correct": false
+        }
+      ],
+      "explanation": "Matthew says the wise men saw a star and followed it until it stopped over the place where Jesus was.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%202%3A9-10&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The wise men brought gold, frankincense and which other gift?",
+      "options": [
+        {
+          "label": "Myrrh",
+          "correct": true
+        },
+        {
+          "label": "Silver",
+          "correct": false
+        },
+        {
+          "label": "Spices from Egypt",
+          "correct": false
+        },
+        {
+          "label": "Pearls",
+          "correct": false
+        }
+      ],
+      "explanation": "Myrrh is a sweet-smelling resin from a tree. It was a precious gift, like gold and frankincense.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%202%3A11&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which town did Jesus grow up?",
+      "options": [
+        {
+          "label": "Nazareth",
+          "correct": true
+        },
+        {
+          "label": "Jericho",
+          "correct": false
+        },
+        {
+          "label": "Bethany",
+          "correct": false
+        },
+        {
+          "label": "Capernaum",
+          "correct": false
+        }
+      ],
+      "explanation": "After Jesus was born in Bethlehem, his family returned to their home town of Nazareth in Galilee.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%202%3A39-40&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "According to Matthew's Gospel, people called Jesus the carpenter's son.",
+      "answer": true,
+      "explanation": "In Matthew, people in Jesus' home town asked, \"Isn't this the carpenter's son?\" because Joseph was a carpenter.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%2013%3A55&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which disciple stepped out of a boat to walk on the water towards Jesus?",
+      "options": [
+        {
+          "label": "Peter",
+          "correct": true
+        },
+        {
+          "label": "Thomas",
+          "correct": false
+        },
+        {
+          "label": "Matthew",
+          "correct": false
+        },
+        {
+          "label": "Philip",
+          "correct": false
+        }
+      ],
+      "explanation": "Peter walked on the water, then became afraid of the wind and began to sink. Jesus reached out and caught him.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%2014%3A28-31&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In Jesus' story of the two builders, the wise man built his house on sand.",
+      "answer": false,
+      "explanation": "The wise man built on rock, so his house stood firm. The foolish man built on sand and his house fell.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%207%3A24-27&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the parable of the lost son, what job did the younger son take when his money ran out?",
+      "options": [
+        {
+          "label": "Feeding pigs",
+          "correct": true
+        },
+        {
+          "label": "Mending nets",
+          "correct": false
+        },
+        {
+          "label": "Baking bread",
+          "correct": false
+        },
+        {
+          "label": "Guarding a city gate",
+          "correct": false
+        }
+      ],
+      "explanation": "The son was so hungry looking after pigs that he decided to go home and say sorry to his father.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2015%3A13-16&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "In the parable of the lost son, the father ran to welcome his son home.",
+      "answer": true,
+      "explanation": "The father saw his son far away, ran to him and hugged him, then threw a party to celebrate.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2015%3A20-24&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In Jesus' parable of the lost sheep, how many sheep did the shepherd have altogether?",
+      "slider": {
+        "min": 0,
+        "max": 200,
+        "step": 1,
+        "unit": "sheep",
+        "correct": 100,
+        "accept_min": 100,
+        "accept_max": 100
+      },
+      "explanation": "The shepherd had 100 sheep. He left the 99 to search for the one that was lost, and was full of joy when he found it.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2015%3A3-6&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many men with leprosy did Jesus heal on the way to Jerusalem, before only one came back to say thank you?",
+      "slider": {
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "men",
+        "correct": 10,
+        "accept_min": 10,
+        "accept_max": 10
+      },
+      "explanation": "Ten men were healed, but only one returned to thank Jesus, and Jesus praised him for it.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2017%3A12-17&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which friend of Jesus, from Bethany, did Jesus call out of his tomb alive?",
+      "options": [
+        {
+          "label": "Lazarus",
+          "correct": true
+        },
+        {
+          "label": "Nicodemus",
+          "correct": false
+        },
+        {
+          "label": "Barnabas",
+          "correct": false
+        },
+        {
+          "label": "Bartimaeus",
+          "correct": false
+        }
+      ],
+      "explanation": "John's Gospel tells how Jesus called, \"Lazarus, come out!\" and his friend walked out of the tomb.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%2011%3A43-44&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which sister sat at Jesus' feet listening while Martha was busy getting things ready?",
+      "options": [
+        {
+          "label": "Mary",
+          "correct": true
+        },
+        {
+          "label": "Ruth",
+          "correct": false
+        },
+        {
+          "label": "Anna",
+          "correct": false
+        },
+        {
+          "label": "Elizabeth",
+          "correct": false
+        }
+      ],
+      "explanation": "Martha was busy with all the preparations, while her sister Mary sat and listened to Jesus' teaching.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Luke%2010%3A38-42&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which animal did Jesus ride into Jerusalem?",
+      "options": [
+        {
+          "label": "A young donkey",
+          "correct": true
+        },
+        {
+          "label": "A camel",
+          "correct": false
+        },
+        {
+          "label": "A horse",
+          "correct": false
+        },
+        {
+          "label": "An ox",
+          "correct": false
+        }
+      ],
+      "explanation": "John's Gospel says Jesus found a young donkey and sat on it, as crowds waved palm branches.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%2012%3A12-15&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Matthew was working as what when Jesus called him to follow?",
+      "options": [
+        {
+          "label": "A tax collector",
+          "correct": true
+        },
+        {
+          "label": "A shepherd",
+          "correct": false
+        },
+        {
+          "label": "A tentmaker",
+          "correct": false
+        },
+        {
+          "label": "A soldier",
+          "correct": false
+        }
+      ],
+      "explanation": "Jesus saw Matthew sitting at the tax collector's booth and said, \"Follow me\", and Matthew got up and followed him.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Matthew%209%3A9&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Mary Magdalene was one of the first people to see Jesus after he rose again.",
+      "answer": true,
+      "explanation": "John's Gospel says Mary Magdalene met Jesus near the empty tomb and then went to tell the disciples.",
+      "source_url": "https://www.biblegateway.com/passage/?search=John%2020%3A16-18&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "At Pentecost, what appeared to rest on each of the disciples?",
+      "options": [
+        {
+          "label": "Tongues of fire",
+          "correct": true
+        },
+        {
+          "label": "Crowns of gold",
+          "correct": false
+        },
+        {
+          "label": "White doves",
+          "correct": false
+        },
+        {
+          "label": "Bright stars",
+          "correct": false
+        }
+      ],
+      "explanation": "Acts says the disciples heard a sound like a mighty wind and saw what looked like tongues of fire resting on each of them.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Acts%202%3A1-4&version=NIVUK",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On which island was Paul shipwrecked on his way to Rome?",
+      "options": [
+        {
+          "label": "Malta",
+          "correct": true
+        },
+        {
+          "label": "Crete",
+          "correct": false
+        },
+        {
+          "label": "Cyprus",
+          "correct": false
+        },
+        {
+          "label": "Sicily",
+          "correct": false
+        }
+      ],
+      "explanation": "After the ship broke up, everyone reached the shore safely and found the island was called Malta.",
+      "source_url": "https://www.biblegateway.com/passage/?search=Acts%2028%3A1&version=NIVUK",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

@@ -1,0 +1,648 @@
+{
+  "slug": "phonics-and-first-words-ks1",
+  "title": "Phonics and First Words",
+  "intro": "Rhymes, first sounds, capital letters and more. A gentle word quiz for new readers.",
+  "category": "school-english",
+  "difficulty": "easy",
+  "age_min": 5,
+  "age_max": 7,
+  "curriculum_tags": [
+    "uk-ks1"
+  ],
+  "time_limit_seconds": 45,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which word rhymes with cat?",
+      "options": [
+        {
+          "label": "dog",
+          "correct": false
+        },
+        {
+          "label": "cup",
+          "correct": false
+        },
+        {
+          "label": "hat",
+          "correct": true
+        }
+      ],
+      "explanation": "Cat and hat both end with the same sound, \"at\". Words that end the same way rhyme.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjhhvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word rhymes with bee?",
+      "options": [
+        {
+          "label": "bed",
+          "correct": false
+        },
+        {
+          "label": "tree",
+          "correct": true
+        },
+        {
+          "label": "bus",
+          "correct": false
+        }
+      ],
+      "explanation": "Bee and tree both end with the \"ee\" sound, so they rhyme.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjhhvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word rhymes with sun?",
+      "options": [
+        {
+          "label": "run",
+          "correct": true
+        },
+        {
+          "label": "sit",
+          "correct": false
+        },
+        {
+          "label": "sock",
+          "correct": false
+        },
+        {
+          "label": "map",
+          "correct": false
+        }
+      ],
+      "explanation": "Sun and run both end with \"un\", so they rhyme.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjhhvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word does NOT rhyme with pig?",
+      "options": [
+        {
+          "label": "big",
+          "correct": false
+        },
+        {
+          "label": "pot",
+          "correct": true
+        },
+        {
+          "label": "wig",
+          "correct": false
+        }
+      ],
+      "explanation": "Big and wig end with \"ig\" like pig. Pot ends with \"ot\", so it does not rhyme.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjhhvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word starts with the same sound as ball?",
+      "options": [
+        {
+          "label": "cat",
+          "correct": false
+        },
+        {
+          "label": "sat",
+          "correct": false
+        },
+        {
+          "label": "bat",
+          "correct": true
+        },
+        {
+          "label": "mat",
+          "correct": false
+        }
+      ],
+      "explanation": "Ball and bat both start with the \"b\" sound.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf2yf4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What sound do you hear at the start of ship?",
+      "options": [
+        {
+          "label": "sh",
+          "correct": true
+        },
+        {
+          "label": "s",
+          "correct": false
+        },
+        {
+          "label": "ch",
+          "correct": false
+        },
+        {
+          "label": "p",
+          "correct": false
+        }
+      ],
+      "explanation": "Ship starts with \"sh\". Two letters, s and h, make this one sound.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvq9bdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the first sound in moon?",
+      "options": [
+        {
+          "label": "n",
+          "correct": false
+        },
+        {
+          "label": "o",
+          "correct": false
+        },
+        {
+          "label": "d",
+          "correct": false
+        },
+        {
+          "label": "m",
+          "correct": true
+        }
+      ],
+      "explanation": "Say it slowly: m-oo-n. The first sound is \"m\".",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf2yf4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the last sound in dog?",
+      "options": [
+        {
+          "label": "d",
+          "correct": false
+        },
+        {
+          "label": "g",
+          "correct": true
+        },
+        {
+          "label": "o",
+          "correct": false
+        },
+        {
+          "label": "k",
+          "correct": false
+        }
+      ],
+      "explanation": "Say it slowly: d-o-g. The last sound is \"g\".",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf2yf4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these letters is a vowel?",
+      "options": [
+        {
+          "label": "e",
+          "correct": true
+        },
+        {
+          "label": "b",
+          "correct": false
+        },
+        {
+          "label": "t",
+          "correct": false
+        },
+        {
+          "label": "m",
+          "correct": false
+        }
+      ],
+      "explanation": "The vowels are a, e, i, o and u. So e is a vowel.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zxfyjty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Where does a capital letter go in a sentence?",
+      "options": [
+        {
+          "label": "In the middle",
+          "correct": false
+        },
+        {
+          "label": "At the start",
+          "correct": true
+        },
+        {
+          "label": "Only at the end",
+          "correct": false
+        }
+      ],
+      "explanation": "Every sentence starts with a capital letter, like the big T in \"The cat sat.\"",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8x6cj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What goes at the end of a telling sentence?",
+      "options": [
+        {
+          "label": "A comma",
+          "correct": false
+        },
+        {
+          "label": "A capital letter",
+          "correct": false
+        },
+        {
+          "label": "A full stop",
+          "correct": true
+        },
+        {
+          "label": "Nothing",
+          "correct": false
+        }
+      ],
+      "explanation": "A telling sentence ends with a full stop, like this one.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8x6cj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What word means more than one dog?",
+      "options": [
+        {
+          "label": "doggs",
+          "correct": false
+        },
+        {
+          "label": "dogs",
+          "correct": true
+        },
+        {
+          "label": "doges",
+          "correct": false
+        }
+      ],
+      "explanation": "For most words we just add s. One dog, two dogs.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcgv39q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What word means more than one box?",
+      "options": [
+        {
+          "label": "boxs",
+          "correct": false
+        },
+        {
+          "label": "boxes",
+          "correct": true
+        },
+        {
+          "label": "boxen",
+          "correct": false
+        }
+      ],
+      "explanation": "Words ending in x need \"es\" added. One box, two boxes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcgv39q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call more than one mouse?",
+      "options": [
+        {
+          "label": "mouses",
+          "correct": false
+        },
+        {
+          "label": "mice",
+          "correct": true
+        },
+        {
+          "label": "mousies",
+          "correct": false
+        },
+        {
+          "label": "meese",
+          "correct": false
+        }
+      ],
+      "explanation": "Mouse is a special word. One mouse, two mice.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/mouse_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the opposite of hot?",
+      "options": [
+        {
+          "label": "warm",
+          "correct": false
+        },
+        {
+          "label": "wet",
+          "correct": false
+        },
+        {
+          "label": "cold",
+          "correct": true
+        },
+        {
+          "label": "big",
+          "correct": false
+        }
+      ],
+      "explanation": "Hot and cold are opposites, like summer sun and winter snow.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/cold_1",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the opposite of big?",
+      "options": [
+        {
+          "label": "tall",
+          "correct": false
+        },
+        {
+          "label": "long",
+          "correct": false
+        },
+        {
+          "label": "small",
+          "correct": true
+        },
+        {
+          "label": "fat",
+          "correct": false
+        }
+      ],
+      "explanation": "Big and small are opposites. An elephant is big and a mouse is small.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/opposite_2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the opposite of up?",
+      "options": [
+        {
+          "label": "over",
+          "correct": false
+        },
+        {
+          "label": "high",
+          "correct": false
+        },
+        {
+          "label": "top",
+          "correct": false
+        },
+        {
+          "label": "down",
+          "correct": true
+        }
+      ],
+      "explanation": "Up and down are opposites. You go up the stairs and come back down.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/opposite_2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the opposite of fast?",
+      "options": [
+        {
+          "label": "quick",
+          "correct": false
+        },
+        {
+          "label": "run",
+          "correct": false
+        },
+        {
+          "label": "speedy",
+          "correct": false
+        },
+        {
+          "label": "slow",
+          "correct": true
+        }
+      ],
+      "explanation": "Fast and slow are opposites. A cheetah is fast and a snail is slow.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/opposite_2",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which letter comes next: a, b, c, ...?",
+      "options": [
+        {
+          "label": "e",
+          "correct": false
+        },
+        {
+          "label": "f",
+          "correct": false
+        },
+        {
+          "label": "d",
+          "correct": true
+        },
+        {
+          "label": "g",
+          "correct": false
+        }
+      ],
+      "explanation": "The alphabet goes a, b, c, d, e, f, g and on to z.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zxfyjty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word has the long \"ee\" sound?",
+      "options": [
+        {
+          "label": "fat",
+          "correct": false
+        },
+        {
+          "label": "feet",
+          "correct": true
+        },
+        {
+          "label": "fit",
+          "correct": false
+        },
+        {
+          "label": "fan",
+          "correct": false
+        }
+      ],
+      "explanation": "In feet, the two e letters work together to make the \"ee\" sound.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvq9bdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word starts with the \"ch\" sound?",
+      "options": [
+        {
+          "label": "ship",
+          "correct": false
+        },
+        {
+          "label": "sip",
+          "correct": false
+        },
+        {
+          "label": "chip",
+          "correct": true
+        },
+        {
+          "label": "hip",
+          "correct": false
+        }
+      ],
+      "explanation": "Chip starts with \"ch\", made by the letters c and h together.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvq9bdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word fits best? I like apples ___ pears.",
+      "options": [
+        {
+          "label": "but",
+          "correct": false
+        },
+        {
+          "label": "or not",
+          "correct": false
+        },
+        {
+          "label": "the",
+          "correct": false
+        },
+        {
+          "label": "and",
+          "correct": true
+        }
+      ],
+      "explanation": "\"And\" joins two things together: I like apples and pears.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zrqqtfr",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which word starts with the \"th\" sound?",
+      "options": [
+        {
+          "label": "tub",
+          "correct": false
+        },
+        {
+          "label": "sum",
+          "correct": false
+        },
+        {
+          "label": "fun",
+          "correct": false
+        },
+        {
+          "label": "thumb",
+          "correct": true
+        }
+      ],
+      "explanation": "Thumb starts with \"th\". The letters t and h work together to make one sound.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvq9bdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Dog and log rhyme.",
+      "answer": true,
+      "explanation": "Yes! Dog and log both end with \"og\", so they rhyme.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zjhhvcw",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The word \"I\" on its own is always written as a capital letter.",
+      "answer": true,
+      "explanation": "When you write about yourself, \"I\" is always a capital letter.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z8x6cj6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Cat and kite start with the same sound.",
+      "answer": true,
+      "explanation": "Cat and kite both start with a \"k\" sound, even though they use different letters.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zf2yf4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "More than one sheep is called sheeps.",
+      "answer": false,
+      "explanation": "Sheep stays the same. One sheep, two sheep, lots of sheep!",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/sheep",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many letters are in the English alphabet?",
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": null,
+        "correct": 26,
+        "accept_min": 26,
+        "accept_max": 26
+      },
+      "explanation": "There are 26 letters, from a all the way to z.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zxfyjty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many claps (syllables) are in the word elephant?",
+      "slider": {
+        "min": 0,
+        "max": 6,
+        "step": 1,
+        "unit": null,
+        "correct": 3,
+        "accept_min": 3,
+        "accept_max": 3
+      },
+      "explanation": "Clap it out: el-e-phant. That is 3 claps, or 3 syllables.",
+      "source_url": "https://www.oxfordlearnersdictionaries.com/definition/english/syllable",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many letters are in the word frog?",
+      "slider": {
+        "min": 0,
+        "max": 8,
+        "step": 1,
+        "unit": null,
+        "correct": 4,
+        "accept_min": 4,
+        "accept_max": 4
+      },
+      "explanation": "F-r-o-g. Frog has 4 letters.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zvq9bdm",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

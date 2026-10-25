@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1570C2" />
+    <meta name="description" content="Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice." />
+    <link rel="canonical" href="https://doyouknow.space/" />
+
+    <!-- Social previews. Per-page title, description and URL are set by useDocumentMeta. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Do You Know" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:title" content="Do You Know" />
+    <meta property="og:description" content="Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice." />
+    <meta property="og:url" content="https://doyouknow.space/" />
+    <meta property="og:image" content="https://doyouknow.space/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Do You Know logo, a yellow speech bubble with a question mark, beside the words: Fun, fair quizzes for all ages." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://doyouknow.space/og-image.png" />
+    <meta name="twitter:image:alt" content="Do You Know logo, a yellow speech bubble with a question mark, beside the words: Fun, fair quizzes for all ages." />
+
+    <!-- iOS PWA support -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Do You Know" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="/icons/pwa-192.png" />
+    <!-- Apply saved / system theme before first paint (no flash). Light is the default. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('dyk-theme');
+          if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <title>Do You Know</title>
+  </head>
+  <body class="bg-background text-content">
+    <div id="root"></div>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

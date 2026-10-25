@@ -1,0 +1,653 @@
+{
+  "slug": "inventions-that-changed-the-world",
+  "title": "Inventions That Changed the World",
+  "intro": "Engines, aeroplanes, medicines and machines that made the modern world.",
+  "category": "tech",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which brothers made the first powered aeroplane flight in 1903?",
+      "options": [
+        {
+          "label": "The Grimm brothers",
+          "correct": false
+        },
+        {
+          "label": "The Wright brothers",
+          "correct": true
+        },
+        {
+          "label": "The Marx brothers",
+          "correct": false
+        },
+        {
+          "label": "The Lumière brothers",
+          "correct": false
+        }
+      ],
+      "explanation": "Orville and Wilbur Wright flew their Wright Flyer at Kitty Hawk, North Carolina, on 17 December 1903.",
+      "source_url": "https://airandspace.si.edu/collection-objects/1903-wright-flyer/nasm_A19610048000",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "The Wright brothers' first powered flight lasted about how many seconds?",
+      "slider": {
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "seconds",
+        "correct": 12,
+        "accept_min": 11,
+        "accept_max": 13
+      },
+      "explanation": "The very first flight on 17 December 1903 lasted only about 12 seconds, but it changed travel for ever.",
+      "source_url": "https://airandspace.si.edu/collection-objects/1903-wright-flyer/nasm_A19610048000",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was Rocket, built by Robert Stephenson's company in 1829?",
+      "options": [
+        {
+          "label": "A steam locomotive",
+          "correct": true
+        },
+        {
+          "label": "A space rocket",
+          "correct": false
+        },
+        {
+          "label": "A sailing ship",
+          "correct": false
+        },
+        {
+          "label": "A hot-air balloon",
+          "correct": false
+        }
+      ],
+      "explanation": "Rocket was a fast steam locomotive that won the Rainhill Trials in 1829 and helped shape early railways.",
+      "source_url": "https://collection.sciencemuseumgroup.org.uk/objects/co26704/rocket-locomotive",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Ada Lovelace is famous for writing about which machine?",
+      "options": [
+        {
+          "label": "The steam engine",
+          "correct": false
+        },
+        {
+          "label": "Charles Babbage's Analytical Engine",
+          "correct": true
+        },
+        {
+          "label": "The printing press",
+          "correct": false
+        },
+        {
+          "label": "The telephone",
+          "correct": false
+        }
+      ],
+      "explanation": "Ada Lovelace wrote notes on Charles Babbage's planned Analytical Engine, including steps now seen as an early computer program.",
+      "source_url": "https://collection.sciencemuseumgroup.org.uk/people/cp38764/ada-lovelace",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which scientist discovered penicillin, one of the first antibiotics?",
+      "options": [
+        {
+          "label": "Marie Curie",
+          "correct": false
+        },
+        {
+          "label": "Alexander Fleming",
+          "correct": true
+        },
+        {
+          "label": "Isaac Newton",
+          "correct": false
+        },
+        {
+          "label": "Louis Pasteur",
+          "correct": false
+        }
+      ],
+      "explanation": "Alexander Fleming noticed in 1928 that a mould called Penicillium killed bacteria, which led to penicillin.",
+      "source_url": "https://www.nobelprize.org/prizes/medicine/1945/fleming/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Penicillin is a medicine used to fight infections caused by bacteria.",
+      "answer": true,
+      "explanation": "Penicillin is an antibiotic, a medicine that kills or stops the growth of bacteria.",
+      "source_url": "https://www.nobelprize.org/prizes/medicine/1945/fleming/facts/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which invention, created by Tim Berners-Lee, lets us visit linked pages on the internet?",
+      "options": [
+        {
+          "label": "Email",
+          "correct": false
+        },
+        {
+          "label": "The World Wide Web",
+          "correct": true
+        },
+        {
+          "label": "Radio",
+          "correct": false
+        },
+        {
+          "label": "The telegraph",
+          "correct": false
+        }
+      ],
+      "explanation": "Tim Berners-Lee invented the World Wide Web while working at CERN in 1989.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What kind of engine powered Rocket and other early railway locomotives?",
+      "options": [
+        {
+          "label": "Petrol engine",
+          "correct": false
+        },
+        {
+          "label": "Electric motor",
+          "correct": false
+        },
+        {
+          "label": "Steam engine",
+          "correct": true
+        },
+        {
+          "label": "Jet engine",
+          "correct": false
+        }
+      ],
+      "explanation": "Early locomotives burned fuel to boil water, and the steam pushed pistons that turned the wheels.",
+      "source_url": "https://collection.sciencemuseumgroup.org.uk/objects/co26704/rocket-locomotive",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the 1400s, Johannes Gutenberg built a machine that made it much faster to do what?",
+      "options": [
+        {
+          "label": "Print books",
+          "correct": true
+        },
+        {
+          "label": "Weave cloth",
+          "correct": false
+        },
+        {
+          "label": "Grind flour",
+          "correct": false
+        },
+        {
+          "label": "Pump water",
+          "correct": false
+        }
+      ],
+      "explanation": "Gutenberg's printing press used movable metal letters, so many copies of a book could be printed quickly instead of being copied by hand.",
+      "source_url": "https://www.britannica.com/biography/Johannes-Gutenberg",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who is usually credited with inventing the telephone?",
+      "options": [
+        {
+          "label": "Alexander Graham Bell",
+          "correct": true
+        },
+        {
+          "label": "Thomas Edison",
+          "correct": false
+        },
+        {
+          "label": "James Watt",
+          "correct": false
+        },
+        {
+          "label": "Isaac Newton",
+          "correct": false
+        }
+      ],
+      "explanation": "Alexander Graham Bell was given a patent for the telephone, a machine that sends voices along wires as electrical signals.",
+      "source_url": "https://www.britannica.com/biography/Alexander-Graham-Bell",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was Alexander Graham Bell given his patent for the telephone?",
+      "slider": {
+        "min": 1800,
+        "max": 1950,
+        "step": 1,
+        "unit": null,
+        "correct": 1876,
+        "accept_min": 1874,
+        "accept_max": 1878
+      },
+      "explanation": "Bell received his telephone patent in 1876, and soon people could talk to each other across long distances.",
+      "source_url": "https://www.britannica.com/biography/Alexander-Graham-Bell",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Edward Jenner created the first vaccine to protect people from which disease?",
+      "options": [
+        {
+          "label": "Smallpox",
+          "correct": true
+        },
+        {
+          "label": "Chickenpox",
+          "correct": false
+        },
+        {
+          "label": "Measles",
+          "correct": false
+        },
+        {
+          "label": "The common cold",
+          "correct": false
+        }
+      ],
+      "explanation": "Jenner noticed that milkmaids who caught mild cowpox did not catch smallpox, and used that idea to make the first vaccine.",
+      "source_url": "https://www.britannica.com/biography/Edward-Jenner",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did Edward Jenner first test his smallpox vaccine?",
+      "slider": {
+        "min": 1700,
+        "max": 1900,
+        "step": 1,
+        "unit": null,
+        "correct": 1796,
+        "accept_min": 1794,
+        "accept_max": 1798
+      },
+      "explanation": "Jenner tested his idea in 1796. His work led, much later, to smallpox being wiped out across the world.",
+      "source_url": "https://www.britannica.com/biography/Edward-Jenner",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The Scottish inventor John Logie Baird showed one of the first working versions of which invention?",
+      "options": [
+        {
+          "label": "Television",
+          "correct": true
+        },
+        {
+          "label": "Radio",
+          "correct": false
+        },
+        {
+          "label": "Camera",
+          "correct": false
+        },
+        {
+          "label": "Typewriter",
+          "correct": false
+        }
+      ],
+      "explanation": "In the 1920s Baird showed moving pictures being sent from one place to another, an early step towards the televisions we have today.",
+      "source_url": "https://www.britannica.com/biography/John-Logie-Baird",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Louis Braille invented a way of reading by touch. Who was it made for?",
+      "options": [
+        {
+          "label": "People who are blind or partly sighted",
+          "correct": true
+        },
+        {
+          "label": "People who are deaf",
+          "correct": false
+        },
+        {
+          "label": "Sailors at night",
+          "correct": false
+        },
+        {
+          "label": "Soldiers sending secrets",
+          "correct": false
+        }
+      ],
+      "explanation": "Louis Braille was blind himself. His system uses patterns of raised dots that people read with their fingertips.",
+      "source_url": "https://www.britannica.com/biography/Louis-Braille",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In 1879, Thomas Edison made a long-lasting version of which invention?",
+      "options": [
+        {
+          "label": "The electric light bulb",
+          "correct": true
+        },
+        {
+          "label": "The steam train",
+          "correct": false
+        },
+        {
+          "label": "The bicycle",
+          "correct": false
+        },
+        {
+          "label": "The telescope",
+          "correct": false
+        }
+      ],
+      "explanation": "Edison's team found a way to make a light bulb glow for many hours, which helped bring electric lighting into homes.",
+      "source_url": "https://www.britannica.com/biography/Thomas-Edison",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Thomas Edison was the only inventor working on electric light bulbs in the 1870s.",
+      "answer": false,
+      "explanation": "Others were too. In England, Joseph Swan was also making light bulbs around the same time.",
+      "source_url": "https://www.britannica.com/biography/Thomas-Edison",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which invention, first made in ancient China, uses a magnetised needle to show direction?",
+      "options": [
+        {
+          "label": "The compass",
+          "correct": true
+        },
+        {
+          "label": "The clock",
+          "correct": false
+        },
+        {
+          "label": "The kite",
+          "correct": false
+        },
+        {
+          "label": "The abacus",
+          "correct": false
+        }
+      ],
+      "explanation": "A compass needle is a small magnet. It lines up with Earth's magnetism, so it always points roughly north and south.",
+      "source_url": "https://www.britannica.com/technology/compass-navigational-instrument",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A compass works because its needle is pulled into line by Earth's magnetism.",
+      "answer": true,
+      "explanation": "Earth acts like a giant magnet. A compass needle is a tiny magnet, so it swings round to line up with it.",
+      "source_url": "https://www.britannica.com/technology/compass-navigational-instrument",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In which country was paper first invented, around 2,000 years ago?",
+      "options": [
+        {
+          "label": "China",
+          "correct": true
+        },
+        {
+          "label": "Italy",
+          "correct": false
+        },
+        {
+          "label": "Mexico",
+          "correct": false
+        },
+        {
+          "label": "Norway",
+          "correct": false
+        }
+      ],
+      "explanation": "Paper was first made in China from plant fibres such as tree bark and old rags, and the idea later spread around the world.",
+      "source_url": "https://www.britannica.com/technology/papermaking",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Galileo used which invention to discover moons going around Jupiter?",
+      "options": [
+        {
+          "label": "A telescope",
+          "correct": true
+        },
+        {
+          "label": "A microscope",
+          "correct": false
+        },
+        {
+          "label": "A periscope",
+          "correct": false
+        },
+        {
+          "label": "A thermometer",
+          "correct": false
+        }
+      ],
+      "explanation": "In 1610 Galileo pointed his telescope at Jupiter and spotted four moons circling it, which helped change how people thought about space.",
+      "source_url": "https://www.britannica.com/biography/Galileo-Galilei",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Wilhelm Röntgen discovered rays that let doctors see bones inside the body. What are they called?",
+      "options": [
+        {
+          "label": "X-rays",
+          "correct": true
+        },
+        {
+          "label": "Sun rays",
+          "correct": false
+        },
+        {
+          "label": "Laser beams",
+          "correct": false
+        },
+        {
+          "label": "Radio waves",
+          "correct": false
+        }
+      ],
+      "explanation": "X-rays pass through skin and muscle more easily than through bone, so bones show up clearly on an X-ray picture.",
+      "source_url": "https://www.britannica.com/biography/Wilhelm-Rontgen",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "X-rays pass through skin more easily than through bone.",
+      "answer": true,
+      "explanation": "That is why bones look bright on an X-ray picture: they block more of the rays than the soft parts of the body.",
+      "source_url": "https://www.britannica.com/biography/Wilhelm-Rontgen",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "The English engineer Frank Whittle invented which kind of engine for aircraft?",
+      "options": [
+        {
+          "label": "The jet engine",
+          "correct": true
+        },
+        {
+          "label": "The steam engine",
+          "correct": false
+        },
+        {
+          "label": "The electric motor",
+          "correct": false
+        },
+        {
+          "label": "The diesel engine",
+          "correct": false
+        }
+      ],
+      "explanation": "Whittle's jet engine pushes hot air out of the back at great speed, which drives the plane forward.",
+      "source_url": "https://www.britannica.com/biography/Frank-Whittle",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Christopher Cockerell invented a vehicle that travels on a cushion of air. What is it called?",
+      "options": [
+        {
+          "label": "A hovercraft",
+          "correct": true
+        },
+        {
+          "label": "A submarine",
+          "correct": false
+        },
+        {
+          "label": "A helicopter",
+          "correct": false
+        },
+        {
+          "label": "A hot-air balloon",
+          "correct": false
+        }
+      ],
+      "explanation": "A hovercraft blows air underneath itself, so it can glide over water, mud and flat land.",
+      "source_url": "https://www.britannica.com/biography/Christopher-Cockerell",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "James Watt is famous for greatly improving which machine?",
+      "options": [
+        {
+          "label": "The steam engine",
+          "correct": true
+        },
+        {
+          "label": "The windmill",
+          "correct": false
+        },
+        {
+          "label": "The printing press",
+          "correct": false
+        },
+        {
+          "label": "The sewing machine",
+          "correct": false
+        }
+      ],
+      "explanation": "Watt's improved steam engine used far less coal, so factories and mines could use steam power much more cheaply.",
+      "source_url": "https://www.britannica.com/biography/James-Watt",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Guglielmo Marconi is famous for sending messages without wires using which invention?",
+      "options": [
+        {
+          "label": "Radio",
+          "correct": true
+        },
+        {
+          "label": "Telephone",
+          "correct": false
+        },
+        {
+          "label": "Television",
+          "correct": false
+        },
+        {
+          "label": "Fax machine",
+          "correct": false
+        }
+      ],
+      "explanation": "Marconi sent signals through the air as radio waves, and in 1901 he sent one right across the Atlantic Ocean.",
+      "source_url": "https://www.britannica.com/biography/Guglielmo-Marconi",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Samuel Morse helped create a code that sends messages using dots and dashes.",
+      "answer": true,
+      "explanation": "Morse code turns each letter into a pattern of short and long signals, which could be sent along telegraph wires.",
+      "source_url": "https://www.britannica.com/biography/Samuel-F-B-Morse",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "George Stephenson built some of the first public railways. He is often called the father of what?",
+      "options": [
+        {
+          "label": "The railways",
+          "correct": true
+        },
+        {
+          "label": "The motor car",
+          "correct": false
+        },
+        {
+          "label": "The aeroplane",
+          "correct": false
+        },
+        {
+          "label": "The bicycle",
+          "correct": false
+        }
+      ],
+      "explanation": "George Stephenson engineered the Stockton and Darlington Railway, which opened in 1825 and was one of the first public railways to use steam locomotives.",
+      "source_url": "https://www.britannica.com/biography/George-Stephenson",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Louis Pasteur found a way of heating milk to kill harmful germs. What is it called?",
+      "options": [
+        {
+          "label": "Pasteurisation",
+          "correct": true
+        },
+        {
+          "label": "Freezing",
+          "correct": false
+        },
+        {
+          "label": "Fermenting",
+          "correct": false
+        },
+        {
+          "label": "Filtering",
+          "correct": false
+        }
+      ],
+      "explanation": "Pasteurisation heats a drink just enough to kill most harmful germs, which makes milk much safer to drink.",
+      "source_url": "https://www.britannica.com/biography/Louis-Pasteur",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

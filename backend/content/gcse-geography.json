@@ -1,0 +1,672 @@
+{
+  "slug": "gcse-geography",
+  "title": "GCSE Geography",
+  "intro": "Plates, storms, rainforests, rivers, coasts and cities: put your GCSE Geography knowledge to the test.",
+  "category": "school-geography",
+  "difficulty": "medium",
+  "age_min": 14,
+  "age_max": 16,
+  "curriculum_tags": [
+    "uk-ks4"
+  ],
+  "time_limit_seconds": 40,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "At which type of plate margin do two plates move apart from each other?",
+      "options": [
+        {
+          "label": "Constructive",
+          "correct": true
+        },
+        {
+          "label": "Collision",
+          "correct": false
+        },
+        {
+          "label": "Conservative",
+          "correct": false
+        },
+        {
+          "label": "Destructive",
+          "correct": false
+        }
+      ],
+      "explanation": "At constructive margins magma rises to fill the gap as the plates move apart, forming new crust.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "At which type of plate margin do two plates slide past each other without crust being made or destroyed?",
+      "options": [
+        {
+          "label": "Constructive",
+          "correct": false
+        },
+        {
+          "label": "Divergent",
+          "correct": false
+        },
+        {
+          "label": "Destructive",
+          "correct": false
+        },
+        {
+          "label": "Conservative",
+          "correct": true
+        }
+      ],
+      "explanation": "Conservative margins, such as the San Andreas Fault, cause earthquakes but not volcanoes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the point on the Earth's surface directly above the focus of an earthquake called?",
+      "options": [
+        {
+          "label": "Fault line",
+          "correct": false
+        },
+        {
+          "label": "Hypocentre",
+          "correct": false
+        },
+        {
+          "label": "Crater",
+          "correct": false
+        },
+        {
+          "label": "Epicentre",
+          "correct": true
+        }
+      ],
+      "explanation": "The focus is where the earthquake starts underground. The epicentre is directly above it, where shaking is usually strongest.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A series of large sea waves caused by an undersea earthquake is called a…",
+      "options": [
+        {
+          "label": "Swash",
+          "correct": false
+        },
+        {
+          "label": "Monsoon",
+          "correct": false
+        },
+        {
+          "label": "Tsunami",
+          "correct": true
+        },
+        {
+          "label": "Storm surge",
+          "correct": false
+        }
+      ],
+      "explanation": "When the sea bed moves suddenly, it pushes up the water above, sending powerful waves across the ocean.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In the traditional GCSE explanation, convection currents in which layer of the Earth move the tectonic plates?",
+      "options": [
+        {
+          "label": "The inner core",
+          "correct": false
+        },
+        {
+          "label": "The crust",
+          "correct": false
+        },
+        {
+          "label": "The outer atmosphere",
+          "correct": false
+        },
+        {
+          "label": "The mantle",
+          "correct": true
+        }
+      ],
+      "explanation": "Heat from the core warms the mantle, creating slow currents that drag the plates above them.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the calm, clear area at the centre of a tropical storm called?",
+      "options": [
+        {
+          "label": "The funnel",
+          "correct": false
+        },
+        {
+          "label": "The wall",
+          "correct": false
+        },
+        {
+          "label": "The core",
+          "correct": false
+        },
+        {
+          "label": "The eye",
+          "correct": true
+        }
+      ],
+      "explanation": "The eye has light winds and clear skies, surrounded by the eyewall where the strongest winds blow.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a large ecosystem, such as tropical rainforest or hot desert, that covers a wide area of the world called?",
+      "options": [
+        {
+          "label": "A biome",
+          "correct": true
+        },
+        {
+          "label": "A food web",
+          "correct": false
+        },
+        {
+          "label": "A habitat",
+          "correct": false
+        },
+        {
+          "label": "A niche",
+          "correct": false
+        }
+      ],
+      "explanation": "Biomes are global-scale ecosystems shaped mainly by climate.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2tqwxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In a tropical rainforest, what is the layer formed by the tallest trees that rise above the canopy called?",
+      "options": [
+        {
+          "label": "The forest floor",
+          "correct": false
+        },
+        {
+          "label": "The shrub layer",
+          "correct": false
+        },
+        {
+          "label": "The under-canopy",
+          "correct": false
+        },
+        {
+          "label": "The emergent layer",
+          "correct": true
+        }
+      ],
+      "explanation": "Emergent trees can grow to around 50 metres tall, poking out above the dense canopy.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2tqwxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What are the large roots that spread out above ground to support tall rainforest trees called?",
+      "options": [
+        {
+          "label": "Epiphytes",
+          "correct": false
+        },
+        {
+          "label": "Drip tips",
+          "correct": false
+        },
+        {
+          "label": "Lianas",
+          "correct": false
+        },
+        {
+          "label": "Buttress roots",
+          "correct": true
+        }
+      ],
+      "explanation": "Rainforest soils are thin, so buttress roots help hold up very tall trees.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2tqwxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for ground that stays frozen all year round in cold environments such as the tundra?",
+      "options": [
+        {
+          "label": "Glacier",
+          "correct": false
+        },
+        {
+          "label": "Hoar frost",
+          "correct": false
+        },
+        {
+          "label": "Permafrost",
+          "correct": true
+        },
+        {
+          "label": "Ice sheet",
+          "correct": false
+        }
+      ],
+      "explanation": "Permafrost has stayed frozen for at least two years in a row. Only the top layer may thaw in summer.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2tqwxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of river erosion happens when rocks carried by the river grind against the bed and banks?",
+      "options": [
+        {
+          "label": "Solution",
+          "correct": false
+        },
+        {
+          "label": "Traction",
+          "correct": false
+        },
+        {
+          "label": "Attrition",
+          "correct": false
+        },
+        {
+          "label": "Abrasion",
+          "correct": true
+        }
+      ],
+      "explanation": "Abrasion works like sandpaper, wearing away the river bed and banks.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr79ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which erosion process makes rocks smaller and rounder as they knock into each other in the river?",
+      "options": [
+        {
+          "label": "Hydraulic action",
+          "correct": false
+        },
+        {
+          "label": "Saltation",
+          "correct": false
+        },
+        {
+          "label": "Attrition",
+          "correct": true
+        },
+        {
+          "label": "Abrasion",
+          "correct": false
+        }
+      ],
+      "explanation": "Attrition explains why stones further downstream are usually smaller and more rounded.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr79ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which river landform is created when the neck of a meander is cut through and the old loop is left behind?",
+      "options": [
+        {
+          "label": "A waterfall",
+          "correct": false
+        },
+        {
+          "label": "An oxbow lake",
+          "correct": true
+        },
+        {
+          "label": "A delta",
+          "correct": false
+        },
+        {
+          "label": "A levée",
+          "correct": false
+        }
+      ],
+      "explanation": "Erosion narrows the meander neck until the river breaks through. Deposition then seals off the old loop.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr79ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the area of land drained by a river and its tributaries called?",
+      "options": [
+        {
+          "label": "A drainage basin",
+          "correct": true
+        },
+        {
+          "label": "A watershed",
+          "correct": false
+        },
+        {
+          "label": "A confluence",
+          "correct": false
+        },
+        {
+          "label": "A floodplain",
+          "correct": false
+        }
+      ],
+      "explanation": "A drainage basin is separated from the next one by high land called the watershed.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr79ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which graph shows how a river's discharge changes after a period of rainfall?",
+      "options": [
+        {
+          "label": "A rose diagram",
+          "correct": false
+        },
+        {
+          "label": "A population pyramid",
+          "correct": false
+        },
+        {
+          "label": "A storm hydrograph",
+          "correct": true
+        },
+        {
+          "label": "A climate graph",
+          "correct": false
+        }
+      ],
+      "explanation": "A storm hydrograph shows rainfall and discharge over time, including lag time and peak discharge.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zdr79ty",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the zigzag movement of sediment along a coastline called?",
+      "options": [
+        {
+          "label": "Longshore drift",
+          "correct": true
+        },
+        {
+          "label": "Deposition",
+          "correct": false
+        },
+        {
+          "label": "Rip current",
+          "correct": false
+        },
+        {
+          "label": "Backwash",
+          "correct": false
+        }
+      ],
+      "explanation": "Waves arrive at an angle with the prevailing wind, but the backwash runs straight back down the beach, moving sediment along.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8q46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which landform is a narrow ridge of sand or shingle that sticks out from the coast into the sea?",
+      "options": [
+        {
+          "label": "A wave-cut platform",
+          "correct": false
+        },
+        {
+          "label": "A headland",
+          "correct": false
+        },
+        {
+          "label": "A stack",
+          "correct": false
+        },
+        {
+          "label": "A spit",
+          "correct": true
+        }
+      ],
+      "explanation": "Spits form where the coastline changes direction and longshore drift keeps depositing sediment.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8q46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which hard engineering structure is a low wooden or stone barrier built out across a beach to trap sediment?",
+      "options": [
+        {
+          "label": "A gabion",
+          "correct": false
+        },
+        {
+          "label": "A groyne",
+          "correct": true
+        },
+        {
+          "label": "Rock armour",
+          "correct": false
+        },
+        {
+          "label": "A sea wall",
+          "correct": false
+        }
+      ],
+      "explanation": "Groynes stop longshore drift carrying the beach away, though they can starve beaches further along the coast.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8q46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Along a headland, erosion can form a crack, a cave and then an arch. What forms when the arch collapses?",
+      "options": [
+        {
+          "label": "A bay",
+          "correct": false
+        },
+        {
+          "label": "A stack",
+          "correct": true
+        },
+        {
+          "label": "A spit",
+          "correct": false
+        },
+        {
+          "label": "A stump",
+          "correct": false
+        }
+      ],
+      "explanation": "When the arch roof collapses, a stack of rock is left standing alone. Further erosion turns it into a stump.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8q46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the increase in the proportion of a country's population living in towns and cities called?",
+      "options": [
+        {
+          "label": "Suburbanisation",
+          "correct": false
+        },
+        {
+          "label": "Regeneration",
+          "correct": false
+        },
+        {
+          "label": "Urbanisation",
+          "correct": true
+        },
+        {
+          "label": "Counter-urbanisation",
+          "correct": false
+        }
+      ],
+      "explanation": "Urbanisation is happening fastest in lower income countries, driven by migration and natural increase.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9wcg82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "A city with a population of more than 10 million people is called a…",
+      "options": [
+        {
+          "label": "Megacity",
+          "correct": true
+        },
+        {
+          "label": "Conurbation",
+          "correct": false
+        },
+        {
+          "label": "Metropolis",
+          "correct": false
+        },
+        {
+          "label": "Capital city",
+          "correct": false
+        }
+      ],
+      "explanation": "Examples of megacities include Lagos, Mumbai and São Paulo.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9wcg82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "When an area's demand for water is greater than its supply, it is said to have a water…",
+      "options": [
+        {
+          "label": "Surplus",
+          "correct": false
+        },
+        {
+          "label": "Transfer",
+          "correct": false
+        },
+        {
+          "label": "Footprint",
+          "correct": false
+        },
+        {
+          "label": "Deficit",
+          "correct": true
+        }
+      ],
+      "explanation": "Much of south-east England has a water deficit, while parts of north and west Britain have a surplus.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zybnhv4",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the term for the distance food travels from where it is produced to where it is eaten?",
+      "options": [
+        {
+          "label": "Food security",
+          "correct": false
+        },
+        {
+          "label": "Agribusiness",
+          "correct": false
+        },
+        {
+          "label": "Food miles",
+          "correct": true
+        },
+        {
+          "label": "Carbon footprint",
+          "correct": false
+        }
+      ],
+      "explanation": "More food miles usually mean more transport emissions, which is one reason people buy local food.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zybnhv4",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Composite volcanoes are usually found at destructive plate margins.",
+      "answer": true,
+      "explanation": "At destructive margins, sticky magma builds steep-sided composite volcanoes from layers of ash and lava.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Beach nourishment is an example of hard engineering.",
+      "answer": false,
+      "explanation": "Beach nourishment, adding sand or shingle to a beach, is soft engineering because it works with natural processes.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zs8q46f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The tundra has a long growing season for plants.",
+      "answer": false,
+      "explanation": "The tundra's growing season is very short, often only around two months, because it is cold for most of the year.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z2tqwxs",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A brownfield site is land that has been built on before.",
+      "answer": true,
+      "explanation": "Brownfield sites are previously developed land, often old industrial areas, which can be cleaned up and reused.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/z9wcg82",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Tropical storms usually need a sea surface temperature of at least about how many degrees Celsius to form?",
+      "slider": {
+        "min": 15,
+        "max": 35,
+        "step": 1,
+        "unit": "°C",
+        "correct": 27,
+        "accept_min": 26,
+        "accept_max": 28
+      },
+      "explanation": "Warm oceans of about 27°C or more provide the heat and moisture that power tropical storms.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the highest category on the Saffir-Simpson scale for hurricanes?",
+      "slider": {
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "unit": null,
+        "correct": 5,
+        "accept_min": 5,
+        "accept_max": 5
+      },
+      "explanation": "The Saffir-Simpson scale runs from category 1 to category 5, the strongest, based on wind speed.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "The Hadley cell of the global atmospheric circulation stretches from the equator to about which latitude?",
+      "slider": {
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "unit": "°",
+        "correct": 30,
+        "accept_min": 25,
+        "accept_max": 35
+      },
+      "explanation": "Air rises at the equator, moves towards the poles and sinks at about 30° north and south, creating high pressure.",
+      "source_url": "https://www.bbc.co.uk/bitesize/topics/zcdrbk7",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

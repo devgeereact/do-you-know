@@ -1,0 +1,670 @@
+{
+  "slug": "computers-and-the-internet",
+  "title": "Computers and the Internet",
+  "intro": "Bits, bytes, the web and staying safe online.",
+  "category": "tech",
+  "difficulty": "easy",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Who invented the World Wide Web?",
+      "options": [
+        {
+          "label": "Bill Gates",
+          "correct": false
+        },
+        {
+          "label": "Tim Berners-Lee",
+          "correct": true
+        },
+        {
+          "label": "Ada Lovelace",
+          "correct": false
+        },
+        {
+          "label": "Alan Turing",
+          "correct": false
+        }
+      ],
+      "explanation": "Tim Berners-Lee, a British scientist working at CERN, invented the World Wide Web in 1989.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does CPU stand for?",
+      "options": [
+        {
+          "label": "Central Processing Unit",
+          "correct": true
+        },
+        {
+          "label": "Computer Power Unit",
+          "correct": false
+        },
+        {
+          "label": "Core Program Utility",
+          "correct": false
+        },
+        {
+          "label": "Central Picture Unit",
+          "correct": false
+        }
+      ],
+      "explanation": "The CPU, or central processing unit, is the part of a computer that carries out instructions.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "The internet and the World Wide Web are exactly the same thing.",
+      "answer": false,
+      "explanation": "The internet is the worldwide network of connected computers. The web is one service that runs on it, made of linked pages.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is an input device?",
+      "options": [
+        {
+          "label": "Monitor",
+          "correct": false
+        },
+        {
+          "label": "Keyboard",
+          "correct": true
+        },
+        {
+          "label": "Speaker",
+          "correct": false
+        },
+        {
+          "label": "Printer",
+          "correct": false
+        }
+      ],
+      "explanation": "A keyboard puts information into a computer, so it is an input device. Monitors and printers are output devices.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these is an output device?",
+      "options": [
+        {
+          "label": "Mouse",
+          "correct": false
+        },
+        {
+          "label": "Microphone",
+          "correct": false
+        },
+        {
+          "label": "Speaker",
+          "correct": true
+        },
+        {
+          "label": "Keyboard",
+          "correct": false
+        }
+      ],
+      "explanation": "A speaker gives out sound from the computer, so it is an output device.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Computers store all their data using which two digits?",
+      "options": [
+        {
+          "label": "1 and 2",
+          "correct": false
+        },
+        {
+          "label": "0 and 1",
+          "correct": true
+        },
+        {
+          "label": "0 and 9",
+          "correct": false
+        },
+        {
+          "label": "5 and 10",
+          "correct": false
+        }
+      ],
+      "explanation": "Computers use binary, a number system with only two digits: 0 and 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/1",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which of these makes a stronger password?",
+      "options": [
+        {
+          "label": "Your first name",
+          "correct": false
+        },
+        {
+          "label": "password123",
+          "correct": false
+        },
+        {
+          "label": "Three random words joined together",
+          "correct": true
+        },
+        {
+          "label": "123456",
+          "correct": false
+        }
+      ],
+      "explanation": "Joining three random words makes a password that is long, easy to remember and hard to guess.",
+      "source_url": "https://www.ncsc.gov.uk/collection/top-tips-for-staying-secure-online/three-random-words",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "slider",
+      "prompt": "How many bits are there in one byte?",
+      "slider": {
+        "min": 0,
+        "max": 16,
+        "step": 1,
+        "unit": "bits",
+        "correct": 8,
+        "accept_min": 8,
+        "accept_max": 8
+      },
+      "explanation": "A byte is a group of eight bits. Each bit is a single 0 or 1.",
+      "source_url": "https://www.bbc.co.uk/bitesize/guides/z26rcdm/revision/1",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does \"www\" at the start of many web addresses stand for?",
+      "options": [
+        {
+          "label": "World Wide Web",
+          "correct": true
+        },
+        {
+          "label": "Wide Web Window",
+          "correct": false
+        },
+        {
+          "label": "World Web Wire",
+          "correct": false
+        },
+        {
+          "label": "Web Writing Wizard",
+          "correct": false
+        }
+      ],
+      "explanation": "www stands for World Wide Web, the system of linked pages invented by Tim Berners-Lee.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a URL?",
+      "options": [
+        {
+          "label": "The address of a page on the web",
+          "correct": true
+        },
+        {
+          "label": "A kind of computer virus",
+          "correct": false
+        },
+        {
+          "label": "A type of keyboard",
+          "correct": false
+        },
+        {
+          "label": "A cable that joins computers",
+          "correct": false
+        }
+      ],
+      "explanation": "URL stands for uniform resource locator. It is the address you type in to go to a particular web page.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3tbgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which kind of program do you use to look at web pages?",
+      "options": [
+        {
+          "label": "A web browser",
+          "correct": true
+        },
+        {
+          "label": "A spreadsheet",
+          "correct": false
+        },
+        {
+          "label": "A calculator",
+          "correct": false
+        },
+        {
+          "label": "A paint program",
+          "correct": false
+        }
+      ],
+      "explanation": "A web browser fetches web pages from the internet and displays them on your screen.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zjbf3j6",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call a wireless connection to a network?",
+      "options": [
+        {
+          "label": "Wi-Fi",
+          "correct": true
+        },
+        {
+          "label": "Ethernet",
+          "correct": false
+        },
+        {
+          "label": "HDMI",
+          "correct": false
+        },
+        {
+          "label": "USB",
+          "correct": false
+        }
+      ],
+      "explanation": "Wi-Fi lets laptops, tablets and phones join a network without a cable, using radio signals.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z78nydm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the name for a computer that stores files or websites and sends them to other computers?",
+      "options": [
+        {
+          "label": "A server",
+          "correct": true
+        },
+        {
+          "label": "A printer",
+          "correct": false
+        },
+        {
+          "label": "A mouse",
+          "correct": false
+        },
+        {
+          "label": "A monitor",
+          "correct": false
+        }
+      ],
+      "explanation": "A server is a computer on a network that stores and shares files, web pages and other data with other computers.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z9n6p4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the cable that plugs a computer into a wired network usually called?",
+      "options": [
+        {
+          "label": "An ethernet cable",
+          "correct": true
+        },
+        {
+          "label": "A kettle lead",
+          "correct": false
+        },
+        {
+          "label": "A headphone cable",
+          "correct": false
+        },
+        {
+          "label": "A charging cable",
+          "correct": false
+        }
+      ],
+      "explanation": "An ethernet cable connects a computer to a network by wire, which is often faster and steadier than a wireless link.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z78nydm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What should you do if something you see online makes you feel worried or upset?",
+      "options": [
+        {
+          "label": "Keep it a secret",
+          "correct": false
+        },
+        {
+          "label": "Tell a trusted adult",
+          "correct": true
+        },
+        {
+          "label": "Reply to it",
+          "correct": false
+        },
+        {
+          "label": "Share it with friends",
+          "correct": false
+        }
+      ],
+      "explanation": "Always tell a trusted adult, such as a parent or teacher, straight away. They can help you sort it out.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zwhkp9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Who should you check with before setting up an account on a website or app?",
+      "options": [
+        {
+          "label": "A trusted adult",
+          "correct": true
+        },
+        {
+          "label": "A stranger in a chat room",
+          "correct": false
+        },
+        {
+          "label": "Nobody at all",
+          "correct": false
+        },
+        {
+          "label": "Whoever sent you the link",
+          "correct": false
+        }
+      ],
+      "explanation": "Always check with a trusted adult, such as a parent or carer, before you set up any online account. They can help you stay safe.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zfmhfdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a safer choice for a username than your real name?",
+      "options": [
+        {
+          "label": "Your full name",
+          "correct": false
+        },
+        {
+          "label": "A nickname",
+          "correct": true
+        },
+        {
+          "label": "Your home address",
+          "correct": false
+        },
+        {
+          "label": "Your school's name",
+          "correct": false
+        }
+      ],
+      "explanation": "Using a nickname instead of your real name helps keep your personal details private.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zfmhfdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which British mathematician helped lay the foundations for modern computers and artificial intelligence?",
+      "options": [
+        {
+          "label": "Alan Turing",
+          "correct": true
+        },
+        {
+          "label": "William Shakespeare",
+          "correct": false
+        },
+        {
+          "label": "Charles Dickens",
+          "correct": false
+        },
+        {
+          "label": "Florence Nightingale",
+          "correct": false
+        }
+      ],
+      "explanation": "Alan Turing's ideas about thinking machines shaped modern computing, and he is seen as a founder of computer science.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/general-history/the-life-of-alan-turing/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What was the name of the secret wartime code that Alan Turing helped to crack at Bletchley Park?",
+      "options": [
+        {
+          "label": "Morse",
+          "correct": false
+        },
+        {
+          "label": "Enigma",
+          "correct": true
+        },
+        {
+          "label": "Braille",
+          "correct": false
+        },
+        {
+          "label": "Semaphore",
+          "correct": false
+        }
+      ],
+      "explanation": "Turing designed machines that helped break the Enigma code, which was used to send secret messages in the Second World War.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/general-history/the-life-of-alan-turing/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is a search engine used for?",
+      "options": [
+        {
+          "label": "Finding information on the web",
+          "correct": true
+        },
+        {
+          "label": "Charging a laptop",
+          "correct": false
+        },
+        {
+          "label": "Cooling down a computer",
+          "correct": false
+        },
+        {
+          "label": "Printing photos",
+          "correct": false
+        }
+      ],
+      "explanation": "A search engine looks through billions of web pages to find the ones that match the words you type in.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zyhbwmn",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What do we call text or a picture that takes you to another web page when you click on it?",
+      "options": [
+        {
+          "label": "A hyperlink",
+          "correct": true
+        },
+        {
+          "label": "A pixel",
+          "correct": false
+        },
+        {
+          "label": "A file",
+          "correct": false
+        },
+        {
+          "label": "A folder",
+          "correct": false
+        }
+      ],
+      "explanation": "A hyperlink, or link, takes you to another location on the web when you click it.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z3tbgk7",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What does AI stand for?",
+      "options": [
+        {
+          "label": "Artificial intelligence",
+          "correct": true
+        },
+        {
+          "label": "Automatic internet",
+          "correct": false
+        },
+        {
+          "label": "Animated images",
+          "correct": false
+        },
+        {
+          "label": "Active input",
+          "correct": false
+        }
+      ],
+      "explanation": "AI stands for artificial intelligence: computer systems that can do tasks that usually need human thinking, such as recognising speech.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/general-history/the-life-of-alan-turing/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the best way to find a website that is safe and reliable for your homework?",
+      "options": [
+        {
+          "label": "Click the first advert you see",
+          "correct": false
+        },
+        {
+          "label": "Ask a trusted adult or your teacher to help",
+          "correct": true
+        },
+        {
+          "label": "Pick the site with the most colours",
+          "correct": false
+        },
+        {
+          "label": "Use any site a stranger sends you",
+          "correct": false
+        }
+      ],
+      "explanation": "Not every website can be trusted. A teacher or trusted adult can help you find websites that are safe and accurate.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z9ntn9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "On a network, what are the devices you use, such as laptops and tablets, called?",
+      "options": [
+        {
+          "label": "Clients",
+          "correct": true
+        },
+        {
+          "label": "Routers",
+          "correct": false
+        },
+        {
+          "label": "Cables",
+          "correct": false
+        },
+        {
+          "label": "Hubs",
+          "correct": false
+        }
+      ],
+      "explanation": "The computers, laptops and tablets that people use on a network are called clients. They ask servers for files and data.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z78nydm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the screen that shows a computer's words and pictures usually called?",
+      "options": [
+        {
+          "label": "A monitor",
+          "correct": true
+        },
+        {
+          "label": "A keyboard",
+          "correct": false
+        },
+        {
+          "label": "A mouse",
+          "correct": false
+        },
+        {
+          "label": "A webcam",
+          "correct": false
+        }
+      ],
+      "explanation": "A monitor is an output device: it shows you the words, pictures and videos the computer produces.",
+      "source_url": "https://www.bbc.co.uk/bitesize/subjects/zvc9q6f",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Everything you read on a website is always true.",
+      "answer": false,
+      "explanation": "Anyone can put information online, and websites are not always checked like books are, so it is wise to check facts.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z9ntn9q",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "People you meet online may not be who they say they are.",
+      "answer": true,
+      "explanation": "Someone online could be pretending to be someone else, so never share personal details or arrange to meet them.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/zfmhfdm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "A network is made when two or more computers are connected together.",
+      "answer": true,
+      "explanation": "Joining two or more computers lets them share information, files and devices such as printers.",
+      "source_url": "https://www.bbc.co.uk/bitesize/articles/z9n6p4j",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year was the computer pioneer Alan Turing born?",
+      "slider": {
+        "min": 1850,
+        "max": 2000,
+        "step": 1,
+        "unit": null,
+        "correct": 1912,
+        "accept_min": 1910,
+        "accept_max": 1914
+      },
+      "explanation": "Alan Turing was born in London on 23 June 1912.",
+      "source_url": "https://www.natgeokids.com/uk/discover/history/general-history/the-life-of-alan-turing/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "In which year did Tim Berners-Lee invent the World Wide Web at CERN?",
+      "slider": {
+        "min": 1950,
+        "max": 2010,
+        "step": 1,
+        "unit": null,
+        "correct": 1989,
+        "accept_min": 1989,
+        "accept_max": 1991
+      },
+      "explanation": "Tim Berners-Lee came up with the World Wide Web in 1989 and wrote the first web browser and server in 1990.",
+      "source_url": "https://www.w3.org/People/Berners-Lee/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

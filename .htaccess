@@ -1,0 +1,110 @@
+# === BEGIN Cloudflare-origin-lock (2026-08-28) ===
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP:CF-RAY} ^$
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule ^ - [F,L]
+</IfModule>
+# === END Cloudflare-origin-lock ===
+
+# Do You Know: Apache and LiteSpeed rules for the app's own cPanel document root.
+# GEE OS cpanel profile. The API folder (api/) carries its own .htaccess that only
+# allows api.php. Change this file, then re-run the local Apache check before release.
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+# Prerendered pages live in folders (q/<slug>/index.html). Without this, Apache answers
+# /q/<slug> with a 301 to /q/<slug>/ before the rewrite in step 6 can serve the page.
+# Directory listings stay off (-Indexes), so a folder without a slash is still a 403.
+<IfModule mod_dir.c>
+  DirectorySlash Off
+</IfModule>
+ServerSignature Off
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType text/javascript .js .mjs
+  AddType font/woff2 .woff2
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Private files are refused first, even when they do not exist: dotfiles (except
+  #    .well-known), source maps, backups, dumps, archives, logs and configuration.
+  RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L,NC]
+  RewriteRule \.(map|bak|sql|sql\.gz|zip|tgz|tar|env|log|ini|phar)$ - [F,L,NC]
+  RewriteRule (^|/)(composer\.[^/]*|config[^/]*\.php)$ - [F,L,NC]
+  # No PHP runs here except api/api.php.
+  RewriteCond %{REQUEST_URI} !^/api/api\.php$
+  RewriteRule \.(php[0-9]?|phtml|phar|cgi|pl|py)$ - [F,L,NC]
+
+  # 2. HTTPS. Behind Cloudflare a forwarded https scheme counts as secure, which
+  #    prevents redirect loops. Certificate checks under .well-known stay on HTTP.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # 3. Bearer tokens: some cPanel PHP handlers drop the Authorization header.
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  # 4. API: /api/v1 goes to the API entry point, never to the app shell.
+  RewriteRule ^api/v1(?:/.*)?$ api/api.php [END]
+  # sitemap.xml is built from the database by the API (published quizzes, active categories).
+  RewriteRule ^sitemap\.xml$ api/api.php [END]
+
+  # 5. Content-hashed build output and icons may be cached for a year.
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^(assets|icons)/ - [E=DYK_IMMUTABLE:1]
+
+  # 6. Prerendered category and quiz pages (scripts/prerender.mjs): /c/<slug> and /q/<slug>
+  #    serve their own index.html straight away, with or without a trailing slash, so there
+  #    is no directory-slash redirect. A slug with no prerendered page falls to the shell.
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^([cq]/[a-z0-9-]{1,100})/?$ $1/index.html [L]
+
+  # 7. Real files and folders are served as they are.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 8. A missing file with a static extension is a real 404, not the app shell.
+  RewriteRule \.(js|mjs|css|json|webmanifest|png|jpe?g|gif|svg|webp|avif|ico|woff2?|txt|xml)$ - [R=404,L,NC]
+
+  # 9. Everything else is a client-side route: serve the app shell.
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# The same deny list for servers that check file sections before rewrites.
+<FilesMatch "(^\.|\.(map|bak|sql|zip|tgz|tar|env|log|ini|phar)$|^composer\.|^config.*\.php$)">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  Header always unset X-Powered-By
+  # Content-Security-Policy in REPORT-ONLY mode: browsers log violations to the console
+  # and block nothing. Clerk hosts follow Clerk's CSP guide; the sha256 is the theme
+  # script inline in index.html (recompute it if that script changes). Switch to
+  # enforcing only after a clean run of every journey, including /account sign-in.
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'sha256-Am9HIyUXdM5J+HUj6OF9rv6t8Cw120RRcxq9OmM+7wk=' https://clerk.doyouknow.space https://challenges.cloudflare.com https://*.protect.clerk.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://img.clerk.com https://ik.imagekit.io; font-src 'self' data:; connect-src 'self' https://clerk.doyouknow.space https://*.protect.clerk.com:* https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.ingest.sentry.io https://*.ingest.de.sentry.io https://*.ingest.us.sentry.io; worker-src 'self' blob:; frame-src 'self' https://challenges.cloudflare.com https://*.protect.clerk.com; manifest-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'"
+  # HSTS on secure responses only, one year, no preload.
+  Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on' || req('X-Forwarded-Proto') == 'https'"
+
+  # Hashed assets and icons never change at the same URL.
+  Header set Cache-Control "public, max-age=31536000, immutable" env=DYK_IMMUTABLE
+  Header set Cache-Control "public, max-age=31536000, immutable" env=REDIRECT_DYK_IMMUTABLE
+
+  # The shell, service worker, Workbox runtime, manifest and offline page must always be
+  # revalidated, or players stay on an old release. This block comes last, so it wins.
+  <FilesMatch "^(index\.html|offline\.html|sw\.js|registerSW\.js|workbox-[^/]*\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>

@@ -1,0 +1,40 @@
+project:
+  name: "Do You Know"
+  slug: do-you-know
+  type: pwa
+  lifecycle: rebranded-import-awaiting-foundation
+  location: /Users/realmrgee/Developer/Projects/do-you-know
+  domain: doyouknow.space
+  route: B
+  source_policy: read-only-source-preserved
+stack_profile: cpanel
+stack: [react-18, typescript-strict, vite, tailwind, private-php-8.2, mysql-mariadb, clerk]
+package_manager: npm
+dev_server:
+  port: 5202
+  command: npm run dev
+repository:
+  intended_owner: gsakinz
+  intended_name: do-you-know
+  visibility: private
+  connected: true
+  url: https://github.com/gsakinz/do-you-know
+  blocker: none-for-repository-access
+hosting:
+  domain_connected: owner-reported-not-independently-verified
+  document_root: TO_VERIFY_IN_CPANEL
+  private_backend_root: TO_VERIFY_OUTSIDE_EVERY_WEBROOT
+  ftps: scoped-account-required
+  deployment: manual-workflow_dispatch-only
+  deployed_by_this_task: false
+identity:
+  provider: clerk
+  new_domain_configuration: not-verified
+sources_of_truth:
+  memory: docs/00-foundation/PROJECT-MEMORY.md
+  handoff: docs/00-foundation/CLAUDE-CODE-HANDOFF.md
+  rules: docs/00-foundation/RULES.md
+  product: docs/01-product/PRODUCT-SPEC.md
+  architecture: docs/02-architecture/ARCHITECTURE.md
+  deployment: docs/07-operations/GITHUB-FTPS-SETUP.md
+current_task: .agent/CURRENT-TASK.md

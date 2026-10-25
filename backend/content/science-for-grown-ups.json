@@ -1,0 +1,653 @@
+{
+  "slug": "science-for-grown-ups",
+  "title": "Science for Grown-Ups",
+  "intro": "Physics, chemistry, biology and astronomy at expert level. Time to see how much science really stuck.",
+  "category": "science-nature",
+  "difficulty": "hard",
+  "age_min": 16,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 30,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "Which element has the chemical symbol W?",
+      "options": [
+        {
+          "label": "Tungsten",
+          "correct": true
+        },
+        {
+          "label": "Vanadium",
+          "correct": false
+        },
+        {
+          "label": "Xenon",
+          "correct": false
+        },
+        {
+          "label": "Bismuth",
+          "correct": false
+        }
+      ],
+      "explanation": "W comes from wolfram, the element's older German-derived name. Tungsten has the highest melting point of any metal.",
+      "source_url": "https://www.britannica.com/science/tungsten-chemical-element",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the only metal that is liquid at normal room temperature and pressure?",
+      "options": [
+        {
+          "label": "Mercury",
+          "correct": true
+        },
+        {
+          "label": "Gallium",
+          "correct": false
+        },
+        {
+          "label": "Caesium",
+          "correct": false
+        },
+        {
+          "label": "Bromine",
+          "correct": false
+        }
+      ],
+      "explanation": "Mercury melts at about −39 °C. Gallium and caesium melt just above room temperature, and bromine is liquid but is not a metal.",
+      "source_url": "https://www.britannica.com/science/mercury-chemical-element",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which element has the highest electronegativity of all, meaning it attracts bonding electrons most strongly?",
+      "options": [
+        {
+          "label": "Fluorine",
+          "correct": true
+        },
+        {
+          "label": "Oxygen",
+          "correct": false
+        },
+        {
+          "label": "Chlorine",
+          "correct": false
+        },
+        {
+          "label": "Nitrogen",
+          "correct": false
+        }
+      ],
+      "explanation": "Fluorine tops the Pauling electronegativity scale at about 4.0, which makes it the most reactive of all the non-metals.",
+      "source_url": "https://www.britannica.com/science/fluorine",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the SI unit of electrical resistance?",
+      "options": [
+        {
+          "label": "Ohm",
+          "correct": true
+        },
+        {
+          "label": "Farad",
+          "correct": false
+        },
+        {
+          "label": "Henry",
+          "correct": false
+        },
+        {
+          "label": "Siemens",
+          "correct": false
+        }
+      ],
+      "explanation": "Resistance is measured in ohms, named after the German physicist Georg Simon Ohm. The siemens measures conductance, its opposite.",
+      "source_url": "https://www.britannica.com/science/ohm",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which cell structure is the site where proteins are built?",
+      "options": [
+        {
+          "label": "Ribosome",
+          "correct": true
+        },
+        {
+          "label": "Lysosome",
+          "correct": false
+        },
+        {
+          "label": "Golgi apparatus",
+          "correct": false
+        },
+        {
+          "label": "Vacuole",
+          "correct": false
+        }
+      ],
+      "explanation": "Ribosomes read messenger RNA and join amino acids together in the right order to build proteins.",
+      "source_url": "https://www.britannica.com/science/ribosome",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "In DNA, the base adenine always pairs with which other base?",
+      "options": [
+        {
+          "label": "Thymine",
+          "correct": true
+        },
+        {
+          "label": "Guanine",
+          "correct": false
+        },
+        {
+          "label": "Cytosine",
+          "correct": false
+        },
+        {
+          "label": "Uracil",
+          "correct": false
+        }
+      ],
+      "explanation": "Adenine pairs with thymine and guanine pairs with cytosine. In RNA, uracil takes the place of thymine.",
+      "source_url": "https://www.britannica.com/science/DNA",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the boundary around a black hole beyond which nothing, not even light, can escape?",
+      "options": [
+        {
+          "label": "The event horizon",
+          "correct": true
+        },
+        {
+          "label": "The photon sphere",
+          "correct": false
+        },
+        {
+          "label": "The accretion disc",
+          "correct": false
+        },
+        {
+          "label": "The singularity",
+          "correct": false
+        }
+      ],
+      "explanation": "Once anything crosses the event horizon, escaping would need a speed greater than light, which is impossible.",
+      "source_url": "https://www.britannica.com/science/black-hole",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Titan, the only moon in the solar system with a thick atmosphere, orbits which planet?",
+      "options": [
+        {
+          "label": "Saturn",
+          "correct": true
+        },
+        {
+          "label": "Jupiter",
+          "correct": false
+        },
+        {
+          "label": "Neptune",
+          "correct": false
+        },
+        {
+          "label": "Uranus",
+          "correct": false
+        }
+      ],
+      "explanation": "Titan is Saturn's largest moon. Its dense nitrogen atmosphere hides lakes of liquid methane and ethane.",
+      "source_url": "https://science.nasa.gov/saturn/moons/titan/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which physicist is famous for the uncertainty principle?",
+      "options": [
+        {
+          "label": "Werner Heisenberg",
+          "correct": true
+        },
+        {
+          "label": "Niels Bohr",
+          "correct": false
+        },
+        {
+          "label": "Erwin Schrödinger",
+          "correct": false
+        },
+        {
+          "label": "Max Planck",
+          "correct": false
+        }
+      ],
+      "explanation": "Heisenberg showed in 1927 that a particle's position and momentum cannot both be known exactly at the same time.",
+      "source_url": "https://www.britannica.com/science/uncertainty-principle",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which noble gas makes up the largest share of Earth's atmosphere?",
+      "options": [
+        {
+          "label": "Argon",
+          "correct": true
+        },
+        {
+          "label": "Neon",
+          "correct": false
+        },
+        {
+          "label": "Helium",
+          "correct": false
+        },
+        {
+          "label": "Krypton",
+          "correct": false
+        }
+      ],
+      "explanation": "Argon makes up just under 1% of the air, far more than all the other noble gases put together.",
+      "source_url": "https://www.britannica.com/science/argon-chemical-element",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which cells in the pancreas produce insulin?",
+      "options": [
+        {
+          "label": "Beta cells",
+          "correct": true
+        },
+        {
+          "label": "Alpha cells",
+          "correct": false
+        },
+        {
+          "label": "Kupffer cells",
+          "correct": false
+        },
+        {
+          "label": "Schwann cells",
+          "correct": false
+        }
+      ],
+      "explanation": "Beta cells in the islets of Langerhans release insulin to lower blood sugar. Alpha cells make glucagon, which raises it.",
+      "source_url": "https://www.britannica.com/science/insulin",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which gas law says that, at constant temperature, the pressure of a fixed mass of gas is inversely proportional to its volume?",
+      "options": [
+        {
+          "label": "Boyle's law",
+          "correct": true
+        },
+        {
+          "label": "Charles's law",
+          "correct": false
+        },
+        {
+          "label": "Hooke's law",
+          "correct": false
+        },
+        {
+          "label": "Avogadro's law",
+          "correct": false
+        }
+      ],
+      "explanation": "Robert Boyle described the rule in 1662: squeeze a gas into half the space and its pressure doubles.",
+      "source_url": "https://www.britannica.com/science/Boyles-law",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of cell division produces four genetically different sex cells?",
+      "options": [
+        {
+          "label": "Meiosis",
+          "correct": true
+        },
+        {
+          "label": "Mitosis",
+          "correct": false
+        },
+        {
+          "label": "Binary fission",
+          "correct": false
+        },
+        {
+          "label": "Budding",
+          "correct": false
+        }
+      ],
+      "explanation": "Meiosis halves the chromosome number and shuffles genes, so each egg or sperm cell is unique. Mitosis makes identical copies.",
+      "source_url": "https://www.britannica.com/science/meiosis-cytology",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Apart from the Sun, which is the brightest star in the night sky?",
+      "options": [
+        {
+          "label": "Sirius",
+          "correct": true
+        },
+        {
+          "label": "Polaris",
+          "correct": false
+        },
+        {
+          "label": "Betelgeuse",
+          "correct": false
+        },
+        {
+          "label": "Vega",
+          "correct": false
+        }
+      ],
+      "explanation": "Sirius, the Dog Star, is bright because it is both luminous and close, about 8.6 light-years away.",
+      "source_url": "https://www.britannica.com/place/Sirius-star",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which type of bond holds the two strands of the DNA double helix together?",
+      "options": [
+        {
+          "label": "Hydrogen bonds",
+          "correct": true
+        },
+        {
+          "label": "Ionic bonds",
+          "correct": false
+        },
+        {
+          "label": "Metallic bonds",
+          "correct": false
+        },
+        {
+          "label": "Peptide bonds",
+          "correct": false
+        }
+      ],
+      "explanation": "Hydrogen bonds between paired bases are weak enough to let the strands unzip when DNA is copied.",
+      "source_url": "https://www.genome.gov/genetics-glossary/Double-Helix",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which particle carries the electromagnetic force?",
+      "options": [
+        {
+          "label": "Photon",
+          "correct": true
+        },
+        {
+          "label": "Gluon",
+          "correct": false
+        },
+        {
+          "label": "W boson",
+          "correct": false
+        },
+        {
+          "label": "Higgs boson",
+          "correct": false
+        }
+      ],
+      "explanation": "Photons are particles of light and carry the electromagnetic force. Gluons carry the strong force and W bosons the weak force.",
+      "source_url": "https://www.britannica.com/science/photon",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which mineral is number 1, the softest, on the Mohs hardness scale?",
+      "options": [
+        {
+          "label": "Talc",
+          "correct": true
+        },
+        {
+          "label": "Gypsum",
+          "correct": false
+        },
+        {
+          "label": "Calcite",
+          "correct": false
+        },
+        {
+          "label": "Quartz",
+          "correct": false
+        }
+      ],
+      "explanation": "Talc is so soft you can scratch it with a fingernail. Gypsum is 2, calcite 3 and quartz 7.",
+      "source_url": "https://www.britannica.com/science/Mohs-hardness",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which scientist first proposed continental drift, the idea that the continents slowly move?",
+      "options": [
+        {
+          "label": "Alfred Wegener",
+          "correct": true
+        },
+        {
+          "label": "Charles Lyell",
+          "correct": false
+        },
+        {
+          "label": "James Hutton",
+          "correct": false
+        },
+        {
+          "label": "Arthur Holmes",
+          "correct": false
+        }
+      ],
+      "explanation": "Wegener set out the idea in 1912. It was widely rejected until plate tectonics explained how continents move.",
+      "source_url": "https://www.britannica.com/science/continental-drift-geology",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which vitamin is mainly needed for blood clotting?",
+      "options": [
+        {
+          "label": "Vitamin K",
+          "correct": true
+        },
+        {
+          "label": "Vitamin D",
+          "correct": false
+        },
+        {
+          "label": "Vitamin B12",
+          "correct": false
+        },
+        {
+          "label": "Vitamin A",
+          "correct": false
+        }
+      ],
+      "explanation": "Vitamin K helps the liver make clotting proteins. Newborn babies are often given it for this reason.",
+      "source_url": "https://www.britannica.com/science/vitamin-K",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which is the nearest large spiral galaxy to the Milky Way?",
+      "options": [
+        {
+          "label": "Andromeda",
+          "correct": true
+        },
+        {
+          "label": "Triangulum",
+          "correct": false
+        },
+        {
+          "label": "Whirlpool",
+          "correct": false
+        },
+        {
+          "label": "Sombrero",
+          "correct": false
+        }
+      ],
+      "explanation": "The Andromeda Galaxy is about 2.5 million light-years away and is one of the farthest things visible with the naked eye.",
+      "source_url": "https://www.britannica.com/place/Andromeda-Galaxy",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is it called when a solid turns straight into a gas without melting first, as dry ice does?",
+      "options": [
+        {
+          "label": "Sublimation",
+          "correct": true
+        },
+        {
+          "label": "Deposition",
+          "correct": false
+        },
+        {
+          "label": "Condensation",
+          "correct": false
+        },
+        {
+          "label": "Evaporation",
+          "correct": false
+        }
+      ],
+      "explanation": "Dry ice is frozen carbon dioxide. At normal air pressure it skips the liquid stage and sublimes straight into gas.",
+      "source_url": "https://www.britannica.com/science/sublimation-phase-change",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "Which chemist published a periodic table in 1869 that left gaps for elements not yet discovered?",
+      "options": [
+        {
+          "label": "Dmitri Mendeleev",
+          "correct": true
+        },
+        {
+          "label": "John Dalton",
+          "correct": false
+        },
+        {
+          "label": "Antoine Lavoisier",
+          "correct": false
+        },
+        {
+          "label": "Humphry Davy",
+          "correct": false
+        }
+      ],
+      "explanation": "Mendeleev predicted the properties of missing elements such as gallium and germanium, which were later found to match.",
+      "source_url": "https://www.britannica.com/science/periodic-table-of-the-elements",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Sound travels faster through water than through air.",
+      "answer": true,
+      "explanation": "Sound moves at about 1,500 metres per second in water, more than four times faster than in air, because the particles are closer together.",
+      "source_url": "https://www.britannica.com/science/sound-physics",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Venus spins in the opposite direction to most planets, so on Venus the Sun rises in the west.",
+      "answer": true,
+      "explanation": "Venus has a backwards, very slow spin. One Venus day is longer than its year.",
+      "source_url": "https://science.nasa.gov/venus/",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Mitochondria contain their own DNA, separate from the DNA in the nucleus.",
+      "answer": true,
+      "explanation": "Mitochondria have their own small loop of DNA, a clue that they were once free-living bacteria.",
+      "source_url": "https://www.britannica.com/science/mitochondrion",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Bats are the only mammals capable of true powered flight.",
+      "answer": true,
+      "explanation": "Flying squirrels and colugos glide, but only bats flap their wings to fly.",
+      "source_url": "https://www.britannica.com/animal/bat-mammal",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "An electron has more mass than a proton.",
+      "answer": false,
+      "explanation": "A proton is about 1,836 times heavier than an electron, which is why almost all of an atom's mass is in its nucleus.",
+      "source_url": "https://www.britannica.com/science/electron",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "What is the atomic number of iron?",
+      "slider": {
+        "min": 1,
+        "max": 60,
+        "step": 1,
+        "unit": null,
+        "correct": 26,
+        "accept_min": 26,
+        "accept_max": 26
+      },
+      "explanation": "Iron has 26 protons in its nucleus, so its atomic number is 26. Its symbol, Fe, comes from the Latin ferrum.",
+      "source_url": "https://www.britannica.com/science/iron-chemical-element",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "Absolute zero is 0 kelvin. What is it in degrees Celsius, to the nearest whole degree?",
+      "slider": {
+        "min": -300,
+        "max": 0,
+        "step": 1,
+        "unit": "°C",
+        "correct": -273,
+        "accept_min": -273,
+        "accept_max": -273
+      },
+      "explanation": "Absolute zero is −273.15 °C, the coldest temperature possible, where particles have the least possible energy.",
+      "source_url": "https://www.britannica.com/science/absolute-zero",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "slider",
+      "prompt": "To the nearest minute, about how long does sunlight take to reach Earth?",
+      "slider": {
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "minutes",
+        "correct": 8,
+        "accept_min": 8,
+        "accept_max": 9
+      },
+      "explanation": "Light covers the 150 million kilometres from the Sun in about 8 minutes 20 seconds.",
+      "source_url": "https://science.nasa.gov/sun/",
+      "review_by": "2027-10-21"
+    }
+  ]
+}

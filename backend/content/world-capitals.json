@@ -1,0 +1,697 @@
+{
+  "slug": "world-capitals",
+  "title": "World Capitals",
+  "intro": "Hop around the globe and match countries to their capital cities.",
+  "category": "geography",
+  "difficulty": "medium",
+  "age_min": 7,
+  "age_max": null,
+  "curriculum_tags": [],
+  "time_limit_seconds": 20,
+  "shuffle_options": true,
+  "is_ranked": true,
+  "questions": [
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Australia?",
+      "options": [
+        {
+          "label": "Sydney",
+          "correct": false
+        },
+        {
+          "label": "Melbourne",
+          "correct": false
+        },
+        {
+          "label": "Canberra",
+          "correct": true
+        },
+        {
+          "label": "Perth",
+          "correct": false
+        }
+      ],
+      "explanation": "Canberra is Australia's capital, even though Sydney and Melbourne are bigger cities.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/australia",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Canada?",
+      "options": [
+        {
+          "label": "Toronto",
+          "correct": false
+        },
+        {
+          "label": "Ottawa",
+          "correct": true
+        },
+        {
+          "label": "Vancouver",
+          "correct": false
+        },
+        {
+          "label": "Montreal",
+          "correct": false
+        }
+      ],
+      "explanation": "Ottawa, in the province of Ontario, is the capital of Canada.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/canada",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Japan?",
+      "options": [
+        {
+          "label": "Kyoto",
+          "correct": false
+        },
+        {
+          "label": "Osaka",
+          "correct": false
+        },
+        {
+          "label": "Tokyo",
+          "correct": true
+        },
+        {
+          "label": "Hiroshima",
+          "correct": false
+        }
+      ],
+      "explanation": "Tokyo is Japan's capital and one of the biggest cities in the world.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/japan",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of France?",
+      "options": [
+        {
+          "label": "Paris",
+          "correct": true
+        },
+        {
+          "label": "Lyon",
+          "correct": false
+        },
+        {
+          "label": "Marseille",
+          "correct": false
+        },
+        {
+          "label": "Nice",
+          "correct": false
+        }
+      ],
+      "explanation": "Paris, on the River Seine, is the capital of France and home to the Eiffel Tower.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/france",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Kenya?",
+      "options": [
+        {
+          "label": "Mombasa",
+          "correct": false
+        },
+        {
+          "label": "Nairobi",
+          "correct": true
+        },
+        {
+          "label": "Kampala",
+          "correct": false
+        },
+        {
+          "label": "Dodoma",
+          "correct": false
+        }
+      ],
+      "explanation": "Nairobi is the capital of Kenya, in East Africa.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/kenya",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Nigeria?",
+      "options": [
+        {
+          "label": "Lagos",
+          "correct": false
+        },
+        {
+          "label": "Kano",
+          "correct": false
+        },
+        {
+          "label": "Abuja",
+          "correct": true
+        },
+        {
+          "label": "Ibadan",
+          "correct": false
+        }
+      ],
+      "explanation": "Abuja became Nigeria's capital in 1991. Lagos is the country's largest city.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/nigeria",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Brazil?",
+      "options": [
+        {
+          "label": "Rio de Janeiro",
+          "correct": false
+        },
+        {
+          "label": "Brasília",
+          "correct": true
+        },
+        {
+          "label": "São Paulo",
+          "correct": false
+        },
+        {
+          "label": "Salvador",
+          "correct": false
+        }
+      ],
+      "explanation": "Brasília was built as a new capital and opened in 1960. Rio de Janeiro was the capital before that.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/brazil",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Egypt?",
+      "options": [
+        {
+          "label": "Alexandria",
+          "correct": false
+        },
+        {
+          "label": "Luxor",
+          "correct": false
+        },
+        {
+          "label": "Cairo",
+          "correct": true
+        },
+        {
+          "label": "Giza",
+          "correct": false
+        }
+      ],
+      "explanation": "Cairo, on the River Nile, is the capital of Egypt.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/egypt",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Italy?",
+      "options": [
+        {
+          "label": "Milan",
+          "correct": false
+        },
+        {
+          "label": "Venice",
+          "correct": false
+        },
+        {
+          "label": "Naples",
+          "correct": false
+        },
+        {
+          "label": "Rome",
+          "correct": true
+        }
+      ],
+      "explanation": "Rome is the capital of Italy and is famous for ancient buildings such as the Colosseum.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/italy",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Wellington is the capital city of New Zealand.",
+      "answer": true,
+      "explanation": "Wellington, at the southern tip of New Zealand's North Island, is the capital. Auckland is the largest city.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/new-zealand",
+      "review_by": "2027-10-17"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Germany?",
+      "options": [
+        {
+          "label": "Berlin",
+          "correct": true
+        },
+        {
+          "label": "Munich",
+          "correct": false
+        },
+        {
+          "label": "Hamburg",
+          "correct": false
+        },
+        {
+          "label": "Frankfurt",
+          "correct": false
+        }
+      ],
+      "explanation": "Berlin is Germany's capital and its biggest city. A wall once divided it in two, but it was knocked down in 1989.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/germany",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Spain?",
+      "options": [
+        {
+          "label": "Madrid",
+          "correct": true
+        },
+        {
+          "label": "Barcelona",
+          "correct": false
+        },
+        {
+          "label": "Seville",
+          "correct": false
+        },
+        {
+          "label": "Valencia",
+          "correct": false
+        }
+      ],
+      "explanation": "Madrid sits right in the middle of Spain. It is one of the highest capital cities in Europe.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/spain",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of China?",
+      "options": [
+        {
+          "label": "Beijing",
+          "correct": true
+        },
+        {
+          "label": "Shanghai",
+          "correct": false
+        },
+        {
+          "label": "Hong Kong",
+          "correct": false
+        },
+        {
+          "label": "Guangzhou",
+          "correct": false
+        }
+      ],
+      "explanation": "Beijing is China's capital. It is home to the Forbidden City, a huge palace where emperors once lived.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/china",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of India?",
+      "options": [
+        {
+          "label": "New Delhi",
+          "correct": true
+        },
+        {
+          "label": "Mumbai",
+          "correct": false
+        },
+        {
+          "label": "Kolkata",
+          "correct": false
+        },
+        {
+          "label": "Chennai",
+          "correct": false
+        }
+      ],
+      "explanation": "New Delhi is the capital of India. Mumbai is India's biggest city by population, but the government meets in New Delhi.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/india",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Argentina?",
+      "options": [
+        {
+          "label": "Buenos Aires",
+          "correct": true
+        },
+        {
+          "label": "Córdoba",
+          "correct": false
+        },
+        {
+          "label": "Rosario",
+          "correct": false
+        },
+        {
+          "label": "Mendoza",
+          "correct": false
+        }
+      ],
+      "explanation": "Buenos Aires is Argentina's capital, on the banks of a wide river called the Río de la Plata. Its name means 'good winds' in Spanish.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/argentina",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Mexico?",
+      "options": [
+        {
+          "label": "Mexico City",
+          "correct": true
+        },
+        {
+          "label": "Cancún",
+          "correct": false
+        },
+        {
+          "label": "Guadalajara",
+          "correct": false
+        },
+        {
+          "label": "Monterrey",
+          "correct": false
+        }
+      ],
+      "explanation": "Mexico City is the capital of Mexico. It was built where the ancient Aztec city of Tenochtitlan once stood.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/mexico",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Russia?",
+      "options": [
+        {
+          "label": "Moscow",
+          "correct": true
+        },
+        {
+          "label": "Saint Petersburg",
+          "correct": false
+        },
+        {
+          "label": "Novosibirsk",
+          "correct": false
+        },
+        {
+          "label": "Kazan",
+          "correct": false
+        }
+      ],
+      "explanation": "Moscow is Russia's capital. Its famous Red Square is next to the Kremlin, a fortress full of palaces and churches.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/russia",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Ghana?",
+      "options": [
+        {
+          "label": "Accra",
+          "correct": true
+        },
+        {
+          "label": "Kumasi",
+          "correct": false
+        },
+        {
+          "label": "Tamale",
+          "correct": false
+        },
+        {
+          "label": "Cape Coast",
+          "correct": false
+        }
+      ],
+      "explanation": "Accra is the capital of Ghana, on the coast of West Africa by the Gulf of Guinea.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/ghana",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Peru?",
+      "options": [
+        {
+          "label": "Lima",
+          "correct": true
+        },
+        {
+          "label": "Cusco",
+          "correct": false
+        },
+        {
+          "label": "Arequipa",
+          "correct": false
+        },
+        {
+          "label": "Trujillo",
+          "correct": false
+        }
+      ],
+      "explanation": "Lima is the capital of Peru, on the Pacific coast. Cusco was once the capital of the Inca Empire, but Lima is the capital today.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/peru",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Norway?",
+      "options": [
+        {
+          "label": "Oslo",
+          "correct": true
+        },
+        {
+          "label": "Bergen",
+          "correct": false
+        },
+        {
+          "label": "Trondheim",
+          "correct": false
+        },
+        {
+          "label": "Stavanger",
+          "correct": false
+        }
+      ],
+      "explanation": "Oslo is Norway's capital. It sits at the end of a long inlet of the sea called a fjord.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/norway",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Ireland?",
+      "options": [
+        {
+          "label": "Dublin",
+          "correct": true
+        },
+        {
+          "label": "Cork",
+          "correct": false
+        },
+        {
+          "label": "Galway",
+          "correct": false
+        },
+        {
+          "label": "Limerick",
+          "correct": false
+        }
+      ],
+      "explanation": "Dublin is the capital of Ireland. The River Liffey flows right through the middle of the city.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/ireland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Greece?",
+      "options": [
+        {
+          "label": "Athens",
+          "correct": true
+        },
+        {
+          "label": "Sparta",
+          "correct": false
+        },
+        {
+          "label": "Thessaloniki",
+          "correct": false
+        },
+        {
+          "label": "Corinth",
+          "correct": false
+        }
+      ],
+      "explanation": "Athens is the capital of Greece and one of the oldest cities in the world. The ancient Parthenon temple stands on a hill above it.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/greece",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of the United States of America?",
+      "options": [
+        {
+          "label": "Washington, D.C.",
+          "correct": true
+        },
+        {
+          "label": "New York City",
+          "correct": false
+        },
+        {
+          "label": "Los Angeles",
+          "correct": false
+        },
+        {
+          "label": "Chicago",
+          "correct": false
+        }
+      ],
+      "explanation": "Washington, D.C. is the capital of the USA. The President lives and works there, in the White House.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/united-states",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Thailand?",
+      "options": [
+        {
+          "label": "Bangkok",
+          "correct": true
+        },
+        {
+          "label": "Phuket",
+          "correct": false
+        },
+        {
+          "label": "Chiang Mai",
+          "correct": false
+        },
+        {
+          "label": "Pattaya",
+          "correct": false
+        }
+      ],
+      "explanation": "Bangkok is Thailand's capital. It is known for its golden temples and busy floating markets.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/thailand",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of South Korea?",
+      "options": [
+        {
+          "label": "Seoul",
+          "correct": true
+        },
+        {
+          "label": "Busan",
+          "correct": false
+        },
+        {
+          "label": "Incheon",
+          "correct": false
+        },
+        {
+          "label": "Daegu",
+          "correct": false
+        }
+      ],
+      "explanation": "Seoul is the capital of South Korea. Around half of all the people in the country live in or near it.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/south-korea",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Portugal?",
+      "options": [
+        {
+          "label": "Lisbon",
+          "correct": true
+        },
+        {
+          "label": "Porto",
+          "correct": false
+        },
+        {
+          "label": "Faro",
+          "correct": false
+        },
+        {
+          "label": "Coimbra",
+          "correct": false
+        }
+      ],
+      "explanation": "Lisbon is Portugal's capital, built on hills beside the River Tagus. Its little yellow trams are famous.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/portugal",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "choice",
+      "prompt": "What is the capital city of Poland?",
+      "options": [
+        {
+          "label": "Warsaw",
+          "correct": true
+        },
+        {
+          "label": "Kraków",
+          "correct": false
+        },
+        {
+          "label": "Gdańsk",
+          "correct": false
+        },
+        {
+          "label": "Wrocław",
+          "correct": false
+        }
+      ],
+      "explanation": "Warsaw is the capital of Poland, on the River Vistula. Kraków was the capital long ago, before Warsaw took over.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/poland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Istanbul is the capital city of Turkey.",
+      "answer": false,
+      "explanation": "Istanbul is Turkey's biggest city, but the capital is Ankara. Ankara became the capital in 1923.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/turkey",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Reykjavík is the capital city of Iceland.",
+      "answer": true,
+      "explanation": "Reykjavík is Iceland's capital. It is the most northerly capital city of any country in the world.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/iceland",
+      "review_by": "2027-10-21"
+    },
+    {
+      "type": "boolean",
+      "prompt": "Kingston is the capital city of Jamaica.",
+      "answer": true,
+      "explanation": "Kingston is the capital of Jamaica, on the island's south coast. It is also the country's largest city.",
+      "source_url": "https://kids.nationalgeographic.com/geography/countries/article/jamaica",
+      "review_by": "2027-10-21"
+    }
+  ]
+}
