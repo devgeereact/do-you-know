@@ -16,7 +16,7 @@ This folder contains imported React/TypeScript frontend and private PHP backend 
 | Item | State |
 |---|---|
 | Domain | doyouknow.space; owner reports connected to cPanel; document root/TLS not independently verified |
-| Local repository | Fresh main branch, no initial commit or remote at audit time |
+| Local repository | Fresh main branch committed and pushed to the new private origin |
 | GitHub repository | https://github.com/gsakinz/do-you-know — private, created and verified |
 | Deployment | Manual-only GitHub Actions; verification status in the rebrand report; no deployment performed |
 | FTPS | Needs dedicated account, verified TLS hostname/root and repository secrets |
@@ -60,3 +60,5 @@ Server-side grading, answer secrecy, child privacy, preset avatars and backend r
 No real .env, passwords, keys, private server config, uploads or database backups belong in GitHub or frontend bundles. VITE_* variables are public. Never use plain FTP or disable TLS verification. The initial deployment needs an explicitly prepared target marker and verified recoverable backup; unknown remote files are never deleted.
 
 The old source repository is read-only and unaffected. Historical release claims from that source are preserved in the private pre-rebrand recovery ZIP, not presented here as this project's status.
+
+Manual GitHub verification: **PASS**, [run 40238993723](https://github.com/gsakinz/do-you-know/actions/runs/40238993723). FTPS secrets are not configured; no site deployment was attempted.

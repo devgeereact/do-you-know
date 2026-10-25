@@ -32,3 +32,7 @@ The old discovery plan proposed guest save/transfer codes, preset score reaction
 ## Checks and limits
 
 Read docs/08-change-management/REBRAND-VERIFICATION.md for the actual results. No production backend/database/Clerk, Apache, real FTPS, repository push or Actions run was verified by local file preparation. Do not mark these PASS merely because workflows exist. Code/API behaviour and visual redesign remain your next development tasks; no legal/privacy readiness certification is implied.
+
+## Completed repository verification
+
+Private gsakinz/do-you-know exists and origin/main is populated. Manual verification run 40238993723 passed on be16ba0. Final metadata-only handoff updates follow that code baseline; no automatic workflows run on documentation pushes. Do not create another repository or rerun bootstrap --create. Next external step is the scoped FTPS account/root marker/secrets, then separately verified private backend/auth/database. No credentials were set or deployment run.

@@ -19,10 +19,12 @@ Identity: Do You Know / do-you-know / https://doyouknow.space. Fresh Route B des
 | PHP example syntax | PASS | php -l backend/config.example.php |
 | Project contract | PASS | scripts/verify.py; Git guard enabled |
 | GitHub authentication/repo | PASS | Authenticated gsakinz; private repository created, origin attached |
-| GitHub push/manual CI | PENDING | Updated after first reviewed commit/push/run |
+| GitHub push/manual CI | PASS | Initial baseline be16ba0 pushed; manual run 40238993723 succeeded. Frontend/unit jobs passed; PHP/database/e2e jobs deliberately skipped |
 | New-domain hosting/FTPS/Clerk/DB | NOT TESTED | Owner reports cPanel connection; secure setup, root marker and private runtime remain required |
 | PHP DB/e2e/Apache | NOT TESTED | Matching disposable database/server not configured for this local rebrand |
 
 No real env/config/credentials were opened or copied. No schema migration, data/user move, cron change, deployment, force push or remote-file deletion performed. Old SSH/owner operational helpers are blocked. Current optional contact email is empty until verified; imported icons/tokens and core business logic are preserved. The source app version is retained as imported package metadata, not a new-domain release claim.
 
 Next: complete the GitHub/FTPS setup guide and Claude Code handoff. Private GitHub source publication does not mean a live site exists; prepared Actions do not prove FTPS or production backend health.
+
+Manual CI evidence: https://github.com/gsakinz/do-you-know/actions/runs/40238993723 . Five required FTPS repository secrets are still absent (names only checked); no deployment workflow was run. Current private recovery ZIP: /Users/realmrgee/Documents/Codex/2026-10-23/ca/work/do-you-know-rebrand/before-rebrand.zip . Reusable Rebrand-and-Restructure pack and its Foundation-First ZIP were updated with the mandatory post-import identity audit.

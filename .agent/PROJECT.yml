@@ -38,3 +38,10 @@ sources_of_truth:
   architecture: docs/02-architecture/ARCHITECTURE.md
   deployment: docs/07-operations/GITHUB-FTPS-SETUP.md
 current_task: .agent/CURRENT-TASK.md
+
+verification:
+  local_rebrand: passed
+  manual_actions_run: 40238993723
+  manual_actions_result: success
+  ftps_secrets_configured: false
+  deployment_performed: false

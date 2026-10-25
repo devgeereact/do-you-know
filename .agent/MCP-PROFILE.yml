@@ -3,11 +3,24 @@ policy:
   reads: use-only-for-authoritative-live-evidence
   mutations: require-current-user-authority
 connections:
-  github: {status: connected, purpose: version-control, account: devgeereact}
-  database: {status: unknown, purpose: data-and-authentication}
-  hosting: {status: unknown, purpose: deployment-and-runtime}
-  monitoring: {status: unknown, purpose: errors-and-observability}
-  design: {status: unknown, purpose: design-source}
+  github:
+    status: CLI-access-verified
+    purpose: version-control
+    account: gsakinz
+    repository: gsakinz/do-you-know
+    mcp_connection: not-assumed
+  database:
+    status: unknown
+    purpose: data-and-authentication
+  hosting:
+    status: unknown
+    purpose: deployment-and-runtime
+  monitoring:
+    status: unknown
+    purpose: errors-and-observability
+  design:
+    status: unknown
+    purpose: design-source
 notes:
-  - Confirm account, organisation, project and environment before every material action.
-  - Record identifiers and evidence, never credentials.
+- Confirm account, organisation, project and environment before every material action.
+- Record identifiers and evidence, never credentials.
