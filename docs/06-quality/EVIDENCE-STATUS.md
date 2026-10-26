@@ -61,3 +61,20 @@ Done over the owner's SSH access. Credentials were generated and written straigh
 | Off-server backup copy | VERIFIED | `scripts/pull-backups.sh` pulls the newest three rolling backups and the pinned baseline over SSH to `~/Developer/Projects/do-you-know-backups/db/` (mode 700/600, outside the repo), checks SHA-256 and gzip, prunes local rolling copies to three only after success. First run fetched 3 + 1 pinned; second run fetched 0. Manual, not scheduled |
 | Old backup tidy-up | DONE | Owner asked to keep three: deleted the two oldest dumps in `~/private_backups/dyk/` and the near-empty `before-preview-20261015.tar.gz` in `~/private_backups/doyouknow/` (old site). Old-site config/htaccess/script copies in `dyk/` kept pending a decision |
 | Old-site jobs and files | KEPT | Owner chose on 26 October 2026 to keep the old `~/dyk-backend/` cron jobs and the config/htaccess/script copies in `~/private_backups/dyk/` for now |
+
+## Content and full app release (step E) — 26 October 2026
+
+| Item | Result | Evidence |
+|---|---|---|
+| Content validation | PASS | `import-content.php --dry-run` on the host: 12 categories, 4 curriculum tags, 46 quizzes (23 general, 23 school), 1,380 questions, no warnings |
+| Draft import | DONE | After a fresh backup: 46 quizzes created as drafts, 12 categories and 4 tags added. Public API stayed empty while drafts |
+| Publication | DONE | Owner confirmed on 26 October 2026 that the review is done and chose to publish all 46 with reviewer recorded as "Site owner". The quizzes were machine-drafted; this record reflects the owner's confirmation, not an independent review. Backup taken first. Public API: 12 categories, 46 quizzes. Today's daily auto-picked: number-and-algebra-ks3 |
+| Answer secrecy (live) | PASS | Public quiz payload fields contain no answer, correct-option or explanation fields |
+| Host test suites | PASS | On the cPanel host against disposable `devgeereact_dykspace_test` (dropped afterwards): migrate twice, unit 28, integration 79, competition 63, daily 16, concurrency 9, feeds 35, content 78, cleanup 7, seo 27 |
+| Local release checks | PASS | Production variables: typecheck, lint (0 warnings), 128 Vitest tests, build, Apache check 27/27 on the fresh build |
+| GitHub variables | SET | `VITE_CLERK_PUBLISHABLE_KEY` = new production key; `PUBLIC_BACKEND_READY=true` |
+| Pre-release backup | DONE | `~/backups/do-you-know/docroot-pre-app-20261026T135054Z.tar.gz` (coming-soon root) |
+| Application deploy | PASS | Manual run 40334226841 on 1b55017: CI typecheck/lint/128 tests/build, upload, HTTPS build-ID verified, no remote deletions |
+| Live checks | PASS | Page build meta 1b55017; /, /quizzes and deep links 200 HTML; /api/v1/health, quizzes, daily 200 JSON; /api/v1/me 401; sitemap.xml, manifest, sw.js, robots.txt 200; .htaccess, marker and api/config.php 403; bundle holds only the public pk_live key, no sk_ strings; headless Chrome render shows today's challenge and trending quizzes from the live API |
+| CSP | REPORT-ONLY | Root .htaccess CSP stays report-only; enforcing it is a separate change |
+| Clerk sign-in in a real browser | NOT TESTED | Needs a human sign-in on the live site |
