@@ -1,5 +1,7 @@
 # New repository and hosting setup — doyouknow.space
 
+**Status 26 October 2026:** steps 1 to 5 are done and the coming-soon page is live (run 40284190441). Verified values: document root `/home/devgeereact/doyouknow.space`; FTPS host `premium17.web-hosting.com`, port 21, account `github-do-you-know@doyouknow.space`, remote dir `/`; pre-deploy backup in `~/backups/do-you-know/`. Clerk production for the new domain is the new application "do you know space". Step 6 (private backend and Clerk wiring) and step 7 retention are still to do. Full evidence: ../06-quality/EVIDENCE-STATUS.md.
+
 25 October 2026. These are prepared steps, not completed remote operations. The owner reports this domain is connected to cPanel. Verify the exact root/TLS before any upload. GitHub authentication is verified and the private repository https://github.com/gsakinz/do-you-know has been created and attached as origin. Commit/push/Action evidence is recorded in docs/08-change-management/REBRAND-VERIFICATION.md. No deployment has been performed.
 
 ## 1. Sign in and create the new private repository

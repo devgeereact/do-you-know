@@ -10,11 +10,11 @@ Updated 25 October 2026. This is the new Route B destination for doyouknow.space
 - Legacy auto/SSH deployment is replaced by manual scoped public FTPS preparation. Private backend installation remains a separate task.
 - Source project and its real configuration were not modified or copied.
 
-## Owner-reported
-The new domain is connected to cPanel. Exact document root, FTPS endpoint/account scope, origin/public TLS, Cloudflare and private backend setup still need verification.
+## Hosting status (26 October 2026)
+Document root, TLS, scoped FTPS account, target marker and the five repository secrets are verified. The coming-soon page is deployed (run 40284190441). Clerk production is a new application, "do you know space", on doyouknow.space, with DNS, mail and SSL verified; Google sign-in there still lacks credentials. Private backend, databases, config, migrations, backups and the full app release are not started. See ../06-quality/EVIDENCE-STATUS.md.
 
 ## Blocked or not performed
-The private repository https://github.com/gsakinz/do-you-know has been created and origin attached. See the rebrand verification record for the latest commit/push/Action evidence. No secrets, database/users/content, old server directories, Clerk domains or cron jobs were migrated. No app/coming-soon deployment was performed. Existing business modules need the normal test/review process before this new site is released.
+The private repository https://github.com/gsakinz/do-you-know has been created and origin attached. See the rebrand verification record for the latest commit/push/Action evidence. No secrets, database/users/content, old server directories, Clerk domains or cron jobs were migrated. The coming-soon page was deployed on 26 October 2026; no app deployment has been performed. Existing business modules need the normal test/review process before this new site is released.
 
 ## Continue
 Read CLAUDE-CODE-HANDOFF.md and ../07-operations/GITHUB-FTPS-SETUP.md. Exact check results are in ../08-change-management/REBRAND-VERIFICATION.md. Follow the existing product/privacy constraints; do not treat backlog proposals as approved features.

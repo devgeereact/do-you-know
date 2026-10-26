@@ -1,7 +1,7 @@
-# Current task — new-domain rebrand
+# Current task — new-domain hosting foundation
 
-25 October 2026. The owner requested local rebranding of the imported Do You Know app for doyouknow.space, a new app-named GitHub repository and FTPS/Actions setup files. Claude Code will continue feature development.
+26 October 2026. Steps A to C of the hosting plan are complete: verified cPanel root and TLS, pre-deploy backup, scoped FTPS account and marker, five repository secrets, and the coming-soon page deployed by manual run 40284190441. Clerk production for doyouknow.space is the new application "do you know space" (DNS, mail and SSL verified). Details: docs/06-quality/EVIDENCE-STATUS.md.
 
-Local identity/domain/docs/manual workflows were realigned; implementation and verification details are in docs/08-change-management/REBRAND-VERIFICATION.md. No deployment or database/auth migration performed. GitHub authentication is verified and the private repository is created/attached. Follow the verification record for commit/push/Action status. Read docs/00-foundation/CLAUDE-CODE-HANDOFF.md for exact next steps. Do not resume inherited old release/branch tasks as current work.
+Next: step D, the private backend (folder outside every webroot, backend code and vendor by a separately approved method, runtime and migration database users, owner-entered config.php, DYK_BACKEND_DIR, migrations after backup, three-backup retention). Then step E, the full app release. Open item: Google OAuth credentials for the new Clerk production instance, or disable Google there.
 
-Repository baseline is committed/pushed. Manual GitHub run 40238993723 succeeded; full DB/e2e jobs were intentionally skipped. Local 128 unit tests, typecheck/lint/PWA build and eight deployment/guard boundary tests passed. Remaining foundation work: verified new-domain cPanel root/TLS, dedicated FTPS account/marker and five repository secrets, private backend/database/Clerk/recovery. No deployment performed. Continue feature development only within the owner’s next approved scope.
+Earlier history: repository baseline be16ba0, verification run 40238993723 and the local backend/Apache checks of 25 October are recorded in the evidence and rebrand verification docs. Do not resume inherited old release tasks.
