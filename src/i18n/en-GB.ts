@@ -185,7 +185,6 @@ export const enGB = {
       options: ['One', 'Two', 'Three', 'Eight'],
     },
     streak: (days: number): string => `Streak: ${days} ${days === 1 ? 'day' : 'days'}`,
-    doneToday: '✓ Done today',
     play: 'Play →',
     continueTitle: 'Continue playing',
     resume: 'Resume →',

@@ -112,8 +112,10 @@ export function HomePage(): JSX.Element {
     { scope: root },
   );
 
+  // Once today's challenge is finished it can't be replayed, so its links disappear.
+  const showDaily = Boolean(daily.today) && !daily.playedToday;
   // The daily banner arrives after its request, so its slow sunburst starts then.
-  const hasDaily = Boolean(daily.today);
+  const hasDaily = showDaily;
   useGSAP(
     () => {
       if (!hasDaily) return;
@@ -175,7 +177,7 @@ export function HomePage(): JSX.Element {
             <a href="#quizzes" className={buttonClasses('primary', 'lg')}>
               {t.home.playAQuiz}
             </a>
-            {daily.today ? (
+            {showDaily ? (
               <Link to="/daily" className={buttonClasses('secondary', 'lg')}>
                 {t.common.todaysChallenge}
               </Link>
@@ -197,7 +199,7 @@ export function HomePage(): JSX.Element {
         id="quizzes"
         className="mx-auto max-w-5xl scroll-mt-20 space-y-12 px-4 md:space-y-16 pb-8 md:px-8"
       >
-        {daily.today && (
+        {showDaily && daily.today && (
           <Link
             to="/daily"
             data-reveal
@@ -230,7 +232,7 @@ export function HomePage(): JSX.Element {
               )}
             </span>
             <span className="relative rounded-full bg-surface px-5 py-2 font-display text-lg font-semibold text-content shadow-edge-surface transition-transform duration-200 group-hover:translate-x-1">
-              {daily.playedToday ? t.home.doneToday : t.home.play}
+              {t.home.play}
             </span>
           </Link>
         )}
