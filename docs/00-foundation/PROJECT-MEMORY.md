@@ -11,7 +11,7 @@ Updated 25 October 2026. This is the new Route B destination for doyouknow.space
 - Source project and its real configuration were not modified or copied.
 
 ## Hosting status (26 October 2026)
-Document root, TLS, scoped FTPS account, target marker and the five repository secrets are verified. The coming-soon page is deployed (run 40284190441). Clerk production is a new application, "do you know space", on doyouknow.space, with DNS, mail and SSL verified; Google sign-in there still lacks credentials. Private backend, databases, config, migrations, backups and the full app release are not started. See ../06-quality/EVIDENCE-STATUS.md.
+Document root, TLS, scoped FTPS account, target marker and the five repository secrets are verified. The coming-soon page is deployed (run 40284190441). Clerk production is a new application, "do you know space", on doyouknow.space, with DNS, mail and SSL verified; Google sign-in there is disabled until Google OAuth credentials exist. Private backend, databases, config, migrations, backups and the full app release are not started. See ../06-quality/EVIDENCE-STATUS.md.
 
 ## Blocked or not performed
 The private repository https://github.com/gsakinz/do-you-know has been created and origin attached. See the rebrand verification record for the latest commit/push/Action evidence. No secrets, database/users/content, old server directories, Clerk domains or cron jobs were migrated. The coming-soon page was deployed on 26 October 2026; no app deployment has been performed. Existing business modules need the normal test/review process before this new site is released.
