@@ -37,3 +37,25 @@ Done by Claude Code with the owner's approval, over the owner's existing cPanel 
 | Cloudflare DNS | CHANGED | Added five DNS-only CNAMEs for Clerk (clerk, accounts, clkmail, clk._domainkey, clk2._domainkey). No other zone change |
 | Private backend, databases, config.php, migrations, backups, cron | NOT STARTED | Step D |
 | Full application release | NOT STARTED | Step E; requires PUBLIC_BACKEND_READY=true and VITE_CLERK_PUBLISHABLE_KEY |
+
+## Private backend, database and backups (step D) — 26 October 2026
+
+Done over the owner's SSH access. Credentials were generated and written straight into private files; none were printed, committed or written to chat.
+
+| Item | Result | Evidence |
+|---|---|---|
+| Host runtime | VERIFIED | PHP 8.4.27 CLI with pdo_mysql, curl, openssl, mbstring, json; MariaDB 11.4.13. No Composer on host |
+| Private layout | VERIFIED | `~/do-you-know-private/` (mode 700): `releases/<sha>/`, `shared/{config.php,migration.php,backup.cnf,backup-db.sh}` (600/700), `current -> releases/80708e7…`. Release `config.php` is a symlink to `shared/config.php`. Old site's `~/dyk-backend/` and database were not touched |
+| Backend release | VERIFIED | Built from pushed commit 80708e7 (git archive) plus local vendor/ (25 packages, exact match with composer.lock, no dev packages). `php -l` and autoload OK |
+| Database and users | VERIFIED | Database `devgeereact_dykspace`. Runtime `devgeereact_dyks_app`: SELECT, INSERT, UPDATE, DELETE on that database only. Migration `devgeereact_dyks_mig`: ALL on that database only. Read-only `devgeereact_dyks_ro`: SELECT only, for local inspection. Grants checked with SHOW GRANTS |
+| Config | VERIFIED | Passes `Dyk\Config::load`. Origins and authorised parties `https://doyouknow.space`; Clerk issuer `https://clerk.doyouknow.space`; Clerk PEM public key from the instance JWKS (kid ins_3LDrRF6buN7fMcmFGPQzTELthLG), no Clerk secret stored; random 64-hex rate-limit key |
+| Pre-migration backup | VERIFIED | `~/private_backups/dykspace/db-pre-migrate-20261026T094001Z.sql.gz` (pinned). First attempt produced an empty file because `~/.my.cnf` overrode `--defaults-extra-file`; it was removed and the backup redone with `--defaults-file` and pipefail |
+| Migrations | PASS | `DYK_CONFIG=shared/migration.php php bin/migrate.php`: 0001 to 0008 and 0010 applied, exit 0, 17 tables |
+| API wiring | VERIFIED | `doyouknow.space/api/.htaccess` = repo rules plus `SetEnv DYK_BACKEND_DIR /home/devgeereact/do-you-know-private/current`; `api/api.php` from 80708e7. The application release uploads only `api/api.php`, so this .htaccess is preserved |
+| HTTPS API checks | PASS | /api/v1/health 200; categories and quizzes 200 (empty); /me 401 unauthenticated, 401 with bogus guest token, 401 with forged Clerk JWT; POST /account/session with forged JWT 401; POST /attempts unauthenticated 401; unknown route JSON 404; api/config.php and api/.htaccess 403; no CORS header for a foreign origin, `https://doyouknow.space` allowed; `Cache-Control: no-store, private` |
+| Rolling backups | VERIFIED | `shared/backup-db.sh` dumps with `--single-transaction`, verifies gzip and dump footer, writes a .sha256, keeps the newest 3 in `~/private_backups/dykspace/rolling/`, prunes only after success, refuses under 1 GB free. Four runs left exactly three; pinned backup untouched |
+| Restore | VERIFIED | Latest rolling backup checksum OK, restored into temporary `devgeereact_dykspace_rt`: 17 tables, same 9 migrations, 43 blocked_words rows, identical to live. Temporary database dropped |
+| Local access to live DB | VERIFIED | `scripts/live-db.sh` opens an SSH tunnel on 127.0.0.1:33061 (not 3306/3307, which are local test databases) using `~/.config/do-you-know/live-db-readonly.cnf` (600). Reads work; CREATE, DELETE and INSERT denied |
+| Cron (backup, cleanup, daily) | NOT DONE | Needs separate owner approval |
+| Content | NOT DONE | Database has no categories or quizzes yet; import/publish is a separate step |
+| Off-server backup copy | NOT DONE | Backups currently live only on the same server |
