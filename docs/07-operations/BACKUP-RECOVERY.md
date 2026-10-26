@@ -1,6 +1,6 @@
 # Backup and recovery — new domain
 
-**Status 26 October 2026:** database backups are set up on the server. `~/do-you-know-private/shared/backup-db.sh` writes verified, checksummed dumps to `~/private_backups/dykspace/rolling/` and keeps the newest three; the pre-migration baseline is pinned in `~/private_backups/dykspace/`; the pre-deploy document root archive is in `~/backups/do-you-know/`. A restore into a temporary database was proved. Not yet scheduled by cron and no off-server copy. Details: ../06-quality/EVIDENCE-STATUS.md.
+**Status 26 October 2026:** database backups are set up on the server. `~/do-you-know-private/shared/backup-db.sh` writes verified, checksummed dumps to `~/private_backups/dykspace/rolling/` and keeps the newest three; the pre-migration baseline is pinned in `~/private_backups/dykspace/`; the pre-deploy document root archive is in `~/backups/do-you-know/`. A restore into a temporary database was proved. Scheduled daily at 03:41 by cron (26 October 2026). No off-server copy yet. Details: ../06-quality/EVIDENCE-STATUS.md.
 
 Not configured on the server by this task (original note). The private local pre-rebrand ZIP is a source recovery artifact only; real env/config/vendor/data/uploads were not copied. The source project remains untouched.
 
