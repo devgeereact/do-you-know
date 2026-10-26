@@ -30,6 +30,7 @@ $caseCount=Database::one($db,'SELECT COUNT(*) AS n FROM identities WHERE subject
 check('Clerk subjects remain case-sensitive',(int)$caseCount['n']===2);
 $stored=Database::one($db,'SELECT token_hash FROM guest_sessions WHERE profile_id=?',[$guest['profile_id']]);check('stores only hash of guest token',$stored['token_hash']===hash('sha256',$guest['token']));
 $r=request('GET','/me',null,$guest['token']);check('guest sees own profile',$r['body']['id']===$guest['profile_id']&&$r['body']['role']==='guest');
+check('new guest starts with a generated nickname',preg_match('/^[A-Za-z]+[0-9]{2}$/D',(string)$r['body']['nickname'])===1);
 Database::execute($db,'UPDATE guest_sessions SET expires_at=DATE_ADD(UTC_TIMESTAMP(),INTERVAL 1 HOUR) WHERE profile_id=?',[$guest['profile_id']]);
 $r=request('GET','/me',null,$guest['token']);$renewed=Database::one($db,'SELECT TIMESTAMPDIFF(HOUR,UTC_TIMESTAMP(),expires_at) AS h FROM guest_sessions WHERE profile_id=?',[$guest['profile_id']]);
 check('active guest session slides forward instead of expiring',$r['status']===200&&(int)$renewed['h']>24);

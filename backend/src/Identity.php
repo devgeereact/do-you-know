@@ -70,7 +70,7 @@ final class Identity
         $expires = gmdate('Y-m-d H:i:s', time() + $config['guest_ttl_seconds']);
         $db->beginTransaction();
         try {
-            Database::execute($db, "INSERT INTO profiles (id,role) VALUES (?, 'guest')", [$id]);
+            Database::execute($db, "INSERT INTO profiles (id,role,nickname) VALUES (?, 'guest', ?)", [$id, Player::generateNickname()]);
             Database::execute($db, 'INSERT INTO guest_sessions (token_hash,profile_id,expires_at) VALUES (?,?,?)', [hash('sha256', $token), $id, $expires]);
             $db->commit();
         } catch (\Throwable $error) { $db->rollBack(); throw $error; }
@@ -86,7 +86,7 @@ final class Identity
             $row = Database::one($db, "SELECT profile_id FROM identities WHERE provider='clerk' AND subject=?", [$subject]);
             if (!$row) {
                 $id = Database::uuid();
-                Database::execute($db, "INSERT INTO profiles (id,role) VALUES (?, 'player')", [$id]);
+                Database::execute($db, "INSERT INTO profiles (id,role,nickname) VALUES (?, 'player', ?)", [$id, Player::generateNickname()]);
                 Database::execute($db, "INSERT INTO identities (provider,subject,profile_id) VALUES ('clerk',?,?)", [$subject, $id]);
             } else { $id = $row['profile_id']; }
             $db->commit();

@@ -46,10 +46,16 @@ final class Player
         }
     }
 
+    /** A safe generated nickname such as "BraveOtter42". New profiles start with one. */
+    public static function generateNickname(): string
+    {
+        return self::ADJECTIVES[random_int(0, count(self::ADJECTIVES)-1)]
+            . self::ANIMALS[random_int(0, count(self::ANIMALS)-1)] . random_int(10, 99);
+    }
+
     public function randomNickname(): string
     {
-        $nickname = self::ADJECTIVES[random_int(0, count(self::ADJECTIVES)-1)]
-            . self::ANIMALS[random_int(0, count(self::ANIMALS)-1)] . random_int(10, 99);
+        $nickname = self::generateNickname();
         Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=?', [$nickname, $this->userId]);
         return $nickname;
     }
