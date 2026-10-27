@@ -56,4 +56,17 @@ check('prompt keys keep maths symbols apart',Dyk\Content::promptKey('What is 7 +
 check('round size defaults to ten or the whole bank',Dyk\Content::roundSize(['questions'=>array_fill(0,30,[])])===10 && Dyk\Content::roundSize(['questions'=>array_fill(0,7,[])])===7 && Dyk\Content::roundSize(['round_size'=>15,'questions'=>array_fill(0,30,[])])===15);
 check('ranked rounds are twenty questions, practice keeps the quiz round size',Game::roundSize('ranked',10,30)===20 && Game::roundSize('practice',10,30)===10 && Game::roundSize('ranked',10,12)===12);
 check('a ranked round is twenty distinct questions from the bank',count(array_unique(Game::pickRound($bank,Game::roundSize('ranked',10,30),[])))===20);
+require __DIR__.'/guard.php';
+$localTest=sys_get_temp_dir().'/dyk-guard-'.bin2hex(random_bytes(4)).'/.local-test';
+mkdir($localTest,0700,true);file_put_contents($localTest.'/ok.php','<?php');
+$good=['environment'=>'test','allowed_origins'=>['http://localhost:5202'],'database'=>['host'=>'127.0.0.1','name'=>'dyk_test','user'=>'root']];
+check('a local _test database inside .local-test passes the guard',testDatabaseProblems($good,$localTest.'/ok.php',$localTest)===[]);
+check('the guard refuses a missing DYK_CONFIG',testDatabaseProblems($good,false,$localTest)!==[]);
+check('the guard refuses a config outside .local-test',testDatabaseProblems($good,__FILE__,$localTest)!==[]);
+check('the guard refuses a non-test environment',testDatabaseProblems(['environment'=>'production']+$good,$localTest.'/ok.php',$localTest)!==[]);
+check('the guard refuses a database not ending _test',testDatabaseProblems(array_replace_recursive($good,['database'=>['name'=>'dyk_dev']]),$localTest.'/ok.php',$localTest)!==[]);
+check('the guard refuses production-looking names',testDatabaseProblems(array_replace_recursive($good,['database'=>['name'=>'devgeereact_doyouknow_test']]),$localTest.'/ok.php',$localTest)!==[]);
+check('the guard refuses a remote database host',testDatabaseProblems(array_replace_recursive($good,['database'=>['host'=>'db.example.com']]),$localTest.'/ok.php',$localTest)!==[]);
+check('the guard refuses a live origin',testDatabaseProblems(['allowed_origins'=>['https://doyouknow.space']]+$good,$localTest.'/ok.php',$localTest)!==[]);
+unlink($localTest.'/ok.php');rmdir($localTest);rmdir(dirname($localTest));
 fwrite(STDOUT,"$count checks passed\n");

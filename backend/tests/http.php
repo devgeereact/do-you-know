@@ -4,8 +4,10 @@ require dirname(__DIR__).'/vendor/autoload.php';
 use Dyk\Config;
 use Dyk\Database;
 $config=Config::load(dirname(__DIR__));
-if ($config['environment']!=='test' || !str_ends_with($config['database']['name'],'_test')) {
-    fwrite(STDERR,"Tests require environment=test and a dedicated database ending _test.\n");exit(1);
+require __DIR__.'/guard.php';
+$problems=testDatabaseProblems($config,getenv('DYK_CONFIG'),dirname(__DIR__,2).'/.local-test');
+if ($problems) {
+    fwrite(STDERR,"Refusing to run: this is not a disposable local test database.\n - ".implode("\n - ",$problems)."\n");exit(1);
 }
 $base=getenv('DYK_TEST_API')?:'http://127.0.0.1:55438/api/v1';
 if (!preg_match('~^http://127\.0\.0\.1:\d+/api/v1$~D',$base)) { throw new RuntimeException('local_test_api_required'); }

@@ -207,12 +207,21 @@ until the question is checked and the date moved on.
 
 ```sh
 composer test
-# Against a fresh, isolated local database configured with environment=test,
-# database name ending _test, and migrations applied:
-DYK_CONFIG=/private/test-config.php php bin/migrate.php
-DYK_CONFIG=/private/test-config.php php -S 127.0.0.1:55438 -t public public/api.php
-DYK_CONFIG=/private/test-config.php php tests/integration.php
+# Disposable local test setup lives in the gitignored, 700-permission .local-test/ folder:
+#   .local-test/test-env.php          config: environment=test, database dyk_test on 127.0.0.1
+#   .local-test/jwt-test-private.pem  test-only signing key (public half is clerk.jwt_key in the config)
+#   .local-test/db/                   local MariaDB data directory
+export DYK_CONFIG="$PWD/../.local-test/test-env.php"
+php bin/migrate.php
+php -S 127.0.0.1:55438 -t public public/api.php &
+php tests/integration.php   # also: competition, concurrency, daily, admin, ...
 ```
+
+`tests/http.php` (every DB-backed test loads it) refuses to run unless `DYK_CONFIG` names a file
+inside `.local-test/`, `environment` is `test`, the database name ends `_test` and does not look like
+production, the host is this machine, and every allowed origin is a local `http://` origin
+(`tests/guard.php`, checked by `tests/unit.php`). It never falls back to `backend/config.php`.
+Real configuration lives only on the server in `~/do-you-know-private/shared/`, outside every webroot.
 
 The HTTP/database test creates original fixtures and test guests. Run only on a
 throwaway database. It must not use the cPanel development/production database.

@@ -47,3 +47,6 @@ __pycache__/
 *.bundle
 *.patch
 *.dump
+
+# disposable local test database, configs and test-only keys (never commit)
+.local-test/

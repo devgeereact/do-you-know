@@ -59,6 +59,8 @@ export default defineConfig({
   server: {
     port: 5202,
     strictPort: true,
+    // The disposable test database lives here; never watch its files.
+    watch: { ignored: ['**/.local-test/**'] },
     proxy: {
       '/api': { target: process.env.DYK_DEV_API ?? 'http://127.0.0.1:55439', changeOrigin: false },
     },
