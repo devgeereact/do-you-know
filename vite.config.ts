@@ -54,7 +54,13 @@ export default defineConfig({
 
   // Dedicated port (block 20 in the dev-server registry). strictPort makes a clash
   // fail loudly instead of drifting to another port and breaking the API's allowed origins.
-  server: { port: 5202, strictPort: true },
+  // /api/v1 is same-origin in production; in dev, forward it to a local PHP API
+  // (backend/README.md, "Local development"). DYK_DEV_API overrides the target.
+  server: {
+    port: 5202,
+    strictPort: true,
+    proxy: { '/api': { target: process.env.DYK_DEV_API ?? 'http://127.0.0.1:55439', changeOrigin: false } },
+  },
   preview: { port: 5202, strictPort: true },
 
   plugins: [
