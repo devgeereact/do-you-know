@@ -7,5 +7,6 @@ Disallow: /challenge/
 Disallow: /me
 Disallow: /account
 Disallow: /dashboard
+Disallow: /admin
 
 Sitemap: https://doyouknow.space/sitemap.xml

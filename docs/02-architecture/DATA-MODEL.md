@@ -17,6 +17,7 @@ The runnable source is `backend/migrations/`, applied in order by `backend/bin/m
 | `0006_content_reviews.sql`            | `content_reviews`: who reviewed and published which quiz version (written only by `bin/import-content.php --publish`)                                                |
 | `0007_attempts_finished_index.sql`    | Index `attempts_finished (status, finished_at, quiz_id)` for the 7-day trending query                                                                                |
 | `0011_leaderboard_likes.sql`          | `leaderboard_likes`: one row per liker per leaderboard entry; no self-likes (CHECK); cascades with the entry or either player (0009 is held by the stashed generator branch) |
+| `0012_admin_audit.sql`                | `admin_audit`: one row per admin write (actor, action, target, small JSON detail); no personal data                                                                  |
 | `0008_attempts_player_quiz_index.sql` | Index `attempts_player_quiz (user_id, quiz_id, started_at)` so a new round can read the player's earlier rounds and serve unseen questions first                     |
 
 **Golden rule:** the browser can read a question's public text, **never its answer**.

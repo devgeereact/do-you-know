@@ -45,6 +45,8 @@ interface RequestOptions {
   method?: 'GET' | 'POST' | 'DELETE';
   body?: unknown;
   query?: Query;
+  /** Staff calls pass a Clerk session token; the guest token is then neither sent nor cleared. */
+  authToken?: string;
 }
 
 export async function api<T>(path: string, options: RequestOptions = {}): Promise<T> {
@@ -55,12 +57,13 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
   }
   const search = params.toString();
   const url = `${env.apiUrl.replace(/\/$/, '')}${path}${search ? `?${search}` : ''}`;
+  const bearer = options.authToken ?? token;
   let response: Response;
   try {
     response = await fetch(url, {
       method,
       headers: {
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
         ...(options.body !== undefined ? { 'Content-Type': 'application/json' } : {}),
       },
       ...(options.body !== undefined ? { body: JSON.stringify(options.body) } : {}),
@@ -73,7 +76,7 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
   const data = (await response.json().catch(() => null)) as
     (T & { error?: { code?: string } }) | null;
   if (!response.ok) {
-    if (response.status === 401) clearSession();
+    if (response.status === 401 && options.authToken === undefined) clearSession();
     throw new ApiError(data?.error?.code ?? 'request_failed', response.status);
   }
   return data as T;

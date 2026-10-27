@@ -28,6 +28,10 @@ const AccountPage = lazy(() =>
   import('@/pages/AccountPage').then((m) => ({ default: m.AccountPage })),
 );
 
+const AdminApp = lazy(() =>
+  import('@/pages/admin/AdminApp').then((m) => ({ default: m.AdminApp })),
+);
+
 export function App(): JSX.Element {
   return (
     <ThemeProvider>
@@ -62,6 +66,20 @@ export function App(): JSX.Element {
                     }
                   >
                     <AccountPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/admin/*"
+                element={
+                  <Suspense
+                    fallback={
+                      <p role="status" className="px-4 py-16 text-center">
+                        Loading…
+                      </p>
+                    }
+                  >
+                    <AdminApp />
                   </Suspense>
                 }
               />

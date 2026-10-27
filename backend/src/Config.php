@@ -29,6 +29,13 @@ final class Config
                 throw new \RuntimeException('https_required');
             }
         }
+        $staff = $config['admin_subjects'] ?? [];
+        if (!is_array($staff)) { throw new \RuntimeException('admin_subjects_invalid'); }
+        foreach ($staff as $subject) {
+            if (!is_string($subject) || !preg_match('/^user_[A-Za-z0-9]{10,64}$/D', $subject)) {
+                throw new \RuntimeException('admin_subjects_invalid');
+            }
+        }
         $ttl = $config['guest_ttl_seconds'] ?? 604800;
         if (!is_int($ttl) || $ttl < 60 || $ttl > 2592000) {
             throw new \RuntimeException('guest_ttl_invalid');

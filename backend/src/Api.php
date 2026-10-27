@@ -21,7 +21,8 @@ final class Api
             $ip = RateLimit::clientIp($_SERVER);
             // Generous per address: a school class can share one address.
             RateLimit::check($db,$config,'api',$ip,600,60);
-            $body = $method === 'POST' ? self::body() : [];
+            $isAdmin = str_starts_with($path, '/admin/');
+            $body = $method === 'POST' ? self::body($isAdmin ? 262144 : 32768) : [];
             $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
             $token = preg_match('/^Bearer ([^\s]{1,8192})$/D', $auth, $m) ? $m[1] : '';
             if ($path === '/guest-sessions' && $method === 'POST') {
@@ -67,6 +68,12 @@ final class Api
                 $rows = $catalog->quizzes($_GET, $path==='/quizzes' ? null : $slug[1]);
                 if ($path!=='/quizzes') { if (!$rows) { throw new ApiError('quiz_not_found',404); } self::reply($rows[0]); }
                 else { self::reply($rows); } return;
+            }
+            if ($isAdmin) {
+                if ($token==='') { throw new ApiError('not_signed_in',401); }
+                // Guest tokens are looked up as ordinary profiles and then fail Admin's Clerk-subject check.
+                $staff=Identity::profile($db,$config,$token);
+                self::reply((new Admin($db,$config,$staff))->handle($method,$path,$body));return;
             }
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
@@ -135,11 +142,11 @@ final class Api
         header('Access-Control-Max-Age: 600');
     }
 
-    private static function body(): array
+    private static function body(int $limit): array
     {
         if (!str_starts_with(strtolower($_SERVER['CONTENT_TYPE']??''),'application/json')) { throw new ApiError('json_required',415); }
-        $raw=file_get_contents('php://input',false,null,0,32769);
-        if ($raw===false || strlen($raw)>32768) { throw new ApiError('payload_too_large',413); }
+        $raw=file_get_contents('php://input',false,null,0,$limit+1);
+        if ($raw===false || strlen($raw)>$limit) { throw new ApiError('payload_too_large',413); }
         try { $value=json_decode($raw,false,32,JSON_THROW_ON_ERROR); }
         catch (\JsonException $error) { throw new ApiError('invalid_json'); }
         if (!$value instanceof \stdClass) { throw new ApiError('invalid_json'); }

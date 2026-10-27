@@ -136,7 +136,7 @@ Targets are starting assumptions; tune them against real data after launch.
   are not unique; boards and challenge previews show them beside the nickname.
 - `/me`: history, best scores, streak, avatar, settings, theme, **delete my account**.
 
-### 4.8 CMS (`/admin`): planned, not built
+### 4.8 CMS (`/admin`): in progress (Phase A foundation built 27 October 2026; see ADMIN-AREA-PLAN.md)
 
 No authoring or publishing endpoints exist in the PHP API yet. Launch content arrives by
 importing categories, quizzes, questions and daily challenges from the old Supabase

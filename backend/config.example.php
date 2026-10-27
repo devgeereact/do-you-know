@@ -26,6 +26,8 @@ return [
     // Public site origin used for absolute links in /sitemap.xml (no trailing slash).
     'site_url' => 'https://doyouknow.space',
     'guest_ttl_seconds' => 604800, // 7 days, renewed while the player keeps playing
+    // Clerk user ids allowed into /admin (the Super Admin). Server-side only; never in the browser.
+    'admin_subjects' => [],
     // Random server key for hashing rate-limit identifiers, at least 32 characters.
     'rate_limit_key' => '',
 ];
