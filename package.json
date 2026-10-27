@@ -16,12 +16,12 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/**/*.md\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
-    "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test": "bash scripts/with-local-tmp.sh vitest run",
+    "test:e2e": "bash scripts/with-local-tmp.sh playwright test",
     "package:cpanel": "npm run build && node scripts/package-cpanel.mjs",
     "check:htaccess": "bash scripts/check-htaccess.sh",
     "cron:ensure": "bash scripts/cron-ensure.sh",
-    "test:cron": "bash scripts/cron-ensure.test.sh",
+    "test:cron": "bash scripts/with-local-tmp.sh bash scripts/cron-ensure.test.sh",
     "check:rebrand": "python3 scripts/check-rebrand.py"
   },
   "dependencies": {

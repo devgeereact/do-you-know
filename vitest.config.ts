@@ -6,7 +6,9 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
+  cacheDir: '.local-test/vitest-cache',
   test: {
+    coverage: { reportsDirectory: '.local-test/coverage' },
     environment: 'jsdom',
     include: ['tests/unit/**/*.test.{ts,tsx}'],
     setupFiles: ['tests/unit/setup.ts'],

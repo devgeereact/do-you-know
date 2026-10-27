@@ -50,3 +50,11 @@ __pycache__/
 
 # disposable local test database, configs and test-only keys (never commit)
 .local-test/
+
+# local project recovery/private state (never commit; plans and handoffs belong in docs/)
+.local-state/
+
+# graphify derived/local files (graph.json and the report are committed)
+graphify-out/cache/
+.graphify-setup-done
+*.graphify-bak

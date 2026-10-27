@@ -22,3 +22,6 @@ Read CLAUDE-CODE-HANDOFF.md and ../07-operations/GITHUB-FTPS-SETUP.md. Exact che
 ## Repository baseline
 
 Private repository created and origin attached: https://github.com/gsakinz/do-you-know. Initial reviewed source baseline be16ba09abbfea21e36680aac9a4d74fd5de5d59 pushed normally to main; staged secret guard passed. Manual verification run 40238993723 was dispatched with full_backend=false. See the verification record for its final result. No FTPS deployment or backend operation was run.
+
+## Update 27 October 2026
+Live now runs on database `devgeereact_doyouknow` (fresh: migrations 0001-0011, 46 quizzes). Ranked rounds are 20 questions; likes are live. Admin area Phase A exists in the repository but is not deployed. Disposable local test state lives in gitignored `.local-test/`. See `.agent/CURRENT-TASK.md` and `docs/01-product/ADMIN-AREA-PLAN.md`.

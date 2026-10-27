@@ -229,6 +229,22 @@ The unit tests generate their own RSA key to check valid/invalid signed sessions
 this tests token verification but does not impersonate or create a real Clerk user.
 Actual Clerk sign-in and cPanel runtime checks are separate.
 
+## Local development
+
+The dev server (`npm run dev`, port 5202) proxies `/api` to a local PHP API on 127.0.0.1:55439
+(override with `DYK_DEV_API`). Use a gitignored config in `.local-test/` (environment `development`,
+a `dyk_dev` database on 127.0.0.1), then:
+
+```sh
+export DYK_CONFIG="$PWD/../.local-test/dev-env.php"
+php bin/migrate.php
+php bin/import-content.php --confirm-production      # drafts; then --publish=... --reviewed-by="Local dev"
+php -S 127.0.0.1:55439 -t public public/api.php
+php bin/dev-admin-token.php                          # token for the /admin dev gate (local config only)
+```
+
+Never use a real server config or the live database here.
+
 Release steps and safety rules: [DEPLOYMENT.md](../docs/07-operations/DEPLOYMENT.md).
 Remaining gates: [CURRENT-TASK.md](../.agent/CURRENT-TASK.md).
 

@@ -1,4 +1,3 @@
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -16,8 +15,8 @@ export const DB_USER_HOST = process.env.E2E_DB_USER_HOST ?? '127.0.0.1';
 export const DB_HOST = process.env.E2E_DB_HOST ?? '127.0.0.1';
 export const DB_PORT = Number(process.env.E2E_DB_PORT ?? 3306);
 
-/** Where the generated test config and server log live (outside the repo). */
-export const WORK_DIR = path.join(os.tmpdir(), `dyk-e2e-${API_PORT}`);
-export const CONFIG_PATH = path.join(WORK_DIR, 'config.php');
 export const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+/** Where the generated test config and server log live (gitignored .local-test/ folder). */
+export const WORK_DIR = path.join(REPO_ROOT, '.local-test', `e2e-${API_PORT}`);
+export const CONFIG_PATH = path.join(WORK_DIR, 'config.php');
 export const FIXTURE_PHP = path.join(REPO_ROOT, 'tests/e2e/support/fixture.php');

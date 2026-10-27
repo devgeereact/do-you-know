@@ -57,7 +57,7 @@ check('round size defaults to ten or the whole bank',Dyk\Content::roundSize(['qu
 check('ranked rounds are twenty questions, practice keeps the quiz round size',Game::roundSize('ranked',10,30)===20 && Game::roundSize('practice',10,30)===10 && Game::roundSize('ranked',10,12)===12);
 check('a ranked round is twenty distinct questions from the bank',count(array_unique(Game::pickRound($bank,Game::roundSize('ranked',10,30),[])))===20);
 require __DIR__.'/guard.php';
-$localTest=sys_get_temp_dir().'/dyk-guard-'.bin2hex(random_bytes(4)).'/.local-test';
+$localTest=dirname(__DIR__,2).'/.local-test/tmp/dyk-guard-'.bin2hex(random_bytes(4)).'/.local-test';
 mkdir($localTest,0700,true);file_put_contents($localTest.'/ok.php','<?php');
 $good=['environment'=>'test','allowed_origins'=>['http://localhost:5202'],'database'=>['host'=>'127.0.0.1','name'=>'dyk_test','user'=>'root']];
 check('a local _test database inside .local-test passes the guard',testDatabaseProblems($good,$localTest.'/ok.php',$localTest)===[]);

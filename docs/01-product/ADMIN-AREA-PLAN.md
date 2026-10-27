@@ -1,6 +1,6 @@
 # Admin area plan (approved 27 October 2026)
 
-Copy of the approved plan, kept in the repository. Status: Phase A in progress.
+Copy of the approved plan, kept in the repository. Status 27 October 2026: Phase A built and tested locally, committed, not deployed. Phases B to G not started.
 
 
 ## Context

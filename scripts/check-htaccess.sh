@@ -6,7 +6,8 @@ set -euo pipefail
 root=$(cd "$(dirname "$0")/.." && pwd)
 [ -f "$root/dist/index.html" ] || { echo "BLOCKED: run npm run build first"; exit 69; }
 mods=${APACHE_MODULES:-/usr/libexec/apache2}
-work=$(mktemp -d "${TMPDIR:-/tmp}/dyk-htaccess.XXXXXX")
+tmp="$root/.local-test/tmp"; mkdir -p "$tmp"
+work=$(mktemp -d "$tmp/dyk-htaccess.XXXXXX")
 cp -R "$root/dist" "$work/www"; cp "$root/.htaccess" "$work/www/"
 mkdir -p "$work/www/api" "$work/www/.well-known/acme-challenge"
 echo api > "$work/www/api/api.php"; echo x > "$work/www/config.php"; echo x > "$work/www/other.php"

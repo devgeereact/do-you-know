@@ -80,3 +80,14 @@ Done over the owner's SSH access. Credentials were generated and written straigh
 | Clerk sign-in in a real browser | NOT TESTED | Needs a human sign-in on the live site |
 
 **27 October 2026 database move:** live now uses `devgeereact_doyouknow` (fresh: migrations 0001-0011, 46 quizzes re-imported and published, reviewer "Site owner"). Old players, scores and streaks were not copied. Pre-move backup of the old database taken with `backup-db.sh`. Backend release 37fc9e8 is current. Live API check: 46 quizzes, daily served, ranked start 20 questions, practice 10, answers not exposed, `POST /likes` without a session returns 401. The frontend build with the like buttons is NOT yet published. `devgeereact_dykspace` and its users (`dyks_app`, `dyks_mig`, `dyks_ro`) were dropped later on 27 October after a verified final dump. `scripts/live-db.sh` used the dropped read-only account and needs a new one for the new database.
+
+## 27 October 2026 local results (throwaway MariaDB in `.local-test/`)
+| Check | Status |
+|---|---|
+| Backend unit (38), HTTP/database (80), competition (77), concurrency (9), daily (16), admin (12) | VERIFIED locally |
+| Frontend: typecheck, lint, 131 unit tests, build | VERIFIED locally |
+| Admin access matrix through the dev proxy: admin 200, no token 401, guest 403, garbage 401 | VERIFIED locally |
+| Admin Phase A on live | NOT DEPLOYED |
+| Clerk sign-in to `/admin` (real Clerk) | NOT TESTED |
+| Browser click-through of likes/ranked on the live site | NOT TESTED |
+| Playwright e2e after the .local-test path changes | NOT TESTED |

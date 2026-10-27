@@ -14,10 +14,12 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 3,
   retries: 0,
   forbidOnly: !!process.env.CI,
-  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : [['list']],
+  reporter: process.env.CI
+    ? [['list'], ['html', { open: 'never', outputFolder: '.local-test/playwright-report' }]]
+    : [['list']],
   timeout: 45_000,
   expect: { timeout: 10_000 },
-  outputDir: 'test-results',
+  outputDir: '.local-test/test-results',
   use: {
     baseURL: WEB_ORIGIN,
     trace: 'retain-on-failure',
