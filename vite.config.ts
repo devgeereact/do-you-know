@@ -59,7 +59,9 @@ export default defineConfig({
   server: {
     port: 5202,
     strictPort: true,
-    proxy: { '/api': { target: process.env.DYK_DEV_API ?? 'http://127.0.0.1:55439', changeOrigin: false } },
+    proxy: {
+      '/api': { target: process.env.DYK_DEV_API ?? 'http://127.0.0.1:55439', changeOrigin: false },
+    },
   },
   preview: { port: 5202, strictPort: true },
 

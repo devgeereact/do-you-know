@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AvatarBadge } from '@/components/AvatarBadge';
+import { LikeButton } from '@/components/game/LikeButton';
 import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { cn } from '@/lib/utils';
-import { gameErrorMessage } from '@/lib/gameErrors';
-import { setLike } from '@/services/gameService';
 import type { Board } from '@/types/domain';
 import type { Leaderboard } from '@/types/game';
 import { t } from '@/i18n';
@@ -29,25 +28,7 @@ export function LeaderboardTable({
   emptyText = t.leaderboards.table.empty,
   showMe = true,
 }: LeaderboardTableProps): JSX.Element {
-  // Like state is kept per entry so a tap shows at once; the server's total replaces it.
-  const [likes, setLikes] = useState<Record<string, { n: number; mine: boolean }>>({});
-  const [busy, setBusy] = useState<string | null>(null);
   const [likeError, setLikeError] = useState<string | null>(null);
-  useEffect(() => setLikes({}), [data]);
-
-  async function toggleLike(entryId: string, now: { n: number; mine: boolean }): Promise<void> {
-    if (!board || busy) return;
-    setBusy(entryId);
-    setLikeError(null);
-    try {
-      const result = await setLike(board, entryId, !now.mine);
-      setLikes((prev) => ({ ...prev, [entryId]: { n: result.likes, mine: result.liked_by_me } }));
-    } catch (err) {
-      setLikeError(gameErrorMessage(err as { message?: string }));
-    } finally {
-      setBusy(null);
-    }
-  }
 
   const meInTop = data.top.some((row) => row.is_me);
 
@@ -98,36 +79,23 @@ export function LeaderboardTable({
                 <span className="shrink-0 text-sm font-bold text-primary">{t.common.you}</span>
               )}
             </span>
-            {(() => {
-              const like = likes[row.entry_id] ?? { n: row.likes, mine: row.liked_by_me };
-              const label = like.mine
-                ? t.leaderboards.table.unlike(row.nickname)
-                : t.leaderboards.table.like(row.nickname);
-              return board && !row.is_me ? (
-                <button
-                  type="button"
-                  aria-pressed={like.mine}
-                  aria-label={label}
-                  title={label}
-                  disabled={busy === row.entry_id}
-                  onClick={() => void toggleLike(row.entry_id, like)}
-                  className={cn(
-                    'flex shrink-0 items-center gap-1 rounded-full border-2 px-2.5 py-1 text-sm font-bold tabular-nums',
-                    like.mine
-                      ? 'border-primary bg-primary/10 text-primary'
-                      : 'border-surface-border text-content-muted hover:border-primary',
-                  )}
-                >
-                  <span aria-hidden="true">{like.mine ? '♥' : '♡'}</span>
-                  <span>{like.n}</span>
-                </button>
-              ) : like.n > 0 ? (
+            {board && !row.is_me ? (
+              <LikeButton
+                board={board}
+                entryId={row.entry_id}
+                nickname={row.nickname}
+                likes={row.likes}
+                likedByMe={row.liked_by_me}
+                onError={setLikeError}
+              />
+            ) : (
+              row.likes > 0 && (
                 <span className="shrink-0 text-sm font-bold tabular-nums text-content-muted">
                   <span aria-hidden="true">♥ </span>
-                  {t.leaderboards.table.likeCount(like.n)}
+                  {t.leaderboards.table.likeCount(row.likes)}
                 </span>
-              ) : null;
-            })()}
+              )
+            )}{' '}
             <span className="shrink-0 text-right">
               <span className="block font-display text-lg font-semibold tabular-nums text-content">
                 {row.correct}/{row.total}
