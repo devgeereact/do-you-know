@@ -65,7 +65,7 @@ export function ResultsBoard({ quizSlug, board, needsNickname }: ResultsBoardPro
           {error}
         </p>
       )}
-      {data && <LeaderboardTable data={data} showMe={named} />}
+      {data && <LeaderboardTable data={data} board={board} showMe={named} />}
     </Card>
   );
 }

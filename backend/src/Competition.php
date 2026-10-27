@@ -144,8 +144,8 @@ final class Competition
         $row = Database::one($this->db,
             'SELECT 1+(SELECT COUNT(*) FROM leaderboard_entries e JOIN profiles p ON p.id=e.user_id
              WHERE e.board=m.board AND e.quiz_id=m.quiz_id AND e.period_start=m.period_start AND e.is_hidden=0 AND p.nickname IS NOT NULL
-             AND (e.correct_count>m.correct_count OR (e.correct_count=m.correct_count AND e.answer_time_ms<m.answer_time_ms)
-             OR (e.correct_count=m.correct_count AND e.answer_time_ms=m.answer_time_ms AND e.achieved_at<m.achieved_at))) AS place
+             AND (e.correct_count*m.total>m.correct_count*e.total OR (e.correct_count*m.total=m.correct_count*e.total AND e.answer_time_ms<m.answer_time_ms)
+             OR (e.correct_count*m.total=m.correct_count*e.total AND e.answer_time_ms=m.answer_time_ms AND e.achieved_at<m.achieved_at))) AS place
              FROM leaderboard_entries m WHERE m.board=? AND m.quiz_id=? AND m.period_start=? AND m.user_id=?',
             [$board, $quizId, $period, $this->userId]);
         return $row ? (int) $row['place'] : null;
@@ -164,20 +164,26 @@ final class Competition
         }
         $period = $board === 'daily' ? $daily['date'] : ($board === 'weekly' ? self::weekStart() : '1970-01-01');
         $statement = $this->db->prepare(
-            'SELECT RANK() OVER (ORDER BY e.correct_count DESC,e.answer_time_ms,e.achieved_at) AS place,
-             p.nickname,p.avatar_id,e.user_id,e.correct_count,e.total,e.answer_time_ms,e.achieved_at FROM leaderboard_entries e
+            'SELECT RANK() OVER (ORDER BY e.correct_count/e.total DESC,e.answer_time_ms,e.achieved_at) AS place,
+             p.nickname,p.avatar_id,e.user_id,e.attempt_id,e.correct_count,e.total,e.answer_time_ms,e.achieved_at,
+             (SELECT COUNT(*) FROM leaderboard_likes l WHERE l.board=e.board AND l.quiz_id=e.quiz_id AND l.period_start=e.period_start AND l.entry_user_id=e.user_id) AS likes,
+             (SELECT COUNT(*) FROM leaderboard_likes l WHERE l.board=e.board AND l.quiz_id=e.quiz_id AND l.period_start=e.period_start AND l.entry_user_id=e.user_id AND l.liker_id=?) AS liked_by_me
+             FROM leaderboard_entries e
              JOIN profiles p ON p.id=e.user_id WHERE e.board=? AND e.quiz_id=? AND e.period_start=? AND e.is_hidden=0 AND p.nickname IS NOT NULL
-             ORDER BY e.correct_count DESC,e.answer_time_ms,e.achieved_at,e.user_id LIMIT ?');
-        $statement->bindValue(1, $board);
-        $statement->bindValue(2, $quiz['id']);
-        $statement->bindValue(3, $period);
-        $statement->bindValue(4, max(1, min(100, $limit)), \PDO::PARAM_INT);
+             ORDER BY e.correct_count/e.total DESC,e.answer_time_ms,e.achieved_at,e.user_id LIMIT ?');
+        $statement->bindValue(1, $this->userId ?? '');
+        $statement->bindValue(2, $board);
+        $statement->bindValue(3, $quiz['id']);
+        $statement->bindValue(4, $period);
+        $statement->bindValue(5, max(1, min(100, $limit)), \PDO::PARAM_INT);
         $statement->execute();
         $top = array_map(fn(array $row): array => [
             'rank' => (int) $row['place'], 'nickname' => $row['nickname'], 'avatar_id' => $row['avatar_id'],
             'correct' => (int) $row['correct_count'], 'total' => (int) $row['total'],
             'answer_time_ms' => (int) $row['answer_time_ms'], 'achieved_at' => Database::utc($row['achieved_at']),
             'is_me' => $row['user_id'] === $this->userId,
+            // Opaque handle for liking this entry. Totals only: who liked is never returned.
+            'entry_id' => $row['attempt_id'], 'likes' => (int) $row['likes'], 'liked_by_me' => (int) $row['liked_by_me'] > 0,
         ], $statement->fetchAll());
         $mine = Database::one($this->db,
             'SELECT correct_count,total,answer_time_ms FROM leaderboard_entries WHERE board=? AND quiz_id=? AND period_start=? AND user_id=?',
@@ -186,5 +192,36 @@ final class Competition
             'rank' => $this->rank($board, $quiz['id'], $period), 'correct' => (int) $mine['correct_count'],
             'total' => (int) $mine['total'], 'answer_time_ms' => (int) $mine['answer_time_ms'],
         ] : null];
+    }
+
+    /**
+     * Likes or unlikes one leaderboard entry for the signed-in player. Idempotent: liking twice or
+     * taking back a like that is not there changes nothing. Returns the new total only.
+     */
+    public function like(string $board, string $entryId, bool $liked): array
+    {
+        if (!in_array($board, ['all_time', 'weekly', 'daily'], true) || !preg_match('/^[0-9a-f-]{36}$/D', $entryId)) {
+            throw new ApiError('entry_not_found', 404);
+        }
+        return Database::transaction($this->db, function () use ($board, $entryId, $liked): array {
+            Database::one($this->db, 'SELECT id FROM profiles WHERE id=? FOR UPDATE', [$this->userId]);
+            $entry = Database::one($this->db,
+                'SELECT board,quiz_id,period_start,user_id FROM leaderboard_entries WHERE board=? AND attempt_id=? AND is_hidden=0', [$board, $entryId]);
+            if (!$entry) { throw new ApiError('entry_not_found', 404); }
+            if ($entry['user_id'] === $this->userId) { throw new ApiError('own_entry'); }
+            $key = [$entry['board'], $entry['quiz_id'], $entry['period_start'], $entry['user_id']];
+            if ($liked) {
+                $played = Database::one($this->db, "SELECT 1 AS ok FROM attempts WHERE user_id=? AND status='finished' LIMIT 1", [$this->userId]);
+                if (!$played) { throw new ApiError('play_first'); }
+                Database::execute($this->db,
+                    'INSERT IGNORE INTO leaderboard_likes (board,quiz_id,period_start,entry_user_id,liker_id) VALUES (?,?,?,?,?)', [...$key, $this->userId]);
+            } else {
+                Database::execute($this->db,
+                    'DELETE FROM leaderboard_likes WHERE board=? AND quiz_id=? AND period_start=? AND entry_user_id=? AND liker_id=?', [...$key, $this->userId]);
+            }
+            $count = Database::one($this->db,
+                'SELECT COUNT(*) AS n FROM leaderboard_likes WHERE board=? AND quiz_id=? AND period_start=? AND entry_user_id=?', $key);
+            return ['likes' => (int) $count['n'], 'liked_by_me' => $liked];
+        });
     }
 }

@@ -71,7 +71,7 @@ final class Api
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
             $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/attempts'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/attempts','/likes'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -97,6 +97,12 @@ final class Api
             if ($path==='/me/avatar') { $player->avatar($body['avatar_id']??null);self::reply(['avatar_id'=>$body['avatar_id']]);return; }
             if ($path==='/me/settings') { self::reply($player->updateSettings($body));return; }
             if ($path==='/me/delete') { $player->delete($body);self::reply(['deleted'=>true]);return; }
+            if ($path==='/likes') {
+                RateLimit::check($db,$config,'like',$profile['id'],120,3600);
+                $board=$body['board']??null;$entry=$body['entry_id']??null;$liked=$body['liked']??null;
+                if (!is_string($board)||!is_string($entry)||!is_bool($liked)) { throw new ApiError('invalid_like'); }
+                self::reply((new Competition($db,$profile['id']))->like($board,$entry,$liked));return;
+            }
             $game=new Game($db,$profile['id']);
             if ($path==='/attempts') { self::reply($game->start($body));return; }
             if ($gameRoute) {

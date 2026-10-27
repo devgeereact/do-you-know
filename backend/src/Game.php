@@ -138,7 +138,7 @@ final class Game
                 $ids = array_column($snapshot, 'id');
                 $order = $daily
                     ? array_slice($ids, 0, (int) $version['question_count'])
-                    : self::pickRound($ids, (int) $version['question_count'], $this->servedHistory($quizId));
+                    : self::pickRound($ids, self::roundSize($mode, (int) $version['question_count'], count($ids)), $this->servedHistory($quizId));
                 $timer = $quiz['time_limit_seconds'];
                 $shuffle = $quiz['shuffle_options'];
             }
@@ -149,6 +149,15 @@ final class Game
                 [$id, $this->userId, $quizId, $versionId, $mode, $daily['id'] ?? null, $challenge['id'] ?? null, $timer, (int) $shuffle, json_encode($order, JSON_THROW_ON_ERROR)]);
             return $this->state($this->attempt($id));
         });
+    }
+
+    /** Questions in a ranked round, drawn at random from the quiz's bank. */
+    public const RANKED_ROUND = 20;
+
+    /** Practice uses the quiz's own round size; ranked uses RANKED_ROUND, or the whole bank if smaller. */
+    public static function roundSize(string $mode, int $quizRound, int $bank): int
+    {
+        return $mode === 'ranked' ? min(self::RANKED_ROUND, $bank) : $quizRound;
     }
 
     /**

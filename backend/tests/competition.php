@@ -100,4 +100,38 @@ $r=request('GET','/leaderboards?quiz_slug='.$slug, null,$third['token']);check('
 Database::execute($db,'UPDATE friend_challenges SET expires_at=DATE_SUB(UTC_TIMESTAMP(),INTERVAL 1 SECOND) WHERE code=?',[$share['code']]);
 $r=request('POST','/attempts',['mode'=>'challenge','challenge_code'=>$share['code']],$third['token']);check('expired challenge cannot start',$r['status']===400&&$r['body']['error']['code']==='challenge_not_found');
 $r=request('GET','/challenges/'.$share['code']);check('public expired preview is labelled',$r['body']['expired']===true);
+// Likes: once per entry, never your own, can be taken back, totals only.
+$r=request('GET','/leaderboards?quiz_slug='.$slug.'&board=all_time',null,$third['token']);$rows=$r['body']['top'];
+$firstRow=$rows[0];$ownRow=null;
+$r=request('GET','/leaderboards?quiz_slug='.$slug.'&board=all_time',null,$first['token']);
+foreach($r['body']['top'] as $row){if($row['is_me']){$ownRow=$row;}}
+check('board rows carry an entry handle and like total only',isset($firstRow['entry_id'])&&$firstRow['likes']===0&&$firstRow['liked_by_me']===false&&!str_contains(json_encode($rows),'liker'));
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>true],$first['token']);
+check('cannot like your own entry',$r['status']===400&&$r['body']['error']['code']==='own_entry');
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>true]);
+check('liking needs a session',$r['status']===401);
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>Database::uuid(),'liked'=>true],$second['token']);
+check('unknown entry is not found',$r['status']===404);
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>'yes'],$second['token']);
+check('like flag must be a boolean',$r['status']===400&&$r['body']['error']['code']==='invalid_like');
+$fresh=request('POST','/guest-sessions',[])['body'];
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>true],$fresh['token']);
+check('a player who has not finished a game cannot like',$r['status']===400&&$r['body']['error']['code']==='play_first');
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>true],$second['token']);
+check('a player can like an entry',$r['status']===200&&$r['body']['likes']===1&&$r['body']['liked_by_me']===true);
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>true],$second['token']);
+check('liking twice still counts once',$r['status']===200&&$r['body']['likes']===1);
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>true],$third['token']);
+check('different players add to the total',$r['body']['likes']===2);
+$r=request('GET','/leaderboards?quiz_slug='.$slug.'&board=all_time',null,$second['token']);
+$seen=array_values(array_filter($r['body']['top'],fn($x)=>$x['entry_id']===$ownRow['entry_id']))[0];
+check('board shows the total and only my own like',$seen['likes']===2&&$seen['liked_by_me']===true);
+$r=request('GET','/leaderboards?quiz_slug='.$slug.'&board=all_time');
+check('anonymous board shows totals but no likes of mine',array_values(array_filter($r['body']['top'],fn($x)=>$x['entry_id']===$ownRow['entry_id']))[0]['likes']===2);
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>false],$second['token']);
+check('a like can be taken back',$r['status']===200&&$r['body']['likes']===1&&$r['body']['liked_by_me']===false);
+$r=request('POST','/likes',['board'=>'all_time','entry_id'=>$ownRow['entry_id'],'liked'=>false],$second['token']);
+check('taking back twice is harmless',$r['status']===200&&$r['body']['likes']===1);
+$gone=Database::one($db,'SELECT id FROM profiles WHERE id=(SELECT user_id FROM attempts WHERE id=?)',[$ownRow['entry_id']]);
+check('a self-like cannot be written even directly',(function() use ($db,$gone,$quiz): bool { try { Database::execute($db,"INSERT INTO leaderboard_likes (board,quiz_id,period_start,entry_user_id,liker_id) VALUES ('all_time',?,'1970-01-01',?,?)",[$quiz,$gone['id'],$gone['id']]); return false; } catch (\PDOException) { return true; } })());
 fwrite(STDOUT,"$count competition checks passed\n");

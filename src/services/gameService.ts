@@ -8,6 +8,7 @@ import type {
   ContinueItem,
   FriendChallengePreview,
   Leaderboard,
+  LikeResult,
 } from '@/types/game';
 
 /**
@@ -88,6 +89,11 @@ export function getLeaderboard(
   limit = 50,
 ): Promise<Leaderboard> {
   return api<Leaderboard>('/leaderboards', { query: { quiz_slug: quizSlug, board, limit } });
+}
+
+/** Like or take back a like on a leaderboard entry. Returns the new total only. */
+export function setLike(board: Board, entryId: string, liked: boolean): Promise<LikeResult> {
+  return api<LikeResult>('/likes', { body: { board, entry_id: entryId, liked } });
 }
 
 export interface DailyToday {

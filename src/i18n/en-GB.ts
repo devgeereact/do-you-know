@@ -36,6 +36,8 @@ export const enGB = {
     whereThisComesFrom: 'Where this comes from',
     you: 'You',
     questionCount: (count: number): string => `${count} questions`,
+    /** Ranked rounds are longer than practice rounds; the server uses the same number. */
+    rankedQuestionCount: (count: number): string => `${count} questions when ranked`,
     /** Answer time in seconds with one decimal place, e.g. "12.4 s". */
     seconds: (ms: number): string =>
       `${(ms / 1000).toLocaleString('en-GB', { maximumFractionDigits: 1 })} s`,
@@ -127,6 +129,10 @@ export const enGB = {
       daily_already_played: "You've played today's challenge. Come back tomorrow for a new one!",
       challenge_not_found: 'This challenge link has expired or doesn’t exist.',
       own_challenge: "That's your own challenge — send it to a friend instead!",
+      own_entry: 'You can’t like your own score, but other players can!',
+      play_first: 'Finish a quiz first, then you can like other players’ scores.',
+      invalid_like: 'That like didn’t go through. Please try again.',
+      entry_not_found: 'That score isn’t on the board any more.',
       quiz_not_found: "We couldn't find that quiz.",
       attempt_not_found: "We couldn't find that game. Let's start a new one.",
       attempt_closed: 'That game has already finished.',
@@ -398,6 +404,9 @@ export const enGB = {
     table: {
       empty: 'No one on this board yet. Be the first!',
       rank: 'Rank ',
+      like: (name: string): string => `Like ${name}’s score`,
+      unlike: (name: string): string => `Take back your like for ${name}’s score`,
+      likeCount: (n: number): string => `${n} ${n === 1 ? 'like' : 'likes'}`,
       youAre: 'You’re',
       rankNumber: (rank: number): string => `#${rank}`,
       withScore: (correct: number, total: number): string => `with ${correct}/${total}`,
@@ -556,13 +565,13 @@ export const enGB = {
       modesTitle: 'Practice or ranked',
       rankedName: 'Play now',
       ranked:
-        'is a ranked game: your best result goes on that quiz’s all-time board and this week’s board. A new week starts on Monday, UK time.',
+        'is a ranked game of 20 questions, picked at random from the quiz’s question pool and shuffled. Your best result goes on that quiz’s all-time board and this week’s board. A new week starts on Monday, UK time.',
       practiceName: 'Just practise',
       practice:
-        'is for fun and learning. Practice games never go on a leaderboard. A few quizzes are practice only.',
+        'is for fun and learning, with 10 questions a game. Practice games never go on a leaderboard. A few quizzes are practice only.',
       dailyTitle: 'The daily challenge',
       daily: [
-        'There is one daily challenge, and everyone gets the same questions in the same order.',
+        'There is one daily challenge, and everyone gets the same 10 questions in the same order.',
         'You get one go each day, and it counts as a ranked game.',
         'A new challenge starts each day, shortly after midnight UK time.',
         'Play on days in a row to grow your streak. Miss a day and your streak starts again from one.',

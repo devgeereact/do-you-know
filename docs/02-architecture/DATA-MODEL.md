@@ -16,6 +16,7 @@ The runnable source is `backend/migrations/`, applied in order by `backend/bin/m
 | `0005_blocked_words_seed.sql`         | Starter `blocked_words` list (clear profanity and slurs, plus `admin`, `moderator`, `staff`, `official`) with `INSERT IGNORE`, so re-runs are safe                   |
 | `0006_content_reviews.sql`            | `content_reviews`: who reviewed and published which quiz version (written only by `bin/import-content.php --publish`)                                                |
 | `0007_attempts_finished_index.sql`    | Index `attempts_finished (status, finished_at, quiz_id)` for the 7-day trending query                                                                                |
+| `0011_leaderboard_likes.sql`          | `leaderboard_likes`: one row per liker per leaderboard entry; no self-likes (CHECK); cascades with the entry or either player (0009 is held by the stashed generator branch) |
 | `0008_attempts_player_quiz_index.sql` | Index `attempts_player_quiz (user_id, quiz_id, started_at)` so a new round can read the player's earlier rounds and serve unseen questions first                     |
 
 **Golden rule:** the browser can read a question's public text, **never its answer**.
@@ -70,6 +71,8 @@ blocked_words · rate_limits · schema_migrations (ledger)
 | `daily_challenges`    | `challenge_date` unique (London date), `quiz_id`, `quiz_version_id`, `status` (`scheduled`/`live`/`done`)                                                                                                                                                                                                                                        | `GET /daily` serves today's row only when `status = 'live'`; `bin/daily.php` (hourly cron) sets the statuses                                              |
 | `friend_challenges`   | `code` unique (8 characters, case-sensitive), `quiz_id`, `quiz_version_id`, `creator_id`, `creator_attempt_id`, `expires_at` (30 days)                                                                                                                                                                                                           | Friends replay the creator's frozen question order and timer                                                                                              |
 | `leaderboard_entries` | (`board`, `quiz_id`, `period_start`, `user_id`) PK, `attempt_id`, `correct_count`, `total`, `answer_time_ms`, `achieved_at`, `is_hidden`                                                                                                                                                                                                         | Boards `all_time`, `weekly`, `daily`. Best result kept per period. Public rows show nickname, avatar_id, score and time only                              |
+
+Likes: `leaderboard_likes` holds (`board`, `quiz_id`, `period_start`, `entry_user_id`, `liker_id`). Public boards return the total and the viewer's own like only, never who liked. Rows carry `entry_id` (the entry's attempt id) as the like handle. Boards rank by correct/total, so 20-question ranked and 10-question daily results compare fairly.
 
 Profile deletion (`POST /me/delete`) cascades to sessions, settings, attempts, answers,
 friend challenges and leaderboard entries through foreign keys.

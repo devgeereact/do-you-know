@@ -162,7 +162,7 @@ export function DailyPage(): JSX.Element {
               {t.daily.topTen}
             </SectionHeading>
             {board.data ? (
-              <LeaderboardTable data={board.data} emptyText={t.daily.boardEmpty} />
+              <LeaderboardTable data={board.data} board="daily" emptyText={t.daily.boardEmpty} />
             ) : board.error ? (
               <p className="text-content-muted">{t.daily.boardError}</p>
             ) : (

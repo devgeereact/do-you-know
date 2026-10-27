@@ -16,6 +16,9 @@ import { Card } from '@/components/ui/Card';
 import { Page } from '@/components/ui/Page';
 import { t } from '@/i18n';
 
+// Mirrors Game::RANKED_ROUND on the server, which is what actually sets the round.
+const RANKED_ROUND = 20;
+
 const metaPill = 'rounded-full border border-surface-border bg-background px-3 py-1 text-content';
 
 function TopPlayers({ slug }: { slug: string }): JSX.Element {
@@ -33,7 +36,7 @@ function TopPlayers({ slug }: { slug: string }): JSX.Element {
         {t.quiz.topPlayers}
       </SectionHeading>
       {data ? (
-        <LeaderboardTable data={data} />
+        <LeaderboardTable data={data} board="all_time" />
       ) : error ? (
         <p className="text-content-muted">{t.quiz.boardError}</p>
       ) : (
@@ -115,6 +118,9 @@ export function QuizPage(): JSX.Element {
 
                 <ul className="mt-5 flex flex-wrap gap-2 text-sm font-bold">
                   <li className={metaPill}>{t.common.questionCount(quiz.question_count)}</li>
+                  {quiz.is_ranked && (
+                    <li className={metaPill}>{t.common.rankedQuestionCount(RANKED_ROUND)}</li>
+                  )}
                   <li className={metaPill}>{difficultyLabel(quiz.difficulty)}</li>
                   {age && <li className={metaPill}>{age}</li>}
                   <li className={metaPill}>

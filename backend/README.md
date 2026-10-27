@@ -109,6 +109,7 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | GET /quizzes/trending        | Up to 6 published quizzes by finished plays in the last 7 days, then newest; catalogue fields only                 |
 | GET /quizzes/:slug           | One published quiz                                                                                                 |
 | GET /daily                   | Today's published challenge, London server date                                                                    |
+| POST /likes                  | `{board, entry_id, liked}`; signed-in players who have finished a game like or unlike another player's entry; returns `{likes, liked_by_me}` only |
 | GET /leaderboards            | board/quiz_slug/limit, public nickname/avatar_id/score rows only                                                   |
 | GET /challenges/:code        | Public nickname/avatar_id/score preview, labels expiry                                                             |
 | GET /me/daily/:id/finished   | Owner-only daily completion                                                                                        |

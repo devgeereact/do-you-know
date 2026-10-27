@@ -87,6 +87,7 @@ export function LeaderboardsPage(): JSX.Element {
           {data && (
             <LeaderboardTable
               data={data}
+              board={board}
               emptyText={board === 'daily' ? t.leaderboards.dailyEmpty : t.leaderboards.table.empty}
             />
           )}

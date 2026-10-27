@@ -105,6 +105,17 @@ export interface LeaderboardRow {
   answer_time_ms: number;
   achieved_at: string;
   is_me: boolean;
+  /** Opaque handle used to like this entry. Not a player id. */
+  entry_id: string;
+  /** Total likes. Who liked is never sent. */
+  likes: number;
+  liked_by_me: boolean;
+}
+
+/** POST /likes */
+export interface LikeResult {
+  likes: number;
+  liked_by_me: boolean;
 }
 
 /** GET /leaderboards */
@@ -133,6 +144,10 @@ export type GameErrorCode =
   | 'daily_already_played'
   | 'challenge_not_found'
   | 'own_challenge'
+  | 'own_entry'
+  | 'play_first'
+  | 'invalid_like'
+  | 'entry_not_found'
   | 'quiz_not_found'
   | 'attempt_not_found'
   | 'attempt_closed'

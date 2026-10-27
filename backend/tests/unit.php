@@ -54,4 +54,6 @@ check('a round is not served in bank order',(function() use ($bank): bool { for 
 check('prompt keys ignore case, spaces and punctuation',Dyk\Content::promptKey('What is 2 + 2?')===Dyk\Content::promptKey('what is 2+2'));
 check('prompt keys keep maths symbols apart',Dyk\Content::promptKey('What is 7 + 8?')!==Dyk\Content::promptKey('What is 7 × 8?'));
 check('round size defaults to ten or the whole bank',Dyk\Content::roundSize(['questions'=>array_fill(0,30,[])])===10 && Dyk\Content::roundSize(['questions'=>array_fill(0,7,[])])===7 && Dyk\Content::roundSize(['round_size'=>15,'questions'=>array_fill(0,30,[])])===15);
+check('ranked rounds are twenty questions, practice keeps the quiz round size',Game::roundSize('ranked',10,30)===20 && Game::roundSize('practice',10,30)===10 && Game::roundSize('ranked',10,12)===12);
+check('a ranked round is twenty distinct questions from the bank',count(array_unique(Game::pickRound($bank,Game::roundSize('ranked',10,30),[])))===20);
 fwrite(STDOUT,"$count checks passed\n");
