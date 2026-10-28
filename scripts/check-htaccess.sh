@@ -28,6 +28,12 @@ LoadModule env_module $mods/mod_env.so
 LoadModule setenvif_module $mods/mod_setenvif.so
 ServerName localhost
 DocumentRoot "$work/www"
+# The work folder sits inside the repo (.local-test/tmp), so Apache would also read the repo's
+# own .htaccess as an ancestor. Switch overrides off everywhere except the throwaway docroot.
+<Directory />
+  AllowOverride None
+  Require all denied
+</Directory>
 <Directory "$work/www">
   AllowOverride All
   Require all granted

@@ -9,7 +9,7 @@ Run with `npm run test:e2e` (Playwright, Chromium). Two projects run every journ
 `global-setup.ts` makes a real, disposable stack and removes it afterwards:
 
 1. A fresh MariaDB database `dyk_e2e_test` and a user limited to it.
-2. A private test config (`environment=test`, allowed origin `http://localhost:5304` only) under the OS temp folder.
+2. A private test config (`environment=test`, allowed origin `http://localhost:5304` only) under the gitignored `.local-test/e2e-<port>/` folder. Reports and traces go to `.local-test/test-results` and `.local-test/playwright-report`.
 3. `backend/bin/migrate.php`, run twice to prove it is repeatable.
 4. `support/fixture.php seed`: one category, one published quiz (`e2e-quick-quiz`) with a choice, a true/false and a slider question, and a daily challenge row that is live today on the London calendar.
 5. The PHP API on `127.0.0.1:55503` (the cPanel entry point under `php -S`).
