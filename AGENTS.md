@@ -1,29 +1,43 @@
 # Do You Know — agent contract
 
-Read `.agent/PROJECT.yml`, `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md` and `docs/00-foundation/CLAUDE-CODE-HANDOFF.md` first. Read the relevant product/architecture/security docs before changes. This is a fresh Route B destination for **doyouknow.space**, not the old production checkout.
+One entry point for every coding agent (Claude Code reads it through `CLAUDE.md`, Codex reads it directly). Read `.agent/PROJECT.yml`, `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md` and `docs/00-foundation/CLAUDE-CODE-HANDOFF.md` first, then the product/architecture/security docs for the area you change. The app is live at **https://doyouknow.space**; repository `gsakinz/do-you-know` (private, `main`).
 
 ## Authority and Git
-The active user request authorises local rebranding/setup files, not unrelated feature development, user/database migration or unreviewed deployment. Preserve the source project and this destination's loose work. There is no initial commit/remote at the baseline audit; do not blindly pull or push a nonexistent origin. Create/attach the intended private repository only with valid authorised access. No force push, destructive reset, broad clean or remote branch deletion. Use focused commits, staged secret checks and appropriate review. A plugin or CodeRabbit installation is not assumed.
+
+Work only within the current request. No force push, `reset --hard`, `clean`, `checkout -- .`, history rewrites or remote branch deletion. Focused commits, one concern each. Anything on the server (deploys, migrations, cron, files) needs the owner's explicit OK in the session.
 
 ## Sources of truth
-- Current state/handoff: docs/00-foundation/PROJECT-MEMORY.md and CLAUDE-CODE-HANDOFF.md.
-- Product and rules: docs/01-product/PRODUCT-SPEC.md and docs/00-foundation/RULES.md.
-- Architecture/data/hooks: docs/02-architecture/.
-- Quality: docs/06-quality/EVIDENCE-STATUS.md and docs/08-change-management/REBRAND-VERIFICATION.md.
-- Hosting: docs/07-operations/GITHUB-FTPS-SETUP.md and DEPLOYMENT.md.
 
-Technical documents may describe imported capabilities. They are not proof that a new-domain backend, database, Clerk instance, cron job or release exists. Record IMPLEMENTED, VERIFIED, PLANNED and BLOCKED accurately; do not relabel inherited test evidence as a new passing check.
+- Current state/handoff: `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md`, `CLAUDE-CODE-HANDOFF.md`.
+- Product and rules: `docs/01-product/PRODUCT-SPEC.md`, `docs/00-foundation/RULES.md`.
+- Architecture/data/hooks: `docs/02-architecture/`. Decisions: `docs/08-change-management/DECISIONS.md`.
+- Quality: `docs/06-quality/EVIDENCE-STATUS.md`. Hosting: `docs/07-operations/GITHUB-FTPS-SETUP.md`, `DEPLOYMENT.md`.
 
-## Stack and coding
-React 18, strict TypeScript, Vite and Tailwind tokens; PHP 8.2+ private backend with MySQL/MariaDB. Use npm and package-lock.json; dev port 5202 remains unchanged. Do not alter machine-global port registries or assume an Ubuntu build machine/GEE OS installation exists. No Node runtime is required on cPanel. Preserve the established layout and hook/service/API boundaries. Components use typed services; PHP uses validated input, prepared statements and server-side scope checks. Applied migrations remain immutable.
+Record IMPLEMENTED, VERIFIED, PLANNED and BLOCKED accurately; never relabel old evidence as a new passing check.
+
+## Stack and commands
+
+React 18, strict TypeScript, Vite, Tailwind tokens; private PHP backend (8.2 floor, server runs 8.4) with MariaDB; Clerk for adults. Node 24 (`.node-version`), **pnpm** (`pnpm-lock.yaml`). ESLint + Prettier stay (the custom i18n lint rule has no Biome equivalent).
+
+| Task                                                            | Command                                                                                  |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Install (also enables the Git hook)                             | `pnpm install`                                                                           |
+| Dev: Vite on http://localhost:5202 + PHP API on 127.0.0.1:55439 | `pnpm dev` (`pnpm dev:web` = frontend only)                                              |
+| Gate before every commit/PR                                     | `pnpm check` (lint, format check, typecheck, unit tests, build)                          |
+| Backend / e2e                                                   | see `backend/README.md`, `tests/e2e/README.md` (disposable DB under `.local-test/` only) |
+
+Preserve the layout and hook/service/API boundaries. Components use typed services; PHP uses validated input, prepared statements and server-side scope checks. Applied migrations are immutable.
 
 ## Security and game integrity
-Never expose answers before answering or compute trusted scores/times/permissions in the browser. Preserve server-side grading and ownership. Children remain guest-first; collect no new real names, birthdates, photos, location, contacts or free text. Public surfaces show nickname, preset avatar and score only. No new tracking/ad SDK, generated player photos or AI auto-publication. Existing optional integrations remain off unless configured and approved.
 
-Never open real .env files, keys or private config just to perform branding. Examples contain placeholders only. VITE_* values are public; backend secrets/config/backups stay outside every webroot. `.claude/settings.json` retains the existing agent guard; Codex applies the same restrictions manually. Enable the Git hook deliberately once the owner adopts this repository; run `scripts/guard.py` on staged files before commits.
+Never expose answers before answering or compute trusted scores/times/permissions in the browser. Children stay guest-first; collect no new real names, birthdates, photos, location, contacts or free text. Public surfaces show nickname, preset avatar and score only. No new tracking/ad SDK, generated player photos or AI auto-publication.
 
-## Deployment
-Only domain: doyouknow.space. Exact cPanel public/private paths and scoped FTPS account must be verified; do not reuse old server directories. Manual workflows only; no workflow_run/push-trigger deployment. No mirror-delete, unknown remote cleanup, database migration or cron modification from the public FTPS workflow. A public-root account cannot deploy a private backend outside that root. Backend install/configuration/migrations require a separate approved procedure. Before publishing the app, verify Clerk origins, private API configuration, disposable-db tests and backup/recovery. Coming-soon is a separate allowlisted artifact. Use valid FTPS certificates; never plaintext FTP or insecure TLS.
+Never open `.env*`, keys, `config.php` or anything in `.local-state/`. `VITE_*` values are public; backend secrets/config/backups stay outside every webroot. The pre-commit hook runs `scripts/guard.py` and gitleaks on staged files. Claude Code also runs `scripts/agent_guard.py` before every tool call (`.claude/settings.json`); a block is not permission to work around it. Codex has no hook: apply the same rules by hand and run `python3 scripts/guard.py` after `git add`.
 
-## Checks and handoff
-Run typecheck, lint, relevant tests and a build for meaningful source changes. PHP/database/browser/Apache checks need their matching environment; label unavailable checks NOT TESTED/BLOCKED. Update current docs and task memory with actual results. No fabricated production readiness.
+## CI and deployment
+
+CI (`.github/workflows/verify.yml`) runs on every push and PR: `pnpm check`, guard tests, secret scan, MariaDB backend tests. Browser e2e is opt-in (Run workflow → `full_backend`). CI never deploys. Deploy is the manual `deploy.yml` workflow only: FTPS with a valid certificate, no mirror-delete, no migrations or cron changes. Backend releases and migrations follow `backend/README.md` with a backup first.
+
+## Handoff
+
+After meaningful work, update `.agent/CURRENT-TASK.md` with what changed, the checks you ran (PASS / NOT TESTED / BLOCKED) and the next step.
