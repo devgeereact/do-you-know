@@ -58,3 +58,7 @@ __pycache__/
 graphify-out/cache/
 .graphify-setup-done
 *.graphify-bak
+
+# Generated helper output (run /graphify on demand; never committed)
+graphify-out/
+.graphify*
