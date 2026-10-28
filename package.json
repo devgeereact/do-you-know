@@ -8,7 +8,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/dev.mjs",
     "build": "tsc --noEmit && vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -22,7 +22,9 @@
     "check:htaccess": "bash scripts/check-htaccess.sh",
     "cron:ensure": "bash scripts/cron-ensure.sh",
     "test:cron": "bash scripts/with-local-tmp.sh bash scripts/cron-ensure.test.sh",
-    "check:rebrand": "python3 scripts/check-rebrand.py"
+    "check:rebrand": "python3 scripts/check-rebrand.py",
+    "dev:web": "vite",
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build"
   },
   "dependencies": {
     "@clerk/react": "^6.17.8",
