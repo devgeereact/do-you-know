@@ -86,7 +86,7 @@ jobs:
     - name: Prove the cron helper only adds lines
       run: bash scripts/cron-ensure.test.sh
     - name: Configure disposable database
-      run: "export DYK_CONFIG=\"$RUNNER_TEMP/dyk-ci.php\"\necho \"DYK_CONFIG=$DYK_CONFIG\" >> \"$GITHUB_ENV\"\n\
+      run: "mkdir -p .local-test\nexport DYK_CONFIG=\"$GITHUB_WORKSPACE/.local-test/dyk-ci.php\"\necho \"DYK_CONFIG=$DYK_CONFIG\" >> \"$GITHUB_ENV\"\n\
         php <<'PHP'\n<?php\n$config = require 'backend/config.example.php';\n$config['environment'] = 'test';\n\
         $config['allowed_origins'] = ['http://localhost:5202'];\n$config['database'] = [\n    'host' => '127.0.0.1',\
         \ 'port' => 3306, 'name' => 'dyk_ci_test',\n    'user' => 'root', 'password' => 'ci_test_only',\n];\n$config['rate_limit_key']\

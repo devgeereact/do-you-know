@@ -18,8 +18,10 @@ for path in ROOT.rglob('*'):
  if any(re.search(pattern,body) for pattern in secret):problems.append((str(path.relative_to(ROOT)),'possible credential signature'))
 assert json.loads((ROOT/'forge.config.json').read_text())['appUrl']=='https://doyouknow.space'
 for workflow in (ROOT/'.github/workflows').glob('*.yml'):
- if re.search(r'(?m)^\s*(workflow_run|push|pull_request|schedule):',workflow.read_text()):problems.append((str(workflow.relative_to(ROOT)),'unexpected automatic workflow trigger'))
+ text=workflow.read_text()
+ # CI may run on push/PR only when it is check-only: no secrets and not a deploy workflow.
+ if re.search(r'(?m)^\s*(workflow_run|push|pull_request|schedule):',text) and ('secrets.' in text or 'deploy' in workflow.name):problems.append((str(workflow.relative_to(ROOT)),'automatic trigger on a deploy or secret-using workflow'))
 if problems:
  for name,reason in problems:print('FAIL:',name,'—',reason)
  sys.exit(1)
-print('PASS: current-domain references, manual triggers and basic secret patterns checked. Not a complete security audit.')
+print('PASS: current-domain references, deploy stays manual and basic secret patterns checked. Not a complete security audit.')
