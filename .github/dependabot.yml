@@ -11,6 +11,9 @@ updates:
     groups:
       dependencies:
         patterns: ['*']
+    ignore:
+      - dependency-name: "@types/node" # stay on the Node major we run (.node-version)
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: composer
     directory: /backend
