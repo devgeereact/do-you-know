@@ -1,17 +1,19 @@
 project:
-  name: "Do You Know"
+  name: 'Do You Know'
   slug: do-you-know
   type: pwa
-  lifecycle: rebranded-import-awaiting-foundation
+  lifecycle: live
   location: /Users/realmrgee/Developer/Projects/do-you-know
   domain: doyouknow.space
   route: B
   source_policy: read-only-source-preserved
 stack_profile: cpanel
 stack: [react-18, typescript-strict, vite, tailwind, private-php-8.2, mysql-mariadb, clerk]
-package_manager: npm
+package_manager: pnpm
+node: '24 (.node-version)'
 dev_server:
   port: 5202
+  api_port: 55439
   command: pnpm dev
 repository:
   intended_owner: gsakinz
@@ -26,6 +28,7 @@ hosting:
   private_backend_root: TO_VERIFY_OUTSIDE_EVERY_WEBROOT
   ftps: scoped-account-required
   deployment: manual-workflow_dispatch-only
+  ci: verify.yml on every push and pull request
   deployed_by_this_task: false
 identity:
   provider: clerk

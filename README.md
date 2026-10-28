@@ -13,19 +13,19 @@ This folder contains imported React/TypeScript frontend and private PHP backend 
 
 ## Current state — 25 October 2026
 
-| Item | State |
-|---|---|
-| Domain | doyouknow.space; owner reports connected to cPanel; document root/TLS not independently verified |
-| Local repository | Fresh main branch committed and pushed to the new private origin |
-| GitHub repository | https://github.com/gsakinz/do-you-know — private, created and verified |
-| Deployment | Manual-only GitHub Actions; verification status in the rebrand report; no deployment performed |
-| FTPS | Needs dedicated account, verified TLS hostname/root and repository secrets |
-| Backend/database/Clerk | Imported code; new-domain configuration and runtime verification pending |
-| Content/CMS improvements | Continue in Claude Code; imported modules are not automatically complete |
+| Item                     | State                                                                                              |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| Domain                   | doyouknow.space; owner reports connected to cPanel; document root/TLS not independently verified   |
+| Local repository         | Fresh main branch committed and pushed to the new private origin                                   |
+| GitHub repository        | https://github.com/gsakinz/do-you-know — private, created and verified                             |
+| Deployment               | Live since 26 October 2026; manual `deploy.yml` only. CI checks run on every push and never deploy |
+| FTPS                     | Needs dedicated account, verified TLS hostname/root and repository secrets                         |
+| Backend/database/Clerk   | Imported code; new-domain configuration and runtime verification pending                           |
+| Content/CMS improvements | Continue in Claude Code; imported modules are not automatically complete                           |
 
 ## Local development
 
-Use Node 24 and the committed npm lockfile:
+Use Node 24 (`.node-version`) and pnpm with the committed lockfile:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -37,7 +37,7 @@ Vite uses **http://localhost:5202** with strict port checking. Browser settings 
 ```sh
 pnpm typecheck
 pnpm lint
-npm test
+pnpm test
 PRERENDER=0 pnpm build
 ```
 
