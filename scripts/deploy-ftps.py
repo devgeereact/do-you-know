@@ -52,6 +52,7 @@ def deploy(folder,expected_build):
   try:ftp.quit()
   except Exception:ftp.close()
  request=urllib.request.Request('https://'+DOMAIN+'/',headers={'Cache-Control':'no-cache','User-Agent':'Do-You-Know-release-check'})
+ # nosemgrep: python.lang.security.audit.dynamic-urllib-use-detected.dynamic-urllib-use-detected -- fixed https:// URL from the DOMAIN constant
  with urllib.request.urlopen(request,timeout=30,context=ssl.create_default_context()) as response:
   if urllib.parse.urlsplit(response.url).hostname!=DOMAIN:raise ValueError('Unexpected public redirect host')
   page=response.read(2_000_000).decode('utf-8',errors='replace')
