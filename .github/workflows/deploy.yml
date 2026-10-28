@@ -55,7 +55,7 @@ jobs:
 
         pnpm lint
 
-        npm test
+        pnpm test
 
         pnpm build
 

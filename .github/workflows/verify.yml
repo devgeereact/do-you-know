@@ -1,5 +1,6 @@
-# Manual checks only; fuller backend/e2e jobs remain opt-in.
-name: Manual application verification
+# Every push to main and every pull request: frontend gate + MariaDB backend contracts.
+# Browser e2e journeys stay opt-in (Run workflow → full_backend) to save Actions minutes.
+name: CI
 permissions:
   contents: read
 concurrency:
@@ -13,6 +14,7 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       with:
         persist-credentials: false
+        fetch-depth: 0
     - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
       with:
         cache: true
@@ -20,9 +22,8 @@ jobs:
       with:
         node-version-file: .node-version
     - run: pnpm install --frozen-lockfile
-    - run: pnpm typecheck
-    - run: pnpm lint
-    - run: pnpm build
+    - name: Lint, format check, typecheck, unit tests and build
+      run: pnpm check
       env:
         VITE_SENTRY_DSN: ''
         VITE_POSTHOG_KEY: ''
@@ -32,6 +33,17 @@ jobs:
         python3 tests/unit/deploy-ftps.test.py
 
         python3 tests/unit/guard.test.py'
+    - name: Secret scan (history + build output)
+      env:
+        GITLEAKS_VERSION: 8.30.1
+        GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+      run: |
+        curl -fsSL -o /tmp/gitleaks.tgz \
+          "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+        echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tgz" | sha256sum --check -
+        tar -xzf /tmp/gitleaks.tgz -C /tmp gitleaks
+        /tmp/gitleaks git --redact --no-banner .
+        /tmp/gitleaks dir --redact --no-banner dist
   backend:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -86,23 +98,7 @@ jobs:
         \ curl --silent --fail http://127.0.0.1:55438/api/v1/health > /dev/null; then break; fi\n  sleep 0.2\ndone\n\
         php backend/tests/integration.php\nphp backend/tests/competition.php\nphp backend/tests/daily.php\nphp backend/tests/concurrency.php\n\
         php backend/tests/feeds.php\nphp backend/tests/content.php\nphp backend/tests/cleanup.php\nphp backend/tests/seo.php\n"
-    if: inputs.full_backend
-  unit:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      with:
-        persist-credentials: false
-    - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-      with:
-        cache: true
-    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
-      with:
-        node-version-file: .node-version
-    - run: pnpm install --frozen-lockfile
-    - name: Unit and component tests
-      run: npm test
+    if: github.event_name != 'workflow_dispatch' || inputs.full_backend
   e2e:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -142,7 +138,7 @@ jobs:
       run: composer install --no-dev --no-interaction --prefer-dist
     - run: pnpm install --frozen-lockfile
     - name: Install Chromium for Playwright
-      run: npx playwright install --with-deps chromium
+      run: pnpm exec playwright install --with-deps chromium
     - name: Browser journeys (mobile and desktop)
       run: pnpm test:e2e
     - name: Keep the report when a journey fails
@@ -158,6 +154,11 @@ jobs:
         retention-days: 7
     if: inputs.full_backend
 'on':
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '**/*.md', '.agent/**']
+  pull_request:
+    paths-ignore: ['docs/**', '**/*.md', '.agent/**']
   workflow_dispatch:
     inputs:
       full_backend:
