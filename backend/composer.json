@@ -9,7 +9,7 @@
     "ext-pdo_mysql": "*",
     "ext-curl": "*",
     "ext-openssl": "*",
-    "clerkinc/backend-php": "^1.0",
+    "clerkinc/backend-php": "^2.0",
     "guzzlehttp/psr7": "^2.8"
   },
   "autoload": { "psr-4": { "Dyk\\": "src/" } },
