@@ -19,8 +19,8 @@ for path in ROOT.rglob('*'):
 assert json.loads((ROOT/'forge.config.json').read_text())['appUrl']=='https://doyouknow.space'
 for workflow in (ROOT/'.github/workflows').glob('*.yml'):
  text=workflow.read_text()
- # CI may run on push/PR only when it is check-only: no secrets and not a deploy workflow.
- if re.search(r'(?m)^\s*(workflow_run|push|pull_request|schedule):',text) and ('secrets.' in text or 'deploy' in workflow.name):problems.append((str(workflow.relative_to(ROOT)),'automatic trigger on a deploy or secret-using workflow'))
+ # Push/PR workflows must be check-only: not a deploy workflow, no secrets except the Semgrep scan token.
+ if re.search(r'(?m)^\s*(workflow_run|push|pull_request|schedule):',text) and (set(re.findall(r'secrets\.(\w+)',text))-{'SEMGREP_APP_TOKEN','GITHUB_TOKEN'} or 'deploy' in workflow.name):problems.append((str(workflow.relative_to(ROOT)),'automatic trigger on a deploy or secret-using workflow'))
 if problems:
  for name,reason in problems:print('FAIL:',name,'—',reason)
  sys.exit(1)
