@@ -24,7 +24,8 @@
     "test:cron": "bash scripts/with-local-tmp.sh bash scripts/cron-ensure.test.sh",
     "check:rebrand": "python3 scripts/check-rebrand.py",
     "dev:web": "vite",
-    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build"
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build",
+    "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@clerk/react": "^6.17.8",
