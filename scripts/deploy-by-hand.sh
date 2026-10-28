@@ -43,9 +43,9 @@ before=$(remote "readlink ~/$BACKEND/current")
 echo "Deploying ${SHA:0:7}. Live before: $before"
 
 if [ "$gates" = 1 ]; then
-  npm run -s lint
-  npm run -s typecheck
-  npm test --silent
+  pnpm -s lint
+  pnpm -s typecheck
+  pnpm -s test
 fi
 
 # 1. Build with the production variables, never the local env file.
@@ -55,8 +55,8 @@ export VITE_APP_URL VITE_CLERK_PUBLISHABLE_KEY
 
 package() {
   rm -rf build/cpanel-*
-  npm run -s build
-  npm run -s check:htaccess | tail -1
+  pnpm -s build
+  pnpm -s check:htaccess | tail -1
   (cd backend && composer install --no-dev -q)
   node scripts/package-cpanel.mjs | sed -n 's/^cPanel release: //p'
   (cd backend && composer install -q)

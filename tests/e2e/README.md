@@ -2,7 +2,7 @@
 
 Test critical user journeys through observable behaviour, including error and recovery paths. Record environment assumptions.
 
-Run with `npm run test:e2e` (Playwright, Chromium). Two projects run every journey: `mobile` (390 x 844, touch) and `desktop` (1440 x 900).
+Run with `pnpm test:e2e` (Playwright, Chromium). Two projects run every journey: `mobile` (390 x 844, touch) and `desktop` (1440 x 900).
 
 ## What the run builds
 

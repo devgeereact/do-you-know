@@ -64,7 +64,7 @@ consent flow. Live deploy is not done. Unimplemented routes return JSON 404.
    If it fails, stop deployment and inspect the private migration state. Never edit
    a migration recorded in schema_migrations. Back up outside every webroot first.
 
-7. Build the frontend on the Mac/CI and run `npm run package:cpanel`. It creates a
+7. Build the frontend on the Mac/CI and run `pnpm package:cpanel`. It creates a
    new ignored build/cpanel-* release directory with public/ and private/ sections.
    The package includes a blank private/config.php generated from the example,
    never copied from live settings. Fill it AFTER upload. Never upload the
@@ -144,7 +144,7 @@ quiz exists, so no daily runs that day. Until the first run after London midnigh
 Use the absolute CLI path in cron. On this host a bare `php` in cron's PATH is
 `/usr/bin/php`, the CGI build: both scripts then answer `404` and exit 0 without doing
 anything. Check with `/usr/local/bin/php -r 'echo PHP_SAPI;'` (must print `cli`).
-Install or repair both lines with `npm run cron:ensure` from the repo, never by replacing
+Install or repair both lines with `pnpm cron:ensure` from the repo, never by replacing
 the shared crontab; runs log to `~/do-you-know-private/shared/logs/cron.log`.
 
 ## Content review and publishing
@@ -231,7 +231,7 @@ Actual Clerk sign-in and cPanel runtime checks are separate.
 
 ## Local development
 
-The dev server (`npm run dev`, port 5202) proxies `/api` to a local PHP API on 127.0.0.1:55439
+The dev server (`pnpm dev`, port 5202) proxies `/api` to a local PHP API on 127.0.0.1:55439
 (override with `DYK_DEV_API`). Use a gitignored config in `.local-test/` (environment `development`,
 a `dyk_dev` database on 127.0.0.1), then:
 

@@ -154,7 +154,7 @@ export default defineConfig({
       },
 
       devOptions: {
-        enabled: false, // set true to debug the SW in `npm run dev`
+        enabled: false, // set true to debug the SW in `pnpm dev`
       },
     }),
   ],

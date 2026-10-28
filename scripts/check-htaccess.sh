@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Local proof for the root .htaccess: serves dist/ through a throwaway Apache on
 # 127.0.0.1:8089 (macOS built-in httpd or any Apache 2.4) and checks routing, caching
-# and deny rules. Run after `npm run build`. Changes nothing outside a temp folder.
+# and deny rules. Run after `pnpm build`. Changes nothing outside a temp folder.
 set -euo pipefail
 root=$(cd "$(dirname "$0")/.." && pwd)
-[ -f "$root/dist/index.html" ] || { echo "BLOCKED: run npm run build first"; exit 69; }
+[ -f "$root/dist/index.html" ] || { echo "BLOCKED: run pnpm build first"; exit 69; }
 mods=${APACHE_MODULES:-/usr/libexec/apache2}
 tmp="$root/.local-test/tmp"; mkdir -p "$tmp"
 work=$(mktemp -d "$tmp/dyk-htaccess.XXXXXX")

@@ -12,7 +12,7 @@ stack: [react-18, typescript-strict, vite, tailwind, private-php-8.2, mysql-mari
 package_manager: npm
 dev_server:
   port: 5202
-  command: npm run dev
+  command: pnpm dev
 repository:
   intended_owner: gsakinz
   intended_name: do-you-know

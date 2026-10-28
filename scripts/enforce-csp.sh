@@ -20,7 +20,7 @@ rm -f .htaccess.bak
 # The Apache check asserts the header by name; keep it in step.
 sed -i.bak -e 's/content-security-policy-report-only:/content-security-policy:/' -e 's/CSP report-only sent/CSP enforced header sent/' scripts/check-htaccess.sh
 rm -f scripts/check-htaccess.sh.bak
-npm run build
-npm run check:htaccess
+pnpm build
+pnpm check:htaccess
 git diff --stat -- .htaccess scripts/check-htaccess.sh
 echo "Also update the CSP paragraph in docs/07-operations/DEPLOYMENT.md before you commit."

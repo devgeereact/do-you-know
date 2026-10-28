@@ -34,11 +34,13 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       with:
         persist-credentials: false
+    - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      with:
+        cache: true
     - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
       if: inputs.payload == 'application'
       with:
-        node-version: '24'
-        cache: npm
+        node-version-file: .node-version
     - name: Check and build application once
       if: inputs.payload == 'application'
       env:
@@ -47,15 +49,15 @@ jobs:
         VITE_CLERK_PUBLISHABLE_KEY: ${{ vars.VITE_CLERK_PUBLISHABLE_KEY }}
         VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
         PRERENDER: '0'
-      run: 'npm ci --ignore-scripts
+      run: 'pnpm install --frozen-lockfile
 
-        npm run typecheck
+        pnpm typecheck
 
-        npm run lint
+        pnpm lint
 
         npm test
 
-        npm run build
+        pnpm build
 
         node scripts/prepare-public-release.mjs'
     - name: Stamp coming-soon artifact

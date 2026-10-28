@@ -28,17 +28,17 @@ This folder contains imported React/TypeScript frontend and private PHP backend 
 Use Node 24 and the committed npm lockfile:
 
 ```sh
-npm ci
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
 Vite uses **http://localhost:5202** with strict port checking. Browser settings are documented in `.env.example`; actual env files remain private and ignored. The same-origin API defaults to `/api/v1`. A running UI without the PHP backend/database does not prove quiz play or authentication works.
 
 ```sh
-npm run typecheck
-npm run lint
+pnpm typecheck
+pnpm lint
 npm test
-PRERENDER=0 npm run build
+PRERENDER=0 pnpm build
 ```
 
 Full PHP/database/e2e checks need a disposable local database and backend dependencies; see `backend/README.md` and `tests/e2e/README.md`. Do not point tests at production.

@@ -184,7 +184,7 @@ The server has no Node. Full playbook and safety rules: `docs/07-operations/DEPL
 
 1. CI (`.github/workflows/verify.yml`) runs typecheck, lint and build, plus backend checks
    on PHP 8.2 and 8.4 against a disposable MariaDB. It does not deploy.
-2. `npm run package:cpanel` builds `dist/` and creates an ignored `build/cpanel-*`
+2. `pnpm package:cpanel` builds `dist/` and creates an ignored `build/cpanel-*`
    release with `public/` (docroot) and `private/` (outside every webroot) parts.
 3. Release delivery through a GitHub Actions SSH deploy is planned and needs the owner's
    approval of the deploy key and secrets. It is not set up yet.

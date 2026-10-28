@@ -66,7 +66,7 @@ describe('en-GB catalogue', () => {
   });
 });
 
-// Type tests: checked by `npm run typecheck` (tests are in tsconfig). A second locale must
+// Type tests: checked by `pnpm typecheck` (tests are in tsconfig). A second locale must
 // match the en-GB shape exactly, but its words are free to differ.
 const fakeLocale: Messages = {
   ...enGB,
