@@ -6,8 +6,8 @@ connections:
   github:
     status: CLI-access-verified
     purpose: version-control
-    account: gsakinz
-    repository: gsakinz/do-you-know
+    account: devgeereact
+    repository: devgeereact/do-you-know
     mcp_connection: not-assumed
   database:
     status: unknown

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-repo=gsakinz/do-you-know
+repo=devgeereact/do-you-know
 if ! gh auth status >/dev/null 2>&1; then
   echo 'BLOCKED: authenticate in your own Terminal with: gh auth login -h github.com' >&2
   exit 1

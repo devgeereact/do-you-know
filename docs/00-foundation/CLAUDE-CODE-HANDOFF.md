@@ -1,6 +1,6 @@
 # Claude Code handoff — Do You Know, new repository/domain
 
-Work here: `/Users/realmrgee/Developer/Projects/do-you-know`. Name: **Do You Know**. Domain: **https://doyouknow.space**. Intended private repository: **gsakinz/do-you-know**, created and attached as origin after authenticated access was verified. Source archive stays untouched. Do not rename this folder or resume old branch/release tasks automatically.
+Work here: `/Users/realmrgee/Developer/Projects/do-you-know`. Name: **Do You Know**. Domain: **https://doyouknow.space**. Intended private repository: **devgeereact/do-you-know**, created and attached as origin after authenticated access was verified. Source archive stays untouched. Do not rename this folder or resume old branch/release tasks automatically.
 
 ## What this rebrand did
 
@@ -35,7 +35,7 @@ Read docs/08-change-management/REBRAND-VERIFICATION.md for the actual results. N
 
 ## Completed repository verification
 
-Private gsakinz/do-you-know exists and origin/main is populated. Manual verification run 40238993723 passed on be16ba0. Final metadata-only handoff updates follow that code baseline; no automatic workflows run on documentation pushes. Do not create another repository or rerun bootstrap --create. Next external step is the scoped FTPS account/root marker/secrets, then separately verified private backend/auth/database. No credentials were set or deployment run.
+Private devgeereact/do-you-know exists and origin/main is populated. Manual verification run 40238993723 passed on be16ba0. Final metadata-only handoff updates follow that code baseline; no automatic workflows run on documentation pushes. Do not create another repository or rerun bootstrap --create. Next external step is the scoped FTPS account/root marker/secrets, then separately verified private backend/auth/database. No credentials were set or deployment run.
 
 ## Update 27 October 2026
 Done since the baseline: ranked 20-question rounds, leaderboard likes (migration 0011), fresh live database `devgeereact_doyouknow`, admin Phase A (migration 0012, not deployed). Start with `docs/01-product/ADMIN-AREA-PLAN.md` for the next phases. Local testing: see `backend/README.md` (Verification, Local development); all disposable state is in gitignored `.local-test/`. Never point tests or importers at the live database; real server config stays in `~/do-you-know-private/shared/` outside the webroot.

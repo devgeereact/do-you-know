@@ -1,6 +1,6 @@
 # Do You Know — agent contract
 
-One entry point for every coding agent (Claude Code reads it through `CLAUDE.md`, Codex reads it directly). Read `.agent/PROJECT.yml`, `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md` and `docs/00-foundation/CLAUDE-CODE-HANDOFF.md` first, then the product/architecture/security docs for the area you change. The app is live at **https://doyouknow.space**; repository `gsakinz/do-you-know` (private, `main`).
+One entry point for every coding agent (Claude Code reads it through `CLAUDE.md`, Codex reads it directly). Read `.agent/PROJECT.yml`, `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md` and `docs/00-foundation/CLAUDE-CODE-HANDOFF.md` first, then the product/architecture/security docs for the area you change. The app is live at **https://doyouknow.space**; repository `devgeereact/do-you-know` (private, `main`).
 
 ## Authority and Git
 

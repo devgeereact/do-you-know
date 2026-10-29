@@ -20,7 +20,7 @@ case "$cmd" in
   actions-status)
     # Read only. A flagged account shows queued runs that never start, or a billing message.
     gh auth status 2>&1 | grep -E 'Logged in|account' || true
-    gh api repos/gsakinz/do-you-know/actions/permissions
+    gh api repos/devgeereact/do-you-know/actions/permissions
     gh workflow list
     gh run list --limit 5
     echo "If runs never start: open https://github.com/settings/billing and"

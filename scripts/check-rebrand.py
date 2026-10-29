@@ -4,7 +4,7 @@ from pathlib import Path
 import re,json,sys
 ROOT=Path(__file__).resolve().parents[1]
 SKIP={'.git','node_modules','vendor','dist','build','.cache','.release-public','__pycache__'}
-legacy=[b'doyouknow.soulrefresh.net',b'doyouknow.example',b'github.com/devgeereact/do-you-know']
+legacy=[b'doyouknow.soulrefresh.net',b'doyouknow.example']
 secret=[rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',rb'gh[pousr]_[A-Za-z0-9]{30,}',rb'github_pat_[A-Za-z0-9_]{30,}',rb'AKIA[A-Z0-9]{16}',rb'sk_(?:live|test)_[A-Za-z0-9]{20,}']
 problems=[]
 for path in ROOT.rglob('*'):

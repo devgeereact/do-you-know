@@ -2,7 +2,7 @@
 
 **Status 26 October 2026:** the full app is live (run 40334226841, commit 1b55017) after the coming-soon page (run 40284190441). Verified values: document root `/home/devgeereact/doyouknow.space`; FTPS host `premium17.web-hosting.com`, port 21, account `github-do-you-know@doyouknow.space`, remote dir `/`; pre-deploy backup in `~/backups/do-you-know/`. Clerk production for the new domain is the new application "do you know space". Step 6 is done except content (cron installed 26 October): private backend in `~/do-you-know-private/` (release layout, `DYK_BACKEND_DIR` = `.../current`), database `devgeereact_dykspace` migrated, API answering on /api/v1. Step 7 backups and restore are proved; backups run daily by cron. Read-only local access to the live database: `bash scripts/live-db.sh shell`. Full evidence: ../06-quality/EVIDENCE-STATUS.md.
 
-25 October 2026. These are prepared steps, not completed remote operations. The owner reports this domain is connected to cPanel. Verify the exact root/TLS before any upload. GitHub authentication is verified and the private repository https://github.com/gsakinz/do-you-know has been created and attached as origin. Commit/push/Action evidence is recorded in docs/08-change-management/REBRAND-VERIFICATION.md. No deployment has been performed.
+25 October 2026. These are prepared steps, not completed remote operations. The owner reports this domain is connected to cPanel. Verify the exact root/TLS before any upload. GitHub authentication is verified and the private repository https://github.com/devgeereact/do-you-know has been created and attached as origin. Commit/push/Action evidence is recorded in docs/08-change-management/REBRAND-VERIFICATION.md. No deployment has been performed.
 
 ## 1. Sign in and create the new private repository
 
@@ -14,7 +14,7 @@ gh auth login -h github.com
 bash scripts/bootstrap-github.sh --check
 ```
 
-Complete GitHub's browser login yourself; never paste a token into chat. Check that the authenticated account can create `gsakinz/do-you-know`. Inspect any existing repository before attaching it. If that exact private repository is the intended new target:
+Complete GitHub's browser login yourself; never paste a token into chat. Check that the authenticated account can create `devgeereact/do-you-know`. Inspect any existing repository before attaching it. If that exact private repository is the intended new target:
 
 ```sh
 bash scripts/bootstrap-github.sh --create

@@ -17,7 +17,7 @@ This folder contains imported React/TypeScript frontend and private PHP backend 
 | ------------------------ | -------------------------------------------------------------------------------------------------- |
 | Domain                   | doyouknow.space; owner reports connected to cPanel; document root/TLS not independently verified   |
 | Local repository         | Fresh main branch committed and pushed to the new private origin                                   |
-| GitHub repository        | https://github.com/gsakinz/do-you-know — private, created and verified                             |
+| GitHub repository        | https://github.com/devgeereact/do-you-know — private, created and verified                             |
 | Deployment               | Live since 26 October 2026; manual `deploy.yml` only. CI checks run on every push and never deploy |
 | FTPS                     | Needs dedicated account, verified TLS hostname/root and repository secrets                         |
 | Backend/database/Clerk   | Imported code; new-domain configuration and runtime verification pending                           |
@@ -61,4 +61,4 @@ No real .env, passwords, keys, private server config, uploads or database backup
 
 The old source repository is read-only and unaffected. Historical release claims from that source are preserved in the private pre-rebrand recovery ZIP, not presented here as this project's status.
 
-Manual GitHub verification: **PASS**, [run 40238993723](https://github.com/gsakinz/do-you-know/actions/runs/40238993723). FTPS secrets are not configured; no site deployment was attempted.
+Manual GitHub verification: **PASS**, [run 40238993723](https://github.com/devgeereact/do-you-know/actions/runs/40238993723). FTPS secrets are not configured; no site deployment was attempted.
