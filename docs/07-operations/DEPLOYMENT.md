@@ -5,7 +5,7 @@ Since 30 October 2026 (owner decision) every push to `main` deploys. `.github/wo
 What a release does (`release.json`):
 
 1. Checks: `pnpm lint`, `pnpm typecheck`, `pnpm test`.
-2. Build: `pnpm build` with the live public settings, `check:htaccess`, `composer install --no-dev`, `scripts/package-cpanel.mjs` into `build/release/{private,public}`.
+2. Build: `pnpm build` with the live public settings, `check:htaccess` (where Apache exists, i.e. on the Mac), `composer install --no-dev`, `scripts/package-cpanel.mjs` into `build/release/{private,public}`.
 3. Plan: checksum list of every file that would change. Nothing is ever deleted; `config.php`, `api/.htaccess` (it carries the server's `SetEnv DYK_BACKEND_DIR`), `.env*`, dumps and Markdown are never sent.
 4. Snapshot of every server file about to change into `~/backups/do-you-know/releases/<time>/` (newest 3 kept).
 5. Upload: `build/release/private` into `~/do-you-know-private/current` (the live backend release folder), then `build/release/public` into `~/doyouknow.space` with entry files last.

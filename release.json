@@ -7,7 +7,7 @@
     "pnpm typecheck",
     "pnpm test"
   ],
-  "build": "rm -rf build/cpanel-* build/release && VITE_APP_URL=https://doyouknow.space VITE_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZG95b3Vrbm93LnNwYWNlJA pnpm -s build && pnpm -s check:htaccess && (cd backend && composer install --no-dev -q) && R=$(node scripts/package-cpanel.mjs | sed -n 's/^cPanel release: //p') && (cd backend && composer install -q) && mv \"$R\" build/release",
+  "build": "rm -rf build/cpanel-* build/release && VITE_APP_URL=https://doyouknow.space VITE_CLERK_PUBLISHABLE_KEY=pk_live_Y2xlcmsuZG95b3Vrbm93LnNwYWNlJA pnpm -s build && { if command -v httpd >/dev/null; then pnpm -s check:htaccess; else echo 'check:htaccess skipped (no Apache here; it runs on the Mac)'; fi; } && (cd backend && composer install --no-dev -q) && R=$(node scripts/package-cpanel.mjs | sed -n 's/^cPanel release: //p') && (cd backend && composer install -q) && mv \"$R\" build/release",
   "parts": [
     {
       "from": "build/release/private",
