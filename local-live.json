@@ -1,0 +1,9 @@
+{
+  "host": "local.doyouknow.space",
+  "live": "https://doyouknow.space",
+  "api": ["/api/"],
+  "port": 5202,
+  "dev": ["pnpm", "exec", "vite"],
+  "clerkKey": "pk_live_Y2xlcmsuZG95b3Vrbm93LnNwYWNlJA",
+  "open": "/"
+}
