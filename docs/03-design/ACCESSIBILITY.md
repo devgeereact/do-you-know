@@ -9,4 +9,4 @@
 - Reduced motion: `UNKNOWN`
 - Test devices and assistive technology: `UNKNOWN`
 
-Record manual and automated evidence in `qa/ACCESSIBILITY-AUDIT.md`. Automated checks alone are insufficient.
+Record manual and automated evidence in `docs/AUDIT.md`. Automated checks alone are insufficient.

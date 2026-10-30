@@ -22,3 +22,6 @@ Open: a human sign-in test on the live site; deciding whether to enforce the rep
 - Next: Phase B dashboard, then C moderation, D content manager, E daily scheduler, F growth tools, G generator (drafts only). See `docs/01-product/ADMIN-AREA-PLAN.md`.
 - Open: ask the owner where the "stashed generator branch" (migration 0009) lives; `scripts/live-db.sh` needs a new read-only account for the new database; `devgeereact_dyk_dev` QA database still exists on the server.
 - Local test layout: everything disposable is under gitignored `.local-test/` (DB, configs, test keys, reports); `.local-state/` is reserved for private recovery state.
+
+## 2026-10-30: docs tidy
+Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed. Tasks stay in this file; every audit is added to `docs/AUDIT.md`.
