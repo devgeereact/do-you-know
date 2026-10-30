@@ -25,7 +25,8 @@
       ],
       "exclude": [
         "/api/.htaccess",
-        "/.do-you-know-deploy-target"
+        "/.do-you-know-deploy-target",
+        "*.md"
       ]
     }
   ],

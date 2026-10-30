@@ -39,7 +39,7 @@ sources_of_truth:
   rules: docs/00-foundation/RULES.md
   product: docs/01-product/PRODUCT-SPEC.md
   architecture: docs/02-architecture/ARCHITECTURE.md
-  deployment: docs/07-operations/GITHUB-FTPS-SETUP.md
+  deployment: docs/07-operations/DEPLOYMENT.md
 current_task: .agent/CURRENT-TASK.md
 
 verification:

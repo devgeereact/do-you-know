@@ -25,3 +25,4 @@ Open: a human sign-in test on the live site; deciding whether to enforce the rep
 
 ## 2026-10-30: docs tidy
 Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed. Tasks stay in this file; every audit is added to `docs/AUDIT.md`.
+- 30 Oct 2026: push to `main` deploys over SSH (`deploy.yml`, `scripts/release.mjs`); FTPS workflow and scripts removed. Dry run: main is ahead of live (admin area, new front-end build, no pending migrations), so the first deploy ships that.

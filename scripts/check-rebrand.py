@@ -19,9 +19,14 @@ for path in ROOT.rglob('*'):
 assert json.loads((ROOT/'forge.config.json').read_text())['appUrl']=='https://doyouknow.space'
 for workflow in (ROOT/'.github/workflows').glob('*.yml'):
  text=workflow.read_text()
- # Push/PR workflows must be check-only: not a deploy workflow, no secrets except the Semgrep scan token.
- if re.search(r'(?m)^\s*(workflow_run|push|pull_request|schedule):',text) and (set(re.findall(r'secrets\.(\w+)',text))-{'SEMGREP_APP_TOKEN','GITHUB_TOKEN'} or 'deploy' in workflow.name):problems.append((str(workflow.relative_to(ROOT)),'automatic trigger on a deploy or secret-using workflow'))
+ # Push/PR workflows are check-only, except deploy.yml (owner decision 30 Oct 2026): it may run on push to main,
+ # never on pull_request (forks) or workflow_run, and may use only the deploy key secrets.
+ auto=re.search(r'(?m)^\s*(workflow_run|push|pull_request|schedule):',text)
+ used=set(re.findall(r'secrets\.(\w+)',text))-{'SEMGREP_APP_TOKEN','GITHUB_TOKEN'}
+ if workflow.name=='deploy.yml':
+  if re.search(r'(?m)^\s*(workflow_run|pull_request|pull_request_target|schedule):',text) or used-{'CPANEL_SSH_KEY','CPANEL_KNOWN_HOSTS'} or not re.search(r'branches:\s*\[main\]',text):problems.append((str(workflow.relative_to(ROOT)),'deploy.yml may run only on push to main with the deploy key secrets'))
+ elif auto and (used or 'deploy' in workflow.name):problems.append((str(workflow.relative_to(ROOT)),'automatic trigger on a deploy or secret-using workflow'))
 if problems:
  for name,reason in problems:print('FAIL:',name,'—',reason)
  sys.exit(1)
-print('PASS: current-domain references, deploy stays manual and basic secret patterns checked. Not a complete security audit.')
+print('PASS: current-domain references, deploy runs only on push to main and basic secret patterns checked. Not a complete security audit.')

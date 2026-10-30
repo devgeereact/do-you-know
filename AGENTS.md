@@ -11,7 +11,7 @@ Work only within the current request. No force push, `reset --hard`, `clean`, `c
 - Current state/handoff: `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md`, `CLAUDE-CODE-HANDOFF.md`.
 - Product and rules: `docs/01-product/PRODUCT-SPEC.md`, `docs/00-foundation/RULES.md`.
 - Architecture/data/hooks: `docs/02-architecture/`. Decisions: `docs/08-change-management/DECISIONS.md`.
-- Quality: `docs/06-quality/EVIDENCE-STATUS.md`. Hosting: `docs/07-operations/GITHUB-FTPS-SETUP.md`, `DEPLOYMENT.md`.
+- Quality: `docs/06-quality/EVIDENCE-STATUS.md`. Hosting: `docs/07-operations/DEPLOYMENT.md`.
 
 Record IMPLEMENTED, VERIFIED, PLANNED and BLOCKED accurately; never relabel old evidence as a new passing check.
 
@@ -36,7 +36,7 @@ Never open `.env*`, keys, `config.php` or anything in `.local-state/`. `VITE_*` 
 
 ## CI and deployment
 
-CI (`.github/workflows/verify.yml`) runs on every push and PR: `pnpm check`, guard tests, secret scan, MariaDB backend tests. Browser e2e is opt-in (Run workflow → `full_backend`). CI never deploys. Deploy is the manual `deploy.yml` workflow only: FTPS with a valid certificate, no mirror-delete, no migrations or cron changes. Backend releases and migrations follow `backend/README.md` with a backup first.
+CI (`.github/workflows/verify.yml`) runs on every push and PR: `pnpm check`, guard tests, secret scan, MariaDB backend tests. Browser e2e is opt-in (Run workflow → `full_backend`). A push to `main` deploys through `deploy.yml` (SSH, `scripts/release.mjs`: checks, build, snapshot, upload, smoke, automatic restore; never deletes, no migrations or cron changes). Migrations run by hand with a backup first (`docs/07-operations/DEPLOYMENT.md`).
 
 ## Handoff
 

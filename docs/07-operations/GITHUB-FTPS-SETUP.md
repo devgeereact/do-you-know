@@ -1,3 +1,5 @@
+> **Superseded 30 October 2026:** deploys run over SSH on every push to `main`; see [DEPLOYMENT.md](DEPLOYMENT.md). The FTPS workflow and script were removed. Kept as history.
+
 # New repository and hosting setup — doyouknow.space
 
 **Status 26 October 2026:** the full app is live (run 40334226841, commit 1b55017) after the coming-soon page (run 40284190441). Verified values: document root `/home/devgeereact/doyouknow.space`; FTPS host `premium17.web-hosting.com`, port 21, account `github-do-you-know@doyouknow.space`, remote dir `/`; pre-deploy backup in `~/backups/do-you-know/`. Clerk production for the new domain is the new application "do you know space". Step 6 is done except content (cron installed 26 October): private backend in `~/do-you-know-private/` (release layout, `DYK_BACKEND_DIR` = `.../current`), database `devgeereact_dykspace` migrated, API answering on /api/v1. Step 7 backups and restore are proved; backups run daily by cron. Read-only local access to the live database: `bash scripts/live-db.sh shell`. Full evidence: ../06-quality/EVIDENCE-STATUS.md.

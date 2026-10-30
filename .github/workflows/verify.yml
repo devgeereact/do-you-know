@@ -30,7 +30,6 @@ jobs:
     - name: Rebrand and deployment guard boundaries
       run: 'python3 scripts/check-rebrand.py
 
-        python3 tests/unit/deploy-ftps.test.py
 
         python3 tests/unit/guard.test.py'
     - name: Secret scan (history + build output)

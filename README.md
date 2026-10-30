@@ -8,7 +8,7 @@ This folder contains imported React/TypeScript frontend and private PHP backend 
 
 1. Read [the Claude Code handoff](docs/00-foundation/CLAUDE-CODE-HANDOFF.md).
 2. Review [the current project memory](docs/00-foundation/PROJECT-MEMORY.md).
-3. Follow [GitHub and FTPS setup](docs/07-operations/GITHUB-FTPS-SETUP.md).
+3. Deploys: a push to `main` releases over SSH ([deployment](docs/07-operations/DEPLOYMENT.md)).
 4. Use [the rebrand checklist](docs/08-change-management/REBRAND-VERIFICATION.md) before publishing.
 
 ## Current state — 25 October 2026
@@ -19,7 +19,7 @@ This folder contains imported React/TypeScript frontend and private PHP backend 
 | Local repository         | Fresh main branch committed and pushed to the new private origin                                   |
 | GitHub repository        | https://github.com/devgeereact/do-you-know — private, created and verified                             |
 | Deployment               | Live since 26 October 2026; manual `deploy.yml` only. CI checks run on every push and never deploy |
-| FTPS                     | Needs dedicated account, verified TLS hostname/root and repository secrets                         |
+| Deploy                   | Push to `main` releases over SSH (`deploy.yml`, deploy key secrets `CPANEL_SSH_KEY`, `CPANEL_KNOWN_HOSTS`) |
 | Backend/database/Clerk   | Imported code; new-domain configuration and runtime verification pending                           |
 | Content/CMS improvements | Continue in Claude Code; imported modules are not automatically complete                           |
 
@@ -48,7 +48,7 @@ Full PHP/database/e2e checks need a disposable local database and backend depend
 - `src/`: React views, typed hooks/services and public environment adapter.
 - `public/`: Do You Know icons, offline page and robots configuration.
 - `backend/`: private PHP API, content, migrations and tests. Keep code/config/vendor outside every webroot; only the approved API entry point is public.
-- `scripts/`: build/quality helpers and scoped FTPS publishing.
+- `scripts/`: build/quality helpers and `release.mjs` (SSH release).
 - `.github/workflows/`: manual verification and manual coming-soon/public-app publishing.
 - `docs/`: product, architecture, security, operations and fresh handoff records.
 - `deployment/coming-soon/`: independent launch page; publishing it does not configure the app backend.
@@ -61,4 +61,4 @@ No real .env, passwords, keys, private server config, uploads or database backup
 
 The old source repository is read-only and unaffected. Historical release claims from that source are preserved in the private pre-rebrand recovery ZIP, not presented here as this project's status.
 
-Manual GitHub verification: **PASS**, [run 40238993723](https://github.com/devgeereact/do-you-know/actions/runs/40238993723). FTPS secrets are not configured; no site deployment was attempted.
+Manual GitHub verification: **PASS**, [run 40238993723](https://github.com/devgeereact/do-you-know/actions/runs/40238993723). Deploys run over SSH since 30 October 2026 (see docs/07-operations/DEPLOYMENT.md).

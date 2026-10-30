@@ -10,7 +10,7 @@ exit 64
 #   bash scripts/enforce-csp.sh
 #
 # It edits the root .htaccess, rebuilds and runs the Apache check. It does not deploy: review the
-# diff, commit it on a branch, open a PR, then run scripts/deploy-by-hand.sh from main.
+# diff, commit it on a branch, open a PR, then push to main (deploy.yml releases it).
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
