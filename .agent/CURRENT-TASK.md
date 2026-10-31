@@ -4,7 +4,7 @@
 - Owner asked: info pages full screen and clean; footer without "Parents and staff" or the tagline; one profile page instead of the avatar menu; nickname changeable once; replies handled in the Studio without email.
 - Built: info shell, footer, profile link with unread dot, new `/me`, nickname-once (migration 0016), player Messages and answers, Studio inbox shows answers and can reply to any message.
 - Checks: backend suites PASS; `pnpm check` PASS; Playwright 46/46 PASS.
-- Still the owner's: run the config command for `admin_subjects` (Studio access); Generator keys when ready.
+- Owner set `admin_subjects` (1 entry) and `mail_from` in the live private config on 31 Oct 2026, 15:14 UTC (backup `~/private_backups/doyouknow/config.php.20261031T151428Z`); confirmed by a read-only check. Next: owner signs in at /admin. Still the owner's: Generator keys when ready.
 
 ## 31 October 2026 (later) — finish every open item (Status: PARTIAL; two steps are the owner's)
 

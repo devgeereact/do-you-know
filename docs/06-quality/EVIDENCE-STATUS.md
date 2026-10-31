@@ -118,7 +118,7 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | Live pages (Chrome, 1440 and 390) | VERIFIED | Home, Daily, Leaderboards, Studio sign-in: no console errors, no overflow |
 | New logo at the edge | VERIFIED | Cloudflare purge; favicon.svg and og-image.png match the repository (SHA-256) |
 | CI and Semgrep | VERIFIED | Green on 13823d7 (CI cms check fixed to not rely on leftover data) |
-| Studio on live | BLOCKED | `admin_subjects` empty in the live private config; owner adds their Clerk id |
+| Studio on live | PARTIAL | Owner added `admin_subjects` (1 entry) on 31 Oct 15:14 UTC; signed-in visit by the owner not yet confirmed |
 | Inbox email replies | NOT TESTED | `mail_from` not set |
 
 ### Generator and tidy-up, 31 October 2026 (later)
