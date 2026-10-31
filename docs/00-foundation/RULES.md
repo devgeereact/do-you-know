@@ -102,7 +102,13 @@ do not merge.
   no photos, no AI-generated images.
 - Contact and feedback (`/contact`, `POST /feedback`): children and players whose age is
   unknown choose preset messages only; the server rejects free text unless the player is
-  13–17, 18+ or signed in as an adult. Only adults may leave an email for a reply.
+  13–17, 18+ or signed in as an adult. Only adults may leave an email, and it is optional.
+- Replies are read on the site (`/me` → Messages). Only a Super Admin can write one, every
+  reply is in the audit log, and children can read replies but never write back. Staff never
+  ask a child for contact details.
+- Nicknames: every player starts with a generated name and may change it **once**
+  (`profiles.nickname_changed_at`). Children pick from generated names only; 13+ may type
+  one (blocked-words check). No two players may take the same name in a change.
 
 ### Content
 

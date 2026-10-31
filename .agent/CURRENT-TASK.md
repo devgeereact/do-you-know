@@ -1,5 +1,11 @@
 # Current task — doyouknow.space is live
 
+## 31 October 2026 (evening) — profile, info pages, on-site replies (Status: DONE; release in this session)
+- Owner asked: info pages full screen and clean; footer without "Parents and staff" or the tagline; one profile page instead of the avatar menu; nickname changeable once; replies handled in the Studio without email.
+- Built: info shell, footer, profile link with unread dot, new `/me`, nickname-once (migration 0016), player Messages and answers, Studio inbox shows answers and can reply to any message.
+- Checks: backend suites PASS; `pnpm check` PASS; Playwright 46/46 PASS.
+- Still the owner's: run the config command for `admin_subjects` (Studio access); Generator keys when ready.
+
 ## 31 October 2026 (later) — finish every open item (Status: PARTIAL; two steps are the owner's)
 
 - Done: Generator built and shipped switched off (ADR-016; migrations 0014–0015 to run on live after a backup); old components removed; reply emails say how to write back; Clerk Super Admin id verified in the production Clerk app (it is the owner's account).

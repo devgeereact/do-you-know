@@ -84,6 +84,10 @@ blocked_words · rate_limits · schema_migrations (ledger)
 
 - `generator_runs` (topic, ages, wanted, model, `stage` search/fetch/draft/check/done/failed, `sources` JSON, `error`, call and token counters, `busy_until` step lock), `generator_pages` (page text per run and url, for quote checks), `generator_drafts` (question JSON, quote, checks, problems, `decision` pending/approved/rejected/sent, `sent_quiz_id`). Admin only; no player data.
 
+### Nickname change and messages (migration 0016)
+
+- `profiles.nickname_changed_at` (NULL until the one change is used). `feedback.player_seen_at` (unread dot). `feedback_messages.kind` adds `player` (an answer written by a teenager or adult in their own thread).
+
 Likes: `leaderboard_likes` holds (`board`, `quiz_id`, `period_start`, `entry_user_id`, `liker_id`). Public boards return the total and the viewer's own like only, never who liked. Rows carry `entry_id` (the entry's attempt id) as the like handle. Boards rank by correct/total, so 20-question ranked and 10-question daily results compare fairly.
 
 Profile deletion (`POST /me/delete`) cascades to sessions, settings, attempts, answers,

@@ -1,6 +1,6 @@
 # UX Specification
 
-Pop & Ink redesign, 31 October 2026 (ADR-014). Phones (under 1024 px) get the bottom tab bar (Explore, Daily, Play, Boards); computers get the top bar (Explore, Daily, Leaderboards, "Play today's quiz") and multi-column layouts. "Me" lives in the avatar menu in the top bar on both.
+Pop & Ink redesign, 31 October 2026 (ADR-014). Phones (under 1024 px) get the bottom tab bar (Explore, Daily, Play, Boards); computers get the top bar (Explore, Daily, Leaderboards, "Play today's quiz") and multi-column layouts. The avatar in the top bar is one link to the profile on both, with a dot when a reply is waiting.
 
 | Screen or flow | Purpose | Primary action | Secondary action | Required states | Mobile decision | Desktop decision |
 |---|---|---|---|---|---|---|
@@ -12,8 +12,9 @@ Pop & Ink redesign, 31 October 2026 (ADR-014). Phones (under 1024 px) get the bo
 | Results | Score and what next | Play again | Challenge a friend, board, review | Personal best, rank, guest without nickname | Score frame, then actions | Score frame beside board |
 | Daily `/daily` | Today's challenge and its board | Play today's challenge | Countdown, streak week | Played already, none today | Fits one screen: animated world stops, stats, board scrolls inside | Same with host character and wider board |
 | Leaderboards `/leaderboards` | Who is doing best overall | Switch period (Today default, week, month, all time) | How points work, a quiz's own board (`?quiz=`) | Empty podium (characters), you not ranked yet, pinned "you" row | Fits one screen; list scrolls inside | Podium + facts beside the list |
-| Contact `/contact` | Feedback, ideas, problems | Send | Pick a quiz, email us | Thanks, error, child refused free text | Player: preset chips only. Grown-up: email + message after an 18+ tick | Info column beside the form |
-| Me `/me` | Your games and profile | Change nickname/avatar | Settings, grown-up sign in, recent rounds (`#games`) | Guest note, no games yet | One column | Two columns |
+| Contact `/contact` | Feedback, ideas, problems | Send | Pick a quiz | Thanks (points to Messages), error, child refused free text | Player: preset chips only. Grown-up: message (email optional) after an 18+ tick | In the info shell: form beside the help tiles |
+| Me `/me` | Everything about the player | Pick a character | Change nickname once (confirm step), messages and replies (`#messages`), rounds (`#games`), settings, delete | No games yet, no messages, nickname locked, new reply | Stacked: identity, stats, nickname, character, messages, rounds | Sticky identity column beside character, messages and rounds |
+| Info pages | How to play, About, Privacy, Terms, Contact, Settings | Read or act | Move between them from the side menu | Long pages get an "On this page" list | Title band, pill menu that scrolls, content | Title band, side menu, content, "On this page" (≥1280) |
 | Studio `/admin` | Run the site (owner only) | Depends on screen | Audit trail | Not signed in, not allowed (403), loading | Usable but desktop-first | Sidebar + screen |
 
 Rules: one primary action per screen; grids always fill their rows (filler "Suggest" tiles); right/wrong always shows an icon and words as well as colour; nothing animates under reduced motion except state colour.

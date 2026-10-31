@@ -130,3 +130,12 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | Playwright journeys | PASS | 46 / 46 |
 | Studio Generator end to end (local, recorded answers) | PASS | Run → 3 pages (one unreadable) → 4 drafts → 1 kept, made-up quote / off-list source / broken question caught → approve; no console errors |
 | Live Generator run | BLOCKED | Needs the owner's cost approval and keys |
+
+### Profile, nickname-once, on-site replies and info pages, 31 October 2026 (evening)
+
+| Check | Result | Notes |
+|---|---|---|
+| Backend suites | PASS | integration 86 (nickname once, suggestions, taken name), cms 131 (messages both ways), feedback 29 |
+| `pnpm check` | PASS | 158 tests |
+| Playwright journeys | PASS | 46 / 46, including the once-only nickname and the character picker on `/me` |
+| Screens at 1440 and 390 | PASS | `/me`, `/how-to-play`, `/privacy`, `/contact`, `/me/settings`: no console errors, no horizontal overflow |

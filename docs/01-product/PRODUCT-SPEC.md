@@ -137,7 +137,7 @@ Targets are starting assumptions; tune them against real data after launch.
 - **Preset avatar per player:** choose one of 12 illustrated object characters on coloured
   circles (owner decision, 16 October 2026; art changed in the 31 October rebrand, ids kept). No uploads, no photos, no AI images. Avatars
   are not unique; boards and challenge previews show them beside the nickname.
-- `/me` (opened from the avatar menu in the top bar): history, best scores, streak, avatar, settings, theme, **delete my account**.
+- `/me` (the avatar in the top bar links here): character picker, nickname (one change only), streaks, **Messages** (our replies; 13+ can write back), recent rounds, best scores, settings and **delete my account**.
 
 ### 4.8 Studio CMS (`/admin`), built 31 October 2026
 

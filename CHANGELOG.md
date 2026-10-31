@@ -1,5 +1,12 @@
 # Changelog
 
+## 31 October 2026 (evening) — Profile, info pages and on-site replies
+- One profile page (`/me`): character picker, nickname, stats, messages, rounds and best scores. The avatar menu is gone; the avatar in the top bar links straight to the profile and shows a dot for a new reply. `/me/avatar` now opens the picker on the profile.
+- Nicknames can be changed once (migration 0016). Children and players with no age pick from four generated names; 13+ may also type one. No two players can take the same name in a change. A confirm step says it is final.
+- Replies live on the site: players read Studio replies under Messages; teenagers and adults can write back, which puts the thread back to "new" in the Studio inbox. Staff can now reply to any message (children can read, not write). Email is optional.
+- How to play, About, Privacy, Terms, Contact and Settings share a full-width shell with a side menu and "On this page" list.
+- Footer: removed "Parents and staff" and the "nicknames only, no adverts" line.
+
 ## 31 October 2026 (later) — Generator, tidy-up
 - Sourced question generator built and switched off (Studio → Generator): trusted-site search and page reading through Bright Data, drafts from Claude using only that text, quote/source/rule/duplicate checks, approve and send to a quiz. Migrations 0014, 0015. ADR-016.
 - Removed HeroTeaser, SkyBackdrop, ProgressDots and TimerBadge (unused after the redesign).

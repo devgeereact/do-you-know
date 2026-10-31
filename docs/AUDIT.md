@@ -2,6 +2,15 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-10-31 · Profile, nickname-once and on-site replies (privacy and child safety)
+
+Reviewer: Claude Code. Scope: `Player::nickname`, `Feedback::mine/playerReply/markSeen`, migration 0016, `/me`, `/contact`, Studio inbox.
+- Children still never write free text: replies are read-only for them; the server refuses their answers (`free_text_not_allowed`, tested). PASS.
+- Staff replies to children are new. Only a Super Admin can send one; each is audited; the Studio warns to keep it short and kind; no contact details are ever asked for or stored. ACCEPTED (owner request, 31 October 2026).
+- A player can only read and answer their own threads (404 for others, tested); internal notes never reach the player (tested). PASS.
+- Nickname change: once only, atomic (no double change), children limited to generated names, blocked-words check for typed names, no copying another player's name (tested). PASS.
+- Email is now optional; "Delete my data" still wipes message and email. PASS.
+
 ## 2026-10-31 · Generator security and cost review
 
 Reviewer: Claude Code. Scope: `Generator.php`, `GeneratorLive.php`, migrations 0014–0015, Studio Generator screen.
