@@ -81,7 +81,7 @@ test.describe('playing a quiz', () => {
     await expect(page).toHaveURL(new RegExp(`/q/${QUIZ.slug}$`));
   });
 
-  test('the play screen lays out side by side on desktop and stacks on a phone', async ({
+  test('the play screen keeps the question above its answers inside the frame', async ({
     page,
   }) => {
     await page.goto(`/play/${QUIZ.slug}?mode=practice`);
@@ -89,12 +89,8 @@ test.describe('playing a quiz', () => {
     const prompt = await page.getByRole('heading', { level: 1 }).boundingBox();
     const answers = await page.getByRole('region', { name: 'Answers' }).boundingBox();
     if (!prompt || !answers) throw new Error('layout boxes missing');
-    const viewport = page.viewportSize();
-    if (viewport && viewport.width >= 1024) {
-      expect(answers.x).toBeGreaterThan(prompt.x + prompt.width * 0.5);
-    } else {
-      expect(answers.y).toBeGreaterThan(prompt.y);
-    }
+    // One framed card on every width: the question on top, the answers below it.
+    expect(answers.y).toBeGreaterThan(prompt.y + prompt.height - 1);
     await expectNoHorizontalOverflow(page);
   });
 

@@ -25,14 +25,14 @@ Run with `pnpm test:e2e` (Playwright, Chromium). Two projects run every journey:
 
 ## Journeys
 
-| File                | Covers                                                                                              |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| `browse.spec.ts`    | home lists the quiz, category and quiz pages, leaderboards tabs, theme, 404 pages, offline banner   |
-| `play.spec.ts`      | practice play to results with review, play again, refresh resume, layout, tap targets, integrity    |
-| `ranked.spec.ts`    | ranked play, age group, 13+ typed nickname, under-13 shuffle only, avatar, public leaderboard row   |
-| `daily.spec.ts`     | daily play, "done for today", streak, refusal of a second play                                      |
-| `challenge.spec.ts` | create a link, open it as a second player in a separate browser context, head to head, own link     |
-| `privacy.spec.ts`   | my games history, delete my account with confirmation, only a guest token stored, no cookies        |
+| File                | Covers                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| `browse.spec.ts`    | home lists the quiz, category and quiz pages, leaderboards tabs, theme, 404 pages, offline banner |
+| `play.spec.ts`      | practice play to results with review, play again, refresh resume, layout, tap targets, integrity  |
+| `ranked.spec.ts`    | ranked play, age group, 13+ typed nickname, under-13 shuffle only, avatar, public leaderboard row |
+| `daily.spec.ts`     | daily play, "done for today", streak, refusal of a second play                                    |
+| `challenge.spec.ts` | create a link, open it as a second player in a separate browser context, head to head, own link   |
+| `privacy.spec.ts`   | my games history, delete my account with confirmation, only a guest token stored, no cookies      |
 
 ## Rules every test gets for free
 

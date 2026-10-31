@@ -26,6 +26,8 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     locale: 'en-GB',
     timezoneId: 'Europe/London',
+    // E2E_CHANNEL=chrome runs on the installed Chrome when Playwright's own browser is missing.
+    ...(process.env.E2E_CHANNEL ? { channel: process.env.E2E_CHANNEL } : {}),
   },
   webServer: {
     command: `npx vite --port ${WEB_PORT} --strictPort`,

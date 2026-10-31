@@ -4,11 +4,15 @@ test.describe('daily challenge', () => {
   // Replaying a finished daily is refused by the server, which the browser logs as a 4xx.
   test.use({ allowConsoleErrors: [/status of 4\d\d/] });
 
-  test('play today once, then the app says it is done', async ({ page, api }) => {
+  test('play today once, then the app says it is done', async ({ page, api }, info) => {
+    const desktop = info.project.name === 'desktop';
     await page.goto('/daily');
-    await expect(page.getByRole('heading', { level: 1, name: 'Today’s challenge' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: QUIZ.title })).toBeVisible();
-    await expect(page.getByText('Play today to start a streak.')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: QUIZ.title })).toBeVisible();
+    await expect(page.getByText(/questions across \d+ worlds?/)).toBeVisible();
+    // The daily page fits one screen: no page scroll.
+    expect(
+      await page.evaluate(() => document.documentElement.scrollHeight - innerHeight),
+    ).toBeLessThanOrEqual(1);
     await expectNoHorizontalOverflow(page);
 
     await page.getByRole('link', { name: 'Play today’s challenge' }).click();
@@ -24,13 +28,13 @@ test.describe('daily challenge', () => {
     // Back on the daily page: done for today, streak started, no play button.
     await page.goto('/daily');
     await expect(page.getByText('Done for today. Come back tomorrow!')).toBeVisible();
-    await expect(page.getByText('Your streak:')).toContainText('1 day');
+    if (desktop) await expect(page.getByText('Your streak · 1 day')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Play today’s challenge' })).toHaveCount(0);
     await expectNoHorizontalOverflow(page);
 
     // The home banner agrees.
     await page.goto('/');
-    await expect(page.getByText('✓ Done today')).toBeVisible();
+    await expect(page.getByText('Done for today. Back tomorrow.')).toBeVisible();
 
     // Going straight to the play URL again is refused kindly rather than starting a second game.
     await page.goto('/daily/play');

@@ -70,14 +70,15 @@ export class ApiWatcher {
         ANSWER_FIELDS,
       );
     }
-    // The question shown to the player is exactly id, type, prompt, image, options, slider.
+    // The question shown to the player is exactly id, type, prompt, image, options, slider and
+    // its cosmetic scene (the world it is drawn in, which says nothing about the answer).
     for (const record of checked.filter((r) => /\/attempts(\/[^/]+\/next)?$/.test(r.path))) {
       const parsed = JSON.parse(record.body) as {
         question: { options: object[]; slider: object | null } | null;
       };
       if (!parsed.question) continue;
       expect(Object.keys(parsed.question).sort()).toEqual(
-        ['id', 'image_url', 'options', 'prompt', 'slider', 'type'].sort(),
+        ['id', 'image_url', 'options', 'prompt', 'scene', 'slider', 'type'].sort(),
       );
       for (const option of parsed.question.options) {
         expect(Object.keys(option).sort()).toEqual(['id', 'label']);
@@ -204,7 +205,8 @@ export const test = base.extend<Fixtures>({
 
 /** Answer the question on screen. The prompt tells us which seeded question it is. */
 export async function answerCurrentQuestion(page: Page, correct: boolean): Promise<void> {
-  const prompt = (await page.getByRole('heading', { level: 1 }).innerText()).trim();
+  // textContent, not innerText: the game shows prompts in CSS capitals.
+  const prompt = ((await page.getByRole('heading', { level: 1 }).textContent()) ?? '').trim();
   const spec = (
     QUIZ.questions as Record<string, (typeof QUIZ.questions)[keyof typeof QUIZ.questions]>
   )[prompt];

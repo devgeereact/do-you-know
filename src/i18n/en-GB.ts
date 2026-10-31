@@ -230,6 +230,7 @@ export const enGB = {
     hello: (name: string): string => `Hi, ${name}`,
     helloGuest: 'Hi there',
     mobileTitle: 'Let’s play a quiz!',
+    seeSubject: (name: string): string => `See all ${name} quizzes`,
     progressKicker: 'Your progress',
     streakDays: (days: number): string => `${days} day streak`,
     streakNone: 'No streak yet',

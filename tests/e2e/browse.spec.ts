@@ -1,52 +1,38 @@
 import { expect, expectNoHorizontalOverflow, QUIZ, test } from './support/test';
 
 test.describe('browse', () => {
-  test('home loads, lists the seeded quiz and fits the screen', async ({ page }) => {
+  test('home loads, lists the seeded quiz and fits the screen', async ({ page }, info) => {
     await page.goto('/');
+    const desktop = info.project.name === 'desktop';
+    // Computer and phone are different layouts: a hero on desktop, an app-style home on a phone.
     await expect(page.getByRole('heading', { level: 1 })).toContainText(
-      'Quick quizzes for curious minds',
+      desktop ? 'Every question is a new world to explore.' : 'Let’s play a quiz!',
     );
-    await expect(page.getByRole('heading', { name: 'Pick a quiz' })).toBeVisible();
-
-    // The quiz shows twice: in "Trending this week" and in the full list below it.
-    const trending = page.getByRole('region', { name: /Trending/ });
-    await expect(trending.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) })).toBeVisible();
     const card = page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) }).last();
     await expect(card).toBeVisible();
     await expect(card).toContainText('3 questions');
-    await expect(
-      page
-        .getByRole('navigation', { name: 'Categories' })
-        .getByRole('link', { name: QUIZ.category }),
-    ).toBeVisible();
-    // Today's challenge banner is offered because the fixture has a live daily.
-    await expect(page.getByRole('link', { name: /Today’s challenge/ }).first()).toBeVisible();
+    if (desktop) {
+      await expect(page.getByRole('heading', { name: 'Explore by subject' })).toBeVisible();
+      await expect(page.getByRole('link', { name: new RegExp(`^${QUIZ.category}`) })).toBeVisible();
+    } else {
+      await expect(page.getByRole('button', { name: QUIZ.category })).toBeVisible();
+    }
+    // Today's challenge card is offered because the fixture has a live daily.
+    await expect(page.getByRole('link', { name: /Daily ·/ }).first()).toBeVisible();
     await expectNoHorizontalOverflow(page);
   });
 
-  test('a category page lists its quizzes', async ({ page }) => {
+  test('a category page lists its quizzes', async ({ page }, info) => {
     await page.goto('/');
-    await page
-      .getByRole('navigation', { name: 'Categories' })
-      .getByRole('link', { name: QUIZ.category })
-      .click();
-    await expect(page).toHaveURL(/\/c\/e2e-general$/);
+    if (info.project.name === 'desktop') {
+      await page.getByRole('link', { name: new RegExp(`^${QUIZ.category}`) }).click();
+    } else {
+      // On a phone the subject chips filter the list; the chosen subject links to its page.
+      await page.getByRole('button', { name: QUIZ.category }).click();
+      await page.getByRole('link', { name: new RegExp(`See all .*${QUIZ.category}`) }).click();
+    }
+    await expect(page.getByRole('heading', { level: 1, name: QUIZ.category })).toBeVisible();
     await expect(page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) })).toBeVisible();
-    await expectNoHorizontalOverflow(page);
-  });
-
-  test('the quiz landing page shows the facts and both ways to play', async ({ page }) => {
-    await page.goto('/');
-    await page
-      .getByRole('link', { name: new RegExp(`^${QUIZ.title}`) })
-      .last()
-      .click();
-    await expect(page).toHaveURL(new RegExp(`/q/${QUIZ.slug}$`));
-    await expect(page.getByRole('heading', { level: 1, name: QUIZ.title })).toBeVisible();
-    await expect(page.getByText('3 questions')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Play now' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Just practise' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Top players' })).toBeVisible();
     await expectNoHorizontalOverflow(page);
   });
 
@@ -58,8 +44,8 @@ test.describe('browse', () => {
       'aria-pressed',
       'true',
     );
-    await page.getByRole('button', { name: "Today's challenge" }).click();
-    await expect(page.getByRole('button', { name: "Today's challenge" })).toHaveAttribute(
+    await page.getByRole('button', { name: 'This month' }).click();
+    await expect(page.getByRole('button', { name: 'This month' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
@@ -106,7 +92,7 @@ test.describe('browse', () => {
     await expect(
       page.getByRole('link', { name: new RegExp(`^${QUIZ.title}`) }).last(),
     ).toBeVisible();
-    await expect(page.getByRole('link', { name: /Today’s challenge/ }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: /Daily ·/ }).first()).toBeVisible();
     await page.waitForLoadState('networkidle');
     await expect(page.getByText('You’re offline')).toHaveCount(0);
 

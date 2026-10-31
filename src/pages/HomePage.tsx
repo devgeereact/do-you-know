@@ -922,6 +922,15 @@ function PhoneHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData): 
             </button>
           ))}
         </div>
+        {subject && (
+          <Link
+            to={`/c/${categories.find((c) => c.id === subject)?.slug ?? ''}`}
+            className="mt-3 inline-flex min-h-tap items-center gap-1 font-bold text-primary"
+          >
+            {t.home.seeSubject(categories.find((c) => c.id === subject)?.name ?? '')}
+            <span aria-hidden="true">→</span>
+          </Link>
+        )}
         <ul className="mt-3 grid gap-2.5">
           {list.map((quiz) => (
             <li key={quiz.id}>
