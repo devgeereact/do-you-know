@@ -87,7 +87,12 @@ $r=request('POST','/me/nickname',['nickname'=>'ValidName'],$guest['token']);chec
 $r=request('POST','/me/age-band',['band'=>'under_13','role'=>'admin'],$guest['token']);check('sets child age band without granting role',$r['status']===200);
 $r=request('POST','/me/age-band',['band'=>'18_plus'],$guest['token']);check('child cannot change age band',$r['status']===400&&$r['body']['error']['code']==='age_band_locked');
 $r=request('POST','/me/nickname',['nickname'=>'ChosenName'],$guest['token']);check('child cannot choose free-text nickname',$r['status']===400&&$r['body']['error']['code']==='kids_use_generated_nickname');
-$r=request('POST','/me/nickname/random',[],$guest['token']);check('child can receive generated nickname',$r['status']===200&&preg_match('/^[A-Za-z]+[0-9]{2}$/D',$r['body']['nickname'])===1);
+$r=request('GET','/me/nickname/suggestions',null,$guest['token']);check('suggestions are four generated nicknames',$r['status']===200&&count($r['body']['suggestions'])===4&&!array_filter($r['body']['suggestions'],fn($n)=>!Dyk\Player::isGenerated($n)));
+$before=request('GET','/me',null,$guest['token'])['body'];check('suggestions save nothing',$before['nickname_locked']===false);
+$pick=$r['body']['suggestions'][1];
+$r=request('POST','/me/nickname',['nickname'=>$pick],$guest['token']);check('a child takes a suggested nickname as their one change',$r['status']===200&&$r['body']['nickname']===$pick);
+$r=request('GET','/me',null,$guest['token']);check('the nickname is then locked',$r['body']['nickname_locked']===true&&$r['body']['nickname']===$pick&&$r['body']['nickname_changed_at']!==null);
+$r=request('POST','/me/nickname/random',[],$guest['token']);check('a second change is refused',$r['status']===409&&$r['body']['error']['code']==='nickname_locked');
 $r=request('POST','/me/avatar',['avatar_id'=>'owl'],$guest['token']);check('preset avatar accepted',$r['status']===200&&$r['body']['avatar_id']==='owl');
 $r=request('GET','/me',null,$guest['token']);check('own profile shows chosen avatar',$r['status']===200&&$r['body']['avatar_id']==='owl');
 $r=request('POST','/me/avatar',['avatar_id'=>'https://example.com/x.png'],$guest['token']);check('unknown avatar refused',$r['status']===400&&$r['body']['error']['code']==='invalid_avatar');
@@ -95,7 +100,10 @@ $r=request('GET','/me',null,$guest['token']);check('profile has no real name ema
 $r=request('POST','/me/age-band',['band'=>'13_17'],$other['token']);check('older player may set age band',$r['status']===200);
 Database::execute($db,'INSERT IGNORE INTO blocked_words (word) VALUES (?)',['forbiddenfixture']);
 $r=request('POST','/me/nickname',['nickname'=>'ForbiddenFixture'],$other['token']);check('nickname moderation ignores case',$r['status']===400&&$r['body']['error']['code']==='nickname_not_allowed');
-$r=request('POST','/me/nickname',['nickname'=>'Safe Player'],$other['token']);check('older player may choose permitted nickname',$r['status']===200&&$r['body']['nickname']==='Safe Player');
+$chosen='Safe '.substr(bin2hex(random_bytes(4)),0,8);
+$r=request('POST','/me/nickname',['nickname'=>$pick],$other['token']);check('a nickname someone else has is refused',$r['status']===409&&$r['body']['error']['code']==='nickname_taken');
+$r=request('POST','/me/nickname',['nickname'=>$chosen],$other['token']);check('older player may choose permitted nickname',$r['status']===200&&$r['body']['nickname']===$chosen);
+$r=request('POST','/me/nickname',['nickname'=>'Another Name'],$other['token']);check('older players also change only once',$r['status']===409);
 $r=request('POST','/me/delete',[],$guest['token']);check('deletion requires explicit confirmation',$r['status']===400);
 $r=request('POST','/guest-sessions',[]);$deletable=$r['body'];
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$deletable['token']);$deletedAttempt=$r['body']['attempt_id'];

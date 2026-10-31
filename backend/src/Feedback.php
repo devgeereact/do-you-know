@@ -77,9 +77,10 @@ final class Feedback
             if ($message === null || mb_strlen($message) < 10 || mb_strlen($message) > 1000 || preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', $message)) {
                 $problems[] = ['field' => 'message', 'message' => 'message must be 10-1000 characters'];
             }
-            $email = is_string($email) ? trim($email) : null;
-            if ($email === null || strlen($email) > 254 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-                $problems[] = ['field' => 'email', 'message' => 'a valid email address is needed for a reply'];
+            // Optional since 31 October 2026: replies are read on the site under Messages.
+            $email = is_string($email) && trim($email) !== '' ? trim($email) : null;
+            if ($email !== null && (strlen($email) > 254 || filter_var($email, FILTER_VALIDATE_EMAIL) === false)) {
+                $problems[] = ['field' => 'email', 'message' => 'that email address does not look right'];
             }
         } elseif (!$presets) {
             $problems[] = ['field' => 'presets', 'message' => 'choose at least one option'];
@@ -126,6 +127,78 @@ final class Feedback
         return Database::one($this->db, "SELECT 1 AS ok FROM identities WHERE profile_id=? AND provider='clerk'", [$profile['id']]) !== null;
     }
 
+    // ---- Player's own messages ----
+
+    /** Number of the player's threads with a staff reply they have not opened yet. */
+    public static function unreadFor(\PDO $db, string $profileId): int
+    {
+        return (int) (Database::one($db, "SELECT COUNT(*) AS n FROM feedback f WHERE f.profile_id=? AND EXISTS (
+            SELECT 1 FROM feedback_messages m WHERE m.feedback_id=f.id AND m.kind='reply'
+            AND m.created_at > COALESCE(f.player_seen_at, '1970-01-01'))", [$profileId])['n'] ?? 0);
+    }
+
+    /**
+     * GET /me/messages: the player's own feedback, newest first, with staff replies and their own
+     * answers. Internal notes are never included. 200 {"items":[{id,type,presets,message,status,
+     * created_at,quiz:{slug,title}|null,question_prompt,unread,can_reply,thread:[{id,from:"staff"|"me",body,created_at}]}]}
+     */
+    public function mine(array $profile): array
+    {
+        $rows = $this->db->prepare('SELECT f.*,q.slug AS quiz_slug,q.title AS quiz_title FROM feedback f LEFT JOIN quizzes q ON q.id=f.quiz_id
+            WHERE f.profile_id=? ORDER BY f.updated_at DESC LIMIT 50');
+        $rows->execute([$profile['id']]);
+        $canWrite = $this->mayWrite($profile);
+        $items = [];
+        foreach ($rows->fetchAll() as $r) {
+            $thread = $this->db->prepare("SELECT id,kind,body,created_at FROM feedback_messages WHERE feedback_id=? AND kind IN ('reply','player') ORDER BY created_at,id");
+            $thread->execute([$r['id']]);
+            $messages = $thread->fetchAll();
+            $seen = $r['player_seen_at'];
+            $items[] = ['id' => $r['id'], 'type' => $r['type'], 'presets' => json_decode($r['presets'], true) ?: [], 'message' => $r['message'],
+                'status' => $r['status'], 'created_at' => Database::utc($r['created_at']),
+                'quiz' => $r['quiz_slug'] === null ? null : ['slug' => $r['quiz_slug'], 'title' => $r['quiz_title']],
+                'question_prompt' => $r['question_prompt'],
+                'unread' => (bool) array_filter($messages, static fn(array $m): bool => $m['kind'] === 'reply' && ($seen === null || $m['created_at'] > $seen)),
+                'can_reply' => $canWrite && $r['status'] !== 'resolved',
+                'thread' => array_map(static fn(array $m): array => ['id' => $m['id'], 'from' => $m['kind'] === 'reply' ? 'staff' : 'me',
+                    'body' => $m['body'], 'created_at' => Database::utc($m['created_at'])], $messages)];
+        }
+        return ['items' => $items, 'can_write' => $canWrite];
+    }
+
+    /** POST /me/messages/seen: clears the unread dot. 200 {"unread":0} */
+    public function markSeen(array $profile): array
+    {
+        Database::execute($this->db, 'UPDATE feedback SET player_seen_at=UTC_TIMESTAMP(6) WHERE profile_id=?', [$profile['id']]);
+        return ['unread' => 0];
+    }
+
+    /**
+     * POST /me/messages/{id}/reply {body}: a teenager or adult answers in their own thread
+     * (10-1000 characters). Children never write (422 free_text_not_allowed). The thread moves
+     * back to "new" so it shows at the top of the Studio inbox. 404 for someone else's thread,
+     * 409 thread_closed once staff resolved it.
+     */
+    public function playerReply(array $profile, string $id, array $body): array
+    {
+        if (!$this->mayWrite($profile)) { throw ApiError::invalid('free_text_not_allowed'); }
+        if (array_diff(array_keys($body), ['body'])) { throw ApiError::invalid('invalid_body'); }
+        $text = is_string($body['body'] ?? null) ? trim($body['body']) : '';
+        if (mb_strlen($text) < 2 || mb_strlen($text) > 1000 || preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', $text)) {
+            throw ApiError::invalid('invalid_body', ['min' => 2, 'max' => 1000]);
+        }
+        return Database::transaction($this->db, function () use ($profile, $id, $text): array {
+            $row = Database::one($this->db, 'SELECT * FROM feedback WHERE id=? AND profile_id=? FOR UPDATE', [$id, $profile['id']]);
+            if (!$row) { throw new ApiError('feedback_not_found', 404); }
+            if ($row['status'] === 'resolved') { throw new ApiError('thread_closed', 409); }
+            $messageId = Database::uuid();
+            Database::execute($this->db, "INSERT INTO feedback_messages (id,feedback_id,kind,body,author_id) VALUES (?,?,'player',?,?)",
+                [$messageId, $id, $text, $profile['id']]);
+            Database::execute($this->db, "UPDATE feedback SET status='new', player_seen_at=UTC_TIMESTAMP(6), updated_at=CURRENT_TIMESTAMP(6) WHERE id=?", [$id]);
+            return ['id' => $messageId];
+        });
+    }
+
     // ---- Admin ----
 
     public function adminList(array $query): array
@@ -160,12 +233,13 @@ final class Feedback
         $text = self::body($body);
         return Database::transaction($this->db, function () use ($admin, $config, $id, $text): array {
             $row = $this->find($id, true);
-            if ($row['kind'] !== 'adult' || $row['email'] === null) { throw ApiError::invalid('not_adult_feedback'); }
+            // The reply shows on the player's Messages on the site. Grown-ups who left an address
+            // also get an email notice when a sender is configured.
             $from = $config['mail_from'] ?? '';
             $emailed = false;
-            if (is_string($from) && $from !== '' && filter_var($from, FILTER_VALIDATE_EMAIL) !== false) {
+            if ($row['kind'] === 'adult' && $row['email'] !== null && is_string($from) && $from !== '' && filter_var($from, FILTER_VALIDATE_EMAIL) !== false) {
                 // Both addresses are validated, so no header can be injected. Plain text only.
-                $emailed = mail($row['email'], 'Reply from Do You Know', $text . "\n\n— Do You Know (doyouknow.space)\nThis address does not receive mail. To write back, use the form at https://doyouknow.space/contact\n",
+                $emailed = mail($row['email'], 'Reply from Do You Know', $text . "\n\n— Do You Know (doyouknow.space)\nYou can read this and write back on the site: https://doyouknow.space/me#messages\nThis address does not receive mail.\n",
                     ['From' => $from, 'Content-Type' => 'text/plain; charset=utf-8']);
             }
             $messageId = Database::uuid();

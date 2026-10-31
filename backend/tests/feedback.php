@@ -66,7 +66,7 @@ check('a message needs at least 10 characters',$r['status']===422&&$r['body']['e
 $r=request('POST','/feedback',['type'=>'idea','presets'=>[],'message'=>str_repeat('a',1001),'email'=>'grown.up@example.org'],$adult['token']);
 check('a message is at most 1000 characters',$r['status']===422);
 $r=request('POST','/feedback',['type'=>'idea','presets'=>[],'message'=>'A perfectly fine message'],$adult['token']);
-check('free text needs an email address',$r['status']===422&&$r['body']['error']['details'][0]['field']==='email');
+check('an email address is optional: replies are read on the site',$r['status']===201);
 $r=request('POST','/feedback',['type'=>'idea','presets'=>[],'message'=>'A perfectly fine message','email'=>'not-an-email'],$adult['token']);
 check('the email address must be valid',$r['status']===422);
 $teen=$guest('13_17');

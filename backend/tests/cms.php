@@ -308,7 +308,8 @@ $r = admin('POST', '/feedback/'.$sent.'/reply', ['body' => 'Thank you, we have f
 check('replying without mail_from stores the reply unsent and opens it', $r['status'] === 200 && $r['body']['emailed'] === false && $r['body']['status'] === 'open');
 $audit = Database::one($db, "SELECT detail FROM admin_audit WHERE action='feedback.reply' AND target_id=? ORDER BY id DESC LIMIT 1", [$sent]);
 check('the reply audit holds the id only, never the address', $audit !== null && !str_contains($audit['detail'], '@'));
-check('player feedback cannot be replied to', admin('POST', '/feedback/'.$child.'/reply', ['body' => 'Hello'])['body']['error']['code'] === 'not_adult_feedback');
+$r = admin('POST', '/feedback/'.$child.'/reply', ['body' => 'Thank you, that is lovely to hear.']);
+check('a child\'s feedback can be answered on the site, never by email', $r['status'] === 200 && $r['body']['emailed'] === false);
 check('a reply needs a body', admin('POST', '/feedback/'.$sent.'/reply', ['body' => ''])['body']['error']['code'] === 'invalid_body');
 check('a private note can be added', admin('POST', '/feedback/'.$child.'/note', ['body' => 'Lovely.'])['status'] === 200);
 $r = admin('POST', '/feedback/'.$sent.'/status', ['status' => 'resolved']);
@@ -316,6 +317,28 @@ check('feedback can be resolved', $r['body']['status'] === 'resolved');
 check('status must be known', admin('POST', '/feedback/'.$sent.'/status', ['status' => 'gone'])['status'] === 422);
 $r = admin('GET', '/feedback/'.$sent);
 check('the thread lists the reply', count($r['body']['thread']) === 1 && $r['body']['thread'][0]['kind'] === 'reply' && $r['body']['status'] === 'resolved');
+
+// ---- Messages on the site ----
+$me = request('GET', '/me', null, $adult['token'])['body'];
+check('the player sees an unread reply count', $me['unread_messages'] === 1);
+$r = request('GET', '/me/messages', null, $adult['token']);
+$mine = array_values(array_filter($r['body']['items'], fn($i) => $i['id'] === $sent))[0] ?? null;
+check('the player reads the staff reply on the site', $mine !== null && $mine['unread'] === true && $mine['thread'][0]['from'] === 'staff' && $mine['thread'][0]['body'] === 'Thank you, we have fixed it.');
+check('internal notes are never shown to the player', !str_contains($r['raw'], 'Lovely.'));
+check('a resolved thread cannot be answered', request('POST', '/me/messages/'.$sent.'/reply', ['body' => 'Thanks!'], $adult['token'])['status'] === 409);
+admin('POST', '/feedback/'.$sent.'/status', ['status' => 'open']);
+$r = request('POST', '/me/messages/'.$sent.'/reply', ['body' => 'Thanks, it looks right now.'], $adult['token']);
+check('a grown-up answers in their thread', $r['status'] === 201);
+$r = admin('GET', '/feedback/'.$sent);
+check('the answer reaches the Studio inbox as new', $r['body']['status'] === 'new' && end($r['body']['thread'])['kind'] === 'player' && end($r['body']['thread'])['body'] === 'Thanks, it looks right now.');
+$stranger = request('POST', '/guest-sessions', [])['body'];
+request('POST', '/me/age-band', ['band' => '18_plus'], $stranger['token']);
+check('nobody else can answer in that thread', request('POST', '/me/messages/'.$sent.'/reply', ['body' => 'Hello there'], $stranger['token'])['status'] === 404);
+check('a child cannot write an answer', request('POST', '/me/messages/'.$child.'/reply', ['body' => 'Hello there'], $guest['token'])['body']['error']['code'] === 'free_text_not_allowed');
+$kid = request('GET', '/me/messages', null, $guest['token'])['body'];
+check('a child reads replies but has no reply box', $kid['can_write'] === false && ($kid['items'][0]['can_reply'] ?? true) === false && ($kid['items'][0]['thread'][0]['from'] ?? '') === 'staff');
+request('POST', '/me/messages/seen', [], $adult['token']);
+check('opening messages clears the unread count', request('GET', '/me', null, $adult['token'])['body']['unread_messages'] === 0);
 
 // ---- Dashboard ----
 $problemsBefore = admin('GET', '/todo')['body']['items'][2]['count'];

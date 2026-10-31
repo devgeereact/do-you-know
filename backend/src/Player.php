@@ -20,7 +20,7 @@ final class Player
     public function own(): array
     {
         $row = Database::one($this->db,
-            'SELECT id,role,nickname,age_band,avatar_id,streak_current,streak_best,last_daily_date,created_at,updated_at FROM profiles WHERE id=?',
+            'SELECT id,role,nickname,nickname_changed_at,age_band,avatar_id,streak_current,streak_best,last_daily_date,created_at,updated_at FROM profiles WHERE id=?',
             [$this->userId]);
         if (!$row) {
             throw new ApiError('not_signed_in', 401);
@@ -29,6 +29,10 @@ final class Player
         $row['streak_best'] = (int) $row['streak_best'];
         $row['created_at'] = Database::utc($row['created_at']);
         $row['updated_at'] = Database::utc($row['updated_at']);
+        // A nickname can be changed once (owner rule, 31 October 2026).
+        $row['nickname_locked'] = $row['nickname_changed_at'] !== null;
+        $row['nickname_changed_at'] = Database::utc($row['nickname_changed_at']);
+        $row['unread_messages'] = Feedback::unreadFor($this->db, $this->userId);
         return $row;
     }
 
@@ -53,34 +57,81 @@ final class Player
             . self::ANIMALS[random_int(0, count(self::ANIMALS)-1)] . random_int(10, 99);
     }
 
-    public function randomNickname(): string
+    /** Four fresh generated nicknames nobody else uses. Nothing is saved. */
+    public function suggestions(): array
     {
-        $nickname = self::generateNickname();
-        Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=?', [$nickname, $this->userId]);
-        return $nickname;
+        $out = [];
+        for ($tries = 0; count($out) < 4 && $tries < 40; $tries++) {
+            $name = self::generateNickname();
+            if (!isset($out[strtolower($name)]) && !$this->taken($name)) { $out[strtolower($name)] = $name; }
+        }
+        return array_values($out);
     }
 
+    /** Old one-tap reroll: now a fresh generated name through the same once-only change. */
+    public function randomNickname(): string
+    {
+        return $this->nickname($this->suggestions()[0] ?? self::generateNickname());
+    }
+
+    /**
+     * The player's one nickname change. Children and players whose age is not known may only take
+     * a generated name (Adjective + Animal + two digits); 13 and over may also type their own.
+     * No two players may share a nickname from a change. 409 nickname_locked after the change.
+     */
     public function nickname(mixed $value): string
     {
         if (!is_string($value)) {
             throw new ApiError('invalid_nickname');
         }
-        $band = $this->own()['age_band'];
-        if ($band === null) {
-            throw new ApiError('age_band_required');
+        $me = $this->own();
+        if ($me['nickname_locked']) {
+            throw new ApiError('nickname_locked', 409);
         }
-        if ($band === 'under_13') {
-            throw new ApiError('kids_use_generated_nickname');
+        $nickname = trim(preg_replace('/\s+/', ' ', $value) ?? '');
+        if (!self::isGenerated($nickname)) {
+            if ($me['age_band'] === null) {
+                throw new ApiError('age_band_required');
+            }
+            if ($me['age_band'] === 'under_13') {
+                throw new ApiError('kids_use_generated_nickname');
+            }
+            if (!preg_match('/^[A-Za-z0-9][A-Za-z0-9 ._-]{1,18}[A-Za-z0-9]$/D', $nickname)) {
+                throw new ApiError('invalid_nickname');
+            }
+            if (self::isBlocked($this->db, $nickname)) {
+                throw new ApiError('nickname_not_allowed');
+            }
         }
-        $nickname = trim(preg_replace('/\s+/', ' ', $value));
-        if (!preg_match('/^[A-Za-z0-9][A-Za-z0-9 ._-]{1,18}[A-Za-z0-9]$/D', $nickname)) {
-            throw new ApiError('invalid_nickname');
+        if (strcasecmp($nickname, (string) $me['nickname']) === 0) {
+            return $me['nickname'];
         }
-        if (self::isBlocked($this->db, $nickname)) {
-            throw new ApiError('nickname_not_allowed');
+        if ($this->taken($nickname)) {
+            throw new ApiError('nickname_taken', 409);
         }
-        Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=?', [$nickname, $this->userId]);
+        if ($me['nickname'] === null) {
+            // A first name for an old profile that never had one is not the player's one change.
+            Database::execute($this->db, 'UPDATE profiles SET nickname=? WHERE id=? AND nickname IS NULL', [$nickname, $this->userId]);
+            return $nickname;
+        }
+        // Atomic: two requests at once cannot both use the one change.
+        $statement = $this->db->prepare('UPDATE profiles SET nickname=?, nickname_changed_at=UTC_TIMESTAMP(6) WHERE id=? AND nickname_changed_at IS NULL');
+        $statement->execute([$nickname, $this->userId]);
+        if ($statement->rowCount() !== 1) {
+            throw new ApiError('nickname_locked', 409);
+        }
         return $nickname;
+    }
+
+    public static function isGenerated(string $nickname): bool
+    {
+        $pattern = '/^(' . implode('|', self::ADJECTIVES) . ')(' . implode('|', self::ANIMALS) . ')[1-9][0-9]$/D';
+        return preg_match($pattern, $nickname) === 1;
+    }
+
+    private function taken(string $nickname): bool
+    {
+        return Database::one($this->db, 'SELECT id FROM profiles WHERE LOWER(nickname)=LOWER(?) AND id<>? LIMIT 1', [$nickname, $this->userId]) !== null;
     }
 
     /**

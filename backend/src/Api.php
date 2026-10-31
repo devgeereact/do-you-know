@@ -92,7 +92,8 @@ final class Api
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
             $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/attempts','/likes','/feedback'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
+            $messageReply = preg_match('~^/me/messages/([0-9a-f-]{36})/reply$~D',$path,$messageId);
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/me/nickname/suggestions','/me/messages','/me/messages/seen','/attempts','/likes','/feedback'],true) && !$gameRoute && !$dailyFinished && !$messageReply) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -111,6 +112,8 @@ final class Api
             }
             if ($path==='/me/continue' && $method==='GET') { self::reply($player->continuing());return; }
             if ($path==='/me/best' && $method==='GET') { self::reply($player->best());return; }
+            if ($path==='/me/nickname/suggestions' && $method==='GET') { self::reply(['suggestions'=>$player->suggestions()]);return; }
+            if ($path==='/me/messages' && $method==='GET') { self::reply((new Feedback($db))->mine($profile));return; }
             if ($method!=='POST') { throw new ApiError('method_not_allowed',405); }
             if ($path==='/me/age-band') { $player->ageBand($body['band']??null);self::reply(['ok'=>true]);return; }
             if ($path==='/me/nickname') { self::reply(['nickname'=>$player->nickname($body['nickname']??null)]);return; }
@@ -123,6 +126,11 @@ final class Api
                 $board=$body['board']??null;$entry=$body['entry_id']??null;$liked=$body['liked']??null;
                 if (!is_string($board)||!is_string($entry)||!is_bool($liked)) { throw new ApiError('invalid_like'); }
                 self::reply((new Competition($db,$profile['id']))->like($board,$entry,$liked));return;
+            }
+            if ($path==='/me/messages/seen') { self::reply((new Feedback($db))->markSeen($profile));return; }
+            if ($messageReply) {
+                RateLimit::check($db,$config,'feedback',$profile['id'],10,3600);
+                self::reply((new Feedback($db))->playerReply($profile,$messageId[1],$body),201);return;
             }
             if ($path==='/feedback') {
                 RateLimit::check($db,$config,'feedback',$profile['id'],10,3600);
