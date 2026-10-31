@@ -23,12 +23,42 @@ final class Competition
     {
         $row = Database::one($this->db,
             "SELECT d.id,d.challenge_date,q.slug,q.title,q.cover_image_url FROM daily_challenges d
-             JOIN quizzes q ON q.id=d.quiz_id AND q.status='published'
+             JOIN quizzes q ON q.id=d.quiz_id AND " . Catalog::LIVE . "
              WHERE d.challenge_date=? AND d.status='live'", [self::londonDate()]);
         return $row === null ? null : [
             'id' => $row['id'], 'date' => $row['challenge_date'],
             'quiz' => ['slug' => $row['slug'], 'title' => $row['title'], 'cover_image_url' => $row['cover_image_url']],
         ];
+    }
+
+    /**
+     * GET /daily: today's live daily plus "stops" (one cosmetic scene per question, in the round's
+     * order; never prompts or answers) and "stats" for today's daily board.
+     */
+    public function dailyDetails(): ?array
+    {
+        $daily = $this->daily();
+        if ($daily === null) {
+            return null;
+        }
+        $row = Database::one($this->db,
+            'SELECT d.challenge_date,d.quiz_id,v.snapshot,v.question_count,c.scene FROM daily_challenges d
+             JOIN quiz_versions v ON v.id=d.quiz_version_id JOIN quizzes q ON q.id=d.quiz_id
+             LEFT JOIN categories c ON c.id=q.category_id WHERE d.id=?', [$daily['id']]);
+        $snapshot = json_decode($row['snapshot'], true, 512, JSON_THROW_ON_ERROR);
+        $byId = array_column($snapshot, null, 'id');
+        $stops = array_map(static fn(string $qid): string => Content::sceneFor($byId[$qid], $row['scene'], $qid),
+            Game::dailyOrder(array_column($snapshot, 'id'), $row['challenge_date'], (int) $row['question_count']));
+        $stats = Database::one($this->db,
+            "SELECT COUNT(*) AS played,AVG(e.correct_count) AS average,COALESCE(SUM(e.correct_count=e.total),0) AS perfect
+             FROM leaderboard_entries e JOIN profiles p ON p.id=e.user_id
+             WHERE e.board='daily' AND e.quiz_id=? AND e.period_start=? AND e.is_hidden=0 AND p.nickname IS NOT NULL",
+            [$row['quiz_id'], $row['challenge_date']]);
+        $daily['stops'] = $stops;
+        $daily['stats'] = ['played' => (int) $stats['played'],
+            'average' => $stats['average'] === null ? null : round((float) $stats['average'], 1),
+            'perfect' => (int) $stats['perfect']];
+        return $daily;
     }
 
     public function dailyFinished(string $id): bool
@@ -47,7 +77,7 @@ final class Competition
             "SELECT f.code,f.expires_at,p.nickname,p.avatar_id,q.slug,q.title,q.cover_image_url,
              a.correct_count,a.answered_count,a.answer_time_ms FROM friend_challenges f
              JOIN profiles p ON p.id=f.creator_id JOIN attempts a ON a.id=f.creator_attempt_id
-             JOIN quizzes q ON q.id=f.quiz_id AND q.status='published' WHERE f.code=?", [$code]);
+             JOIN quizzes q ON q.id=f.quiz_id AND " . Catalog::LIVE . " WHERE f.code=?", [$code]);
         if (!$row) {
             return null;
         }
@@ -103,11 +133,17 @@ final class Competition
     {
         $params = [$board, $attempt['quiz_id'], $period, $attempt['user_id']];
         $old = Database::one($this->db,
-            'SELECT correct_count,answer_time_ms FROM leaderboard_entries WHERE board=? AND quiz_id=? AND period_start=? AND user_id=? FOR UPDATE', $params);
+            'SELECT correct_count,total,answer_time_ms FROM leaderboard_entries WHERE board=? AND quiz_id=? AND period_start=? AND user_id=? FOR UPDATE', $params);
         $correct = (int) $attempt['correct_count'];
         $time = (int) $attempt['answer_time_ms'];
-        if ($old && ($correct < (int) $old['correct_count'] || ($correct === (int) $old['correct_count'] && $time >= (int) $old['answer_time_ms']))) {
-            return;
+        // Fair across round sizes: compare the share answered right (cross-multiplied, no rounding),
+        // then the lower total answer time. A daily round of 10 and a ranked round of 20 compete evenly.
+        if ($old) {
+            $mine = $correct * (int) $old['total'];
+            $theirs = (int) $old['correct_count'] * $total;
+            if ($mine < $theirs || ($mine === $theirs && $time >= (int) $old['answer_time_ms'])) {
+                return;
+            }
         }
         if ($old) {
             Database::execute($this->db,
@@ -158,7 +194,7 @@ final class Competition
         }
         $daily = $board === 'daily' ? $this->daily() : null;
         $slug ??= $daily['quiz']['slug'] ?? null;
-        $quiz = Database::one($this->db, "SELECT id FROM quizzes WHERE slug=? AND status='published'", [$slug]);
+        $quiz = Database::one($this->db, 'SELECT q.id FROM quizzes q WHERE q.slug=? AND ' . Catalog::LIVE, [$slug]);
         if (!$quiz || ($board === 'daily' && (!$daily || $daily['quiz']['slug'] !== $slug))) {
             return ['top' => [], 'me' => null];
         }

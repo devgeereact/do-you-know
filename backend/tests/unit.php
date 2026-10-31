@@ -30,7 +30,8 @@ try { Identity::clerkSubject($token.'tampered',$config); } catch (ApiError $erro
 check('rejects tampered signature',$ok);
 $q=['id'=>'q','type'=>'slider','prompt'=>'A test','image_url'=>null,'explanation'=>'hidden','source_url'=>'https://example.com','options'=>[['id'=>'o','label'=>'Choice','is_correct'=>true]],'slider'=>['min'=>0,'max'=>10,'step'=>1,'unit'=>null,'correct'=>5,'accept_min'=>4,'accept_max'=>6]];
 $publicQuestion=Game::publicQuestion($q);
-check('public question whitelists top-level fields',array_keys($publicQuestion)===['id','type','prompt','image_url','options','slider']);
+check('public question whitelists top-level fields',array_keys($publicQuestion)===['id','type','prompt','image_url','scene','options','slider']);
+check('public question scene is a cosmetic world name only',in_array($publicQuestion['scene'],\Dyk\Content::SCENES,true));
 check('public options contain no answer key',array_keys($publicQuestion['options'][0])===['id','label']);
 check('public slider strips answer and accepted range',array_keys($publicQuestion['slider'])===['min','max','step','unit']);
 check('UUIDs are distinct v4 identifiers',preg_match('/^[a-f0-9-]{14}4[a-f0-9-]{21}$/D',Dyk\Database::uuid())===1 && Dyk\Database::uuid()!==Dyk\Database::uuid());
@@ -69,4 +70,35 @@ check('the guard refuses production-looking names',testDatabaseProblems(array_re
 check('the guard refuses a remote database host',testDatabaseProblems(array_replace_recursive($good,['database'=>['host'=>'db.example.com']]),$localTest.'/ok.php',$localTest)!==[]);
 check('the guard refuses a live origin',testDatabaseProblems(['allowed_origins'=>['https://doyouknow.space']]+$good,$localTest.'/ok.php',$localTest)!==[]);
 unlink($localTest.'/ok.php');rmdir($localTest);rmdir(dirname($localTest));
+
+// Cosmetic scenes: own scene, then prompt words in rule order, then the category, then a stable pick.
+$scene=fn(string $prompt,?string $own=null,?string $category=null,string $id='q-1'): string => \Dyk\Content::sceneFor(['prompt'=>$prompt]+($own===null?[]:['scene'=>$own]),$category,$id);
+check('a question keeps its own scene',$scene('How many planets are there?','past')==='past');
+check('planets mean space',$scene('How many planets are in our solar system?')==='space');
+check('whales mean ocean',$scene('Which is the largest whale?')==='ocean');
+check('penguins mean arctic',$scene('Where do emperor penguins live?')==='arctic');
+check('a stem matches longer words',$scene('What happens when water is freezing?')==='arctic');
+check('bones mean body',$scene('How many bones are in your body?')==='body');
+check('kings mean past',$scene('Which king had six wives?')==='past');
+check('digits mean city',$scene('What is 7 × 8?')==='city');
+check('capitals mean desert',$scene('What is the capital of France?')==='desert');
+check('lions mean jungle',$scene('What do lions eat?')==='jungle');
+check('the first matching rule wins',$scene('Which planet has the biggest ocean?')==='space');
+check('words match whole, so "start" is not a star',$scene('Who will start the race?',null,'body')==='body');
+check('the category scene is the next fallback',$scene('Which word is spelt correctly?',null,'jungle')==='jungle');
+check('an invalid category scene is ignored',in_array($scene('Which word is spelt correctly?',null,'mars'),\Dyk\Content::SCENES,true));
+check('the last fallback is stable per question',$scene('Pick a word',null,null,'a')===$scene('Pick a word',null,null,'a'));
+$picks=[];foreach(range(1,40) as $i){$picks[$scene('Pick a word',null,null,'id-'.$i)]=true;}
+check('the last fallback varies between questions',count($picks)>=4);
+// Daily order: the same for one date, a different slice on another date, never file order by design.
+$ids=array_map(fn(int $i): string => sprintf('00000000-0000-4000-8000-%012d',$i),range(1,30));
+check('daily order is deterministic for a date',Game::dailyOrder($ids,'2026-11-01',10)===Game::dailyOrder($ids,'2026-11-01',10));
+check('daily order takes the round size',count(Game::dailyOrder($ids,'2026-11-01',10))===10&&count(array_unique(Game::dailyOrder($ids,'2026-11-01',10)))===10);
+check('daily order changes with the date',Game::dailyOrder($ids,'2026-11-01',10)!==Game::dailyOrder($ids,'2026-11-02',10));
+check('daily order is not file order',Game::dailyOrder($ids,'2026-11-01',10)!==array_slice($ids,0,10));
+$p=\Dyk\Overall::periodStart('week',new DateTimeImmutable('2026-11-04 12:00:00',new DateTimeZone('UTC')));
+check('the overall week starts Monday 00:00 London (UTC in winter)',$p==='2026-11-02 00:00:00.000000');
+$p=\Dyk\Overall::periodStart('month',new DateTimeImmutable('2026-07-15 12:00:00',new DateTimeZone('UTC')));
+check('the overall month starts on the 1st, London summer time',$p==='2026-06-30 23:00:00.000000');
+check('all time has no start',\Dyk\Overall::periodStart('all')===null);
 fwrite(STDOUT,"$count checks passed\n");

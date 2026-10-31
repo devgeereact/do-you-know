@@ -40,15 +40,102 @@ final class Admin
              $detail === null ? null : json_encode($detail, JSON_THROW_ON_ERROR|JSON_UNESCAPED_SLASHES)]);
     }
 
-    /** @return array|object the JSON reply for the route */
-    public function handle(string $method, string $path, array $body): array|object
+    /** HTTP status for the last handled route (201 for creates). */
+    public int $status = 200;
+
+    public function profileId(): string
+    {
+        return $this->profile['id'];
+    }
+
+    /** Name recorded in content_reviews: the admin's nickname, else "Site owner". */
+    public function reviewerName(): string
+    {
+        $name = is_string($this->profile['nickname'] ?? null) && trim($this->profile['nickname']) !== '' ? trim($this->profile['nickname']) : 'Site owner';
+        return mb_substr($name, 0, 100);
+    }
+
+    public static function isUuid(string $value): bool
+    {
+        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/D', $value) === 1;
+    }
+
+    /** An optional enum query parameter; 422 for anything outside the list. */
+    public static function queryEnum(array $query, string $key, array $allowed): ?string
+    {
+        if (!isset($query[$key]) || $query[$key] === '') { return null; }
+        if (!is_string($query[$key]) || !in_array($query[$key], $allowed, true)) {
+            throw ApiError::invalid('invalid_filter', ['field' => $key, 'allowed' => $allowed]);
+        }
+        return $query[$key];
+    }
+
+    /** limit=1..$max, default $default. The result is a safe integer for a LIMIT clause. */
+    public static function queryLimit(array $query, int $default, int $max): int
+    {
+        $limit = $query['limit'] ?? (string) $default;
+        if (!is_string($limit) || !preg_match('/^[0-9]{1,4}$/D', $limit) || (int) $limit < 1 || (int) $limit > $max) {
+            throw ApiError::invalid('invalid_limit', ['min' => 1, 'max' => $max]);
+        }
+        return (int) $limit;
+    }
+
+    /**
+     * Routes: GET for reads, POST for writes. See AdminContent, AdminOps and Feedback for shapes.
+     * Unknown routes and wrong methods are 404, so the admin surface cannot be probed by method.
+     * @return array|object the JSON reply for the route
+     */
+    public function handle(string $method, string $path, array $body, array $query = []): array|object
     {
         $this->guard();
-        if ($method === 'GET' && $path === '/admin/me') {
+        $get = $method === 'GET';
+        $post = $method === 'POST';
+        if ($get && $path === '/admin/me') {
             return ['is_admin' => true];
         }
-        if ($method === 'GET' && $path === '/admin/audit') {
+        if ($get && $path === '/admin/audit') {
             return $this->recentAudit();
+        }
+        $content = new AdminContent($this->db, $this);
+        $ops = new AdminOps($this->db, $this);
+        $feedback = new Feedback($this->db);
+        $uuid = '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})';
+        if ($path === '/admin/quizzes') {
+            if ($get) { return $content->list($query); }
+            if ($post) { $this->status = 201; return $content->create($body); }
+        }
+        if (preg_match("~^/admin/quizzes/$uuid(?:/(append|submit|unsubmit|check|publish|retire|restore|discard))?$~D", $path, $m)) {
+            $action = $m[2] ?? '';
+            if ($get && $action === '') { return $content->detail($m[1]); }
+            if ($post) {
+                return match ($action) {
+                    '' => $content->save($m[1], $body), 'append' => $content->append($m[1], $body),
+                    'submit' => $content->submit($m[1]), 'unsubmit' => $content->unsubmit($m[1]),
+                    'check' => $content->check($m[1], $body), 'publish' => $content->publish($m[1], $body),
+                    'retire' => $content->retire($m[1]), 'restore' => $content->restore($m[1]), 'discard' => $content->discard($m[1]),
+                };
+            }
+        }
+        if ($get && $path === '/admin/todo') { return $ops->todo(); }
+        if ($get && $path === '/admin/stats') { return $ops->stats(); }
+        if ($path === '/admin/daily') {
+            if ($get) { return $ops->dailyMonth($query); }
+            if ($post) { return $ops->setDaily($body); }
+        }
+        if ($get && $path === '/admin/rounds') { return $ops->rounds($query); }
+        if ($post && preg_match("~^/admin/rounds/$uuid/hide$~D", $path, $m)) { return $ops->hideRound($m[1], $body); }
+        if ($path === '/admin/subjects') {
+            if ($get) { return $ops->subjects(); }
+            if ($post) { $this->status = 201; return $ops->createSubject($body); }
+        }
+        if ($post && preg_match('~^/admin/subjects/([a-z0-9-]{1,100})$~D', $path, $m)) { return $ops->updateSubject($m[1], $body); }
+        if ($get && $path === '/admin/feedback') { return $feedback->adminList($query); }
+        if (preg_match("~^/admin/feedback/$uuid(?:/(reply|note|status))?$~D", $path, $m)) {
+            $action = $m[2] ?? '';
+            if ($get && $action === '') { return $feedback->adminDetail($m[1]); }
+            if ($post && $action === 'reply') { return $feedback->reply($this, $this->config, $m[1], $body); }
+            if ($post && $action === 'note') { return $feedback->note($this, $m[1], $body); }
+            if ($post && $action === 'status') { return $feedback->setStatus($this, $m[1], $body); }
         }
         throw new ApiError('not_found', 404);
     }

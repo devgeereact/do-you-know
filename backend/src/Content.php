@@ -18,7 +18,9 @@ final class Content
         'curriculum_tags', 'time_limit_seconds', 'shuffle_options', 'is_ranked', 'round_size', 'questions'];
     /** Questions in one round when a quiz file does not set round_size. */
     public const DEFAULT_ROUND = 10;
-    private const QUESTION_KEYS = ['type', 'prompt', 'options', 'answer', 'slider', 'explanation', 'source_url', 'review_by'];
+    private const QUESTION_KEYS = ['type', 'prompt', 'options', 'answer', 'slider', 'explanation', 'source_url', 'review_by', 'scene'];
+    /** Cosmetic backdrops a question (or a category) may name. Keep identical to the frontend list. */
+    public const SCENES = ['ocean', 'space', 'jungle', 'desert', 'arctic', 'body', 'past', 'city'];
     private const SLIDER_KEYS = ['min', 'max', 'step', 'unit', 'correct', 'accept_min', 'accept_max'];
 
     /**
@@ -251,11 +253,14 @@ final class Content
         return $e;
     }
 
-    private static function validateQuestion(array $q, string $at): array
+    public static function validateQuestion(array $q, string $at): array
     {
         $e = [];
         if ($extra = array_diff(array_keys($q), self::QUESTION_KEYS)) {
             $e[] = "$at: unknown keys " . implode(', ', $extra);
+        }
+        if (array_key_exists('scene', $q) && !in_array($q['scene'], self::SCENES, true)) {
+            $e[] = "$at: scene must be one of " . implode(', ', self::SCENES);
         }
         $type = $q['type'] ?? null;
         if (!in_array($type, self::TYPES, true)) {
@@ -363,6 +368,43 @@ final class Content
         return preg_replace('/[\s.,!?;:\'"“”‘’()\[\]…]+/u', '', mb_strtolower($prompt)) ?? '';
     }
 
+    /**
+     * Prompt words that suggest a world, tried in this order; the first rule that matches wins.
+     * Matching is case-insensitive on whole words (a plural s/es is allowed); "freez" and "multipl"
+     * are stems, digits and the maths signs match anywhere.
+     */
+    private const SCENE_RULES = [
+        'space' => '/\b(?:planet|moon|star|sun|space|astronaut|orbit|galaxy|galaxies|rocket|comet|mars|jupiter|saturn)(?:s|es)?\b/iu',
+        'ocean' => '/\b(?:sea|ocean|fish|whale|shark|coral|octopus|octopuses|dolphin|wave|tide|beach|clownfish|crab|starfish)(?:s|es)?\b/iu',
+        'arctic' => '/\b(?:ice|snow|polar|arctic|antarctic|antarctica|penguin|freez\w*|winter|cold|glacier)(?:s|es)?\b/iu',
+        'body' => '/\b(?:body|bodies|heart|bone|blood|teeth|tooth|skin|brain|lung|muscle|skeleton|stomach)(?:s|es)?\b/iu',
+        'past' => '/\b(?:ancient|history|king|queen|roman|viking|egypt|egyptian|pharaoh|tudor|victorian|war|century|centuries|castle|knight|medieval)(?:s|es)?\b/iu',
+        'city' => '/\d|[×÷]|\b(?:number|maths|add|subtract|multipl\w*|divide|fraction|shape|triangle|square|circle|sum|total|count)(?:s|es)?\b/iu',
+        'desert' => '/\b(?:desert|sand|camel|cactus|cacti|volcano|volcanoes|country|countries|continent|river|mountain|capital|map)(?:s|es)?\b/iu',
+        'jungle' => '/\b(?:animal|jungle|forest|tree|plant|insect|bird|lion|tiger|monkey|leaf|leaves|flower)(?:s|es)?\b/iu',
+    ];
+
+    /**
+     * The world a question is shown in (cosmetic only): its own scene, else one inferred from the
+     * prompt, else the category's scene, else a stable pick by question id. Always one of SCENES.
+     */
+    public static function sceneFor(array $question, ?string $categoryScene, string $questionId): string
+    {
+        if (in_array($question['scene'] ?? null, self::SCENES, true)) {
+            return $question['scene'];
+        }
+        $prompt = is_string($question['prompt'] ?? null) ? $question['prompt'] : '';
+        foreach (self::SCENE_RULES as $scene => $pattern) {
+            if (preg_match($pattern, $prompt) === 1) {
+                return $scene;
+            }
+        }
+        if (in_array($categoryScene, self::SCENES, true)) {
+            return $categoryScene;
+        }
+        return self::SCENES[hexdec(substr(hash('sha256', 'dyk-scene|' . $questionId), 0, 7)) % count(self::SCENES)];
+    }
+
     /** Questions served per round: the file's round_size, or up to DEFAULT_ROUND. */
     public static function roundSize(array $quiz): int
     {
@@ -394,6 +436,10 @@ final class Content
                     'unit' => $s['unit'] ?? null, 'correct' => $s['correct'], 'accept_min' => $s['accept_min'], 'accept_max' => $s['accept_max']],
                 'explanation' => $q['explanation'], 'source_url' => $q['source_url'], 'review_by' => $q['review_by'],
             ];
+            // Only when set, so a file without scenes keeps its snapshot (and stored version) unchanged.
+            if (isset($q['scene'])) {
+                $out[array_key_last($out)]['scene'] = $q['scene'];
+            }
         }
         return $out;
     }

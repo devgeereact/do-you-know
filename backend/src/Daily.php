@@ -26,13 +26,13 @@ final class Daily
             $closed = $close->rowCount();
 
             $row = Database::one($this->db,
-                "SELECT d.id,d.status,q.slug,q.status AS quiz_status FROM daily_challenges d
+                "SELECT d.id,d.status,q.slug,(" . Catalog::LIVE . ") AS quiz_live FROM daily_challenges d
                  JOIN quizzes q ON q.id=d.quiz_id WHERE d.challenge_date=? FOR UPDATE", [$today]);
 
             if ($row && $row['status'] === 'live') {
                 return $this->summary($today, $closed, 'already_live', $row['slug']);
             }
-            if ($row && $row['status'] === 'scheduled' && $row['quiz_status'] === 'published') {
+            if ($row && $row['status'] === 'scheduled' && (int) $row['quiz_live'] === 1) {
                 Database::execute($this->db, "UPDATE daily_challenges SET status='live' WHERE id=?", [$row['id']]);
                 return $this->summary($today, $closed, 'activated', $row['slug']);
             }
@@ -46,7 +46,7 @@ final class Daily
                 return $this->summary($today, $closed, 'none_available', null);
             }
             if ($row) {
-                // Scheduled quiz was unpublished. Scheduled rows have no attempts, so swap it.
+                // Scheduled quiz was unpublished (or is not live yet). Scheduled rows have no attempts, so swap it.
                 Database::execute($this->db,
                     "UPDATE daily_challenges SET quiz_id=?,quiz_version_id=?,status='live' WHERE id=?",
                     [$pick['id'], $pick['current_version_id'], $row['id']]);
@@ -67,7 +67,7 @@ final class Daily
              JOIN quiz_versions v ON v.id=q.current_version_id AND v.quiz_id=q.id
              LEFT JOIN (SELECT quiz_id,MAX(challenge_date) AS last_used FROM daily_challenges GROUP BY quiz_id) u
                ON u.quiz_id=q.id
-             WHERE q.status='published'
+             WHERE " . Catalog::LIVE . "
              ORDER BY u.last_used IS NOT NULL, u.last_used, SHA2(CONCAT(?,q.id),256)
              LIMIT 1", [$today]);
     }

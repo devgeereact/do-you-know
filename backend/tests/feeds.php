@@ -42,6 +42,9 @@ foreach (Player::ADJECTIVES as $adjective) {
 }
 check('every generated nickname passes moderation ('.(count(Player::ADJECTIVES)*count(Player::ANIMALS)*90).' combinations)',$blockedNames===[]);
 
+// Earlier runs leave their fixtures in this disposable database; retire them so their recent
+// plays cannot outrank this run's popular quiz.
+$db->exec("UPDATE quizzes SET status='archived' WHERE slug LIKE 'feeds-%' AND status='published'");
 $popular=feedQuiz($db,'feeds-popular');$quiet=feedQuiz($db,'feeds-quiet');$stale=feedQuiz($db,'feeds-stale');$draft=feedQuiz($db,'feeds-draft','draft');
 $r=request('POST','/guest-sessions',[]);$me=$r['body'];
 $r=request('POST','/guest-sessions',[]);$other=$r['body'];

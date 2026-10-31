@@ -22,7 +22,8 @@ final class Api
             // Generous per address: a school class can share one address.
             RateLimit::check($db,$config,'api',$ip,600,60);
             $isAdmin = str_starts_with($path, '/admin/');
-            $body = $method === 'POST' ? self::body($isAdmin ? 262144 : 32768) : [];
+            // Admin action routes (submit, retire, ...) may be posted with an empty body.
+            $body = $method === 'POST' ? self::body($isAdmin ? 262144 : 32768, $isAdmin) : [];
             $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '';
             $token = preg_match('/^Bearer ([^\s]{1,8192})$/D', $auth, $m) ? $m[1] : '';
             if ($path === '/guest-sessions' && $method === 'POST') {
@@ -43,7 +44,18 @@ final class Api
                 http_response_code(200);
                 echo $xml; return;
             }
-            if ($method==='GET' && $path==='/daily') { self::reply((new Competition($db,null))->daily());return; }
+            if ($method==='GET' && $path==='/daily') { self::reply((new Competition($db,null))->dailyDetails());return; }
+            if ($method==='GET' && $path==='/leaderboards/overall') {
+                $period = $_GET['period'] ?? 'week';
+                $limit = $_GET['limit'] ?? '50';
+                if (!is_string($period) || !in_array($period, Overall::PERIODS, true)) { throw ApiError::invalid('invalid_period', ['allowed' => Overall::PERIODS]); }
+                if (!is_string($limit) || !preg_match('/^[0-9]{1,3}$/D', $limit) || (int) $limit < 1 || (int) $limit > 100) { throw ApiError::invalid('invalid_limit', ['min' => 1, 'max' => 100]); }
+                $viewer = $token==='' ? null : Identity::profile($db,$config,$token);
+                $result = (new Overall($db))->board($period, (int) $limit, $viewer['id'] ?? null);
+                // Changes as rounds finish; a short private cache saves repeat loads without sharing is_me.
+                header('Cache-Control: private, max-age=30');
+                self::reply($result);return;
+            }
             if ($method==='GET' && preg_match('~^/challenges/([A-Za-z0-9]{8})$~D',$path,$challengeCode)) {
                 self::reply((new Competition($db,null))->challenge($challengeCode[1]));return;
             }
@@ -73,12 +85,14 @@ final class Api
                 if ($token==='') { throw new ApiError('not_signed_in',401); }
                 // Guest tokens are looked up as ordinary profiles and then fail Admin's Clerk-subject check.
                 $staff=Identity::profile($db,$config,$token);
-                self::reply((new Admin($db,$config,$staff))->handle($method,$path,$body));return;
+                $admin=new Admin($db,$config,$staff);
+                $result=$admin->handle($method,$path,$body,$_GET);
+                self::reply($result,$admin->status);return;
             }
             // Unknown routes must never become a generic table reader or SPA HTML.
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
             $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/attempts','/likes'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/attempts','/likes','/feedback'],true) && !$gameRoute && !$dailyFinished) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -110,6 +124,10 @@ final class Api
                 if (!is_string($board)||!is_string($entry)||!is_bool($liked)) { throw new ApiError('invalid_like'); }
                 self::reply((new Competition($db,$profile['id']))->like($board,$entry,$liked));return;
             }
+            if ($path==='/feedback') {
+                RateLimit::check($db,$config,'feedback',$profile['id'],10,3600);
+                self::reply((new Feedback($db))->submit($profile,$body),201);return;
+            }
             $game=new Game($db,$profile['id']);
             if ($path==='/attempts') { self::reply($game->start($body));return; }
             if ($gameRoute) {
@@ -117,7 +135,11 @@ final class Api
                 self::reply($result);return;
             }
             throw new ApiError('not_found',404);
-        } catch (ApiError $error) { self::reply(['error'=>['code'=>$error->errorCode]],$error->status); }
+        } catch (ApiError $error) {
+            $reply=['code'=>$error->errorCode];
+            if ($error->details!==null) { $reply['details']=$error->details; }
+            self::reply(['error'=>$reply],$error->status);
+        }
         catch (\Throwable $error) { self::reply(['error'=>['code'=>'service_unavailable']],503); }
     }
 
@@ -142,11 +164,12 @@ final class Api
         header('Access-Control-Max-Age: 600');
     }
 
-    private static function body(int $limit): array
+    private static function body(int $limit, bool $allowEmpty = false): array
     {
         if (!str_starts_with(strtolower($_SERVER['CONTENT_TYPE']??''),'application/json')) { throw new ApiError('json_required',415); }
         $raw=file_get_contents('php://input',false,null,0,$limit+1);
         if ($raw===false || strlen($raw)>$limit) { throw new ApiError('payload_too_large',413); }
+        if ($allowEmpty && trim($raw)==='') { return []; }
         try { $value=json_decode($raw,false,32,JSON_THROW_ON_ERROR); }
         catch (\JsonException $error) { throw new ApiError('invalid_json'); }
         if (!$value instanceof \stdClass) { throw new ApiError('invalid_json'); }

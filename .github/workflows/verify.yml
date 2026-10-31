@@ -92,11 +92,39 @@ jobs:
         \ = bin2hex(random_bytes(32));\n$file = getenv('DYK_CONFIG');\nfile_put_contents($file, '<?php return '\
         \ . var_export($config, true) . ';');\nchmod($file, 0600);\nPHP\nphp backend/bin/migrate.php\nphp backend/bin/migrate.php\n"
     - name: Verify HTTP, ownership and grading contracts
-      run: "PHP_CLI_SERVER_WORKERS=4 php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > \"$RUNNER_TEMP/dyk-php.log\"\
-        \ 2>&1 &\napi_pid=$!\ntrap 'kill \"$api_pid\" 2>/dev/null || true' EXIT\nfor attempt in {1..30}; do\n  if\
-        \ curl --silent --fail http://127.0.0.1:55438/api/v1/health > /dev/null; then break; fi\n  sleep 0.2\ndone\n\
-        php backend/tests/integration.php\nphp backend/tests/competition.php\nphp backend/tests/daily.php\nphp backend/tests/concurrency.php\n\
-        php backend/tests/feeds.php\nphp backend/tests/content.php\nphp backend/tests/cleanup.php\nphp backend/tests/seo.php\n"
+      run: |
+        # Throwaway Clerk test key (never a real one) so the admin, CMS and feedback suites can sign
+        # fixture session tokens; the server config trusts only its public half.
+        openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out .local-test/jwt-test-private.pem 2>/dev/null
+        openssl pkey -in .local-test/jwt-test-private.pem -pubout -out .local-test/jwt-test-public.pem
+        php <<'PHP'
+        <?php
+        $file = getenv('DYK_CONFIG');
+        $config = require $file;
+        $config['clerk'] = ['issuer' => 'https://clerk.example.test', 'jwt_key' => file_get_contents('.local-test/jwt-test-public.pem'),
+            'secret_key' => '', 'authorized_parties' => ['http://localhost:5202']];
+        $config['admin_subjects'] = ['user_TestAdmin0000000001'];
+        file_put_contents($file, '<?php return ' . var_export($config, true) . ';');
+        chmod($file, 0600);
+        PHP
+        PHP_CLI_SERVER_WORKERS=4 php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > "$RUNNER_TEMP/dyk-php.log" 2>&1 &
+        api_pid=$!
+        trap 'kill "$api_pid" 2>/dev/null || true' EXIT
+        for attempt in {1..30}; do
+          if curl --silent --fail http://127.0.0.1:55438/api/v1/health > /dev/null; then break; fi
+          sleep 0.2
+        done
+        php backend/tests/integration.php
+        php backend/tests/competition.php
+        php backend/tests/daily.php
+        php backend/tests/concurrency.php
+        php backend/tests/feeds.php
+        php backend/tests/content.php
+        php backend/tests/cleanup.php
+        php backend/tests/seo.php
+        php backend/tests/admin.php
+        php backend/tests/feedback.php
+        php backend/tests/cms.php
     if: github.event_name != 'workflow_dispatch' || inputs.full_backend
   e2e:
     runs-on: ubuntu-24.04

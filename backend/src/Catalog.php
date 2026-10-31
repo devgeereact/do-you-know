@@ -11,17 +11,27 @@ final class Catalog
         q.cover_image_url,q.question_count,q.time_limit_seconds,q.shuffle_options,q.is_ranked,q.status,
         q.publish_at,q.seo_title,q.seo_description,q.created_at,q.updated_at';
 
+    /**
+     * A quiz is live (public, playable, rankable) when it is published and its publish time has
+     * come. Every public read uses this, with the quiz table aliased as q.
+     */
+    public const LIVE = "q.status='published' AND (q.publish_at IS NULL OR q.publish_at<=UTC_TIMESTAMP(6))";
+
     public function __construct(private readonly \PDO $db) {}
 
     public function categories(?string $slug = null): array
     {
-        $sql = 'SELECT id,slug,name,description,kind,icon,scene,sort_order,is_active,created_at,updated_at FROM categories WHERE is_active=1';
+        // Listed only while active and holding at least one live quiz; a direct link to an active
+        // category still resolves (the sitemap lists active categories).
+        $sql = 'SELECT c.id,c.slug,c.name,c.description,c.kind,c.icon,c.scene,c.sort_order,c.is_active,c.created_at,c.updated_at FROM categories c WHERE c.is_active=1';
         $args = [];
         if ($slug !== null) {
-            $sql .= ' AND slug=?';
+            $sql .= ' AND c.slug=?';
             $args[] = $slug;
+        } else {
+            $sql .= ' AND EXISTS (SELECT 1 FROM quizzes q WHERE q.category_id=c.id AND ' . self::LIVE . ')';
         }
-        $statement = $this->db->prepare($sql . ' ORDER BY sort_order,name LIMIT 100');
+        $statement = $this->db->prepare($sql . ' ORDER BY c.sort_order,c.name LIMIT 100');
         $statement->execute($args);
         return array_map(static function (array $row): array {
             $row['sort_order'] = (int) $row['sort_order'];
@@ -39,7 +49,7 @@ final class Catalog
 
     public function quizzes(array $filters, ?string $slug = null): array
     {
-        $sql = 'SELECT ' . self::QUIZ_COLUMNS . " FROM quizzes q WHERE q.status='published'";
+        $sql = 'SELECT ' . self::QUIZ_COLUMNS . ' FROM quizzes q WHERE ' . self::LIVE;
         $args = [];
         if ($slug !== null) {
             $sql .= ' AND slug=?';
@@ -91,7 +101,7 @@ final class Catalog
         $statement = $this->db->query('SELECT ' . self::QUIZ_COLUMNS . " FROM quizzes q
             LEFT JOIN (SELECT quiz_id,COUNT(*) AS plays FROM attempts
                 WHERE status='finished' AND finished_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 7 DAY) GROUP BY quiz_id) p
-            ON p.quiz_id=q.id WHERE q.status='published'
+            ON p.quiz_id=q.id WHERE " . self::LIVE . "
             ORDER BY COALESCE(p.plays,0) DESC,q.updated_at DESC,q.id LIMIT 6");
         return array_map(self::quizRow(...), $statement->fetchAll());
     }
@@ -116,7 +126,7 @@ final class Catalog
         foreach ($categories->fetchAll() as $row) {
             $entries[] = ['loc' => '/c/' . $row['slug'], 'lastmod' => $row['updated_at'], 'changefreq' => 'weekly'];
         }
-        $quizzes = $this->db->query("SELECT slug,updated_at FROM quizzes WHERE status='published' ORDER BY updated_at DESC,id LIMIT 45000");
+        $quizzes = $this->db->query('SELECT q.slug,q.updated_at FROM quizzes q WHERE ' . self::LIVE . ' ORDER BY q.updated_at DESC,q.id LIMIT 45000');
         foreach ($quizzes->fetchAll() as $row) {
             $entries[] = ['loc' => '/q/' . $row['slug'], 'lastmod' => $row['updated_at'], 'changefreq' => 'weekly'];
         }

@@ -104,11 +104,13 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | POST /me/delete              | `{ "confirmed": true }`, cascades own app data and sessions                                                        |
 | GET /curriculum-tags         | Public filter options                                                                                              |
 | GET /categories/:slug        | Active category detail                                                                                             |
-| GET /categories              | Active category metadata                                                                                           |
-| GET /quizzes                 | Published metadata; category_id/age/curriculum_tag/search filters, literal wildcards                               |
+| GET /categories              | Active categories that hold at least one live quiz                                                                 |
+| GET /quizzes                 | Live metadata (published and `publish_at` reached); category_id/age/curriculum_tag/search filters, literal wildcards |
 | GET /quizzes/trending        | Up to 6 published quizzes by finished plays in the last 7 days, then newest; catalogue fields only                 |
 | GET /quizzes/:slug           | One published quiz                                                                                                 |
-| GET /daily                   | Today's published challenge, London server date                                                                    |
+| GET /daily                   | Today's live challenge, London server date, plus `stops` (one cosmetic scene per question) and board `stats`       |
+| GET /leaderboards/overall    | period=day/week/month/all, limit 1-100; best round per quiz, points = correct x 10; see `src/Overall.php`          |
+| POST /feedback               | Preset feedback for everyone; free text and email only for Clerk adults or 13+ age bands; 10 an hour; `src/Feedback.php` |
 | POST /likes                  | `{board, entry_id, liked}`; signed-in players who have finished a game like or unlike another player's entry; returns `{likes, liked_by_me}` only |
 | GET /leaderboards            | board/quiz_slug/limit, public nickname/avatar_id/score rows only                                                   |
 | GET /challenges/:code        | Public nickname/avatar_id/score preview, labels expiry                                                             |
@@ -119,9 +121,14 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | POST /attempts/:id/answer    | `{ "option_id": "…" }` or `{ "value": 5 }`; server grades/times                                                    |
 | POST /attempts/:id/finish    | `{}`; owner-only result/review, idempotent                                                                         |
 
+Staff routes under `/admin/` (Clerk subject in `admin_subjects` only) are documented at the top of
+`src/Admin.php`, `src/AdminContent.php`, `src/AdminOps.php` and `src/Feedback.php`; every write is
+recorded in `admin_audit`. Validation failures there and on the new public routes are 422
+`{error:{code,details}}`.
+
 Do not expose generic SELECT * readers, question tables or quiz version snapshots.
 A submitted score, role or profile ID is never an authority. Public question payloads
-whitelist id, type, prompt, image, option id/label and slider display bounds only.
+whitelist id, type, prompt, image, a cosmetic scene name, option id/label and slider display bounds only.
 
 Guest sessions expire after seven days by default, store only token hashes and
 contain no child email/name/photo. No cookie/CSRF protocol is implied by this bearer
@@ -214,7 +221,8 @@ composer test
 export DYK_CONFIG="$PWD/../.local-test/test-env.php"
 php bin/migrate.php
 php -S 127.0.0.1:55438 -t public public/api.php &
-php tests/integration.php   # also: competition, concurrency, daily, admin, ...
+php tests/integration.php   # also: competition, concurrency, daily, admin, feedback, cms, ...
+# or all of it, starting and stopping the local database and API: bash ../scripts/test-backend.sh
 ```
 
 `tests/http.php` (every DB-backed test loads it) refuses to run unless `DYK_CONFIG` names a file
@@ -274,6 +282,8 @@ Tests: tests/http.php supplies a guarded localhost/test-database harness.
 tests/integration.php covers ownership/metadata/practice, tests/competition.php
 covers all game modes, tests/daily.php covers the daily activator and its cron script,
 tests/content.php covers the content validator, draft import, publish gate and an
-imported quiz played through the API, tests/concurrency.php requires four local PHP workers and
+imported quiz played through the API, tests/feedback.php covers POST /feedback and the child free-text
+rule, tests/cms.php covers the admin studio, daily calendar, rounds, subjects, inbox and the overall
+board, tests/concurrency.php requires four local PHP workers and
 sends parallel requests. CI uses PHP_CLI_SERVER_WORKERS=4; this development server
 is never used for cPanel production.

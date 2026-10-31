@@ -5,12 +5,13 @@ final class Game
 {
     public function __construct(private readonly \PDO $db, private readonly string $userId) {}
 
-    public static function publicQuestion(array $q): array
+    /** What a player may see before answering. $categoryScene feeds the cosmetic scene only. */
+    public static function publicQuestion(array $q, ?string $categoryScene = null): array
     {
         $slider = $q['slider'] ?? null;
         return [
             'id' => $q['id'], 'type' => $q['type'], 'prompt' => $q['prompt'],
-            'image_url' => $q['image_url'] ?? null,
+            'image_url' => $q['image_url'] ?? null, 'scene' => Content::sceneFor($q, $categoryScene, $q['id']),
             'options' => array_map(fn(array $o): array => ['id' => $o['id'], 'label' => $o['label']], $q['options'] ?? []),
             'slider' => $slider ? ['min' => $slider['min'], 'max' => $slider['max'], 'step' => $slider['step'], 'unit' => $slider['unit'] ?? null] : null,
         ];
@@ -45,10 +46,10 @@ final class Game
 
     private function state(array $a): array
     {
-        $quiz = Database::one($this->db, 'SELECT slug,title FROM quizzes WHERE id=?', [$a['quiz_id']]);
+        $quiz = Database::one($this->db, 'SELECT q.slug,q.title,c.scene FROM quizzes q LEFT JOIN categories c ON c.id=q.category_id WHERE q.id=?', [$a['quiz_id']]);
         $total = count(json_decode($a['question_order'], true, 512, JSON_THROW_ON_ERROR));
         $complete = (int)$a['answered_count'] >= $total;
-        $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a)) : null;
+        $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a), $quiz['scene']) : null;
         if ($q && $a['shuffle_options']) {
             usort($q['options'], static fn(array $left, array $right): int =>
                 strcmp(hash('sha256', $a['id'] . $left['id']), hash('sha256', $a['id'] . $right['id'])));
@@ -99,12 +100,12 @@ final class Game
                 if (!is_string($slug) || !preg_match('/^[a-z0-9-]{1,100}$/D', $slug)) {
                     throw new ApiError('quiz_not_found', 404);
                 }
-                $found = Database::one($this->db, "SELECT id,current_version_id FROM quizzes WHERE slug=? AND status='published'", [$slug]);
+                $found = Database::one($this->db, 'SELECT q.id,q.current_version_id FROM quizzes q WHERE q.slug=? AND ' . Catalog::LIVE, [$slug]);
                 if (!$found || !$found['current_version_id']) { throw new ApiError('quiz_not_found', 404); }
                 $quizId = $found['id'];
                 $versionId = $found['current_version_id'];
             }
-            $quiz = Database::one($this->db, "SELECT * FROM quizzes WHERE id=? AND status='published'", [$quizId]);
+            $quiz = Database::one($this->db, 'SELECT q.* FROM quizzes q WHERE q.id=? AND ' . Catalog::LIVE, [$quizId]);
             if (!$quiz) { throw new ApiError('quiz_not_found', 404); }
             if ($mode === 'ranked' && !$quiz['is_ranked']) { $mode = 'practice'; }
             $existing = $daily
@@ -137,7 +138,7 @@ final class Game
             } else {
                 $ids = array_column($snapshot, 'id');
                 $order = $daily
-                    ? array_slice($ids, 0, (int) $version['question_count'])
+                    ? self::dailyOrder($ids, $daily['challenge_date'], (int) $version['question_count'])
                     : self::pickRound($ids, self::roundSize($mode, (int) $version['question_count'], count($ids)), $this->servedHistory($quizId));
                 $timer = $quiz['time_limit_seconds'];
                 $shuffle = $quiz['shuffle_options'];
@@ -149,6 +150,20 @@ final class Game
                 [$id, $this->userId, $quizId, $versionId, $mode, $daily['id'] ?? null, $challenge['id'] ?? null, $timer, (int) $shuffle, json_encode($order, JSON_THROW_ON_ERROR)]);
             return $this->state($this->attempt($id));
         });
+    }
+
+    /**
+     * The daily round: the same for everyone on one London date, but a different slice of the
+     * bank each time a quiz comes back as the daily. Sorted by a hash of the date and question id.
+     *
+     * @param list<string> $ids every question ID in the pinned version
+     * @return list<string>
+     */
+    public static function dailyOrder(array $ids, string $date, int $size): array
+    {
+        usort($ids, static fn(string $a, string $b): int =>
+            strcmp(hash('sha256', $date . '|' . $a), hash('sha256', $date . '|' . $b)) ?: strcmp($a, $b));
+        return array_slice($ids, 0, $size);
     }
 
     /** Questions in a ranked round, drawn at random from the quiz's bank. */

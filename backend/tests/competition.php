@@ -75,7 +75,9 @@ $r=request('POST','/attempts',['mode'=>'daily'],$first['token']);$dailyState=$r[
 $r=request('POST','/attempts',['mode'=>'daily'],$second['token']);$otherDaily=$r['body'];
 $a=Database::one($db,'SELECT question_order FROM attempts WHERE id=?',[$dailyState['attempt_id']]);
 $b=Database::one($db,'SELECT question_order FROM attempts WHERE id=?',[$otherDaily['attempt_id']]);
-check('daily players receive identical question order',$a['question_order']===$b['question_order']&&$dailyState['question']['id']===$snapshot[0]['id']);
+// The daily order is a hash of the London date and question id, not file order, so a quiz that
+// comes back as the daily serves a different slice; it is still the same for everyone that day.
+check('daily players receive identical question order',$a['question_order']===$b['question_order']&&json_decode($a['question_order'],true)===\Dyk\Game::dailyOrder(array_column($snapshot,'id'),$today,3)&&$dailyState['question']['id']===json_decode($a['question_order'],true)[0]);
 $dailyResult=completeGame($dailyState,$first['token']);
 check('daily finish updates streak once',$dailyResult['streak']===1&&$dailyResult['ranks']['daily']===1);
 $r=request('POST','/attempts/'.$dailyState['attempt_id'].'/finish',[],$first['token']);check('daily finish retry does not increment streak',$r['body']['streak']===1);
