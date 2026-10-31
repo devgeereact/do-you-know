@@ -92,4 +92,11 @@ for($i=0;$i<11;$i++){$codes[]=request('POST','/feedback',['type'=>'idea','preset
 check('feedback is limited to 10 an hour per player',count(array_filter($codes,fn($c)=>$c===201))===10&&end($codes)===429);
 check('the preset lists are the agreed copy',Feedback::PRESETS['problem']===['Something isn’t working','The page is slow','I can’t find my score']);
 
+$leaver=$guest('18_plus');
+$r=request('POST','/feedback',['type'=>'idea','presets'=>[],'message'=>'Please add a quiz about volcanoes.','email'=>'leaver@example.org'],$leaver['token']);
+$fid=$r['body']['id']??'';
+request('POST','/me/delete',['confirmed'=>true],$leaver['token']);
+$row=Database::one($db,'SELECT * FROM feedback WHERE id=?',[$fid]);
+check('deleting my data removes the message and email from my feedback',$row&&$row['profile_id']===null&&$row['message']===null&&$row['email']===null&&$row['type']==='idea');
+
 fwrite(STDOUT,"$count feedback checks passed\n");

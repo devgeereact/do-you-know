@@ -16,8 +16,8 @@ final class Identity
             $state = AuthenticateRequest::authenticateRequest(
                 new Request('GET', 'https://api.invalid/session', ['Authorization' => 'Bearer '.$token]),
                 new AuthenticateRequestOptions(
-                    secretKey: $c['secret_key'] ?: null,
-                    jwtKey: $c['jwt_key'] ?: null,
+                    secretKey: empty($c['secret_key']) ? null : $c['secret_key'],
+                    jwtKey: empty($c['jwt_key']) ? null : $c['jwt_key'],
                     authorizedParties: $c['authorized_parties'],
                     acceptsToken: ['session_token'],
                 ),

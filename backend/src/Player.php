@@ -216,6 +216,9 @@ final class Player
         }
         // Cascades revoke every guest session and remove owned attempts/settings.
         // The Clerk account itself is separate and must be deleted through Clerk.
+        // Feedback stays for the owner's records, but anything personal in it (a written message
+        // and a reply address) goes with the player. The row keeps only its type and presets.
+        Database::execute($this->db, 'UPDATE feedback SET message=NULL, email=NULL, question_prompt=NULL WHERE profile_id=?', [$this->userId]);
         Database::execute($this->db, 'DELETE FROM profiles WHERE id=?', [$this->userId]);
     }
 }

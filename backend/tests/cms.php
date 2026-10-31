@@ -138,6 +138,9 @@ $live = json_decode(Database::one($db, 'SELECT v.snapshot FROM quizzes q JOIN qu
 check('players keep the live version while it is edited', $live[0]['explanation'] === 'Original fixture explanation.' && !isset($live[0]['scene']));
 $r = admin('POST', '/quizzes/'.$id.'/submit');
 check('a live quiz can be submitted without going offline', $r['body']['quiz']['status'] === 'published' && $r['body']['quiz']['in_review'] === true);
+$r = admin('GET', '/quizzes?status=review&q='.$tag);
+$row = array_values(array_filter($r['body']['items'], fn ($i) => $i['id'] === $id))[0] ?? null;
+check('a live quiz with edits to check is listed as in review', $row !== null && $row['in_review'] === true && $row['status'] === 'published');
 $r = admin('POST', '/quizzes/'.$id.'/unsubmit');
 check('unsubmitting a live quiz keeps it published', $r['body']['quiz']['status'] === 'published' && $r['body']['quiz']['in_review'] === false);
 admin('POST', '/quizzes/'.$id.'/check', ['index' => 0, 'checked' => true]);

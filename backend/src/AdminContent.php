@@ -53,7 +53,7 @@ final class AdminContent
         $args = [];
         $status = Admin::queryEnum($query, 'status', self::STATUSES);
         if ($status === 'review') {
-            $sql .= " AND (q.status='review' OR JSON_VALUE(q.draft,'$.review')='true')";
+            $sql .= " AND (q.status='review' OR JSON_VALUE(q.draft,'$.review') IN ('true','1'))";
         } elseif ($status !== null) {
             $sql .= ' AND q.status=?';
             $args[] = $status;
@@ -84,7 +84,7 @@ final class AdminContent
             'id' => $r['id'], 'slug' => $r['slug'], 'title' => $r['title'],
             'category' => $r['category_slug'] === null ? null : ['slug' => $r['category_slug'], 'name' => $r['category_name']],
             'ks' => self::ks(json_decode((string) $r['curriculum_tags'], true) ?: []),
-            'status' => $r['status'], 'in_review' => $r['status'] === 'review' || $r['review'] === 'true',
+            'status' => $r['status'], 'in_review' => $r['status'] === 'review' || in_array((string) $r['review'], ['true', '1'], true),
             'version' => $r['version'] === null ? null : (int) $r['version'], 'question_count' => (int) $r['bank'],
             'plays' => (int) $r['plays'],
             'right_rate' => (int) $r['answered'] > 0 ? (int) round(100 * (int) $r['right_answers'] / (int) $r['answered']) : null,
@@ -419,7 +419,7 @@ final class AdminContent
     {
         $quizzes = 0;
         $questions = 0;
-        foreach ($this->db->query("SELECT * FROM quizzes WHERE status='review' OR JSON_VALUE(draft,'$.review')='true'")->fetchAll() as $row) {
+        foreach ($this->db->query("SELECT * FROM quizzes WHERE status='review' OR JSON_VALUE(draft,'$.review') IN ('true','1')")->fetchAll() as $row) {
             $quizzes++;
             foreach ($this->workCopy($row)['questions'] as $q) { $questions += $q['checked'] ? 0 : 1; }
         }
