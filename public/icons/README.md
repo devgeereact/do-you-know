@@ -8,14 +8,13 @@ Drop your generated PNG icons here. The manifest in `vite.config.ts` expects:
 | `pwa-512.png`            | 512×512 | any       |
 | `pwa-maskable-512.png`   | 512×512 | maskable  |
 
-Fast way to generate all sizes from one source image:
+Also `apple-touch-icon.png` (180×180, linked from index.html).
 
-```bash
-npx pwa-asset-generator ./logo.png ./public/icons \
-  --background "#1570C2" --padding "18%" --icon-only
-```
+All of these, plus `public/og-image.png`, are rendered from the brand mark in `public/favicon.svg`
+by `node scripts/brand-assets.mjs` (Playwright with the installed Chrome). Change the mark, run the
+script, commit the PNGs.
 
-Then confirm the filenames match the `manifest.icons` entries in `vite.config.ts`.
-
-Current icons are the Do You Know mark (yellow speech bubble with a "?" on sky blue),
-rendered from `public/favicon.svg`. The maskable icon keeps the mark inside the 70% safe zone.
+Current mark (31 October 2026): the Do You Know logo, a chunky purple speech bubble with a yellow
+question mark and an orange spark, on the Mist background. The maskable icon keeps the mark
+inside the central 60% so every platform mask leaves it whole. The same artwork is the
+`LogoMark` React component in `src/components/brand/Logo.tsx`.
