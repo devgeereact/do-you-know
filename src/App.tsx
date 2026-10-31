@@ -69,20 +69,6 @@ export function App(): JSX.Element {
                   </Suspense>
                 }
               />
-              <Route
-                path="/admin/*"
-                element={
-                  <Suspense
-                    fallback={
-                      <p role="status" className="px-4 py-16 text-center">
-                        Loading…
-                      </p>
-                    }
-                  >
-                    <AdminApp />
-                  </Suspense>
-                }
-              />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
 
@@ -91,6 +77,21 @@ export function App(): JSX.Element {
             <Route path="/daily/play" element={<PlayPage kind="daily" />} />
             <Route path="/challenge/:code/play" element={<PlayPage kind="challenge" />} />
 
+            {/* The Studio has its own full-screen shell, outside the site chrome and page-enter motion. */}
+            <Route
+              path="/admin/*"
+              element={
+                <Suspense
+                  fallback={
+                    <p role="status" className="px-4 py-16 text-center">
+                      Loading…
+                    </p>
+                  }
+                >
+                  <AdminApp />
+                </Suspense>
+              }
+            />
             <Route path="/preview" element={<Navigate to="/" replace />} />
             <Route path="/login" element={<Navigate to="/account" replace />} />
             <Route path="/dashboard" element={<Navigate to="/me/settings" replace />} />
