@@ -106,3 +106,17 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | Clerk sign-in on the live site | NOT TESTED | Needs a human sign-in |
 | Email replies from the inbox | NOT TESTED | `mail_from` not set; replies are saved and marked "not emailed" |
 | Sourced generator | BLOCKED | Waiting for the owner's cost approval (Bright Data, Claude) |
+
+### Live release, 31 October 2026
+
+| Check | Result | Evidence |
+|---|---|---|
+| Deploy (Actions SSH) | VERIFIED | 6ea5580, ac8fd17, 114a226, 13823d7; smoke 3/3 each; undo `pnpm release --rollback --go` |
+| Pre-migration backup | VERIFIED | `db-pre-migrate-0012-0013-20261031T111147Z.sql.gz`, gzip -t OK, pinned outside the rolling set |
+| Migrations 0012, 0013 on live | VERIFIED | `bin/migrate.php`: "Applied 0012_admin_audit.sql", "Applied 0013_cms_feedback.sql" |
+| Live API | VERIFIED | health, daily (stops, stats), leaderboards/overall day and all, categories: 200 |
+| Live pages (Chrome, 1440 and 390) | VERIFIED | Home, Daily, Leaderboards, Studio sign-in: no console errors, no overflow |
+| New logo at the edge | VERIFIED | Cloudflare purge; favicon.svg and og-image.png match the repository (SHA-256) |
+| CI and Semgrep | VERIFIED | Green on 13823d7 (CI cms check fixed to not rely on leftover data) |
+| Studio on live | BLOCKED | `admin_subjects` empty in the live private config; owner adds their Clerk id |
+| Inbox email replies | NOT TESTED | `mail_from` not set |

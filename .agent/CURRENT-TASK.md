@@ -1,13 +1,14 @@
 # Current task — doyouknow.space is live
 
-## 31 October 2026 — Pop & Ink rebrand, Studio CMS, overall board, feedback (Status: DONE locally; release PLANNED in this session)
+## 31 October 2026 — Pop & Ink rebrand, Studio CMS, overall board, feedback (Status: DONE, released)
 
 - Goal (owner): build the approved Pop & Ink design to live, with our own logo; fix gaps; test locally first.
 - Built: own logo and icons; Pop & Ink tokens and fonts; 13 characters and 8 per-question worlds; framed game stage; new Home (desktop and phone), subject, quiz, Daily (fits screen), Leaderboards (overall, Today default), Contact and feedback with Report; Me in the avatar menu; Studio CMS (To do, Inbox, Library, Editor, Check & publish, Import, Generator screen, Daily calendar, Players, Subjects, Activity, ⌘K search); Clerk sign-ins linked to a server identity; migration 0013.
 - Design file v2.0 (owner asked for it before the main app): https://claude.ai/artifact/AzQsphxsJhPuDoSefzJKLh
 - Fixed while reviewing: review flag compare on MariaDB 11.4 (`JSON_VALUE` gives 1); feedback message and email now wiped on "Delete my data" (privacy notice updated); Studio moved outside the site layout; local PHP warning in `Identity.php`.
 - Checks: `pnpm check` PASS (162 tests); backend suites PASS (incl. cms 121, feedback 29); Playwright 46/46 PASS; Studio walkthrough PASS at 1440 and 390. Live sign-in NOT TESTED; inbox email NOT TESTED (`mail_from` unset); generator BLOCKED (cost approval).
-- Release steps: push `main` (deploy.yml) → SSH: DB backup → `bin/migrate.php` (0013) → smoke `/api/v1/health`, `/daily`, `/leaderboards/overall`, `/admin`.
+- Released (owner goal "build it to live"): deploys 6ea5580, ac8fd17, 114a226, 13823d7 (smoke 3/3 each; CI and Semgrep green on 13823d7). Live DB backup pinned `~/private_backups/dykspace/db-pre-migrate-0012-0013-20261031T111147Z.sql.gz` (gzip verified), then `bin/migrate.php` applied 0012 and 0013 (0012 had never reached the server: release.json now allows *.sql for the backend part). Live checks: health, daily (stops, stats), overall board (day, all), categories, /, /admin, /leaderboards, /contact all 200; desktop and phone pages with no console errors or overflow. Cloudflare cache purged for favicon, icons, og-image and manifest.
+- Owner to do: add your Clerk user id to `admin_subjects` in `~/do-you-know-private/shared/config.php` (it is empty, so the Studio refuses every account on live); optionally set `mail_from` so inbox replies are emailed; sign in once on live to confirm.
 - Unused now (not deleted; owner to confirm): `HeroTeaser`, `SkyBackdrop`, `ProgressDots`, `TimerBadge`.
 
 ## 29 October 2026 — repository moved
