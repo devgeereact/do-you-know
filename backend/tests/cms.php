@@ -318,10 +318,13 @@ $r = admin('GET', '/feedback/'.$sent);
 check('the thread lists the reply', count($r['body']['thread']) === 1 && $r['body']['thread'][0]['kind'] === 'reply' && $r['body']['status'] === 'resolved');
 
 // ---- Dashboard ----
+$problemsBefore = admin('GET', '/todo')['body']['items'][2]['count'];
+$broken = admin('POST', '/quizzes', ['title' => 'Cms Broken Draft '.$tag, 'category' => $subject])['body']['id'];
+admin('POST', '/quizzes/'.$broken, ['meta' => ['intro' => 'A draft that still has no questions.']]);
 $r = admin('GET', '/todo');
 check('the to-do list has its six items in order', $r['status'] === 200 && array_column($r['body']['items'], 'key') === ['feedback_new', 'review_questions', 'draft_problems', 'review_due', 'hard_questions', 'daily_gaps']);
 check('to-do counts are numbers with labels', !array_filter($r['body']['items'], fn($i) => !is_int($i['count']) || !is_string($i['label'])));
-check('drafts with problems are counted', $r['body']['items'][2]['count'] >= 1);
+check('drafts with problems are counted', $r['body']['items'][2]['count'] === $problemsBefore + 1);
 $r = admin('GET', '/stats');
 check('stats report plays, finish rate, guests, modes, top quizzes and hard questions', $r['status'] === 200 && $r['body']['plays']['today'] >= 2
     && array_keys($r['body']['modes_7d']) === ['practice', 'ranked', 'daily', 'challenge'] && is_array($r['body']['top_quizzes_7d']) && is_array($r['body']['hardest']));
