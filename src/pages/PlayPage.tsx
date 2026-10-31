@@ -3,15 +3,13 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { gsap, SplitText, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { burstConfetti } from '@/lib/confetti';
-import { SkyBackdrop } from '@/components/motion/SkyBackdrop';
+import { Character, Scene, WorldBackdrop, WorldGlyph } from '@/components/art/Art';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { AnswerButton, type AnswerButtonState } from '@/components/game/AnswerButton';
 import { FeedbackPanel } from '@/components/game/FeedbackPanel';
-import { ProgressDots } from '@/components/game/ProgressDots';
 import { ResultsView } from '@/components/game/ResultsView';
 import { SliderAnswer } from '@/components/game/SliderAnswer';
-import { TimerBadge } from '@/components/game/TimerBadge';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
@@ -20,7 +18,7 @@ import { useQuizAttempt } from '@/hooks/useQuizAttempt';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { cn, isWebUrl } from '@/lib/utils';
 import type { AnswerResult, AttemptSummary } from '@/types/game';
-import { Card } from '@/components/ui/Card';
+import { frameStyle, worldFor } from '@/lib/worlds';
 import { t } from '@/i18n';
 
 function optionState(
@@ -131,8 +129,8 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     if (phase === 'feedback') feedbackRef.current?.focus();
   }, [phase, question?.id]);
 
-  // Each new question flies in: the prompt card lifts, its words rise, then the answers
-  // stagger up. Transform and opacity only, never blocking input; skipped under reduced motion.
+  // Each new question flies in: the world settles, the frame lifts, the tab drops in, the words
+  // rise, then the answers. Transform only (content is visible at rest); skipped under reduced motion.
   const stage = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
@@ -140,14 +138,32 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
       const mm = gsap.matchMedia();
       mm.add(`not all and ${REDUCED_MOTION}`, () => {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        tl.from('[data-q-card]', { y: 26, scale: 0.97, opacity: 0, duration: 0.45 });
+        tl.from('[data-q-world]', { scale: 1.05, duration: 0.45 }, 0);
+        tl.from('[data-q-card]', { y: 18, duration: 0.35 }, 0);
+        tl.from('[data-q-tab]', { y: -14, duration: 0.3, ease: 'back.out(2.4)' }, 0.08);
+        tl.from('[data-q-host]', { y: 26, duration: 0.35, ease: 'back.out(2)' }, 0.1);
         const split = SplitText.create('[data-q-prompt]', { type: 'words' });
-        tl.from(split.words, { y: 14, opacity: 0, duration: 0.35, stagger: 0.025 }, '-=0.25');
+        tl.from(split.words, { y: 10, duration: 0.22, stagger: 0.015 }, 0.06);
         tl.add(() => split.revert());
-        tl.from('[data-q-answer]', { y: 18, opacity: 0, duration: 0.35, stagger: 0.06 }, 0.15);
+        tl.from('[data-q-answer]', { y: 10, duration: 0.22, stagger: 0.03 }, 0.1);
       });
     },
     { scope: stage, dependencies: [question?.id] },
+  );
+
+  // The verdict pops and the explanation sheet rises when the server has graded the answer.
+  useGSAP(
+    () => {
+      if (phase !== 'feedback') return;
+      gsap.matchMedia().add(`not all and ${REDUCED_MOTION}`, () => {
+        gsap.from('[data-q-verdict]', { scale: 0.85, duration: 0.3, ease: 'back.out(2.5)' });
+        gsap.from('[data-stage-sheet]', { yPercent: 100, duration: 0.32, ease: 'power2.out' });
+        if (lastResult?.is_correct) {
+          gsap.fromTo('[data-q-host]', { y: 0 }, { y: -16, duration: 0.16, yoyo: true, repeat: 1 });
+        }
+      });
+    },
+    { scope: stage, dependencies: [phase, question?.id] },
   );
 
   // A right answer earns a little confetti from the button (or slider) the player used.
@@ -173,25 +189,57 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
       : t.play.backToQuiz;
   useDocumentMeta({ title, noindex: true });
 
+  const inStage = (phase === 'question' || phase === 'feedback') && Boolean(state && question);
+  const w = question ? worldFor(question) : null;
+  const modeLabel = t.play.mode[mode];
+
   return (
-    <main className="relative isolate mx-auto min-h-dvh max-w-3xl px-4 pb-12 pt-4 md:px-8 lg:max-w-5xl">
-      <SkyBackdrop />
-      <header className="mb-4 flex items-center justify-between gap-3">
+    <main
+      className={cn(
+        'relative isolate mx-auto min-h-dvh',
+        inStage ? 'overflow-hidden' : 'max-w-3xl px-4 pb-12 pt-4 md:px-8 lg:max-w-5xl',
+      )}
+    >
+      {inStage && w && (
+        <div aria-hidden="true" data-q-world className="absolute inset-0 -z-10">
+          <WorldBackdrop world={w.key} />
+        </div>
+      )}
+      <header
+        className={cn(
+          'flex items-center justify-between gap-3',
+          inStage ? 'absolute inset-x-0 top-0 z-10 px-3 pt-3 md:px-5' : 'mb-4',
+        )}
+      >
         <Link
           to={leaveTo}
-          className="-ml-2 inline-flex min-h-tap shrink-0 items-center rounded-full px-2 font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+          className={cn(
+            'inline-flex min-h-tap shrink-0 items-center gap-1 rounded-full px-3 font-semibold focus-visible:outline-none focus-visible:ring-[3px]',
+            inStage
+              ? 'border-[1.5px] border-white/40 bg-white/20 text-white backdrop-blur focus-visible:ring-white'
+              : '-ml-2 text-primary hover:underline focus-visible:ring-primary',
+          )}
         >
-          <span aria-hidden="true">←&nbsp;</span>
+          <span aria-hidden="true">←</span>
           {phase === 'results' ? backLabel : t.play.leave}
         </Link>
-        <p className="min-w-0 truncate text-center font-display text-lg font-semibold text-content">
-          {title}
+        <p
+          className={cn(
+            'min-w-0 truncate font-semibold',
+            inStage
+              ? 'rounded-full border-[1.5px] border-white/40 bg-white/20 px-3 py-2 text-sm text-white backdrop-blur'
+              : 'text-center font-display text-lg text-content',
+          )}
+        >
+          {inStage ? (
+            <>
+              {modeLabel}
+              <span className="hidden sm:inline">{` · ${title}`}</span>
+            </>
+          ) : (
+            title
+          )}
         </p>
-        {timer.secondsLeft !== null && phase === 'question' ? (
-          <TimerBadge secondsLeft={timer.secondsLeft} isLow={timer.isLow} />
-        ) : (
-          <span className="min-w-tap" />
-        )}
       </header>
 
       {!online && phase !== 'results' && (
@@ -249,85 +297,189 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
         />
       )}
 
-      {(phase === 'question' || phase === 'feedback') && state && question && (
-        <div key={question.id} ref={stage} className="md:pt-[4vh]">
-          <ProgressDots position={state.position} total={state.total} />
-
-          <div className="mt-4 grid gap-6 lg:grid-cols-2 lg:items-start lg:gap-8 landscape:max-lg:grid-cols-2 landscape:max-lg:items-start landscape:max-lg:gap-4">
-            <Card
-              as="section"
-              data-q-card
-              className="shadow-lift md:p-8 lg:sticky lg:top-4 landscape:max-lg:sticky landscape:max-lg:top-4"
+      {inStage && state && question && w && (
+        <div
+          key={question.id}
+          ref={stage}
+          className="grid min-h-dvh place-items-stretch px-2 pb-2 pt-[5.4rem] md:place-items-center md:px-7 md:pb-7 md:pt-16"
+        >
+          <section
+            data-q-card
+            aria-label={t.play.questionOf(state.position, state.total)}
+            className="stage-frame flex w-full max-w-[70rem] flex-col md:h-[min(calc(100dvh-7rem),45rem)] md:min-h-[35rem]"
+            style={frameStyle(w)}
+          >
+            <span data-q-tab className="stage-tab">
+              <WorldGlyph world={w.key} size={26} />
+              {t.play.worldTab(w.name)}
+            </span>
+            <div
+              className="stage-inner min-h-[calc(100dvh-6.4rem)] md:min-h-0"
+              data-dark={w.dark && phase === 'question'}
+              data-result={
+                phase === 'feedback' && lastResult
+                  ? lastResult.is_correct
+                    ? 'right'
+                    : 'wrong'
+                  : undefined
+              }
             >
-              {isWebUrl(question.image_url) && (
-                <img
-                  src={question.image_url}
-                  alt=""
-                  className="mb-4 max-h-48 w-full rounded-xl object-cover"
-                />
-              )}
-              <h1
-                ref={promptRef}
-                tabIndex={-1}
-                data-q-prompt
-                className="text-balance font-display text-2xl font-semibold leading-snug text-content focus:outline-none md:text-4xl landscape:max-lg:text-2xl"
+              <Scene world={w.key} className="!h-[58%]" />
+              <div className="absolute inset-x-4 top-4 z-[4] flex items-center justify-between md:inset-x-6">
+                {timer.secondsLeft !== null && phase === 'question' ? (
+                  <span className="stage-pill" data-low={timer.isLow} role="timer" aria-live="off">
+                    {t.play.timer.badge(timer.secondsLeft)}
+                  </span>
+                ) : (
+                  <span />
+                )}
+              </div>
+              <div
+                data-q-host
+                aria-hidden="true"
+                className={cn(
+                  'absolute bottom-3 left-4 z-[3] transition-[filter] md:bottom-6 md:left-7',
+                  phase === 'feedback' && 'blur-[3px]',
+                )}
               >
-                {question.prompt}
-              </h1>
-            </Card>
+                <Character
+                  name={w.host}
+                  size={150}
+                  mood={
+                    phase === 'feedback' && lastResult
+                      ? lastResult.is_correct
+                        ? 'happy'
+                        : 'sad'
+                      : 'happy'
+                  }
+                  className="h-24 w-24 md:h-[10.5rem] md:w-[10.5rem]"
+                />
+              </div>
 
-            <section aria-label={t.play.answersLabel}>
-              {question.type === 'slider' && question.slider ? (
-                <div data-q-answer data-q-slider>
-                  <SliderAnswer
-                    slider={question.slider}
-                    prompt={question.prompt}
-                    questionKey={question.id}
-                    result={lastResult}
-                    disabled={submitting || phase !== 'question' || !online}
-                    onSubmit={(value) => void game.answerValue(value)}
-                  />
-                </div>
-              ) : (
-                <ul className={cn('grid gap-3', question.type === 'boolean' && 'grid-cols-2')}>
-                  {question.options.map((option, i) => (
-                    <li key={option.id} data-q-answer>
-                      <AnswerButton
-                        marker={
-                          question.type === 'boolean' ? undefined : String.fromCharCode(65 + i)
-                        }
-                        state={optionState(option.id, chosenId, lastResult)}
-                        chosen={option.id === chosenId}
-                        disabled={submitting || phase !== 'question' || !online}
-                        onClick={() => {
-                          setChosenId(option.id);
-                          void game.answerOption(option.id);
-                        }}
-                      >
-                        {option.label}
-                      </AnswerButton>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {phase === 'question' && error && (
-                <p role="alert" className="mt-3 text-center font-semibold text-content">
-                  {error}
+              <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-10">
+                <p
+                  className="flex items-center gap-2.5 text-sm font-semibold tracking-wider opacity-70"
+                  aria-hidden="true"
+                >
+                  {state.position} / {state.total}
+                  <span className="flex gap-1">
+                    {Array.from({ length: state.total }, (_, i) => (
+                      <i
+                        key={i}
+                        className={cn(
+                          'block h-[7px] rounded-full bg-current',
+                          i + 1 === state.position ? 'w-[18px] opacity-100' : 'w-[7px] opacity-25',
+                        )}
+                      />
+                    ))}
+                  </span>
                 </p>
-              )}
+                <span className="sr-only">{t.play.questionOf(state.position, state.total)}</span>
+                {phase === 'feedback' && lastResult ? (
+                  <>
+                    <h2
+                      ref={feedbackRef}
+                      tabIndex={-1}
+                      data-q-verdict
+                      className="mt-3 font-display text-[2.1rem] font-extrabold uppercase leading-none focus:outline-none md:text-[3.4rem]"
+                    >
+                      {lastResult.timed_out
+                        ? t.play.feedback.timeUp
+                        : lastResult.is_correct
+                          ? t.play.feedback.correct
+                          : t.play.feedback.wrong}
+                    </h2>
+                    <p className="mb-5 mt-2 text-sm font-semibold opacity-75 [font-variant:small-caps]">
+                      {lastResult.timed_out
+                        ? t.play.cheerTime
+                        : lastResult.is_correct
+                          ? t.play.cheerRight
+                          : t.play.cheerWrong}
+                    </p>
+                    <p className="sr-only">{question.prompt}</p>
+                  </>
+                ) : (
+                  <h1
+                    ref={promptRef}
+                    tabIndex={-1}
+                    data-q-prompt
+                    className="mx-auto mb-6 mt-3 max-w-[22ch] text-balance font-display text-[1.6rem] font-extrabold uppercase leading-[1.08] focus:outline-none md:text-[2.4rem]"
+                  >
+                    {question.prompt}
+                  </h1>
+                )}
+                {isWebUrl(question.image_url) && phase === 'question' && (
+                  <img
+                    src={question.image_url}
+                    alt=""
+                    className="mb-4 max-h-40 rounded-2xl object-cover"
+                  />
+                )}
+
+                <section aria-label={t.play.answersLabel} className="flex w-full justify-center">
+                  {question.type === 'slider' && question.slider ? (
+                    <div data-q-answer data-q-slider className="flex w-full justify-center">
+                      <SliderAnswer
+                        slider={question.slider}
+                        prompt={question.prompt}
+                        questionKey={question.id}
+                        result={lastResult}
+                        disabled={submitting || phase !== 'question' || !online}
+                        onSubmit={(value) => void game.answerValue(value)}
+                      />
+                    </div>
+                  ) : (
+                    <ul
+                      className={cn(
+                        'grid w-full max-w-[40rem] gap-3',
+                        question.type === 'boolean' ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2',
+                      )}
+                    >
+                      {question.options.map((option, i) => (
+                        <li key={option.id} data-q-answer>
+                          <AnswerButton
+                            marker={
+                              question.type === 'boolean' ? undefined : String.fromCharCode(65 + i)
+                            }
+                            state={optionState(option.id, chosenId, lastResult)}
+                            chosen={option.id === chosenId}
+                            disabled={submitting || phase !== 'question' || !online}
+                            onClick={() => {
+                              setChosenId(option.id);
+                              void game.answerOption(option.id);
+                            }}
+                          >
+                            {option.label}
+                          </AnswerButton>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+
+                {phase === 'question' && error && (
+                  <p
+                    role="alert"
+                    className="mt-3 rounded-full bg-white/90 px-4 py-2 text-center font-semibold text-[#17153A]"
+                  >
+                    {error}
+                  </p>
+                )}
+              </div>
 
               {phase === 'feedback' && lastResult && (
                 <FeedbackPanel
                   result={lastResult}
-                  headingRef={feedbackRef}
                   blocked={submitting || !online}
                   reduceMotion={reduceMotion}
                   onNext={() => void game.next()}
+                  quizSlug={slug}
+                  questionId={question.id}
+                  prompt={question.prompt}
                 />
               )}
-            </section>
-          </div>
+            </div>
+          </section>
         </div>
       )}
     </main>

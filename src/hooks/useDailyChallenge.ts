@@ -7,7 +7,13 @@ import type { Quiz } from '@/types';
 import { t } from '@/i18n';
 
 interface UseDailyChallenge {
-  today: { date: string; quiz: Pick<Quiz, 'slug' | 'title' | 'cover_image_url'> } | null;
+  today: {
+    date: string;
+    quiz: Pick<Quiz, 'slug' | 'title' | 'cover_image_url'>;
+    /** World of each of today's questions, in order (cosmetic; never prompts or answers). */
+    stops: string[];
+    stats: { played: number; average: number | null; perfect: number } | null;
+  } | null;
   playedToday: boolean;
   streak: number;
   loading: boolean;
@@ -53,7 +59,16 @@ export function useDailyChallenge(): UseDailyChallenge {
         days = alive ? (profile?.streak_current ?? 0) : 0;
       }
       if (!active) return;
-      setToday(daily ? { date: daily.date, quiz: daily.quiz } : null);
+      setToday(
+        daily
+          ? {
+              date: daily.date,
+              quiz: daily.quiz,
+              stops: daily.stops ?? [],
+              stats: daily.stats ?? null,
+            }
+          : null,
+      );
       setPlayedToday(played);
       setStreak(days);
     })()

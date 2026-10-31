@@ -11,20 +11,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: token('background'), // page: sky wash / deep navy
+        background: token('background'), // page: mist / deep ink
         surface: {
           DEFAULT: token('surface'), // cards, sheets
           border: token('surface-border'),
         },
         primary: {
-          DEFAULT: token('primary'), // sky blue: buttons, links
+          DEFAULT: token('primary'), // grape: buttons, links
           fg: token('primary-fg'), // text on primary
         },
         secondary: {
           DEFAULT: token('sun'), // sunshine yellow: accents, highlights
           fg: token('sun-fg'),
         },
-        sky: token('sky'), // light sky for illustration fills
+        sky: token('sky'), // lagoon: info and illustration fills
+        tang: { DEFAULT: token('tang'), fg: token('content') }, // tangerine: the play action
+        gum: token('gum'), // bubblegum: celebrations only
         content: {
           DEFAULT: token('content'), // body text
           muted: token('content-muted'),
@@ -48,8 +50,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['"Nunito Variable"', 'Nunito', 'system-ui', 'sans-serif'],
-        display: ['"Fredoka Variable"', 'Fredoka', '"Nunito Variable"', 'sans-serif'],
+        sans: ['"Outfit Variable"', 'Outfit', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
+        display: ['"Baloo 2 Variable"', '"Baloo 2"', '"Outfit Variable"', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
@@ -58,15 +60,21 @@ const config: Config = {
       },
       borderRadius: {
         xl: '1rem', // cards
-        '2xl': '1.5rem', // sheets, dialogs
+        '2xl': '1.5rem', // cards, sheets, dialogs
+        '3xl': '1.75rem', // feature cards
+        frame: '2.5rem', // game frame
       },
       boxShadow: {
         // Chunky "game button" edge. The edge shrinks on press so the button sinks.
         'edge-primary': '0 4px 0 0 rgb(var(--primary-edge))',
         'edge-sun': '0 4px 0 0 rgb(var(--sun-edge))',
+        'edge-tang': '0 4px 0 0 rgb(var(--tang-edge))',
+        'edge-ink': '0 4px 0 0 rgb(var(--content))',
         'edge-surface': '0 4px 0 0 rgb(var(--surface-border))',
         'edge-pressed': '0 1px 0 0 rgb(var(--surface-border))',
-        lift: '0 12px 32px -12px rgb(var(--primary) / 0.35)',
+        lift: '0 12px 32px -14px rgb(var(--content) / 0.30)',
+        soft: '0 1px 2px rgb(var(--content) / 0.05)',
+        float: '0 24px 48px -20px rgb(var(--content) / 0.38)',
       },
       minHeight: { tap: '3rem' }, // 48px touch targets
       minWidth: { tap: '3rem' },

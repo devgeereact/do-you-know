@@ -10,7 +10,11 @@ vi.mock('@/services/profileService');
 vi.mock('@/lib/sentry', () => ({ reportError: vi.fn() }));
 
 const signOut = vi.fn(() => Promise.resolve());
-const session = { user: { id: 'p1' } as { id: string } | null, loading: false };
+const session = {
+  user: { id: 'p1' } as { id: string } | null,
+  loading: false,
+  reload: () => Promise.resolve(),
+};
 vi.mock('@/hooks/useSession', () => ({
   useSession: () => ({ ...session, ensureSession: vi.fn(), signOut }),
 }));

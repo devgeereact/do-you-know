@@ -10,7 +10,10 @@ interface CardProps extends HTMLAttributes<HTMLElement> {
 export function Card({ as: Tag = 'div', className, ...props }: CardProps): JSX.Element {
   return (
     <Tag
-      className={cn('rounded-2xl border-2 border-surface-border bg-surface p-6', className)}
+      className={cn(
+        'rounded-2xl border border-surface-border bg-surface p-5 shadow-soft lg:p-6',
+        className,
+      )}
       {...props}
     />
   );

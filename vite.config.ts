@@ -86,8 +86,8 @@ export default defineConfig({
         short_name: 'DoYouKnow',
         description:
           'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
-        theme_color: '#1570C2',
-        background_color: '#EAF6FF',
+        theme_color: '#6C4CF5',
+        background_color: '#F6F4FD',
         display: 'standalone',
         orientation: 'any', // never lock: play in portrait or landscape
         categories: ['education', 'games'],

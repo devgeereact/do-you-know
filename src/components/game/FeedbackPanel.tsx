@@ -1,7 +1,6 @@
-import { useEffect, useId, useRef, useState, type RefObject } from 'react';
-import { Button } from '@/components/ui/Button';
-import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
-import { cn, isWebUrl } from '@/lib/utils';
+import { useEffect, useId, useRef, useState } from 'react';
+import { ReportQuestion } from '@/components/game/ReportQuestion';
+import { isWebUrl } from '@/lib/utils';
 import type { AnswerResult } from '@/types/game';
 import { t } from '@/i18n';
 
@@ -10,52 +9,37 @@ export const AUTO_ADVANCE_MS = 2500;
 
 interface FeedbackPanelProps {
   result: AnswerResult;
-  headingRef: RefObject<HTMLHeadingElement>;
   /** True while a request is in flight or the device is offline. */
   blocked: boolean;
   /** True when the player prefers reduced motion: no automatic moving on. */
   reduceMotion: boolean;
   onNext: () => void;
-}
-
-function headline(result: AnswerResult): string {
-  if (result.timed_out) return t.play.feedback.timeUp;
-  return result.is_correct ? t.play.feedback.correct : t.play.feedback.wrong;
+  /** For the Report button. */
+  quizSlug: string;
+  questionId: string;
+  prompt: string;
 }
 
 /**
- * The result of one graded answer: headline, a "Why?" toggle for the explanation and
- * source, and the way on. After a correct answer that is not the last question it
- * moves on by itself; "Stay here" or opening "Why?" stops that. Waiting here is never
- * counted against the player: the server stops the clock when it grades the answer.
+ * The sheet that rises inside the game frame after the server grades an answer: the
+ * explanation and source (behind "Why?" after a right answer), Report, and the way on.
+ * After a correct answer that is not the last question it moves on by itself; "Stay here"
+ * or opening "Why?" stops that. Waiting is never counted against the player: the server
+ * stopped the clock when it graded the answer. The verdict itself is the heading above.
  */
 export function FeedbackPanel({
   result,
-  headingRef,
   blocked,
   reduceMotion,
   onNext,
+  quizSlug,
+  questionId,
+  prompt,
 }: FeedbackPanelProps): JSX.Element {
   const hasWhy = Boolean(result.explanation) || isWebUrl(result.source_url);
   const [whyOpen, setWhyOpen] = useState(!result.is_correct);
   const [stayed, setStayed] = useState(false);
   const whyId = useId();
-
-  // The tick or cross pops in beside the headline; text and colour carry the meaning.
-  const panel = useRef<HTMLDivElement>(null);
-  useGSAP(
-    () => {
-      gsap.matchMedia().add(`not all and ${REDUCED_MOTION}`, () => {
-        gsap.from('[data-feedback-icon]', {
-          scale: 0.3,
-          rotation: result.is_correct ? -30 : 0,
-          duration: 0.5,
-          ease: 'back.out(2.5)',
-        });
-      });
-    },
-    { scope: panel },
-  );
 
   const autoAdvance =
     result.is_correct && !result.is_last && !reduceMotion && !blocked && !stayed && !whyOpen;
@@ -73,88 +57,74 @@ export function FeedbackPanel({
   }, [autoAdvance]);
 
   return (
-    <div
-      ref={panel}
-      className={cn(
-        'mt-5 animate-fade-up rounded-2xl border-2 bg-surface p-5 shadow-lift',
-        result.is_correct ? 'border-correct' : 'border-wrong',
-      )}
-    >
-      <h2
-        ref={headingRef}
-        tabIndex={-1}
-        className="flex items-center gap-3 font-display text-2xl font-semibold text-content focus:outline-none"
-      >
-        <span
-          aria-hidden="true"
-          data-feedback-icon
-          className={cn(
-            'grid h-10 w-10 shrink-0 place-items-center rounded-full text-xl',
-            result.is_correct ? 'bg-correct text-correct-fg' : 'bg-wrong text-wrong-fg',
-          )}
-        >
-          {result.is_correct ? '✓' : '✕'}
-        </span>
-        {headline(result)}
-      </h2>
-
-      {hasWhy && (
-        <div className="mt-3">
-          <button
-            type="button"
-            aria-expanded={whyOpen}
-            aria-controls={whyId}
-            onClick={() => setWhyOpen((open) => !open)}
-            className="inline-flex min-h-tap items-center gap-2 rounded-full border-2 border-surface-border px-4 font-bold text-content transition-colors duration-[120ms] hover:border-primary/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary"
-          >
-            {t.play.feedback.why}
-            <span
-              aria-hidden="true"
-              className={cn('text-xs transition-transform duration-200', whyOpen && 'rotate-180')}
+    <div data-stage-sheet className="stage-sheet">
+      <span className="stage-sheet-tag">
+        {whyOpen || !result.is_correct ? t.play.sheetExplain : t.play.sheetNice}
+      </span>
+      <div className="grid items-center gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:gap-8">
+        <div className="min-w-0">
+          {hasWhy && !whyOpen && (
+            <button
+              type="button"
+              aria-expanded={false}
+              aria-controls={whyId}
+              onClick={() => setWhyOpen(true)}
+              className="inline-flex min-h-tap items-center gap-2 rounded-full border-2 border-surface-border px-4 font-bold hover:border-primary/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
             >
-              ▼
-            </span>
-          </button>
-          <div id={whyId} hidden={!whyOpen} className="mt-3 rounded-xl bg-background p-4">
+              {t.play.feedback.why}
+            </button>
+          )}
+          <div id={whyId} hidden={!whyOpen}>
             {result.explanation && (
-              <p className="leading-relaxed text-content">{result.explanation}</p>
+              <p className="max-w-[70ch] leading-relaxed text-[#4A4770]">{result.explanation}</p>
             )}
             {isWebUrl(result.source_url) && (
               <a
                 href={result.source_url}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="mt-1 inline-flex min-h-tap items-center text-sm font-semibold text-primary underline underline-offset-2"
+                className="mt-1 inline-flex min-h-tap items-center text-sm font-bold text-[#6C4CF5] underline underline-offset-2"
               >
                 {t.common.whereThisComesFrom}
               </a>
             )}
           </div>
-        </div>
-      )}
-
-      {autoAdvance && (
-        <div className="mt-4 flex items-center gap-3">
-          <div className="min-w-0 flex-1">
-            <p role="status" className="text-sm font-semibold text-content-muted">
-              {t.play.feedback.comingUp}
-            </p>
-            <div
-              aria-hidden="true"
-              className="mt-1 h-2 overflow-hidden rounded-full bg-surface-border"
-            >
-              <div className="h-full origin-left animate-countdown rounded-full bg-primary" />
+          {autoAdvance && (
+            <div className="mt-2 flex items-center gap-3">
+              <div className="min-w-0 flex-1">
+                <p role="status" className="text-sm font-semibold text-[#5A5680]">
+                  {t.play.feedback.comingUp}
+                </p>
+                <div
+                  aria-hidden="true"
+                  className="mt-1 h-1.5 overflow-hidden rounded-full bg-[#ECE8F6]"
+                >
+                  <div className="h-full origin-left animate-countdown rounded-full bg-[#1FB57A]" />
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setStayed(true)}
+                className="h-10 shrink-0 rounded-full border-2 border-surface-border px-4 text-sm font-bold"
+              >
+                {t.play.feedback.stay}
+              </button>
             </div>
-          </div>
-          <Button variant="ghost" onClick={() => setStayed(true)}>
-            {t.play.feedback.stay}
-          </Button>
+          )}
         </div>
-      )}
-
-      <Button size="lg" className="mt-5 w-full" disabled={blocked} onClick={onNext}>
-        {result.is_last ? t.play.feedback.seeScore : t.play.feedback.next}
-      </Button>
+        <div className="flex items-center justify-end gap-2">
+          <ReportQuestion quizSlug={quizSlug} questionId={questionId} prompt={prompt} />
+          <button
+            type="button"
+            disabled={blocked}
+            onClick={onNext}
+            className="h-12 flex-1 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50 md:flex-none"
+          >
+            {result.is_last ? t.play.feedback.seeScore : t.play.feedback.next}{' '}
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

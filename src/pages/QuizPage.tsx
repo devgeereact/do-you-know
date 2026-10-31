@@ -10,9 +10,10 @@ import { useQuiz } from '@/hooks/useQuiz';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { ageLabel, difficultyLabel } from '@/lib/quizLabels';
 import { categoryStyle } from '@/lib/categoryStyle';
-import { cn, isWebUrl } from '@/lib/utils';
+import { isWebUrl } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import { Card } from '@/components/ui/Card';
+import { WorldBanner } from '@/components/art/WorldBanner';
 import { Page } from '@/components/ui/Page';
 import { t } from '@/i18n';
 
@@ -24,7 +25,7 @@ const metaPill = 'rounded-full border border-surface-border bg-background px-3 p
 function TopPlayers({ slug }: { slug: string }): JSX.Element {
   const { data, error } = useLeaderboard(slug, 'all_time', 10);
   return (
-    <section className="mt-12">
+    <section className="min-w-0">
       <SectionHeading
         action={
           <Link to={`/leaderboards?quiz=${slug}`} className={sectionLinkClass}>
@@ -62,11 +63,10 @@ export function QuizPage(): JSX.Element {
   if (notFound) return <NotFoundPage />;
 
   const age = quiz ? ageLabel(quiz) : null;
-  const style = category ? categoryStyle(category.slug) : null;
 
   return (
     <>
-      <Page>
+      <Page width="wide">
         <BackLink
           to={category ? `/c/${category.slug}` : '/'}
           label={category ? category.name : t.common.allQuizzes}
@@ -89,34 +89,28 @@ export function QuizPage(): JSX.Element {
           </div>
         )}
         {quiz && (
-          <article className="mt-3">
-            <Card className="overflow-hidden p-0 shadow-lift">
-              {isWebUrl(quiz.cover_image_url) && (
-                <img
-                  src={quiz.cover_image_url}
-                  alt=""
-                  className="aspect-[16/9] w-full object-cover"
-                />
-              )}
-              <div className="p-6 md:p-8">
-                <div className="flex items-start gap-4">
-                  {style && !isWebUrl(quiz.cover_image_url) && (
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        'grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-3xl md:h-16 md:w-16',
-                        style.tile,
-                      )}
-                    >
-                      {style.emoji}
-                    </span>
-                  )}
-                  <h1 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-content md:text-5xl">
-                    {quiz.title}
-                  </h1>
-                </div>
-
-                <ul className="mt-5 flex flex-wrap gap-2 text-sm font-bold">
+          <article className="mt-2">
+            <WorldBanner
+              world={categoryStyle(category?.slug, category).world}
+              character={categoryStyle(category?.slug, category).character}
+              kicker={category?.name}
+              title={quiz.title}
+            />
+            <div className="mt-6 grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+              <Card className="space-y-5">
+                {isWebUrl(quiz.cover_image_url) && (
+                  <img
+                    src={quiz.cover_image_url}
+                    alt=""
+                    className="aspect-[16/9] w-full rounded-xl object-cover"
+                  />
+                )}
+                {quiz.intro && (
+                  <p className="max-w-prose whitespace-pre-line text-lg leading-relaxed text-content">
+                    {quiz.intro}
+                  </p>
+                )}
+                <ul className="flex flex-wrap gap-2 text-sm font-bold">
                   <li className={metaPill}>{t.common.questionCount(quiz.question_count)}</li>
                   {quiz.is_ranked && (
                     <li className={metaPill}>{t.common.rankedQuestionCount(RANKED_ROUND)}</li>
@@ -129,11 +123,10 @@ export function QuizPage(): JSX.Element {
                       : t.quiz.noTimer}
                   </li>
                 </ul>
-
                 {quiz.curriculum_tags.length > 0 && (
                   <ul
                     aria-label={t.quiz.curriculumLabel}
-                    className="mt-3 flex flex-wrap gap-2 text-sm font-bold"
+                    className="flex flex-wrap gap-2 text-sm font-bold"
                   >
                     {quiz.curriculum_tags.map((code) => (
                       <li key={code} className="rounded-full bg-primary/10 px-3 py-1 text-content">
@@ -142,9 +135,8 @@ export function QuizPage(): JSX.Element {
                     ))}
                   </ul>
                 )}
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link to={`/play/${quiz.slug}`} className={buttonClasses('primary', 'lg')}>
+                <div className="flex flex-wrap gap-3">
+                  <Link to={`/play/${quiz.slug}`} className={buttonClasses('play', 'lg')}>
                     {t.quiz.playNow}
                   </Link>
                   {quiz.is_ranked && (
@@ -156,17 +148,14 @@ export function QuizPage(): JSX.Element {
                     </Link>
                   )}
                 </div>
-                <p className="mt-4 text-sm text-content-muted">{t.quiz.noSignUp}</p>
-              </div>
-            </Card>
-
-            {quiz.intro && (
-              <div className="mt-10 max-w-prose whitespace-pre-line text-lg leading-relaxed text-content">
-                {quiz.intro}
-              </div>
-            )}
-
-            {quiz.is_ranked && <TopPlayers slug={quiz.slug} />}
+                <p className="text-sm text-content-muted">{t.quiz.noSignUp}</p>
+              </Card>
+              {quiz.is_ranked && (
+                <Card>
+                  <TopPlayers slug={quiz.slug} />
+                </Card>
+              )}
+            </div>
           </article>
         )}
       </Page>

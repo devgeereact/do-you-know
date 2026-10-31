@@ -5,9 +5,11 @@ export interface NavItem {
   to: string;
   label: string;
   short: string; // tab bar label on narrow phones
-  /** Paths that count as this section, e.g. category and quiz pages under Quizzes. */
+  /** Paths that count as this section, e.g. category and quiz pages under Explore. */
   matches: (pathname: string) => boolean;
   icon: JSX.Element;
+  /** Shown only in the phone tab bar (the header has a Play button instead). */
+  tabOnly?: boolean;
 }
 
 const iconProps = {
@@ -15,7 +17,7 @@ const iconProps = {
   viewBox: '0 0 24 24',
   fill: 'none',
   stroke: 'currentColor',
-  strokeWidth: 2,
+  strokeWidth: 2.2,
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
   className: 'h-6 w-6',
@@ -29,7 +31,10 @@ export const NAV_ITEMS: NavItem[] = [
     matches: (path) => path === '/' || path.startsWith('/c/') || path.startsWith('/q/'),
     icon: (
       <svg {...iconProps}>
-        <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" />
+        <rect x="3" y="3" width="7" height="7" rx="2" />
+        <rect x="14" y="3" width="7" height="7" rx="2" />
+        <rect x="3" y="14" width="7" height="7" rx="2" />
+        <rect x="14" y="14" width="7" height="7" rx="2" />
       </svg>
     ),
   },
@@ -40,7 +45,20 @@ export const NAV_ITEMS: NavItem[] = [
     matches: (path) => path === '/daily',
     icon: (
       <svg {...iconProps}>
-        <path d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" />
+        <rect x="3" y="5" width="18" height="16" rx="3" />
+        <path d="M3 10h18M8 3v4M16 3v4" />
+      </svg>
+    ),
+  },
+  {
+    to: '/daily/play',
+    label: t.nav.play.label,
+    short: t.nav.play.short,
+    matches: () => false,
+    tabOnly: true,
+    icon: (
+      <svg {...iconProps} fill="currentColor" stroke="none">
+        <path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z" />
       </svg>
     ),
   },
@@ -52,18 +70,6 @@ export const NAV_ITEMS: NavItem[] = [
     icon: (
       <svg {...iconProps}>
         <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3" />
-      </svg>
-    ),
-  },
-  {
-    to: '/me',
-    label: t.nav.me.label,
-    short: t.nav.me.short,
-    matches: (path) => path === '/me' || path.startsWith('/me/'),
-    icon: (
-      <svg {...iconProps}>
-        <circle cx="12" cy="8" r="4" />
-        <path d="M4 21a8 8 0 0 1 16 0" />
       </svg>
     ),
   },

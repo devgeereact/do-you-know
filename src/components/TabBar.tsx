@@ -6,9 +6,9 @@ import { cn } from '@/lib/utils';
 import { t } from '@/i18n';
 
 /**
- * Phone navigation: four big thumb-reach tabs. A soft pill slides behind the current tab's
+ * Phone and tablet navigation: four big thumb-reach tabs (Explore, Daily, Play, Boards). A soft pill slides behind the current tab's
  * icon; the tab also turns primary and carries aria-current, so the pill is never the only
- * signal. Hidden from tablet width up.
+ * signal. Hidden from desktop width up, where the header has the sections.
  */
 export function TabBar(): JSX.Element {
   const { pathname } = useLocation();
@@ -50,7 +50,7 @@ export function TabBar(): JSX.Element {
     <nav
       ref={root}
       aria-label={t.nav.mainLabel}
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-surface-border bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-surface-border bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
     >
       <div className="relative mx-auto max-w-md">
         {/* Same column layout as a tab (pill row + label row), so the pill sits behind the icon. */}

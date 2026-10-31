@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NicknamePicker } from '@/components/game/NicknamePicker';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { buttonClasses } from '@/components/ui/buttonClasses';
@@ -12,6 +12,7 @@ import { AvatarBadge } from '@/components/AvatarBadge';
 import { Page } from '@/components/ui/Page';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Character } from '@/components/art/Art';
 import { CountUp } from '@/components/ui/CountUp';
 import { useReveal } from '@/hooks/useReveal';
 import { t } from '@/i18n';
@@ -27,7 +28,7 @@ function ProfileCard(): JSX.Element | null {
   if (!profile) return null;
 
   return (
-    <Card className="mt-4 p-5 md:p-6">
+    <Card className="p-5 md:p-6">
       <div className="flex items-center gap-4">
         <AvatarBadge
           avatarId={profile.avatar_id}
@@ -120,9 +121,7 @@ function BestScores(): JSX.Element | null {
 
   return (
     <section aria-labelledby="best-title">
-      <SectionHeading id="best-title" className="mt-12">
-        {t.me.bestScores}
-      </SectionHeading>
+      <SectionHeading id="best-title">{t.me.bestScores}</SectionHeading>
       {loading && (
         <p role="status" className="text-content-muted">
           {t.common.loading}
@@ -170,105 +169,107 @@ export function MePage(): JSX.Element {
   useDocumentMeta({ title: t.me.title, noindex: true });
   const root = useRef<HTMLDivElement>(null);
   useReveal(root, [games.length]);
+  // "My rounds" in the profile menu links to /me#games: scroll there once the list is in.
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash !== '#games' || loading) return;
+    document.getElementById('recent-title')?.scrollIntoView({ block: 'start' });
+  }, [hash, loading]);
 
   return (
     <div ref={root}>
-      <Page>
+      <Page width="wide">
         <PageHeader title={t.me.title} className="mb-6" />
-
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="p-5 text-center">
-            <span
-              aria-hidden="true"
-              className="mx-auto mb-2 grid h-10 w-10 place-items-center rounded-full bg-secondary/30 text-xl"
-            >
-              🔥
-            </span>
-            <p className="font-display text-4xl font-semibold text-content md:text-5xl">
-              <CountUp value={streak.current} />
-            </p>
-            <p className="mt-1 text-sm font-bold text-content-muted">{t.me.dayStreak}</p>
-          </Card>
-          <Card className="p-5 text-center">
-            <span
-              aria-hidden="true"
-              className="mx-auto mb-2 grid h-10 w-10 place-items-center rounded-full bg-sky/25 text-xl"
-            >
-              🎯
-            </span>
-            <p className="font-display text-4xl font-semibold text-content md:text-5xl">
-              <CountUp value={games.length} />
-            </p>
-            <p className="mt-1 text-sm font-bold text-content-muted">{t.me.gamesPlayed}</p>
-          </Card>
-        </div>
-
-        <ProfileCard />
-
-        <Card className="mt-4 p-5 md:p-6">
-          <p className="text-content">{t.me.guestNote}</p>
-          <Link to="/me/settings" className={buttonClasses('ghost', 'md', 'mt-4')}>
-            {t.me.settings}
-          </Link>
-        </Card>
-
-        <Link
-          to="/account"
-          className="mt-4 inline-flex min-h-tap items-center rounded-full px-1 font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
-        >
-          {t.me.accountLink}
-        </Link>
-
-        <BestScores />
-
-        <SectionHeading id="recent-title" className="mt-12">
-          {t.me.recentGames}
-        </SectionHeading>
-        {loading && (
-          <p role="status" className="text-content-muted">
-            {t.common.loading}
-          </p>
-        )}
-        {error && (
-          <p role="alert" className="text-content">
-            {error}
-          </p>
-        )}
-        {!loading && !error && games.length === 0 && (
-          <div className="rounded-2xl border-2 border-dashed border-surface-border p-8 text-center">
-            <p className="text-content-muted">{t.me.empty}</p>
-            <Link to="/" className={buttonClasses('primary', 'md', 'mt-4')}>
-              {t.common.findAQuiz}
-            </Link>
-          </div>
-        )}
-        <ul aria-labelledby="recent-title" className="grid gap-3">
-          {games.map((game) => (
-            <li key={game.attemptId} data-reveal>
-              <Card className="flex items-center justify-between gap-4 p-4">
-                <div className="min-w-0">
-                  {game.quiz ? (
-                    <Link
-                      to={`/q/${game.quiz.slug}`}
-                      className="block truncate font-display text-lg font-semibold text-content hover:text-primary"
-                    >
-                      {game.quiz.title}
-                    </Link>
-                  ) : (
-                    <p className="font-display text-lg font-semibold text-content-muted">
-                      {t.me.retiredQuiz}
-                    </p>
-                  )}
-                  <p className="text-sm text-content-muted">{when(game.finishedAt)}</p>
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-8">
+          <div className="grid gap-4">
+            <div className="grid grid-cols-2 gap-3">
+              <Card className="flex items-center gap-3 p-4">
+                <Character name="battery" size={48} />
+                <div>
+                  <p className="font-display text-3xl font-extrabold leading-none text-content">
+                    <CountUp value={streak.current} />
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-content-muted">{t.me.dayStreak}</p>
                 </div>
-                <p className="shrink-0 font-display text-2xl font-semibold tabular-nums text-content">
-                  {game.correct}
-                  <span className="text-content-muted">/{game.total}</span>
-                </p>
               </Card>
-            </li>
-          ))}
-        </ul>
+              <Card className="flex items-center gap-3 p-4">
+                <Character name="star" size={48} />
+                <div>
+                  <p className="font-display text-3xl font-extrabold leading-none text-content">
+                    <CountUp value={games.length} />
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-content-muted">
+                    {t.me.gamesPlayed}
+                  </p>
+                </div>
+              </Card>
+            </div>
+            <ProfileCard />
+            <Card className="p-5">
+              <p className="text-content">{t.me.guestNote}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link to="/me/settings" className={buttonClasses('ghost')}>
+                  {t.me.settings}
+                </Link>
+                <Link to="/account" className={buttonClasses('ghost')}>
+                  {t.me.accountLink}
+                </Link>
+              </div>
+            </Card>
+          </div>
+          <div className="min-w-0">
+            <BestScores />
+
+            <SectionHeading id="recent-title" className="mt-10 scroll-mt-24">
+              {t.me.recentGames}
+            </SectionHeading>
+            {loading && (
+              <p role="status" className="text-content-muted">
+                {t.common.loading}
+              </p>
+            )}
+            {error && (
+              <p role="alert" className="text-content">
+                {error}
+              </p>
+            )}
+            {!loading && !error && games.length === 0 && (
+              <div className="rounded-2xl border-2 border-dashed border-surface-border p-8 text-center">
+                <p className="text-content-muted">{t.me.empty}</p>
+                <Link to="/" className={buttonClasses('primary', 'md', 'mt-4')}>
+                  {t.common.findAQuiz}
+                </Link>
+              </div>
+            )}
+            <ul id="games" aria-labelledby="recent-title" className="grid scroll-mt-24 gap-3">
+              {games.map((game) => (
+                <li key={game.attemptId} data-reveal>
+                  <Card className="flex items-center justify-between gap-4 p-4">
+                    <div className="min-w-0">
+                      {game.quiz ? (
+                        <Link
+                          to={`/q/${game.quiz.slug}`}
+                          className="block truncate font-display text-lg font-semibold text-content hover:text-primary"
+                        >
+                          {game.quiz.title}
+                        </Link>
+                      ) : (
+                        <p className="font-display text-lg font-semibold text-content-muted">
+                          {t.me.retiredQuiz}
+                        </p>
+                      )}
+                      <p className="text-sm text-content-muted">{when(game.finishedAt)}</p>
+                    </div>
+                    <p className="shrink-0 font-display text-2xl font-semibold tabular-nums text-content">
+                      {game.correct}
+                      <span className="text-content-muted">/{game.total}</span>
+                    </p>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </Page>
     </div>
   );

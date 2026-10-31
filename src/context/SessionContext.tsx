@@ -13,6 +13,10 @@ import type { Profile } from '@/types';
 
 export interface SessionUser {
   id: string; // the player's profile id on the server
+  /** For the header menu; refreshed by reload() after the player changes them. */
+  nickname?: string | null;
+  avatarId?: string | null;
+  streak?: number;
 }
 
 export interface SessionContextValue {
@@ -20,6 +24,8 @@ export interface SessionContextValue {
   loading: boolean;
   ensureSession: () => Promise<void>;
   signOut: () => Promise<void>;
+  /** Reload the header details (nickname, avatar, streak) after a change. */
+  reload: () => Promise<void>;
 }
 
 export const SessionContext = createContext<SessionContextValue | null>(null);
@@ -32,7 +38,12 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
   const load = useCallback(async (): Promise<void> => {
     try {
       const me = await api<Profile>('/me');
-      setUser({ id: me.id });
+      setUser({
+        id: me.id,
+        nickname: me.nickname,
+        avatarId: me.avatar_id,
+        streak: me.streak_current,
+      });
     } catch {
       setUser(null); // expired or revoked token; api() already forgot it
     }
@@ -68,8 +79,11 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
         await signOutGuest();
         setUser(null);
       },
+      reload: async () => {
+        if (hasSession()) await load();
+      },
     }),
-    [user, loading, ensureSession],
+    [user, loading, ensureSession, load],
   );
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;

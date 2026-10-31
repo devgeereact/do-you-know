@@ -27,6 +27,8 @@ export interface PublicQuestion {
   image_url: string | null;
   options: PublicOption[];
   slider: PublicSlider | null;
+  /** Cosmetic world the question is shown in (one of src/lib/art.ts WORLD_KEYS), if set. */
+  scene?: string | null;
 }
 
 /** start_attempt / next_question */
@@ -185,4 +187,28 @@ export interface BestScore {
   total: number;
   answerTimeMs: number;
   finishedAt: string;
+}
+
+/** GET /leaderboards/overall: one board across every subject. */
+export type OverallPeriod = 'day' | 'week' | 'month' | 'all';
+export interface OverallRow {
+  rank: number;
+  nickname: string;
+  avatar_id: string | null;
+  points: number;
+  accuracy: number;
+  rounds: number;
+  quizzes: number;
+  is_me: boolean;
+}
+export interface OverallBoard {
+  period: OverallPeriod;
+  rows: OverallRow[];
+  me: OverallRow | null;
+  facts: {
+    rounds: number;
+    accuracy: number | null;
+    top_category: { slug: string; name: string } | null;
+    gap: number | null;
+  };
 }

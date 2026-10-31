@@ -4,7 +4,7 @@
  * Transform, border and shadow only; the press settles back down.
  */
 export const cardLinkClass =
-  'rounded-2xl border-2 border-surface-border bg-surface transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lift active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+  'rounded-2xl border border-surface-border bg-surface shadow-soft transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lift active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 /** Filter chips (age groups and similar): a pill that fills with primary when chosen. */
 export function chipClass(active: boolean): string {

@@ -27,7 +27,7 @@ interface UseProfile {
 
 /** The current player's profile and the protected actions that change it. */
 export function useProfile(): UseProfile {
-  const { user, loading: authLoading, signOut } = useSession();
+  const { user, loading: authLoading, signOut, reload: reloadSession } = useSession();
   const userId = user?.id ?? null;
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -64,6 +64,7 @@ export function useProfile(): UseProfile {
       try {
         const result = await action();
         await reload();
+        void reloadSession(); // keeps the header menu's name and avatar current
         return result;
       } catch (err) {
         const e = err as { message?: string };
@@ -76,7 +77,7 @@ export function useProfile(): UseProfile {
         return null;
       }
     },
-    [reload],
+    [reload, reloadSession],
   );
 
   const setAgeBand = useCallback(

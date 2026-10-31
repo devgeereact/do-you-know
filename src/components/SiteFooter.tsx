@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { LogoMark } from '@/components/brand/Logo';
 import { t } from '@/i18n';
 
 const linkClass =
@@ -17,10 +18,10 @@ const LINKS: { to: string; label: string }[] = [
 /** Quiet footer: help, legal pages and the grown-ups' area, away from the playful bits. */
 export function SiteFooter(): JSX.Element {
   return (
-    <footer className="mt-12 border-t border-surface-border bg-surface/60 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-6 text-sm md:flex-row md:items-center md:justify-between md:px-8">
+    <footer className="border-t border-surface-border bg-surface/70 backdrop-blur-sm">
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm md:flex-row md:items-center md:justify-between lg:px-6">
         <p className="flex items-center gap-2 text-content-muted">
-          <img src="/favicon.svg" alt="" width={24} height={24} className="h-6 w-6" />
+          <LogoMark size={24} />
           {t.footer.tagline}
         </p>
         <nav aria-label={t.footer.label}>

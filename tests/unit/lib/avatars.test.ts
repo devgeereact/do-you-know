@@ -20,10 +20,10 @@ describe('preset avatars', () => {
     expect(AVATARS.map((avatar) => avatar.id)).toEqual(serverAvatars());
   });
 
-  it('has unique ids, labels and emoji, each with a colour token class', () => {
+  it('has unique ids, labels and characters, each with a colour token class', () => {
     expect(new Set(AVATARS.map((a) => a.id)).size).toBe(12);
     expect(new Set(AVATARS.map((a) => a.label)).size).toBe(12);
-    expect(new Set(AVATARS.map((a) => a.emoji)).size).toBe(12);
+    expect(new Set(AVATARS.map((a) => a.character)).size).toBe(12);
     for (const avatar of AVATARS) {
       expect(avatar.colour).toBe(`bg-avatar-${avatar.id}`);
       expect(avatar.label.length).toBeGreaterThan(0);
@@ -31,7 +31,8 @@ describe('preset avatars', () => {
   });
 
   it('finds an avatar by id and returns null for unknown or empty ids', () => {
-    expect(findAvatar('fox')?.label).toBe('Fox');
+    expect(findAvatar('fox')?.label).toBe('Mug');
+    expect(findAvatar('fox')?.character).toBe('mug');
     expect(findAvatar('not-an-avatar')).toBeNull();
     expect(findAvatar(null)).toBeNull();
     expect(findAvatar(undefined)).toBeNull();

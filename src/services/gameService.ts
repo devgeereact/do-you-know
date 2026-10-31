@@ -9,6 +9,8 @@ import type {
   FriendChallengePreview,
   Leaderboard,
   LikeResult,
+  OverallBoard,
+  OverallPeriod,
 } from '@/types/game';
 
 /**
@@ -100,6 +102,14 @@ export interface DailyToday {
   id: string;
   date: string; // YYYY-MM-DD, Europe/London
   quiz: { slug: string; title: string; cover_image_url: string | null };
+  /** The world of each of today's questions, in order (never prompts or answers). */
+  stops?: string[];
+  stats?: { played: number; average: number | null; perfect: number };
+}
+
+/** One board across every subject: best round per quiz counts, 10 points per right answer. */
+export function getOverallBoard(period: OverallPeriod, limit = 50): Promise<OverallBoard> {
+  return api<OverallBoard>('/leaderboards/overall', { query: { period, limit } });
 }
 
 /** Today's date in Europe/London, the calendar the daily challenge runs on. */

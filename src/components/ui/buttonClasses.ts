@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'play';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 // Each variant sits on a darker "edge" shadow. On press the button drops 3px and the
@@ -10,6 +10,8 @@ const VARIANTS: Record<ButtonVariant, string> = {
   secondary: 'bg-secondary text-secondary-fg shadow-edge-sun hover:bg-secondary/95', // dark text only on yellow
   ghost:
     'border-2 border-surface-border bg-surface text-content shadow-edge-surface hover:border-primary/40',
+  // Tangerine: the one "start playing" action on a screen. Dark text (7.4:1).
+  play: 'bg-tang text-tang-fg shadow-edge-tang hover:bg-tang/95',
 };
 
 const SIZES: Record<ButtonSize, string> = {
@@ -28,7 +30,7 @@ export function buttonClasses(
   className?: string,
 ): string {
   return cn(
-    'inline-flex select-none items-center justify-center gap-2 rounded-full font-display font-semibold tracking-wide',
+    'inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-bold',
     'touch-manipulation transition-[transform,box-shadow,background-color,border-color] duration-[120ms] ease-out',
     'hover:-translate-y-0.5 active:translate-y-[3px] active:shadow-edge-pressed',
     'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background',

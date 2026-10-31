@@ -1,7 +1,5 @@
 import { useEffect, useId, useState } from 'react';
-import { Button } from '@/components/ui/Button';
 import type { AnswerResult, PublicSlider } from '@/types/game';
-import { Card } from '@/components/ui/Card';
 import { t } from '@/i18n';
 
 interface SliderAnswerProps {
@@ -35,14 +33,14 @@ export function SliderAnswer({
   useEffect(() => setValue(midpoint), [questionKey, midpoint]);
 
   return (
-    <Card className="p-5">
+    <div className="w-full max-w-xl rounded-[1.75rem] border-[3px] border-[var(--fd)] bg-white p-5 text-[#17153A] shadow-[0_4px_0_var(--fd)]">
       <label htmlFor={id} className="sr-only">
         {prompt}
       </label>
       <output
         htmlFor={id}
         aria-live="polite"
-        className="mb-4 block text-center font-display text-4xl font-semibold text-primary"
+        className="mb-2 block text-center font-display text-4xl font-extrabold text-[var(--fd)]"
       >
         {format(value, slider.unit)}
       </output>
@@ -55,30 +53,30 @@ export function SliderAnswer({
         value={value}
         disabled={disabled || result !== null}
         onChange={(e) => setValue(Number(e.target.value))}
-        className="h-12 w-full cursor-pointer accent-primary disabled:cursor-default"
+        className="h-12 w-full cursor-pointer accent-[var(--fd)] disabled:cursor-default"
       />
-      <div className="mt-1 flex justify-between text-sm text-content-muted">
+      <div className="mt-1 flex justify-between text-sm font-semibold opacity-60">
         <span>{format(slider.min, slider.unit)}</span>
         <span>{format(slider.max, slider.unit)}</span>
       </div>
 
       {result === null ? (
-        <Button
-          size="lg"
-          className="mt-5 w-full"
+        <button
+          type="button"
+          className="mt-4 h-12 w-full rounded-full bg-[var(--fd)] font-display text-lg font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
           disabled={disabled}
           onClick={() => onSubmit(value)}
         >
           {t.play.slider.lockIn}
-        </Button>
+        </button>
       ) : (
         result.correct_value !== null && (
-          <p className="mt-5 text-center text-content">
+          <p className="mt-4 text-center font-semibold">
             {t.play.slider.answerIs} <strong>{format(result.correct_value, slider.unit)}</strong>
             {result.accept_min !== null &&
               result.accept_max !== null &&
               result.accept_min !== result.accept_max && (
-                <span className="text-content-muted">
+                <span className="opacity-70">
                   {' '}
                   {t.play.slider.range(
                     format(result.accept_min, slider.unit),
@@ -89,6 +87,6 @@ export function SliderAnswer({
           </p>
         )
       )}
-    </Card>
+    </div>
   );
 }

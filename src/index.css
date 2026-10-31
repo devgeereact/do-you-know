@@ -1,75 +1,81 @@
-@import '@fontsource-variable/nunito';
-@import '@fontsource-variable/fredoka';
+@import '@fontsource-variable/outfit';
+@import '@fontsource-variable/baloo-2';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Light theme (default). Values are RGB channels for Tailwind alpha support.
-     Contrast checked: white on primary 5.1:1, content on background 13.3:1,
-     content on sun 9.5:1, white on correct 5.0:1, white on wrong 5.2:1. */
+  /* Pop & Ink. Light theme (default). Values are RGB channels for Tailwind alpha support. */
   :root {
-    --background: 234 246 255; /* #EAF6FF sky wash */
+    --background: 246 244 253; /* #F6F4FD mist page */
     --surface: 255 255 255;
-    --surface-border: 207 228 245;
-    --primary: 21 112 194; /* #1570C2 sky blue */
+    --surface-border: 232 228 243; /* #E8E4F3 */
+    --primary: 108 76 245; /* #6C4CF5 grape */
     --primary-fg: 255 255 255;
-    --primary-edge: 14 80 140; /* #0E508C, pressed-button edge under primary */
-    --sky: 79 179 246; /* #4FB3F6 */
-    --sun: 255 201 60; /* #FFC93C sunshine yellow */
-    --sun-fg: 27 42 58;
-    --sun-edge: 214 154 20; /* #D69A14, pressed-button edge under sun */
-    --content: 27 42 58; /* #1B2A3A ink */
-    --content-muted: 74 94 115;
-    --correct: 23 128 79; /* #17804F */
-    --wrong: 201 54 59; /* #C9363B */
+    --primary-edge: 74 47 201; /* #4A2FC9, pressed-button edge under primary */
+    --sky: 20 184 166; /* #14B8A6 lagoon, info and illustration fills */
+    --sun: 255 210 63; /* #FFD23F lemon */
+    --sun-fg: 23 21 58;
+    --sun-edge: 214 166 0; /* #D6A600 */
+    --tang: 255 138 61; /* #FF8A3D tangerine, the play action */
+    --tang-edge: 224 106 28; /* #E06A1C */
+    --gum: 255 111 163; /* #FF6FA3 bubblegum, celebrations only */
+    --content: 23 21 58; /* #17153A ink */
+    --content-muted: 90 86 128; /* #5A5680 */
+    --correct: 15 122 79; /* #0F7A4F */
+    --wrong: 198 49 47; /* #C6312F */
     --warning: 245 158 11; /* #F59E0B, dark text only */
-    /* Preset avatar circles (src/lib/avatars.ts): soft pastels. */
-    --avatar-fox: 254 215 170;
-    --avatar-owl: 253 230 138;
-    --avatar-panda: 226 232 240;
-    --avatar-lion: 254 240 138;
-    --avatar-frog: 187 247 208;
-    --avatar-octopus: 251 207 232;
-    --avatar-penguin: 186 230 253;
-    --avatar-unicorn: 233 213 255;
-    --avatar-dragon: 167 243 208;
-    --avatar-robot: 228 228 231;
-    --avatar-rocket: 199 210 254;
-    --avatar-star: 254 249 195;
+    /* Preset avatar circles (src/lib/avatars.ts): soft pastels behind the characters. */
+    --avatar-fox: 255 230 213;
+    --avatar-owl: 246 227 200;
+    --avatar-panda: 221 240 251;
+    --avatar-lion: 255 241 201;
+    --avatar-frog: 221 245 234;
+    --avatar-octopus: 253 227 228;
+    --avatar-penguin: 231 244 251;
+    --avatar-unicorn: 238 234 254;
+    --avatar-dragon: 221 246 242;
+    --avatar-robot: 238 234 254;
+    --avatar-rocket: 255 243 196;
+    --avatar-star: 255 241 201;
     color-scheme: light;
   }
 
+  /* Contrast checked: white on primary 5.7:1, content on background 15.6:1, muted on
+     background 6.3:1, content on sun 13:1, content on tang 7.4:1, white on correct 5.4:1,
+     white on wrong 5.5:1. Dark: background text 15:1, dark text on primary 6.1:1. */
   .dark {
-    --background: 15 27 42; /* #0F1B2A */
-    --surface: 22 38 58; /* #16263A */
-    --surface-border: 40 62 88;
-    --primary: 79 179 246; /* #4FB3F6, dark text on it */
-    --primary-fg: 15 27 42;
-    --primary-edge: 30 120 186;
-    --sky: 79 179 246;
-    --sun: 255 201 60;
-    --sun-fg: 27 42 58;
-    --sun-edge: 214 154 20;
-    --content: 234 246 255;
-    --content-muted: 160 182 204;
-    --correct: 23 128 79;
-    --wrong: 201 54 59;
+    --background: 21 19 49; /* #151331 */
+    --surface: 31 28 66; /* #1F1C42 */
+    --surface-border: 52 48 94;
+    --primary: 156 134 255; /* #9C86FF, dark text on it */
+    --primary-fg: 21 19 49;
+    --primary-edge: 108 76 245;
+    --sky: 20 184 166;
+    --sun: 255 210 63;
+    --sun-fg: 23 21 58;
+    --sun-edge: 214 166 0;
+    --tang: 255 138 61;
+    --tang-edge: 224 106 28;
+    --gum: 255 111 163;
+    --content: 241 239 255;
+    --content-muted: 180 176 214;
+    --correct: 31 181 122;
+    --wrong: 239 90 94;
     --warning: 245 158 11;
-    /* Deeper avatar circles so emoji still stand out on navy. */
-    --avatar-fox: 124 45 18;
-    --avatar-owl: 120 53 15;
-    --avatar-panda: 51 65 85;
-    --avatar-lion: 113 63 18;
-    --avatar-frog: 20 83 45;
-    --avatar-octopus: 131 24 67;
-    --avatar-penguin: 12 74 110;
-    --avatar-unicorn: 88 28 135;
-    --avatar-dragon: 6 78 59;
-    --avatar-robot: 63 63 70;
-    --avatar-rocket: 49 46 129;
-    --avatar-star: 133 77 14;
+    --avatar-fox: 92 52 30;
+    --avatar-owl: 84 60 36;
+    --avatar-panda: 30 58 80;
+    --avatar-lion: 90 72 20;
+    --avatar-frog: 22 72 52;
+    --avatar-octopus: 96 34 52;
+    --avatar-penguin: 30 60 84;
+    --avatar-unicorn: 60 48 120;
+    --avatar-dragon: 18 72 66;
+    --avatar-robot: 60 48 120;
+    --avatar-rocket: 96 78 20;
+    --avatar-star: 90 72 20;
     color-scheme: dark;
   }
 
@@ -86,12 +92,13 @@
   h1,
   h2,
   h3 {
-    @apply font-display;
+    @apply font-display font-extrabold tracking-tight;
+    text-wrap: balance;
   }
 
   /* Visible focus for keyboard users (WCAG 2.2 focus appearance). */
   :focus-visible {
-    outline: 3px solid rgb(var(--sun));
+    outline: 3px solid rgb(var(--primary));
     outline-offset: 2px;
   }
 
@@ -106,4 +113,264 @@
       scroll-behavior: auto !important;
     }
   }
+}
+
+/* ---------- The game stage: a framed card over a full-bleed illustrated world ---------- */
+@layer components {
+  .stage-frame {
+    --fc: #2d9be0;
+    --fd: #0b5fa8;
+    position: relative;
+    border-radius: 2.5rem;
+    background: var(--fc);
+    padding: 10px;
+    box-shadow:
+      0 12px 0 rgb(0 0 0 / 0.14),
+      0 24px 48px -20px rgb(23 21 58 / 0.4);
+  }
+  .stage-inner {
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    border: 6px solid #fff;
+    border-radius: 2rem;
+    background: linear-gradient(180deg, var(--sky-top), var(--sky-bot));
+    color: #17153a;
+  }
+  /* The frame's sky is always light, so the light theme's tokens apply inside it (dark mode too). */
+  .stage-inner {
+    --background: 246 244 253;
+    --surface: 255 255 255;
+    --surface-border: 232 228 243;
+    --primary: 108 76 245;
+    --primary-fg: 255 255 255;
+    --primary-edge: 74 47 201;
+    --content: 23 21 58;
+    --content-muted: 90 86 128;
+    --correct: 15 122 79;
+    --wrong: 198 49 47;
+  }
+  .stage-inner[data-dark='true'] {
+    color: #fff;
+  }
+  .stage-inner[data-result='right'] {
+    --sky-top: #5fd39a !important;
+    --sky-bot: #ecfbf3 !important;
+    color: #17153a;
+  }
+  .stage-inner[data-result='wrong'] {
+    --sky-top: #f27a5e !important;
+    --sky-bot: #fff1ec !important;
+    color: #17153a;
+  }
+  .stage-tab {
+    position: absolute;
+    left: 50%;
+    top: -1.9rem;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    border-radius: 1.4rem;
+    background: var(--fd);
+    padding: 0.6rem 1.75rem 0.45rem;
+    font-family: theme('fontFamily.display');
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 3px 0 rgb(0 0 0 / 0.22);
+    box-shadow:
+      0 5px 0 rgb(0 0 0 / 0.2),
+      0 0 0 5px #fff;
+  }
+  .stage-answer {
+    display: flex;
+    min-height: 3.6rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 3px solid var(--fd);
+    border-radius: 9999px;
+    background: #fff;
+    padding: 0.5rem 1.1rem;
+    font-family: theme('fontFamily.display');
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--fd);
+    box-shadow: 0 4px 0 var(--fd);
+    transition:
+      transform 120ms ease-out,
+      box-shadow 120ms ease-out,
+      opacity 200ms;
+    touch-action: manipulation;
+  }
+  .stage-answer:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--fd);
+  }
+  .stage-answer:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--fd);
+  }
+  .stage-answer:focus-visible {
+    outline: 3px solid #17153a;
+    outline-offset: 3px;
+  }
+  .stage-answer[data-state='right'] {
+    border-color: #c8f0da;
+    background: #c8f0da;
+    color: #0b6b43;
+    box-shadow: 0 4px 0 #8fd8b1;
+  }
+  .stage-answer[data-state='wrong'] {
+    border-color: #e5484d;
+    background: #ffe3df;
+    color: #b0262a;
+    box-shadow: 0 4px 0 #e5484d;
+  }
+  .stage-answer[data-state='dimmed'] {
+    opacity: 0.4;
+    filter: saturate(0.3);
+  }
+  .stage-answer:disabled {
+    cursor: default;
+  }
+  .stage-sheet {
+    position: relative;
+    z-index: 4;
+    flex: none;
+    background: #fff;
+    color: #17153a;
+    padding: 1.75rem 2rem 1.4rem;
+  }
+  .stage-sheet-tag {
+    position: absolute;
+    left: 1.5rem;
+    top: -1.35rem;
+    border-radius: 1rem;
+    background: #fff;
+    padding: 0.35rem 1.1rem 0.1rem;
+    font-family: theme('fontFamily.display');
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .stage-pill {
+    display: inline-flex;
+    height: 2.25rem;
+    align-items: center;
+    gap: 0.35rem;
+    border: 3px solid var(--fd);
+    border-radius: 9999px;
+    background: #fff;
+    padding: 0 0.85rem;
+    font-family: theme('fontFamily.display');
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--fd);
+    font-variant-numeric: tabular-nums;
+  }
+  .stage-pill[data-low='true'] {
+    border-color: #c6312f;
+    background: #c6312f;
+    color: #fff;
+  }
+  @media (max-width: 759px) {
+    .stage-frame {
+      border-radius: 1.9rem;
+      padding: 6px;
+    }
+    .stage-inner {
+      border-width: 4px;
+      border-radius: 1.6rem;
+    }
+    .stage-tab {
+      top: -1.4rem;
+      font-size: 1.35rem;
+      padding: 0.5rem 1.1rem 0.35rem;
+      box-shadow:
+        0 4px 0 rgb(0 0 0 / 0.2),
+        0 0 0 4px #fff;
+    }
+    .stage-answer {
+      min-height: 3.35rem;
+      font-size: 1rem;
+    }
+    .stage-sheet {
+      padding: 1.6rem 1.1rem 1rem;
+    }
+    .stage-sheet-tag {
+      left: 1rem;
+      top: -1.15rem;
+      font-size: 1.05rem;
+    }
+  }
+}
+
+/* Scene motion from src/lib/art.ts. Switched off by the reduced-motion rule above. */
+@keyframes swim {
+  50% {
+    transform: translateX(-60px);
+  }
+}
+@keyframes sway {
+  50% {
+    transform: skewX(4deg);
+  }
+}
+@keyframes twinkle {
+  50% {
+    opacity: 0.1;
+  }
+}
+@keyframes drift {
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes beat {
+  from {
+    stroke-dashoffset: 900;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pulse-sun {
+  50% {
+    transform: scale(1.08);
+  }
+}
+.swim {
+  animation: swim 7s linear infinite;
+}
+.s2 {
+  animation-duration: 10s;
+  animation-direction: reverse;
+}
+.sway {
+  transform-origin: bottom;
+  animation: sway 4s ease-in-out infinite;
+}
+.twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+.drift {
+  animation: drift 9s ease-in-out infinite;
+}
+.beat {
+  stroke-dasharray: 900;
+  animation: beat 3s linear infinite;
+}
+.pulse-sun {
+  transform-origin: 660px 90px;
+  animation: pulse-sun 5s ease-in-out infinite;
 }

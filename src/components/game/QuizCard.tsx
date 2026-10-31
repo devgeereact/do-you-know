@@ -1,89 +1,116 @@
 import { Link } from 'react-router-dom';
+import { Character } from '@/components/art/Art';
+import { WORLD_BG } from '@/lib/art';
 import { ageLabel, difficultyLabel } from '@/lib/quizLabels';
-import { cn, isWebUrl } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { categoryStyle } from '@/lib/categoryStyle';
 import { cardLinkClass } from '@/components/ui/cardClasses';
 import type { Quiz } from '@/types';
 import { t } from '@/i18n';
 
 const DIFFICULTY_CHIP: Record<Quiz['difficulty'], string> = {
-  easy: 'bg-correct/15 text-correct dark:text-content',
+  easy: 'bg-correct/10 text-correct dark:text-content',
   medium: 'bg-secondary/40 text-content',
-  hard: 'bg-wrong/15 text-wrong dark:text-content',
+  hard: 'bg-wrong/10 text-wrong dark:text-content',
 };
 
 /**
- * A quiz in a list. The whole card is one link to the quiz landing page. `categorySlug`
- * picks the card's picture and colour; without it the card shows the quiz's initial.
+ * A quiz in a list: one even row (the same height in every grid), the whole row a link to the
+ * quiz page. The tile shows the subject's character on its home world's colours.
  */
 export function QuizCard({
   quiz,
   categorySlug,
+  best,
 }: {
   quiz: Quiz;
   categorySlug?: string;
+  /** Best percentage this player has scored, shown as a ring. */
+  best?: number | null;
 }): JSX.Element {
-  const style = categorySlug ? categoryStyle(categorySlug) : null;
+  const style = categoryStyle(categorySlug);
+  const world = WORLD_BG[style.world];
   const age = ageLabel(quiz);
-  const cover = isWebUrl(quiz.cover_image_url) ? quiz.cover_image_url : null;
-  const meta = (
-    <p className="mt-1 flex flex-wrap items-center gap-1.5 text-xs font-bold text-content-muted">
-      <span className="rounded-full bg-background px-2 py-0.5">
-        {t.common.questionCount(quiz.question_count)}
+  return (
+    <Link
+      to={`/q/${quiz.slug}`}
+      className={cn(cardLinkClass, 'group flex h-full min-h-[5rem] items-center gap-4 p-3 pr-4')}
+    >
+      <span
+        aria-hidden="true"
+        className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-2xl transition-transform duration-300 ease-out group-hover:-rotate-3 group-hover:scale-105"
+        style={{ background: `linear-gradient(160deg, ${world.b}, ${world.a})` }}
+      >
+        <Character name={style.character} size={46} />
       </span>
-      <span className={cn('rounded-full px-2 py-0.5', DIFFICULTY_CHIP[quiz.difficulty])}>
-        {difficultyLabel(quiz.difficulty)}
-      </span>
-      {age && <span className="rounded-full bg-background px-2 py-0.5">{age}</span>}
-    </p>
-  );
-  const linkClass = cn(cardLinkClass, 'group h-full overflow-hidden');
-
-  // No cover art: a compact row, so a list of quizzes stays scannable on a phone.
-  if (!cover) {
-    return (
-      <Link to={`/q/${quiz.slug}`} className={cn(linkClass, 'flex items-center gap-4 p-4')}>
+      <div className="min-w-0 flex-1">
+        <h3 className="line-clamp-2 font-sans text-base font-bold leading-snug text-content group-hover:text-primary">
+          {quiz.title}
+        </h3>
+        <p className="mt-1 flex flex-wrap items-center gap-1.5 text-xs font-semibold text-content-muted">
+          <span className="rounded-full bg-background px-2 py-0.5">
+            {t.common.questionCount(quiz.question_count)}
+          </span>
+          <span className={cn('rounded-full px-2 py-0.5', DIFFICULTY_CHIP[quiz.difficulty])}>
+            {difficultyLabel(quiz.difficulty)}
+          </span>
+          {age && <span className="rounded-full bg-background px-2 py-0.5">{age}</span>}
+        </p>
+      </div>
+      {typeof best === 'number' ? (
+        <ScoreRing value={best} />
+      ) : (
         <span
           aria-hidden="true"
-          className={cn(
-            'grid h-14 w-14 shrink-0 place-items-center rounded-xl font-display text-2xl font-semibold text-primary transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-110',
-            style ? style.tile : 'bg-sky/30',
-          )}
-        >
-          {style ? style.emoji : quiz.title.charAt(0).toUpperCase()}
-        </span>
-        <div className="min-w-0 flex-1">
-          <h3 className="font-display text-lg font-semibold leading-snug text-content group-hover:text-primary">
-            {quiz.title}
-          </h3>
-          {meta}
-        </div>
-        <span
-          aria-hidden="true"
-          className="font-display text-xl font-semibold text-primary transition-transform duration-200 group-hover:translate-x-1"
+          className="font-display text-xl font-extrabold text-primary transition-transform duration-200 group-hover:translate-x-1"
         >
           →
         </span>
-      </Link>
-    );
-  }
-
-  return (
-    <Link to={`/q/${quiz.slug}`} className={cn(linkClass, 'flex flex-col')}>
-      <span className="block overflow-hidden">
-        <img
-          src={cover}
-          alt=""
-          loading="lazy"
-          className="aspect-[16/9] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-        />
-      </span>
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-xl font-semibold leading-snug text-content group-hover:text-primary">
-          {quiz.title}
-        </h3>
-        <div className="mt-auto pt-3">{meta}</div>
-      </div>
+      )}
     </Link>
+  );
+}
+
+/** Best score as a small ring with the number inside; the label is real text for screen readers. */
+export function ScoreRing({ value }: { value: number }): JSX.Element {
+  const colour =
+    value >= 70 ? 'rgb(var(--correct))' : value >= 40 ? 'rgb(var(--primary))' : 'rgb(var(--tang))';
+  return (
+    <svg
+      viewBox="0 0 36 36"
+      className="h-11 w-11 shrink-0"
+      role="img"
+      aria-label={t.home.bestScore(value)}
+    >
+      <circle
+        cx="18"
+        cy="18"
+        r="15"
+        fill="none"
+        stroke="rgb(var(--surface-border))"
+        strokeWidth="4"
+      />
+      <circle
+        cx="18"
+        cy="18"
+        r="15"
+        fill="none"
+        stroke={colour}
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeDasharray={`${value * 0.942} 100`}
+        transform="rotate(-90 18 18)"
+      />
+      <text
+        x="18"
+        y="22"
+        textAnchor="middle"
+        fontSize="9.5"
+        fontWeight="700"
+        fill="rgb(var(--content))"
+      >
+        {value}%
+      </text>
+    </svg>
   );
 }

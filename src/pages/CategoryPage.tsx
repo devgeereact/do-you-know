@@ -3,8 +3,11 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { useReveal } from '@/hooks/useReveal';
 import { categoryStyle } from '@/lib/categoryStyle';
 import { QuizCard } from '@/components/game/QuizCard';
-import { PageHeader } from '@/components/ui/PageHeader';
-import { chipClass, fullRows } from '@/components/ui/cardClasses';
+import { WorldBanner } from '@/components/art/WorldBanner';
+import { BackLink } from '@/components/BackLink';
+import { cardLinkClass, chipClass } from '@/components/ui/cardClasses';
+import { Link } from 'react-router-dom';
+import { Character } from '@/components/art/Art';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { Button } from '@/components/ui/Button';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
@@ -52,25 +55,21 @@ export function CategoryPage(): JSX.Element {
   return (
     <>
       <Page width="wide">
-        <PageHeader
-          back={{ to: '/', label: t.common.allQuizzes }}
-          icon={
-            category && (
-              <span
-                aria-hidden="true"
-                className={cn(
-                  'grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-3xl md:h-16 md:w-16',
-                  categoryStyle(category.slug).tile,
-                )}
-              >
-                {categoryStyle(category.slug).emoji}
-              </span>
-            )
-          }
-          title={category?.name ?? t.category.fallbackTitle}
-          lead={category?.description ?? undefined}
-          className="mb-6"
-        />
+        <BackLink to="/" label={t.common.allQuizzes} />
+        {category ? (
+          <WorldBanner
+            className="mb-4 mt-2"
+            world={categoryStyle(category.slug, category).world}
+            character={categoryStyle(category.slug, category).character}
+            kicker={category.kind === 'school' ? t.category.school : t.category.topic}
+            title={category.name}
+          />
+        ) : (
+          <h1 className="mb-4 mt-2 text-[2rem]">{t.category.fallbackTitle}</h1>
+        )}
+        {category?.description && (
+          <p className="mb-5 max-w-[65ch] text-content-muted">{category.description}</p>
+        )}
 
         <div
           className="flex flex-wrap items-center gap-2"
@@ -128,14 +127,40 @@ export function CategoryPage(): JSX.Element {
           <p className="mt-10 text-center text-content-muted">{t.category.empty}</p>
         )}
 
-        <ul ref={list} className={cn('mt-8', fullRows.quizzes.list)}>
+        <ul ref={list} className="mt-6 grid gap-3 lg:grid-cols-2">
           {quizzes.map((quiz) => (
-            <li key={quiz.id} data-reveal className={fullRows.quizzes.item}>
+            <li key={quiz.id} data-reveal>
               <QuizCard quiz={quiz} categorySlug={slug} />
             </li>
           ))}
+          {quizzes.length % 2 === 1 && (
+            <li className="hidden lg:block">
+              <SuggestQuiz />
+            </li>
+          )}
         </ul>
       </Page>
     </>
+  );
+}
+
+/** Fills the last half-row of an odd list so the grid never ends on a gap. */
+function SuggestQuiz(): JSX.Element {
+  return (
+    <Link
+      to="/contact?type=idea"
+      className={cn(
+        cardLinkClass,
+        'flex h-full min-h-[5rem] items-center gap-4 border-dashed bg-transparent p-3 pr-4 shadow-none',
+      )}
+    >
+      <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[rgb(var(--surface-border)/0.6)]">
+        <Character name="mug" size={44} />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-bold">{t.home.suggestQuiz}</span>
+        <span className="text-sm text-content-muted">{t.home.suggestQuizLead}</span>
+      </span>
+    </Link>
   );
 }

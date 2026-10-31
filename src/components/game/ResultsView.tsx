@@ -7,6 +7,9 @@ import { ResultsBoard } from '@/components/game/ResultsBoard';
 import { ShareResult } from '@/components/game/ShareResult';
 import { VersusPanel } from '@/components/game/VersusPanel';
 import { cn, isWebUrl } from '@/lib/utils';
+import { Scene } from '@/components/art/Art';
+import type { WorldKey } from '@/lib/art';
+import { frameStyle, world } from '@/lib/worlds';
 import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { burstConfetti } from '@/lib/confetti';
 import { useReveal } from '@/hooks/useReveal';
@@ -50,6 +53,23 @@ function NextSteps({
 }
 
 const RING_RADIUS = 50;
+
+/** Frame title: the same bands as the cheer line. */
+function resultTab(correct: number, total: number): string {
+  const ratio = total === 0 ? 0 : correct / total;
+  if (ratio === 1) return t.results.tab.perfect;
+  if (ratio >= 0.7) return t.results.tab.great;
+  if (ratio >= 0.4) return t.results.tab.good;
+  return t.results.tab.keepGoing;
+}
+
+/** A bright world for a strong round, a calm one otherwise. Cosmetic only. */
+function resultWorld(percent: number): WorldKey {
+  if (percent === 100) return 'space';
+  if (percent >= 70) return 'jungle';
+  if (percent >= 40) return 'ocean';
+  return 'arctic';
+}
 
 function cheer(correct: number, total: number): string {
   const ratio = total === 0 ? 0 : correct / total;
@@ -188,100 +208,110 @@ export function ResultsView({
 
   return (
     <div ref={root}>
-      <Card as="section" data-results-card className="text-center shadow-lift">
-        <div aria-hidden="true" className="relative mx-auto mb-2 h-28 w-28 md:h-32 md:w-32">
-          <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
-            <circle
-              cx="60"
-              cy="60"
-              r={RING_RADIUS}
-              fill="none"
-              strokeWidth="12"
-              className="stroke-surface-border"
-            />
-            <circle
-              data-score-ring
-              cx="60"
-              cy="60"
-              r={RING_RADIUS}
-              fill="none"
-              strokeWidth="12"
-              strokeLinecap="round"
-              className={cn(
-                percent >= 70
-                  ? 'stroke-correct'
-                  : percent >= 40
-                    ? 'stroke-secondary'
-                    : 'stroke-primary',
-              )}
-            />
-          </svg>
-          <span
-            data-ring-percent
-            className="absolute inset-0 grid place-items-center font-display text-2xl font-semibold tabular-nums text-content"
-          >
-            {`${percent}%`}
-          </span>
-        </div>
-        <p className="text-sm font-bold text-content-muted">{quizTitle}</p>
-        <h1
-          ref={headingRef}
-          tabIndex={-1}
-          className="mt-2 text-5xl font-semibold text-content focus:outline-none md:text-6xl"
-        >
-          {summary.correct} <span className="text-content-muted">/ {summary.total}</span>
-          <span className="sr-only"> {t.results.correctSuffix}</span>
-        </h1>
-        <p data-results-rise className="mx-auto mt-3 max-w-sm text-lg text-content">
-          {cheer(summary.correct, summary.total)}
-        </p>
-        <p data-results-rise className="mt-1 text-sm font-semibold text-content">
-          {t.results.accuracy(percent)}
-        </p>
-        <p className="mt-1 text-sm text-content-muted">
-          {t.results.answerTime(t.common.seconds(summary.answer_time_ms))}
-        </p>
-
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          {nextQuiz && (
-            <Link to={`/q/${nextQuiz.slug}`} className={buttonClasses('primary', 'lg')}>
-              {t.results.nextQuiz}
-            </Link>
-          )}
-          {onPlayAgain && (
-            <Button
-              size="lg"
-              variant={nextQuiz ? 'ghost' : 'primary'}
-              onClick={onPlayAgain}
-              disabled={restarting}
+      <section
+        data-results-card
+        className="stage-frame mx-auto mt-8 max-w-3xl"
+        style={frameStyle(world(resultWorld(percent)))}
+      >
+        <span className="stage-tab">{resultTab(summary.correct, summary.total)}</span>
+        <div className="stage-inner px-5 pb-8 pt-12 text-center md:px-10">
+          <Scene world={resultWorld(percent)} className="!h-[45%] opacity-90" />
+          <div className="relative z-[2]">
+            <div aria-hidden="true" className="relative mx-auto mb-2 h-28 w-28 md:h-32 md:w-32">
+              <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
+                <circle
+                  cx="60"
+                  cy="60"
+                  r={RING_RADIUS}
+                  fill="none"
+                  strokeWidth="12"
+                  className="stroke-surface-border"
+                />
+                <circle
+                  data-score-ring
+                  cx="60"
+                  cy="60"
+                  r={RING_RADIUS}
+                  fill="none"
+                  strokeWidth="12"
+                  strokeLinecap="round"
+                  className={cn(
+                    percent >= 70
+                      ? 'stroke-correct'
+                      : percent >= 40
+                        ? 'stroke-secondary'
+                        : 'stroke-primary',
+                  )}
+                />
+              </svg>
+              <span
+                data-ring-percent
+                className="absolute inset-0 grid place-items-center font-display text-2xl font-semibold tabular-nums text-content"
+              >
+                {`${percent}%`}
+              </span>
+            </div>
+            <p className="text-sm font-bold text-content-muted">{quizTitle}</p>
+            <h1
+              ref={headingRef}
+              tabIndex={-1}
+              className="mt-2 text-5xl font-semibold text-content focus:outline-none md:text-6xl"
             >
-              {t.results.playAgain}
-            </Button>
-          )}
+              {summary.correct} <span className="text-content-muted">/ {summary.total}</span>
+              <span className="sr-only"> {t.results.correctSuffix}</span>
+            </h1>
+            <p data-results-rise className="mx-auto mt-3 max-w-sm text-lg text-content">
+              {cheer(summary.correct, summary.total)}
+            </p>
+            <p data-results-rise className="mt-1 text-sm font-semibold text-content">
+              {t.results.accuracy(percent)}
+            </p>
+            <p className="mt-1 text-sm text-content-muted">
+              {t.results.answerTime(t.common.seconds(summary.answer_time_ms))}
+            </p>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              {nextQuiz && (
+                <Link to={`/q/${nextQuiz.slug}`} className={buttonClasses('primary', 'lg')}>
+                  {t.results.nextQuiz}
+                </Link>
+              )}
+              {onPlayAgain && (
+                <Button
+                  size="lg"
+                  variant={nextQuiz ? 'ghost' : 'primary'}
+                  onClick={onPlayAgain}
+                  disabled={restarting}
+                >
+                  {t.results.playAgain}
+                </Button>
+              )}
+            </div>
+            <ShareResult
+              quizSlug={quizSlug}
+              quizTitle={quizTitle}
+              correct={summary.correct}
+              total={summary.total}
+            />
+            {summary.mode !== 'challenge' && (
+              <ChallengeFriend
+                attemptId={summary.attempt_id}
+                quizTitle={quizTitle}
+                correct={summary.correct}
+                total={summary.total}
+              />
+            )}
+            {isGuest && (
+              <p className="mt-5 text-sm text-content-muted">
+                {t.results.guestNote}{' '}
+                <Link to="/me" className="font-semibold text-primary underline underline-offset-2">
+                  {t.common.myGames}
+                </Link>
+              </p>
+            )}
+          </div>
         </div>
-        <ShareResult
-          quizSlug={quizSlug}
-          quizTitle={quizTitle}
-          correct={summary.correct}
-          total={summary.total}
-        />
-        {summary.mode !== 'challenge' && (
-          <ChallengeFriend
-            attemptId={summary.attempt_id}
-            quizTitle={quizTitle}
-            correct={summary.correct}
-            total={summary.total}
-          />
-        )}
-        {isGuest && (
-          <p className="mt-5 text-sm text-content-muted">
-            {t.results.guestNote}{' '}
-            <Link to="/me" className="font-semibold text-primary underline underline-offset-2">
-              {t.common.myGames}
-            </Link>
-          </p>
-        )}
-      </Card>
+      </section>
 
       {summary.versus && (
         <VersusPanel
