@@ -73,6 +73,13 @@ blocked_words · rate_limits · schema_migrations (ledger)
 | `friend_challenges`   | `code` unique (8 characters, case-sensitive), `quiz_id`, `quiz_version_id`, `creator_id`, `creator_attempt_id`, `expires_at` (30 days)                                                                                                                                                                                                           | Friends replay the creator's frozen question order and timer                                                                                              |
 | `leaderboard_entries` | (`board`, `quiz_id`, `period_start`, `user_id`) PK, `attempt_id`, `correct_count`, `total`, `answer_time_ms`, `achieved_at`, `is_hidden`                                                                                                                                                                                                         | Boards `all_time`, `weekly`, `daily`. Best result kept per period. Public rows show nickname, avatar_id, score and time only                              |
 
+### Studio and feedback (migration 0013, 31 October 2026)
+
+- `quizzes.draft` JSON: the Studio work copy `{"meta":{...},"questions":[...]}` beside the live version. The database is the content master; `backend/content/*.json` is an export/seed.
+- `quiz_versions.created_at` dates each published version. `content_reviews.action` now allows `published`, `checked`, `retired`, `restored`, `unpublished`.
+- `attempts.is_hidden` hides one round from every board; index `attempts_period (status, mode, finished_at)` serves the overall board (`Overall.php`: best finished ranked or daily round per quiz × 10 points, London periods).
+- `feedback` (`profile_id` SET NULL on delete, `kind` player/adult, `type` feedback/question/idea/problem, `presets` JSON, `message` and `email` adult/teen only, optional `quiz_id`, `question_id`, `question_prompt`, `status` new/open/resolved) and `feedback_messages` (`reply` or `note`, `author_id`, `emailed`). Never returned by a public endpoint.
+
 Likes: `leaderboard_likes` holds (`board`, `quiz_id`, `period_start`, `entry_user_id`, `liker_id`). Public boards return the total and the viewer's own like only, never who liked. Rows carry `entry_id` (the entry's attempt id) as the like handle. Boards rank by correct/total, so 20-question ranked and 10-question daily results compare fairly.
 
 Profile deletion (`POST /me/delete`) cascades to sessions, settings, attempts, answers,

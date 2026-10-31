@@ -1,5 +1,18 @@
 # Changelog
 
+## 31 October 2026 — Pop & Ink rebrand, Studio and one board for every subject
+- Our own logo (grape speech bubble, lemon question mark) across the header, footer, favicon, app icons and share image (`scripts/brand-assets.mjs`).
+- Pop & Ink colours, Baloo 2 + Outfit fonts, 13 illustrated object characters (avatar ids unchanged) and eight worlds. Every question now plays inside its own world on a framed game stage; the explanation is a sheet inside the frame. ADR-014.
+- New Home (desktop hero with a real practice question; separate phone layout), subject and quiz pages with world banners, Daily and Leaderboards that fit one screen, Me inside the avatar menu.
+- Overall leaderboard across every subject: Today (default), week, month, all time; points, then accuracy, then speed (`GET /leaderboards/overall`). ADR-015.
+- Contact and feedback: preset messages for players, written messages and email for adults only; report a question from the game. Everything lands in the Studio inbox (`POST /feedback`).
+- Studio (`/admin`): library, editor with live preview, import from pasted text or files, checks, publish/retire/restore, daily calendar, rounds, subjects, players, activity and the feedback inbox. The database is the content master. The sourced question generator is built but switched off until its cost is approved.
+- Grown-up Clerk sign-ins now link to a server identity (`POST /account/session`).
+- Migration `0013_cms_feedback.sql` (additive): quiz drafts, version dates, review actions, hidden rounds, feedback tables.
+- `scripts/test-backend.sh` runs every backend suite against the local test database.
+- "Delete my data" now also wipes any message or email written in feedback; privacy notice updated (31 October 2026).
+- Studio: white sidebar grouped Work / Content / Site, breadcrumbs and a ⌘K search palette, matching design file v2.0.
+
 ## 2026-10-30
 - Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed.
 

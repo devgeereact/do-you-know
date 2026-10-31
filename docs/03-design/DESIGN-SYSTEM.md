@@ -2,79 +2,65 @@
 
 # Design System & Visual Guidelines — Do You Know
 
+> Pop & Ink, approved by the owner on 31 October 2026 (ADR-014). Earlier "sky blue" values are gone from the code; this section is the reference.
+
 ## 1. Aesthetic direction
 
-**Bright and playful.** Sunny colours, rounded shapes, chunky pill buttons and friendly
-illustrated scenes. It should feel like a game a 7-year-old and their parent both enjoy —
-never like an exam. Light mode is the default; dark mode follows the device or the
-player's toggle.
+**Pop & Ink.** Bright, chunky and friendly for children, calm and readable for the grown-ups who sit beside them. Grape is the brand colour, tangerine is the one "play" action on a screen, lemon marks rewards, and deep ink carries the text.
 
-- **Scenes:** one illustrated, lightly animated scene set **per category** (sky,
-  ocean, space, jungle, city, classroom…) plus one recurring **mascot** who reacts to
-  answers. Not one illustration per question.
-- **Feedback moments:** correct → sky brightens, mascot cheers, a soft "pop"; wrong →
-  gentle shake, mascot shrugs, then the explanation. Kind words always ("So close!").
-- **Avatars:** 3D cartoon head-and-shoulders portraits, soft studio lighting, large
-  expressive eyes, warm plain background, everyday clothing. Style reference:
-  `references/avatar-style-reference.jpg` (outside the repo, kept with the planning
-  files). Shown in a circle on boards and profiles.
-- **Layout:** works in portrait **and** landscape on every screen. Never ask the player
-  to rotate. Portrait: question on top, answers stacked. Landscape/tablet: scene on one
-  side, question and answers on the other.
+- **Worlds:** every question plays inside a small illustrated world (Ocean, Jungle, Space, Desert, Arctic, City, Body, Past). The server sends a cosmetic `scene` key with each question (`Content::sceneFor`: prompt keywords, then the quiz's category, then a stable hash), so a round travels through several scenes. Art is typed inline SVG in `src/lib/art.ts`; there are no uploaded, generated or photographic images.
+- **The framed stage:** the play screen is a thick coloured frame (`.stage-frame`) around a light card (`.stage-inner`), with a tab label, timer pill, host character, progress dots, the prompt and chunky answer pills. The explanation slides up as a sheet inside the frame.
+- **Characters:** 13 object mascots (owl, bulb, globe, boat, battery, mug, rocket, star, planet, cactus, turtle, penguin, heart) with a mood (`happy`, `cheer`, `sad`, `think`). Preset avatars reuse them; stored avatar ids did not change (`src/lib/avatars.ts`).
+- **Logo:** a grape speech bubble with a lemon question mark and a tangerine spark (`src/components/brand/Logo.tsx`, `public/favicon.svg`). PNG icons and the share image are rendered from the same art by `scripts/brand-assets.mjs`.
+- **Phone vs computer:** phones get a stacked, thumb-first layout with the bottom tab bar; screens at 1024 px and wider get the top navigation, multi-column grids and the hero. `useMediaQuery(DESKTOP)` picks between two layouts where they differ (Home). Grids always fill their rows (filler "Suggest a subject/quiz" tiles), so there are no single orphan cards.
+- **Fit pages:** Daily and Leaderboards fill exactly one screen (`h-dvh`) and scroll inside their list area, not the page.
 
 ## 2. Design tokens
 
-Tokens map 1:1 to `tailwind.config.ts` and are CSS variables in `src/index.css`
-(`:root` = light, `.dark` = dark). **Always use the token class, never a raw hex.**
+Tokens map 1:1 to `tailwind.config.ts` and are RGB CSS variables in `src/index.css` (`:root` = light, `.dark` = dark). **Always use the token class, never a raw hex** (world gradients in `src/lib/art.ts` are the one exception: they are illustration).
 
 ### Colour
 
-| Token                | Class                         | Light              | Dark      | Use                           |
-| -------------------- | ----------------------------- | ------------------ | --------- | ----------------------------- |
-| Background           | `bg-background`               | `#EAF6FF` sky wash | `#0F1B2A` | App canvas                    |
-| Surface              | `bg-surface`                  | `#FFFFFF`          | `#16263A` | Cards, sheets                 |
-| Surface border       | `border-surface-border`       | `#CFE4F5`          | `#283E58` | Card outlines, dividers       |
-| Primary              | `bg-primary` / `text-primary` | `#1570C2` sky blue | `#4FB3F6` | Main buttons, links, focus    |
-| Primary foreground   | `text-primary-fg`             | `#FFFFFF`          | `#0F1B2A` | Text on primary               |
-| Secondary (sun)      | `bg-secondary`                | `#FFC93C`          | `#FFC93C` | Highlights, streaks, badges   |
-| Secondary foreground | `text-secondary-fg`           | `#1B2A3A`          | `#1B2A3A` | Text on yellow (dark only)    |
-| Sky                  | `bg-sky`                      | `#4FB3F6`          | `#4FB3F6` | Illustration fills            |
-| Content              | `text-content`                | `#1B2A3A` ink      | `#EAF6FF` | Headings, body                |
-| Content muted        | `text-content-muted`          | `#4A5E73`          | `#A0B6CC` | Captions, hints               |
-| Correct              | `bg-correct`                  | `#17804F`          | `#17804F` | Right answer (+ ✓ icon)       |
-| Wrong                | `bg-wrong`                    | `#C9363B`          | `#C9363B` | Wrong answer (+ ✕ icon)       |
-| Warning              | `bg-warning`                  | `#F59E0B`          | `#F59E0B` | Timer running low (dark text) |
+| Token              | Class                         | Light                | Dark      | Use                                    |
+| ------------------ | ----------------------------- | -------------------- | --------- | -------------------------------------- |
+| Background         | `bg-background`               | `#F6F4FD` mist       | `#151331` | App canvas                             |
+| Surface            | `bg-surface`                  | `#FFFFFF`            | `#1F1C42` | Cards, sheets                          |
+| Surface border     | `border-surface-border`       | `#E8E4F3`            | `#34305E` | Card outlines, dividers                |
+| Primary (grape)    | `bg-primary` / `text-primary` | `#6C4CF5`            | `#9C86FF` | Buttons, links, focus, the brand       |
+| Primary edge       | `shadow-edge-primary`         | `#4A2FC9`            | `#6C4CF5` | Pressed-button edge                    |
+| Secondary (lemon)  | `bg-secondary`                | `#FFD23F`            | same      | Streaks, rewards (dark text only)      |
+| Tangerine          | `bg-tang`                     | `#FF8A3D`            | same      | The single "play" action (dark text)   |
+| Lagoon             | `bg-sky`                      | `#14B8A6`            | same      | Info, illustration fills               |
+| Bubblegum          | `bg-gum`                      | `#FF6FA3`            | same      | Celebration accents only               |
+| Content (ink)      | `text-content`                | `#17153A`            | `#F1EFFF` | Headings, body                         |
+| Content muted      | `text-content-muted`          | `#5A5680`            | `#B4B0D6` | Captions, hints                        |
+| Correct            | `bg-correct`                  | `#0F7A4F`            | `#1FB57A` | Right answer (+ ✓ and words)           |
+| Wrong              | `bg-wrong`                    | `#C6312F`            | `#EF5A5E` | Wrong answer (+ ✕ and words)           |
+| Warning            | `bg-warning`                  | `#F59E0B`            | same      | Timer running low (dark text)          |
 
-**Contrast (checked):** white on primary 5.1:1 · ink on background 13.3:1 · ink on yellow
-9.5:1 · white on correct 5.0:1 · white on wrong 5.2:1 · dark text on dark-mode primary
-7.5:1. Never put white text on yellow or on `sky`.
+**Contrast (computed 31 Oct 2026):** white on grape 5.3:1 · grape text on white 5.3:1 · ink on mist 16.0:1 · muted on mist 6.3:1 (on white 6.8:1) · ink on tangerine 7.4:1 · ink on lemon 12.1:1 · white on correct 5.4:1 · white on wrong 5.4:1 · dark: ink-dark on primary 6.2:1, content on background 15.8:1, muted on surface 7.8:1. **Never put white text on tangerine (2.3:1), lemon or lagoon.**
 
-PWA manifest: `theme_color #1570C2`, `background_color #EAF6FF`.
+Inside the stage, `.stage-inner` forces the light tokens so the card reads the same in dark mode.
+
+PWA manifest: `theme_color #6C4CF5`, `background_color #F6F4FD`.
 
 ### Typography
 
-| Role               | Family                 | Class          | Notes                                         |
-| ------------------ | ---------------------- | -------------- | --------------------------------------------- |
-| Display / headings | **Fredoka** (variable) | `font-display` | Rounded, friendly; h1–h3 use it automatically |
-| Body / UI          | **Nunito** (variable)  | `font-sans`    | Readable at small sizes                       |
-| Mono               | system mono            | `font-mono`    | Admin only                                    |
+| Role               | Family                  | Class          | Notes                                                   |
+| ------------------ | ----------------------- | -------------- | ------------------------------------------------------- |
+| Display / headings | **Baloo 2** (variable)  | `font-display` | Rounded and heavy; h1–h3 extrabold, `text-wrap: balance` |
+| Body / UI          | **Outfit** (variable)   | `font-sans`    | Clean, readable at small sizes                          |
+| Mono               | system mono             | `font-mono`    | Admin only                                              |
 
-Fonts are **self-hosted** via `@fontsource-variable/*` (no Google Fonts request — better
-for children's privacy and offline play).
-
-Scale: `text-base` (16 px, minimum body) · `text-lg` answers · `text-2xl`–`text-3xl`
-question prompt (`text-4xl` on tablets) · `text-5xl md:text-6xl` hero and final score.
-Line-height 1.6 for body.
+Fonts are **self-hosted** via `@fontsource-variable/*` (no Google Fonts request: better for children's privacy and offline play). Minimum body size 16 px.
 
 ### Spacing, radius, size
 
-- 4 px base unit. Generous padding: cards `p-6` (`p-5` for compact cards), screens `px-4 md:px-8` through the `Page` container (`narrow` = `max-w-2xl`, `wide` = `max-w-5xl` for card grids).
-- Radius: answer buttons and CTAs `rounded-full`; surfaces (`Card`, sheets, prompts) `rounded-2xl`; quiz list cards `rounded-xl`.
-- **Touch targets ≥ 48 px**: use `min-h-tap` / `min-w-tap`. Answer buttons ≥ 56 px tall.
-- Shadows: one soft shadow for raised cards; borders do most of the work.
-- Buttons sit on a darker edge (`shadow-edge-primary`, `shadow-edge-sun`, `shadow-edge-surface`), coloured by `--primary-edge` and `--sun-edge` in `src/index.css`. This is the "chunky game button" signature: keep it on CTAs and answer buttons, not on cards.
-- Raised panels (hero teaser, login card, prompts) use `shadow-lift`, a soft primary-tinted shadow.
-- Navigation that looks like a button uses `buttonClasses()` on a `<Link>`. Never wrap a `<Button>` in a `<Link>`.
+- 4 px base unit. `Page` containers: `narrow` = `max-w-3xl`, `wide` = `max-w-6xl`.
+- Radius: buttons, chips and answer pills `rounded-full`; cards `rounded-2xl`/`rounded-3xl`; the stage frame `rounded-frame`.
+- **Touch targets ≥ 48 px** (`min-h-tap`); answer pills ≥ 56 px.
+- Shadows: `shadow-soft` for resting cards, `shadow-lift`/`shadow-float` for raised panels, and the chunky `shadow-edge-*` (primary, sun, tang, ink, surface) only on buttons and answers.
+- Navigation that looks like a button uses `buttonClasses()` on a `<Link>`; variants `primary`, `secondary`, `ghost`, `play`.
 
 ## 3. Motion (GSAP + Lenis + CSS)
 
@@ -86,8 +72,8 @@ ticker, so smooth scroll and ScrollTrigger share one frame loop.
 | Interaction    | Spec                                                                                                                                                                                      |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Button press   | Drops 3 px and its edge shadow shrinks (`shadow-edge-*` to `shadow-edge-pressed`), 120 ms. Hover lifts 2 px                                                                               |
-| Sky backdrop   | `SkyBackdrop`: sun, clouds and stars drift slowly and move at different speeds on scroll (ScrollTrigger scrub)                                                                            |
-| Hero           | Headline rises word by word (`SplitText`, masked lines, reverted after), squiggle draws under the accent word                                                                             |
+| World scenes   | CSS keyframes (`swim`, `sway`, `twinkle`, `drift`, `beat`, `pulse-sun`) move props inside each world; Daily cross-fades one world per stop every 2 s                                       |
+| Hero           | Headline rises word by word (`SplitText`), the ocean world follows the pointer a little (`quickTo` parallax), and the "Try one" card plays a real practice question                   |
 | Scroll reveal  | `useReveal`: `[data-reveal]` items rise 28 px and fade in, in staggered batches, once                                                                                                     |
 | Question in    | Prompt card lifts, its words rise, answers stagger up (about 600 ms, never blocks input)                                                                                                  |
 | Correct answer | `animate-pop` + a short confetti burst from the chosen answer (`burstConfetti`)                                                                                                           |
@@ -111,7 +97,7 @@ events. Lenis needs `lenis/dist/lenis.css`; mark nested scroll areas with
 
 - Text contrast ≥ 4.5:1 (palette above satisfies this).
 - Touch targets ≥ 48 × 48 px; spacing between answers ≥ 8 px.
-- Focus: global `:focus-visible` = 3 px sunshine outline + 2 px offset.
+- Focus: global `:focus-visible` = 3 px grape outline + 2 px offset (buttons use a lemon ring).
 - Right/wrong is never colour alone: always ✓/✕ icon + words ("Correct!").
 - The slider is a native `<input type="range">` with a visible value and an
   `aria-label` naming the question; arrow keys move one step.
@@ -131,9 +117,9 @@ events. Lenis needs `lenis/dist/lenis.css`; mark nested scroll areas with
   `space-y-12 md:space-y-16`); card grids `gap-4`.
 - **Clickable cards** (quiz cards, subject tiles, resume rows) share `cardLinkClass` from `ui/cardClasses.ts`:
   2 px border, `rounded-2xl`, hover lift 2 px with `shadow-lift`, sunshine focus ring. Filter chips use `chipClass`.
-- Home lists the first 9 quizzes, then a "Show all" button (`aria-expanded`) reveals the rest.
+- Quiz rows and subject tiles always fill whole rows: Home pads subject tiles to a multiple of 6 and an odd list of quiz rows with "Suggest" tiles that open `/contact?type=idea`.
 - Answer buttons for choice questions show a decorative A/B/C/D marker (`aria-hidden`), never on true/false.
 - Variants are prop-driven class maps; compose with `cn()` (clsx + tailwind-merge).
 - Game components in `src/components/game/`, admin in `src/components/admin/`.
-- No inline `style={{}}`. Avatars and scenes render as `<img>` with token classes.
+- Inline `style` only for the world CSS variables (`frameStyle()` sets `--fc`, `--fd`, `--sky-top`, `--sky-bot`) and GSAP. Characters, worlds and scenes render through `Character`, `WorldGlyph`, `Scene` and `WorldBackdrop` in `src/components/art/Art.tsx` (static SVG from `src/lib/art.ts`, decorative, `aria-hidden`).
 - Preset avatar circles use `bg-avatar-<id>` tokens (pastel in light, deeper in dark), defined in `src/index.css`.

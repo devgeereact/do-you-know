@@ -1,6 +1,6 @@
 # Admin area plan (approved 27 October 2026)
 
-Copy of the approved plan, kept in the repository. Status 27 October 2026: Phase A built and tested locally, committed, not deployed. Phases B to G not started.
+Copy of the approved plan, kept in the repository. Status 31 October 2026: Phases A to E (foundation, dashboard "To do", moderation, content Studio with import, daily calendar) and the feedback inbox are built and tested locally (backend suites `admin`, `cms`, `feedback`; Studio unit tests; Playwright walkthrough of every screen at 1440 and 390). Migration 0013 adds the tables. Phase G (sourced generator) has a screen that explains the flow but makes no calls: it needs the owner's cost approval. Phase A was deployed on 30 October; the rest ships with the 31 October release.
 
 ## Context
 

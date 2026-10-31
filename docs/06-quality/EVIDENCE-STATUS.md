@@ -91,3 +91,18 @@ Done over the owner's SSH access. Credentials were generated and written straigh
 | Clerk sign-in to `/admin` (real Clerk) | NOT TESTED |
 | Browser click-through of likes/ranked on the live site | NOT TESTED |
 | Playwright e2e after the .local-test path changes | NOT TESTED |
+
+## 31 October 2026 local results: Pop & Ink rebrand, Studio, overall board, feedback
+
+Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` (started with `--character-set-collations=utf8mb4=uca1400_ai_ci`, as on the server). These prove the code locally; the live release and migration 0013 are recorded separately when done.
+
+| Check | Result | Notes |
+|---|---|---|
+| `pnpm check` (lint, format, typecheck, unit, build) | PASS | 19 files, 162 tests |
+| Backend suites (`scripts/test-backend.sh`) | PASS | unit, integration 80, competition 77, daily 16, concurrency 9, feeds 35, content 78, cleanup 7, seo 27, admin 12, feedback 28, cms 121 |
+| Browser journeys (Playwright, Chrome, 390 and 1440) | PASS | 46 / 46, including the no-answer-leak check |
+| Studio walkthrough (every screen, 1440 and 390) | PASS | Create, check, publish, edit, retire, restore, import text and CSV, daily, hide round, subjects, inbox reply and note; no console errors, no horizontal overflow |
+| Studio shell and ⌘K palette | PASS | Screenshots at 1440 and 390; palette search opens the editor |
+| Clerk sign-in on the live site | NOT TESTED | Needs a human sign-in |
+| Email replies from the inbox | NOT TESTED | `mail_from` not set; replies are saved and marked "not emailed" |
+| Sourced generator | BLOCKED | Waiting for the owner's cost approval (Bright Data, Claude) |

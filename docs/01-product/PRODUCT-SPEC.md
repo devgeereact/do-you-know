@@ -122,7 +122,10 @@ Targets are starting assumptions; tune them against real data after launch.
 
 ### 4.6 Leaderboards
 
-- Per quiz: all-time and this week; daily board for the daily challenge.
+- **Overall board** (`/leaderboards`, `GET /leaderboards/overall`): every subject together,
+  periods Today (default), This week, This month, All time (London time). Points = the best
+  ranked or daily round per quiz × 10 (a perfect 10/10 = 100); ties by accuracy, then speed.
+- Per quiz (`/leaderboards?quiz=slug`): all-time and this week; daily board for the daily challenge.
 - Top 50 plus "your rank". Nickname + avatar + score + time only — never email or ids.
 - Only players with a nickname appear. Staff can hide any entry.
 
@@ -131,29 +134,22 @@ Targets are starting assumptions; tune them against real data after launch.
 - Age band asked once (under 13 / 13–17 / 18+); locked after (admin can change).
 - 13+: choose a nickname (3–20 characters, blocked-words filter). Under-13: **generated
   nicknames only** ("BraveOtter42"), shuffle to reroll.
-- **Preset avatar per player:** choose one of 12 friendly emoji characters on coloured
-  circles (owner decision, 16 October 2026). No uploads, no photos, no AI images. Avatars
+- **Preset avatar per player:** choose one of 12 illustrated object characters on coloured
+  circles (owner decision, 16 October 2026; art changed in the 31 October rebrand, ids kept). No uploads, no photos, no AI images. Avatars
   are not unique; boards and challenge previews show them beside the nickname.
-- `/me`: history, best scores, streak, avatar, settings, theme, **delete my account**.
+- `/me` (opened from the avatar menu in the top bar): history, best scores, streak, avatar, settings, theme, **delete my account**.
 
-### 4.8 CMS (`/admin`): in progress (Phase A foundation built 27 October 2026; see ADMIN-AREA-PLAN.md)
+### 4.8 Studio CMS (`/admin`), built 31 October 2026
 
-No authoring or publishing endpoints exist in the PHP API yet. Launch content arrives by
-importing categories, quizzes, questions and daily challenges from the old Supabase
-project into MySQL. The list below is the target, not current behaviour.
+Super Admin only (Clerk subject in the private `admin_subjects` config, checked on every request). The database is the content master; `backend/content/*.json` is an export and seed. Screens (sidebar groups Work, Content, Site, plus a ⌘K search palette):
 
-- Dashboard: plays today/7 days, completion rate, top quizzes, newest board entries.
-- Quizzes: search/filter; edit, duplicate, preview, schedule, archive.
-- Quiz editor: Details → Questions → Settings → Preview → Publish (autosaves drafts).
-- Question bank: reusable questions with explanation, **source URL** and **review-by
-  date** (all required to publish); CSV import lands as drafts.
-- AI drafts (later, server-side only): drafts arrive for human review. **AI never publishes.**
-- Daily calendar: assign a quiz to a date; shows gaps in the next 14 days.
-- Categories & curriculum tags; leaderboard moderation; blocked words.
-- Settings (admin): site settings and blocked words.
-- Audit log of every content change and role change.
-- Publishing freezes a **version**; editing later creates a new version and never
-  changes past results.
+- **To do:** plays, finish rate, new players, what needs attention (new feedback, drafts with problems, questions to check, review dates due, hard questions, days on automatic pick).
+- **Inbox:** player feedback (preset messages) and grown-up messages; internal notes, statuses New / In review / Resolved, replies to grown-ups by email when mail is configured.
+- **Library and Editor:** every quiz with status; the editor autosaves a draft beside the live version, marks the right answer, needs an explanation, an https source and a review-by date, and shows a live preview.
+- **Check & publish:** a named human ticks each question against its source, then publishes a frozen version (now or scheduled). Retire and restore; never delete.
+- **Import:** paste text or upload .txt/.csv/.md; parsed in the browser and validated on the server; errors per line; drafts only.
+- **Generator (Bright Data + Claude, sourced drafts):** screen explains the flow; **switched off** until the owner approves the cost. AI never publishes.
+- **Daily calendar, Players (hide rounds), Subjects (new subjects hidden until they have a live quiz), Activity (audit log).**
 
 ### 4.9 PWA
 

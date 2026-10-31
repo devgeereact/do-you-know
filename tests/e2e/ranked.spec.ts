@@ -1,10 +1,5 @@
 import { expect, expectNoHorizontalOverflow, playThrough, QUIZ, test } from './support/test';
 
-/** A nickname that passes the server's rules and is unlikely to repeat across runs. */
-function nickname(prefix: string): string {
-  return `${prefix}${Math.floor(Math.random() * 1e6)}`;
-}
-
 test.describe('ranked play, nickname, avatar and leaderboard', () => {
   // Every new player gets a generated nickname (since 26 October 2026), so a ranked round goes
   // straight onto the board with no age question or typed name.

@@ -97,8 +97,12 @@ do not merge.
   score** only — never email, ids or age band.
 - Optional analytics load only after consent, and never for under-13s beyond cookieless,
   aggregate events. No third-party ad or tracking SDKs in V1.
-- Avatars are presets only (12 emoji characters on coloured circles, `src/lib/avatars.ts`
-  and `Player::AVATARS`). No uploads, no photos, no AI-generated images.
+- Avatars are presets only (12 illustrated object characters on coloured circles,
+  `src/lib/avatars.ts` and `Player::AVATARS`; ids unchanged since 16 October). No uploads,
+  no photos, no AI-generated images.
+- Contact and feedback (`/contact`, `POST /feedback`): children and players whose age is
+  unknown choose preset messages only; the server rejects free text unless the player is
+  13–17, 18+ or signed in as an adult. Only adults may leave an email for a reply.
 
 ### Content
 

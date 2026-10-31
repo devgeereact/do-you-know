@@ -1,5 +1,15 @@
 # Current task — doyouknow.space is live
 
+## 31 October 2026 — Pop & Ink rebrand, Studio CMS, overall board, feedback (Status: DONE locally; release PLANNED in this session)
+
+- Goal (owner): build the approved Pop & Ink design to live, with our own logo; fix gaps; test locally first.
+- Built: own logo and icons; Pop & Ink tokens and fonts; 13 characters and 8 per-question worlds; framed game stage; new Home (desktop and phone), subject, quiz, Daily (fits screen), Leaderboards (overall, Today default), Contact and feedback with Report; Me in the avatar menu; Studio CMS (To do, Inbox, Library, Editor, Check & publish, Import, Generator screen, Daily calendar, Players, Subjects, Activity, ⌘K search); Clerk sign-ins linked to a server identity; migration 0013.
+- Design file v2.0 (owner asked for it before the main app): https://claude.ai/artifact/AzQsphxsJhPuDoSefzJKLh
+- Fixed while reviewing: review flag compare on MariaDB 11.4 (`JSON_VALUE` gives 1); feedback message and email now wiped on "Delete my data" (privacy notice updated); Studio moved outside the site layout; local PHP warning in `Identity.php`.
+- Checks: `pnpm check` PASS (162 tests); backend suites PASS (incl. cms 121, feedback 29); Playwright 46/46 PASS; Studio walkthrough PASS at 1440 and 390. Live sign-in NOT TESTED; inbox email NOT TESTED (`mail_from` unset); generator BLOCKED (cost approval).
+- Release steps: push `main` (deploy.yml) → SSH: DB backup → `bin/migrate.php` (0013) → smoke `/api/v1/health`, `/daily`, `/leaderboards/overall`, `/admin`.
+- Unused now (not deleted; owner to confirm): `HeroTeaser`, `SkyBackdrop`, `ProgressDots`, `TimerBadge`.
+
 ## 29 October 2026 — repository moved
 - Now `devgeereact/do-you-know` (transferred from gsakinz; history, issues and secrets kept). Main is protected from force-push and deletion.
 
