@@ -17,7 +17,6 @@ import { MePage } from '@/pages/MePage';
 import { LeaderboardsPage } from '@/pages/LeaderboardsPage';
 import { DailyPage } from '@/pages/DailyPage';
 import { ChallengePage } from '@/pages/ChallengePage';
-import { AvatarPage } from '@/pages/AvatarPage';
 import { HowToPlayPage } from '@/pages/HowToPlayPage';
 import { AboutPage } from '@/pages/AboutPage';
 import { ContactPage } from '@/pages/ContactPage';
@@ -48,7 +47,7 @@ export function App(): JSX.Element {
               <Route path="/leaderboards" element={<LeaderboardsPage />} />
               <Route path="/challenge/:code" element={<ChallengePage />} />
               <Route path="/me" element={<MePage />} />
-              <Route path="/me/avatar" element={<AvatarPage />} />
+              <Route path="/me/avatar" element={<Navigate to="/me#character" replace />} />
               <Route path="/me/settings" element={<SettingsPage />} />
               <Route path="/how-to-play" element={<HowToPlayPage />} />
               <Route path="/about" element={<AboutPage />} />

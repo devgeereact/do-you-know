@@ -166,6 +166,10 @@ export type GameErrorCode =
   | 'kids_use_generated_nickname'
   | 'invalid_nickname'
   | 'nickname_not_allowed'
+  | 'nickname_locked'
+  | 'nickname_taken'
+  | 'thread_closed'
+  | 'invalid_body'
   | 'invalid_avatar'
   | 'network_error';
 

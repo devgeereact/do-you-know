@@ -45,7 +45,7 @@ export const enGB = {
     tryAgain: 'Try again',
     findAQuiz: 'Find a quiz',
     allQuizzes: 'All quizzes',
-    myGames: 'My games',
+    myGames: 'My profile',
     todaysChallenge: 'Today’s challenge',
     fullLeaderboard: 'Full leaderboard',
     privacyNotice: 'privacy notice',
@@ -94,31 +94,21 @@ export const enGB = {
     quizzes: { label: 'Explore', short: 'Explore' },
     daily: { label: 'Daily', short: 'Daily' },
     leaderboards: { label: 'Leaderboards', short: 'Boards' },
-    me: { label: 'My games', short: 'Me' },
+    me: { label: 'My profile', short: 'Me' },
     play: { label: 'Play today’s quiz', short: 'Play' },
     signIn: 'Grown-up sign in',
     account: 'Grown-up account',
     accountHint: 'Parents, carers and staff',
     menu: {
       open: (name: string): string => `Your profile: ${name}`,
-      label: 'Profile menu',
+      openUnread: (name: string): string => `Your profile: ${name}, new reply waiting`,
       player: 'Player',
-      streak: (days: number): string => `${days} day streak`,
-      noStreak: 'Play the daily to start a streak',
-      profile: 'My profile and avatar',
-      games: 'My rounds',
-      newName: 'New nickname',
-      contact: 'Contact us',
-      settings: 'Settings',
-      grownUp: 'Grown-up sign in',
-      grownUpHint: 'save progress',
-      grownUpSignedIn: 'Grown-up account',
     },
   },
 
   footer: {
     label: 'Footer',
-    tagline: '© 2026 Do You Know · nicknames only, no adverts',
+    tagline: '© 2026 Do You Know',
     links: {
       howToPlay: 'How to play',
       about: 'About',
@@ -126,7 +116,6 @@ export const enGB = {
       terms: 'Terms',
       contact: 'Contact',
       settings: 'Settings',
-      account: 'Parents and staff',
     },
   },
 
@@ -181,6 +170,10 @@ export const enGB = {
       kids_use_generated_nickname: 'Pick one of our fun nicknames — tap shuffle to see more!',
       invalid_nickname: 'Nicknames need 3–20 letters or numbers.',
       nickname_not_allowed: "That nickname isn't allowed. Please try another.",
+      nickname_locked: 'You’ve already used your one nickname change.',
+      nickname_taken: 'Someone already has that nickname. Pick another.',
+      thread_closed: 'This conversation is closed. Send us a new message instead.',
+      invalid_body: 'Write a little more, up to 1,000 characters.',
       invalid_avatar: 'That avatar isn’t available. Please pick another.',
       network_error: "We couldn't reach the game. Check your connection and try again.",
     },
@@ -543,7 +536,7 @@ export const enGB = {
       { title: 'Players', body: 'Pick from ready-made messages. No names, no typing needed.' },
       {
         title: 'Grown-ups',
-        body: 'Write to us and leave an email. We reply within two school days.',
+        body: 'Write to us. Our reply appears on your profile under Messages, usually within two school days.',
       },
       {
         title: 'Wrong answer?',
@@ -573,8 +566,10 @@ export const enGB = {
       problem: ['Something isn’t working', 'The page is slow', 'I can’t find my score'],
       idea: ['A new subject', 'More daily challenges', 'More characters'],
     },
-    adultConfirm: 'I’m 18 or over. My email is only used to reply to this message.',
-    email: 'Your email, so we can reply',
+    adultConfirm: 'I’m 18 or over.',
+    email: 'Your email (optional)',
+    emailHint:
+      'Our reply always shows on your profile under Messages. Add an email only if you’d like a heads-up too.',
     emailPlaceholder: 'you@example.com',
     message: 'Your message',
     messagePlaceholder: 'Tell us what happened or what you’d like to see',
@@ -586,16 +581,17 @@ export const enGB = {
     errors: {
       pick: 'Pick at least one message.',
       adult: 'Please confirm you’re 18 or over.',
-      email: 'Enter an email address we can reply to.',
+      email: 'That email address doesn’t look right.',
       message: 'Tell us a bit more (at least 10 characters).',
       notAllowed: 'Players can only send the ready-made messages. Ask a grown-up to write to us.',
       failed: 'We couldn’t send that. Check your connection and try again.',
     },
     thanksTitle: 'Thanks, we got it!',
     thanksPlayer:
-      'A real person reads every message. We can’t write back to players, but your message helps us make the quizzes better.',
+      'A real person reads every message. If we reply, you’ll see it on your profile under Messages.',
     thanksAdult:
-      'A real person reads every message. We’ll reply by email, usually within two school days.',
+      'A real person reads every message. Our reply will appear on your profile under Messages, usually within two school days.',
+    seeMessages: 'Go to my messages',
     another: 'Send another',
     back: 'Back to quizzes',
   },
@@ -661,7 +657,47 @@ export const enGB = {
   },
 
   me: {
-    title: 'My games',
+    title: 'My profile',
+    since: (date: string): string => `Playing since ${date}`,
+    bestStreak: 'Best streak',
+    character: {
+      title: 'Your character',
+      lead: 'It stands next to your nickname on every board. Change it whenever you like.',
+      saved: (name: string): string => `${name} is your character now.`,
+    },
+    nicknameOnce: {
+      title: 'Your nickname',
+      open: 'You can change your nickname once. After that it stays, so friends always know who they’re playing.',
+      locked: 'Your nickname is set for good, so friends always know it’s you.',
+      change: 'Change my nickname',
+      pick: 'Pick a new nickname',
+      others: 'Show other names',
+      orType: 'Or type your own',
+      typeHint: '3–20 letters or numbers. Please don’t use your real name.',
+      use: (name: string): string => `Use ${name}`,
+      confirmTitle: (name: string): string => `Become ${name} for good?`,
+      confirmBody: 'This is your one change. You won’t be able to change your nickname again.',
+      confirm: 'Yes, change it',
+      cancel: 'Not now',
+      done: (name: string): string => `You’re ${name} now.`,
+    },
+    messages: {
+      title: 'Messages',
+      lead: 'What you’ve sent us and our replies.',
+      empty: 'Nothing here yet. When you send us a message, it shows here with our reply.',
+      write: 'Send us a message',
+      you: 'You',
+      us: 'Do You Know',
+      waiting: 'We’ve got it. Our reply will appear here.',
+      newReply: 'New reply',
+      closed: 'This conversation is closed.',
+      replyLabel: 'Write back',
+      replyPlaceholder: 'Write your answer',
+      send: 'Send',
+      sending: 'Sending…',
+      sent: 'Sent. We’ll read it soon.',
+      about: (title: string): string => `About ${title}`,
+    },
     dayStreak: 'Day streak',
     gamesPlayed: 'Games played',
     guestNote: 'You play as a guest, so no email is needed and your games live on this device.',
@@ -670,6 +706,7 @@ export const enGB = {
     bestScores: 'Best scores',
     recentGames: 'Recent games',
     empty: 'No games yet. Pick a quiz and give it a go!',
+    bestEmpty: 'Your best score in each quiz shows here.',
     retiredQuiz: 'A retired quiz',
     /** Best-score time, e.g. "12.4s". */
     time: (ms: number): string => `${(ms / 1000).toFixed(1)}s`,
@@ -704,12 +741,13 @@ export const enGB = {
 
   settings: {
     title: 'Settings',
+    lead: 'How the app looks on this device.',
     colours: 'Colours',
     themes: {
       light: { label: 'Light', hint: 'Bright and sunny' },
       dark: { label: 'Dark', hint: 'Easier on the eyes at night' },
     },
-    profileHint: 'Your nickname, avatar and age group live on',
+    profileHint: 'Your nickname, character and messages live on',
   },
 
   avatar: {
@@ -747,6 +785,11 @@ export const enGB = {
   },
 
   info: {
+    shell: {
+      eyebrow: 'Help and info',
+      menu: 'Help and info pages',
+      onThisPage: 'On this page',
+    },
     about: {
       metaTitle: 'About',
       metaDescription:

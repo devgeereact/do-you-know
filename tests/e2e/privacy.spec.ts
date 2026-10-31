@@ -1,9 +1,9 @@
 import { expect, expectNoHorizontalOverflow, playThrough, QUIZ, test } from './support/test';
 
-test.describe('my games and deleting my data', () => {
+test.describe('my profile and deleting my data', () => {
   test('a new visitor sees an empty history; after a game it lists the score', async ({ page }) => {
     await page.goto('/me');
-    await expect(page.getByRole('heading', { level: 1, name: 'My games' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Your character' })).toBeVisible();
     await expect(page.getByText('No games yet. Pick a quiz and give it a go!')).toBeVisible();
     await expectNoHorizontalOverflow(page);
 
@@ -25,7 +25,7 @@ test.describe('my games and deleting my data', () => {
     await page.goto(`/play/${QUIZ.slug}?mode=practice`);
     await playThrough(page);
     await page.goto('/me');
-    await expect(page.getByRole('heading', { name: 'Your profile' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Your character' })).toBeVisible();
 
     // Nothing is deleted until the player confirms; keeping is the safe default.
     await page.getByRole('button', { name: 'Delete my account' }).click();
@@ -46,7 +46,6 @@ test.describe('my games and deleting my data', () => {
     expect(stored).toBeNull();
     await page.goto('/me');
     await expect(page.getByText('No games yet. Pick a quiz and give it a go!')).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Your profile' })).toHaveCount(0);
   });
 
   test('the app stores no personal data: a guest token only', async ({ page }) => {

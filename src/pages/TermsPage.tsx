@@ -68,7 +68,7 @@ export function TermsPage(): JSX.Element {
           You do not need an account to play. You can delete your player, games and scores at any
           time from{' '}
           <Link to="/me" className={proseLinkClass}>
-            My games
+            My profile
           </Link>
           . The{' '}
           <Link to="/privacy" className={proseLinkClass}>

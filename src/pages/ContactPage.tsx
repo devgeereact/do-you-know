@@ -1,6 +1,7 @@
 import { useId, useState, type FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Character } from '@/components/art/Art';
+import { InfoShell } from '@/components/InfoPage';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { chipClass } from '@/components/ui/cardClasses';
 import { proseLinkClass } from '@/components/ui/linkClasses';
@@ -21,7 +22,8 @@ const isType = (v: string | null): v is FeedbackType => TYPES.includes(v as Feed
 /**
  * Contact and feedback. Players (and every child) pick ready-made messages only: the project
  * collects no free text from children, and the server refuses it too. A grown-up can write a
- * message and leave an email for the reply. Everything lands in the Studio inbox.
+ * message (an email is optional). Everything lands in the Studio inbox; replies show on the
+ * player's profile under Messages.
  */
 export function ContactPage(): JSX.Element {
   const copy = t.info.contact;
@@ -58,7 +60,8 @@ export function ContactPage(): JSX.Element {
     if (who === 'adult') {
       if (isChild) return setError(f.errors.notAllowed);
       if (!adultKnown && !adultOk) return setError(f.errors.adult);
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) return setError(f.errors.email);
+      if (email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim()))
+        return setError(f.errors.email);
       if (message.trim().length < 10) return setError(f.errors.message);
     }
     setSending(true);
@@ -72,7 +75,7 @@ export function ContactPage(): JSX.Element {
               type,
               presets: [],
               message: message.trim(),
-              email: email.trim(),
+              ...(email.trim() ? { email: email.trim() } : {}),
               ...(quiz ? { quiz_slug: quiz } : {}),
             },
       );
@@ -98,14 +101,9 @@ export function ContactPage(): JSX.Element {
     'h-12 w-full rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/20';
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 pb-12 pt-5 lg:px-6 lg:pt-8">
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-8">
-        <section className="grid gap-4">
-          <p className="text-xs font-bold uppercase tracking-widest text-content-muted">
-            {f.kicker}
-          </p>
-          <h1 className="text-[2.2rem] leading-tight lg:text-[2.6rem]">{f.title}</h1>
-          <p className="text-lg text-content-muted">{f.lead}</p>
+    <InfoShell title={f.title} lead={f.lead}>
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-8">
+        <section className="order-2 grid gap-4 xl:order-none xl:col-start-2 xl:row-start-1">
           <ul className="grid gap-2">
             {f.tiles.map((tile) => (
               <li
@@ -138,7 +136,7 @@ export function ContactPage(): JSX.Element {
           </p>
         </section>
 
-        <section className="rounded-2xl border border-surface-border bg-surface p-5 shadow-soft lg:p-7">
+        <section className="rounded-2xl border border-surface-border bg-surface p-5 shadow-soft lg:p-7 xl:col-start-1 xl:row-start-1">
           {sent ? (
             <div role="status" className="grid justify-items-center gap-3 py-6 text-center">
               <Character name="heart" size={96} />
@@ -146,6 +144,9 @@ export function ContactPage(): JSX.Element {
               <p className="max-w-[42ch] text-content-muted">
                 {sent === 'adult' ? f.thanksAdult : f.thanksPlayer}
               </p>
+              <Link to="/me#messages" className="text-sm font-semibold text-primary underline">
+                {f.seeMessages}
+              </Link>
               <div className="mt-2 flex flex-wrap justify-center gap-2">
                 <button type="button" onClick={reset} className={buttonClasses('primary')}>
                   {f.another}
@@ -237,8 +238,12 @@ export function ContactPage(): JSX.Element {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={f.emailPlaceholder}
+                      aria-describedby={`${ids.email}-hint`}
                       className={field}
                     />
+                    <span id={`${ids.email}-hint`} className="text-xs text-content-muted">
+                      {f.emailHint}
+                    </span>
                   </div>
                   <div className="grid gap-1.5">
                     <label
@@ -296,6 +301,6 @@ export function ContactPage(): JSX.Element {
           )}
         </section>
       </div>
-    </main>
+    </InfoShell>
   );
 }

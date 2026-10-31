@@ -12,10 +12,9 @@ const LINKS: { to: string; label: string }[] = [
   { to: '/terms', label: t.footer.links.terms },
   { to: '/contact', label: t.footer.links.contact },
   { to: '/me/settings', label: t.footer.links.settings },
-  { to: '/account', label: t.footer.links.account },
 ];
 
-/** Quiet footer: help, legal pages and the grown-ups' area, away from the playful bits. */
+/** Quiet footer: help and legal pages, away from the playful bits. */
 export function SiteFooter(): JSX.Element {
   return (
     <footer className="border-t border-surface-border bg-surface/70 backdrop-blur-sm">

@@ -388,7 +388,7 @@ export interface FeedbackItem {
 
 export interface ThreadMessage {
   id: string;
-  kind: 'reply' | 'note';
+  kind: 'reply' | 'note' | 'player';
   body: string;
   emailed: boolean;
   author: string | null;

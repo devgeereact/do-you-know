@@ -179,9 +179,9 @@ describe('ResultsView', () => {
     expect(screen.getByRole('heading', { name: "It's a tie!" })).toBeInTheDocument();
   });
 
-  it('mentions guest play with a link to My games only for guests', () => {
+  it('mentions guest play with a link to My profile only for guests', () => {
     renderResults(summary(), { isGuest: true });
-    expect(screen.getByRole('link', { name: 'My games' })).toHaveAttribute('href', '/me');
+    expect(screen.getByRole('link', { name: 'My profile' })).toHaveAttribute('href', '/me');
   });
 
   it('does not mention guest play for non-guests', () => {

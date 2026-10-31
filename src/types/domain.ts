@@ -24,7 +24,27 @@ export type Profile = Timestamps & {
   streak_current: number;
   streak_best: number;
   last_daily_date: string | null;
+  /** The one nickname change has been used (owner rule, 31 October 2026). */
+  nickname_locked: boolean;
+  nickname_changed_at: string | null;
+  /** Threads with a staff reply the player has not opened. */
+  unread_messages: number;
 };
+
+/** GET /me/messages */
+export interface MyMessage {
+  id: string;
+  type: 'feedback' | 'question' | 'idea' | 'problem';
+  presets: string[];
+  message: string | null;
+  status: 'new' | 'open' | 'resolved';
+  created_at: string;
+  quiz: { slug: string; title: string } | null;
+  question_prompt: string | null;
+  unread: boolean;
+  can_reply: boolean;
+  thread: { id: string; from: 'staff' | 'me'; body: string; created_at: string }[];
+}
 
 /** GET /me/settings */
 export type AppSettings = Timestamps & {

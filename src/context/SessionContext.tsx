@@ -17,6 +17,7 @@ export interface SessionUser {
   nickname?: string | null;
   avatarId?: string | null;
   streak?: number;
+  unreadMessages?: number;
 }
 
 export interface SessionContextValue {
@@ -43,6 +44,7 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
         nickname: me.nickname,
         avatarId: me.avatar_id,
         streak: me.streak_current,
+        unreadMessages: me.unread_messages ?? 0,
       });
     } catch {
       setUser(null); // expired or revoked token; api() already forgot it

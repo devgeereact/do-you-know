@@ -85,7 +85,11 @@ export function InboxScreen(): JSX.Element {
     if (!res) return;
     setReply('');
     await refreshItem(detail.id);
-    toast(res.emailed ? 'Reply sent by email' : 'Saved; not emailed (email isn’t set up yet)');
+    toast(
+      res.emailed
+        ? 'Reply sent: on their profile and by email'
+        : 'Reply sent: they’ll see it on their profile',
+    );
   };
 
   const addNote = async (): Promise<void> => {
@@ -259,15 +263,21 @@ export function InboxScreen(): JSX.Element {
                         key={m.id}
                         className={cn(
                           'rounded-[14px] px-3 py-2.5',
-                          m.kind === 'reply' ? 'bg-correct/10' : 'bg-warning/15',
+                          m.kind === 'reply'
+                            ? 'ml-8 bg-correct/10'
+                            : m.kind === 'player'
+                              ? 'mr-8 bg-primary/10'
+                              : 'bg-warning/15',
                         )}
                       >
                         <span className="text-xs text-content-muted">
                           {m.kind === 'reply'
                             ? m.emailed
-                              ? 'Reply sent by email'
-                              : 'Reply saved, not emailed'
-                            : 'Internal note'}
+                              ? 'Your reply · on their profile and by email'
+                              : 'Your reply · on their profile'
+                            : m.kind === 'player'
+                              ? 'Their answer'
+                              : 'Internal note'}
                           {m.author ? ` · ${m.author}` : ''} · {niceDateTime(m.created_at)}
                         </span>
                         <p className="mt-0.5 whitespace-pre-wrap text-[14.5px] [overflow-wrap:anywhere]">
@@ -277,34 +287,37 @@ export function InboxScreen(): JSX.Element {
                     ))}
                   </div>
                 )}
-                {detail.kind === 'adult' && detail.has_email ? (
-                  <Field label={`Reply to ${maskEmail(detail.email)}`} htmlFor="ib-reply">
-                    <textarea
-                      id="ib-reply"
-                      rows={3}
-                      maxLength={5000}
-                      className={inputClass}
-                      placeholder="Write a reply. It goes by email (when email is set up) and is saved here."
-                      value={reply}
-                      onChange={(e) => setReply(e.target.value)}
-                    />
-                    <div className="mt-2 flex justify-end">
-                      <Button
-                        size="sm"
-                        disabled={busy || !reply.trim()}
-                        onClick={() => void sendReply()}
-                      >
-                        Send reply
-                      </Button>
-                    </div>
-                  </Field>
-                ) : (
-                  <p className="text-sm text-content-muted">
-                    {detail.kind === 'player'
-                      ? 'Players can’t receive replies: we never store a way to contact children. Add a note for the team instead.'
-                      : 'No email was left, so there is no way to reply. Add a note instead.'}
-                  </p>
-                )}
+                <Field
+                  label={
+                    detail.kind === 'adult' && detail.has_email
+                      ? `Reply · also emailed to ${maskEmail(detail.email)}`
+                      : 'Reply'
+                  }
+                  htmlFor="ib-reply"
+                >
+                  <textarea
+                    id="ib-reply"
+                    rows={3}
+                    maxLength={5000}
+                    className={inputClass}
+                    placeholder={
+                      detail.kind === 'player'
+                        ? 'This player is a child or didn’t give an age: keep it short and kind. They can read it but can’t write back.'
+                        : 'They read this on their profile under Messages and can answer there.'
+                    }
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                  />
+                  <div className="mt-2 flex justify-end">
+                    <Button
+                      size="sm"
+                      disabled={busy || !reply.trim()}
+                      onClick={() => void sendReply()}
+                    >
+                      Send reply
+                    </Button>
+                  </div>
+                </Field>
                 <Field label="Internal note" htmlFor="ib-note">
                   <textarea
                     id="ib-note"

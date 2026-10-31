@@ -33,7 +33,7 @@ export function PrivacyPage(): JSX.Element {
           <li>Other players only see your nickname, your avatar, your score and your time.</li>
           <li>We keep your games so you can see your scores and streaks.</li>
           <li>There are no adverts and nothing that follows you around the internet.</li>
-          <li>You can delete everything any time on My games. A grown-up can help you.</li>
+          <li>You can delete everything any time on My profile. A grown-up can help you.</li>
           <li>If something worries you, talk to a grown-up you trust.</li>
         </ul>
       </Card>
@@ -66,8 +66,8 @@ export function PrivacyPage(): JSX.Element {
           <li>a scrambled copy of this device’s code, so the server can recognise it</li>
           <li>
             any feedback you send from Contact us or the Report button: players pick ready-made
-            messages only; grown-ups may also write a message and leave an email address so we can
-            reply
+            messages only; grown-ups may also write a message and, if they want an email as well,
+            leave an address. Our replies show on your profile under Messages
           </li>
         </ul>
         <p>
@@ -187,7 +187,7 @@ export function PrivacyPage(): JSX.Element {
         <p>
           Go to{' '}
           <Link to="/me" className={proseLinkClass}>
-            My games
+            My profile
           </Link>{' '}
           and choose “Delete my account”. This straight away removes your player, every game and
           answer, your leaderboard results, your friend challenge links and this device’s code. Any

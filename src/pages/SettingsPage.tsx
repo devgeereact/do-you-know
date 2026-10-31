@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { PageHeader } from '@/components/ui/PageHeader';
+import { InfoShell } from '@/components/InfoPage';
 import { Card } from '@/components/ui/Card';
 import { useTheme } from '@/context/ThemeContext';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { cn } from '@/lib/utils';
 import type { ThemeMode } from '@/types';
-import { Page } from '@/components/ui/Page';
 import { t } from '@/i18n';
 
 const THEMES: { mode: ThemeMode; label: string; hint: string }[] = [
@@ -19,14 +18,8 @@ export function SettingsPage(): JSX.Element {
   useDocumentMeta({ title: t.settings.title, noindex: true });
 
   return (
-    <Page>
-      <PageHeader
-        back={{ to: '/me', label: t.common.myGames }}
-        title={t.settings.title}
-        className="mb-6"
-      />
-
-      <Card>
+    <InfoShell title={t.settings.title} lead={t.settings.lead}>
+      <Card className="max-w-3xl">
         <fieldset>
           <legend className="text-lg font-semibold text-content">{t.settings.colours}</legend>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -61,10 +54,10 @@ export function SettingsPage(): JSX.Element {
       <p className="mt-6 text-content-muted">
         {t.settings.profileHint}{' '}
         <Link to="/me" className="font-semibold text-primary underline underline-offset-2">
-          {t.common.myGames}
+          {t.me.title}
         </Link>
         .
       </p>
-    </Page>
+    </InfoShell>
   );
 }
