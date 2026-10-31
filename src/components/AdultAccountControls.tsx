@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import { SignInButton, SignUpButton, UserButton, useAuth } from '@clerk/react';
+import { linkAdultSession } from '@/services/accountService';
 import { Button } from '@/components/ui/Button';
 import { t } from '@/i18n';
 
 /** Account identity only. Game ownership still belongs to the existing backend. */
 export function AdultAccountControls(): JSX.Element {
-  const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn, getToken } = useAuth();
+
+  // Without this call the server never creates the identity row for a grown-up sign-in.
+  useEffect(() => {
+    if (isLoaded && isSignedIn) void linkAdultSession(() => getToken()).catch(() => undefined);
+  }, [isLoaded, isSignedIn, getToken]);
 
   if (!isLoaded) {
     return <p role="status">{t.account.loading}</p>;

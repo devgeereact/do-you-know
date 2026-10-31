@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClerkProvider, SignInButton, UserButton, useAuth } from '@clerk/react';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -7,6 +7,7 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { env } from '@/lib/env';
 import type { GetToken } from '@/services/adminService';
 import { AdminConsole } from '@/pages/admin/AdminConsole';
+import { linkAdultSession } from '@/services/accountService';
 
 /**
  * Staff area at /admin. Loaded lazily with its own Clerk provider, kept out of search results,
@@ -33,7 +34,19 @@ export function AdminApp(): JSX.Element {
 
 function ClerkGate(): JSX.Element {
   const { isLoaded, isSignedIn, getToken } = useAuth();
-  if (!isLoaded) return <p role="status">Loading…</p>;
+  const [linked, setLinked] = useState(false);
+  // The admin guard looks up the Clerk identity row, which only exists after this call.
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+    let live = true;
+    void linkAdultSession(() => getToken())
+      .catch(() => undefined)
+      .finally(() => live && setLinked(true));
+    return () => {
+      live = false;
+    };
+  }, [isLoaded, isSignedIn, getToken]);
+  if (!isLoaded || (isSignedIn && !linked)) return <p role="status">Loading…</p>;
   if (!isSignedIn) {
     return (
       <Card className="space-y-4">
