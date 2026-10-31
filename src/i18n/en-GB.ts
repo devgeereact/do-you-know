@@ -633,6 +633,7 @@ export const enGB = {
     },
     tied: 'Tied',
     onlyThree: 'Only the top three so far.',
+    emptyList: 'Places 4 and down show up here once people start playing.',
     emptyBoard: 'Nobody on this board yet. Play a ranked round or the daily to be first.',
     loadError: 'We couldn’t load the board. Check your connection and try again.',
     lead: 'Most correct wins. If it’s a tie, the faster answer time goes first.',

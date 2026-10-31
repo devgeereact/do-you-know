@@ -100,8 +100,11 @@ test.describe('playing a quiz', () => {
     const buttons = await page.getByRole('region', { name: 'Answers' }).getByRole('button').all();
     // A slider question has a single "Lock it in" button; the others have two or three options.
     expect(buttons.length).toBeGreaterThanOrEqual(1);
+    // The answers rise in with a short scale animation, so measure once it has settled.
     for (const button of buttons) {
-      expect((await button.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(48);
+      await expect
+        .poll(async () => (await button.boundingBox())?.height ?? 0)
+        .toBeGreaterThanOrEqual(48);
     }
   });
 });

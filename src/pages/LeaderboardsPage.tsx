@@ -215,7 +215,7 @@ function Overall({
               </li>
             )}
             {board && rows.length === 0 && (
-              <li className="p-4 text-content-muted">{t.leaderboards.emptyBoard}</li>
+              <li className="p-4 text-content-muted">{t.leaderboards.emptyList}</li>
             )}
             {board && rows.length > 0 && rows.length <= 3 && (
               <li className="p-4 text-content-muted">{t.leaderboards.onlyThree}</li>
@@ -254,6 +254,9 @@ function Podium({ rows }: { rows: OverallRow[] }): JSX.Element {
           <Character name="owl" size={64} />
         </div>
         <p className="max-w-[26ch] font-semibold text-content-muted">{t.leaderboards.emptyBoard}</p>
+        <Link to="/daily/play" className={buttonClasses('play', 'md')}>
+          {t.nav.play.label}
+        </Link>
       </div>
     );
   }
