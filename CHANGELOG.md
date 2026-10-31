@@ -1,5 +1,11 @@
 # Changelog
 
+## 31 October 2026 (later) — Generator, tidy-up
+- Sourced question generator built and switched off (Studio → Generator): trusted-site search and page reading through Bright Data, drafts from Claude using only that text, quote/source/rule/duplicate checks, approve and send to a quiz. Migrations 0014, 0015. ADR-016.
+- Removed HeroTeaser, SkyBackdrop, ProgressDots and TimerBadge (unused after the redesign).
+- Inbox reply emails tell grown-ups to answer through the contact form (sender is no-reply).
+- ESLint ignores `backend/vendor`.
+
 ## 31 October 2026 — Pop & Ink rebrand, Studio and one board for every subject
 - Our own logo (grape speech bubble, lemon question mark) across the header, footer, favicon, app icons and share image (`scripts/brand-assets.mjs`).
 - Pop & Ink colours, Baloo 2 + Outfit fonts, 13 illustrated object characters (avatar ids unchanged) and eight worlds. Every question now plays inside its own world on a framed game stage; the explanation is a sheet inside the frame. ADR-014.

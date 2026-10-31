@@ -120,3 +120,13 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | CI and Semgrep | VERIFIED | Green on 13823d7 (CI cms check fixed to not rely on leftover data) |
 | Studio on live | BLOCKED | `admin_subjects` empty in the live private config; owner adds their Clerk id |
 | Inbox email replies | NOT TESTED | `mail_from` not set |
+
+### Generator and tidy-up, 31 October 2026 (later)
+
+| Check | Result | Notes |
+|---|---|---|
+| Backend suites incl. `generator` | PASS | generator 37 checks with recorded answers; all other suites unchanged |
+| `pnpm check` | PASS | 158 tests (ProgressDots tests removed with the component) |
+| Playwright journeys | PASS | 46 / 46 |
+| Studio Generator end to end (local, recorded answers) | PASS | Run → 3 pages (one unreadable) → 4 drafts → 1 kept, made-up quote / off-list source / broken question caught → approve; no console errors |
+| Live Generator run | BLOCKED | Needs the owner's cost approval and keys |

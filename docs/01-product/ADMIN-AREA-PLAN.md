@@ -1,6 +1,6 @@
 # Admin area plan (approved 27 October 2026)
 
-Copy of the approved plan, kept in the repository. Status 31 October 2026: Phases A to E (foundation, dashboard "To do", moderation, content Studio with import, daily calendar) and the feedback inbox are built and tested locally (backend suites `admin`, `cms`, `feedback`; Studio unit tests; Playwright walkthrough of every screen at 1440 and 390). Migration 0013 adds the tables. Phase G (sourced generator) has a screen that explains the flow but makes no calls: it needs the owner's cost approval. Phase A was deployed on 30 October; the rest ships with the 31 October release.
+Copy of the approved plan, kept in the repository. Status 31 October 2026: Phases A to E (foundation, dashboard "To do", moderation, content Studio with import, daily calendar) and the feedback inbox are built and tested locally (backend suites `admin`, `cms`, `feedback`; Studio unit tests; Playwright walkthrough of every screen at 1440 and 390). Migration 0013 adds the tables. Phase G (sourced generator) is built (migrations 0014, 0015; `Generator.php`; `backend/tests/generator.php` with recorded answers) and ships switched off: turning it on needs the owner's cost approval and keys in the private config. Phase A was deployed on 30 October; the rest ships with the 31 October release.
 
 ## Context
 

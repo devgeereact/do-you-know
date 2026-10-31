@@ -148,7 +148,7 @@ Super Admin only (Clerk subject in the private `admin_subjects` config, checked 
 - **Library and Editor:** every quiz with status; the editor autosaves a draft beside the live version, marks the right answer, needs an explanation, an https source and a review-by date, and shows a live preview.
 - **Check & publish:** a named human ticks each question against its source, then publishes a frozen version (now or scheduled). Retire and restore; never delete.
 - **Import:** paste text or upload .txt/.csv/.md; parsed in the browser and validated on the server; errors per line; drafts only.
-- **Generator (Bright Data + Claude, sourced drafts):** screen explains the flow; **switched off** until the owner approves the cost. AI never publishes.
+- **Generator (Bright Data + Claude, sourced drafts), built 31 October 2026:** topic, ages, count and subject → Bright Data searches only trusted sites → up to four pages read → Claude (`claude-opus-5-5` by default) writes questions only from that text with an exact quote → the server checks quote, source, question rules and duplicates → a person approves and sends drafts into a quiz that still goes through Check & publish. **Switched off** until the owner sets `generator.enabled` and the keys; daily run cap; usage shown in the Studio. AI never publishes.
 - **Daily calendar, Players (hide rounds), Subjects (new subjects hidden until they have a live quiz), Activity (audit log).**
 
 ### 4.9 PWA

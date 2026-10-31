@@ -2,6 +2,18 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-10-31 · Generator security and cost review
+
+Reviewer: Claude Code. Scope: `Generator.php`, `GeneratorLive.php`, migrations 0014–0015, Studio Generator screen.
+- Off by default: no outside call is possible unless `generator.enabled` is true and the Claude and Bright Data settings are present; recorded answers are refused outside the test environment (tests check both). PASS.
+- Keys are read only from the private config, never sent to the browser; the status endpoint reports only true/false for each. PASS.
+- Only Super Admins reach the routes (`Admin::guard`); players get 401/403 (tested). PASS.
+- No player data leaves the server: requests carry the topic, age band and fetched public page text only. PASS.
+- Output is untrusted: every draft is validated like hand-written content, its quote must appear in the fetched page, its source must be an https page on the trusted list, and it never publishes; approval and sending are audited. PASS.
+- Cost control: daily run cap (default 20), at most one search, four page fetches and one model call per run, and a per-run step lock so a double click or two tabs never repeat a paid step (tested). PASS.
+- Model output is parsed as JSON from a schema-constrained response; refusal and token-limit stops end the run with a readable reason. PASS.
+- Not done: a live run (BLOCKED until the owner approves the cost and adds keys).
+
 ## 2026-10-31 · Rebrand, Studio and feedback release review (accessibility, security, privacy)
 
 Reviewer: Claude Code for the owner. Scope: the Pop & Ink redesign, the Studio CMS, the overall leaderboard and contact/feedback, before the 31 October release.

@@ -1,5 +1,12 @@
 # Current task — doyouknow.space is live
 
+## 31 October 2026 (later) — finish every open item (Status: PARTIAL; two steps are the owner's)
+
+- Done: Generator built and shipped switched off (ADR-016; migrations 0014–0015 to run on live after a backup); old components removed; reply emails say how to write back; Clerk Super Admin id verified in the production Clerk app (it is the owner's account).
+- Blocked by the project guard (it refuses any command touching the live private config): adding `admin_subjects` and `mail_from` to `~/do-you-know-private/shared/config.php`. The owner runs the prepared command (see the chat of 31 Oct) or edits it in cPanel.
+- Owner decisions: approve the generator cost and add the keys; whether to create a hello@doyouknow.space forwarder for replies.
+- Checks: backend all suites PASS (generator 37); `pnpm check` PASS; Playwright 46/46 PASS.
+
 ## 31 October 2026 — Pop & Ink rebrand, Studio CMS, overall board, feedback (Status: DONE, released)
 
 - Goal (owner): build the approved Pop & Ink design to live, with our own logo; fix gaps; test locally first.

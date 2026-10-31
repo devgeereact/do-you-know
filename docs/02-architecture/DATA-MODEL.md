@@ -80,6 +80,10 @@ blocked_words · rate_limits · schema_migrations (ledger)
 - `attempts.is_hidden` hides one round from every board; index `attempts_period (status, mode, finished_at)` serves the overall board (`Overall.php`: best finished ranked or daily round per quiz × 10 points, London periods).
 - `feedback` (`profile_id` SET NULL on delete, `kind` player/adult, `type` feedback/question/idea/problem, `presets` JSON, `message` and `email` adult/teen only, optional `quiz_id`, `question_id`, `question_prompt`, `status` new/open/resolved) and `feedback_messages` (`reply` or `note`, `author_id`, `emailed`). Never returned by a public endpoint.
 
+### Generator (migrations 0014, 0015)
+
+- `generator_runs` (topic, ages, wanted, model, `stage` search/fetch/draft/check/done/failed, `sources` JSON, `error`, call and token counters, `busy_until` step lock), `generator_pages` (page text per run and url, for quote checks), `generator_drafts` (question JSON, quote, checks, problems, `decision` pending/approved/rejected/sent, `sent_quiz_id`). Admin only; no player data.
+
 Likes: `leaderboard_likes` holds (`board`, `quiz_id`, `period_start`, `entry_user_id`, `liker_id`). Public boards return the total and the viewer's own like only, never who liked. Rows carry `entry_id` (the entry's attempt id) as the like handle. Boards rank by correct/total, so 20-question ranked and 10-question daily results compare fairly.
 
 Profile deletion (`POST /me/delete`) cascades to sessions, settings, attempts, answers,
