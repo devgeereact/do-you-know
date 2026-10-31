@@ -64,6 +64,11 @@ export function PrivacyPage(): JSX.Element {
           </li>
           <li>your best results on the leaderboards, and any friend challenge links you make</li>
           <li>a scrambled copy of this device’s code, so the server can recognise it</li>
+          <li>
+            any feedback you send from Contact us or the Report button: players pick ready-made
+            messages only; grown-ups may also write a message and leave an email address so we can
+            reply
+          </li>
         </ul>
         <p>
           To stop people flooding the server, it also keeps a scrambled, one-way version of your
@@ -185,8 +190,9 @@ export function PrivacyPage(): JSX.Element {
             My games
           </Link>{' '}
           and choose “Delete my account”. This straight away removes your player, every game and
-          answer, your leaderboard results, your friend challenge links and this device’s code. It
-          cannot be undone.
+          answer, your leaderboard results, your friend challenge links and this device’s code. Any
+          message or email address you wrote in feedback is wiped too; only the ready-made choices
+          stay, with nothing linking them to you. It cannot be undone.
         </p>
         <p>
           A grown-up’s Clerk sign-in is separate: delete it from the account menu on the Parents and

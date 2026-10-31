@@ -17,4 +17,4 @@ export const CONTACT_EMAIL: string | undefined = readContactEmail();
 export const CONTROLLER_NAME = 'Do You Know (operated by Gideon Akinlotan)';
 
 /** Date the privacy notice and terms were last changed. Update with every edit. */
-export const POLICY_UPDATED = '17 October 2026';
+export const POLICY_UPDATED = '31 October 2026';
