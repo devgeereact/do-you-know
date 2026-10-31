@@ -8,7 +8,7 @@ Run with `npm test` (Vitest, jsdom, React Testing Library). Config is `vitest.co
 
 - `lib/`: `src/lib` rules. `api.ts` error and session handling with `fetch` mocked, `gameErrors.ts` copy, and `avatars.ts`, which parses `backend/src/Player.php` so the 12 presets and the server whitelist cannot drift apart.
 - `hooks/`: `useQuizAttempt`, `useProfile`, `useLeaderboard`, `useDailyChallenge`, `useQuestionTimer` and `useOnlineStatus`, with the services and session mocked at the module boundary.
-- `components/`: render tests for `ResultsView` and `ProgressDots`. Children with their own data hooks are stubbed.
+- `components/`: render tests for `ResultsView`, `AdminConsole` and other screens. Children with their own data hooks are stubbed.
 - `support/`: typed fixtures for attempt state, answers, summaries and profiles.
 - `setup.ts`: jest-dom matchers, automatic cleanup and an in-memory `localStorage` (newer Node versions ship an experimental one that can shadow jsdom's).
 

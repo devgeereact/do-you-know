@@ -21,22 +21,22 @@ Tokens map 1:1 to `tailwind.config.ts` and are RGB CSS variables in `src/index.c
 
 ### Colour
 
-| Token              | Class                         | Light                | Dark      | Use                                    |
-| ------------------ | ----------------------------- | -------------------- | --------- | -------------------------------------- |
-| Background         | `bg-background`               | `#F6F4FD` mist       | `#151331` | App canvas                             |
-| Surface            | `bg-surface`                  | `#FFFFFF`            | `#1F1C42` | Cards, sheets                          |
-| Surface border     | `border-surface-border`       | `#E8E4F3`            | `#34305E` | Card outlines, dividers                |
-| Primary (grape)    | `bg-primary` / `text-primary` | `#6C4CF5`            | `#9C86FF` | Buttons, links, focus, the brand       |
-| Primary edge       | `shadow-edge-primary`         | `#4A2FC9`            | `#6C4CF5` | Pressed-button edge                    |
-| Secondary (lemon)  | `bg-secondary`                | `#FFD23F`            | same      | Streaks, rewards (dark text only)      |
-| Tangerine          | `bg-tang`                     | `#FF8A3D`            | same      | The single "play" action (dark text)   |
-| Lagoon             | `bg-sky`                      | `#14B8A6`            | same      | Info, illustration fills               |
-| Bubblegum          | `bg-gum`                      | `#FF6FA3`            | same      | Celebration accents only               |
-| Content (ink)      | `text-content`                | `#17153A`            | `#F1EFFF` | Headings, body                         |
-| Content muted      | `text-content-muted`          | `#5A5680`            | `#B4B0D6` | Captions, hints                        |
-| Correct            | `bg-correct`                  | `#0F7A4F`            | `#1FB57A` | Right answer (+ ✓ and words)           |
-| Wrong              | `bg-wrong`                    | `#C6312F`            | `#EF5A5E` | Wrong answer (+ ✕ and words)           |
-| Warning            | `bg-warning`                  | `#F59E0B`            | same      | Timer running low (dark text)          |
+| Token             | Class                         | Light          | Dark      | Use                                  |
+| ----------------- | ----------------------------- | -------------- | --------- | ------------------------------------ |
+| Background        | `bg-background`               | `#F6F4FD` mist | `#151331` | App canvas                           |
+| Surface           | `bg-surface`                  | `#FFFFFF`      | `#1F1C42` | Cards, sheets                        |
+| Surface border    | `border-surface-border`       | `#E8E4F3`      | `#34305E` | Card outlines, dividers              |
+| Primary (grape)   | `bg-primary` / `text-primary` | `#6C4CF5`      | `#9C86FF` | Buttons, links, focus, the brand     |
+| Primary edge      | `shadow-edge-primary`         | `#4A2FC9`      | `#6C4CF5` | Pressed-button edge                  |
+| Secondary (lemon) | `bg-secondary`                | `#FFD23F`      | same      | Streaks, rewards (dark text only)    |
+| Tangerine         | `bg-tang`                     | `#FF8A3D`      | same      | The single "play" action (dark text) |
+| Lagoon            | `bg-sky`                      | `#14B8A6`      | same      | Info, illustration fills             |
+| Bubblegum         | `bg-gum`                      | `#FF6FA3`      | same      | Celebration accents only             |
+| Content (ink)     | `text-content`                | `#17153A`      | `#F1EFFF` | Headings, body                       |
+| Content muted     | `text-content-muted`          | `#5A5680`      | `#B4B0D6` | Captions, hints                      |
+| Correct           | `bg-correct`                  | `#0F7A4F`      | `#1FB57A` | Right answer (+ ✓ and words)         |
+| Wrong             | `bg-wrong`                    | `#C6312F`      | `#EF5A5E` | Wrong answer (+ ✕ and words)         |
+| Warning           | `bg-warning`                  | `#F59E0B`      | same      | Timer running low (dark text)        |
 
 **Contrast (computed 31 Oct 2026):** white on grape 5.3:1 · grape text on white 5.3:1 · ink on mist 16.0:1 · muted on mist 6.3:1 (on white 6.8:1) · ink on tangerine 7.4:1 · ink on lemon 12.1:1 · white on correct 5.4:1 · white on wrong 5.4:1 · dark: ink-dark on primary 6.2:1, content on background 15.8:1, muted on surface 7.8:1. **Never put white text on tangerine (2.3:1), lemon or lagoon.**
 
@@ -46,11 +46,11 @@ PWA manifest: `theme_color #6C4CF5`, `background_color #F6F4FD`.
 
 ### Typography
 
-| Role               | Family                  | Class          | Notes                                                   |
-| ------------------ | ----------------------- | -------------- | ------------------------------------------------------- |
-| Display / headings | **Baloo 2** (variable)  | `font-display` | Rounded and heavy; h1–h3 extrabold, `text-wrap: balance` |
-| Body / UI          | **Outfit** (variable)   | `font-sans`    | Clean, readable at small sizes                          |
-| Mono               | system mono             | `font-mono`    | Admin only                                              |
+| Role               | Family                 | Class          | Notes                                                    |
+| ------------------ | ---------------------- | -------------- | -------------------------------------------------------- |
+| Display / headings | **Baloo 2** (variable) | `font-display` | Rounded and heavy; h1–h3 extrabold, `text-wrap: balance` |
+| Body / UI          | **Outfit** (variable)  | `font-sans`    | Clean, readable at small sizes                           |
+| Mono               | system mono            | `font-mono`    | Admin only                                               |
 
 Fonts are **self-hosted** via `@fontsource-variable/*` (no Google Fonts request: better for children's privacy and offline play). Minimum body size 16 px.
 
@@ -72,8 +72,8 @@ ticker, so smooth scroll and ScrollTrigger share one frame loop.
 | Interaction    | Spec                                                                                                                                                                                      |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Button press   | Drops 3 px and its edge shadow shrinks (`shadow-edge-*` to `shadow-edge-pressed`), 120 ms. Hover lifts 2 px                                                                               |
-| World scenes   | CSS keyframes (`swim`, `sway`, `twinkle`, `drift`, `beat`, `pulse-sun`) move props inside each world; Daily cross-fades one world per stop every 2 s                                       |
-| Hero           | Headline rises word by word (`SplitText`), the ocean world follows the pointer a little (`quickTo` parallax), and the "Try one" card plays a real practice question                   |
+| World scenes   | CSS keyframes (`swim`, `sway`, `twinkle`, `drift`, `beat`, `pulse-sun`) move props inside each world; Daily cross-fades one world per stop every 2 s                                      |
+| Hero           | Headline rises word by word (`SplitText`), the ocean world follows the pointer a little (`quickTo` parallax), and the "Try one" card plays a real practice question                       |
 | Scroll reveal  | `useReveal`: `[data-reveal]` items rise 28 px and fade in, in staggered batches, once                                                                                                     |
 | Question in    | Prompt card lifts, its words rise, answers stagger up (about 600 ms, never blocks input)                                                                                                  |
 | Correct answer | `animate-pop` + a short confetti burst from the chosen answer (`burstConfetti`)                                                                                                           |
@@ -84,7 +84,7 @@ ticker, so smooth scroll and ScrollTrigger share one frame loop.
 | Segmented tabs | `SegmentedControl` (leaderboards): equal-width buttons, a primary pill slides with `xPercent`; `aria-pressed` stays                                                                       |
 | Count-up       | `CountUp` (My games stats) and the results ring percentage count up with the fill; screen readers get the final number only                                                               |
 | Lists          | Leaderboard rows rise in with a short stagger on every load; review rows, avatar tiles, info cards and My games rows use `useReveal`                                                      |
-| Timer low      | `TimerBadge` turns amber and gives one soft scale beat per second (no flashing)                                                                                                           |
+| Timer low      | The stage timer pill (`.stage-pill`) (`data-low`) turns amber with ink text in the last seconds (no flashing)                                                                             |
 | Reduced motion | Every GSAP animation sits in `gsap.matchMedia` with a reduced-motion branch; Lenis smoothing is off; CSS in `index.css` disables transforms. State is still shown by colour + icon + text |
 
 Rules: animate only `opacity` and transforms (`autoAlpha` is avoided for reveals so content
@@ -109,7 +109,7 @@ events. Lenis needs `lenis/dist/lenis.css`; mark nested scroll areas with
 ## 5. Component conventions
 
 - Primitives in `src/components/ui` (`Button`, `Card` with an `as` prop for `section`/`article`/`nav`, `Page`, plus `AnswerButton`,
-  `ScoreRing`, `AvatarImage`, `ProgressDots`, `Sheet` as they are built).
+  `ScoreRing`, `AvatarBadge`, the stage classes in `src/index.css`).
 - **Page header pattern:** every browse page starts with `PageHeader` (optional back link, eyebrow, h1 at
   `text-4xl md:text-5xl`, lead, actions). Section titles use `SectionHeading` (`text-2xl md:text-3xl`, optional
   action link on the right using `sectionLinkClass`). Info pages get both through `InfoPage`.
