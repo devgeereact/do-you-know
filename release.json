@@ -15,6 +15,9 @@
       "exclude": [
         "*.md",
         "config.example.php"
+      ],
+      "allow": [
+        "*.sql"
       ]
     },
     {
