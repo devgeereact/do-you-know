@@ -165,7 +165,7 @@ final class Feedback
             $emailed = false;
             if (is_string($from) && $from !== '' && filter_var($from, FILTER_VALIDATE_EMAIL) !== false) {
                 // Both addresses are validated, so no header can be injected. Plain text only.
-                $emailed = mail($row['email'], 'Reply from Do You Know', $text . "\n\n— Do You Know (doyouknow.space)\n",
+                $emailed = mail($row['email'], 'Reply from Do You Know', $text . "\n\n— Do You Know (doyouknow.space)\nThis address does not receive mail. To write back, use the form at https://doyouknow.space/contact\n",
                     ['From' => $from, 'Content-Type' => 'text/plain; charset=utf-8']);
             }
             $messageId = Database::uuid();
