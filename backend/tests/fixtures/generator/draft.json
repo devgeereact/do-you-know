@@ -1,0 +1,48 @@
+{
+ "questions": [
+  {
+   "prompt": "Fixture generator: what is the change from liquid water to water vapour called?",
+   "right_answer": "Evaporation",
+   "wrong_answers": [
+    "Condensation",
+    "Melting",
+    "Freezing"
+   ],
+   "explanation": "Warm water turns into an invisible gas. That change is called evaporation.",
+   "source_url": "https://www.bbc.co.uk/bitesize/fixture-water-cycle",
+   "quote": "this change from liquid to gas is called evaporation"
+  },
+  {
+   "prompt": "Fixture generator: what are clouds made of?",
+   "right_answer": "Tiny drops of water or ice crystals",
+   "wrong_answers": [
+    "Smoke",
+    "Cotton",
+    "Dust only"
+   ],
+   "explanation": "Clouds are made of tiny water drops or small ice crystals.",
+   "source_url": "https://www.metoffice.gov.uk/fixture-clouds",
+   "quote": "clouds are mostly made of candyfloss according to scientists"
+  },
+  {
+   "prompt": "Fixture generator: which website did this come from?",
+   "right_answer": "A quiz site",
+   "wrong_answers": [
+    "A museum",
+    "A school",
+    "A library"
+   ],
+   "explanation": "This draft cites a page that is not on the trusted list.",
+   "source_url": "https://example-quiz-site.com/water",
+   "quote": "this page is not on the trusted list at all"
+  },
+  {
+   "prompt": "",
+   "right_answer": "Rain",
+   "wrong_answers": [],
+   "explanation": "",
+   "source_url": "https://www.metoffice.gov.uk/fixture-clouds",
+   "quote": "they fall as rain, snow, sleet or hail"
+  }
+ ]
+}

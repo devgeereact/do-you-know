@@ -48,6 +48,12 @@ final class Database
         return $s->fetch() ?: null;
     }
 
+    public static function all(\PDO $db, string $sql, array $args = []): array
+    {
+        $s = $db->prepare($sql); $s->execute($args);
+        return $s->fetchAll();
+    }
+
     public static function execute(\PDO $db, string $sql, array $args = []): void
     {
         $s = $db->prepare($sql); $s->execute($args);

@@ -6,6 +6,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LT="$ROOT/.local-test"
 export DYK_CONFIG="$LT/test-env.php"
 export DYK_TEST_API="http://127.0.0.1:55438/api/v1"
+# The generator suite replays recorded Bright Data and Claude answers; the server reads this.
+export DYK_GENERATOR_FIXTURES="$ROOT/backend/tests/fixtures/generator"
 [ -f "$DYK_CONFIG" ] || { echo "Missing $DYK_CONFIG (see backend/README.md)"; exit 1; }
 
 started_db=0; started_api=0
@@ -31,7 +33,7 @@ if ! curl --silent --fail "$DYK_TEST_API/health" > /dev/null 2>&1; then
   for _ in $(seq 1 50); do curl --silent --fail "$DYK_TEST_API/health" > /dev/null 2>&1 && break; sleep 0.2; done
 fi
 
-suites="${*:-unit integration competition daily concurrency feeds content cleanup seo admin feedback cms}"
+suites="${*:-unit integration competition daily concurrency feeds content cleanup seo admin feedback cms generator}"
 for s in $suites; do
   echo "== $s"
   php "$ROOT/backend/tests/$s.php" | tail -n 3

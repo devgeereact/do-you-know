@@ -33,4 +33,17 @@ return [
     'mail_from' => '',
     // Random server key for hashing rate-limit identifiers, at least 32 characters.
     'rate_limit_key' => '',
+    // Sourced question generator in the Studio (Bright Data search + page fetch, Claude drafts).
+    // Off until 'enabled' is true AND every key below is set. Each run costs money: about one
+    // search, up to four page fetches and one Claude call. Drafts never publish themselves.
+    'generator' => [
+        'enabled' => false,
+        'anthropic_api_key' => '',
+        'model' => 'claude-opus-5-5',
+        'brightdata_api_key' => '',
+        'brightdata_serp_zone' => '',      // a SERP API zone name
+        'brightdata_unlocker_zone' => '',  // a Web Unlocker zone name
+        'daily_runs' => 20,                // runs allowed per London day
+        // 'sources' => ['bbc.co.uk', ...], // optional; defaults to Generator::DEFAULT_SOURCES
+    ],
 ];

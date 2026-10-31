@@ -129,6 +129,16 @@ final class Admin
             if ($post) { $this->status = 201; return $ops->createSubject($body); }
         }
         if ($post && preg_match('~^/admin/subjects/([a-z0-9-]{1,100})$~D', $path, $m)) { return $ops->updateSubject($m[1], $body); }
+        $generator = new Generator($this->db, $this->config, $this, $content);
+        if ($get && $path === '/admin/generator') { return $generator->status(); }
+        if ($post && $path === '/admin/generator/runs') { $this->status = 201; return $generator->create($body); }
+        if (preg_match("~^/admin/generator/runs/$uuid(?:/(step|send))?$~D", $path, $m)) {
+            $action = $m[2] ?? '';
+            if ($get && $action === '') { return $generator->detail($m[1]); }
+            if ($post && $action === 'step') { return $generator->step($m[1]); }
+            if ($post && $action === 'send') { return $generator->send($m[1], $body); }
+        }
+        if ($post && preg_match("~^/admin/generator/drafts/$uuid$~D", $path, $m)) { return $generator->decide($m[1], $body); }
         if ($get && $path === '/admin/feedback') { return $feedback->adminList($query); }
         if (preg_match("~^/admin/feedback/$uuid(?:/(reply|note|status))?$~D", $path, $m)) {
             $action = $m[2] ?? '';

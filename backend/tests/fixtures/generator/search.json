@@ -1,0 +1,26 @@
+[
+ {
+  "link": "https://example-quiz-site.com/water",
+  "title": "Someone else's quiz"
+ },
+ {
+  "link": "https://www.bbc.co.uk/bitesize/fixture-water-cycle",
+  "title": "Fixture: the water cycle"
+ },
+ {
+  "link": "https://www.bbc.co.uk/bitesize/fixture-water-cycle",
+  "title": "Fixture duplicate result"
+ },
+ {
+  "link": "https://www.metoffice.gov.uk/fixture-clouds",
+  "title": "Fixture: how clouds form"
+ },
+ {
+  "link": "https://www.nhm.ac.uk/fixture-missing",
+  "title": "Fixture page that cannot be read"
+ },
+ {
+  "link": "http://www.bbc.co.uk/insecure",
+  "title": "Not https"
+ }
+]

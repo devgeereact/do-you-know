@@ -107,7 +107,7 @@ jobs:
         file_put_contents($file, '<?php return ' . var_export($config, true) . ';');
         chmod($file, 0600);
         PHP
-        PHP_CLI_SERVER_WORKERS=4 php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > "$RUNNER_TEMP/dyk-php.log" 2>&1 &
+        DYK_GENERATOR_FIXTURES="$GITHUB_WORKSPACE/backend/tests/fixtures/generator" PHP_CLI_SERVER_WORKERS=4 php -S 127.0.0.1:55438 -t backend/public backend/public/api.php > "$RUNNER_TEMP/dyk-php.log" 2>&1 &
         api_pid=$!
         trap 'kill "$api_pid" 2>/dev/null || true' EXIT
         for attempt in {1..30}; do
@@ -125,6 +125,7 @@ jobs:
         php backend/tests/admin.php
         php backend/tests/feedback.php
         php backend/tests/cms.php
+        php backend/tests/generator.php
     if: github.event_name != 'workflow_dispatch' || inputs.full_backend
   e2e:
     runs-on: ubuntu-24.04
