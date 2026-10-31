@@ -301,6 +301,72 @@ export interface SubjectPatch {
   is_active?: boolean;
 }
 
+export type GeneratorAges = '5-7' | '7-11' | '11-14' | '14-16' | '16+';
+export type GeneratorStage = 'search' | 'fetch' | 'draft' | 'check' | 'done' | 'failed';
+export type DraftDecision = 'pending' | 'approved' | 'rejected' | 'sent';
+
+export interface GeneratorUsage {
+  search_calls: number;
+  page_calls: number;
+  input_tokens: number;
+  output_tokens: number;
+}
+
+export interface GeneratorRunSummary {
+  id: string;
+  topic: string;
+  category: string | null;
+  ages: GeneratorAges;
+  wanted: number;
+  model: string;
+  stage: GeneratorStage;
+  error: string | null;
+  usage: GeneratorUsage;
+  created_at: string;
+}
+
+export interface GeneratorRunListItem extends GeneratorRunSummary {
+  drafts: number;
+}
+
+export interface GeneratorSource {
+  url: string;
+  title: string;
+  domain: string;
+  state: 'waiting' | 'read' | 'unreadable';
+}
+
+export interface GeneratorDraft {
+  id: string;
+  position: number;
+  question: QuestionContent;
+  quote: string;
+  checks: { quote_found: boolean; on_allowlist: boolean; new_prompt: boolean };
+  problems: { field: string; message: string }[];
+  kept: boolean;
+  decision: DraftDecision;
+  sent_quiz_id: string | null;
+}
+
+export interface GeneratorRun extends GeneratorRunSummary {
+  sources: GeneratorSource[];
+  drafts: GeneratorDraft[];
+  /** True when another request is already working on this step. */
+  busy?: boolean;
+}
+
+export interface GeneratorStatus {
+  enabled: boolean;
+  configured: { claude: boolean; bright_data: boolean };
+  ready: boolean;
+  model: string;
+  sources: string[];
+  ages: GeneratorAges[];
+  cap: { used: number; limit: number };
+  usage_30d: GeneratorUsage & { runs: number; drafts: number; sent: number };
+  runs: GeneratorRunListItem[];
+}
+
 export type FeedbackType = 'feedback' | 'question' | 'idea' | 'problem';
 export type FeedbackStatus = 'new' | 'open' | 'resolved';
 
@@ -404,6 +470,20 @@ export function adminClient(getToken: GetToken) {
     updateSubject: (slug: string, body: SubjectPatch) =>
       post<Subject>(`/admin/subjects/${encodeURIComponent(slug)}`, body),
 
+    generator: () => get<GeneratorStatus>('/admin/generator'),
+    startRun: (body: { topic: string; ages: GeneratorAges; count: number; category?: string }) =>
+      post<GeneratorRun>('/admin/generator/runs', body),
+    run: (id: string) => get<GeneratorRun>(`/admin/generator/runs/${encodeURIComponent(id)}`),
+    stepRun: (id: string) =>
+      post<GeneratorRun>(`/admin/generator/runs/${encodeURIComponent(id)}/step`),
+    decideDraft: (id: string, decision: 'approved' | 'rejected' | 'pending') =>
+      post<GeneratorDraft>(`/admin/generator/drafts/${encodeURIComponent(id)}`, { decision }),
+    sendDrafts: (runId: string, quizId: string, draftIds: string[]) =>
+      post<{ sent: number; run: GeneratorRun }>(
+        `/admin/generator/runs/${encodeURIComponent(runId)}/send`,
+        { quiz_id: quizId, draft_ids: draftIds },
+      ),
+
     feedback: (filter: { status?: FeedbackStatus; type?: FeedbackType; limit?: number } = {}) =>
       get<{ items: FeedbackItem[] }>('/admin/feedback', filter).then((r) => r.items),
     feedbackItem: (id: string) => get<FeedbackDetail>(`/admin/feedback/${encodeURIComponent(id)}`),
@@ -425,6 +505,12 @@ export type AdminClient = ReturnType<typeof adminClient>;
 
 const MESSAGES: Record<string, string> = {
   network_error: 'Can’t reach the server. Check your connection and try again.',
+  generator_off:
+    'The generator is switched off. It needs the owner’s approval and its keys in the server settings.',
+  generator_daily_cap: 'Today’s generator runs are used up. Try again tomorrow.',
+  draft_has_problems: 'Fix the problems on this draft before approving it.',
+  drafts_not_approved: 'Only approved drafts can be sent.',
+  draft_already_sent: 'That draft has already been sent to a quiz.',
   not_signed_in: 'Your sign-in has run out. Sign in again.',
   forbidden: 'This account can’t use the Studio.',
   rate_limited: 'Too many changes at once. Wait a minute, then try again.',
