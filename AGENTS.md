@@ -1,6 +1,6 @@
 # Do You Know — agent contract
 
-One entry point for every coding agent (Claude Code reads it through `CLAUDE.md`, Codex reads it directly). Read `.agent/PROJECT.yml`, `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md` and `docs/00-foundation/CLAUDE-CODE-HANDOFF.md` first, then the product/architecture/security docs for the area you change. The app is live at **https://doyouknow.space**; repository `devgeereact/do-you-know` (private, `main`).
+One entry point for every coding agent (Claude Code reads it through `CLAUDE.md`, Codex reads it directly). Read `.agent/PROJECT.yml`, `.agent/CURRENT-TASK.md` and `docs/00-foundation/PROJECT-MEMORY.md` first, then the product/architecture/security docs for the area you change. The app is live at **https://doyouknow.space**; repository `devgeereact/do-you-know` (private, `main`).
 
 ## Authority and Git
 
@@ -8,7 +8,7 @@ Work only within the current request. No force push, `reset --hard`, `clean`, `c
 
 ## Sources of truth
 
-- Current state/handoff: `.agent/CURRENT-TASK.md`, `docs/00-foundation/PROJECT-MEMORY.md`, `CLAUDE-CODE-HANDOFF.md`.
+- Current state: `.agent/CURRENT-TASK.md` (now) and `docs/00-foundation/PROJECT-MEMORY.md` (how it runs); finished sessions in `.agent/HANDOFF.md`.
 - Product and rules: `docs/01-product/PRODUCT-SPEC.md`, `docs/00-foundation/RULES.md`.
 - Architecture/data/hooks: `docs/02-architecture/`. Decisions: `docs/08-change-management/DECISIONS.md`.
 - Quality: `docs/06-quality/EVIDENCE-STATUS.md`. Hosting: `docs/07-operations/DEPLOYMENT.md`.
@@ -24,7 +24,7 @@ React 18, strict TypeScript, Vite, Tailwind tokens; private PHP backend (8.2 flo
 | Install (also enables the Git hook)                             | `pnpm install`                                                                           |
 | Dev: Vite on http://localhost:5202 + PHP API on 127.0.0.1:55439 | `pnpm dev` (`pnpm dev:web` = frontend only)                                              |
 | Gate before every commit/PR                                     | `pnpm check` (lint, format check, typecheck, unit tests, build)                          |
-| Backend / e2e                                                   | see `backend/README.md`, `tests/e2e/README.md` (disposable DB under `.local-test/` only) |
+| Backend / e2e                                                   | `bash scripts/test-backend.sh`, `pnpm test:e2e` (disposable DB under `.local-test/` only) |
 
 Preserve the layout and hook/service/API boundaries. Components use typed services; PHP uses validated input, prepared statements and server-side scope checks. Applied migrations are immutable.
 

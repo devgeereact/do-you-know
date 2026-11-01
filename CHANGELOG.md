@@ -1,5 +1,10 @@
 # Changelog
 
+## 1 November 2026 — Daily auto-pick fix, generator providers, clean-up
+- Daily auto-pick: the server's crontab had been emptied, so 1 Nov had no daily. Jobs restored; `GET /daily` and starting a daily round now activate today's daily themselves when the job missed it; the Studio calendar preview uses the quizzes live at pick time, so it matches the real pick.
+- Generator: Anthropic is the default writer and searcher, OpenRouter (same Claude Opus 5.5) the backup; Bright Data is optional. `scripts/set-generator-keys.sh` saves keys on the server with hidden prompts.
+- Clean-up: removed blank template docs and pre-launch records (FTPS setup, rebrand verification, old cPanel evidence, launch/release stubs, PWA/API/email templates); rewrote README, project memory, security, backup and deployment docs; removed dead code (`useOptimizedImage`, `settingsService`, unused helpers) and FTPS-era scripts; `check-rebrand.py` checks only tracked files; `cron-ensure.sh` refuses to install when the crontab cannot be read.
+
 ## 31 October 2026 (evening) — Profile, info pages and on-site replies
 - One profile page (`/me`): character picker, nickname, stats, messages, rounds and best scores. The avatar menu is gone; the avatar in the top bar links straight to the profile and shows a dot for a new reply. `/me/avatar` now opens the picker on the profile.
 - Nicknames can be changed once (migration 0016). Children and players with no age pick from four generated names; 13+ may also type one. No two players can take the same name in a change. A confirm step says it is final.

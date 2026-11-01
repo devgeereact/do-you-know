@@ -7,7 +7,11 @@ SKIP={'.git','node_modules','vendor','dist','build','.cache','.release-public','
 legacy=[b'doyouknow.soulrefresh.net',b'doyouknow.example']
 secret=[rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----',rb'gh[pousr]_[A-Za-z0-9]{30,}',rb'github_pat_[A-Za-z0-9_]{30,}',rb'AKIA[A-Z0-9]{16}',rb'sk_(?:live|test)_[A-Za-z0-9]{20,}']
 problems=[]
-for path in ROOT.rglob('*'):
+import subprocess
+# Only files Git tracks: the same set CI checks out, so local and CI runs agree (ignored local files never count).
+tracked=subprocess.run(['git','-C',str(ROOT),'ls-files','-z'],capture_output=True,check=True).stdout.decode().split('\0')
+for rel in filter(None,tracked):
+ path=ROOT/rel
  if not path.is_file() or path.is_symlink() or SKIP.intersection(path.relative_to(ROOT).parts):continue
  if path.resolve()==Path(__file__).resolve():continue
  if path.name.startswith('.env') and path.name!='.env.example':problems.append((str(path.relative_to(ROOT)),'real env file needs private review'));continue
@@ -16,7 +20,7 @@ for path in ROOT.rglob('*'):
  body=path.read_bytes()
  if any(term in body for term in legacy):problems.append((str(path.relative_to(ROOT)),'legacy identity reference'))
  if any(re.search(pattern,body) for pattern in secret):problems.append((str(path.relative_to(ROOT)),'possible credential signature'))
-assert json.loads((ROOT/'forge.config.json').read_text())['appUrl']=='https://doyouknow.space'
+assert json.loads((ROOT/'release.json').read_text())['url']=='https://doyouknow.space'
 for workflow in (ROOT/'.github/workflows').glob('*.yml'):
  text=workflow.read_text()
  # Push/PR workflows are check-only, except deploy.yml (owner decision 30 Oct 2026): it may run on push to main,

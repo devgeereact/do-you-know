@@ -40,10 +40,9 @@ backend/.phpunit.cache/
 
 __pycache__/
 
-# Local rebrand/deployment scratch and recovery artifacts
+# Local caches and old release scratch
 .cache/
 .release-public/
-__pycache__/
 *.bundle
 *.patch
 *.dump
@@ -54,11 +53,8 @@ __pycache__/
 # local project recovery/private state (never commit; plans and handoffs belong in docs/)
 .local-state/
 
-# graphify derived/local files (graph.json and the report are committed)
-graphify-out/cache/
-.graphify-setup-done
-*.graphify-bak
 
-# Generated helper output (run /graphify on demand; never committed)
+# graphify output if it is ever run again (never committed since 28 Oct 2026)
 graphify-out/
 .graphify*
+*.graphify-bak

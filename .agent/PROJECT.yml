@@ -5,8 +5,6 @@ project:
   lifecycle: live
   location: /Users/realmrgee/Developer/Projects/do-you-know
   domain: doyouknow.space
-  route: B
-  source_policy: read-only-source-preserved
 stack_profile: cpanel
 stack: [react-18, typescript-strict, vite, tailwind, private-php-8.2, mysql-mariadb, clerk]
 package_manager: pnpm
@@ -23,19 +21,18 @@ repository:
   url: https://github.com/devgeereact/do-you-know
   blocker: none-for-repository-access
 hosting:
-  domain_connected: owner-reported-not-independently-verified
-  document_root: TO_VERIFY_IN_CPANEL
-  private_backend_root: TO_VERIFY_OUTSIDE_EVERY_WEBROOT
-  ftps: scoped-account-required
-  deployment: manual-workflow_dispatch-only
+  domain_connected: verified
+  document_root: ~/doyouknow.space
+  private_backend_root: ~/do-you-know-private/current
+  deployment: push to main -> deploy.yml (SSH, scripts/release.mjs)
   ci: verify.yml on every push and pull request
-  deployed_by_this_task: false
+  cron: daily.php hourly, cleanup.php hourly, backup-db.sh nightly
 identity:
   provider: clerk
-  new_domain_configuration: not-verified
+  new_domain_configuration: verified (production app "do you know space")
 sources_of_truth:
   memory: docs/00-foundation/PROJECT-MEMORY.md
-  handoff: docs/00-foundation/CLAUDE-CODE-HANDOFF.md
+  handoff: .agent/HANDOFF.md
   rules: docs/00-foundation/RULES.md
   product: docs/01-product/PRODUCT-SPEC.md
   architecture: docs/02-architecture/ARCHITECTURE.md
@@ -43,8 +40,6 @@ sources_of_truth:
 current_task: .agent/CURRENT-TASK.md
 
 verification:
-  local_rebrand: passed
-  manual_actions_run: 40238993723
-  manual_actions_result: success
-  ftps_secrets_configured: false
-  deployment_performed: false
+  gate: pnpm check, scripts/test-backend.sh, pnpm test:e2e
+  evidence: docs/06-quality/EVIDENCE-STATUS.md
+  audits: docs/AUDIT.md

@@ -49,22 +49,6 @@ export function useDocumentMeta(meta: DocumentMeta): void;
 export function useOnlineStatus(): boolean;
 ```
 
-### 3. `useOptimizedImage`
-
-`src/hooks/useOptimizedImage.ts`. Memoised ImageKit URL for quiz cover images.
-
-```ts
-interface ImageTransform {
-  width?: number;
-  height?: number;
-  quality?: number; // 1–100, default 80
-  crop?: 'maintain_ratio' | 'force' | 'at_max';
-}
-export function useOptimizedImage(path: string, transform?: ImageTransform): string;
-```
-
-## Session hooks
-
 ### 4. `useSession`
 
 `src/hooks/useSession.ts`. Reads `SessionContext` (`src/context/SessionContext.tsx`).

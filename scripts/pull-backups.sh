@@ -9,7 +9,7 @@
 # checksum means nothing local is pruned.
 set -euo pipefail
 KEEP=3
-REMOTE_DIR=private_backups/dykspace
+REMOTE_DIR=backups/do-you-know/dykspace
 LOCAL="${DYK_BACKUP_DIR:-$HOME/Developer/Projects/do-you-know-backups/db}"
 mkdir -p "$LOCAL/rolling" "$LOCAL/pinned"
 chmod 700 "$LOCAL" "$LOCAL/rolling" "$LOCAL/pinned"

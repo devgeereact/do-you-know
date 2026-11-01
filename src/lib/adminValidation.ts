@@ -177,11 +177,6 @@ export function validateQuestion(
   return e;
 }
 
-/** Problems that stop a draft question being saved as-is (everything except "later" ones). */
-export function blockingErrors(q: QuestionContent, options: { today?: string } = {}): FieldError[] {
-  return validateQuestion(q, options).filter((e) => !e.later);
-}
-
 // ---- Dates ----
 
 /** Today's date in London (the server's calendar), as YYYY-MM-DD. */

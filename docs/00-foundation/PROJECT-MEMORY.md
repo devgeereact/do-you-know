@@ -1,27 +1,33 @@
-# Do You Know — current project memory
+# Do You Know — project memory
 
-Updated 25 October 2026. This is the new Route B destination for doyouknow.space. Older source release/PR/account notes are not this project's state.
+Updated 1 November 2026. The current picture of the project; history lives in `CHANGELOG.md`, `.agent/HANDOFF.md` and `docs/08-change-management/DECISIONS.md`.
 
-## Verified locally
-- Imported frontend, backend and tests exist in this project; name/slug are Do You Know / do-you-know.
-- Destination Git had an unborn main branch, no commits and no remote at audit time.
-- Canonical/SEO/robots/example origins are changed to https://doyouknow.space.
-- Optional contact email defaults to empty, avoiding an inherited unverified mailbox.
-- Legacy auto/SSH deployment is replaced by manual scoped public FTPS preparation. Private backend installation remains a separate task.
-- Source project and its real configuration were not modified or copied.
+## What it is
 
-## Hosting status (26 October 2026)
-Document root, TLS, scoped FTPS account, target marker and the five repository secrets are verified. The coming-soon page is deployed (run 40284190441). Clerk production is a new application, "do you know space", on doyouknow.space, with DNS, mail and SSL verified; Google sign-in there is disabled until Google OAuth credentials exist. Private backend (`~/do-you-know-private/current`), database `devgeereact_dykspace` (migrated), runtime/migration/read-only users, private config, API wiring and verified backups with a proven restore are done (step D). Cron jobs (daily, cleanup, backup) are installed. Off-server backup copies are pulled to the Mac with `scripts/pull-backups.sh`. Step E done 26 October 2026: 46 quizzes published (owner-confirmed review, reviewer "Site owner"), full app live at https://doyouknow.space (run 40334226841). Local read-only live DB access: `bash scripts/live-db.sh shell`. See ../06-quality/EVIDENCE-STATUS.md.
+A quiz PWA for children, families and trivia fans at **https://doyouknow.space**. Players are guests (generated nickname, preset character, no personal data); grown-ups may sign in with Clerk. The owner runs the site from the **Studio** at `/admin`.
 
-## Blocked or not performed
-The private repository https://github.com/devgeereact/do-you-know has been created and origin attached. See the rebrand verification record for the latest commit/push/Action evidence. No secrets, database/users/content, old server directories, Clerk domains or cron jobs were migrated. The coming-soon page was deployed on 26 October 2026; no app deployment has been performed. Existing business modules need the normal test/review process before this new site is released.
+## Live setup
 
-## Continue
-Read CLAUDE-CODE-HANDOFF.md and ../07-operations/GITHUB-FTPS-SETUP.md. Exact check results are in ../08-change-management/REBRAND-VERIFICATION.md. Follow the existing product/privacy constraints; do not treat backlog proposals as approved features.
+| Part           | Where                                                                                                                                                                                                                       |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Frontend       | `~/doyouknow.space` (document root), built by `pnpm build`                                                                                                                                                                  |
+| Backend        | `~/do-you-know-private/current` (outside the web root); private settings in `~/do-you-know-private/shared/config.php`                                                                                                       |
+| Database       | MariaDB `devgeereact_doyouknow`; migrations 0001–0016 applied (0016 on 31 Oct 2026)                                                                                                                                         |
+| Sign-in        | Clerk production app "do you know space" (email code). Studio access: Clerk subject in `admin_subjects` (the owner's account)                                                                                               |
+| Deploys        | Push to `main` → `.github/workflows/deploy.yml` → `scripts/release.mjs` over SSH (checks, build, snapshot, upload, smoke, automatic restore). Migrations by hand after a pinned backup (`docs/07-operations/DEPLOYMENT.md`) |
+| Scheduled jobs | Hourly daily activator (`bin/daily.php`, :07), hourly clean-up (:23), nightly DB backup (03:41). `GET /daily` and starting a daily round also activate today's daily if the job missed it                                   |
+| Backups        | `~/backups/do-you-know/` on the server (rolling 3 + newest 3 pinned pre-migration copies; release snapshots, last 3); Mac copies via `scripts/pull-backups.sh`                                                              |
 
-## Repository baseline
+## What's built
 
-Private repository created and origin attached: https://github.com/devgeereact/do-you-know. Initial reviewed source baseline be16ba09abbfea21e36680aac9a4d74fd5de5d59 pushed normally to main; staged secret guard passed. Manual verification run 40238993723 was dispatched with full_backend=false. See the verification record for its final result. No FTPS deployment or backend operation was run.
+Pop & Ink design with our own logo, per-question worlds and the framed game stage; Home, subjects, quizzes, play, results, Daily (fits the screen), one Leaderboard across every subject (Today default), Contact with preset messages for children, the profile (`/me`: character, nickname changeable once, messages and replies, rounds) and full-width info pages. Studio: To do, Inbox (replies are read on the player's profile), Library, Editor, Check & publish, Import, Generator, Daily calendar, Players, Subjects, Activity, ⌘K search.
 
-## Update 27 October 2026
-Live now runs on database `devgeereact_doyouknow` (fresh: migrations 0001-0011, 46 quizzes). Ranked rounds are 20 questions; likes are live. Admin area Phase A exists in the repository but is not deployed. Disposable local test state lives in gitignored `.local-test/`. See `.agent/CURRENT-TASK.md` and `docs/01-product/ADMIN-AREA-PLAN.md`.
+## Open items
+
+- **Generator keys**: the owner adds Anthropic (default) and OpenRouter (backup) keys with `scripts/set-generator-keys.sh`; it stays off until then.
+- A human sign-in test of the live Studio after `admin_subjects` was set (31 Oct).
+- Report-only CSP: decide whether to enforce.
+
+## Rules that never change
+
+Answers and scores are decided on the server only. Children never type free text and give no personal data. Nothing AI-written publishes itself. Applied migrations are immutable. Full rules: `RULES.md`.

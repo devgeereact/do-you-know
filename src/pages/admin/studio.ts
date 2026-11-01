@@ -114,7 +114,6 @@ export function useAction(): {
 export const inputClass =
   'block w-full min-w-0 rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-[15px] text-content placeholder:text-content-muted/70 focus:border-primary focus:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30 disabled:opacity-60';
 export const selectClass = `${inputClass} h-10 py-0 pr-8`;
-export const labelClass = 'mb-1 block text-sm font-bold text-content';
 export const linkButtonClass =
   'inline-flex items-center gap-1 rounded-md text-sm font-bold text-primary hover:underline underline-offset-2 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40 disabled:opacity-50';
 export const cardClass = 'rounded-2xl border border-surface-border bg-surface shadow-soft';

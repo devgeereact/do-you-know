@@ -32,20 +32,29 @@ mkdir -p "$shared/logs"
 
 # "\%" because cron turns a bare % into a newline. Each run logs a UTC timestamp.
 want=(
-  "17 * * * * { date -u +\%FT\%TZ; $php $base/current/bin/cleanup.php; } >> $log 2>&1"
-  "5 * * * * { date -u +\%FT\%TZ; $php $base/current/bin/daily.php; } >> $log 2>&1"
+  "7 * * * * { date -u +\%FT\%TZ; $php $base/current/bin/daily.php; } >> $log 2>&1"
+  "23 * * * * { date -u +\%FT\%TZ; $php $base/current/bin/cleanup.php; } >> $log 2>&1"
+  "41 3 * * * { date -u +\%FT\%TZ; $shared/backup-db.sh; } >> $shared/logs/backup.log 2>&1"
 )
 
 current=$(mktemp); next=$(mktemp); trap 'rm -f "$current" "$next"' EXIT
-crontab -l > "$current" 2>/dev/null || true
+# A failed read must never look like an empty crontab: installing from it would wipe every
+# other site's jobs. Only "no crontab for <user>" means there is genuinely nothing yet.
+if ! crontab -l > "$current" 2> "$current.err"; then
+  grep -qi 'no crontab' "$current.err" || { echo "FAIL: could not read the crontab; nothing changed"; exit 1; }
+  : > "$current"
+fi
+rm -f "$current.err"
 cp "$current" "$next"
 added=0
 new_lines=()
 for line in "${want[@]}"; do
-  job=$(printf '%s' "$line" | grep -o 'bin/[a-z]*\.php')
+  # The job's script path identifies it: bin/daily.php, bin/cleanup.php or shared/backup-db.sh.
+  target=$(printf '%s' "$line" | grep -oE "$base/(current/bin/[a-z]+\.php|shared/backup-db\.sh)")
+  job=${target#"$base/"}
   if grep -qxF -- "$line" "$current"; then
     echo "ok      $job"
-  elif grep -qF -- "$base/current/$job" "$current"; then
+  elif grep -qF -- "$target" "$current"; then
     echo "DIFFERS $job: an older line exists; left as is, fix it by hand"
   else
     echo "add     $job"

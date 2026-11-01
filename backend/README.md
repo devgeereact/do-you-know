@@ -1,5 +1,3 @@
-> New-domain baseline, 25 October 2026: imported technical/design history below is reference, not evidence of a doyouknow.space deployment. Current setup and status: docs/00-foundation/CLAUDE-CODE-HANDOFF.md and docs/07-operations/GITHUB-FTPS-SETUP.md. Verify private paths, auth, legal copy and runtime before release. Applied migrations are unchanged.
-
 # cPanel API package
 
 Status, 16 October 2026: this PHP API with MySQL/MariaDB is the app's only backend

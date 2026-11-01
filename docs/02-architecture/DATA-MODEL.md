@@ -7,18 +7,18 @@ Supabase was removed from the code on this date (ADR-003 in
 The runnable source is `backend/migrations/`, applied in order by `backend/bin/migrate.php`
 (CLI only). This document explains it.
 
-| File                                  | Contents                                                                                                                                                             |
-| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `0001_api_foundation.sql`             | `profiles`, `identities`, `guest_sessions`, `rate_limits`, `categories`, `quizzes`, `quiz_versions`, `attempts`, `attempt_answers`                                   |
-| `0002_identity_case_sensitivity.sql`  | Makes `identities.provider` and `subject` case-sensitive (`ascii_bin`) so different Clerk IDs never merge                                                            |
-| `0003_player_metadata.sql`            | Profile streak, daily date and `avatar_id`; quiz age range, curriculum tags, ranked flag, publish and SEO fields; `curriculum_tags`, `blocked_words`, `app_settings` |
-| `0004_competition.sql`                | `daily_challenges`, `friend_challenges`, `leaderboard_entries`; attempt links to daily/friend challenges, frozen timer and shuffle settings; mode and status checks  |
-| `0005_blocked_words_seed.sql`         | Starter `blocked_words` list (clear profanity and slurs, plus `admin`, `moderator`, `staff`, `official`) with `INSERT IGNORE`, so re-runs are safe                   |
-| `0006_content_reviews.sql`            | `content_reviews`: who reviewed and published which quiz version (written only by `bin/import-content.php --publish`)                                                |
-| `0007_attempts_finished_index.sql`    | Index `attempts_finished (status, finished_at, quiz_id)` for the 7-day trending query                                                                                |
+| File                                  | Contents                                                                                                                                                                     |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `0001_api_foundation.sql`             | `profiles`, `identities`, `guest_sessions`, `rate_limits`, `categories`, `quizzes`, `quiz_versions`, `attempts`, `attempt_answers`                                           |
+| `0002_identity_case_sensitivity.sql`  | Makes `identities.provider` and `subject` case-sensitive (`ascii_bin`) so different Clerk IDs never merge                                                                    |
+| `0003_player_metadata.sql`            | Profile streak, daily date and `avatar_id`; quiz age range, curriculum tags, ranked flag, publish and SEO fields; `curriculum_tags`, `blocked_words`, `app_settings`         |
+| `0004_competition.sql`                | `daily_challenges`, `friend_challenges`, `leaderboard_entries`; attempt links to daily/friend challenges, frozen timer and shuffle settings; mode and status checks          |
+| `0005_blocked_words_seed.sql`         | Starter `blocked_words` list (clear profanity and slurs, plus `admin`, `moderator`, `staff`, `official`) with `INSERT IGNORE`, so re-runs are safe                           |
+| `0006_content_reviews.sql`            | `content_reviews`: who reviewed and published which quiz version (written only by `bin/import-content.php --publish`)                                                        |
+| `0007_attempts_finished_index.sql`    | Index `attempts_finished (status, finished_at, quiz_id)` for the 7-day trending query                                                                                        |
 | `0011_leaderboard_likes.sql`          | `leaderboard_likes`: one row per liker per leaderboard entry; no self-likes (CHECK); cascades with the entry or either player (0009 is held by the stashed generator branch) |
-| `0012_admin_audit.sql`                | `admin_audit`: one row per admin write (actor, action, target, small JSON detail); no personal data                                                                  |
-| `0008_attempts_player_quiz_index.sql` | Index `attempts_player_quiz (user_id, quiz_id, started_at)` so a new round can read the player's earlier rounds and serve unseen questions first                     |
+| `0012_admin_audit.sql`                | `admin_audit`: one row per admin write (actor, action, target, small JSON detail); no personal data                                                                          |
+| `0008_attempts_player_quiz_index.sql` | Index `attempts_player_quiz (user_id, quiz_id, started_at)` so a new round can read the player's earlier rounds and serve unseen questions first                             |
 
 **Golden rule:** the browser can read a question's public text, **never its answer**.
 Answers live only inside `quiz_versions.snapshot`, which no public endpoint returns. The

@@ -1,5 +1,3 @@
-> New-domain baseline, 25 October 2026: imported technical/design history below is reference, not evidence of a doyouknow.space deployment. Current setup and status: docs/00-foundation/CLAUDE-CODE-HANDOFF.md and docs/07-operations/GITHUB-FTPS-SETUP.md. Verify private paths, auth, legal copy and runtime before release. Applied migrations are unchanged.
-
 # System Architecture: Do You Know
 
 Updated 16 October 2026. Supabase was removed from the code on this date (ADR-003 in
@@ -66,7 +64,6 @@ src/
 │   ├── catalogService.ts   # categories, quizzes, curriculum tags (public reads)
 │   ├── gameService.ts      # attempts, daily, challenges, leaderboards, history
 │   ├── profileService.ts   # profile, age band, nickname, avatar, delete
-│   └── settingsService.ts  # theme and notification preferences
 ├── types/           # domain.ts (row shapes), game.ts (game payloads), index.ts
 ├── App.tsx          # providers + router
 ├── main.tsx         # bootstrap: Sentry, SW registration, render
@@ -169,8 +166,8 @@ The browser never holds an answer before answering and never sends a score.
 
 ## 7. Background and scheduled work
 
-| Job             | Trigger                                                                                      | What it does                                                                                                                                                                                                           |
-| --------------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Job             | Trigger                                                                                              | What it does                                                                                                                                                                                                           |
+| --------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Clean-up        | cPanel cron, hourly at minute 17: `/usr/local/bin/php ~/do-you-know-private/current/bin/cleanup.php` | Removes up to 1000 expired guest sessions and rate-limit buckets per run. Scheduled on the server 16 October 2026.                                                                                                     |
 | Daily challenge | cPanel cron, hourly: `/usr/local/bin/php ~/do-you-know-private/current/bin/daily.php` (`Dyk\Daily`)  | Uses the London date. Marks earlier `live` and missed `scheduled` rows `done`, makes today's `scheduled` row `live`, or auto-picks the least recently used published quiz and pins its current version. Safe to rerun. |
 

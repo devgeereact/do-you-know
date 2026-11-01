@@ -1,5 +1,3 @@
-> New-domain baseline, 25 October 2026: imported technical/design history below is reference, not evidence of a doyouknow.space deployment. Current setup and status: docs/00-foundation/CLAUDE-CODE-HANDOFF.md and docs/07-operations/GITHUB-FTPS-SETUP.md. Verify private paths, auth, legal copy and runtime before release. Applied migrations are unchanged.
-
 # Design System & Visual Guidelines — Do You Know
 
 > Pop & Ink, approved by the owner on 31 October 2026 (ADR-014). Earlier "sky blue" values are gone from the code; this section is the reference.

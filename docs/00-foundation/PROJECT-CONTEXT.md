@@ -25,7 +25,7 @@ The detailed record lives in `PROJECT-MEMORY.md` beside this file. This page is 
 | Supabase removed; cPanel PHP/MySQL is the only backend                         | DECISION | ADR-003, 16 October 2026                              | Live verification               |
 | Grading happens only in the PHP API                                            | DECISION | `backend/src/Game.php`, `backend/src/Competition.php` | Re-run backend checks on Ubuntu |
 | Backend checks pass (14 unit, 76 HTTP/database, 63 competition, 9 concurrency) | FACT     | Local MariaDB, 16 October 2026                        | CI on the next push             |
-| Site domain is doyouknow.space                                       | FACT     | `.agent/CURRENT-TASK.md`                              | Live verification               |
+| Site domain is doyouknow.space                                                 | FACT     | `.agent/CURRENT-TASK.md`                              | Live verification               |
 | Content imported into MySQL                                                    | UNKNOWN  | Gideon                                                | Content import, with approval   |
 | Dev server port 5202                                                           | DECISION | `vite.config.ts`, dev-all registry block 20           | `dev-all check`                 |
 
