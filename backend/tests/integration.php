@@ -60,14 +60,24 @@ $r=request('POST','/account/session',['adult_confirmed'=>true],$guest['token']);
 $r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'forged'],$guest['token']);check('unknown modes fail explicitly',$r['status']===400);
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$state=$r['body'];$id=$state['attempt_id'];check('starts practice with three questions',$r['status']===200&&$state['total']===3);
 check('first question has no explanation or answers',!isset($state['question']['explanation'])&&!str_contains(json_encode($state['question']),'is_correct')&&!str_contains(json_encode($state['question']),'accept_min'));
+$snapshotOptionIds=[];foreach($snapshot as $sq){foreach($sq['options'] as $so){$snapshotOptionIds[]=$so['id'];}}
+$servedIds=fn(array $st): array => array_column($st['question']['options']??[],'id');
+$r=request('POST','/attempts',['quiz_slug'=>$slug],$other['token']);$otherState=$r['body'];
+check('the same option gets a different id in another attempt',array_intersect($servedIds($otherState),$servedIds($state))===[]);
 $r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);check('reload resumes original attempt',$r['body']['attempt_id']===$id);
+check('reload serves the same option ids',$servedIds($r['body'])===$servedIds($state));
 $r=request('POST','/attempts/'.$id.'/finish',[],$guest['token']);check('cannot finish early',$r['status']===400&&$r['body']['error']['code']==='not_all_answered');
 $r=request('POST','/attempts/'.$id.'/answer',['option_id'=>'forged'],$other['token']);check('another player cannot answer',$r['status']===404);
 $r=request('POST','/attempts/'.$id.'/answer',['option_id'=>'forged','value'=>'bad'],$guest['token']);check('invalid answer refused',$r['status']===400);
 for($i=0;$i<3;$i++) {
-    $q=$keys[$state['question']['id']];$body=$q['type']==='slider'?['value'=>5]:['option_id'=>$q['options'][0]['id']];
+    $q=$keys[$state['question']['id']];$right=null;
+    if($q['type']!=='slider'){check('served option ids are not the stored snapshot ids '.($i+1),count($servedIds($state))===2&&array_intersect($servedIds($state),$snapshotOptionIds)===[]);}
+    foreach($state['question']['options']??[] as $o){if($o['label']==='Right'||$o['label']==='True'){$right=$o['id'];}}
+    if($q['type']==='boolean'){foreach($state['question']['options'] as $o){if($o['label']===$q['options'][0]['label']){$right=$o['id'];}}}
+    $body=$q['type']==='slider'?['value'=>5]:['option_id'=>$right];
     $r=request('POST','/attempts/'.$id.'/answer',$body+['correct'=>999,'score'=>999,'time_ms'=>0],$guest['token']);
     check('server grades answer '.($i+1),$r['status']===200&&$r['body']['is_correct']===true&&$r['body']['explanation']==='Test explanation');
+    if($q['type']!=='slider'){check('correct option ids use the served ids '.($i+1),$r['body']['correct_option_ids']===[$right]);}
     $r=request('POST','/attempts/'.$id.'/answer',$body,$guest['token']);check('rejects duplicate answer '.($i+1),$r['status']===400);
     if($i<2){$r=request('POST','/attempts/'.$id.'/next',[],$guest['token']);$state=$r['body'];check('advances without answer fields '.($i+1),$r['status']===200&&!str_contains(json_encode($state['question']),'is_correct'));}
 }

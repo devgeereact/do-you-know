@@ -136,7 +136,7 @@ final class Api
                 RateLimit::check($db,$config,'feedback',$profile['id'],10,3600);
                 self::reply((new Feedback($db))->submit($profile,$body),201);return;
             }
-            $game=new Game($db,$profile['id']);
+            $game=new Game($db,$profile['id'],hash_hmac('sha256','option-handles',$config['rate_limit_key']));
             if ($path==='/attempts') { self::reply($game->start($body));return; }
             if ($gameRoute) {
                 $result=match($parts[2]) { 'next'=>$game->next($parts[1]),'answer'=>$game->answer($parts[1],$body),'finish'=>$game->finish($parts[1]),'challenge'=>(new Competition($db,$profile['id']))->createChallenge($parts[1]) };

@@ -27,7 +27,7 @@ function completeGame(array $state,string $token,bool $correct=true,int $elapsed
     for($i=0;$i<$state['total'];$i++) {
         $q=$keys[$state['question']['id']];
         Database::execute($db,'UPDATE attempts SET current_sent_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL ? MICROSECOND) WHERE id=?',[$elapsed,$state['attempt_id']]);
-        $r=request('POST','/attempts/'.$state['attempt_id'].'/answer',['option_id'=>$q['options'][$correct?0:1]['id'],'score'=>999,'time_ms'=>0],$token);
+        $r=request('POST','/attempts/'.$state['attempt_id'].'/answer',['option_id'=>servedId($state['question'],$q['options'][$correct?0:1]),'score'=>999,'time_ms'=>0],$token);
         check('server grades competition answer',$r['status']===200&&$r['body']['is_correct']===$correct);
         if($i<$state['total']-1) {
             $r=request('POST','/attempts/'.$state['attempt_id'].'/next',[],$token);

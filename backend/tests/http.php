@@ -23,3 +23,9 @@ function request(string $method,string $path,?array $body=null,?string $token=nu
     $status=curl_getinfo($c,CURLINFO_RESPONSE_CODE);$size=curl_getinfo($c,CURLINFO_HEADER_SIZE);$h=substr($reply,0,$size);$j=json_decode(substr($reply,$size),true);
     return ['status'=>$status,'body'=>$j,'headers'=>$h,'raw'=>substr($reply,$size)];
 }
+/** The id this attempt shows for a stored option: players get per-attempt handles, never snapshot ids. */
+function servedId(array $question,array $option): string {
+    foreach($question['options']??[] as $o){if($o['label']===$option['label']){return $o['id'];}}
+    throw new RuntimeException('served_option_missing');
+}
+

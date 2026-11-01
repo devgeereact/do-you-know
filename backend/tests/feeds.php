@@ -68,7 +68,7 @@ check('trending rows use the catalogue quiz fields',array_keys($r['body'][0])===
 // Continue playing: own, unfinished, resumable only.
 $r=request('POST','/attempts',['quiz_slug'=>$quiet['slug'],'mode'=>'practice'],$me['token']);$state=$r['body'];
 $q=$quiet['keys'][$state['question']['id']];
-request('POST','/attempts/'.$state['attempt_id'].'/answer',['option_id'=>$q['options'][0]['id']],$me['token']);
+request('POST','/attempts/'.$state['attempt_id'].'/answer',['option_id'=>servedId($state['question'],$q['options'][0])],$me['token']);
 $r=request('POST','/attempts',['quiz_slug'=>$popular['slug'],'mode'=>'practice'],$me['token']);$expired=$r['body']['attempt_id'];
 Database::execute($db,'UPDATE attempts SET started_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 25 HOUR) WHERE id=?',[$expired]);
 $r=request('GET','/me/continue');check('continue requires a session',$r['status']===401);

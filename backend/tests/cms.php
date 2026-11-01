@@ -230,7 +230,7 @@ $play = function (string $token, bool $right) use ($slug, $snapshot): array {
     for ($i = 0; $i < $state['total']; $i++) {
         $q = $snapshot[$state['question']['id']];
         $pick = array_values(array_filter($q['options'], fn($o) => $o['is_correct'] === $right))[0];
-        request('POST', '/attempts/'.$state['attempt_id'].'/answer', ['option_id' => $pick['id']], $token);
+        request('POST', '/attempts/'.$state['attempt_id'].'/answer', ['option_id' => servedId($state['question'], $pick)], $token);
         if ($i < $state['total'] - 1) { $state = request('POST', '/attempts/'.$state['attempt_id'].'/next', [], $token)['body']; }
     }
     return request('POST', '/attempts/'.$state['attempt_id'].'/finish', [], $token)['body'];
@@ -301,7 +301,7 @@ $state = request('POST', '/attempts', ['mode' => 'daily'], $star['token'])['body
 check('the daily round follows the same order', $state['question']['id'] === $order[0]);
 for ($i = 0; $i < 3; $i++) {
     $pick = array_values(array_filter($snapshot[$state['question']['id']]['options'], fn($o) => $o['is_correct']))[0];
-    request('POST', '/attempts/'.$state['attempt_id'].'/answer', ['option_id' => $pick['id']], $star['token']);
+    request('POST', '/attempts/'.$state['attempt_id'].'/answer', ['option_id' => servedId($state['question'], $pick)], $star['token']);
     if ($i < 2) { $state = request('POST', '/attempts/'.$state['attempt_id'].'/next', [], $star['token'])['body']; }
 }
 request('POST', '/attempts/'.$state['attempt_id'].'/finish', [], $star['token']);

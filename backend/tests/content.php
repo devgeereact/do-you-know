@@ -208,7 +208,7 @@ for ($i = 0; $i < $state['total']; $i++) {
     foreach ($leaks as $leak) { $clean = $clean && !str_contains($json, $leak); }
     $q = $snapshot[$state['question']['id']];
     if ($q['type'] === 'slider') { $body = ['value' => $q['slider']['correct']]; }
-    else { $body = ['option_id' => array_values(array_filter($q['options'], fn(array $o): bool => $o['is_correct']))[0]['id']]; }
+    else { $body = ['option_id' => servedId($state['question'], array_values(array_filter($q['options'], fn(array $o): bool => $o['is_correct']))[0])]; }
     $a = request('POST', '/attempts/'.$state['attempt_id'].'/answer', $body, $guest['token']);
     $graded = $graded && $a['status'] === 200 && $a['body']['is_correct'] === true && $a['body']['explanation'] === $q['explanation'] && $a['body']['source_url'] === $q['source_url'];
     if ($i < $state['total'] - 1) { $state = request('POST', '/attempts/'.$state['attempt_id'].'/next', [], $guest['token'])['body']; }

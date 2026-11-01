@@ -3,7 +3,18 @@ declare(strict_types=1);
 namespace Dyk;
 final class Game
 {
-    public function __construct(private readonly \PDO $db, private readonly string $userId) {}
+    /**
+     * $handleKey is a server secret. Players see option handles keyed on it and the attempt, never the
+     * snapshot ids, which are an unkeyed hash of the authored position (and so of the right answer).
+     */
+    public function __construct(private readonly \PDO $db, private readonly string $userId, private readonly string $handleKey) {}
+
+    /** The id a player sees for one option in one attempt. */
+    private function handle(string $attemptId, string $optionId): string
+    {
+        $h = hash_hmac('sha256', $attemptId . '|' . $optionId, $this->handleKey);
+        return substr($h, 0, 8) . '-' . substr($h, 8, 4) . '-' . substr($h, 12, 4) . '-' . substr($h, 16, 4) . '-' . substr($h, 20, 12);
+    }
 
     /** What a player may see before answering. $categoryScene feeds the cosmetic scene only. */
     public static function publicQuestion(array $q, ?string $categoryScene = null): array
@@ -50,9 +61,10 @@ final class Game
         $total = count(json_decode($a['question_order'], true, 512, JSON_THROW_ON_ERROR));
         $complete = (int)$a['answered_count'] >= $total;
         $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a), $quiz['scene']) : null;
-        if ($q && $a['shuffle_options']) {
-            usort($q['options'], static fn(array $left, array $right): int =>
-                strcmp(hash('sha256', $a['id'] . $left['id']), hash('sha256', $a['id'] . $right['id'])));
+        if ($q) {
+            foreach ($q['options'] as $i => $o) { $q['options'][$i]['id'] = $this->handle($a['id'], $o['id']); }
+            // Ordering by the keyed handle: a player cannot recompute it from what they are sent.
+            if ($a['shuffle_options']) { usort($q['options'], static fn(array $left, array $right): int => strcmp($left['id'], $right['id'])); }
         }
         $deadline = $a['current_sent_at'] !== null && $a['time_limit_seconds'] !== null
             ? (new \DateTimeImmutable($a['current_sent_at'], new \DateTimeZone('UTC')))->modify('+' . (int) $a['time_limit_seconds'] . ' seconds')->format('Y-m-d\TH:i:s.v\Z')
@@ -248,10 +260,10 @@ final class Game
             $timedOut = $limit !== null && $elapsed > $limit+1500;
             $correct = false; $option = null; $value = null; $correctIds = [];
             if (in_array($q['type'], ['choice','boolean'], true)) {
-                foreach ($q['options'] as $o) { if ($o['is_correct']) { $correctIds[] = $o['id']; } }
+                foreach ($q['options'] as $o) { if ($o['is_correct']) { $correctIds[] = $this->handle($id, $o['id']); } }
                 if (!$timedOut) {
                     if (!is_string($input['option_id'] ?? null)) { throw new ApiError('invalid_option'); }
-                    foreach ($q['options'] as $o) { if ($o['id'] === $input['option_id']) { $option = $o['id']; $correct = (bool)$o['is_correct']; } }
+                    foreach ($q['options'] as $o) { if (hash_equals($this->handle($id, $o['id']), $input['option_id'])) { $option = $o['id']; $correct = (bool)$o['is_correct']; } }
                     if ($option === null) { throw new ApiError('invalid_option'); }
                 }
             } elseif ($q['type'] === 'slider') {

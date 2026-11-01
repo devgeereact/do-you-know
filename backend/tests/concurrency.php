@@ -43,14 +43,14 @@ check('parallel starts share a single attempt',$a['attempt_id']===$results[1]['b
 $countRow=Database::one($db,'SELECT COUNT(*) AS n FROM attempts WHERE user_id=? AND quiz_id=?',[$guest['profile_id'],$quiz]);
 check('database contains one started attempt',(int)$countRow['n']===1);
 $question=$keys[$a['question']['id']];
-$results=parallelPosts('/attempts/'.$a['attempt_id'].'/answer',['option_id'=>$question['options'][0]['id']],$token);
+$results=parallelPosts('/attempts/'.$a['attempt_id'].'/answer',['option_id'=>servedId($a['question'],$question['options'][0])],$token);
 $statuses=array_column($results,'status');sort($statuses);
 check('simultaneous answer accepts exactly one submission',$statuses===[200,400]);
 $stored=Database::one($db,'SELECT correct_count,answered_count FROM attempts WHERE id=?',[$a['attempt_id']]);
 check('simultaneous answer increments once',(int)$stored['correct_count']===1&&(int)$stored['answered_count']===1);
 for($i=0;$i<2;$i++) {
     $r=request('POST','/attempts/'.$a['attempt_id'].'/next',[],$token);$q=$keys[$r['body']['question']['id']];
-    request('POST','/attempts/'.$a['attempt_id'].'/answer',['option_id'=>$q['options'][0]['id']],$token);
+    request('POST','/attempts/'.$a['attempt_id'].'/answer',['option_id'=>servedId($r['body']['question'],$q['options'][0])],$token);
 }
 $results=parallelPosts('/attempts/'.$a['attempt_id'].'/finish',[],$token);
 check('simultaneous finish returns one consistent score',$results[0]['status']===200&&$results[1]['status']===200&&$results[0]['body']['correct']===3&&$results[1]['body']['correct']===3);

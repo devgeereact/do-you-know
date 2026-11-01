@@ -1,5 +1,8 @@
 # Changelog
 
+## 1 November 2026 (go-live branch `golive/2026-11`) — Security fixes from the go-live audit
+- Answers: players now see per-attempt option ids keyed with a server secret instead of the stored ids. The stored ids were an unkeyed hash of each option's authored position, so a script could undo the shuffle; in the shipped content the right answer is written first in 59% of questions. Shuffling now follows the keyed ids too. No migration. Old ids are refused on purpose (accepting them would let a script submit "authored first option" directly), so a question on screen at the moment of release needs a reload; resuming a round works as before.
+
 ## 1 November 2026 — Daily auto-pick fix, generator providers, clean-up
 - Daily auto-pick: the server's crontab had been emptied, so 1 Nov had no daily. Jobs restored; `GET /daily` and starting a daily round now activate today's daily themselves when the job missed it; the Studio calendar preview uses the quizzes live at pick time, so it matches the real pick.
 - Generator: Anthropic is the default writer and searcher, OpenRouter (same Claude Opus 5.5) the backup; Bright Data is optional. `scripts/set-generator-keys.sh` saves keys on the server with hidden prompts.
