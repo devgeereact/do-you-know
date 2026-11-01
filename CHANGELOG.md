@@ -2,6 +2,7 @@
 
 ## 1 November 2026 (go-live branch `golive/2026-11`) — Security fixes from the go-live audit
 - Answers: players now see per-attempt option ids keyed with a server secret instead of the stored ids. The stored ids were an unkeyed hash of each option's authored position, so a script could undo the shuffle; in the shipped content the right answer is written first in 59% of questions. Shuffling now follows the keyed ids too. No migration. Old ids are refused on purpose (accepting them would let a script submit "authored first option" directly), so a question on screen at the moment of release needs a reload; resuming a round works as before.
+- Privacy: "Delete my data" now also removes the written answers a player left in their message threads, and the hourly clean-up of unused guests wipes their feedback message, email and written answers the same way (before, both kept that text for staff, against the privacy notice).
 
 ## 1 November 2026 — Daily auto-pick fix, generator providers, clean-up
 - Daily auto-pick: the server's crontab had been emptied, so 1 Nov had no daily. Jobs restored; `GET /daily` and starting a daily round now activate today's daily themselves when the job missed it; the Studio calendar preview uses the quizzes live at pick time, so it matches the real pick.

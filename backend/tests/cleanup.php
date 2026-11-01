@@ -22,6 +22,13 @@ $session($ids['a'],'UTC_TIMESTAMP()-INTERVAL 31 DAY');
 $session($ids['b'],'UTC_TIMESTAMP()-INTERVAL 10 DAY');
 $session($ids['e'],'UTC_TIMESTAMP()+INTERVAL 3 DAY');
 Database::execute($db,"INSERT INTO identities (provider,subject,profile_id) VALUES ('clerk',?,?)",['user_cleanup'.str_replace('-','',$ids['d']),$ids['d']]);
+// F: a 13-17 guest removed by the purge, who left a written message, an email and a written answer.
+$ids['f']=Database::uuid();
+Database::execute($db,"INSERT INTO profiles (id,role,age_band,created_at) VALUES (?,'guest','13_17',UTC_TIMESTAMP()-INTERVAL 60 DAY)",[$ids['f']]);
+$session($ids['f'],'UTC_TIMESTAMP()-INTERVAL 31 DAY');
+$feedbackId=Database::uuid();$answerId=Database::uuid();
+Database::execute($db,"INSERT INTO feedback (id,profile_id,kind,type,presets,message,email,question_prompt) VALUES (?,?,'player','idea','[]','Dummy message text','dummy@example.test','Dummy prompt')",[$feedbackId,$ids['f']]);
+Database::execute($db,"INSERT INTO feedback_messages (id,feedback_id,kind,body,author_id) VALUES (?,?,'player','Dummy written answer',?)",[$answerId,$feedbackId,$ids['f']]);
 Database::execute($db,"INSERT INTO rate_limits (bucket_hash,hits,expires_at) VALUES (?,1,UTC_TIMESTAMP()-INTERVAL 1 MINUTE)",[hash('sha256',random_bytes(16))]);
 
 exec(escapeshellarg(PHP_BINARY).' '.escapeshellarg(dirname(__DIR__).'/bin/cleanup.php').' 2>&1',$out,$code);
@@ -34,6 +41,10 @@ check('guest whose code expired 10 days ago is kept with its code',$exists($ids[
 check('brand-new guest without a code is kept',$exists($ids['c']));
 check('adult with a sign-in identity is never removed',$exists($ids['d']));
 check('guest with a live code is kept',$exists($ids['e'])&&$codes($ids['e'])===1);
+$kept=Database::one($db,'SELECT message,email,question_prompt FROM feedback WHERE id=?',[$feedbackId]);
+check('purged guest leaves no written message or email in feedback',!$exists($ids['f'])&&$kept&&$kept['message']===null&&$kept['email']===null&&$kept['question_prompt']===null);
+check('purged guest leaves no written answers in feedback threads',!Database::one($db,'SELECT 1 AS ok FROM feedback_messages WHERE id=?',[$answerId]));
+Database::execute($db,'DELETE FROM feedback WHERE id=?',[$feedbackId]);
 check('expired throttle buckets are removed',(int)Database::one($db,'SELECT COUNT(*) AS n FROM rate_limits WHERE expires_at<=UTC_TIMESTAMP()')['n']===0);
 
 foreach (['b','c','d','e'] as $key) { Database::execute($db,'DELETE FROM profiles WHERE id=?',[$ids[$key]]); }

@@ -23,9 +23,15 @@ try {
     // A guest with no device code left has not played for 30 days and can never be reached
     // again: remove the player and, by cascade, their games and board rows. Anyone with an
     // adult sign-in identity is kept, as are staff roles.
-    $removed = $drain("DELETE FROM profiles WHERE role IN ('guest','player')
-        AND created_at<=UTC_TIMESTAMP() - INTERVAL 30 DAY
-        AND NOT EXISTS (SELECT 1 FROM guest_sessions s WHERE s.profile_id=profiles.id)
-        AND NOT EXISTS (SELECT 1 FROM identities i WHERE i.profile_id=profiles.id)");
+    // One cutoff for every step, so the players scrubbed below are exactly the players removed.
+    $cutoff = (string) $db->query('SELECT UTC_TIMESTAMP() - INTERVAL 30 DAY')->fetchColumn();
+    if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/D', $cutoff)) { throw new RuntimeException('cutoff'); }
+    $unused = static fn (string $p): string => "$p.role IN ('guest','player') AND $p.created_at<='$cutoff'
+        AND NOT EXISTS (SELECT 1 FROM guest_sessions s WHERE s.profile_id=$p.id)
+        AND NOT EXISTS (SELECT 1 FROM identities i WHERE i.profile_id=$p.id)";
+    // Same promise as "Delete my data": anything they wrote in feedback goes with the player.
+    $db->exec("DELETE m FROM feedback_messages m JOIN profiles p ON p.id=m.author_id WHERE m.kind='player' AND ".$unused('p'));
+    $db->exec('UPDATE feedback f JOIN profiles p ON p.id=f.profile_id SET f.message=NULL, f.email=NULL, f.question_prompt=NULL WHERE '.$unused('p'));
+    $removed = $drain('DELETE FROM profiles WHERE '.$unused('profiles'));
     fwrite(STDOUT,"Cleaned expired buckets and codes; removed $removed unused guest players.\n");
 } catch (Throwable $error) { fwrite(STDERR,"Cleanup failed; check private configuration.\n");exit(1); }

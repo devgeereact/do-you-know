@@ -95,8 +95,12 @@ check('the preset lists are the agreed copy',Feedback::PRESETS['problem']===['So
 $leaver=$guest('18_plus');
 $r=request('POST','/feedback',['type'=>'idea','presets'=>[],'message'=>'Please add a quiz about volcanoes.','email'=>'leaver@example.org'],$leaver['token']);
 $fid=$r['body']['id']??'';
+$r=request('POST','/me/messages/'.$fid.'/reply',['body'=>'My private follow-up text.'],$leaver['token']);
+check('a grown-up can answer in their own thread before leaving',$r['status']===201);
 request('POST','/me/delete',['confirmed'=>true],$leaver['token']);
 $row=Database::one($db,'SELECT * FROM feedback WHERE id=?',[$fid]);
 check('deleting my data removes the message and email from my feedback',$row&&$row['profile_id']===null&&$row['message']===null&&$row['email']===null&&$row['type']==='idea');
+$left=(int)Database::one($db,"SELECT COUNT(*) AS n FROM feedback_messages WHERE feedback_id=? AND kind='player'",[$fid])['n'];
+check('deleting my data removes the answers I wrote in my thread',$left===0);
 
 fwrite(STDOUT,"$count feedback checks passed\n");
