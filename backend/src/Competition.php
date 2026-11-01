@@ -43,12 +43,12 @@ final class Competition
             return null;
         }
         $row = Database::one($this->db,
-            'SELECT d.challenge_date,d.quiz_id,v.snapshot,v.question_count,c.scene FROM daily_challenges d
+            'SELECT d.challenge_date,d.quiz_id,v.snapshot,v.question_count,c.scene,q.title FROM daily_challenges d
              JOIN quiz_versions v ON v.id=d.quiz_version_id JOIN quizzes q ON q.id=d.quiz_id
              LEFT JOIN categories c ON c.id=q.category_id WHERE d.id=?', [$daily['id']]);
         $snapshot = json_decode($row['snapshot'], true, 512, JSON_THROW_ON_ERROR);
         $byId = array_column($snapshot, null, 'id');
-        $stops = array_map(static fn(string $qid): string => Content::sceneFor($byId[$qid], $row['scene'], $qid),
+        $stops = array_map(static fn(string $qid): string => Content::sceneFor($byId[$qid], $row['scene'], $qid, $row['title']),
             Game::dailyOrder(array_column($snapshot, 'id'), $row['challenge_date'], (int) $row['question_count']));
         $stats = Database::one($this->db,
             "SELECT COUNT(*) AS played,AVG(e.correct_count) AS average,COALESCE(SUM(e.correct_count=e.total),0) AS perfect

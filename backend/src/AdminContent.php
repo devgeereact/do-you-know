@@ -124,7 +124,8 @@ final class AdminContent
                  'ks' => self::ks(is_array($meta['curriculum_tags'] ?? null) ? $meta['curriculum_tags'] : [])]),
             // scene is the question's own choice (null when unset); scene_default is what players see then.
             'questions' => array_map(static fn(array $q): array => $q + [
-                'scene_default' => Content::sceneFor(['prompt' => $q['prompt'] ?? null], $category['scene'] ?? null, $q['id']),
+                'scene_default' => Content::sceneFor(['prompt' => $q['prompt'] ?? null], $category['scene'] ?? null, $q['id'],
+                    is_string($meta['title'] ?? null) ? $meta['title'] : null),
                 'stats' => $stats[$q['id']] ?? ['answered' => 0, 'right' => 0]], $work['questions']),
             'versions' => array_map(static fn(array $v): array => ['version' => (int) $v['version'],
                 'created_at' => Database::utc($v['created_at']), 'question_count' => (int) $v['question_count'],

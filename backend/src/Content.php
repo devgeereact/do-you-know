@@ -385,13 +385,29 @@ final class Content
     ];
 
     /**
-     * The world a question is shown in (cosmetic only): its own scene, else one inferred from the
-     * prompt, else the category's scene, else a stable pick by question id. Always one of SCENES.
+     * Quiz-title words that put every question of the quiz in one world, before any prompt word:
+     * a quiz about digestion stays in the body world even when a prompt says "waves" or "map".
      */
-    public static function sceneFor(array $question, ?string $categoryScene, string $questionId): string
+    private const TOPIC_RULES = [
+        'body' => '/\b(?:body|bodies|human|anatomy|digestion|digestive|food|nutrition|bones?|skeleton|muscles?|movement|senses?|sight|hearing|brain|nerves?|nervous|heart|blood|circulation|breathing|lungs?|respiration|hormones?|growth|development|puberty|health|healthy|medical|medicine|teeth|tooth|skin)\b/iu',
+    ];
+
+    /**
+     * The world a question is shown in (cosmetic only): its own scene, else the body world when the
+     * quiz's title is about the body (TOPIC_RULES), else one inferred from the prompt, else the category's scene, else a
+     * stable pick by question id. Always one of SCENES.
+     */
+    public static function sceneFor(array $question, ?string $categoryScene, string $questionId, ?string $quizTitle = null): string
     {
         if (in_array($question['scene'] ?? null, self::SCENES, true)) {
             return $question['scene'];
+        }
+        if (is_string($quizTitle) && $quizTitle !== '') {
+            foreach (self::TOPIC_RULES as $scene => $pattern) {
+                if (preg_match($pattern, $quizTitle) === 1) {
+                    return $scene;
+                }
+            }
         }
         $prompt = is_string($question['prompt'] ?? null) ? $question['prompt'] : '';
         foreach (self::SCENE_RULES as $scene => $pattern) {

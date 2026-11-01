@@ -90,6 +90,17 @@ check('an invalid category scene is ignored',in_array($scene('Which word is spel
 check('the last fallback is stable per question',$scene('Pick a word',null,null,'a')===$scene('Pick a word',null,null,'a'));
 $picks=[];foreach(range(1,40) as $i){$picks[$scene('Pick a word',null,null,'id-'.$i)]=true;}
 check('the last fallback varies between questions',count($picks)>=4);
+// A quiz about the body keeps every question in the body world, whatever words a prompt uses.
+$topic=fn(string $prompt,string $title,?string $own=null): string => \Dyk\Content::sceneFor(['prompt'=>$prompt]+($own===null?[]:['scene'=>$own]),'ocean','q-1',$title);
+check('a body quiz is not an ocean because a prompt says waves',$topic('What moves food along the gut in waves?','Food and digestion (ages 9–11)')==='body');
+check('a body quiz is not a desert because a prompt says map',$topic('Is the traditional tongue map of separate taste zones accurate?','The senses (ages 15–16)')==='body');
+check('a body quiz is not space because a prompt says star',$topic('Which sense helps you see the shape of a star?','The senses')==='body');
+foreach (['Bones and movement','Brain and nerves','Heart and blood','Breathing','Growth and development','Hormones','Medical history','Food and digestion'] as $t) {
+    check("“{$t}” is a body topic",$topic('Pick one',$t)==='body');
+}
+check('a question’s own scene still wins over the topic',$topic('Pick one','Heart and blood','past')==='past');
+check('a topic with no theme falls back to the prompt',$topic('How many planets are there?','General knowledge mix')==='space');
+check('only body topics are read from the title, so other quizzes keep per-question worlds',$topic('Pick one','World Capitals')==='ocean');
 // Daily order: the same for one date, a different slice on another date, never file order by design.
 $ids=array_map(fn(int $i): string => sprintf('00000000-0000-4000-8000-%012d',$i),range(1,30));
 check('daily order is deterministic for a date',Game::dailyOrder($ids,'2026-11-01',10)===Game::dailyOrder($ids,'2026-11-01',10));

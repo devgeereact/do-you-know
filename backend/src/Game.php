@@ -17,12 +17,12 @@ final class Game
     }
 
     /** What a player may see before answering. $categoryScene feeds the cosmetic scene only. */
-    public static function publicQuestion(array $q, ?string $categoryScene = null): array
+    public static function publicQuestion(array $q, ?string $categoryScene = null, ?string $quizTitle = null): array
     {
         $slider = $q['slider'] ?? null;
         return [
             'id' => $q['id'], 'type' => $q['type'], 'prompt' => $q['prompt'],
-            'image_url' => $q['image_url'] ?? null, 'scene' => Content::sceneFor($q, $categoryScene, $q['id']),
+            'image_url' => $q['image_url'] ?? null, 'scene' => Content::sceneFor($q, $categoryScene, $q['id'], $quizTitle),
             'options' => array_map(fn(array $o): array => ['id' => $o['id'], 'label' => $o['label']], $q['options'] ?? []),
             'slider' => $slider ? ['min' => $slider['min'], 'max' => $slider['max'], 'step' => $slider['step'], 'unit' => $slider['unit'] ?? null] : null,
         ];
@@ -60,7 +60,7 @@ final class Game
         $quiz = Database::one($this->db, 'SELECT q.slug,q.title,c.scene FROM quizzes q LEFT JOIN categories c ON c.id=q.category_id WHERE q.id=?', [$a['quiz_id']]);
         $total = count(json_decode($a['question_order'], true, 512, JSON_THROW_ON_ERROR));
         $complete = (int)$a['answered_count'] >= $total;
-        $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a), $quiz['scene']) : null;
+        $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a), $quiz['scene'], $quiz['title']) : null;
         if ($q) {
             foreach ($q['options'] as $i => $o) { $q['options'][$i]['id'] = $this->handle($a['id'], $o['id']); }
             // Ordering by the keyed handle: a player cannot recompute it from what they are sent.
