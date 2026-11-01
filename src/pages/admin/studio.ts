@@ -1,3 +1,4 @@
+import { isWebUrl } from '@/lib/utils';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import type {
   AdminClient,
@@ -217,6 +218,11 @@ export function maskEmail(email: string | null | undefined): string {
   if (!email) return 'no email';
   const [user = '', domain = ''] = email.split('@');
   return `${user.slice(0, 1)}•••@${domain}`;
+}
+
+/** A source link safe to put in an href: http(s) only, so a draft can never carry a `javascript:` link. */
+export function webHref(url: string | null | undefined): string | undefined {
+  return isWebUrl(url) ? url : undefined;
 }
 
 export function hostOf(url: string | null | undefined): string {

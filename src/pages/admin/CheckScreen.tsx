@@ -5,7 +5,15 @@ import { londonToday, markedAnswer, validateQuestion } from '@/lib/adminValidati
 import { cn } from '@/lib/utils';
 import type { QuizDetail } from '@/services/adminService';
 import { QuestionPreview } from '@/pages/admin/QuestionPreview';
-import { hostOf, inputClass, niceDate, useAction, useLoad, useStudio } from '@/pages/admin/studio';
+import {
+  hostOf,
+  inputClass,
+  niceDate,
+  useAction,
+  useLoad,
+  useStudio,
+  webHref,
+} from '@/pages/admin/studio';
 import { AHead, Bar, Empty, ErrorNote, Field, Loading, Panel, Pill } from '@/pages/admin/ui';
 
 /** One question at a time with its source; nothing goes live until every one is ticked. */
@@ -214,7 +222,7 @@ export function CheckScreen(): JSX.Element {
                   {q.source_url ? (
                     <>
                       <a
-                        href={q.source_url}
+                        href={webHref(q.source_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-bold text-primary underline-offset-2 hover:underline"

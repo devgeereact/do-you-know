@@ -18,6 +18,7 @@ import {
   useAction,
   useLoad,
   useStudio,
+  webHref,
 } from '@/pages/admin/studio';
 import { AHead, ErrorNote, Field, Loading, Panel, Pill } from '@/pages/admin/ui';
 
@@ -467,9 +468,9 @@ function DraftCard({
         {q.explanation && <p className="mt-2 text-sm text-content-muted">{q.explanation}</p>}
         <blockquote className="mt-2 rounded-lg bg-background p-2 text-[13px] text-content-muted">
           <span className="italic">“{draft.quote}”</span>{' '}
-          {q.source_url && (
+          {webHref(q.source_url) && (
             <a
-              href={q.source_url}
+              href={webHref(q.source_url)}
               target="_blank"
               rel="noreferrer"
               className="font-bold not-italic text-primary hover:underline"
