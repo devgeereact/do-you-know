@@ -146,8 +146,11 @@ final class AdminOps
             for ($day = new \DateTimeImmutable($today); $day->format('Y-m-d') <= $last; $day = $day->modify('+1 day')) {
                 $date = $day->format('Y-m-d');
                 if (isset($rows[$date])) { continue; }
-                $end = (new \DateTimeImmutable($date . ' 23:59:59', new \DateTimeZone('Europe/London')))->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s');
-                $live = array_filter($pool, static fn(array $q): bool => $q['publish_at'] === null || $q['publish_at'] <= $end);
+                // The hourly job picks just after London midnight (or the first visit that day), so only
+                // quizzes already live then can be chosen. Today uses "now", as the real pick would.
+                $at = $date === $today ? gmdate('Y-m-d H:i:s')
+                    : (new \DateTimeImmutable($date . ' 00:00:00', new \DateTimeZone('Europe/London')))->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d H:i:s');
+                $live = array_filter($pool, static fn(array $q): bool => $q['publish_at'] === null || $q['publish_at'] <= $at);
                 usort($live, static fn(array $a, array $b): int =>
                     [isset($used[$a['id']]), $used[$a['id']] ?? '', hash('sha256', $date . $a['id'])]
                     <=> [isset($used[$b['id']]), $used[$b['id']] ?? '', hash('sha256', $date . $b['id'])]);

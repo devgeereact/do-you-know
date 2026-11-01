@@ -59,6 +59,19 @@ final class Daily
         });
     }
 
+    /**
+     * Self-heal: when today has no live daily (cron missed, server restarted, crontab lost), pick
+     * or activate it now, exactly as the hourly job would. Cheap when today is already live. Must be
+     * called outside any open transaction.
+     */
+    public static function ensureToday(\PDO $db): void
+    {
+        $live = Database::one($db, "SELECT id FROM daily_challenges WHERE challenge_date=? AND status='live'", [Competition::londonDate()]);
+        if ($live === null && !$db->inTransaction()) {
+            (new self($db))->activate();
+        }
+    }
+
     /** Least recently used published quiz; ties break by a hash of the date so picks vary. */
     private function pick(string $today): ?array
     {

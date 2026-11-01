@@ -146,6 +146,22 @@ check('unsubmitting a live quiz keeps it published', $r['body']['quiz']['status'
 admin('POST', '/quizzes/'.$id.'/check', ['index' => 0, 'checked' => true]);
 $future = (new DateTimeImmutable($today))->modify('+20 days')->format('Y-m-d');
 check('only live quizzes can be booked as a daily', admin('POST', '/daily', ['date' => $future, 'quiz_id' => $second])['body']['error']['code'] === 'quiz_not_live');
+// The calendar's auto-pick preview must match what the activator really picks on that day.
+$probe = null;
+foreach ([0, 1] as $ahead) {
+    $month = (new DateTimeImmutable(Competition::londonDate()))->modify('first day of this month')->modify("+$ahead month")->format('Y-m');
+    foreach (admin('GET', '/daily?month='.$month)['body']['days'] as $d) {
+        if ($d['status'] === 'auto' && $d['quiz_id'] !== null && $d['date'] > Competition::londonDate()) { $probe = $d; break 2; }
+    }
+}
+if ($probe !== null) {
+    $before = Database::all($db, 'SELECT id,status FROM daily_challenges WHERE challenge_date>=?', [Competition::londonDate()]);
+    $picked = (new Dyk\Daily($db))->activate($probe['date']);
+    $real = Database::one($db, 'SELECT quiz_id FROM daily_challenges WHERE challenge_date=?', [$probe['date']]);
+    check('the calendar preview names the quiz the activator really picks', $picked['action'] === 'auto_picked' && $real['quiz_id'] === $probe['quiz_id']);
+    Database::execute($db, 'DELETE FROM daily_challenges WHERE challenge_date=?', [$probe['date']]);
+    foreach ($before as $b) { Database::execute($db, 'UPDATE daily_challenges SET status=? WHERE id=?', [$b['status'], $b['id']]); }
+}
 $r = admin('POST', '/daily', ['date' => $future, 'quiz_id' => $id]);
 check('a future daily can be booked', $r['status'] === 200 && $r['body']['status'] === 'scheduled' && $r['body']['quiz_id'] === $id);
 $v1 = Database::one($db, 'SELECT current_version_id FROM quizzes WHERE id=?', [$id])['current_version_id'];

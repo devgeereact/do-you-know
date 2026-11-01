@@ -96,5 +96,19 @@ check('GET /daily serves the activated quiz without answers',$api['status']===20
 exec(escapeshellarg(PHP_BINARY).' '.escapeshellarg(dirname(__DIR__).'/bin/daily.php').' 2>&1',$out,$code);
 check('cron script exits cleanly and is idempotent',$code===0&&str_contains(implode("\n",$out),'already_live'));
 
+// Self-heal: no cron run at all today, and the site still has its daily.
+Database::execute($db,'DELETE FROM attempts WHERE daily_challenge_id IN (SELECT id FROM daily_challenges WHERE challenge_date=?)',[$today]);
+Database::execute($db,'DELETE FROM daily_challenges WHERE challenge_date=?',[$today]);
+$api=request('GET','/daily');
+$healed=$row($today);
+check('GET /daily picks today\'s quiz itself when the cron has not run',$api['status']===200&&is_array($api['body'])&&$healed!==null&&$healed['status']==='live'&&$api['body']['quiz']['slug']!=='');
+Database::execute($db,'DELETE FROM attempts WHERE daily_challenge_id IN (SELECT id FROM daily_challenges WHERE challenge_date=?)',[$today]);
+Database::execute($db,'DELETE FROM daily_challenges WHERE challenge_date=?',[$today]);
+$guest=request('POST','/guest-sessions',[])['body']['token'];
+$start=request('POST','/attempts',['mode'=>'daily'],$guest);
+check('starting a daily round also picks today\'s quiz when the cron has not run',$start['status']===200&&$row($today)!==null&&$row($today)['status']==='live');
+$again=request('GET','/daily');
+check('self-heal never picks twice in one day',$again['body']['id']===$row($today)['id']&&(int)Database::one($db,'SELECT COUNT(*) AS n FROM daily_challenges WHERE challenge_date=?',[$today])['n']===1);
+
 $restore();
 fwrite(STDOUT,"$count daily checks passed.\n");

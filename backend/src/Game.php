@@ -75,6 +75,9 @@ final class Game
         if (!in_array($mode, ['practice', 'ranked', 'daily', 'challenge'], true)) {
             throw new ApiError('invalid_mode');
         }
+        if ($mode === 'daily') {
+            Daily::ensureToday($this->db);
+        }
         return $this->transaction(function () use ($input, $mode): array {
             $daily = null;
             $challenge = null;

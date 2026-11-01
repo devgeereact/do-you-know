@@ -37,6 +37,7 @@ final class Competition
      */
     public function dailyDetails(): ?array
     {
+        Daily::ensureToday($this->db);
         $daily = $this->daily();
         if ($daily === null) {
             return null;
