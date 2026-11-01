@@ -60,3 +60,8 @@ Open: a human sign-in test on the live site; deciding whether to enforce the rep
 Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed. Tasks stay in this file; every audit is added to `docs/AUDIT.md`.
 - 30 Oct 2026: push to `main` deploys over SSH (`deploy.yml`, `scripts/release.mjs`); FTPS workflow and scripts removed. Dry run: main is ahead of live (admin area, new front-end build, no pending migrations), so the first deploy ships that.
 - 30 Oct 2026: first Actions SSH deploy released `c882ba5` (20261030T192236Z): admin area, backend (4 changed, 2 new) and front end (3 changed, 5 new); 7 files snapshotted; smoke 3/3. Undo: `pnpm release --rollback --go`.
+
+## 2026-11-01 (evening): go-live audit, branch `golive/2026-11`
+- Security audit (security-audit skill, 16 agents, final critic clean): no Critical or High findings. Fixed: option ids leaked the authored position of the right answer (d18fc57); delete and purge kept written feedback (82c4d43); Studio source links limited to http(s) (4cd271e); `X-Powered-By` stripped in api.php (bc5b559). Dependencies updated in range (821f4fa).
+- SEO audit (claude-seo): live URLs all served the bare shell because the release skipped prerender. Fixed: release prerenders and fails if it cannot (e1673b8); info pages, schema and meta fallbacks (3fa6ed2); CLS (d9f7d0e). e2e keeps its API log (97c8f55).
+- Not pushed, not deployed. Owner steps are in CURRENT-TASK.md.

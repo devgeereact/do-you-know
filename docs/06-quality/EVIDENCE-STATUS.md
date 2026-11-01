@@ -147,3 +147,17 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | Live Studio, server side as the owner's account | PASS       | Access check `is_admin: true`, To do and Library load from the live database, other accounts refused (403)                                                                                                                                                  |
 | Live Studio in the owner's browser              | NOT TESTED | Needs the owner's email sign-in code                                                                                                                                                                                                                        |
 | Generator live run                              | BLOCKED    | Owner adds keys later (`scripts/set-generator-keys.sh`)                                                                                                                                                                                                     |
+
+## Go-live branch `golive/2026-11` — 1 November 2026 (not deployed)
+
+| Check | Result | Notes |
+| --- | --- | --- |
+| `pnpm verify` + `pnpm format:check` before each commit | PASS | 11 commits |
+| `pnpm check` | PASS | after the dependency updates |
+| Backend suites (disposable MariaDB) | PASS | all 13 suites; new checks for option handles, erasure, X-Powered-By |
+| Apache root .htaccess (local httpd) | PASS | 37 passed, 0 failed; now covers prerendered /q/, /c/ and /about |
+| `pnpm test:e2e` | PASS (3 of 4 runs) | one unexplained 503 on round start in one run; log now kept |
+| Lab CLS, throttled phone, local build with live data | PASS | home 0.002, category 0.001; quiz 0.08–0.11 |
+| Lighthouse / PSI / CrUX | NOT TESTED | PSI quota exhausted |
+| Live checks of the new code | NOT TESTED | not deployed |
+

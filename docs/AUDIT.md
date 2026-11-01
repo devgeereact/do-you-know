@@ -2,6 +2,47 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-01 · Go-live security audit (full codebase, security-audit skill)
+
+Reviewer: Claude Code. Branch `golive/2026-11`, source `80e1f23`. Profile standard: 12 coverage units, 7 hunters in two waves, 3 candidate verifiers, 3 record verifiers, 3 coverage critics (final pass clean). Audit agents read source only; every confirmed finding was reproduced with a failing check on the disposable local MariaDB (`scripts/test-backend.sh`). Run files (ledger, findings.json, reports) are in the gitignored `.local-test/security-audit/run-1/`.
+
+**Findings**
+
+| Severity | Finding | Status |
+|---|---|---|
+| Medium | Option ids were an unkeyed hash of each option's authored position, so a script could undo the shuffle. The right answer is written first in 615 of 1042 shipped questions (59% against 25% chance). This broke "answers never exposed before answering". | FIXED d18fc57: per-attempt HMAC handles, raw ids refused, shuffle by handle. Regression checks in integration.php |
+| Medium | "Delete my data" kept the player's written thread answers, and the hourly guest purge kept message, email and answers. Staff could still read them, against the privacy notice. | FIXED 82c4d43: both paths scrub; checks in feedback.php and cleanup.php |
+| Needs validation | Studio generator draft card used the model's `source_url` as an href with no scheme check (a `javascript:` link was possible, staff click needed, generator off by default) | Guard applied 4cd271e (`webHref`); browser behaviour NOT TESTED |
+| — | No Critical or High findings | — |
+
+**Checked and passing (source review):** every `/admin/*` route goes through `Admin::guard` before any handler, and every staff write is audited (except generator step, see below). All SQL is prepared, with emulation and multi-statements off; LIMIT, ORDER BY, IN and LIKE are built safely. Every player route takes identity from the token only; attempts and threads are owner-bound. Scoring, timing and once-only daily are enforced on the server. Clerk JWT is pinned to RS256 and checks iss, azp, exp, nbf, iat, `user_` and `sess_`; guest and Clerk tokens cannot be swapped. CORS is an exact allowlist with no credentials. Rate limits are atomic and keyed per IP (CF-Connecting-IP trusted only from Cloudflare ranges), per player and per route. Nicknames are ASCII-only and blocked-word filtered, and children cannot type them. React renders every user string as text. Prerender, JSON-LD and the sitemap escape their output. The service worker caches public catalogue routes only. The release puts no config, maps or dumps in the webroot (`verifyPublic`); bin scripts are CLI-only. The deploy job runs only on `main`, with pinned known_hosts. Migrations are checksummed.
+
+**Hardening, not findings (left for later):** the CSP is Report-Only with `'unsafe-inline'` styles. The CF-RAY origin lock can be spoofed (nothing relies on it). `api/.htaccess` is server-managed and never deployed. deploy.yml uses mutable action tags, writes the deploy key before the build and has no GitHub environment. The generator follows redirects without per-hop checks, can approve drafts before the check stage (API only), does not audit `step` and has no retry cap. Nicknames have no unique index. Leaderboards return microsecond timestamps and attempt ids. The generator places answers at slot i % n. Clerk `sts` is not checked. Guest creation is per /64. Next and answer do not re-check that a quiz is still live.
+
+**Go-live checklist (owner request, 1 Nov):**
+- Keys hidden: no secret in 84 commits (gitleaks, full history) or in the build. The one `sk_live` pattern hit is the Clerk SDK's literal prefix check. The only env var the frontend reads is `VITE_*`, and the Clerk publishable key is public by design. PASS.
+- Env files: the project rule forbids opening `.env*` and `config.php`, so their contents were NOT TESTED. Only `.env.example` is tracked. PASS for tracking.
+- Admin routes, authentication, user access, forms and XSS, rate limits, API endpoints, CORS: see above. PASS.
+- Security headers on live: HSTS, nosniff, X-Frame-Options, Referrer-Policy, Permissions-Policy and a report-only CSP are present. `Server: cloudflare` (origin version hidden), and no `X-Powered-By` on `/` or the API. `api.php` now strips `X-Powered-By` itself (bc5b559). Server version (`ServerTokens`) cannot be set from `.htaccess`; Cloudflare already replaces the header. PASS.
+- Debug off: `display_errors` 0, generic error bodies, production environment required by Config, maps filtered out of the release, no `console.log`. PASS.
+- Dependencies (821f4fa): in-range updates only. `pnpm audit` 41 → 5, 0 high. The 2 production advisories left need React Router 7 and do not apply (BrowserRouter only, no navigation to user-supplied URLs). The 3 dev ones are inside workbox-build. `composer audit` clean. Majors (React 19, Router 7, ESLint 10, Vite 7, Clerk PHP 2) are a planned task. PASS within scope.
+- Unused packages: every npm and Composer dependency is referenced. PASS.
+- Exposed files on live: `/.git/HEAD`, composer files, `/vendor/`, `phpinfo.php`, `.DS_Store`, `backup.sql`, `/server-status`, `api/.htaccess` and source maps all return 403 or 404. `.env` and `config.php` URLs were not probed (blocked by the agent guard; owner command in `.agent/CURRENT-TASK.md`).
+- Database: prepared statements only, credentials outside the webroot, backups outside the webroot. The DB user's grants and remote access are server facts, NOT TESTED.
+- Passwords: none stored. Clerk handles adult sign-in. Guest tokens are 256-bit random and stored as sha256, which is right for high-entropy tokens. PASS.
+
+**Checks run:** `pnpm verify` and `pnpm format:check` before every commit, PASS. Backend suites unit, integration, competition, daily, concurrency, feeds, content, cleanup, seo, admin, feedback, cms and generator: PASS. `pnpm test:e2e`: 46/46 in 3 of 4 runs. One run had a single 503 on round start in `privacy.spec` (mobile) that 2 reruns and a 180-request concurrent-start stress test could not reproduce; the e2e API log is now kept at `.local-test/e2e-last-php.log` (97c8f55). Cause NOT FOUND.
+
+## 2026-11-01 · Go-live SEO audit (claude-seo)
+
+Reviewer: Claude Code. Full report: `.local-test/seo/doyouknow.space-audit/FULL-AUDIT-REPORT.md` and `ACTION-PLAN.md`. Live health score 29/100.
+
+- Critical, FIXED in code (e1673b8): every live URL served the same empty shell with the canonical pointing at home, because the release build skipped prerender silently. Release builds now prerender from the live public catalogue and fail if they cannot.
+- FIXED in code (3fa6ed2): the 7 info pages are prerendered; title and description fallbacks for quizzes; richer category pages; related-quiz links; Organization, WebSite and BreadcrumbList JSON-LD; a home title that says what the site is; `llms.txt`.
+- FIXED in code (d9f7d0e): CLS (lab, throttled phone): home 0.30 → 0.002, category 0.26 → 0.001. The quiz page is 0.08–0.11, still open.
+- Owner work: who makes it and how questions are checked (E-E-A-T), 46 quiz intros at 60–120 words, SEO titles and descriptions in Studio, category copy, a parents and teachers section, the contact line, Search Console, the Cloudflare GPTBot 429 rule. FAQ or Q&A rich results are deliberately not used (FAQ is restricted to gov and health sites; Q&A markup would expose answers).
+- NOT TESTED: Lighthouse and PSI (API quota exhausted), CrUX field data, a live check of the new pages (not deployed).
+
 ## 2026-10-31 · Profile, nickname-once and on-site replies (privacy and child safety)
 
 Reviewer: Claude Code. Scope: `Player::nickname`, `Feedback::mine/playerReply/markSeen`, migration 0016, `/me`, `/contact`, Studio inbox.

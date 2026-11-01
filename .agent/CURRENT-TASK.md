@@ -1,19 +1,24 @@
 # Current task
 
-Updated 1 November 2026. Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`.
+Updated 1 November 2026 (evening). Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`.
 
 ## Goal
-Keep doyouknow.space healthy after the Pop & Ink rebrand; switch on the Studio generator once the owner adds keys.
+Get doyouknow.space ready for go-live: security audit and fixes, SEO audit and fixes. Branch `golive/2026-11` (local only: not pushed, not deployed).
 
 ## Status
-- Live and healthy; daily auto-pick self-heals; crontab restored (11 jobs).
-- Generator built, off until keys are saved (`bash scripts/set-generator-keys.sh`).
+- Commits on `golive/2026-11` are all gated (`pnpm verify` + format check). The audits are in `docs/AUDIT.md` (1 Nov, two sections).
+- Security: no Critical or High findings. Fixed 2 Medium (answer-position leak through option ids; erasure keeping written feedback) and the Studio `javascript:` source link. `api.php` strips `X-Powered-By`. Dependencies updated in range (0 high advisories).
+- SEO: the live site serves an empty shell on every URL (release skipped prerender). Fixed in code: 65 prerendered pages, schema, CLS. Not live until deployed.
 
-## Next steps
-1. Owner: run `scripts/set-generator-keys.sh` (Anthropic default, OpenRouter backup) and try one run in Studio → Generator.
-2. Owner: sign in once at /admin to confirm Studio access on live.
-3. Decide whether to enforce the report-only CSP.
+## Next steps (owner)
+1. Review the branch, then push to `main` (deploys). Confirm the release log shows `prerender: 65 pages`. If Cloudflare blocks the GitHub runner reading the catalogue, the release fails safely: run `pnpm release --go` from the Mac. A question on screen at the moment of release may need one reload (new option ids).
+2. Run the exposed-file check for the private config and environment file URLs (command in Claude's go-live report; the agent guard blocks it). Expect 403 or 404 on every line.
+3. Search Console: DNS verify, submit the sitemap. Content work: see `.local-test/seo/doyouknow.space-audit/ACTION-PLAN.md` (About "who" and "how we check", quiz intros, SEO titles).
+4. Decide the CSP: enforcing needs a clean click-through of every journey including Clerk sign-in.
+5. Cloudflare: GPTBot gets 429; check the rule does not catch search bots. GitHub: consider a `production` environment for `CPANEL_SSH_KEY`.
 
-## Checks (1 November 2026)
-`pnpm check` PASS · backend suites PASS (daily 19, cms 132, generator 42) · `pnpm test:cron` 12/12 PASS · `check-rebrand.py` PASS · live `/api/v1/daily` serves today's quiz.
-Studio browser walkthrough (local, all 10 screens, desktop and phone) PASS · live Studio server-side as the owner PASS.
+## Next steps (code, later)
+Quiz page CLS (0.08–0.11); footer subject links; generator hardening (per-hop redirect checks, approve only when the stage is done, audit `step`, retry cap); deploy.yml SHA pins and building before the key is written; planned majors (React 19, Router 7, Vite 7, ESLint 10, Clerk PHP 2); find the intermittent e2e 503 (log now in `.local-test/e2e-last-php.log`).
+
+## Checks (1 November 2026, branch)
+`pnpm verify` PASS (each commit) · `pnpm check` PASS · backend 13 suites PASS · Apache 37/37 PASS · e2e 46/46 in 3 of 4 runs (1 unexplained 503) · gitleaks full history clean · `pnpm audit` 0 high · `composer audit` clean · lab CLS home 0.002 / category 0.001. NOT TESTED: Lighthouse/PSI (quota), live behaviour of the new code, private config contents (project rule), DB grants (server).

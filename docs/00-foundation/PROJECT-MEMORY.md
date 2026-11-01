@@ -27,6 +27,7 @@ Pop & Ink design with our own logo, per-question worlds and the framed game stag
 - **Generator keys**: the owner adds Anthropic (default) and OpenRouter (backup) keys with `scripts/set-generator-keys.sh`; it stays off until then.
 - A human sign-in test of the live Studio after `admin_subjects` was set (31 Oct).
 - Report-only CSP: decide whether to enforce.
+- Release builds prerender info, category and quiz pages from the live public catalogue (`PRERENDER_REQUIRED=1`); a release fails rather than ship the bare shell.
 
 ## Rules that never change
 
