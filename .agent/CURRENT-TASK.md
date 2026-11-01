@@ -16,3 +16,4 @@ Keep doyouknow.space healthy after the Pop & Ink rebrand; switch on the Studio g
 
 ## Checks (1 November 2026)
 `pnpm check` PASS · backend suites PASS (daily 19, cms 132, generator 42) · `pnpm test:cron` 12/12 PASS · `check-rebrand.py` PASS · live `/api/v1/daily` serves today's quiz.
+Studio browser walkthrough (local, all 10 screens, desktop and phone) PASS · live Studio server-side as the owner PASS.

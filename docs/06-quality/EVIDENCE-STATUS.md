@@ -138,3 +138,12 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | `pnpm check`            | PASS   | 158 tests                                                                                                |
 | Playwright journeys     | PASS   | 46 / 46, including the once-only nickname and the character picker on `/me`                              |
 | Screens at 1440 and 390 | PASS   | `/me`, `/how-to-play`, `/privacy`, `/contact`, `/me/settings`: no console errors, no horizontal overflow |
+
+### Studio browser walkthrough, 1 November 2026 (local)
+
+| Check                                           | Result     | Notes                                                                                                                                                                                                                                                       |
+| ----------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Every Studio screen in Chrome at 1440 and 390   | PASS       | To do, Inbox, Library, Check & publish, Import, Generator, Subjects, Daily calendar, Players, Activity; Editor opens from the Library; ⌘K palette opens. No console errors, no server errors, no horizontal overflow (`.local-test/studio/all-screens.mjs`) |
+| Live Studio, server side as the owner's account | PASS       | Access check `is_admin: true`, To do and Library load from the live database, other accounts refused (403)                                                                                                                                                  |
+| Live Studio in the owner's browser              | NOT TESTED | Needs the owner's email sign-in code                                                                                                                                                                                                                        |
+| Generator live run                              | BLOCKED    | Owner adds keys later (`scripts/set-generator-keys.sh`)                                                                                                                                                                                                     |
