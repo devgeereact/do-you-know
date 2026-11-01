@@ -4,6 +4,8 @@ declare(strict_types=1);
 // On cPanel set DYK_BACKEND_DIR in this API directory's Apache configuration:
 // SetEnv DYK_BACKEND_DIR /home/CPANEL_USER/do-you-know-private
 $private = getenv('DYK_BACKEND_DIR') ?: dirname(__DIR__);
+// Never name the PHP version, even where the host's expose_php is on or .htaccess is bypassed.
+header_remove('X-Powered-By');
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, private');
 header('X-Content-Type-Options: nosniff');

@@ -17,6 +17,7 @@ Database::execute($db,'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,qu
 $keys=array_column($snapshot,null,'id');
 $r=request('GET','/health');check('health responds without exposing config',$r['status']===200&&$r['body']===['status'=>'ok','api_version'=>1]);
 check('API responses are never cached',str_contains(strtolower($r['headers']),'no-store'));
+check('API never names its PHP version (no X-Powered-By)',!str_contains(strtolower($r['headers']),'x-powered-by'));
 $r=request('OPTIONS','/attempts');check('preflight allows bearer header',$r['status']===204&&str_contains($r['headers'],'Authorization'));
 $r=request('GET','/health',null,null,'https://attacker.example');check('rejects unapproved origin',$r['status']===403&&!str_contains($r['headers'],'Access-Control-Allow-Origin'));
 $r=request('POST','/guest-sessions',null,null,'http://localhost:5202','{broken');check('rejects malformed JSON',$r['status']===400);
