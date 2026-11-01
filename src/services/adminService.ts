@@ -357,7 +357,14 @@ export interface GeneratorRun extends GeneratorRunSummary {
 
 export interface GeneratorStatus {
   enabled: boolean;
-  configured: { claude: boolean; bright_data: boolean };
+  configured: {
+    anthropic: boolean;
+    openrouter: boolean;
+    bright_data: boolean;
+    writer: boolean;
+    search: boolean;
+  };
+  backup_model: string;
   ready: boolean;
   model: string;
   sources: string[];

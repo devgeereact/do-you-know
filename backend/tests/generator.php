@@ -43,11 +43,17 @@ $adminRow = Database::one($db, "SELECT profile_id FROM identities WHERE provider
 $offAdmin = new Admin($db, ['environment' => 'production', 'admin_subjects' => []], ['id' => $adminRow['profile_id'] ?? '']);
 $off = new Generator($db, ['environment' => 'production'], $offAdmin, new AdminContent($db, $offAdmin));
 $status = $off->status();
-check('the generator is off by default and says why', $status['enabled'] === false && $status['ready'] === false && $status['configured'] === ['claude' => false, 'bright_data' => false]);
+check('the generator is off by default and says why', $status['enabled'] === false && $status['ready'] === false && $status['configured'] === ['anthropic' => false, 'openrouter' => false, 'bright_data' => false, 'writer' => false, 'search' => false]);
 try { $off->create(['topic' => 'The water cycle', 'ages' => '7-11', 'count' => 5]); $refused = false; } catch (ApiError $e) { $refused = $e->errorCode === 'generator_off' && $e->status === 409; }
 check('a run cannot start while it is off', $refused);
 $keys = new Generator($db, ['environment' => 'production', 'generator' => ['enabled' => true, 'anthropic_api_key' => 'x', 'fixtures' => __DIR__.'/fixtures/generator']], $offAdmin, new AdminContent($db, $offAdmin));
-check('recorded answers are never used outside the test environment', $keys->status()['configured'] === ['claude' => true, 'bright_data' => false] && $keys->status()['ready'] === false);
+check('recorded answers are never used outside the test environment', $keys->status()['configured']['openrouter'] === false && $keys->status()['configured']['bright_data'] === false);
+$only = fn(array $g) => (new Generator($db, ['environment' => 'production', 'generator' => ['enabled' => true] + $g], $offAdmin, new AdminContent($db, $offAdmin)))->status();
+check('an Anthropic key alone is enough: Claude searches and writes', $only(['anthropic_api_key' => 'x'])['ready'] === true);
+check('an OpenRouter key alone is enough as the backup', $only(['openrouter_api_key' => 'x'])['ready'] === true);
+check('Bright Data alone cannot write questions', $only(['brightdata_api_key' => 'x', 'brightdata_serp_zone' => 'z', 'brightdata_unlocker_zone' => 'u'])['ready'] === false);
+check('keys switched off stay off', (new Generator($db, ['environment' => 'production', 'generator' => ['enabled' => false, 'anthropic_api_key' => 'x']], $offAdmin, new AdminContent($db, $offAdmin)))->status()['ready'] === false);
+check('the backup model defaults to Opus 5.5 on OpenRouter', $status['backup_model'] === 'anthropic/claude-opus-5.5');
 check('the default model is claude-opus-5-5', $status['model'] === 'claude-opus-5-5');
 
 // ---- Through the API with recorded answers ----
@@ -73,7 +79,7 @@ check('each page is read in its own step; a page that fails is marked unreadable
 $page = Database::one($db, 'SELECT text FROM generator_pages WHERE run_id=? AND url=?', [$run, 'https://www.bbc.co.uk/bitesize/fixture-water-cycle'])['text'] ?? '';
 check('stored page text has no menus or scripts', str_contains($page, 'called evaporation') && !str_contains($page, 'Menu Home') && !str_contains($page, 'var x'));
 $r = gen('POST', "/generator/runs/$run/step");
-check('the draft step records drafts and token use', $r['body']['stage'] === 'check' && count($r['body']['drafts']) === 4 && $r['body']['usage']['output_tokens'] > 0);
+check('the draft step records drafts, token use and the model that wrote them', $r['body']['stage'] === 'check' && count($r['body']['drafts']) === 4 && $r['body']['usage']['output_tokens'] > 0 && $r['body']['model'] === 'fixtures:recorded');
 $r = gen('POST', "/generator/runs/$run/step");
 $d = $r['body']['drafts'];
 check('the run is done after the checks', $r['body']['stage'] === 'done');

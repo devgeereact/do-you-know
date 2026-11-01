@@ -56,6 +56,8 @@ final class Generator
             'sources' => $sources ?: self::DEFAULT_SOURCES,
             'fixtures' => $fixtures,
             'anthropic_api_key' => (string) ($g['anthropic_api_key'] ?? ''),
+            'openrouter_api_key' => (string) ($g['openrouter_api_key'] ?? ''),
+            'openrouter_model' => is_string($g['openrouter_model'] ?? null) && $g['openrouter_model'] !== '' ? $g['openrouter_model'] : 'anthropic/claude-opus-5.5',
             'brightdata_api_key' => (string) ($g['brightdata_api_key'] ?? ''),
             'brightdata_serp_zone' => (string) ($g['brightdata_serp_zone'] ?? ''),
             'brightdata_unlocker_zone' => (string) ($g['brightdata_unlocker_zone'] ?? ''),
@@ -64,10 +66,13 @@ final class Generator
 
     private function configured(array $s): array
     {
-        return [
-            'claude' => $s['fixtures'] !== null || $s['anthropic_api_key'] !== '',
-            'bright_data' => $s['fixtures'] !== null || ($s['brightdata_api_key'] !== '' && $s['brightdata_serp_zone'] !== '' && $s['brightdata_unlocker_zone'] !== ''),
-        ];
+        $fx = $s['fixtures'] !== null;
+        $anthropic = $fx || $s['anthropic_api_key'] !== '';
+        $openrouter = $fx || $s['openrouter_api_key'] !== '';
+        $brightData = $fx || ($s['brightdata_api_key'] !== '' && $s['brightdata_serp_zone'] !== '' && $s['brightdata_unlocker_zone'] !== '');
+        // Writing needs Anthropic or OpenRouter; searching needs Bright Data or either model provider.
+        return ['anthropic' => $anthropic, 'openrouter' => $openrouter, 'bright_data' => $brightData,
+            'writer' => $anthropic || $openrouter, 'search' => $brightData || $anthropic || $openrouter];
     }
 
     private function transport(array $s): GeneratorTransport
@@ -90,8 +95,9 @@ final class Generator
         return [
             'enabled' => $s['enabled'],
             'configured' => $configured,
-            'ready' => $s['enabled'] && $configured['claude'] && $configured['bright_data'],
+            'ready' => $s['enabled'] && $configured['writer'] && $configured['search'],
             'model' => $s['model'],
+            'backup_model' => $s['openrouter_model'],
             'sources' => $s['sources'],
             'ages' => self::AGES,
             'cap' => ['used' => $this->runsToday(), 'limit' => $s['daily_runs']],
@@ -122,7 +128,7 @@ final class Generator
         if ($problems) { throw ApiError::invalid('invalid_run', $problems); }
         $s = $this->settings();
         $configured = $this->configured($s);
-        if (!$s['enabled'] || !$configured['claude'] || !$configured['bright_data']) { throw new ApiError('generator_off', 409); }
+        if (!$s['enabled'] || !$configured['writer'] || !$configured['search']) { throw new ApiError('generator_off', 409); }
         if ($this->runsToday() >= $s['daily_runs']) { throw new ApiError('generator_daily_cap', 429, ['limit' => $s['daily_runs']]); }
         $id = Database::uuid();
         Database::execute($this->db, 'INSERT INTO generator_runs (id,created_by,topic,category_slug,ages,wanted,model) VALUES (?,?,?,?,?,?,?)',
@@ -212,8 +218,7 @@ final class Generator
 
     private function doSearch(array $run, array $s): void
     {
-        $sites = implode(' OR ', array_map(static fn(string $d): string => "site:$d", $s['sources']));
-        $results = $this->transport($s)->search($run['topic'] . ' ' . $sites);
+        $results = $this->transport($s)->search($run['topic'], $s['sources']);
         $sources = [];
         foreach ($results as $r) {
             $host = self::host($r['link'] ?? '');
@@ -233,7 +238,7 @@ final class Generator
             if ($source['state'] !== 'waiting') { continue; }
             $text = '';
             try {
-                $text = self::pageText($this->transport($s)->fetch($source['url']));
+                $text = self::pageText($this->transport($s)->fetch($source['url'], $s['sources']));
             } catch (ApiError) {
                 $text = '';
             }
@@ -274,7 +279,7 @@ final class Generator
                 ],
             ]]],
         ];
-        $out = $this->transport($s)->draft($run['model'], $system, $user, $schema);
+        $out = $this->transport($s)->draft($system, $user, $schema);
         Database::transaction($this->db, function () use ($run, $out): void {
             Database::execute($this->db, 'DELETE FROM generator_drafts WHERE run_id=?', [$run['id']]);
             $reviewBy = (new \DateTimeImmutable(Competition::londonDate()))->modify('+12 months')->format('Y-m-d');
@@ -289,8 +294,9 @@ final class Generator
                 Database::execute($this->db, "INSERT INTO generator_drafts (id,run_id,position,question,quote,problems) VALUES (?,?,?,?,?,'[]')",
                     [Database::uuid(), $run['id'], $i, json_encode($question, JSON_UNESCAPED_UNICODE), mb_substr(trim((string) ($q['quote'] ?? '')), 0, 2000)]);
             }
-            Database::execute($this->db, "UPDATE generator_runs SET input_tokens=input_tokens+?, output_tokens=output_tokens+?, stage='check' WHERE id=?",
-                [$out['input_tokens'], $out['output_tokens'], $run['id']]);
+            // Record which provider and model really wrote the drafts (Anthropic, or the OpenRouter backup).
+            Database::execute($this->db, "UPDATE generator_runs SET input_tokens=input_tokens+?, output_tokens=output_tokens+?, model=?, stage='check' WHERE id=?",
+                [$out['input_tokens'], $out['output_tokens'], mb_substr($out['model'], 0, 60), $run['id']]);
         });
     }
 

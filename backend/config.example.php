@@ -33,16 +33,20 @@ return [
     'mail_from' => '',
     // Random server key for hashing rate-limit identifiers, at least 32 characters.
     'rate_limit_key' => '',
-    // Sourced question generator in the Studio (Bright Data search + page fetch, Claude drafts).
-    // Off until 'enabled' is true AND every key below is set. Each run costs money: about one
-    // search, up to four page fetches and one Claude call. Drafts never publish themselves.
+    // Sourced question generator in the Studio. Set with scripts/set-generator-keys.sh (never by hand).
+    // Off until 'enabled' is true and an Anthropic or OpenRouter key is set. Anthropic writes and
+    // searches by default; OpenRouter is the backup when Anthropic fails. Bright Data is optional
+    // (used for search and page reading when all three of its settings are present). Each run costs
+    // money: one web search, up to four page reads and one model call. Drafts never publish themselves.
     'generator' => [
         'enabled' => false,
         'anthropic_api_key' => '',
         'model' => 'claude-opus-5-5',
-        'brightdata_api_key' => '',
-        'brightdata_serp_zone' => '',      // a SERP API zone name
-        'brightdata_unlocker_zone' => '',  // a Web Unlocker zone name
+        'openrouter_api_key' => '',
+        'openrouter_model' => 'anthropic/claude-opus-5.5',
+        'brightdata_api_key' => '',        // optional
+        'brightdata_serp_zone' => '',      // optional: a SERP API zone name
+        'brightdata_unlocker_zone' => '',  // optional: a Web Unlocker zone name
         'daily_runs' => 20,                // runs allowed per London day
         // 'sources' => ['bbc.co.uk', ...], // optional; defaults to Generator::DEFAULT_SOURCES
     ],

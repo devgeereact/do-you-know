@@ -11,23 +11,28 @@ final class GeneratorFixtures implements GeneratorTransport
 {
     public function __construct(private readonly string $dir) {}
 
-    public function search(string $query): array
+    public function engine(): string
+    {
+        return 'fixtures';
+    }
+
+    public function search(string $topic, array $domains): array
     {
         return $this->read('search.json');
     }
 
-    public function fetch(string $url): string
+    public function fetch(string $url, array $domains): string
     {
         $pages = $this->read('pages.json');
         if (!is_string($pages[$url] ?? null)) { throw new ApiError('generator_fetch_failed', 502, ['status' => 404]); }
         return $pages[$url];
     }
 
-    public function draft(string $model, string $system, string $user, array $schema): array
+    public function draft(string $system, string $user, array $schema): array
     {
         $draft = $this->read('draft.json');
         if (($draft['refuse'] ?? false) === true) { throw new ApiError('generator_refused', 422); }
-        return ['questions' => $draft['questions'], 'input_tokens' => strlen($system . $user) >> 2, 'output_tokens' => 900];
+        return ['questions' => $draft['questions'], 'input_tokens' => strlen($system . $user) >> 2, 'output_tokens' => 900, 'model' => 'fixtures:recorded'];
     }
 
     private function read(string $name): array

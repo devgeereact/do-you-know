@@ -41,11 +41,11 @@ const FAILURES: Record<string, string> = {
   generator_bad_output: 'The model’s answer could not be read. Run it again.',
   generator_too_long: 'The answer was too long. Ask for fewer questions.',
   generator_search_failed: 'The search failed. Run it again.',
-  generator_fetch_failed: 'Fetching from Bright Data failed. Check the zone names in the settings.',
+  generator_fetch_failed: 'A page could not be read. Try again, or a different topic.',
 };
 
 /**
- * Sourced question generator: Bright Data finds pages on trusted sites, Claude writes questions
+ * Sourced question generator: Claude (or Bright Data) finds pages on trusted sites, Claude writes questions
  * only from that text, the server checks every quote. A person approves drafts and sends them to
  * a quiz, which still goes through Check & publish. Off until the owner switches it on.
  */
@@ -87,7 +87,7 @@ export function GeneratorScreen(): JSX.Element {
             <Panel>
               <h2 className="font-display text-xl font-extrabold">How a run works</h2>
               <ol className="mt-3 grid gap-2 text-sm text-content-muted">
-                <li>1. Bright Data searches only the trusted sites for your topic.</li>
+                <li>1. Only the trusted sites are searched for your topic.</li>
                 <li>2. Up to four pages are read and kept with the run.</li>
                 <li>
                   3. Claude writes questions using only that text, quoting the page each time.
@@ -116,22 +116,28 @@ export function GeneratorScreen(): JSX.Element {
 }
 
 function StatePill({ s }: { s: GeneratorStatus }): JSX.Element {
-  if (s.ready) return <Pill tone="ok">Switched on</Pill>;
-  return <Pill tone="warn">Switched off until the cost is approved</Pill>;
+  if (s.ready)
+    return (
+      <Pill tone="ok">
+        Switched on · {s.configured.anthropic ? 'Anthropic' : 'OpenRouter'}
+        {s.configured.anthropic && s.configured.openrouter ? ' with OpenRouter backup' : ''}
+      </Pill>
+    );
+  return <Pill tone="warn">Switched off</Pill>;
 }
 
 function OffNotice({ s }: { s: GeneratorStatus }): JSX.Element {
   const missing = [
     !s.enabled && '“enabled” is false',
-    !s.configured.claude && 'the Claude API key',
-    !s.configured.bright_data && 'the Bright Data key and zone names',
+    !s.configured.writer && 'an Anthropic or OpenRouter API key',
   ].filter(Boolean);
   return (
     <div className="mb-4 rounded-2xl border border-warning/40 bg-warning/10 p-4 text-sm">
       <p className="font-bold text-content">Nothing here costs money until it is switched on.</p>
       <p className="mt-1 text-content-muted">
         Missing in the private server settings (<code>generator</code>): {missing.join(', ')}. Each
-        run then uses about one search, up to four page fetches and one Claude call.
+        run then uses one web search, up to four page reads and one Claude call. Run{' '}
+        <code>scripts/set-generator-keys.sh</code> on your Mac to add the keys.
       </p>
     </div>
   );
@@ -232,6 +238,9 @@ function StartForm({
       <div className="rounded-xl bg-background p-3 text-sm">
         <p className="font-bold">Model</p>
         <p className="font-mono text-[13px] text-content-muted">{s.model}</p>
+        <p className="mt-1 text-xs text-content-muted">
+          Backup: <span className="font-mono">{s.backup_model}</span> via OpenRouter
+        </p>
       </div>
       <div>
         <p className="mb-1.5 text-sm font-bold">Trusted sources</p>
@@ -595,7 +604,7 @@ function SidePanel({
               [u.runs, 'runs'],
               [u.drafts, 'drafts'],
               [u.sent, 'sent to quizzes'],
-              [u.search_calls + u.page_calls, 'Bright Data calls'],
+              [u.search_calls + u.page_calls, 'searches and page reads'],
               [(u.input_tokens + u.output_tokens).toLocaleString(), 'Claude tokens'],
             ] as const
           ).map(([value, label]) => (
