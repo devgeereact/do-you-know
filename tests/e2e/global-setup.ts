@@ -1,6 +1,6 @@
 import { execFileSync, spawn, type ChildProcess } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
-import { chmodSync, mkdirSync, openSync, rmSync } from 'node:fs';
+import { chmodSync, copyFileSync, mkdirSync, openSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import {
   API_PORT,
@@ -147,6 +147,15 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
       );
     } catch {
       /* best effort: the next run drops and recreates it anyway */
+    }
+    // Keep the API's log of the last run: a 503 in a browser test is only explainable from it.
+    try {
+      copyFileSync(
+        path.join(WORK_DIR, 'php.log'),
+        path.join(REPO_ROOT, '.local-test', 'e2e-last-php.log'),
+      );
+    } catch {
+      /* no log to keep */
     }
     rmSync(WORK_DIR, { recursive: true, force: true });
   };
