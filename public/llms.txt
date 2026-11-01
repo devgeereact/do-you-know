@@ -1,0 +1,18 @@
+# Do You Know
+
+> Free quizzes for children and grown-ups in the UK: a daily challenge, friend battles and KS1 to GCSE school-subject practice. Every answer is explained and has a source. No ads, no trackers, no sign-up for players.
+
+Answers are only shown after a player answers, so quiz questions and answers are not published as pages.
+
+## Main pages
+
+- [Home](https://doyouknow.space/): all subjects and today's challenge
+- [How to play](https://doyouknow.space/how-to-play): question types, practice and ranked play, fair scoring
+- [Today's challenge](https://doyouknow.space/daily): one quiz a day, the same for everyone
+- [Leaderboards](https://doyouknow.space/leaderboards)
+- [About](https://doyouknow.space/about): what the app is and how it treats children's privacy
+- [Privacy notice](https://doyouknow.space/privacy)
+
+## Subjects and quizzes
+
+- [Sitemap](https://doyouknow.space/sitemap.xml): every subject page (/c/...) and quiz page (/q/...)

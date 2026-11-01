@@ -60,11 +60,11 @@ ServerSignature Off
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^(assets|icons)/ - [E=DYK_IMMUTABLE:1]
 
-  # 6. Prerendered category and quiz pages (scripts/prerender.mjs): /c/<slug> and /q/<slug>
-  #    serve their own index.html straight away, with or without a trailing slash, so there
-  #    is no directory-slash redirect. A slug with no prerendered page falls to the shell.
+  # 6. Prerendered pages (scripts/prerender.mjs): info pages such as /about, and /c/<slug> and
+  #    /q/<slug>, serve their own index.html straight away, with or without a trailing slash, so
+  #    there is no directory-slash redirect. A path with no prerendered page falls to the shell.
   RewriteCond %{REQUEST_FILENAME}/index.html -f
-  RewriteRule ^([cq]/[a-z0-9-]{1,100})/?$ $1/index.html [L]
+  RewriteRule ^((?:[cq]/)?[a-z0-9-]{1,100})/?$ $1/index.html [L]
 
   # 7. Real files and folders are served as they are.
   RewriteCond %{REQUEST_FILENAME} -f [OR]

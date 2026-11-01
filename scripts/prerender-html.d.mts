@@ -33,11 +33,22 @@ export function categoryPage(
   shell: string,
   origin: string,
   category: PrerenderCategory,
-  quizzes: ReadonlyArray<Pick<PrerenderQuiz, 'slug' | 'title'>>,
+  quizzes: ReadonlyArray<Pick<PrerenderQuiz, 'slug' | 'title'> & Partial<PrerenderQuiz>>,
+  categories?: ReadonlyArray<Pick<PrerenderCategory, 'slug' | 'name'>>,
 ): string;
 export function quizPage(
   shell: string,
   origin: string,
   quiz: PrerenderQuiz,
   category: Pick<PrerenderCategory, 'slug' | 'name'> | null,
+  siblings?: ReadonlyArray<Pick<PrerenderQuiz, 'slug' | 'title'>>,
 ): string;
+export interface PrerenderStaticPage {
+  path: string;
+  title: string;
+  description: string;
+  heading: string;
+  sections: ReadonlyArray<{ heading?: string; paragraphs: ReadonlyArray<string> }>;
+}
+export function staticPage(shell: string, origin: string, page: PrerenderStaticPage): string;
+export function infoPages(copy: typeof import('../src/i18n/en-GB').enGB): PrerenderStaticPage[];

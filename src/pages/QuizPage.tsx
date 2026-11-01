@@ -9,6 +9,7 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { ageLabel, difficultyLabel } from '@/lib/quizLabels';
+import { quizSeoDescription, quizSeoTitle } from '@/lib/seoText';
 import { categoryStyle } from '@/lib/categoryStyle';
 import { isWebUrl } from '@/lib/utils';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -56,8 +57,8 @@ export function QuizPage(): JSX.Element {
   const category = quiz ? categories.find((c) => c.id === quiz.category_id) : undefined;
 
   useDocumentMeta({
-    title: quiz ? (quiz.seo_title ?? quiz.title) : t.quiz.metaTitle,
-    description: quiz?.seo_description ?? quiz?.intro ?? undefined,
+    title: quiz ? quizSeoTitle(quiz) : t.quiz.metaTitle,
+    description: (quiz && quizSeoDescription(quiz)) ?? undefined,
   });
 
   if (notFound) return <NotFoundPage />;

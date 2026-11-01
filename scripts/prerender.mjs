@@ -14,7 +14,8 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { categoryPage, isSlug, quizPage } from './prerender-html.mjs';
+import { enGB } from '../src/i18n/en-GB.ts';
+import { categoryPage, infoPages, isSlug, quizPage, staticPage } from './prerender-html.mjs';
 
 const DEFAULT_ORIGIN = 'https://doyouknow.space';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -45,7 +46,7 @@ async function getJson(pathname) {
 async function writePage(kind, slug, html) {
   // Slugs come from the API; only [a-z0-9-] may ever become a folder name.
   if (!isSlug(slug)) return false;
-  const folder = path.join(dist, kind, slug);
+  const folder = kind ? path.join(dist, kind, slug) : path.join(dist, slug);
   await mkdir(folder, { recursive: true });
   await writeFile(path.join(folder, 'index.html'), html);
   return true;
@@ -69,6 +70,11 @@ async function main() {
     return;
   }
   const shell = await readFile(path.join(dist, 'index.html'), 'utf8');
+  // Info pages need no network: their words come from the app's own copy.
+  let info = 0;
+  for (const page of infoPages(enGB)) {
+    if (await writePage('', page.path, staticPage(shell, origin, page))) info++;
+  }
   let categories;
   let quizzes;
   try {
@@ -93,14 +99,16 @@ async function main() {
   let written = 0;
   for (const category of categories) {
     const own = quizzes.filter((quiz) => quiz.category_id === category.id);
-    if (await writePage('c', category.slug, categoryPage(shell, origin, category, own))) written++;
+    const html = categoryPage(shell, origin, category, own, categories);
+    if (await writePage('c', category.slug, html)) written++;
   }
   for (const quiz of quizzes) {
     const category = categoryById.get(quiz.category_id) ?? null;
-    if (await writePage('q', quiz.slug, quizPage(shell, origin, quiz, category))) written++;
+    const siblings = quizzes.filter((other) => other.category_id === quiz.category_id);
+    if (await writePage('q', quiz.slug, quizPage(shell, origin, quiz, category, siblings))) written++;
   }
   process.stdout.write(
-    `prerender: ${written} pages (${categories.length} categories, ${quizzes.length} quizzes) from ${apiBase}\n`,
+    `prerender: ${written + info} pages (${info} info, ${categories.length} categories, ${quizzes.length} quizzes) from ${apiBase}\n`,
   );
 }
 

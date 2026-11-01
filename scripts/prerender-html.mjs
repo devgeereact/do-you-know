@@ -2,10 +2,11 @@
 // Each page is a copy of the built app shell with its own head tags and a short static
 // block (h1 + intro) that search engines and link unfurlers can read without running JS.
 // Only published catalogue metadata goes in; never questions, options or answers.
+import { quizSeoDescription, quizSeoTitle } from '../src/lib/seoText.ts';
 
 export const SITE = 'Do You Know';
 export const DEFAULT_DESCRIPTION =
-  'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.';
+  'Free quizzes for children and grown-ups: a daily challenge, friend battles and KS1 to GCSE practice. Every answer is explained and sourced. No ads.';
 const DESCRIPTION_LIMIT = 200;
 const SLUG = /^[a-z0-9-]{1,100}$/;
 
@@ -108,42 +109,77 @@ function pageTitle(name) {
   return `${name} · ${SITE}`;
 }
 
+/** BreadcrumbList from [name, url] pairs, Home first. */
+function breadcrumb(origin, trail) {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: [['Home', `${origin}/`], ...trail].map(([name, item], i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name,
+      item,
+    })),
+  };
+}
+
+/** One ld+json block holding the page's main node and its breadcrumb. */
+function pageGraph(main, crumbs) {
+  return { '@context': 'https://schema.org', '@graph': [main, crumbs] };
+}
+
+const ORG = (origin) => ({ '@id': `${origin}/#organization` });
+
 /**
  * @param {{ slug: string, name: string, description?: string | null }} category
  * @param {Array<{ slug: string, title: string }>} quizzes published quizzes in this category
  */
-export function categoryPage(shell, origin, category, quizzes) {
+export function categoryPage(shell, origin, category, quizzes, categories = []) {
   const url = `${origin}/c/${category.slug}`;
   const name = `${category.name} quizzes`;
   const description = summary(category.description) || DEFAULT_DESCRIPTION;
   const listed = quizzes.filter((quiz) => isSlug(quiz.slug));
   const items = listed
-    .map((quiz) => `<li><a href="/q/${quiz.slug}">${escapeHtml(quiz.title)}</a></li>`)
+    .map((quiz) => {
+      const about = quizSeoDescription({ ...quiz, seo_description: null });
+      return (
+        `<li><a href="/q/${quiz.slug}">${escapeHtml(quiz.title)}</a>` +
+        (about ? `: ${escapeHtml(summary(about, 300))}` : '') +
+        '</li>'
+      );
+    })
+    .join('');
+  const others = categories
+    .filter((other) => isSlug(other.slug) && other.slug !== category.slug)
+    .map((other) => `<li><a href="/c/${other.slug}">${escapeHtml(other.name)} quizzes</a></li>`)
     .join('');
   const bodyHtml =
     `<h1>${escapeHtml(name)}</h1>` +
     (category.description ? `<p>${escapeHtml(summary(category.description, 600))}</p>` : '') +
     (items ? `<ul>${items}</ul>` : '') +
+    (others ? `<nav aria-label="Other subjects"><h2>Other subjects</h2><ul>${others}</ul></nav>` : '') +
     `<p><a href="/">More quizzes on ${SITE}</a></p>`;
   return renderPage(shell, {
     title: pageTitle(name),
     description,
     url,
     bodyHtml,
-    jsonLd: {
-      '@context': 'https://schema.org',
-      '@type': 'CollectionPage',
-      name,
-      description,
-      url,
-      inLanguage: 'en-GB',
-      isPartOf: { '@type': 'WebSite', name: SITE, url: `${origin}/` },
-      hasPart: listed.map((quiz) => ({
-        '@type': 'Quiz',
-        name: quiz.title,
-        url: `${origin}/q/${quiz.slug}`,
-      })),
-    },
+    jsonLd: pageGraph(
+      {
+        '@type': 'CollectionPage',
+        name,
+        description,
+        url,
+        inLanguage: 'en-GB',
+        isPartOf: { '@id': `${origin}/#website` },
+        publisher: ORG(origin),
+        hasPart: listed.map((quiz) => ({
+          '@type': 'Quiz',
+          name: quiz.title,
+          url: `${origin}/q/${quiz.slug}`,
+        })),
+      },
+      breadcrumb(origin, [[name, url]]),
+    ),
   });
 }
 
@@ -155,10 +191,11 @@ const DIFFICULTY = { easy: 'Easy', medium: 'Medium', hard: 'Tricky' };
  *   age_min?: number | null, age_max?: number | null }} quiz
  * @param {{ slug: string, name: string } | null} category
  */
-export function quizPage(shell, origin, quiz, category) {
+export function quizPage(shell, origin, quiz, category, siblings = []) {
   const url = `${origin}/q/${quiz.slug}`;
   const heading = quiz.title;
-  const description = summary(quiz.seo_description ?? quiz.intro) || DEFAULT_DESCRIPTION;
+  const seoTitle = quizSeoTitle(quiz);
+  const description = summary(quizSeoDescription(quiz)) || DEFAULT_DESCRIPTION;
   const facts = [];
   if (Number.isInteger(quiz.question_count)) facts.push(`${quiz.question_count} questions`);
   if (quiz.difficulty && DIFFICULTY[quiz.difficulty]) facts.push(DIFFICULTY[quiz.difficulty]);
@@ -169,30 +206,49 @@ export function quizPage(shell, origin, quiz, category) {
     `<h1>${escapeHtml(heading)}</h1>` +
     (quiz.intro ? `<p>${escapeHtml(summary(quiz.intro, 600))}</p>` : '') +
     (facts.length ? `<p>${escapeHtml(facts.join(' · '))}</p>` : '') +
+    related(quiz, category, siblings) +
     (category && isSlug(category.slug)
       ? `<p><a href="/c/${category.slug}">More ${escapeHtml(category.name)} quizzes</a></p>`
       : `<p><a href="/">More quizzes on ${SITE}</a></p>`);
-  const jsonLd = {
-    '@context': 'https://schema.org',
+  const main = {
     '@type': 'Quiz',
     name: heading,
     description,
     url,
     inLanguage: 'en-GB',
     isAccessibleForFree: true,
-    isPartOf: { '@type': 'WebSite', name: SITE, url: `${origin}/` },
+    learningResourceType: 'Quiz',
+    isPartOf: { '@id': `${origin}/#website` },
+    publisher: ORG(origin),
   };
-  if (ages) jsonLd.typicalAgeRange = ages;
+  if (ages) main.typicalAgeRange = ages;
+  const trail = [];
   if (category && isSlug(category.slug)) {
-    jsonLd.about = { '@type': 'Thing', name: category.name };
+    main.about = { '@type': 'Thing', name: category.name };
+    trail.push([`${category.name} quizzes`, `${origin}/c/${category.slug}`]);
   }
+  trail.push([seoTitle, url]);
   return renderPage(shell, {
-    title: pageTitle(quiz.seo_title ?? quiz.title),
+    title: pageTitle(seoTitle),
     description,
     url,
     bodyHtml,
-    jsonLd,
+    jsonLd: pageGraph(main, breadcrumb(origin, trail)),
   });
+}
+
+const RELATED = 4;
+
+/** Up to four other quizzes in the same subject, as a small link list. */
+function related(quiz, category, siblings) {
+  const items = siblings
+    .filter((other) => isSlug(other.slug) && other.slug !== quiz.slug)
+    .slice(0, RELATED)
+    .map((other) => `<li><a href="/q/${other.slug}">${escapeHtml(other.title)}</a></li>`)
+    .join('');
+  if (!items) return '';
+  const label = category ? `More ${category.name} quizzes` : 'More quizzes';
+  return `<nav aria-label="${escapeHtml(label)}"><h2>${escapeHtml(label)}</h2><ul>${items}</ul></nav>`;
 }
 
 function ageRange(min, max) {
@@ -212,4 +268,118 @@ function ageLabel(min, max) {
   if (lo !== null) return `Ages ${lo}+`;
   if (hi !== null) return `Up to age ${hi}`;
   return null;
+}
+
+/**
+ * An info page (/about, /how-to-play, ...): the app's own title and description, an h1 and the
+ * page's main copy, so search engines read the words people see without running JS.
+ * @param {{ path: string, title: string, description: string, heading: string,
+ *   sections: Array<{ heading?: string, paragraphs: string[] }> }} page
+ */
+export function staticPage(shell, origin, page) {
+  const url = `${origin}/${page.path}`;
+  const body = page.sections
+    .map(
+      (section) =>
+        (section.heading ? `<h2>${escapeHtml(section.heading)}</h2>` : '') +
+        section.paragraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join(''),
+    )
+    .join('');
+  return renderPage(shell, {
+    title: pageTitle(page.title),
+    description: page.description,
+    url,
+    bodyHtml: `<h1>${escapeHtml(page.heading)}</h1>${body}<p><a href="/">Play a quiz on ${SITE}</a></p>`,
+    jsonLd: pageGraph(
+      {
+        '@type': 'WebPage',
+        name: page.title,
+        description: page.description,
+        url,
+        inLanguage: 'en-GB',
+        isPartOf: { '@id': `${origin}/#website` },
+        publisher: ORG(origin),
+      },
+      breadcrumb(origin, [[page.title, url]]),
+    ),
+  });
+}
+
+/** The info pages listed in the sitemap, built from the app's own copy (src/i18n/en-GB.ts). */
+export function infoPages(copy) {
+  const { about, howToPlay, contact, privacy, terms } = copy.info;
+  const text = (value) => (typeof value === 'string' ? [value] : []);
+  return [
+    {
+      path: 'about',
+      title: about.metaTitle,
+      description: about.metaDescription,
+      heading: about.title,
+      sections: [
+        { paragraphs: [about.lead] },
+        { heading: about.whatTitle, paragraphs: about.what },
+        { heading: about.everyoneTitle, paragraphs: about.everyone },
+        { heading: about.fairTitle, paragraphs: [about.fair] },
+      ],
+    },
+    {
+      path: 'how-to-play',
+      title: howToPlay.metaTitle,
+      description: howToPlay.metaDescription,
+      heading: howToPlay.title,
+      sections: [
+        { paragraphs: [howToPlay.lead] },
+        {
+          heading: howToPlay.kindsTitle,
+          paragraphs: howToPlay.kinds.map((kind) => `${kind.name} ${kind.text}`),
+        },
+        { paragraphs: text(howToPlay.timer) },
+        {
+          heading: howToPlay.modesTitle,
+          paragraphs: [
+            `${howToPlay.rankedName} ${howToPlay.ranked}`,
+            `${howToPlay.practiceName} ${howToPlay.practice}`,
+          ],
+        },
+      ],
+    },
+    {
+      path: 'daily',
+      title: copy.common.todaysChallenge,
+      description: copy.daily.metaDescription,
+      heading: copy.common.todaysChallenge,
+      sections: [{ paragraphs: [copy.daily.lead] }],
+    },
+    {
+      path: 'leaderboards',
+      title: copy.leaderboards.title,
+      description: copy.leaderboards.metaDescription,
+      heading: copy.leaderboards.title,
+      sections: [{ paragraphs: [copy.leaderboards.metaDescription] }],
+    },
+    {
+      path: 'contact',
+      title: contact.metaTitle,
+      description: contact.metaDescription,
+      heading: contact.title,
+      sections: [
+        { paragraphs: [contact.lead] },
+        { heading: contact.correctionsTitle, paragraphs: [contact.corrections] },
+      ],
+    },
+    {
+      path: 'privacy',
+      title: privacy.metaTitle,
+      description: privacy.metaDescription,
+      heading: privacy.title,
+      sections: [{ paragraphs: [privacy.metaDescription] }],
+    },
+    {
+      path: 'terms',
+      title: terms.metaTitle,
+      description: terms.metaDescription,
+      heading: terms.title,
+      sections: [{ paragraphs: [terms.metaDescription] }],
+    },
+  ];
 }

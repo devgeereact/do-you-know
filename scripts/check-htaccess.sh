@@ -86,6 +86,10 @@ for kind in q c; do
   body "/$kind/<slug>/ with a slash serves the same page" 200 "/$kind/$slug/" "/$kind/$slug\""
   body "/$kind/<slug> page carries the static intro block" 200 "/$kind/$slug" '<div id="prerender"'
 done
+if [ -f "$root/dist/about/index.html" ]; then
+  body "/about serves its prerendered page with no redirect" 200 /about '<link rel="canonical" href="https://doyouknow.space/about"'
+  body "/about/ with a slash serves the same page" 200 /about/ 'https://doyouknow.space/about"'
+else echo "SKIP no prerendered info pages in dist"; fi
 check "folder without a slash is not listed" 404 /assets
 check "folder with a slash is not listed" 404 /assets/
 body "unknown quiz slug falls back to the shell" 200 /q/no-such-quiz-here '<link rel="canonical" href="https://doyouknow.space/" />'
@@ -96,7 +100,8 @@ check "CSP report-only sent" 200 / "content-security-policy-report-only: default
 inline_hash=$(python3 - "$root/dist/index.html" <<'PY2'
 import base64, hashlib, re, sys
 html = open(sys.argv[1]).read()
-for body in re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>', html, re.S):
+# JSON-LD data blocks are not scripts, so script-src (and its hashes) does not apply to them.
+for body in re.findall(r'<script(?![^>]*\bsrc=)(?![^>]*application/ld\+json)[^>]*>(.*?)</script>', html, re.S):
     print('sha256-' + base64.b64encode(hashlib.sha256(body.encode()).digest()).decode())
 PY2
 )

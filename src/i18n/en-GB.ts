@@ -82,7 +82,9 @@ export const enGB = {
 
   meta: {
     defaultDescription:
-      'Fun, fair quizzes for all ages: daily challenges, friend battles and school-subject practice.',
+      'Free quizzes for children and grown-ups: a daily challenge, friend battles and KS1 to GCSE practice. Every answer is explained and sourced. No ads.',
+    /** Home page title: says what the site is, for search results. */
+    homeTitle: 'Do You Know: free quizzes for kids, families and schools',
     /** Page name followed by the site name, e.g. "Settings · Do You Know". */
     title: (page: string): string => `${page} · Do You Know`,
   },

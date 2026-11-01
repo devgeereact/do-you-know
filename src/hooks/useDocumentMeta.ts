@@ -24,7 +24,7 @@ function setMeta(attr: 'name' | 'property', key: string, content: string): void 
 /** Title, description, canonical and robots for the current route; every page calls it. */
 export function useDocumentMeta({ title, description, noindex = false }: DocumentMeta): void {
   useEffect(() => {
-    const fullTitle = title ? t.meta.title(title) : t.common.siteName;
+    const fullTitle = title ? t.meta.title(title) : t.meta.homeTitle;
     const text = description ?? t.meta.defaultDescription;
     document.title = fullTitle;
     setMeta('name', 'description', text);
