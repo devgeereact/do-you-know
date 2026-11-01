@@ -8,8 +8,9 @@
 //   PRERENDER_API_URL     catalogue API base, e.g. http://127.0.0.1:55520/api/v1
 //   VITE_CPANEL_API_URL   used when absolute (http/https) and PRERENDER_API_URL is unset
 //   PRERENDER_SITE_URL    public origin for canonical links (else VITE_APP_URL, else live)
-// If the API cannot be reached the build still succeeds: a warning is printed, no pages are
-// written and the app shell serves every route as before.
+//   PRERENDER_REQUIRED=1  fail the build when no page can be written (release.json sets it)
+// In a local build an unreachable API only prints a warning and the app shell serves every route;
+// with PRERENDER_REQUIRED=1 (release builds) it fails the build instead.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -50,8 +51,20 @@ async function writePage(kind, slug, html) {
   return true;
 }
 
+// Release builds set PRERENDER_REQUIRED=1: a skipped or empty prerender fails the build instead of
+// shipping the bare shell for every URL (which is what happened before 1 November 2026).
+const required = env.PRERENDER_REQUIRED === '1';
+function skip(reason) {
+  if (required) {
+    console.error(`prerender: required but ${reason}`);
+    process.exit(1);
+  }
+  console.warn(`prerender: skipped, ${reason}`);
+}
+
 async function main() {
   if (env.PRERENDER === '0' || !apiBase) {
+    if (required) return skip('no absolute PRERENDER_API_URL is set');
     process.stdout.write('prerender: skipped (PRERENDER=0)\n');
     return;
   }
@@ -73,9 +86,9 @@ async function main() {
     }
     quizzes = [...bySlug.values()];
   } catch (error) {
-    console.warn(`prerender: skipped, catalogue API unreachable at ${apiBase} (${error.message})`);
-    return;
+    return skip(`catalogue API unreachable at ${apiBase} (${error.message})`);
   }
+  if (quizzes.length === 0) return skip(`catalogue API at ${apiBase} listed no published quizzes`);
   const categoryById = new Map(categories.map((category) => [category.id, category]));
   let written = 0;
   for (const category of categories) {

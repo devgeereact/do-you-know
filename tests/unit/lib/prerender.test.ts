@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -166,5 +167,24 @@ describe('categoryPage', () => {
     expect(data.hasPart).toEqual([
       { '@type': 'Quiz', name: 'Space <facts>', url: `${ORIGIN}/q/space-facts` },
     ]);
+  });
+});
+
+describe('prerender.mjs in a release build', () => {
+  const run = (env: Record<string, string>) =>
+    spawnSync(process.execPath, [path.resolve(__dirname, '../../../scripts/prerender.mjs')], {
+      env: { PATH: process.env.PATH ?? '', ...env },
+      encoding: 'utf8',
+      timeout: 20_000,
+    });
+
+  it('fails instead of shipping the bare shell when pages are required and no API is set', () => {
+    const result = run({ PRERENDER_REQUIRED: '1' });
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/prerender/);
+  });
+
+  it('still skips quietly in an ordinary local build', () => {
+    expect(run({}).status).toBe(0);
   });
 });

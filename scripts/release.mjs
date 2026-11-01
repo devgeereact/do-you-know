@@ -14,7 +14,7 @@
  *   6. Smoke: each "smoke" URL must answer its status. Any failure restores the snapshot automatically.
  *
  * Options: --go, --skip-checks, --rollback (restore the newest snapshot), --list (show snapshots),
- *   --verify (steps 2 and the upload guard only, on uncommitted work, before you commit or push; never contacts the host),
+ *   --verify (steps 2 and the upload guard only, on uncommitted work, before you commit or push; never contacts the host over SSH, but the build reads the public catalogue API to prerender pages),
  *   --config=FILE (another settings file, e.g. release.coming-soon.json for the coming-soon page).
  * host "local" runs everything against $HOME on this computer (used by the kit's own test).
  */
