@@ -6,7 +6,7 @@ import { quizSeoDescription, quizSeoTitle } from '../src/lib/seoText.ts';
 
 export const SITE = 'Do You Know';
 export const DEFAULT_DESCRIPTION =
-  'Free quizzes for children and grown-ups: a daily challenge, friend battles and KS1 to GCSE practice. Every answer is explained and sourced. No ads.';
+  'Free quizzes for children and grown-ups: a daily challenge, friend battles and KS1 to GCSE practice. Every answer comes with a short explanation. No ads.';
 const DESCRIPTION_LIMIT = 200;
 const SLUG = /^[a-z0-9-]{1,100}$/;
 

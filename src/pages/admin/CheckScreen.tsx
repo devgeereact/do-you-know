@@ -233,7 +233,7 @@ export function CheckScreen(): JSX.Element {
                     </>
                   ) : (
                     <span className="font-bold text-wrong">
-                      No source. Add one before publishing.
+                      No source given. That is fine; add one if you have it.
                     </span>
                   )}
                 </div>

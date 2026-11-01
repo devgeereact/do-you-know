@@ -2,6 +2,7 @@
 
 ## 1 November 2026 (branch `studio/import-2026-11`) — Studio import fixes
 - Worlds: a quiz whose title is about the body (digestion, bones, senses, brain, heart, breathing, hormones, growth, medicine and similar) shows every question in the body world, so a prompt that says "waves" or "map" no longer gets an ocean or desert. A question's own scene still wins; other quizzes are unchanged.
+- Sources are optional (ADR-019): a question without a source can be published; a source that is given must be https. Site copy (description, About, Contact, llms.txt) no longer says every answer is sourced.
 
 ## 1 November 2026 (go-live branch `golive/2026-11`) — Security fixes from the go-live audit
 - Answers: players now see per-attempt option ids keyed with a server secret instead of the stored ids. The stored ids were an unkeyed hash of each option's authored position, so a script could undo the shuffle; in the shipped content the right answer is written first in 59% of questions. Shuffling now follows the keyed ids too. No migration. Old ids are refused on purpose (accepting them would let a script submit "authored first option" directly), so a question on screen at the moment of release needs a reload; resuming a round works as before.

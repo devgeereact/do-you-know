@@ -33,9 +33,9 @@ describe('parseImport (text)', () => {
     expect(rows[2]?.subject).toBe('geography');
   });
 
-  it('blocks a choice question with no marked answer, and lists missing source as later', () => {
+  it('blocks a choice question with no marked answer, and does not ask for a source', () => {
     expect(rows[2]?.block).toContain('Mark the right answer with * or “Answer: b”');
-    expect(rows[2]?.later).toContain('Add a source link (https)');
+    expect(rows[2]?.later.some((m) => /source/i.test(m))).toBe(false);
   });
 
   it('applies "# Subject · KS · Topic" headings', () => {

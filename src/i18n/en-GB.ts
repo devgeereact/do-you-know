@@ -82,7 +82,7 @@ export const enGB = {
 
   meta: {
     defaultDescription:
-      'Free quizzes for children and grown-ups: a daily challenge, friend battles and KS1 to GCSE practice. Every answer is explained and sourced. No ads.',
+      'Free quizzes for children and grown-ups: a daily challenge, friend battles and KS1 to GCSE practice. Every answer comes with a short explanation. No ads.',
     /** Home page title: says what the site is, for search results. */
     homeTitle: 'Do You Know: free quizzes for kids, families and schools',
     /** Page name followed by the site name, e.g. "Settings · Do You Know". */
@@ -263,7 +263,7 @@ export const enGB = {
       'Children play as guests. We never ask for a real name, a photo or where they live. Boards show a made-up nickname, a cartoon avatar and a score.',
     parentsPoints: [
       'No adverts and no tracking',
-      'Every question is checked by a person, with a source',
+      'Every question is written or reviewed by our team, with an explanation',
       'Scores are worked out on our server, so the boards are fair',
       'Grown-ups can sign in to keep progress across devices',
     ],
@@ -830,7 +830,7 @@ export const enGB = {
         'Our contact details are being set up and will appear here soon. Thank you for your patience.',
       correctionsTitle: 'Content corrections',
       corrections:
-        'Every question should have a short explanation and a source. If you think an answer is wrong or out of date, tell us the quiz name and the question, and we will check it.',
+        'Every question should have a short explanation, and many link to a source. If you think an answer is wrong or out of date, tell us the quiz name and the question, and we will check it.',
       deleteTitle: 'Deleting a player’s data',
       deleteStart: 'You do not need to contact us to delete a player. Open',
       deleteMiddle: 'on the device they play on and choose “Delete my account”. The',

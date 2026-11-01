@@ -272,9 +272,11 @@ final class Content
         if (!self::text($q['explanation'] ?? null, 400)) {
             $e[] = "$at: explanation required (up to 400 characters)";
         }
+        // Optional (owner decision, 1 November 2026, ADR-019); a source that is given must be https.
         $url = $q['source_url'] ?? null;
-        if (!is_string($url) || strlen($url) > 500 || !preg_match('~^https://[a-z0-9.-]+\.[a-z]{2,}(/[^\s"<>]*)?$~iD', $url)) {
-            $e[] = "$at: source_url must be an https URL";
+        if ($url !== null && $url !== '' && (!is_string($url) || strlen($url) > 500
+            || !preg_match('~^https://[a-z0-9.-]+\.[a-z]{2,}(/[^\s"<>]*)?$~iD', $url))) {
+            $e[] = "$at: source_url must be an https URL when given";
         }
         $date = $q['review_by'] ?? null;
         $parsed = is_string($date) ? \DateTimeImmutable::createFromFormat('!Y-m-d', $date) : false;
@@ -450,7 +452,7 @@ final class Content
                 'options' => $options,
                 'slider' => $s === null ? null : ['min' => $s['min'], 'max' => $s['max'], 'step' => $s['step'],
                     'unit' => $s['unit'] ?? null, 'correct' => $s['correct'], 'accept_min' => $s['accept_min'], 'accept_max' => $s['accept_max']],
-                'explanation' => $q['explanation'], 'source_url' => $q['source_url'], 'review_by' => $q['review_by'],
+                'explanation' => $q['explanation'], 'source_url' => ($q['source_url'] ?? '') === '' ? null : $q['source_url'], 'review_by' => $q['review_by'],
             ];
             // Only when set, so a file without scenes keeps its snapshot (and stored version) unchanged.
             if (isset($q['scene'])) {

@@ -262,7 +262,9 @@ export function ImportScreen(): JSX.Element {
               <b>#</b> sets subject, key stage and topic for what follows
             </li>
             <li>No heading? We guess the subject and you can change it</li>
-            <li>Source and explanation can be added later, but are needed to publish</li>
+            <li>
+              An explanation can be added later but is needed to publish. A source is optional
+            </li>
             <li>CSV columns: subject, ks, topic, question, a–f, answer, explanation, source</li>
           </ul>
         </details>
@@ -296,7 +298,7 @@ export function ImportScreen(): JSX.Element {
             <Pill tone="ok">{ready.length} ready</Pill>
             <Pill tone="bad">{rows.length - ready.length} need fixing in the text</Pill>
             <Pill tone="warn">
-              {ready.filter((r) => r.later.length).length} need a source or explanation later
+              {ready.filter((r) => r.later.length).length} need an explanation later
             </Pill>
           </div>
           <Table

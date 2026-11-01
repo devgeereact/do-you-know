@@ -113,3 +113,12 @@ $p=\Dyk\Overall::periodStart('month',new DateTimeImmutable('2026-07-15 12:00:00'
 check('the overall month starts on the 1st, London summer time',$p==='2026-06-30 23:00:00.000000');
 check('all time has no start',\Dyk\Overall::periodStart('all')===null);
 fwrite(STDOUT,"$count checks passed\n");
+
+// A source is optional (owner decision, 1 November 2026); one that is given must be https.
+$base=['type'=>'boolean','prompt'=>'The heart pumps blood.','answer'=>true,'explanation'=>'The heart is a pump.','review_by'=>'2027-11-01'];
+check('a question without a source is valid',\Dyk\Content::validateQuestion($base,'q')===[]);
+check('an empty source counts as no source',\Dyk\Content::validateQuestion($base+['source_url'=>''],'q')===[]);
+check('a null source counts as no source',\Dyk\Content::validateQuestion($base+['source_url'=>null],'q')===[]);
+check('a given source must still be https',\Dyk\Content::validateQuestion($base+['source_url'=>'http://example.org/x'],'q')===['q: source_url must be an https URL when given']);
+check('a snapshot of a sourceless question has a null source',\Dyk\Content::snapshot(['slug'=>'s','questions'=>[$base]])[0]['source_url']===null);
+

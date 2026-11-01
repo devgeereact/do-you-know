@@ -136,9 +136,9 @@ export function validateQuestion(
     e.push({ field: 'explanation', message: 'Keep the explanation on one line' });
   }
 
+  // A source is optional (ADR-019); one that is given must be a full https link.
   const source = (q.source_url ?? '').trim();
-  if (!source) e.push({ field: 'source_url', message: 'Add a source link (https)', later: true });
-  else if (!isSourceUrl(source)) {
+  if (source && !isSourceUrl(source)) {
     e.push({ field: 'source_url', message: 'Source must be a full https:// link', later: true });
   }
 

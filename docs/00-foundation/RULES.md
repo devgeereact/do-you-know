@@ -112,7 +112,8 @@ do not merge.
 
 ### Content
 
-- Every question needs an explanation, an https `source_url` and a `review_by` date.
+- Every question needs an explanation and a `review_by` date. A `source_url` is optional
+  (owner decision, 1 November 2026, ADR-019); when one is given it must be https.
   `backend/bin/import-content.php` enforces this: files that miss any of them do not
   import, imported quizzes are drafts, and only `--publish` with a named `--reviewed-by`
   makes them public. Time-sensitive facts get a short review date.

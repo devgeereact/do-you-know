@@ -37,7 +37,6 @@ $bad = [
     'slider zero step' => function (array $q): array { $q['questions'][2]['slider']['step'] = 0; return $q; },
     'slider correct off the step grid' => function (array $q): array { $q['questions'][2]['slider']['step'] = 2; $q['questions'][2]['slider']['correct'] = 5; return $q; },
     'missing explanation' => function (array $q): array { unset($q['questions'][0]['explanation']); return $q; },
-    'missing source' => function (array $q): array { unset($q['questions'][1]['source_url']); return $q; },
     'http source' => function (array $q): array { $q['questions'][1]['source_url'] = 'http://example.org/b'; return $q; },
     'missing review date' => function (array $q): array { unset($q['questions'][2]['review_by']); return $q; },
     'impossible review date' => function (array $q): array { $q['questions'][2]['review_by'] = '2027-02-30'; return $q; },
@@ -58,6 +57,9 @@ $bad = [
 foreach ($bad as $name => $mutate) {
     check('validator rejects '.$name, $validate($mutate($good)) !== []);
 }
+// A source is optional (ADR-019): leaving it out is valid; a given one must still be https (above).
+$noSource = $good; unset($noSource['questions'][1]['source_url']);
+check('validator accepts a question with no source', $validate($noSource) === []);
 
 // Directory-level checks: duplicate slugs and file naming.
 $tmp = sys_get_temp_dir().'/dyk-content-'.bin2hex(random_bytes(4));

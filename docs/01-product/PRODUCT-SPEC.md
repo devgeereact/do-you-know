@@ -92,7 +92,7 @@ Targets are starting assumptions; tune them against real data after launch.
   **slider estimate** (correct when inside an accepted range).
 - One question at a time over the category's illustrated scene; position "3 / 10".
 - After every answer: correct/incorrect moment, the right answer, an **explanation** and
-  a source link. Correct answers can auto-advance; the player can always open "Why?".
+  a source link when the question has one. Correct answers can auto-advance; the player can always open "Why?".
 - Optional per-question **timer** (set per quiz in the CMS).
 - **Results:** score, accuracy, answer time, full review of every question, then
   **Play again · Challenge a friend · Share · Next quiz**.

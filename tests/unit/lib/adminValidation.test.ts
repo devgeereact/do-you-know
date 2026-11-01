@@ -47,6 +47,12 @@ describe('validateQuestion', () => {
     expect(fields({ ...good, options: [{ label: 'a', correct: true }] })).toContain('options');
   });
 
+  it('allows a question with no source, but not a source that is not https', () => {
+    expect(validateQuestion({ ...good, source_url: '' })).toEqual([]);
+    expect(validateQuestion({ ...good, source_url: null })).toEqual([]);
+    expect(fields({ ...good, source_url: 'http://x.com' })).toEqual(['source_url']);
+  });
+
   it('marks missing explanation and source as "later"', () => {
     const errors = validateQuestion({ ...good, explanation: '', source_url: 'http://x.com' });
     expect(errors.every((e) => e.later)).toBe(true);

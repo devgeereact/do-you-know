@@ -21,8 +21,8 @@ import type { KeyStage, QuestionContent } from '@/services/adminService';
  *   Source: https://…              the source link
  * CSV: a header row with subject, ks, topic, question, a..f, answer, explanation, source.
  *
- * Blocking errors stop a row being imported; missing explanation or source are allowed in a
- * draft and listed as "later". The server checks everything again.
+ * Blocking errors stop a row being imported; a missing explanation is allowed in a draft and
+ * listed as "later". A source is optional. The server checks everything again.
  */
 
 export const MAX_IMPORT_BYTES = 256 * 1024;
