@@ -19,6 +19,7 @@ import { WORLD_KEYS, type WorldKey } from '@/lib/art';
 import { AGE_BANDS, suitsAge } from '@/lib/ageBands';
 import { categoryStyle } from '@/lib/categoryStyle';
 import { gsap, SplitText, useGSAP, REDUCED_MOTION } from '@/lib/motion';
+import { carryOnRow } from '@/lib/carryOn';
 import { cn } from '@/lib/utils';
 import { frameStyle, world, worldFor } from '@/lib/worlds';
 import {
@@ -54,7 +55,14 @@ export function HomePage(): JSX.Element {
     () => new Map(catalog.categories.map((c) => [c.id, c.slug])),
     [catalog.categories],
   );
-  const props = { catalog, daily, trending: trending.quizzes, bestBySlug, slugOf };
+  const props = {
+    catalog,
+    daily,
+    trending: trending.quizzes,
+    trendingLoading: trending.loading,
+    bestBySlug,
+    slugOf,
+  };
   return desktop ? <DesktopHome {...props} /> : <PhoneHome {...props} />;
 }
 
@@ -62,6 +70,7 @@ interface HomeData {
   catalog: ReturnType<typeof useQuizCatalog>;
   daily: ReturnType<typeof useDailyChallenge>;
   trending: Quiz[];
+  trendingLoading: boolean;
   bestBySlug: Map<string, number>;
   slugOf: Map<string, string>;
 }
@@ -804,7 +813,14 @@ function ParentsBand(): JSX.Element {
 
 /* ============================== Phone ============================== */
 
-function PhoneHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData): JSX.Element {
+function PhoneHome({
+  catalog,
+  daily,
+  trending,
+  trendingLoading,
+  bestBySlug,
+  slugOf,
+}: HomeData): JSX.Element {
   const { user } = useSession();
   const { items: unfinished } = useContinuePlaying();
   const { categories, quizzes } = catalog;
@@ -844,7 +860,16 @@ function PhoneHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData): 
         <Character name="battery" size={60} />
       </Link>
 
-      {(unfinished.length > 0 || trending.length > 0) && (
+      {carryOnRow(unfinished.length, trending.length, trendingLoading) === 'placeholder' && (
+        <section aria-hidden="true">
+          <h2 className="mb-2.5 text-[1.4rem]">{t.home.carryOn}</h2>
+          <div className="-mx-4 grid auto-cols-[82%] grid-flow-col gap-3 overflow-hidden px-4 pb-1">
+            <div className="min-h-[9.5rem] rounded-[1.5rem] bg-content/[0.06]" />
+            <div className="min-h-[9.5rem] rounded-[1.5rem] bg-content/[0.06]" />
+          </div>
+        </section>
+      )}
+      {carryOnRow(unfinished.length, trending.length, trendingLoading) === 'show' && (
         <section>
           <h2 className="mb-2.5 text-[1.4rem]">{t.home.carryOn}</h2>
           <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[82%] grid-flow-col gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none]">

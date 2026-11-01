@@ -64,11 +64,21 @@ export function CategoryPage(): JSX.Element {
             kicker={category.kind === 'school' ? t.category.school : t.category.topic}
             title={category.name}
           />
+        ) : loading ? (
+          // Holds the banner's height so the chips and list do not jump when it arrives.
+          <div
+            data-reserve="banner"
+            aria-hidden="true"
+            className="mb-4 mt-2 min-h-[9.5rem] rounded-[1.75rem] bg-content/[0.06] lg:min-h-[11rem]"
+          />
         ) : (
           <h1 className="mb-4 mt-2 text-[2rem]">{t.category.fallbackTitle}</h1>
         )}
         {category?.description && (
           <p className="mb-5 max-w-[65ch] text-content-muted">{category.description}</p>
+        )}
+        {!category && loading && (
+          <div data-reserve="description" aria-hidden="true" className="mb-5 h-12" />
         )}
 
         <div
@@ -119,7 +129,8 @@ export function CategoryPage(): JSX.Element {
           </div>
         )}
         {loading && (
-          <p role="status" className="mt-10 text-center text-content-muted">
+          // Tall enough that the footer stays below the fold until the list arrives.
+          <p role="status" className="mt-10 min-h-[60vh] text-center text-content-muted">
             {t.category.loading}
           </p>
         )}
