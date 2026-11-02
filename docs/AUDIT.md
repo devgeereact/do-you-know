@@ -2,6 +2,109 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-02 · Science body-topics import: content review and publish
+
+Reviewer: Claude Code, at the owner's request ("fix all the imported questions … publish"), through Studio's own admin API in the owner's signed-in session (no server files, no SQL).
+
+- Scope: the 54 drafts from the owner's first import (9 topics × 6 age bands, 1,080 questions), made before the import fixes and stuck in To do: no intro (publish refused), 249 sources stored as `[url](url` (refused), age band inside the title, no age range or key stage.
+- Placement: kept in the subject the file names, **Science** (School Science). Title "Topic (ages 4–5)" / "(adults)", intro "20 questions about …", age range per band, key stages 6–8 KS1+KS2, 9–11 KS2, 12–14 KS3, 15–16 KS4, difficulty easy/easy/easy/medium/medium/hard, timer 45/45/30/30/40/30 s. Slugs and quiz ids kept.
+- Sources: 249 turned into plain https addresses.
+- Content: every question read for the 12–14 and adult sets and scanned for the rest. 91 prompts reworded so the question fits its existing answers (answers and the right answer never changed); colliding rewrites made distinct so no prompt repeats another quiz's. Left as they are: sense questions sharing Sight/Hearing/Taste/Touch as distractors (correct by design).
+- Result: 54 of 54 published, 0 held, 0 errors; To do empty (0 drafts with problems, 0 waiting for review). Duplicate check over all live content: 100 quizzes, 2,460 questions, 0 duplicate prompts, 0 duplicate titles.
+- Gap: prerendered pages exist only for quizzes live at a release; 37 quizzes published after release `6e6c15c` serve the shell (canonical home) until the next release.
+- Reworded prompts (old → new):
+  - Which teeth are at the front of your mouth? → Which teeth cut into an apple first?
+  - Which teeth help crush food at the back? → Which teeth crush and grind your food?
+  - Can air also enter through your mouth? → Besides your nose, where else can air go in?
+  - What are hormones: body messages or little bones? → What are hormones?
+  - Can body messages help you grow? → What can body messages help control?
+  - Can body messages help your body use food? → What can body messages help your body do?
+  - Do hormones work as body messages? → What do hormones do?
+  - Can tiny amounts of body messages have an effect? → How much of a body message can have an effect?
+  - Do body messages stay in one shoe? → Where do body messages travel?
+  - Can body messages help the body work together? → Why does your body send messages?
+  - Which daily activity supports learning and development? → Why is sleep important for children?
+  - Which statement about children’s growth is correct? → Do all children grow at the same speed?
+  - Which action normally continues automatically during sleep? → Which action keeps going by itself while you sleep?
+  - Why does the body use hormonal communication? → Why does the body send hormone messages?
+  - Which trained professional helps care for patients? → Which trained worker helps care for patients?
+  - Which term means a broken bone? → Which option best describes a fracture?
+  - Which description of bone is scientifically correct? → Is bone a living tissue?
+  - What are the finger-like projections of the small-intestinal lining? → Which option best describes villi?
+  - What name describes the mixture leaving the stomach? → Which option best describes chyme?
+  - Which structures contain cells that detect taste chemicals? → What are taste buds made of?
+  - Which structures make up the central nervous system? → Which name covers the brain and spinal cord together?
+  - What name is given to a specialised nerve cell? → Which option best describes a neuron?
+  - At what junction can one neuron communicate with another cell? → Which option best describes a synapse?
+  - Which insulating material surrounds many nerve fibres? → Which option best describes myelin?
+  - Which process transfers oxygen and carbon dioxide between alveoli and blood? → Which option best describes gas exchange?
+  - Which stage involves the body becoming physically capable of reproduction? → What best describes puberty?
+  - Which statement about puberty timing is correct? → Does everyone start puberty at the same age?
+  - What term describes a period of unusually rapid height increase? → Which option best describes a growth spurt?
+  - What occurs when the genetic material of a sperm and egg combines? → What happens at fertilisation?
+  - Which temporary organ supports exchange between maternal and fetal circulations? → Which option best describes the placenta?
+  - Which fluid surrounds the developing fetus? → Which option best describes amniotic fluid?
+  - What process produces new cells from existing cells? → Which option best describes cell division?
+  - Which cellular changes contribute to an increase in body size? → How do cells make a body bigger?
+  - Which life period includes transition from childhood towards adulthood? → Which option best describes adolescence?
+  - Which skill type involves precise small movements such as writing? → What does fine motor development mean?
+  - Which system consists of hormone-producing glands and their signals? → Which option best describes the endocrine system?
+  - Which organs have adrenal glands sitting above them? → Where in the body do the adrenal glands sit?
+  - Which signals coordinate many physical changes of puberty? → Are hormones involved in the changes of puberty?
+  - What is the intended effect of an antiseptic applied appropriately to living tissue? → What does an antiseptic aim to reduce on living tissue?
+  - Which method studies internal structures by carefully cutting them apart? → What does dissection involve?
+  - Which field studies the structure of the body? → What is anatomy the study of?
+  - Which field asks how body parts work? → What is physiology the study of?
+  - Which instrument allows direct viewing inside body cavities? → Why would a doctor use an endoscope?
+  - Why does a blocked nose reduce food flavour? → What does a blocked nose take away from food flavour?
+  - What is menstruation? → What is shed during menstruation?
+  - How can nutrition affect growth? → Why is growth not set by genes alone?
+  - What is the main exchange function of the placenta? → What does the placenta exchange between mother and fetus?
+  - What does a phagocyte do? → What does a phagocyte do to some microbes?
+  - What is negative feedback? → What does negative feedback do to hormone production?
+  - How does glucagon help raise blood glucose? → Which liver response does glucagon trigger?
+  - Which enzyme class hydrolyses proteins? → Which option best describes a protease?
+  - What name describes a swallowed mass of chewed food? → Which option best describes a bolus?
+  - Which bone cells lay down new bone tissue? → What do osteoblasts mainly do?
+  - Which cells remove bone during remodelling? → What do osteoclasts mainly do during remodelling?
+  - Which bone tissue forms a dense outer layer? → Which option best describes compact bone?
+  - Which term describes moving a limb away from the body’s midline? → What does abduction mean?
+  - Which term describes bringing an outstretched arm back towards the body? → What does adduction mean?
+  - How is a physical or chemical stimulus converted into nervous information? → Which option best describes sensory transduction?
+  - Which brain structure receives early input from olfactory neurons? → Which option best describes the olfactory bulb?
+  - What travels along an axon as a regenerating electrical signal? → Which option best describes an action potential?
+  - What chemical carries a signal across many synapses? → Which option best describes a neurotransmitter?
+  - What is the narrow gap between cells at a chemical synapse? → Which option best describes the synaptic cleft?
+  - Which structure performs a nervous-system response? → Which option best describes an effector?
+  - What fluid surrounds and cushions the brain and spinal cord? → Which option best describes cerebrospinal fluid?
+  - Which function is performed by specialised brain capillary barriers? → What is the main job of the blood–brain barrier?
+  - Which quantity equals heart rate multiplied by stroke volume? → Which option best describes cardiac output?
+  - Which volume is ejected by one ventricle during one beat? → Which option best describes stroke volume?
+  - What function is especially useful in veins carrying blood against gravity? → What do the valves in many veins do?
+  - Which molecule allows red cells to carry large quantities of oxygen? → What does haemoglobin do with oxygen?
+  - How do phagocytic white blood cells attack some pathogens? → What does a phagocyte do to some pathogens?
+  - Which feature defines these vessel types despite oxygen-level exceptions? → What really distinguishes an artery from a vein?
+  - Which mechanical change enlarges the thoracic cavity during inhalation? → What does the diaphragm do during inhalation?
+  - Which process moves air between atmosphere and alveoli? → Which option best describes ventilation?
+  - Which volume describes air moved in a normal quiet breath? → Which option best describes tidal volume?
+  - What air remains after the strongest possible expiration? → Which option best describes residual volume?
+  - Which volume can be exhaled after a maximal inhalation? → Which option best describes vital capacity?
+  - Which airway volume does not directly exchange gases with blood? → Which option best describes anatomical dead space?
+  - How does the mucociliary escalator clear inhaled particles? → What do cilia do in the airways?
+  - What occurs when an early embryo embeds in the uterine lining? → Which option best describes implantation?
+  - Which event releases an egg from an ovary? → Which option best describes ovulation?
+  - Which uterine tissue changes across the menstrual cycle? → Which option best describes the endometrium?
+  - How do unspecialised cells acquire distinct structures and functions? → Which option best describes differentiation?
+  - Which cell type can self-renew and generate more specialised cells? → Which option best describes a stem cell?
+  - Which term refers to an organism’s genetic constitution? → Which option best describes genotype?
+  - Which term includes observable characteristics influenced by genes and environment? → Which option best describes phenotype?
+  - What term describes differences in inherited genetic information among individuals? → Which option best describes genetic variation?
+  - Which term refers to biological changes associated with ageing? → Which option best describes senescence?
+  - Which event marks the end of menstrual cycles due to loss of ovarian follicular activity? → Which option best describes menopause?
+  - Which hormone is a glucocorticoid involved in metabolic stress responses? → Which option best describes cortisol?
+  - Which parathyroid hormone helps restore low plasma calcium? → Which hormone helps restore low plasma calcium?
+  - What was the key diagnostic significance of Röntgen’s discovery? → Which discovery let doctors see bones without surgery?
+
 ## 2026-11-01 · Studio import changes (privacy, child safety, AI cost)
 
 Reviewer: Claude Code. Branch `studio/import-2026-11`. Scope: optional sources and imported questions arriving checked (ADR-019), the AI writing helpers (ADR-020), import parsing and checks, body-world scenes.

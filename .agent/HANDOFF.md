@@ -75,3 +75,8 @@ Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits a
 - Owner said "deploy now". main fast-forwarded to `82b7324` (both branches), no migrations needed. Gate on that tree: `pnpm verify` PASS (prerender 65, Apache 37/37), backend suites PASS (cms failed once from 138 leftover test-DB subjects past the 100-row public list; switched them off in the disposable DB, PASS), e2e 46/46.
 - deploy.yml: prerender 65 pages on the runner, snapshot `20261102T085255Z`, smoke 3/3, released. CI PASS.
 - Live checks: 4 sampled pages distinct with own title/canonical; JSON-LD Organization, WebSite, Quiz, BreadcrumbList; /about and /q/<slug>/ served without redirect; llms.txt 200; health ok; no X-Powered-By; one live practice question as a new guest: served ids accepted, correct ids in the served set, nothing leaked, second answer refused.
+
+## 2026-11-02 (later): 4–5 band deployed; science import fixed and published
+- 4–5 age chip on home and subject pages (6e6c15c), deployed with owner approval: verify PASS, e2e 46/46, release 20261102T094703Z smoke 3/3; live bundle and `?age=5` checked.
+- The 54 stuck science drafts fixed in place and published through Studio's API (details and the 91 reworded prompts in docs/AUDIT.md). To do empty; 0 duplicate prompts or titles across 100 live quizzes.
+- Open: 37 quizzes published after the release need one more release for prerendered pages.

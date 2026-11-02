@@ -16,6 +16,10 @@ Get doyouknow.space ready for go-live: security audit and fixes, SEO audit and f
 - Body quizzes (title about digestion, bones, senses and so on) keep every question in the body world.
 - Owner after deploy: re-import the science file in Studio → Import (the drafts made locally were in the test database only), look at the 35 "worth a second look" notes, then publish.
 
+## Science import (2 Nov)
+- All 54 science quizzes published (School Science, age bands and key stages set, 91 prompts reworded, 249 sources fixed); To do empty, no duplicates. 4–5 age chip live.
+- Needs one more release so the 37 quizzes published after release `6e6c15c` get prerendered pages (they serve the shell until then).
+
 ## Next steps (owner)
 1. DONE 2 Nov: deployed. Undo if ever needed: `pnpm release --rollback --go`. Next in Studio → Import: re-paste the science file, read the 35 notes, create drafts, publish.
 2. Run the exposed-file check for the private config and environment file URLs (command in Claude's go-live report; the agent guard blocks it). Expect 403 or 404 on every line.
