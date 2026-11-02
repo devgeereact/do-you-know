@@ -369,4 +369,29 @@ check('stats report plays, finish rate, guests, modes, top quizzes and hard ques
     && array_keys($r['body']['modes_7d']) === ['practice', 'ranked', 'daily', 'challenge'] && is_array($r['body']['top_quizzes_7d']) && is_array($r['body']['hardest']));
 check('stats carry no player identities', !str_contains($r['raw'], 'nickname') && !str_contains($r['raw'], 'user_id'));
 
+// ---- Import (owner decision, 1 November 2026, ADR-019): imported questions arrive checked ----
+$imported = [$question('Imported fixture one '.$word.'?'), $question('Imported fixture two '.$word.'?', false),
+    ['type' => 'choice', 'prompt' => 'Imported fixture three '.$word.'?', 'options' => [['label' => 'Right one', 'correct' => true], ['label' => 'Wrong one', 'correct' => false]],
+     'explanation' => 'No source on this one.', 'review_by' => '2099-01-01']];
+$r = admin('POST', '/quizzes', ['title' => 'Imported fixture (ages 4–5) '.$tag, 'category' => $subject, 'age_min' => 4, 'age_max' => 5,
+    'intro' => 'Three questions about the fixture, for ages 4–5.', 'imported' => true, 'questions' => $imported]);
+$importId = $r['body']['id'] ?? '';
+check('an import creates a draft', $r['status'] === 201);
+$d = admin('GET', '/quizzes/'.$importId)['body'];
+check('imported questions are already checked', count($d['questions']) === 3 && array_column($d['questions'], 'checked') === [true, true, true]);
+check('an import sets the quiz age band', $d['quiz']['age_min'] === 4 && $d['quiz']['age_max'] === 5);
+check('a question without a source is not a problem', !in_array('source_url', array_column($d['problems'], 'field'), true));
+$audit = Database::one($db, "SELECT detail FROM admin_audit WHERE action='quiz.create' AND target_id=?", [$importId]);
+check('the import is recorded in the audit log', $audit && (json_decode($audit['detail'], true)['imported'] ?? null) === true);
+$r = admin('POST', '/quizzes/'.$importId.'/publish', []);
+check('an imported quiz publishes without ticking each question', $r['status'] === 200 && $r['body']['quiz']['status'] === 'published');
+check('the published quiz keeps its age band', (int) Database::one($db, 'SELECT age_min FROM quizzes WHERE id=?', [$importId])['age_min'] === 4);
+$r = admin('POST', '/quizzes/'.$importId.'/append', ['questions' => [$question('Imported fixture four '.$word.'?')], 'imported' => true]);
+check('questions appended by an import arrive checked too', $r['status'] === 200 && end($r['body']['questions'])['checked'] === true);
+$r = admin('POST', '/quizzes', ['title' => 'Hand-made fixture '.$tag, 'category' => $subject, 'questions' => [$question('Hand-made fixture '.$word.'?')]]);
+check('questions made by hand still need checking', admin('GET', '/quizzes/'.($r['body']['id'] ?? ''))['body']['questions'][0]['checked'] === false);
+check('the imported flag must be true or false', admin('POST', '/quizzes', ['title' => 'Bad flag '.$tag, 'category' => $subject, 'imported' => 'yes'])['status'] === 422);
+check('an age band must be in order', admin('POST', '/quizzes', ['title' => 'Bad ages '.$tag, 'category' => $subject, 'age_min' => 9, 'age_max' => 5])['status'] === 422);
+check('an append flag must be true or false', admin('POST', '/quizzes/'.$importId.'/append', ['questions' => [$question('Flag fixture '.$word.'?')], 'imported' => 1])['status'] === 422);
+
 fwrite(STDOUT, "$count cms checks passed\n");

@@ -12,13 +12,14 @@ import type { KeyStage, QuestionContent } from '@/services/adminService';
  *
  * Text format (blank line between questions is optional):
  *   # Maths · KS2 · Fractions      sets subject, key stage and topic for what follows
+ *   # Science · Ages 4–5 · Bones   an age band ("Ages 4–5", "Ages 11+", "Adult") instead of or with a key stage
  *   Q: What is half of 18?         or "1." / "Question 3:" starts a question
  *   A) 6  B) 9*  C) 12             options on one line or one per line; * marks the right one
  *   Answer: b                      or name the right option (or true / false)
  *   True* / False                a true-or-false question (star the right one)
  *   Slider: 300-400 = 366 ±0 days  a slider: min-max = right answer, ± accepted band, unit
  *   Why: …                         the explanation
- *   Source: https://…              the source link
+ *   Source: https://…              the source link (optional; a markdown [link](url) works too)
  * CSV: a header row with subject, ks, topic, question, a..f, answer, explanation, source.
  *
  * Blocking errors stop a row being imported; a missing explanation is allowed in a draft and
@@ -33,6 +34,11 @@ export interface ImportSubject {
   kind?: 'general' | 'school';
 }
 
+export interface ImportAges {
+  min: number;
+  max: number | null;
+}
+
 export interface ImportRow {
   /** 1-based line where the question starts (CSV: the data row's line). */
   line: number;
@@ -42,12 +48,16 @@ export interface ImportRow {
   /** A "# Heading" subject that does not exist yet. */
   newSubject: string | null;
   ks: KeyStage | '';
+  /** Age band from a "# … · Ages 4–5 · …" heading. */
+  ages: ImportAges | null;
   topic: string;
   q: QuestionContent;
   /** How many answers were marked right. */
   marks: number;
   block: string[];
   later: string[];
+  /** Content warnings worth a look before publishing; they never stop an import. */
+  notes: string[];
 }
 
 export interface ImportGroup {
@@ -55,8 +65,43 @@ export interface ImportGroup {
   /** Subject slug, or "new:<name>" for a subject still to create. */
   sid: string;
   ks: KeyStage | '';
+  ages: ImportAges | null;
   topic: string;
   rows: ImportRow[];
+}
+
+/** "Ages 4–5", "Age 11+", "Adult(s)", "Grown-ups": the band, or null when the text is not one. */
+export function parseAges(text: string): ImportAges | null {
+  const t = text.trim();
+  if (/^(adults?|grown-?ups?)$/i.test(t)) return { min: 18, max: null };
+  let m = t.match(/^ages?\s*(\d{1,3})\s*(?:[–—-]|to)\s*(\d{1,3})$/i);
+  if (m) {
+    const [min, max] = [Number(m[1]), Number(m[2])];
+    return min <= max && max <= 120 ? { min, max } : null;
+  }
+  m = t.match(/^ages?\s*(\d{1,3})\s*\+$/i);
+  return m ? { min: Number(m[1]), max: null } : null;
+}
+
+/** How a band reads in a quiz title: "ages 4–5", "ages 11+", "adults". */
+export function agesLabel(ages: ImportAges): string {
+  if (ages.min >= 18 && ages.max === null) return 'adults';
+  return ages.max === null ? `ages ${ages.min}+` : `ages ${ages.min}–${ages.max}`;
+}
+
+/** A plain first intro for a new quiz ("20 questions about bones, for ages 4–5."), to edit later. */
+export function importIntro(group: ImportGroup, fallback = ''): string {
+  const about = (group.topic || fallback).toLowerCase();
+  const count = `${group.rows.length} question${group.rows.length === 1 ? '' : 's'}`;
+  return group.ages
+    ? `${count} about ${about}, for ${agesLabel(group.ages)}.`
+    : `${count} about ${about}.`;
+}
+
+/** A new quiz's title: the topic (or a fallback) plus the age band, so each band gets its own quiz. */
+export function groupTitle(group: ImportGroup, fallback = ''): string {
+  const base = group.topic || fallback;
+  return group.ages ? `${base} (${agesLabel(group.ages)})`.trim() : base;
 }
 
 /** Keyword guesses, in order; each lists the subject slugs it may map to, best first. */
@@ -200,20 +245,128 @@ export function finishRow(row: ImportRow): ImportRow {
   }
   row.block = block;
   row.later = later;
+  row.notes = contentNotes(row);
   return row;
 }
 
-/** Flags questions that appear twice in the same file. */
-export function markFileDups(rows: ImportRow[]): ImportRow[] {
+const STOP = new Set(
+  (
+    'a an the of in on at to for by and or with from into your you our its it is are be was were what ' +
+    'which who whom whose where when why how does do did can this that these those there their them ' +
+    'they as about after before than then each every some any most more many much only also not no'
+  ).split(' '),
+);
+
+/** Lower-case content words (3+ letters, no stop words), with a plural s dropped. */
+function words(text: string): string[] {
+  return (text.toLowerCase().match(/[a-z][a-z'’-]{2,}/g) ?? [])
+    .map((w) => w.replace(/['’]s$/, '').replace(/(?<=[a-z]{3})s$/, ''))
+    .filter((w) => !STOP.has(w));
+}
+
+/** Things a "Which … ?" question can ask for, where a process for an answer is a mismatch. */
+const THINGS = new Set(
+  'cell cells organ organs gland glands vessel vessels molecule molecules bone bones muscle muscles hormone hormones enzyme enzymes nerve nerves chamber chambers valve valves receptor receptors protein proteins'.split(
+    ' ',
+  ),
+);
+/** Words that end the noun phrase after "Which"/"What". */
+const VERBS =
+  /^(?:is|are|was|were|does|do|did|can|could|has|have|uses?|helps?|makes?|carries|carry|moves?|happens?|fits?|enables?|lets?|gives?|keeps?|shows?|lay|lays|remove|removes|release|releases|produce|produces|secrete|secretes|form|forms|allow|allows)$/i;
+
+/** "Which bone cells lay down …" → "cells": the head noun right after which/what, if it is a thing. */
+function askedThing(prompt: string): string | null {
+  const m = prompt.match(/^(?:which|what)\s+(.+)$/i);
+  if (!m) return null;
+  const phrase: string[] = [];
+  for (const w of (m[1] ?? '').split(/\s+/).slice(0, 4)) {
+    if (VERBS.test(w)) break;
+    phrase.push(w.toLowerCase().replace(/[^a-z-]/g, ''));
+  }
+  const thing = [...phrase].reverse().find((w) => THINGS.has(w));
+  return thing && phrase.indexOf(thing) === phrase.length - 1 ? thing : null;
+}
+
+/** Answers that name a process rather than a thing: "Bone formation", "Binding oxygen …". */
+const PROCESS_ANSWER = /^(?:it|they|to)\s|(?:tion|sion)$|^[a-z]+ing\b/i;
+const YES_NO_QUESTION =
+  /^(?:is|are|do|does|did|can|could|was|were|will|would|has|have|had|should|must)\b/i;
+
+/** Checks a person should look at, for a choice question that is otherwise valid. */
+function contentNotes(row: ImportRow): string[] {
+  const q = row.q;
+  if (q.type !== 'choice' || row.block.length) return [];
+  const right = (q.options ?? []).find((o) => o.correct)?.label.trim() ?? '';
+  if (!right) return [];
+  const notes: string[] = [];
+  const asked = new Set(words(q.prompt));
+  const answer = words(right);
+  if (answer.length >= 2 && answer.every((w) => asked.has(w))) {
+    notes.push('The right answer repeats the question’s own words');
+  }
+  if (/^(?:yes|no)\b/i.test(right) && !YES_NO_QUESTION.test(q.prompt)) {
+    notes.push('The right answer starts with yes or no, but this is not a yes-or-no question');
+  }
+  const kind = askedThing(q.prompt);
+  if (kind) {
+    const noun = kind.replace(/(?:es|s)$/, '');
+    if (!right.toLowerCase().includes(noun) && PROCESS_ANSWER.test(right)) {
+      notes.push(
+        `The question asks for ${kind}, but the right answer reads like a process or description`,
+      );
+    }
+  }
+  if (row.ages && (row.ages.max ?? 99) <= 8) {
+    const long = (q.prompt.match(/[A-Za-z]{12,}/g) ?? [])[0];
+    if (long) notes.push(`“${long}” may be a hard word for ${agesLabel(row.ages)}`);
+    if (q.prompt.split(/\s+/).length > 14) notes.push(`A long question for ${agesLabel(row.ages)}`);
+  }
+  return notes;
+}
+
+/** Same subject, key stage, age band and topic: the quiz a row will go into. */
+function groupKey(r: ImportRow): string {
+  const sid = r.newSubject ? `new:${r.newSubject}` : r.subject;
+  const ages = r.ages ? `${r.ages.min}-${r.ages.max ?? ''}` : '';
+  return `${sid}|${r.ks}|${ages}|${r.topic}`;
+}
+
+/** Notes questions in one quiz that offer exactly the same answers as an earlier one. */
+export function markSameAnswers(rows: ImportRow[]): ImportRow[] {
   const seen = new Map<string, number>();
+  for (const r of rows) {
+    if (r.q.type !== 'choice' || !r.q.options?.length || r.block.length) continue;
+    const set = r.q.options
+      .map((o) => o.label.trim().toLowerCase())
+      .sort()
+      .join('|');
+    const key = `${groupKey(r)}#${set}`;
+    const first = seen.get(key);
+    if (first !== undefined) r.notes.push(`Same answers as line ${first} in this quiz`);
+    else seen.set(key, r.line);
+  }
+  return rows;
+}
+
+/**
+ * Flags questions that appear twice in the same file: a block inside one quiz (a quiz cannot
+ * repeat a question), a note across quizzes (only one of them can be published as it is).
+ */
+export function markFileDups(rows: ImportRow[]): ImportRow[] {
+  const seen = new Map<string, ImportRow>();
   for (const r of rows) {
     const key = promptKey(r.q.prompt);
     if (!key) continue;
     const first = seen.get(key);
-    if (first !== undefined) r.block.push(`Same as line ${first} in this file`);
-    else seen.set(key, r.line);
+    if (!first) seen.set(key, r);
+    else if (groupKey(first) === groupKey(r))
+      r.block.push(`Same as line ${first.line} in this file`);
+    else
+      r.notes.push(
+        `Same question as line ${first.line}, in another quiz: reword one before publishing both`,
+      );
   }
-  return rows;
+  return markSameAnswers(rows);
 }
 
 function parseCsv(lines: string[], subjects: ImportSubject[], today: string): ImportRow[] {
@@ -255,11 +408,13 @@ function parseCsv(lines: string[], subjects: ImportSubject[], today: string): Im
       guessed: !subjectName,
       newSubject: subjectName && !found ? subjectName : null,
       ks,
+      ages: parseAges(g('ages') || g('age')),
       topic: g('topic'),
       q,
       marks,
       block: [],
       later: [],
+      notes: [],
     });
   });
 }
@@ -281,8 +436,9 @@ export function parseImport(raw: string, subjects: ImportSubject[], today: strin
     subject: string | null;
     newSubject: string | null;
     ks: KeyStage | '';
+    ages: ImportAges | null;
     topic: string;
-  } = { subject: null, newSubject: null, ks: '', topic: '' };
+  } = { subject: null, newSubject: null, ks: '', ages: null, topic: '' };
   let cur: ImportRow | null = null;
   const flush = (): void => {
     if (cur) out.push(finishRow(cur));
@@ -300,11 +456,13 @@ export function parseImport(raw: string, subjects: ImportSubject[], today: strin
       guessed: !head.subject && !head.newSubject,
       newSubject: head.newSubject,
       ks: head.ks,
+      ages: head.ages,
       topic: head.topic,
       q,
       marks: 0,
       block: [],
       later: [],
+      notes: [],
     };
     return cur;
   };
@@ -322,13 +480,15 @@ export function parseImport(raw: string, subjects: ImportSubject[], today: strin
         .map((x) => x.trim())
         .filter(Boolean);
       const ksPart = parts.find((p) => /^ks\s?[1-4]$/i.test(p));
-      const rest = parts.filter((p) => p !== ksPart);
+      const agePart = parts.find((p) => parseAges(p) !== null);
+      const rest = parts.filter((p) => p !== ksPart && p !== agePart);
       const ks = ksPart ? normaliseKs(ksPart) : '';
       const found = findSubject(rest[0] ?? '', subjects, ks);
       head = {
         subject: found ? found.slug : null,
         newSubject: found ? null : (rest[0] ?? null),
         ks,
+        ages: agePart ? parseAges(agePart) : null,
         topic: rest.slice(1).join(' '),
       };
       if (!found && !head.newSubject) head.subject = guessSubject(m[1] ?? '', subjects);
@@ -346,8 +506,11 @@ export function parseImport(raw: string, subjects: ImportSubject[], today: strin
       q.explanation = (m[1] ?? '').trim();
       return;
     }
-    if ((m = L.match(/^source\s*:\s*(\S+)/i))) {
-      q.source_url = m[1] ?? '';
+    if ((m = L.match(/^source\s*:\s*(.+)$/i))) {
+      // Plain "https://…", or a markdown link "[text](https://…)" pasted from a document.
+      const value = (m[1] ?? '').trim();
+      const link = value.match(/^\[[^\]]*\]\((\S+?)\)$/) ?? value.match(/^<(\S+)>$/);
+      q.source_url = link ? (link[1] ?? '') : (value.split(/\s/)[0] ?? '');
       return;
     }
     if (
@@ -428,8 +591,8 @@ export function groupsOf(rows: ImportRow[]): ImportGroup[] {
   for (const r of rows) {
     if (r.block.length) continue;
     const sid = r.newSubject ? `new:${r.newSubject}` : r.subject;
-    const key = `${sid}|${r.ks}|${r.topic}`;
-    const g = groups.get(key) ?? { key, sid, ks: r.ks, topic: r.topic, rows: [] };
+    const key = groupKey(r);
+    const g = groups.get(key) ?? { key, sid, ks: r.ks, ages: r.ages, topic: r.topic, rows: [] };
     g.rows.push(r);
     groups.set(key, g);
   }
@@ -492,7 +655,12 @@ Q: What is 6 × 7?
 A) 42*  B) 48  C) 36  D) 49
 Why: Six sevens are forty-two.`;
 
-export const IMPORT_CHEATSHEET = `# Maths · KS2 · Fractions
+export const IMPORT_CHEATSHEET = `# Science · Ages 4–5 · Food and digestion
+Q: What helps you bite an apple?
+A) Lips  B) Teeth*  C) Ears  D) Eyelashes
+Why: Teeth break food into smaller pieces.
+
+# Maths · KS2 · Fractions
 Q: What is half of 18?
 A) 6  B) 9*  C) 12  D) 8
 Why: 18 split into 2 equal groups is 9.

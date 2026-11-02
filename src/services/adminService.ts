@@ -214,7 +214,11 @@ export interface NewQuiz {
   intro?: string;
   difficulty?: Difficulty;
   time_limit_seconds?: number | null;
+  age_min?: number | null;
+  age_max?: number | null;
   questions?: QuestionContent[];
+  /** From Studio → Import: questions arrive checked (ADR-019). */
+  imported?: boolean;
 }
 
 export type TodoKey =
@@ -438,8 +442,12 @@ export function adminClient(getToken: GetToken) {
     createQuiz: (body: NewQuiz) => post<{ id: string; slug: string }>('/admin/quizzes', body),
     saveQuiz: (id: string, body: { meta?: QuizMetaPatch; questions?: QuestionContent[] }) =>
       post<QuizDetail>(quiz(id), body),
-    append: (id: string, questions: QuestionContent[]) =>
-      post<QuizDetail>(`${quiz(id)}/append`, { questions }),
+    /** imported: from Studio → Import, so the server stores the questions as checked (ADR-019). */
+    append: (id: string, questions: QuestionContent[], options: { imported?: boolean } = {}) =>
+      post<QuizDetail>(
+        `${quiz(id)}/append`,
+        options.imported ? { questions, imported: true } : { questions },
+      ),
     submit: (id: string) => post<QuizDetail>(`${quiz(id)}/submit`),
     unsubmit: (id: string) => post<QuizDetail>(`${quiz(id)}/unsubmit`),
     check: (id: string, index: number, checked: boolean) =>

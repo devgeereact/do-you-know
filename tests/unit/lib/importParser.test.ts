@@ -1,7 +1,11 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   IMPORT_SAMPLE,
+  groupTitle,
   groupsOf,
+  importIntro,
   guessSubject,
   parseImport,
   rowToContent,
@@ -151,5 +155,78 @@ describe('groups and content', () => {
 
   it('falls back to general knowledge when no keyword matches', () => {
     expect(guessSubject('Who painted the Mona Lisa?', SUBJECTS)).toBe('general-knowledge');
+  });
+});
+
+describe('the owner’s science import (backend/tests/fixtures/import/science-body.md)', () => {
+  const SCIENCE: ImportSubject[] = [
+    ...SUBJECTS,
+    { slug: 'school-science', name: 'Science', kind: 'school' },
+  ];
+  const text = readFileSync(
+    path.resolve(__dirname, '../../../backend/tests/fixtures/import/science-body.md'),
+    'utf8',
+  );
+  const rows = parseImport(text, SCIENCE, TODAY);
+  const groups = groupsOf(rows);
+
+  it('reads all 1,080 questions with four answers and one right answer, none blocked', () => {
+    expect(rows).toHaveLength(1080);
+    expect(rows.filter((r) => r.block.length)).toEqual([]);
+    expect(rows.every((r) => r.q.options?.length === 4)).toBe(true);
+    expect(rows.every((r) => r.q.options?.filter((o) => o.correct).length === 1)).toBe(true);
+    expect(rows.some((r) => r.q.options?.some((o) => o.label.includes('*')))).toBe(false);
+  });
+
+  it('makes one quiz per heading, in the Science subject, with its age band', () => {
+    expect(groups).toHaveLength(54);
+    expect(groups.every((g) => g.sid === 'school-science' && g.rows.length === 20)).toBe(true);
+    expect(groups[0]).toMatchObject({ topic: 'Food and digestion', ages: { min: 4, max: 5 } });
+    expect(groupTitle(groups[0]!)).toBe('Food and digestion (ages 4–5)');
+    const adult = groups.find((g) => g.ages?.min === 18)!;
+    expect(adult.ages).toEqual({ min: 18, max: null });
+    expect(groupTitle(adult)).toBe('Food and digestion (adults)');
+    expect(new Set(groups.map((g) => groupTitle(g))).size).toBe(54);
+  });
+
+  it('turns a markdown source link into the plain https address', () => {
+    const sourced = rows.filter((r) => r.q.source_url);
+    expect(sourced).toHaveLength(258);
+    expect(sourced.every((r) => /^https:\/\/[^\s[\]()]+$/.test(r.q.source_url ?? ''))).toBe(true);
+    expect(rows[4]?.q.source_url).toBe(
+      'https://www.niddk.nih.gov/health-information/digestive-diseases/digestive-system-how-it-works',
+    );
+  });
+
+  const notesFor = (prompt: string): string[] =>
+    rows.find((r) => r.q.prompt === prompt)?.notes ?? ['(question not found)'];
+
+  it('writes a plain starting intro for each new quiz, which the owner can change', () => {
+    expect(importIntro(groups[0]!)).toBe('20 questions about food and digestion, for ages 4–5.');
+    const adult = groups.find((g) => g.ages?.min === 18)!;
+    expect(importIntro(adult)).toBe('20 questions about food and digestion, for adults.');
+    expect(importIntro({ ...groups[0]!, topic: '', ages: null }, 'Science')).toBe(
+      '20 questions about science.',
+    );
+  });
+
+  it('warns, without blocking, when the right answer just repeats the question', () => {
+    expect(notesFor('Which structures make up the central nervous system?').join()).toMatch(
+      /repeats the question/,
+    );
+  });
+
+  it('warns when the right answer does not fit what the question asks for', () => {
+    expect(notesFor('Which bone cells lay down new bone tissue?').join()).toMatch(/asks for cells/);
+    expect(notesFor('Which description of bone is scientifically correct?').join()).toMatch(
+      /yes or no/,
+    );
+    expect(notesFor('What is the coloured part of the eye called?')).toEqual([]);
+  });
+
+  it('warns about answers repeated within a quiz, and never blocks for a warning', () => {
+    const all = rows.flatMap((r) => r.notes);
+    expect(all.some((n) => /Same answers as line/.test(n))).toBe(true);
+    expect(rows.filter((r) => r.notes.length).every((r) => r.block.length === 0)).toBe(true);
   });
 });

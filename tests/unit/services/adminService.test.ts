@@ -44,6 +44,18 @@ describe('adminService', () => {
     expect(adminErrorMessage(err)).toBe('Some questions need fixing.');
   });
 
+  it('marks imported questions so the server stores them as checked', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(reply(200, {}));
+    vi.stubGlobal('fetch', fetchMock);
+    await adminClient(() => Promise.resolve('tok')).append('abc', [], { imported: true });
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toEqual({
+      questions: [],
+      imported: true,
+    });
+    await adminClient(() => Promise.resolve('tok')).append('abc', []);
+    expect(JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body))).toEqual({ questions: [] });
+  });
+
   it('builds list queries and refuses without a token', async () => {
     const fetchMock = vi.fn().mockResolvedValue(reply(200, { items: [] }));
     vi.stubGlobal('fetch', fetchMock);

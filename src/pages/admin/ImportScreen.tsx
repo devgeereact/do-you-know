@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/Button';
 import { londonToday } from '@/lib/adminValidation';
 import {
   IMPORT_CHEATSHEET,
+  agesLabel,
+  groupTitle,
+  importIntro,
   IMPORT_SAMPLE,
   MAX_IMPORT_BYTES,
   groupsOf,
@@ -116,7 +119,7 @@ export function ImportScreen(): JSX.Element {
         'question',
         'questions',
       )}?`,
-      body: 'They become drafts. Nothing goes live until each question is checked and published.',
+      body: 'They become drafts with every question already checked, because you are importing them. Nothing goes live until you publish.',
       confirmLabel: 'Create drafts',
     });
     if (!ok) return;
@@ -128,19 +131,23 @@ export function ImportScreen(): JSX.Element {
       try {
         if (target === 'new') {
           const made = await client.createQuiz({
-            title: g.topic || subjectName(g.sid),
+            title: groupTitle(g, subjectName(g.sid)),
             category: g.sid,
             ks: g.ks || null,
+            intro: importIntro(g, subjectName(g.sid)),
+            age_min: g.ages?.min ?? null,
+            age_max: g.ages?.max ?? null,
+            imported: true,
             questions,
           });
           results.push({
             key: g.key,
             ok: true,
-            text: `New draft “${g.topic || subjectName(g.sid)}” with ${plural(questions.length, 'question', 'questions')}`,
+            text: `New draft “${groupTitle(g, subjectName(g.sid))}” with ${plural(questions.length, 'question', 'questions')}`,
             quizId: made.id,
           });
         } else {
-          await client.append(target, questions);
+          await client.append(target, questions, { imported: true });
           const title = quizzes.data?.find((q) => q.id === target)?.title ?? 'the quiz';
           results.push({
             key: g.key,
@@ -160,7 +167,7 @@ export function ImportScreen(): JSX.Element {
         results.push({
           key: g.key,
           ok: false,
-          text: `${g.topic || subjectName(g.sid)}: ${adminErrorMessage(err)}`,
+          text: `${groupTitle(g, subjectName(g.sid))}: ${adminErrorMessage(err)}`,
           errors,
         });
       }
@@ -177,7 +184,7 @@ export function ImportScreen(): JSX.Element {
     <>
       <AHead
         title="Import questions"
-        lead="Paste from Notepad, Word or a spreadsheet, or drop a .txt, .csv or .md file. Imports become drafts. Nothing goes live from here."
+        lead="Paste from Notepad, Word or a spreadsheet, or drop a .txt, .csv or .md file. Imports become drafts with their questions already checked, so you can publish them straight away. Nothing goes live from here."
       />
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <Panel className="grid min-w-0 content-start gap-3">
@@ -259,7 +266,8 @@ export function ImportScreen(): JSX.Element {
             </li>
             <li>A blank line between questions</li>
             <li>
-              <b>#</b> sets subject, key stage and topic for what follows
+              <b>#</b> sets subject, key stage or age band (Ages 4–5, Adult) and topic for what
+              follows. Each heading becomes its own quiz
             </li>
             <li>No heading? We guess the subject and you can change it</li>
             <li>
@@ -299,6 +307,9 @@ export function ImportScreen(): JSX.Element {
             <Pill tone="bad">{rows.length - ready.length} need fixing in the text</Pill>
             <Pill tone="warn">
               {ready.filter((r) => r.later.length).length} need an explanation later
+            </Pill>
+            <Pill tone="grape">
+              {ready.filter((r) => r.notes.length).length} worth a second look
             </Pill>
           </div>
           <Table
@@ -365,10 +376,11 @@ export function ImportScreen(): JSX.Element {
                     {r.guessed && (
                       <span className="text-xs font-extrabold text-[#9A6400]">guessed</span>
                     )}
-                    {r.ks && (
+                    {(r.ks || r.ages) && (
                       <span className="text-xs text-content-muted">
-                        {r.ks}
-                        {r.topic ? ` · ${r.topic}` : ''}
+                        {[r.ks, r.ages ? agesLabel(r.ages) : '', r.topic]
+                          .filter(Boolean)
+                          .join(' · ')}
                       </span>
                     )}
                   </span>
@@ -385,7 +397,14 @@ export function ImportScreen(): JSX.Element {
                         ! {e}
                       </span>
                     ))}
-                    {!r.block.length && !r.later.length && <Pill tone="ok">Ready</Pill>}
+                    {r.notes.map((e) => (
+                      <span key={e} className="text-[12.5px] font-bold text-content-muted">
+                        ? {e}
+                      </span>
+                    ))}
+                    {!r.block.length && !r.later.length && !r.notes.length && (
+                      <Pill tone="ok">Ready</Pill>
+                    )}
                   </span>
                 </Td>
               </Tr>
@@ -407,7 +426,7 @@ export function ImportScreen(): JSX.Element {
                   className={cn(cardClass, 'flex flex-wrap items-center justify-between gap-3 p-4')}
                 >
                   <div className="min-w-0">
-                    <b>{g.topic || subjectName(g.sid)}</b>{' '}
+                    <b>{groupTitle(g, subjectName(g.sid))}</b>{' '}
                     <span className="text-sm text-content-muted">
                       {subjectName(g.sid)}
                       {g.ks ? ` · ${g.ks}` : ''} · {plural(g.rows.length, 'question', 'questions')}
@@ -425,7 +444,7 @@ export function ImportScreen(): JSX.Element {
                     )}
                   </div>
                   <select
-                    aria-label={`Where “${g.topic || subjectName(g.sid)}” goes`}
+                    aria-label={`Where “${groupTitle(g, subjectName(g.sid))}” goes`}
                     className={`${selectClass} h-9 w-[320px] max-w-full`}
                     disabled={isNew}
                     value={target}
