@@ -80,7 +80,7 @@ Targets are starting assumptions; tune them against real data after launch.
 - Home: today's challenge, trending quizzes, categories, "Continue playing".
 - Category pages `/c/:slug` and quiz landing pages `/q/:slug` (title, 150–300-word intro,
   difficulty, age band, curriculum tags, question count, Play) — **prerendered** for SEO.
-- Filter by age band (6–8, 9–11, 12–14, 15–16, adult) and curriculum tag.
+- Filter by age band (4–5, 6–8, 9–11, 12–14, 15–16, adult) and curriculum tag.
 - Launch categories: General Knowledge, Science & Nature, Geography, History, Tech,
   Bible & Faith, plus school subjects (Maths, English, Science, Geography, History,
   Computing) tagged by age band and curriculum.

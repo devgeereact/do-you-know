@@ -335,6 +335,7 @@ export const enGB = {
     ageLabel: 'Age',
     ageChips: {
       all: 'All ages',
+      ages4to5: '4–5',
       ages6to8: '6–8',
       ages9to11: '9–11',
       ages12to14: '12–14',

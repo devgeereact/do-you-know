@@ -1,5 +1,8 @@
 # Changelog
 
+## 2 November 2026 — 4–5 age band
+- A 4–5 age chip on the home page and every subject page (it shows quizzes for ages 4–5 and the KS1 quizzes that start at 5); the 6–8 chip no longer needs to stand in for the youngest players.
+
 ## 1 November 2026 (branch `studio/import-2026-11`) — Studio import fixes
 - Worlds: a quiz whose title is about the body (digestion, bones, senses, brain, heart, breathing, hormones, growth, medicine and similar) shows every question in the body world, so a prompt that says "waves" or "map" no longer gets an ocean or desert. A question's own scene still wins; other quizzes are unchanged.
 - Sources are optional (ADR-019): a question without a source can be published; a source that is given must be https. Site copy (description, About, Contact, llms.txt) no longer says every answer is sourced.
