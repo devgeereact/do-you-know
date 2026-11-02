@@ -70,3 +70,8 @@ Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits a
 - Import takes the owner's age-banded format (1,080 science questions as a fixture), sources optional and imports checked on arrival (ADR-019), AI intro and explanation helpers (ADR-020), body quizzes stay in the body world.
 - Not pushed, not deployed. Owner steps are in CURRENT-TASK.md.
 
+
+## 2026-11-02: deployed go-live and Studio import
+- Owner said "deploy now". main fast-forwarded to `82b7324` (both branches), no migrations needed. Gate on that tree: `pnpm verify` PASS (prerender 65, Apache 37/37), backend suites PASS (cms failed once from 138 leftover test-DB subjects past the 100-row public list; switched them off in the disposable DB, PASS), e2e 46/46.
+- deploy.yml: prerender 65 pages on the runner, snapshot `20261102T085255Z`, smoke 3/3, released. CI PASS.
+- Live checks: 4 sampled pages distinct with own title/canonical; JSON-LD Organization, WebSite, Quiz, BreadcrumbList; /about and /q/<slug>/ served without redirect; llms.txt 200; health ok; no X-Powered-By; one live practice question as a new guest: served ids accepted, correct ids in the served set, nothing leaked, second answer refused.

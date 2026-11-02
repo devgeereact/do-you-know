@@ -173,3 +173,12 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | AI helpers with live providers | NOT TESTED | no keys; recorded fixtures only |
 | Live site | NOT TESTED | not deployed |
 
+## Deploy of go-live + Studio import — 2 November 2026
+
+| Check | Result | Notes |
+| --- | --- | --- |
+| Release `82b7324` (deploy.yml) | PASS | prerender 65 pages on the runner; snapshot 20261102T085255Z; smoke 3/3 |
+| Live pages | PASS | /, /about, /how-to-play, /c/history, /q/the-tudors-ks3, /daily: own title and canonical, JSON-LD present |
+| Live API | PASS | health ok; no X-Powered-By; one guest practice question answered through served option ids |
+| Lighthouse / CrUX | NOT TESTED | PSI quota; field data needs ~28 days |
+

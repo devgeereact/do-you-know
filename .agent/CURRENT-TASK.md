@@ -3,12 +3,12 @@
 Updated 1 November 2026 (evening). Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`.
 
 ## Goal
-Get doyouknow.space ready for go-live: security audit and fixes, SEO audit and fixes. Branch `golive/2026-11` (local only: not pushed, not deployed).
+Get doyouknow.space ready for go-live: security audit and fixes, SEO audit and fixes. Branches `golive/2026-11` and `studio/import-2026-11`: **deployed 2 Nov 2026** (main `82b7324`, release `20261102T085255Z`).
 
 ## Status
 - Commits on `golive/2026-11` are all gated (`pnpm verify` + format check). The audits are in `docs/AUDIT.md` (1 Nov, two sections).
 - Security: no Critical or High findings. Fixed 2 Medium (answer-position leak through option ids; erasure keeping written feedback) and the Studio `javascript:` source link. `api.php` strips `X-Powered-By`. Dependencies updated in range (0 high advisories).
-- SEO: the live site serves an empty shell on every URL (release skipped prerender). Fixed in code: 65 prerendered pages, schema, CLS. Not live until deployed.
+- SEO: live now serves 65 prerendered pages with their own titles, canonicals and JSON-LD (checked 2 Nov).
 
 ## Studio import (branch `studio/import-2026-11`, on top of `golive/2026-11`)
 - Import reads the owner's `# Science · Ages 4–5 · Topic` format: one quiz per heading with its age band, a plain intro and Science as the subject; markdown source links work; sources are optional (ADR-019); imported questions arrive checked so a quiz can be published at once. Non-blocking content notes in the preview.
@@ -17,7 +17,7 @@ Get doyouknow.space ready for go-live: security audit and fixes, SEO audit and f
 - Owner after deploy: re-import the science file in Studio → Import (the drafts made locally were in the test database only), look at the 35 "worth a second look" notes, then publish.
 
 ## Next steps (owner)
-1. Review the branch, then push to `main` (deploys). Confirm the release log shows `prerender: 65 pages`. If Cloudflare blocks the GitHub runner reading the catalogue, the release fails safely: run `pnpm release --go` from the Mac. A question on screen at the moment of release may need one reload (new option ids).
+1. DONE 2 Nov: deployed. Undo if ever needed: `pnpm release --rollback --go`. Next in Studio → Import: re-paste the science file, read the 35 notes, create drafts, publish.
 2. Run the exposed-file check for the private config and environment file URLs (command in Claude's go-live report; the agent guard blocks it). Expect 403 or 404 on every line.
 3. Search Console: DNS verify, submit the sitemap. Content work: see `.local-test/seo/doyouknow.space-audit/ACTION-PLAN.md` (About "who" and "how we check", quiz intros, SEO titles).
 4. Decide the CSP: enforcing needs a clean click-through of every journey including Clerk sign-in.
