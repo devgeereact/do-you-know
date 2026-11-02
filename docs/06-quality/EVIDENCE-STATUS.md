@@ -161,3 +161,15 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | Lighthouse / PSI / CrUX | NOT TESTED | PSI quota exhausted |
 | Live checks of the new code | NOT TESTED | not deployed |
 
+## Studio import branch `studio/import-2026-11` — 2 November 2026 (not deployed)
+
+| Check | Result | Notes |
+| --- | --- | --- |
+| `pnpm verify` + `pnpm -s format:check` before each commit | PASS | 4 code commits |
+| Frontend unit tests | PASS | 190 tests, incl. the owner's 1,080-question file as a fixture |
+| Backend suites (disposable MariaDB, own API on 55448) | PASS | unit 84, cms 144, generator 54, others unchanged; one cms check depends on test-data build-up (133 active subjects, list capped at 100) and passed on rerun |
+| Studio → Import in a browser, desktop and phone | PASS | 1,080 ready, 0 to fix, 35 notes, 54 quizzes; 54 of 54 drafts created; no console errors |
+| Publish one imported quiz and play it (local API) | PASS | "Food and digestion (ages 4–5)": 0 problems, published with ages 4–5, 10-question round, body world |
+| AI helpers with live providers | NOT TESTED | no keys; recorded fixtures only |
+| Live site | NOT TESTED | not deployed |
+

@@ -65,3 +65,8 @@ Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits a
 - Security audit (security-audit skill, 16 agents, final critic clean): no Critical or High findings. Fixed: option ids leaked the authored position of the right answer (d18fc57); delete and purge kept written feedback (82c4d43); Studio source links limited to http(s) (4cd271e); `X-Powered-By` stripped in api.php (bc5b559). Dependencies updated in range (821f4fa).
 - SEO audit (claude-seo): live URLs all served the bare shell because the release skipped prerender. Fixed: release prerenders and fails if it cannot (e1673b8); info pages, schema and meta fallbacks (3fa6ed2); CLS (d9f7d0e). e2e keeps its API log (97c8f55).
 - Not pushed, not deployed. Owner steps are in CURRENT-TASK.md.
+
+## 2026-11-02: Studio import fixes, branch `studio/import-2026-11`
+- Import takes the owner's age-banded format (1,080 science questions as a fixture), sources optional and imports checked on arrival (ADR-019), AI intro and explanation helpers (ADR-020), body quizzes stay in the body world.
+- Not pushed, not deployed. Owner steps are in CURRENT-TASK.md.
+
