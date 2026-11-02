@@ -359,6 +359,15 @@ export interface GeneratorRun extends GeneratorRunSummary {
   busy?: boolean;
 }
 
+export interface WriteRequest {
+  kind: 'intro' | 'explanation';
+  title?: string;
+  prompt?: string;
+  answer?: string;
+  age_min?: number | null;
+  age_max?: number | null;
+}
+
 export interface GeneratorStatus {
   enabled: boolean;
   configured: {
@@ -374,6 +383,9 @@ export interface GeneratorStatus {
   sources: string[];
   ages: GeneratorAges[];
   cap: { used: number; limit: number };
+  /** The writing helpers (intro, explanation) need a model key only, not search. */
+  writer_ready: boolean;
+  writer_cap: { used: number; limit: number };
   usage_30d: GeneratorUsage & { runs: number; drafts: number; sent: number };
   runs: GeneratorRunListItem[];
 }
@@ -486,6 +498,9 @@ export function adminClient(getToken: GetToken) {
       post<Subject>(`/admin/subjects/${encodeURIComponent(slug)}`, body),
 
     generator: () => get<GeneratorStatus>('/admin/generator'),
+    /** A draft intro or explanation for an editor field. Nothing is saved by the server. */
+    write: (body: WriteRequest) =>
+      post<{ text: string; model: string }>('/admin/generator/write', body),
     startRun: (body: { topic: string; ages: GeneratorAges; count: number; category?: string }) =>
       post<GeneratorRun>('/admin/generator/runs', body),
     run: (id: string) => get<GeneratorRun>(`/admin/generator/runs/${encodeURIComponent(id)}`),
@@ -522,7 +537,9 @@ const MESSAGES: Record<string, string> = {
   network_error: 'Can’t reach the server. Check your connection and try again.',
   generator_off:
     'The generator is switched off. It needs the owner’s approval and its keys in the server settings.',
-  generator_daily_cap: 'Today’s generator runs are used up. Try again tomorrow.',
+  generator_daily_cap: 'Today’s AI allowance is used up. Try again tomorrow.',
+  generator_bad_output: 'The AI answer could not be used. Try again, or write it yourself.',
+  invalid_write: 'Fill in the title, or the question and its right answer, first.',
   draft_has_problems: 'Fix the problems on this draft before approving it.',
   drafts_not_approved: 'Only approved drafts can be sent.',
   draft_already_sent: 'That draft has already been sent to a quiz.',

@@ -2,6 +2,16 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-01 · Studio import changes (privacy, child safety, AI cost)
+
+Reviewer: Claude Code. Branch `studio/import-2026-11`. Scope: optional sources and imported questions arriving checked (ADR-019), the AI writing helpers (ADR-020), import parsing and checks, body-world scenes.
+
+- Privacy: no new personal data. Imports and the helpers carry quiz text only; helper requests send the title, or a question and its answer, and an age band to the model provider. No player data. PASS.
+- Child safety: imported questions skip the per-question tick, so the person importing is the reviewer; the audit log records `imported: true` and who did it. The preview flags answers that repeat the question, yes/no answers to other questions, "which cells" questions answered with a process, repeated answer sets and hard words for ages 8 and under, without blocking. Players still never see answers before answering, and children still write no free text. ACCEPTED (owner decision, 1 November 2026).
+- Sources optional: a given source must still be https, and player screens show it only when present (`isWebUrl`). Site copy no longer promises a source on every answer. PASS.
+- AI output is untrusted: plain text only (links, HTML and markdown refused), length-capped, put into an editor field and never saved by the server; an AI-edited explanation leaves the question unchecked. Staff-only route behind `Admin::guard`; players get 403 (tested). PASS.
+- AI cost: off until the generator is enabled and a key is set; one short call per click; own daily cap (default 200), counted from the audit log and tested at the limit. Live calls NOT TESTED (no keys; fixtures only).
+
 ## 2026-11-01 · Go-live security audit (full codebase, security-audit skill)
 
 Reviewer: Claude Code. Branch `golive/2026-11`, source `80e1f23`. Profile standard: 12 coverage units, 7 hunters in two waves, 3 candidate verifiers, 3 record verifiers, 3 coverage critics (final pass clean). Audit agents read source only; every confirmed finding was reproduced with a failing check on the disposable local MariaDB (`scripts/test-backend.sh`). Run files (ledger, findings.json, reports) are in the gitignored `.local-test/security-audit/run-1/`.

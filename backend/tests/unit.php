@@ -122,3 +122,14 @@ check('a null source counts as no source',\Dyk\Content::validateQuestion($base+[
 check('a given source must still be https',\Dyk\Content::validateQuestion($base+['source_url'=>'http://example.org/x'],'q')===['q: source_url must be an https URL when given']);
 check('a snapshot of a sourceless question has a null source',\Dyk\Content::snapshot(['slug'=>'s','questions'=>[$base]])[0]['source_url']===null);
 
+// Writing-helper output must be one short line of plain text before it reaches an editor field.
+$clean = fn(string $t, int $max = 300) => \Dyk\Generator::plainText($t, $max);
+check('plain helper text is kept, trimmed', $clean('  Teeth break food into small pieces.  ') === 'Teeth break food into small pieces.');
+check('surrounding quotes are dropped', $clean('“Teeth break food up.”') === 'Teeth break food up.');
+check('a link is refused', $clean('See https://example.org for more.') === null);
+check('markdown is refused', $clean('**Teeth** break food.') === null && $clean('# Teeth') === null);
+check('HTML is refused', $clean('Teeth <b>break</b> food.') === null);
+check('more than one paragraph is refused', $clean("One.\n\nTwo.") === null);
+check('text over the limit is refused', $clean(str_repeat('a', 301)) === null);
+check('empty text is refused', $clean('   ') === null);
+

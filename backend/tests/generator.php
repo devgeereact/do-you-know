@@ -111,4 +111,34 @@ $r = gen('GET', '/generator');
 check('usage counts the run and the sent draft', $r['body']['usage_30d']['runs'] >= 1 && $r['body']['usage_30d']['sent'] >= 1 && $r['body']['runs'][0]['id'] === $run);
 
 Database::execute($db, 'DELETE FROM quizzes WHERE id=?', [$quiz]);
+// ---- Writing helpers: a draft intro or explanation for the editor, never saved by the server ----
+$s = gen('GET', '/generator')['body'];
+check('status says whether the writing helpers can run', ($s['writer_ready'] ?? null) === true && is_array($s['writer_cap'] ?? null));
+$before = (int) Database::one($db, "SELECT COUNT(*) AS n FROM admin_audit WHERE action='generator.write'")['n'];
+$quizWrites = fn(): int => (int) Database::one($db, "SELECT COUNT(*) AS n FROM admin_audit WHERE action IN ('quiz.save','quiz.create','quiz.append')")['n'];
+$writesBefore = $quizWrites();
+$r = gen('POST', '/generator/write', ['kind' => 'intro', 'title' => 'Food and digestion (ages 4–5)', 'age_min' => 4, 'age_max' => 5]);
+check('an intro is written from the title', $r['status'] === 200 && $r['body']['text'] === 'Find out what happens to your food after you take a bite, from your teeth to your tummy.');
+check('the helper says which model wrote it', is_string($r['body']['model'] ?? null) && $r['body']['model'] !== '');
+$r = gen('POST', '/generator/write', ['kind' => 'explanation', 'prompt' => 'What helps you bite an apple?', 'answer' => 'Teeth', 'age_min' => 4, 'age_max' => 5]);
+check('an explanation is written from the question and answer', $r['status'] === 200 && str_starts_with($r['body']['text'], 'Your teeth'));
+$after = (int) Database::one($db, "SELECT COUNT(*) AS n FROM admin_audit WHERE action='generator.write'")['n'];
+check('each helper call is in the audit log', $after === $before + 2);
+check('nothing is saved to a quiz by the helper', $quizWrites() === $writesBefore);
+check('the helper needs a known kind', gen('POST', '/generator/write', ['kind' => 'poem', 'title' => 'x'])['status'] === 422);
+check('an intro needs a title', gen('POST', '/generator/write', ['kind' => 'intro'])['status'] === 422);
+check('an explanation needs the question and the answer', gen('POST', '/generator/write', ['kind' => 'explanation', 'prompt' => 'Why?'])['status'] === 422);
+check('the helper refuses unknown fields', gen('POST', '/generator/write', ['kind' => 'intro', 'title' => 'x', 'url' => 'https://e.org'])['status'] === 422);
+check('players cannot use the helper', request('POST', '/admin/generator/write', ['kind' => 'intro', 'title' => 'x'], request('POST', '/guest-sessions', [])['body']['token'])['status'] === 403);
+// The daily cap counts helper calls from the audit log.
+$actor = Database::one($db, "SELECT actor_id FROM admin_audit WHERE action='generator.write' ORDER BY created_at DESC LIMIT 1")['actor_id'];
+$cap = (int) $s['writer_cap']['limit'];
+$used = (int) $s['writer_cap']['used'] + 2;
+for ($i = $used; $i < $cap; $i++) {
+    Database::execute($db, "INSERT INTO admin_audit (actor_id,action,target_type,detail) VALUES (?, 'generator.write', 'cap-fixture', NULL)", [$actor]);
+}
+$r = gen('POST', '/generator/write', ['kind' => 'intro', 'title' => 'One too many']);
+check('the helper stops at its daily cap', $r['status'] === 429 && $r['body']['error']['code'] === 'generator_daily_cap');
+Database::execute($db, "DELETE FROM admin_audit WHERE target_type='cap-fixture'");
+
 fwrite(STDOUT, "$count generator checks passed\n");

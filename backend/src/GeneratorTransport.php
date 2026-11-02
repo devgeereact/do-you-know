@@ -26,6 +26,12 @@ interface GeneratorTransport
      */
     public function draft(string $system, string $user, array $schema): array;
 
+    /**
+     * One short piece of text for a Studio field ($kind "intro" or "explanation"). Returns
+     * ['text' => string, 'input_tokens' => int, 'output_tokens' => int, 'model' => "provider:model"].
+     */
+    public function write(string $kind, string $system, string $user): array;
+
     /** Which search engine answered the last search() ("brightdata", "claude", "openrouter", "fixtures"). */
     public function engine(): string;
 }

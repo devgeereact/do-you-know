@@ -132,6 +132,7 @@ final class Admin
         $generator = new Generator($this->db, $this->config, $this, $content);
         if ($get && $path === '/admin/generator') { return $generator->status(); }
         if ($post && $path === '/admin/generator/runs') { $this->status = 201; return $generator->create($body); }
+        if ($post && $path === '/admin/generator/write') { return $generator->write($body); }
         if (preg_match("~^/admin/generator/runs/$uuid(?:/(step|send))?$~D", $path, $m)) {
             $action = $m[2] ?? '';
             if ($get && $action === '') { return $generator->detail($m[1]); }

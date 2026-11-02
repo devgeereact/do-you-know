@@ -167,6 +167,18 @@ final class GeneratorLive implements GeneratorTransport
         throw new ApiError('generator_off', 409);
     }
 
+    /** The same providers as draft(), asked for one short text in the same JSON envelope. */
+    public function write(string $kind, string $system, string $user): array
+    {
+        $schema = ['type' => 'object', 'additionalProperties' => false, 'required' => ['questions'], 'properties' => [
+            'questions' => ['type' => 'array', 'items' => ['type' => 'object', 'additionalProperties' => false,
+                'required' => ['text'], 'properties' => ['text' => ['type' => 'string']]]]]];
+        $out = $this->draft($system, $user, $schema);
+        $text = $out['questions'][0]['text'] ?? null;
+        if (!is_string($text)) { throw new ApiError('generator_bad_output', 502); }
+        return ['text' => $text, 'input_tokens' => $out['input_tokens'], 'output_tokens' => $out['output_tokens'], 'model' => $out['model']];
+    }
+
     private function claudeDraft(string $system, string $user, array $schema): array
     {
         try {

@@ -35,6 +35,13 @@ final class GeneratorFixtures implements GeneratorTransport
         return ['questions' => $draft['questions'], 'input_tokens' => strlen($system . $user) >> 2, 'output_tokens' => 900, 'model' => 'fixtures:recorded'];
     }
 
+    public function write(string $kind, string $system, string $user): array
+    {
+        $texts = $this->read('write.json');
+        if (!is_string($texts[$kind] ?? null)) { throw new ApiError('generator_bad_output', 502); }
+        return ['text' => $texts[$kind], 'input_tokens' => strlen($system . $user) >> 2, 'output_tokens' => 40, 'model' => 'fixtures:recorded'];
+    }
+
     private function read(string $name): array
     {
         $data = json_decode((string) @file_get_contents($this->dir . '/' . $name), true);

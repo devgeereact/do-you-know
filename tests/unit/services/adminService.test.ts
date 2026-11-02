@@ -56,6 +56,25 @@ describe('adminService', () => {
     expect(JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body))).toEqual({ questions: [] });
   });
 
+  it('asks the writing helper for a draft and returns only the text and model', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(reply(200, { text: 'A short intro.', model: 'm' }));
+    vi.stubGlobal('fetch', fetchMock);
+    const out = await adminClient(() => Promise.resolve('tok')).write({
+      kind: 'intro',
+      title: 'Bones (ages 4–5)',
+      age_min: 4,
+      age_max: 5,
+    });
+    expect(fetchMock.mock.calls[0]?.[0]).toBe('/api/v1/admin/generator/write');
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toEqual({
+      kind: 'intro',
+      title: 'Bones (ages 4–5)',
+      age_min: 4,
+      age_max: 5,
+    });
+    expect(out).toEqual({ text: 'A short intro.', model: 'm' });
+  });
+
   it('builds list queries and refuses without a token', async () => {
     const fetchMock = vi.fn().mockResolvedValue(reply(200, { items: [] }));
     vi.stubGlobal('fetch', fetchMock);

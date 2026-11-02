@@ -53,6 +53,8 @@ final class Generator
             'enabled' => ($g['enabled'] ?? false) === true || $fixtures !== null,
             'model' => is_string($g['model'] ?? null) && $g['model'] !== '' ? $g['model'] : 'claude-opus-5-5',
             'daily_runs' => is_int($g['daily_runs'] ?? null) ? max(0, $g['daily_runs']) : 20,
+            // Writing helpers make one short call each, so they have their own, larger daily cap.
+            'writer_daily' => is_int($g['writer_daily'] ?? null) ? max(0, $g['writer_daily']) : 200,
             'sources' => $sources ?: self::DEFAULT_SOURCES,
             'fixtures' => $fixtures,
             'anthropic_api_key' => (string) ($g['anthropic_api_key'] ?? ''),
@@ -96,6 +98,8 @@ final class Generator
             'enabled' => $s['enabled'],
             'configured' => $configured,
             'ready' => $s['enabled'] && $configured['writer'] && $configured['search'],
+            'writer_ready' => $s['enabled'] && $configured['writer'],
+            'writer_cap' => ['used' => $this->writesToday(), 'limit' => $s['writer_daily']],
             'model' => $s['model'],
             'backup_model' => $s['openrouter_model'],
             'sources' => $s['sources'],
@@ -340,6 +344,86 @@ final class Generator
     private function fail(string $id, string $reason): void
     {
         Database::execute($this->db, "UPDATE generator_runs SET stage='failed', error=? WHERE id=?", [mb_substr($reason, 0, 300), $id]);
+    }
+
+    /**
+     * A draft intro (from a quiz title) or explanation (from a question and its right answer) for
+     * a Studio field. Nothing is saved: the text goes back to the editor, where a person reads,
+     * changes and saves it. Each call is audited and counted against the writer's daily cap.
+     */
+    public function write(array $body): array
+    {
+        if ($extra = array_diff(array_keys($body), ['kind', 'title', 'prompt', 'answer', 'age_min', 'age_max'])) {
+            throw ApiError::invalid('invalid_write', [['field' => 'body', 'message' => 'unknown keys ' . implode(', ', $extra)]]);
+        }
+        $kind = $body['kind'] ?? null;
+        $text = static fn(string $key, int $max): ?string => AdminContent::cleanText($body[$key] ?? null, $max);
+        $problems = [];
+        if (!in_array($kind, ['intro', 'explanation'], true)) { $problems[] = ['field' => 'kind', 'message' => 'kind must be intro or explanation']; }
+        $title = $text('title', 255);
+        $prompt = $text('prompt', 300);
+        $answer = $text('answer', 200);
+        if ($kind === 'intro' && $title === null) { $problems[] = ['field' => 'title', 'message' => 'Give the quiz title.']; }
+        if ($kind === 'explanation' && ($prompt === null || $answer === null)) {
+            $problems[] = ['field' => 'prompt', 'message' => 'Give the question and its right answer.'];
+        }
+        $min = $body['age_min'] ?? null;
+        $max = $body['age_max'] ?? null;
+        if (($min !== null && (!is_int($min) || $min < 0 || $min > 120)) || ($max !== null && (!is_int($max) || $max < 0 || $max > 120))) {
+            $problems[] = ['field' => 'ages', 'message' => 'Ages must be whole numbers from 0 to 120.'];
+        }
+        if ($problems) { throw ApiError::invalid('invalid_write', $problems); }
+        $s = $this->settings();
+        if (!$s['enabled'] || !$this->configured($s)['writer']) { throw new ApiError('generator_off', 409); }
+        if ($this->writesToday() >= $s['writer_daily']) { throw new ApiError('generator_daily_cap', 429, ['limit' => $s['writer_daily']]); }
+        $ages = match (true) {
+            is_int($min) && $min >= 18 => 'adults',
+            is_int($min) && is_int($max) => "children aged $min to $max",
+            is_int($min) => "players aged $min and over",
+            default => 'children and families',
+        };
+        $system = "You write short text for Do You Know, a free UK quiz site played by children and families.\n"
+            . "Write in plain British English for $ages: warm, clear, short sentences, no jokes at anyone's expense.\n"
+            . "Plain text only: one or two sentences, no markdown, no lists, no emojis, no links, no quotation marks around it.\n"
+            . "Only state well-established facts. If you are not sure of a fact, keep the text general rather than guess.";
+        if ($kind === 'intro') {
+            $limit = 300;
+            $user = "Write the intro players read before they start the quiz \"$title\". Say what the quiz covers and make it inviting. "
+                . 'Do not give away any answers, and do not mention a number of questions. At most 300 characters.';
+        } else {
+            $limit = 400;
+            $user = "Question: $prompt\nRight answer: $answer\n"
+                . 'Write the short explanation shown after the player answers: why that answer is right, '
+                . 'in a way that teaches something. At most 400 characters.';
+        }
+        $out = $this->transport($s)->write((string) $kind, $system, $user);
+        $clean = self::plainText((string) ($out['text'] ?? ''), $limit);
+        $this->admin->audit('generator.write', 'generator', null, ['kind' => $kind, 'model' => $out['model'] ?? null,
+            'input_tokens' => (int) ($out['input_tokens'] ?? 0), 'output_tokens' => (int) ($out['output_tokens'] ?? 0), 'accepted' => $clean !== null]);
+        if ($clean === null) { throw new ApiError('generator_bad_output', 502); }
+        return ['text' => $clean, 'model' => (string) ($out['model'] ?? '')];
+    }
+
+    /**
+     * Model text made safe for an editor field: one paragraph of plain text within $max
+     * characters, outer quotes dropped. Links, HTML and markdown are refused (null).
+     */
+    public static function plainText(string $text, int $max): ?string
+    {
+        $t = trim($text);
+        $t = trim((string) preg_replace('/^["“”\'‘’]+|["“”\'‘’]+$/u', '', $t));
+        if ($t === '' || preg_match('/\n\s*\n/u', $t) || preg_match('~https?://|www\.|<[a-z/!]~i', $t)
+            || preg_match('/(^|\s)(#{1,6}\s|[*_]{2}|`|\* |- )|\[[^\]]*\]\(/u', $t)) {
+            return null;
+        }
+        $t = (string) preg_replace('/\s+/u', ' ', $t);
+        return mb_strlen($t) > $max || preg_match('/[\x00-\x1F\x7F]/', $t) ? null : $t;
+    }
+
+    private function writesToday(): int
+    {
+        $start = Overall::periodStart('day');
+        return (int) Database::one($this->db, "SELECT COUNT(*) AS n FROM admin_audit WHERE action='generator.write' AND created_at >= ?", [$start])['n'];
     }
 
     private function runsToday(): int

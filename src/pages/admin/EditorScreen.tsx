@@ -7,6 +7,7 @@ import {
   blankQuestion,
   changeType,
   londonToday,
+  markedAnswer,
   textLength,
   toContent,
   validateQuestion,
@@ -35,6 +36,7 @@ import {
   quizState,
   selectClass,
   useAction,
+  useLoad,
   useStudio,
 } from '@/pages/admin/studio';
 import { AHead, Bar, Dot, ErrorNote, Field, Loading, Panel, Pill } from '@/pages/admin/ui';
@@ -97,6 +99,10 @@ export function EditorScreen(): JSX.Element {
   const [detail, setDetail] = useState<QuizDetail | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [meta, setMeta] = useState<Meta | null>(null);
+  // AI writing helpers: only offered when the server has a model key and the generator is on.
+  const writer = useLoad(() => client.generator(), [client]);
+  const writerReady = writer.data?.writer_ready === true;
+  const [writing, setWriting] = useState<'intro' | 'explanation' | null>(null);
   const [questions, setQuestions] = useState<EditQ[]>([]);
   const [sel, setSel] = useState(0);
   const [save, setSave] = useState<SaveState>('idle');
@@ -508,6 +514,35 @@ export function EditorScreen(): JSX.Element {
                 onChange={(e) => editMeta({ title: e.target.value })}
               />
             </Field>
+            {writerReady && (
+              <div className="-mb-2 flex justify-end">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={writing !== null || !meta.title.trim()}
+                  onClick={() => {
+                    setWriting('intro');
+                    client
+                      .write({
+                        kind: 'intro',
+                        title: meta.title,
+                        age_min: detail?.quiz.age_min ?? null,
+                        age_max: detail?.quiz.age_max ?? null,
+                      })
+                      .then((out) => {
+                        editMeta({ intro: out.text });
+                        toast(
+                          'Intro drafted by AI. Read it and change anything before you publish.',
+                        );
+                      })
+                      .catch((err: unknown) => toast(adminErrorMessage(err), 'bad'))
+                      .finally(() => setWriting(null));
+                  }}
+                >
+                  {writing === 'intro' ? 'Writing…' : 'Write the intro with AI'}
+                </Button>
+              </div>
+            )}
             <Field
               label="Intro"
               htmlFor="ed-intro"
@@ -836,6 +871,37 @@ export function EditorScreen(): JSX.Element {
               />
             )}
 
+            {writerReady && (
+              <div className="-mb-2 flex justify-end">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={
+                    writing !== null || !q.prompt.trim() || markedAnswer(q) === 'None marked'
+                  }
+                  onClick={() => {
+                    const index = sel;
+                    setWriting('explanation');
+                    client
+                      .write({
+                        kind: 'explanation',
+                        prompt: q.prompt,
+                        answer: markedAnswer(q),
+                        age_min: detail?.quiz.age_min ?? null,
+                        age_max: detail?.quiz.age_max ?? null,
+                      })
+                      .then((out) => {
+                        editQ(index, (x) => ({ ...x, explanation: out.text }));
+                        toast('Explanation drafted by AI. Check it before you tick the question.');
+                      })
+                      .catch((err: unknown) => toast(adminErrorMessage(err), 'bad'))
+                      .finally(() => setWriting(null));
+                  }}
+                >
+                  {writing === 'explanation' ? 'Writing…' : 'Write the explanation with AI'}
+                </Button>
+              </div>
+            )}
             <Field
               label="Explanation"
               htmlFor="ed-expl"
