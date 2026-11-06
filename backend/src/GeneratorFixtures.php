@@ -4,7 +4,7 @@ namespace Dyk;
 
 /**
  * Recorded answers for the generator, read from a folder: search.json (the organic list),
- * pages.json ({url: html}) and draft.json ({"questions": [...]}). Generator only builds this
+ * pages.json ({url: html}), draft.json ({"questions": [...]}), write.json and review.json. Generator only builds this
  * when the config says environment "test".
  */
 final class GeneratorFixtures implements GeneratorTransport
@@ -40,6 +40,17 @@ final class GeneratorFixtures implements GeneratorTransport
         $texts = $this->read('write.json');
         if (!is_string($texts[$kind] ?? null)) { throw new ApiError('generator_bad_output', 502); }
         return ['text' => $texts[$kind], 'input_tokens' => strlen($system . $user) >> 2, 'output_tokens' => 40, 'model' => 'fixtures:recorded'];
+    }
+
+    /** review.json maps a prompt to its recorded verdict; a prompt not in it comes back "ok". */
+    public function review(string $system, string $user, array $schema, array $questions): array
+    {
+        $recorded = $this->read('review.json');
+        $items = [];
+        foreach (array_values($questions) as $i => $q) {
+            $items[] = ['index' => $i] + ($recorded[$q['prompt'] ?? ''] ?? ['verdict' => 'ok', 'reason' => '', 'prompt' => '', 'options' => [], 'explanation' => '']);
+        }
+        return ['items' => $items, 'input_tokens' => strlen($system . $user) >> 2, 'output_tokens' => 60 * count($items), 'model' => 'fixtures:recorded'];
     }
 
     private function read(string $name): array

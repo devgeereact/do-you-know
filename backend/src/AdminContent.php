@@ -16,9 +16,9 @@ namespace Dyk;
  *      200 {"items":[{id,slug,title,category:{slug,name}|null,ks,status,in_review,version,question_count,
  *                      plays,right_rate,updated_at,publish_at,has_draft}]}
  * GET  /admin/quizzes/{id}      200 {"quiz":{...},"questions":[...],"versions":[...],"problems":[...]}
- * POST /admin/quizzes           {title,category,ks?,intro?,difficulty?,time_limit_seconds?,age_min?,age_max?,questions?,imported?} 201 {id,slug}
+ * POST /admin/quizzes           {title,category,ks?,intro?,difficulty?,time_limit_seconds?,age_min?,age_max?,questions?,imported?,ai_fixes?} 201 {id,slug}
  * POST /admin/quizzes/{id}      {meta?,questions?}  save the work copy
- * POST /admin/quizzes/{id}/append   {questions:[...],imported?}
+ * POST /admin/quizzes/{id}/append   {questions:[...],imported?,ai_fixes?}
  *      imported:true (Studio → Import) stores the questions as checked: the person importing them is
  *      the reviewer (owner decision, 1 November 2026, ADR-019). The audit row records it.
  * POST /admin/quizzes/{id}/submit | /unsubmit | /check {index,checked} | /publish {publish_at?:Y-m-d}
@@ -164,7 +164,9 @@ final class AdminContent
         }
         $imported = $body['imported'] ?? false;
         if (!is_bool($imported)) { $problems[] = ['field' => 'imported', 'message' => 'imported must be true or false']; }
-        if ($extra = array_diff(array_keys($body), ['title', 'category', 'ks', 'intro', 'difficulty', 'time_limit_seconds', 'age_min', 'age_max', 'questions', 'imported'])) {
+        $aiFixes = self::aiFixes($body);
+        if ($aiFixes === false) { $problems[] = ['field' => 'ai_fixes', 'message' => 'ai_fixes must be a whole number from 0 to 50']; }
+        if ($extra = array_diff(array_keys($body), ['title', 'category', 'ks', 'intro', 'difficulty', 'time_limit_seconds', 'age_min', 'age_max', 'questions', 'imported', 'ai_fixes'])) {
             $problems[] = ['field' => 'body', 'message' => 'unknown keys ' . implode(', ', $extra)];
         }
         if ($problems) { throw ApiError::invalid('invalid_quiz', $problems); }
@@ -173,7 +175,7 @@ final class AdminContent
         $meta = ['title' => $title, 'intro' => trim($intro), 'category' => $category['slug'], 'difficulty' => $difficulty,
             'age_min' => $ageMin, 'age_max' => $ageMax, 'curriculum_tags' => $tags, 'time_limit_seconds' => $timer,
             'shuffle_options' => true, 'is_ranked' => true, 'round_size' => null];
-        return Database::transaction($this->db, function () use ($title, $intro, $category, $difficulty, $timer, $tags, $meta, $questions, $imported): array {
+        return Database::transaction($this->db, function () use ($title, $intro, $category, $difficulty, $timer, $tags, $meta, $questions, $imported, $aiFixes): array {
             $id = Database::uuid();
             $slug = $this->uniqueSlug($title);
             Database::execute($this->db,
@@ -181,7 +183,8 @@ final class AdminContent
                  VALUES (?,?,'draft',?,?,?,?,?,3,?,?)",
                 [$id, $slug, $title, trim($intro), $category['id'], $difficulty, $timer, json_encode($tags, JSON_THROW_ON_ERROR),
                  self::encode(['meta' => $meta, 'questions' => $questions, 'review' => false])]);
-            $this->admin->audit('quiz.create', 'quiz', $id, ['slug' => $slug, 'questions' => count($questions), 'imported' => $imported]);
+            $this->admin->audit('quiz.create', 'quiz', $id, ['slug' => $slug, 'questions' => count($questions), 'imported' => $imported]
+                + ($aiFixes ? ['ai_fixes' => $aiFixes] : []));
             return ['id' => $id, 'slug' => $slug];
         });
     }
@@ -213,17 +216,18 @@ final class AdminContent
             throw ApiError::invalid('invalid_questions', [['field' => 'questions', 'message' => 'questions must be a non-empty list']]);
         }
         $imported = $body['imported'] ?? false;
-        if (!is_bool($imported) || ($extra = array_diff(array_keys($body), ['questions', 'imported']))) {
-            throw ApiError::invalid('invalid_questions', [['field' => 'imported', 'message' => 'only questions and imported (true or false) are allowed']]);
+        $aiFixes = self::aiFixes($body);
+        if (!is_bool($imported) || $aiFixes === false || ($extra = array_diff(array_keys($body), ['questions', 'imported', 'ai_fixes']))) {
+            throw ApiError::invalid('invalid_questions', [['field' => 'imported', 'message' => 'only questions, imported (true or false) and ai_fixes are allowed']]);
         }
-        return $this->write($id, 'quiz.append', function (array $row, array $work) use ($new, $imported): array {
+        return $this->write($id, 'quiz.append', function (array $row, array $work) use ($new, $imported, $aiFixes): array {
             $added = $this->incoming($new, [], $imported);
             if (count($work['questions']) + count($added) > self::MAX_QUESTIONS) {
                 throw ApiError::invalid('too_many_questions', ['max' => self::MAX_QUESTIONS, 'have' => count($work['questions'])]);
             }
             $work['questions'] = array_merge($work['questions'], $added);
             $work['review'] = false;
-            return [$work, ['added' => count($added), 'imported' => $imported]];
+            return [$work, ['added' => count($added), 'imported' => $imported] + ($aiFixes ? ['ai_fixes' => $aiFixes] : [])];
         });
     }
 
@@ -662,6 +666,13 @@ final class AdminContent
             if (in_array($code, $tags, true)) { return $label; }
         }
         return null;
+    }
+
+    /** How many AI review fixes the importer accepted (for the audit): 0-50, or false when invalid. */
+    private static function aiFixes(array $body): int|false
+    {
+        $n = $body['ai_fixes'] ?? 0;
+        return is_int($n) && $n >= 0 && $n <= self::MAX_QUESTIONS ? $n : false;
     }
 
     public static function cleanText(mixed $v, int $max): ?string

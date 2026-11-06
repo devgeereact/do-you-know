@@ -121,6 +121,7 @@ do not merge.
   import, imported quizzes are drafts, and only `--publish` with a named `--reviewed-by`
   makes them public. Time-sensitive facts get a short review date.
 - AI drafts, if ever added, never publish themselves: a human reviews and an admin publishes.
+- AI review of imports is advisory (ADR-021): it suggests fixes and flags; a person accepts each fix, and nothing the AI writes is saved or published by itself.
 - Never reuse questions, art or text from other quiz sites. Original content only.
 
 ### Naming conventions

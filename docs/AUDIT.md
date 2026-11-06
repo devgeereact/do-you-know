@@ -2,6 +2,18 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-06 · AI review of imports (security, child safety, privacy, cost)
+
+Reviewer: Claude Code. Scope: `Generator::review`, `POST /admin/import/review`, `AdminContent` `ai_fixes`, the Import and Editor review UI (ADR-021).
+
+- Who can call it: staff only (`Admin::guard`); players get 403 (tested). Off until the generator is enabled with a model key; returns 409 `generator_off` otherwise (tested). PASS.
+- Prompt injection from imported text: the questions are sent as JSON inside `<questions>` and the system prompt says they are untrusted data whose instructions must not be followed (tested). Whatever comes back is only a suggestion: each fix is checked like hand-written content (same number of answers, exactly one right, plain text without links, markdown or HTML, length limits, `Content::validateQuestion`) and becomes a flag when it fails (tested with recorded answers: wrong answer count, a link, two right answers). Sources are never taken from the model (tested). PASS.
+- Nothing publishes or saves itself: the endpoint writes nothing to any quiz (tested); a person accepts each fix in the preview or editor. Accepted fixes are counted in the import audit (`ai_fixes`, tested). PASS.
+- Child safety: the prompt asks for a kind, child-safe tone and wording for the age band from the heading; a person still reads every accepted fix. ACCEPTED (advisory).
+- Privacy: only question text, answers, explanation, age band, subject and topic are sent; no player data, no names or emails. PASS.
+- Cost: each call (up to 25 questions) is audited as `generator.review` and capped at `generator.review_daily` (default 100 a day, about 2,500 questions; tested). PASS.
+- NOT TESTED: a live call to Anthropic or OpenRouter (recorded answers only; needs the owner's keys).
+
 ## 2026-11-02 · Science body-topics import: content review and publish
 
 Reviewer: Claude Code, at the owner's request ("fix all the imported questions … publish"), through Studio's own admin API in the owner's signed-in session (no server files, no SQL).

@@ -1,0 +1,2238 @@
+{
+ "Which teeth are at the front of your mouth?": {
+  "verdict": "fix",
+  "reason": "The answer repeats the question.",
+  "prompt": "Which teeth cut into an apple first?",
+  "options": [
+   {
+    "label": "Front teeth",
+    "correct": true
+   },
+   {
+    "label": "Back teeth",
+    "correct": false
+   },
+   {
+    "label": "Kneecaps",
+    "correct": false
+   }
+  ],
+  "explanation": "Front teeth have edges suited to cutting food."
+ },
+ "Which teeth help crush food at the back?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which teeth crush and grind your food?",
+  "options": [
+   {
+    "label": "Eyelashes",
+    "correct": false
+   },
+   {
+    "label": "Back teeth",
+    "correct": true
+   },
+   {
+    "label": "Front teeth only",
+    "correct": false
+   },
+   {
+    "label": "Fingernails",
+    "correct": false
+   }
+  ],
+  "explanation": "Back teeth crush and grind food."
+ },
+ "Can air also enter through your mouth?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Besides your nose, where else can air go in?",
+  "options": [
+   {
+    "label": "Ear canal",
+    "correct": false
+   },
+   {
+    "label": "Mouth",
+    "correct": true
+   },
+   {
+    "label": "Tooth root",
+    "correct": false
+   },
+   {
+    "label": "Fingernail",
+    "correct": false
+   }
+  ],
+  "explanation": "Air can pass through the mouth towards the lungs."
+ },
+ "What are hormones: body messages or little bones?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What are hormones?",
+  "options": [
+   {
+    "label": "Little bones",
+    "correct": false
+   },
+   {
+    "label": "Air sacs",
+    "correct": false
+   },
+   {
+    "label": "Food pieces",
+    "correct": false
+   },
+   {
+    "label": "Body messages",
+    "correct": true
+   }
+  ],
+  "explanation": "Hormones carry chemical messages within the body."
+ },
+ "Can body messages help you grow?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What can body messages help control?",
+  "options": [
+   {
+    "label": "Shoe colour",
+    "correct": false
+   },
+   {
+    "label": "Body growth",
+    "correct": true
+   },
+   {
+    "label": "The weather",
+    "correct": false
+   },
+   {
+    "label": "Toy size",
+    "correct": false
+   }
+  ],
+  "explanation": "Hormones help regulate growth."
+ },
+ "Can body messages help your body use food?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What can body messages help your body do?",
+  "options": [
+   {
+    "label": "Making sunlight",
+    "correct": false
+   },
+   {
+    "label": "Growing feathers",
+    "correct": false
+   },
+   {
+    "label": "Use of energy from food",
+    "correct": true
+   },
+   {
+    "label": "Turning skin to stone",
+    "correct": false
+   }
+  ],
+  "explanation": "Hormones help regulate metabolism."
+ },
+ "Do hormones work as body messages?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What do hormones do?",
+  "options": [
+   {
+    "label": "They are tiny teeth",
+    "correct": false
+   },
+   {
+    "label": "They help body parts communicate",
+    "correct": true
+   },
+   {
+    "label": "They are swallowed toys",
+    "correct": false
+   },
+   {
+    "label": "They are bones in the ear",
+    "correct": false
+   }
+  ],
+  "explanation": "Hormones signal to responsive cells."
+ },
+ "Can tiny amounts of body messages have an effect?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "How much of a body message can have an effect?",
+  "options": [
+   {
+    "label": "Only a bucketful",
+    "correct": false
+   },
+   {
+    "label": "A very small amount",
+    "correct": true
+   },
+   {
+    "label": "Only more than all the blood",
+    "correct": false
+   },
+   {
+    "label": "No amount",
+    "correct": false
+   }
+  ],
+  "explanation": "Hormones can act at low concentrations."
+ },
+ "Do body messages stay in one shoe?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Where do body messages travel?",
+  "options": [
+   {
+    "label": "Inside shoes only",
+    "correct": false
+   },
+   {
+    "label": "Across the sky",
+    "correct": false
+   },
+   {
+    "label": "Inside the body",
+    "correct": true
+   },
+   {
+    "label": "Inside toys only",
+    "correct": false
+   }
+  ],
+  "explanation": "Endocrine hormones travel within the body."
+ },
+ "Can body messages help the body work together?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Why does your body send messages?",
+  "options": [
+   {
+    "label": "To replace every nerve",
+    "correct": false
+   },
+   {
+    "label": "To turn bones into blood",
+    "correct": false
+   },
+   {
+    "label": "To coordinate body functions",
+    "correct": true
+   },
+   {
+    "label": "To make all cells identical",
+    "correct": false
+   }
+  ],
+  "explanation": "Hormones help coordinate activities in different tissues."
+ },
+ "Which daily activity supports learning and development?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Why is sleep important for children?",
+  "options": [
+   {
+    "label": "Rest and grow",
+    "correct": true
+   },
+   {
+    "label": "Turn into animals",
+    "correct": false
+   },
+   {
+    "label": "Avoid all learning",
+    "correct": false
+   },
+   {
+    "label": "Replace every meal",
+    "correct": false
+   }
+  ],
+  "explanation": "Sleep supports development and health."
+ },
+ "Which statement about children’s growth is correct?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Do all children grow at the same speed?",
+  "options": [
+   {
+    "label": "No, growth rates vary",
+    "correct": true
+   },
+   {
+    "label": "Yes, everyone is identical",
+    "correct": false
+   },
+   {
+    "label": "Only tall children grow",
+    "correct": false
+   },
+   {
+    "label": "Children never grow",
+    "correct": false
+   }
+  ],
+  "explanation": "Growth differs between individuals."
+ },
+ "Which action normally continues automatically during sleep?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which action keeps going by itself while you sleep?",
+  "options": [
+   {
+    "label": "Eating a meal",
+    "correct": false
+   },
+   {
+    "label": "Reading a book",
+    "correct": false
+   },
+   {
+    "label": "Breathing",
+    "correct": true
+   },
+   {
+    "label": "Tying shoes",
+    "correct": false
+   }
+  ],
+  "explanation": "Automatic nervous control keeps breathing going."
+ },
+ "Why does the body use hormonal communication?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Why does the body send hormone messages?",
+  "options": [
+   {
+    "label": "To replace every nerve",
+    "correct": false
+   },
+   {
+    "label": "To turn bones into blood",
+    "correct": false
+   },
+   {
+    "label": "To make all cells identical",
+    "correct": false
+   },
+   {
+    "label": "To coordinate body functions",
+    "correct": true
+   }
+  ],
+  "explanation": "Hormones help coordinate activities in different tissues."
+ },
+ "Which trained professional helps care for patients?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which trained worker helps care for patients?",
+  "options": [
+   {
+    "label": "Astronaut only",
+    "correct": false
+   },
+   {
+    "label": "Pilot only",
+    "correct": false
+   },
+   {
+    "label": "Carpenter only",
+    "correct": false
+   },
+   {
+    "label": "Nurse",
+    "correct": true
+   }
+  ],
+  "explanation": "Nurses provide skilled patient care."
+ },
+ "Which term means a broken bone?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a fracture?",
+  "options": [
+   {
+    "label": "A joint lubricant",
+    "correct": false
+   },
+   {
+    "label": "A break in a bone",
+    "correct": true
+   },
+   {
+    "label": "A nerve signal",
+    "correct": false
+   },
+   {
+    "label": "A muscle enzyme",
+    "correct": false
+   }
+  ],
+  "explanation": "A fracture is a crack or break in bone."
+ },
+ "Which description of bone is scientifically correct?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Is bone a living tissue?",
+  "options": [
+   {
+    "label": "Yes, with living cells and a blood supply",
+    "correct": true
+   },
+   {
+    "label": "No, they are dead stone",
+    "correct": false
+   },
+   {
+    "label": "No, they contain only air",
+    "correct": false
+   },
+   {
+    "label": "Only teeth are alive",
+    "correct": false
+   }
+  ],
+  "explanation": "Bone is living tissue that changes throughout life."
+ },
+ "What are the finger-like projections of the small-intestinal lining?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes villi?",
+  "options": [
+   {
+    "label": "Teeth in the stomach",
+    "correct": false
+   },
+   {
+    "label": "Air sacs",
+    "correct": false
+   },
+   {
+    "label": "Heart valves",
+    "correct": false
+   },
+   {
+    "label": "Tiny projections that help absorption",
+    "correct": true
+   }
+  ],
+  "explanation": "Villi increase the surface available for absorption."
+ },
+ "What name describes the mixture leaving the stomach?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes chyme?",
+  "options": [
+   {
+    "label": "Stored bile",
+    "correct": false
+   },
+   {
+    "label": "Partly digested food mixed with stomach juices",
+    "correct": true
+   },
+   {
+    "label": "A type of bone",
+    "correct": false
+   },
+   {
+    "label": "A red blood cell",
+    "correct": false
+   }
+  ],
+  "explanation": "Stomach mixing produces a semi-liquid mixture called chyme."
+ },
+ "Which structures contain cells that detect taste chemicals?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What are taste buds made of?",
+  "options": [
+   {
+    "label": "Tiny bones",
+    "correct": false
+   },
+   {
+    "label": "Air pockets",
+    "correct": false
+   },
+   {
+    "label": "Groups of sensory cells",
+    "correct": true
+   },
+   {
+    "label": "Blood clots",
+    "correct": false
+   }
+  ],
+  "explanation": "Taste buds contain specialised taste receptor cells."
+ },
+ "Which structures make up the central nervous system?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which name covers the brain and spinal cord together?",
+  "options": [
+   {
+    "label": "Central nervous system",
+    "correct": true
+   },
+   {
+    "label": "Digestive system",
+    "correct": false
+   },
+   {
+    "label": "Endocrine system",
+    "correct": false
+   },
+   {
+    "label": "Lymphatic system",
+    "correct": false
+   }
+  ],
+  "explanation": "The CNS consists of brain and spinal cord."
+ },
+ "What name is given to a specialised nerve cell?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a neuron?",
+  "options": [
+   {
+    "label": "A blood cell",
+    "correct": false
+   },
+   {
+    "label": "A bone mineral",
+    "correct": false
+   },
+   {
+    "label": "A nerve cell",
+    "correct": true
+   },
+   {
+    "label": "A digestive enzyme",
+    "correct": false
+   }
+  ],
+  "explanation": "Neurons receive and transmit information."
+ },
+ "At what junction can one neuron communicate with another cell?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a synapse?",
+  "options": [
+   {
+    "label": "A bone cavity",
+    "correct": false
+   },
+   {
+    "label": "A communication junction",
+    "correct": true
+   },
+   {
+    "label": "A heart chamber",
+    "correct": false
+   },
+   {
+    "label": "A digestive valve",
+    "correct": false
+   }
+  ],
+  "explanation": "Synapses transfer signals between cells."
+ },
+ "Which insulating material surrounds many nerve fibres?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes myelin?",
+  "options": [
+   {
+    "label": "A stomach acid",
+    "correct": false
+   },
+   {
+    "label": "A bone mineral",
+    "correct": false
+   },
+   {
+    "label": "An insulating sheath",
+    "correct": true
+   },
+   {
+    "label": "An eye pigment",
+    "correct": false
+   }
+  ],
+  "explanation": "Myelin helps signals travel efficiently."
+ },
+ "Which process transfers oxygen and carbon dioxide between alveoli and blood?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes gas exchange?",
+  "options": [
+   {
+    "label": "Chewing food",
+    "correct": false
+   },
+   {
+    "label": "Movement of gases across a thin surface",
+    "correct": true
+   },
+   {
+    "label": "Making red cells",
+    "correct": false
+   },
+   {
+    "label": "Filtering urine",
+    "correct": false
+   }
+  ],
+  "explanation": "Gas exchange swaps gases between air and blood."
+ },
+ "Which stage involves the body becoming physically capable of reproduction?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What best describes puberty?",
+  "options": [
+   {
+    "label": "A type of digestion",
+    "correct": false
+   },
+   {
+    "label": "A bone injury",
+    "correct": false
+   },
+   {
+    "label": "A blood-clotting step",
+    "correct": false
+   },
+   {
+    "label": "A period of physical maturation",
+    "correct": true
+   }
+  ],
+  "explanation": "Puberty involves hormone-driven maturation."
+ },
+ "Which statement about puberty timing is correct?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Does everyone start puberty at the same age?",
+  "options": [
+   {
+    "label": "No, normal timing varies",
+    "correct": true
+   },
+   {
+    "label": "Yes, everyone starts on one birthday",
+    "correct": false
+   },
+   {
+    "label": "Only adults experience it",
+    "correct": false
+   },
+   {
+    "label": "It happens before birth",
+    "correct": false
+   }
+  ],
+  "explanation": "Puberty starts at different times in different people."
+ },
+ "What term describes a period of unusually rapid height increase?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a growth spurt?",
+  "options": [
+   {
+    "label": "A sudden loss of every bone",
+    "correct": false
+   },
+   {
+    "label": "A period of faster growth",
+    "correct": true
+   },
+   {
+    "label": "A type of sleep",
+    "correct": false
+   },
+   {
+    "label": "A blood group",
+    "correct": false
+   }
+  ],
+  "explanation": "Growth can accelerate during puberty."
+ },
+ "What occurs when the genetic material of a sperm and egg combines?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What happens at fertilisation?",
+  "options": [
+   {
+    "label": "Food entering the stomach",
+    "correct": false
+   },
+   {
+    "label": "A bone breaking",
+    "correct": false
+   },
+   {
+    "label": "Air entering the lungs",
+    "correct": false
+   },
+   {
+    "label": "Union of sperm and egg",
+    "correct": true
+   }
+  ],
+  "explanation": "Fertilisation begins the development of a new organism."
+ },
+ "Which temporary organ supports exchange between maternal and fetal circulations?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes the placenta?",
+  "options": [
+   {
+    "label": "A chamber of the heart",
+    "correct": false
+   },
+   {
+    "label": "A bone in the ear",
+    "correct": false
+   },
+   {
+    "label": "An organ supporting exchange during pregnancy",
+    "correct": true
+   },
+   {
+    "label": "A part of the eye",
+    "correct": false
+   }
+  ],
+  "explanation": "The placenta exchanges nutrients, gases and wastes."
+ },
+ "Which fluid surrounds the developing fetus?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes amniotic fluid?",
+  "options": [
+   {
+    "label": "Fluid in the amniotic sac",
+    "correct": true
+   },
+   {
+    "label": "Blood in the heart",
+    "correct": false
+   },
+   {
+    "label": "Bile in the liver",
+    "correct": false
+   },
+   {
+    "label": "Urine in the bladder only",
+    "correct": false
+   }
+  ],
+  "explanation": "Amniotic fluid surrounds and cushions the fetus."
+ },
+ "What process produces new cells from existing cells?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes cell division?",
+  "options": [
+   {
+    "label": "A cell producing daughter cells",
+    "correct": true
+   },
+   {
+    "label": "A tooth dissolving",
+    "correct": false
+   },
+   {
+    "label": "A lung taking air",
+    "correct": false
+   },
+   {
+    "label": "A heart valve closing",
+    "correct": false
+   }
+  ],
+  "explanation": "Cell division increases or renews cell populations."
+ },
+ "Which cellular changes contribute to an increase in body size?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "How do cells make a body bigger?",
+  "options": [
+   {
+    "label": "They all turn into fat",
+    "correct": false
+   },
+   {
+    "label": "They increase in number and can grow larger",
+    "correct": true
+   },
+   {
+    "label": "They stop using energy",
+    "correct": false
+   },
+   {
+    "label": "They disappear permanently",
+    "correct": false
+   }
+  ],
+  "explanation": "Growth involves changes in cell number and size."
+ },
+ "Which life period includes transition from childhood towards adulthood?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes adolescence?",
+  "options": [
+   {
+    "label": "The period between childhood and adulthood",
+    "correct": true
+   },
+   {
+    "label": "Only the first month after birth",
+    "correct": false
+   },
+   {
+    "label": "Only old age",
+    "correct": false
+   },
+   {
+    "label": "The time before fertilisation",
+    "correct": false
+   }
+  ],
+  "explanation": "Adolescence includes physical and social development."
+ },
+ "Which skill type involves precise small movements such as writing?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does fine motor development mean?",
+  "options": [
+   {
+    "label": "Only increasing height",
+    "correct": false
+   },
+   {
+    "label": "Improving control of small muscles",
+    "correct": true
+   },
+   {
+    "label": "Changing blood group",
+    "correct": false
+   },
+   {
+    "label": "Making new ribs",
+    "correct": false
+   }
+  ],
+  "explanation": "Fine motor skills use controlled small movements."
+ },
+ "Which system consists of hormone-producing glands and their signals?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes the endocrine system?",
+  "options": [
+   {
+    "label": "The body’s hormonal communication system",
+    "correct": true
+   },
+   {
+    "label": "The skeleton only",
+    "correct": false
+   },
+   {
+    "label": "The airways only",
+    "correct": false
+   },
+   {
+    "label": "The teeth only",
+    "correct": false
+   }
+  ],
+  "explanation": "Endocrine glands release chemical messengers."
+ },
+ "Which organs have adrenal glands sitting above them?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Where in the body do the adrenal glands sit?",
+  "options": [
+   {
+    "label": "Inside the eyes",
+    "correct": false
+   },
+   {
+    "label": "Inside the teeth",
+    "correct": false
+   },
+   {
+    "label": "Below the kneecaps",
+    "correct": false
+   },
+   {
+    "label": "Above the kidneys",
+    "correct": true
+   }
+  ],
+  "explanation": "There is an adrenal gland above each kidney."
+ },
+ "Which signals coordinate many physical changes of puberty?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Are hormones involved in the changes of puberty?",
+  "options": [
+   {
+    "label": "No, only bones act",
+    "correct": false
+   },
+   {
+    "label": "Only air controls puberty",
+    "correct": false
+   },
+   {
+    "label": "Yes, hormones are involved",
+    "correct": true
+   },
+   {
+    "label": "Only teeth control it",
+    "correct": false
+   }
+  ],
+  "explanation": "Puberty depends on changing hormone signals."
+ },
+ "What is the intended effect of an antiseptic applied appropriately to living tissue?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does an antiseptic aim to reduce on living tissue?",
+  "options": [
+   {
+    "label": "All bone tissue",
+    "correct": false
+   },
+   {
+    "label": "Microorganisms that can cause infection",
+    "correct": true
+   },
+   {
+    "label": "All oxygen in the blood",
+    "correct": false
+   },
+   {
+    "label": "Every hormone",
+    "correct": false
+   }
+  ],
+  "explanation": "Antiseptics reduce or inhibit microorganisms on living tissue."
+ },
+ "Which method studies internal structures by carefully cutting them apart?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does dissection involve?",
+  "options": [
+   {
+    "label": "Listening through a stethoscope",
+    "correct": false
+   },
+   {
+    "label": "Examining a body’s internal parts by cutting",
+    "correct": true
+   },
+   {
+    "label": "Measuring temperature",
+    "correct": false
+   },
+   {
+    "label": "Photographing the skin only",
+    "correct": false
+   }
+  ],
+  "explanation": "Dissection reveals internal anatomical relationships."
+ },
+ "Which field studies the structure of the body?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What is anatomy the study of?",
+  "options": [
+   {
+    "label": "Only the weather",
+    "correct": false
+   },
+   {
+    "label": "Only medicines’ prices",
+    "correct": false
+   },
+   {
+    "label": "Body structure",
+    "correct": true
+   },
+   {
+    "label": "Only stars",
+    "correct": false
+   }
+  ],
+  "explanation": "Anatomy concerns the arrangement of body parts."
+ },
+ "Which field asks how body parts work?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What is physiology the study of?",
+  "options": [
+   {
+    "label": "Only bone names",
+    "correct": false
+   },
+   {
+    "label": "Only old books",
+    "correct": false
+   },
+   {
+    "label": "Only hospital buildings",
+    "correct": false
+   },
+   {
+    "label": "Body function",
+    "correct": true
+   }
+  ],
+  "explanation": "Physiology examines how living systems function."
+ },
+ "Which instrument allows direct viewing inside body cavities?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Why would a doctor use an endoscope?",
+  "options": [
+   {
+    "label": "Viewing inside the body",
+    "correct": true
+   },
+   {
+    "label": "Measuring shoe size",
+    "correct": false
+   },
+   {
+    "label": "Making hormones",
+    "correct": false
+   },
+   {
+    "label": "Counting external hairs only",
+    "correct": false
+   }
+  ],
+  "explanation": "Endoscopes allow internal examination through openings or small incisions."
+ },
+ "Why does a blocked nose reduce food flavour?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does a blocked nose take away from food flavour?",
+  "options": [
+   {
+    "label": "All ability to detect sweetness",
+    "correct": false
+   },
+   {
+    "label": "Much of the smell contribution",
+    "correct": true
+   },
+   {
+    "label": "All tongue movement",
+    "correct": false
+   },
+   {
+    "label": "All saliva production",
+    "correct": false
+   }
+  ],
+  "explanation": "Aromas from food contribute strongly to flavour."
+ },
+ "What is menstruation?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What is shed during menstruation?",
+  "options": [
+   {
+    "label": "The whole ovary",
+    "correct": false
+   },
+   {
+    "label": "The whole uterus",
+    "correct": false
+   },
+   {
+    "label": "Part of the uterine lining with blood",
+    "correct": true
+   },
+   {
+    "label": "The entire placenta every month",
+    "correct": false
+   }
+  ],
+  "explanation": "Hormonal changes cause shedding of the endometrium."
+ },
+ "How can nutrition affect growth?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Why is growth not set by genes alone?",
+  "options": [
+   {
+    "label": "Food replaces chromosomes",
+    "correct": false
+   },
+   {
+    "label": "Every nutrient changes blood group",
+    "correct": false
+   },
+   {
+    "label": "Nutrition has no biological effects",
+    "correct": false
+   },
+   {
+    "label": "Environment also influences development",
+    "correct": true
+   }
+  ],
+  "explanation": "Growth depends on inherited potential and environmental conditions."
+ },
+ "What is the main exchange function of the placenta?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does the placenta exchange between mother and fetus?",
+  "options": [
+   {
+    "label": "Gases, nutrients and wastes",
+    "correct": true
+   },
+   {
+    "label": "Whole bones",
+    "correct": false
+   },
+   {
+    "label": "Chewed food pieces",
+    "correct": false
+   },
+   {
+    "label": "Air through an umbilical airway",
+    "correct": false
+   }
+  ],
+  "explanation": "Placental exchange supports fetal metabolism."
+ },
+ "What does a phagocyte do?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does a phagocyte do to some microbes?",
+  "options": [
+   {
+    "label": "Turns them into hormones",
+    "correct": false
+   },
+   {
+    "label": "Engulfs and digests them",
+    "correct": true
+   },
+   {
+    "label": "Carries them to hair",
+    "correct": false
+   },
+   {
+    "label": "Changes them into platelets",
+    "correct": false
+   }
+  ],
+  "explanation": "Phagocytosis surrounds and breaks down particles or microbes."
+ },
+ "What is negative feedback?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does negative feedback do to hormone production?",
+  "options": [
+   {
+    "label": "It always accelerates production",
+    "correct": false
+   },
+   {
+    "label": "It destroys every receptor",
+    "correct": false
+   },
+   {
+    "label": "It converts hormones into bones",
+    "correct": false
+   },
+   {
+    "label": "It reduces further production",
+    "correct": true
+   }
+  ],
+  "explanation": "Negative feedback limits deviation from a regulated state."
+ },
+ "How does glucagon help raise blood glucose?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which liver response does glucagon trigger?",
+  "options": [
+   {
+    "label": "Removal of every liver receptor",
+    "correct": false
+   },
+   {
+    "label": "Permanent closure of bile ducts",
+    "correct": false
+   },
+   {
+    "label": "Conversion of glucose into oxygen",
+    "correct": false
+   },
+   {
+    "label": "Release and production of glucose",
+    "correct": true
+   }
+  ],
+  "explanation": "Glucagon promotes hepatic glucose output."
+ },
+ "Which enzyme class hydrolyses proteins?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a protease?",
+  "options": [
+   {
+    "label": "A protein-digesting enzyme",
+    "correct": true
+   },
+   {
+    "label": "An oxygen carrier",
+    "correct": false
+   },
+   {
+    "label": "A fat store",
+    "correct": false
+   },
+   {
+    "label": "A mineral salt",
+    "correct": false
+   }
+  ],
+  "explanation": "Proteases break proteins into smaller peptides or amino acids."
+ },
+ "What name describes a swallowed mass of chewed food?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a bolus?",
+  "options": [
+   {
+    "label": "Stored urine",
+    "correct": false
+   },
+   {
+    "label": "A lump of chewed food mixed with saliva",
+    "correct": true
+   },
+   {
+    "label": "An alveolar air pocket",
+    "correct": false
+   },
+   {
+    "label": "A blood clot",
+    "correct": false
+   }
+  ],
+  "explanation": "Chewing and saliva form food into a bolus."
+ },
+ "Which bone cells lay down new bone tissue?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What do osteoblasts mainly do?",
+  "options": [
+   {
+    "label": "Bone resorption",
+    "correct": false
+   },
+   {
+    "label": "Oxygen transport",
+    "correct": false
+   },
+   {
+    "label": "Bone formation",
+    "correct": true
+   },
+   {
+    "label": "Insulin release",
+    "correct": false
+   }
+  ],
+  "explanation": "Osteoblasts build the bone matrix."
+ },
+ "Which cells remove bone during remodelling?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What do osteoclasts mainly do during remodelling?",
+  "options": [
+   {
+    "label": "Antibody production",
+    "correct": false
+   },
+   {
+    "label": "Cartilage lubrication",
+    "correct": false
+   },
+   {
+    "label": "Muscle contraction",
+    "correct": false
+   },
+   {
+    "label": "Bone resorption",
+    "correct": true
+   }
+  ],
+  "explanation": "Osteoclasts break down bone tissue."
+ },
+ "Which bone tissue forms a dense outer layer?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes compact bone?",
+  "options": [
+   {
+    "label": "A tendon sheath",
+    "correct": false
+   },
+   {
+    "label": "Dense, hard bone tissue",
+    "correct": true
+   },
+   {
+    "label": "A joint space",
+    "correct": false
+   },
+   {
+    "label": "A nerve bundle",
+    "correct": false
+   }
+  ],
+  "explanation": "Compact bone contributes strength to the skeleton."
+ },
+ "Which term describes moving a limb away from the body’s midline?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does abduction mean?",
+  "options": [
+   {
+    "label": "Movement towards the midline",
+    "correct": false
+   },
+   {
+    "label": "Bending a joint",
+    "correct": false
+   },
+   {
+    "label": "Turning the palm down",
+    "correct": false
+   },
+   {
+    "label": "Movement away from the midline",
+    "correct": true
+   }
+  ],
+  "explanation": "Abduction moves a body part away from the midline."
+ },
+ "Which term describes bringing an outstretched arm back towards the body?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does adduction mean?",
+  "options": [
+   {
+    "label": "Movement towards the midline",
+    "correct": true
+   },
+   {
+    "label": "Movement away from the midline",
+    "correct": false
+   },
+   {
+    "label": "Straightening a joint",
+    "correct": false
+   },
+   {
+    "label": "Turning the palm up",
+    "correct": false
+   }
+  ],
+  "explanation": "Adduction brings a body part towards the midline."
+ },
+ "How is a physical or chemical stimulus converted into nervous information?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes sensory transduction?",
+  "options": [
+   {
+    "label": "Production of bone marrow",
+    "correct": false
+   },
+   {
+    "label": "Breaking protein into amino acids",
+    "correct": false
+   },
+   {
+    "label": "Conversion of a stimulus into an electrical signal",
+    "correct": true
+   },
+   {
+    "label": "Pumping blood into arteries",
+    "correct": false
+   }
+  ],
+  "explanation": "Receptors convert stimulus energy into cellular signals."
+ },
+ "Which brain structure receives early input from olfactory neurons?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes the olfactory bulb?",
+  "options": [
+   {
+    "label": "A digestive gland",
+    "correct": false
+   },
+   {
+    "label": "A structure processing smell signals",
+    "correct": true
+   },
+   {
+    "label": "A bone in the ear",
+    "correct": false
+   },
+   {
+    "label": "A chamber of the heart",
+    "correct": false
+   }
+  ],
+  "explanation": "Olfactory input is relayed through the olfactory bulb."
+ },
+ "What travels along an axon as a regenerating electrical signal?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes an action potential?",
+  "options": [
+   {
+    "label": "A rapid change in membrane voltage",
+    "correct": true
+   },
+   {
+    "label": "A bone contraction",
+    "correct": false
+   },
+   {
+    "label": "An antibody",
+    "correct": false
+   },
+   {
+    "label": "A digestive droplet",
+    "correct": false
+   }
+  ],
+  "explanation": "Action potentials carry information along nerve fibres."
+ },
+ "What chemical carries a signal across many synapses?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a neurotransmitter?",
+  "options": [
+   {
+    "label": "A blood-clotting cell",
+    "correct": false
+   },
+   {
+    "label": "A chemical messenger released by a neuron",
+    "correct": true
+   },
+   {
+    "label": "A bone mineral",
+    "correct": false
+   },
+   {
+    "label": "A lung air sac",
+    "correct": false
+   }
+  ],
+  "explanation": "Neurotransmitters bind to receptors on another cell."
+ },
+ "What is the narrow gap between cells at a chemical synapse?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes the synaptic cleft?",
+  "options": [
+   {
+    "label": "A bone-growth zone",
+    "correct": false
+   },
+   {
+    "label": "A heart chamber",
+    "correct": false
+   },
+   {
+    "label": "The gap between communicating cells",
+    "correct": true
+   },
+   {
+    "label": "A gland duct",
+    "correct": false
+   }
+  ],
+  "explanation": "Neurotransmitter diffuses across the synaptic cleft."
+ },
+ "Which structure performs a nervous-system response?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes an effector?",
+  "options": [
+   {
+    "label": "A stimulus",
+    "correct": false
+   },
+   {
+    "label": "A synaptic gap",
+    "correct": false
+   },
+   {
+    "label": "A sensory receptor only",
+    "correct": false
+   },
+   {
+    "label": "A muscle or gland",
+    "correct": true
+   }
+  ],
+  "explanation": "Effectors act in response to nervous signals."
+ },
+ "What fluid surrounds and cushions the brain and spinal cord?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes cerebrospinal fluid?",
+  "options": [
+   {
+    "label": "Bile in the skull",
+    "correct": false
+   },
+   {
+    "label": "Fluid within and around the CNS",
+    "correct": true
+   },
+   {
+    "label": "Blood without oxygen",
+    "correct": false
+   },
+   {
+    "label": "Joint lubricant",
+    "correct": false
+   }
+  ],
+  "explanation": "CSF supports and protects CNS structures."
+ },
+ "Which function is performed by specialised brain capillary barriers?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What is the main job of the blood–brain barrier?",
+  "options": [
+   {
+    "label": "Air entering the lungs",
+    "correct": false
+   },
+   {
+    "label": "Food entering the stomach",
+    "correct": false
+   },
+   {
+    "label": "Tendon movement",
+    "correct": false
+   },
+   {
+    "label": "Movement of substances from blood into brain tissue",
+    "correct": true
+   }
+  ],
+  "explanation": "The barrier selectively controls exchange with brain tissue."
+ },
+ "Which quantity equals heart rate multiplied by stroke volume?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes cardiac output?",
+  "options": [
+   {
+    "label": "Air breathed per second",
+    "correct": false
+   },
+   {
+    "label": "Blood pumped by one ventricle per minute",
+    "correct": true
+   },
+   {
+    "label": "Blood sugar concentration",
+    "correct": false
+   },
+   {
+    "label": "Total blood-cell count",
+    "correct": false
+   }
+  ],
+  "explanation": "Cardiac output measures flow from a ventricle each minute."
+ },
+ "Which volume is ejected by one ventricle during one beat?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes stroke volume?",
+  "options": [
+   {
+    "label": "Air in one lung",
+    "correct": false
+   },
+   {
+    "label": "Total plasma in the body",
+    "correct": false
+   },
+   {
+    "label": "Blood pumped per heartbeat",
+    "correct": true
+   },
+   {
+    "label": "Blood remaining in all veins",
+    "correct": false
+   }
+  ],
+  "explanation": "Stroke volume is the volume ejected per ventricular contraction."
+ },
+ "What function is especially useful in veins carrying blood against gravity?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What do the valves in many veins do?",
+  "options": [
+   {
+    "label": "Adding oxygen directly",
+    "correct": false
+   },
+   {
+    "label": "Preventing backward flow",
+    "correct": true
+   },
+   {
+    "label": "Making red cells",
+    "correct": false
+   },
+   {
+    "label": "Increasing gut digestion",
+    "correct": false
+   }
+  ],
+  "explanation": "Valves help maintain flow towards the heart."
+ },
+ "Which molecule allows red cells to carry large quantities of oxygen?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does haemoglobin do with oxygen?",
+  "options": [
+   {
+    "label": "Digesting starch",
+    "correct": false
+   },
+   {
+    "label": "Filtering urine",
+    "correct": false
+   },
+   {
+    "label": "Binding oxygen reversibly",
+    "correct": true
+   },
+   {
+    "label": "Emulsifying fat",
+    "correct": false
+   }
+  ],
+  "explanation": "Haemoglobin binds oxygen in lungs and releases it in tissues."
+ },
+ "How do phagocytic white blood cells attack some pathogens?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does a phagocyte do to some pathogens?",
+  "options": [
+   {
+    "label": "Turns them into hormones",
+    "correct": false
+   },
+   {
+    "label": "Carries them to hair",
+    "correct": false
+   },
+   {
+    "label": "Engulfs and digests them",
+    "correct": true
+   },
+   {
+    "label": "Changes them into platelets",
+    "correct": false
+   }
+  ],
+  "explanation": "Phagocytosis surrounds and breaks down particles or microbes."
+ },
+ "Which feature defines these vessel types despite oxygen-level exceptions?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What really distinguishes an artery from a vein?",
+  "options": [
+   {
+    "label": "Direction of flow relative to the heart",
+    "correct": true
+   },
+   {
+    "label": "Blood colour alone",
+    "correct": false
+   },
+   {
+    "label": "Presence of red cells",
+    "correct": false
+   },
+   {
+    "label": "Whether the blood contains water",
+    "correct": false
+   }
+  ],
+  "explanation": "Arteries carry blood away; veins carry it towards the heart."
+ },
+ "Which mechanical change enlarges the thoracic cavity during inhalation?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What does the diaphragm do during inhalation?",
+  "options": [
+   {
+    "label": "It contracts and flattens",
+    "correct": true
+   },
+   {
+    "label": "It relaxes into a higher dome",
+    "correct": false
+   },
+   {
+    "label": "It turns into cartilage",
+    "correct": false
+   },
+   {
+    "label": "It seals the trachea",
+    "correct": false
+   }
+  ],
+  "explanation": "Flattening increases the volume of the chest cavity."
+ },
+ "Which process moves air between atmosphere and alveoli?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes ventilation?",
+  "options": [
+   {
+    "label": "Oxygen transport in red cells",
+    "correct": false
+   },
+   {
+    "label": "Glucose breakdown inside cells",
+    "correct": false
+   },
+   {
+    "label": "Movement of air into and out of the lungs",
+    "correct": true
+   },
+   {
+    "label": "Blood production in marrow",
+    "correct": false
+   }
+  ],
+  "explanation": "Ventilation renews the air available for gas exchange."
+ },
+ "Which volume describes air moved in a normal quiet breath?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes tidal volume?",
+  "options": [
+   {
+    "label": "Air inspired or expired per quiet breath",
+    "correct": true
+   },
+   {
+    "label": "Total blood pumped per beat",
+    "correct": false
+   },
+   {
+    "label": "All air remaining after maximum exhalation",
+    "correct": false
+   },
+   {
+    "label": "Total body water",
+    "correct": false
+   }
+  ],
+  "explanation": "Tidal volume measures ordinary breath size."
+ },
+ "What air remains after the strongest possible expiration?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes residual volume?",
+  "options": [
+   {
+    "label": "Air in the stomach",
+    "correct": false
+   },
+   {
+    "label": "Blood in the lungs",
+    "correct": false
+   },
+   {
+    "label": "Air that cannot be voluntarily exhaled",
+    "correct": true
+   },
+   {
+    "label": "All newly inhaled oxygen",
+    "correct": false
+   }
+  ],
+  "explanation": "Some air remains in the lungs after maximal expiration."
+ },
+ "Which volume can be exhaled after a maximal inhalation?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes vital capacity?",
+  "options": [
+   {
+    "label": "Only one quiet breath",
+    "correct": false
+   },
+   {
+    "label": "All residual air",
+    "correct": false
+   },
+   {
+    "label": "Blood volume in capillaries",
+    "correct": false
+   },
+   {
+    "label": "Maximum exhaled volume after breathing in fully",
+    "correct": true
+   }
+  ],
+  "explanation": "Vital capacity excludes residual volume."
+ },
+ "Which airway volume does not directly exchange gases with blood?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes anatomical dead space?",
+  "options": [
+   {
+    "label": "Air in conducting passages",
+    "correct": true
+   },
+   {
+    "label": "Air in functioning alveoli",
+    "correct": false
+   },
+   {
+    "label": "Blood in pulmonary veins",
+    "correct": false
+   },
+   {
+    "label": "Air dissolved in plasma",
+    "correct": false
+   }
+  ],
+  "explanation": "Conducting airways move air but are not the main exchange surface."
+ },
+ "How does the mucociliary escalator clear inhaled particles?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "What do cilia do in the airways?",
+  "options": [
+   {
+    "label": "Move mucus towards the throat",
+    "correct": true
+   },
+   {
+    "label": "Pump blood into alveoli",
+    "correct": false
+   },
+   {
+    "label": "Produce bone",
+    "correct": false
+   },
+   {
+    "label": "Carry oxygen inside red cells",
+    "correct": false
+   }
+  ],
+  "explanation": "Ciliary beating moves particle-laden mucus upwards."
+ },
+ "What occurs when an early embryo embeds in the uterine lining?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes implantation?",
+  "options": [
+   {
+    "label": "Release of an egg",
+    "correct": false
+   },
+   {
+    "label": "Formation of sperm",
+    "correct": false
+   },
+   {
+    "label": "Loss of a tooth",
+    "correct": false
+   },
+   {
+    "label": "Attachment and embedding in the endometrium",
+    "correct": true
+   }
+  ],
+  "explanation": "Implantation establishes the embryo within the uterine lining."
+ },
+ "Which event releases an egg from an ovary?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes ovulation?",
+  "options": [
+   {
+    "label": "Release of an oocyte",
+    "correct": true
+   },
+   {
+    "label": "Implantation",
+    "correct": false
+   },
+   {
+    "label": "Menstruation",
+    "correct": false
+   },
+   {
+    "label": "Fertilisation",
+    "correct": false
+   }
+  ],
+  "explanation": "Ovulation releases an oocyte from an ovarian follicle."
+ },
+ "Which uterine tissue changes across the menstrual cycle?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes the endometrium?",
+  "options": [
+   {
+    "label": "The outer skin",
+    "correct": false
+   },
+   {
+    "label": "The heart lining",
+    "correct": false
+   },
+   {
+    "label": "The inner uterine lining",
+    "correct": true
+   },
+   {
+    "label": "The lung surface",
+    "correct": false
+   }
+  ],
+  "explanation": "The endometrium prepares for possible implantation."
+ },
+ "How do unspecialised cells acquire distinct structures and functions?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes differentiation?",
+  "options": [
+   {
+    "label": "Development of specialised cell types",
+    "correct": true
+   },
+   {
+    "label": "Loss of all DNA",
+    "correct": false
+   },
+   {
+    "label": "Digestion of every protein",
+    "correct": false
+   },
+   {
+    "label": "Conversion of cells into air",
+    "correct": false
+   }
+  ],
+  "explanation": "Differentiation produces specialised cells through altered gene expression."
+ },
+ "Which cell type can self-renew and generate more specialised cells?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes a stem cell?",
+  "options": [
+   {
+    "label": "Any mature red blood cell",
+    "correct": false
+   },
+   {
+    "label": "A cell with self-renewal and differentiation capacity",
+    "correct": true
+   },
+   {
+    "label": "A bone mineral",
+    "correct": false
+   },
+   {
+    "label": "A hormone receptor",
+    "correct": false
+   }
+  ],
+  "explanation": "Stem cells can divide and give rise to differentiated cells."
+ },
+ "Which term refers to an organism’s genetic constitution?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes genotype?",
+  "options": [
+   {
+    "label": "Visible traits only",
+    "correct": false
+   },
+   {
+    "label": "Age alone",
+    "correct": false
+   },
+   {
+    "label": "Genetic makeup",
+    "correct": true
+   },
+   {
+    "label": "Daily food intake",
+    "correct": false
+   }
+  ],
+  "explanation": "Genotype refers to genetic information carried by an individual."
+ },
+ "Which term includes observable characteristics influenced by genes and environment?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes phenotype?",
+  "options": [
+   {
+    "label": "Only the DNA sequence",
+    "correct": false
+   },
+   {
+    "label": "Only the number of chromosomes",
+    "correct": false
+   },
+   {
+    "label": "Only biological age",
+    "correct": false
+   },
+   {
+    "label": "Expressed characteristics",
+    "correct": true
+   }
+  ],
+  "explanation": "Phenotype reflects genetic and environmental influences."
+ },
+ "What term describes differences in inherited genetic information among individuals?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes genetic variation?",
+  "options": [
+   {
+    "label": "A change only in clothing",
+    "correct": false
+   },
+   {
+    "label": "A universal identical genome",
+    "correct": false
+   },
+   {
+    "label": "A type of breathing",
+    "correct": false
+   },
+   {
+    "label": "Differences in genetic makeup",
+    "correct": true
+   }
+  ],
+  "explanation": "Genetic variation contributes to differences between individuals."
+ },
+ "Which term refers to biological changes associated with ageing?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes senescence?",
+  "options": [
+   {
+    "label": "Fertilisation",
+    "correct": false
+   },
+   {
+    "label": "Age-related biological decline or cell ageing",
+    "correct": true
+   },
+   {
+    "label": "Embryo implantation",
+    "correct": false
+   },
+   {
+    "label": "Pubertal growth alone",
+    "correct": false
+   }
+  ],
+  "explanation": "Senescence describes aspects of biological ageing."
+ },
+ "Which event marks the end of menstrual cycles due to loss of ovarian follicular activity?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes menopause?",
+  "options": [
+   {
+    "label": "The start of puberty",
+    "correct": false
+   },
+   {
+    "label": "A single missed period",
+    "correct": false
+   },
+   {
+    "label": "Permanent end of menstruation",
+    "correct": true
+   },
+   {
+    "label": "Release of the first egg",
+    "correct": false
+   }
+  ],
+  "explanation": "Menopause marks the end of reproductive menstrual cycling."
+ },
+ "Which hormone is a glucocorticoid involved in metabolic stress responses?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which option best describes cortisol?",
+  "options": [
+   {
+    "label": "An adrenal steroid hormone",
+    "correct": true
+   },
+   {
+    "label": "A digestive enzyme",
+    "correct": false
+   },
+   {
+    "label": "A blood-cell fragment",
+    "correct": false
+   },
+   {
+    "label": "A bone mineral",
+    "correct": false
+   }
+  ],
+  "explanation": "Cortisol influences metabolism and stress adaptation."
+ },
+ "Which parathyroid hormone helps restore low plasma calcium?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which hormone helps restore low plasma calcium?",
+  "options": [
+   {
+    "label": "Insulin",
+    "correct": false
+   },
+   {
+    "label": "Melatonin",
+    "correct": false
+   },
+   {
+    "label": "Parathyroid hormone",
+    "correct": true
+   },
+   {
+    "label": "ADH",
+    "correct": false
+   }
+  ],
+  "explanation": "PTH acts to increase circulating calcium."
+ },
+ "What was the key diagnostic significance of Röntgen’s discovery?": {
+  "verdict": "fix",
+  "reason": "The question did not fit its right answer, so it is reworded to match the answers.",
+  "prompt": "Which discovery let doctors see bones without surgery?",
+  "options": [
+   {
+    "label": "The stethoscope",
+    "correct": false
+   },
+   {
+    "label": "X-rays",
+    "correct": true
+   },
+   {
+    "label": "The microscope alone",
+    "correct": false
+   },
+   {
+    "label": "The thermometer",
+    "correct": false
+   }
+  ],
+  "explanation": "X-rays enabled internal imaging through the body."
+ },
+ "What protects your brain?": {
+  "verdict": "flag",
+  "reason": "Check this one: a helmet also protects the brain, so some players may argue.",
+  "prompt": "",
+  "options": [],
+  "explanation": ""
+ },
+ "Which part helps you taste food?": {
+  "verdict": "fix",
+  "reason": "Add a source.",
+  "prompt": "Which part of your mouth tastes food?",
+  "options": [
+   {
+    "label": "Teeth",
+    "correct": false
+   },
+   {
+    "label": "Tongue",
+    "correct": true
+   },
+   {
+    "label": "Lips only",
+    "correct": false
+   },
+   {
+    "label": "Jawbone",
+    "correct": false
+   }
+  ],
+  "explanation": "See https://example.org/taste for more.",
+  "source_url": "https://example.org/taste"
+ },
+ "Which part bends in the middle of your arm?": {
+  "verdict": "fix",
+  "reason": "Two answers could be right.",
+  "prompt": "Which joint bends in the middle of your arm?",
+  "options": [
+   {
+    "label": "Ankle",
+    "correct": false
+   },
+   {
+    "label": "Elbow",
+    "correct": true
+   },
+   {
+    "label": "Hip",
+    "correct": true
+   },
+   {
+    "label": "Knee",
+    "correct": false
+   }
+  ],
+  "explanation": "The elbow joins the upper arm and forearm."
+ }
+}

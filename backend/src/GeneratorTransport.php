@@ -32,6 +32,13 @@ interface GeneratorTransport
      */
     public function write(string $kind, string $system, string $user): array;
 
+    /**
+     * A review of imported questions: one verdict per question. $questions is the batch as sent
+     * (only the recorded transport reads it, to look up its answers by prompt). Returns
+     * ['items' => list, 'input_tokens' => int, 'output_tokens' => int, 'model' => "provider:model"].
+     */
+    public function review(string $system, string $user, array $schema, array $questions): array;
+
     /** Which search engine answered the last search() ("brightdata", "claude", "openrouter", "fixtures"). */
     public function engine(): string;
 }

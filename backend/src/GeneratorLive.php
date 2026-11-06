@@ -179,6 +179,13 @@ final class GeneratorLive implements GeneratorTransport
         return ['text' => $text, 'input_tokens' => $out['input_tokens'], 'output_tokens' => $out['output_tokens'], 'model' => $out['model']];
     }
 
+    /** The same providers as draft(); the reviews come back under the same "questions" key. */
+    public function review(string $system, string $user, array $schema, array $questions): array
+    {
+        $out = $this->draft($system, $user, $schema);
+        return ['items' => $out['questions'], 'input_tokens' => $out['input_tokens'], 'output_tokens' => $out['output_tokens'], 'model' => $out['model']];
+    }
+
     private function claudeDraft(string $system, string $user, array $schema): array
     {
         try {

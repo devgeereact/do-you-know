@@ -141,4 +141,61 @@ $r = gen('POST', '/generator/write', ['kind' => 'intro', 'title' => 'One too man
 check('the helper stops at its daily cap', $r['status'] === 429 && $r['body']['error']['code'] === 'generator_daily_cap');
 Database::execute($db, "DELETE FROM admin_audit WHERE target_type='cap-fixture'");
 
+// ---- AI review of imported questions (advisory: nothing is saved) ----
+$q = static fn(string $prompt, array $labels, int $right, string $why = 'Because it is.', ?string $src = null): array => ['type' => 'choice', 'prompt' => $prompt,
+    'options' => array_map(static fn(string $l, int $i): array => ['label' => $l, 'correct' => $i === $right], $labels, array_keys($labels)),
+    'explanation' => $why, 'source_url' => $src];
+$batch = [
+    $q('What helps you bite an apple?', ['Lips', 'Teeth', 'Ears', 'Eyelashes'], 1),
+    $q('Which bone cells lay down new bone tissue?', ['Bone resorption', 'Oxygen transport', 'Bone formation', 'Insulin release'], 2, 'Osteoblasts build the bone matrix.', 'https://training.seer.cancer.gov/anatomy/skeletal/growth.html'),
+    $q('What protects your brain?', ['Heel', 'Elbow', 'Wrist', 'Skull'], 3),
+    $q('Which teeth are at the front of your mouth?', ['Front teeth', 'Back teeth', 'Kneecaps', 'Ribs'], 0),
+    $q('Which part helps you taste food?', ['Teeth', 'Tongue', 'Lips only', 'Jawbone'], 1),
+    $q('Which part bends in the middle of your arm?', ['Ankle', 'Elbow', 'Hip', 'Knee'], 1),
+];
+$reviewsBefore = (int) Database::one($db, "SELECT COUNT(*) AS n FROM admin_audit WHERE action='generator.review'")['n'];
+$writesBefore = $quizWrites();
+$r = gen('POST', '/import/review', ['subject' => 'Science', 'topic' => 'Bones and movement', 'age_min' => 18, 'age_max' => null, 'questions' => $batch]);
+$items = array_column($r['body']['items'] ?? [], null, 'index');
+check('the review answers every question in the batch', $r['status'] === 200 && count($items) === count($batch));
+check('a fine question comes back ok with no fix', ($items[0]['verdict'] ?? '') === 'ok' && !isset($items[0]['fix']));
+check('a question that does not fit its answer gets a fix with a reason',
+    ($items[1]['verdict'] ?? '') === 'fix' && ($items[1]['fix']['prompt'] ?? '') === 'What do osteoblasts mainly do?' && ($items[1]['reason'] ?? '') !== '');
+check('a fix keeps the same number of answers and one right one',
+    count($items[1]['fix']['options'] ?? []) === 4 && count(array_filter($items[1]['fix']['options'] ?? [], static fn($o) => $o['correct'])) === 1);
+check('a fix never touches the source', !array_key_exists('source_url', $items[1]['fix'] ?? []));
+check('a doubtful question is flagged with a reason and no fix', ($items[2]['verdict'] ?? '') === 'flag' && !isset($items[2]['fix']) && ($items[2]['reason'] ?? '') !== '');
+check('a fix with a different number of answers is turned into a flag', ($items[3]['verdict'] ?? '') === 'flag' && !isset($items[3]['fix']));
+check('a fix with a link in it is turned into a flag', ($items[4]['verdict'] ?? '') === 'flag' && !isset($items[4]['fix']));
+check('a fix with two right answers is turned into a flag', ($items[5]['verdict'] ?? '') === 'flag' && !isset($items[5]['fix']));
+check('each review call is audited once', (int) Database::one($db, "SELECT COUNT(*) AS n FROM admin_audit WHERE action='generator.review'")['n'] === $reviewsBefore + 1);
+check('the review saves nothing to any quiz', $quizWrites() === $writesBefore);
+check('status says whether the review can run and its cap', ($s2 = gen('GET', '/generator')['body']) && ($s2['review_ready'] ?? null) === true && is_array($s2['review_cap'] ?? null));
+check('the review takes at most 25 questions a call', gen('POST', '/import/review', ['questions' => array_fill(0, 26, $batch[0])])['status'] === 422);
+check('the review needs at least one question', gen('POST', '/import/review', ['questions' => []])['status'] === 422);
+check('only choice questions are reviewed', gen('POST', '/import/review', ['questions' => [['type' => 'boolean', 'prompt' => 'Is it?', 'answer' => true, 'explanation' => 'Yes.']]])['status'] === 422);
+check('the review refuses unknown fields', gen('POST', '/import/review', ['questions' => [$batch[0]], 'model' => 'x'])['status'] === 422);
+check('players cannot use the review', request('POST', '/admin/import/review', ['questions' => [$batch[0]]], request('POST', '/guest-sessions', [])['body']['token'])['status'] === 403);
+try { $off->review(['questions' => [$batch[0]]]); $refused = false; } catch (ApiError $e) { $refused = $e->errorCode === 'generator_off' && $e->status === 409; }
+check('the review cannot run while the generator is off', $refused);
+$prompt = Generator::reviewPrompt([$batch[0]], 'Science', 'Bones', 4, 5);
+check('the review prompt treats the questions as data, not instructions', str_contains($prompt['system'], 'untrusted') && str_contains($prompt['user'], '<questions>') && str_contains($prompt['system'], 'ages 4 to 5'));
+// The import records how many AI fixes the person accepted.
+$made = gen('POST', '/quizzes', ['title' => 'Generator fixture AI fixes', 'category' => $subject, 'intro' => 'Fixture.', 'imported' => true, 'ai_fixes' => 2,
+    'questions' => array_map(static fn(array $x): array => $x + ['review_by' => '2027-11-06'], array_slice($batch, 0, 3))]);
+$detail = json_decode((string) (Database::one($db, "SELECT detail FROM admin_audit WHERE action='quiz.create' AND target_id=?", [$made['body']['id'] ?? ''])['detail'] ?? 'null'), true);
+check('an import records the AI fixes accepted', $made['status'] === 201 && ($detail['ai_fixes'] ?? null) === 2);
+$appended = gen('POST', '/quizzes/'.($made['body']['id'] ?? '').'/append', ['questions' => [$batch[4] + ['review_by' => '2027-11-06']], 'imported' => true, 'ai_fixes' => 1]);
+$detail = json_decode((string) (Database::one($db, "SELECT detail FROM admin_audit WHERE action='quiz.append' AND target_id=? ORDER BY created_at DESC LIMIT 1", [$made['body']['id'] ?? ''])['detail'] ?? 'null'), true);
+check('adding to a quiz records the AI fixes accepted too', $appended['status'] === 200 && ($detail['ai_fixes'] ?? null) === 1);
+check('ai_fixes must be a small whole number', gen('POST', '/quizzes', ['title' => 'Generator fixture bad', 'category' => $subject, 'ai_fixes' => -1])['status'] === 422);
+Database::execute($db, "DELETE FROM quizzes WHERE slug LIKE 'generator-fixture-%'");
+$reviewCap = (int) $s2['review_cap']['limit'];
+for ($i = (int) $s2['review_cap']['used']; $i < $reviewCap; $i++) {
+    Database::execute($db, "INSERT INTO admin_audit (actor_id,action,target_type,detail) VALUES (?, 'generator.review', 'cap-fixture', NULL)", [$actor]);
+}
+$r = gen('POST', '/import/review', ['questions' => [$batch[0]]]);
+check('the review stops at its own daily cap', $r['status'] === 429 && $r['body']['error']['code'] === 'generator_daily_cap');
+Database::execute($db, "DELETE FROM admin_audit WHERE target_type='cap-fixture'");
+
 fwrite(STDOUT, "$count generator checks passed\n");
