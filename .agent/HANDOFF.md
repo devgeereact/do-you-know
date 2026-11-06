@@ -80,3 +80,8 @@ Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits a
 - 4–5 age chip on home and subject pages (6e6c15c), deployed with owner approval: verify PASS, e2e 46/46, release 20261102T094703Z smoke 3/3; live bundle and `?age=5` checked.
 - The 54 stuck science drafts fixed in place and published through Studio's API (details and the 91 reworded prompts in docs/AUDIT.md). To do empty; 0 duplicate prompts or titles across 100 live quizzes.
 - Open: 37 quizzes published after the release need one more release for prerendered pages.
+
+## 2026-11-06: AI import review deployed
+- Owner approved deploy. main fast-forwarded to `80ecb9a` (AI review endpoint, Import/Editor review UI, Studio phone scroll fix); no migrations. Gate: `pnpm verify` PASS, backend suites PASS, e2e 46/46 (run against the project test DB on 33999 because the system MariaDB socket was down: `E2E_DB_ADMIN_HOST=127.0.0.1 E2E_DB_ADMIN_PORT=33999 E2E_DB_ADMIN_USER=root E2E_DB_PORT=33999 pnpm test:e2e`).
+- Release 20261106T231940Z: prerender 201 pages, smoke 3/3; live health ok; `/admin/import/review` returns 401 without a session.
+- Open: owner adds generator keys; Bright Data needs an API key plus zone names `mcp_serp` / `mcp_unlocker` (the app uses Bright Data's REST API, not the proxy host/username/password).
