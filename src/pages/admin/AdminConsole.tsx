@@ -278,7 +278,7 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
               <div className="[&_button]:!h-8 [&_button]:!text-xs">{account}</div>
             </div>
           </nav>
-          <div className="flex min-w-0 flex-1 flex-col">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col">
             <header className="hidden h-[60px] flex-none items-center gap-4 border-b border-surface-border bg-surface px-7 lg:flex">
               <p className="flex items-center gap-1.5 text-[13px] font-medium text-content-muted">
                 Studio
