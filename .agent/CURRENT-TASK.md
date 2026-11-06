@@ -16,6 +16,11 @@ Get doyouknow.space ready for go-live: security audit and fixes, SEO audit and f
 - Body quizzes (title about digestion, bones, senses and so on) keep every question in the body world.
 - Owner after deploy: re-import the science file in Studio → Import (the drafts made locally were in the test database only), look at the 35 "worth a second look" notes, then publish.
 
+## AI review of imports (branch `studio/ai-import-review`, 6 Nov, not deployed)
+- Import and Editor get "Review with AI": ok / fix (before and after, Accept or Reject) / flag per question; nothing saves until a person accepts (ADR-021). Off until `bash scripts/set-generator-keys.sh` has added a model key. Cap 100 calls a day (about 2,500 questions).
+- Also fixed: Studio main area did not scroll on phones.
+- Owner: approve the deploy, add keys, then Import → paste → Review with AI → Accept → Create drafts → publish.
+
 ## Science import (2 Nov)
 - All 54 science quizzes published (School Science, age bands and key stages set, 91 prompts reworded, 249 sources fixed); To do empty, no duplicates. 4–5 age chip live.
 - Needs one more release so the 37 quizzes published after release `6e6c15c` get prerendered pages (they serve the shell until then).

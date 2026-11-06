@@ -13,6 +13,7 @@ import {
   validateQuestion,
   type FieldKey,
 } from '@/lib/adminValidation';
+import { applyFix, planBatches, runBatches, type ReviewItem } from '@/lib/aiReview';
 import { cn } from '@/lib/utils';
 import { world } from '@/lib/worlds';
 import {
@@ -40,6 +41,7 @@ import {
   useStudio,
 } from '@/pages/admin/studio';
 import { AHead, Bar, Dot, ErrorNote, Field, Loading, Panel, Pill } from '@/pages/admin/ui';
+import { AiVerdict, type FixState } from '@/pages/admin/AiReview';
 
 /** A question being edited: the content plus a client key and what the server last said. */
 type EditQ = QuestionContent & {
@@ -105,6 +107,12 @@ export function EditorScreen(): JSX.Element {
   const [writing, setWriting] = useState<'intro' | 'explanation' | null>(null);
   const [questions, setQuestions] = useState<EditQ[]>([]);
   const [sel, setSel] = useState(0);
+  // AI review of this quiz's questions (ADR-021), keyed by the question's client key.
+  const reviewReady = writer.data?.review_ready === true;
+  const [aiReview, setAiReview] = useState<Record<string, ReviewItem>>({});
+  const [aiState, setAiState] = useState<Record<string, FixState>>({});
+  const [aiRun, setAiRun] = useState<{ done: number; total: number } | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
   const [save, setSave] = useState<SaveState>('idle');
   const [saveProblems, setSaveProblems] = useState<Problem[]>([]);
 
@@ -429,6 +437,69 @@ export function EditorScreen(): JSX.Element {
     );
   }
 
+  const reviewWithAi = async (): Promise<void> => {
+    const items = questions.filter((q) => q.type === 'choice');
+    const batches = planBatches([{ key: 'quiz', items }]);
+    if (!batches.length) return;
+    setAiError(null);
+    setAiReview({});
+    setAiState({});
+    let done = 0;
+    setAiRun({ done, total: batches.length });
+    const outcomes = await runBatches(batches, async (b) => {
+      try {
+        const res = await client.reviewImport({
+          questions: b.items.map((q) => ({
+            type: q.type,
+            prompt: q.prompt,
+            options: q.options,
+            explanation: q.explanation,
+            source_url: q.source_url,
+            review_by: q.review_by,
+          })),
+          subject: detail?.quiz.category_name ?? undefined,
+          topic: meta?.title || undefined,
+          age_min: detail?.quiz.age_min ?? null,
+          age_max: detail?.quiz.age_max ?? null,
+        });
+        setAiReview((prev) => {
+          const next = { ...prev };
+          for (const it of res.items) {
+            const q = b.items[it.index];
+            if (q) next[q.key] = it;
+          }
+          return next;
+        });
+      } catch (err) {
+        throw new Error(adminErrorMessage(err));
+      } finally {
+        done += 1;
+        setAiRun({ done, total: batches.length });
+      }
+    });
+    setAiRun(null);
+    const failed = outcomes.find((o) => !o.ok);
+    if (failed && !failed.ok) setAiError(failed.error);
+  };
+  const acceptAi = (key: string): void => {
+    const index = questions.findIndex((q) => q.key === key);
+    const fix = aiReview[key]?.fix;
+    if (index < 0 || !fix) return;
+    // An accepted fix is an edit: the question needs ticking again before publishing.
+    editQ(index, (q) => ({ ...q, ...applyFix(q, fix) }));
+    setAiState((s) => ({ ...s, [key]: 'accepted' }));
+  };
+  const aiCount = questions.filter((q) => q.type === 'choice').length;
+  const aiCalls = planBatches([{ key: 'quiz', items: Array.from({ length: aiCount }) }]).length;
+  const aiFixKeys = Object.entries(aiReview)
+    .filter(([key, it]) => it.fix && (aiState[key] ?? 'pending') === 'pending')
+    .map(([key]) => key);
+  const aiNoted = questions
+    .map((q, i) => ({ q, i, item: aiReview[q.key] }))
+    .filter(
+      (x): x is { q: EditQ; i: number; item: ReviewItem } => !!x.item && x.item.verdict !== 'ok',
+    );
+
   const saveText =
     save === 'saving'
       ? 'Saving…'
@@ -495,6 +566,56 @@ export function EditorScreen(): JSX.Element {
         <p className="mb-3 rounded-2xl bg-warning/15 px-4 py-2.5 text-sm font-semibold">
           Waiting for checks. Any edit here sends it back to draft.
         </p>
+      )}
+
+      {reviewReady && !retired && (
+        <Panel as="div" className="mb-3 grid gap-2 !p-4">
+          <div className="flex flex-wrap items-center gap-2 text-sm">
+            <b>AI review</b>
+            <span className="text-content-muted">
+              {aiCount === 1 ? '1 question' : `${aiCount} questions`}, about{' '}
+              {aiCalls === 1 ? '1 AI call' : `${aiCalls} AI calls`}. Fixes you accept need ticking
+              again before publishing.
+            </span>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-9"
+              disabled={!!aiRun || !questions.some((q) => q.type === 'choice')}
+              onClick={() => void reviewWithAi()}
+            >
+              {aiRun ? `Reviewing… ${aiRun.done} of ${aiRun.total}` : 'Review with AI'}
+            </Button>
+            {aiFixKeys.length > 0 && (
+              <Button size="sm" className="h-9" onClick={() => aiFixKeys.forEach(acceptAi)}>
+                Accept all {aiFixKeys.length} fixes
+              </Button>
+            )}
+            {Object.keys(aiReview).length > 0 && !aiRun && aiNoted.length === 0 && (
+              <Pill tone="ok">AI: every question looks fine</Pill>
+            )}
+          </div>
+          {aiError && <p className="text-sm font-bold text-wrong">{aiError}</p>}
+          {aiNoted.map(({ q, i, item }) => (
+            <div key={q.key} className="grid gap-1 border-t border-surface-border pt-2 text-sm">
+              <button
+                type="button"
+                className="text-left font-bold hover:underline"
+                onClick={() => setSel(i)}
+              >
+                Question {i + 1}: {q.prompt}
+              </button>
+              <AiVerdict
+                question={q}
+                item={item}
+                state={aiState[q.key] ?? 'pending'}
+                onAccept={() => acceptAi(q.key)}
+                onReject={() => setAiState((s) => ({ ...s, [q.key]: 'rejected' }))}
+                onUndo={() => setAiState((s) => ({ ...s, [q.key]: 'pending' }))}
+              />
+            </div>
+          ))}
+        </Panel>
       )}
 
       <fieldset

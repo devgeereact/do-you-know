@@ -182,3 +182,15 @@ Run on the development Mac against the throwaway MariaDB 11.4 in `.local-test/` 
 | Live API | PASS | health ok; no X-Powered-By; one guest practice question answered through served option ids |
 | Lighthouse / CrUX | NOT TESTED | PSI quota; field data needs ~28 days |
 
+## AI review of imports (branch `studio/ai-import-review`) — 6 November 2026 (not deployed)
+
+| Check | Result | Notes |
+| --- | --- | --- |
+| `pnpm verify` + `pnpm -s format:check` | PASS | before each commit |
+| Backend suites generator, unit, cms (disposable MariaDB) | PASS | new review checks: ok/fix/flag, invalid fixes become flags, source untouched, nothing saved, audit, cap, off, players 403, `ai_fixes` in the import audit |
+| Frontend unit tests | PASS | `tests/unit/lib/aiReview.test.ts`: batching, before/after, apply, two at a time with a failed batch |
+| Studio → Import in Chrome, desktop and phone, recorded AI answers | PASS | science file: 1,080 questions in 54 calls → 986 fine, 90 fixes, 4 flags; accept one, accept all; phone auto-review of one section, draft created with the accepted fix (`ai_fixes` 1); no console errors, no overflow |
+| Cap reached mid-run | PASS | a second full run hit the 100-call cap: 240 questions shown as not reviewed with a Retry |
+| Studio → Editor review, desktop and phone | PASS | flag shown on the quiz just imported; no console errors |
+| Live model (Anthropic / OpenRouter) | NOT TESTED | needs the owner's keys |
+

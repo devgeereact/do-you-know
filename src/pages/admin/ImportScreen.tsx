@@ -1,7 +1,14 @@
-import { useMemo, useState, type DragEvent } from 'react';
+import { useMemo, useRef, useState, type DragEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { londonToday } from '@/lib/adminValidation';
+import {
+  applyFix,
+  planBatches,
+  runBatches,
+  type ReviewBatch,
+  type ReviewItem,
+} from '@/lib/aiReview';
 import {
   IMPORT_CHEATSHEET,
   agesLabel,
@@ -27,6 +34,26 @@ import {
   useStudio,
 } from '@/pages/admin/studio';
 import { AHead, Panel, Pill, Table, Td, Tr } from '@/pages/admin/ui';
+import { AiVerdict, type FixState } from '@/pages/admin/AiReview';
+
+/** Up to this many AI calls (about 100 questions) the review starts by itself after a check. */
+const AUTO_REVIEW_CALLS = 5;
+
+/** Questions the AI can review: multiple choice and not blocked by the format checks. */
+const reviewable = (list: ImportRow[]): ImportRow[] =>
+  list.filter((r) => !r.block.length && r.q.type === 'choice');
+
+type RowBatch = ReviewBatch<ImportRow> & { group: ImportGroup };
+
+function rowBatches(list: ImportRow[], only?: Set<number>): RowBatch[] {
+  const groups = groupsOf(list);
+  return planBatches(
+    groups.map((g) => ({
+      key: g.key,
+      items: reviewable(g.rows).filter((r) => !only || only.has(r.line)),
+    })),
+  ).map((b) => ({ ...b, group: groups.find((g) => g.key === b.key)! }));
+}
 
 interface Outcome {
   key: string;
@@ -48,6 +75,14 @@ export function ImportScreen(): JSX.Element {
   const [busy, setBusy] = useState(false);
   const [outcomes, setOutcomes] = useState<Outcome[]>([]);
   const quizzes = useLoad(() => client.quizzes(), []);
+  const gen = useLoad(() => client.generator(), [client]);
+  const reviewReady = gen.data?.review_ready === true;
+  // AI review (ADR-021), keyed by the question's line in the pasted text.
+  const [review, setReview] = useState<Record<number, ReviewItem>>({});
+  const [fixState, setFixState] = useState<Record<number, FixState>>({});
+  const [reviewing, setReviewing] = useState<{ done: number; total: number } | null>(null);
+  const [failed, setFailed] = useState<{ lines: number[]; message: string } | null>(null);
+  const runId = useRef(0);
 
   const rows: ImportRow[] = useMemo(() => {
     if (parsed === null) return [];
@@ -57,20 +92,88 @@ export function ImportScreen(): JSX.Element {
       return pick && !r.newSubject ? { ...r, subject: pick, guessed: false } : r;
     });
   }, [parsed, subjects, today, overrides]);
-  const ready = rows.filter((r) => !r.block.length);
-  const groups = groupsOf(rows);
+  // Accepted AI fixes replace the question before anything is created.
+  const finalRows: ImportRow[] = rows.map((r) => {
+    const fix = review[r.line]?.fix;
+    return fix && fixState[r.line] === 'accepted' ? { ...r, q: applyFix(r.q, fix) } : r;
+  });
+  const ready = finalRows.filter((r) => !r.block.length);
+  const groups = groupsOf(finalRows);
+  const fixLines = rows.filter((r) => review[r.line]?.verdict === 'fix').map((r) => r.line);
+  const pendingFixes = fixLines.filter((l) => (fixState[l] ?? 'pending') === 'pending');
+  const acceptedIn = (list: ImportRow[]): number =>
+    list.filter((r) => review[r.line]?.fix && fixState[r.line] === 'accepted').length;
+  const reviewCalls = rowBatches(rows).length;
+  const reviewedCount = Object.keys(review).length;
+  const verdicts = Object.values(review);
+  const setFix = (lines: number[], state: FixState): void =>
+    setFixState((f) => ({ ...f, ...Object.fromEntries(lines.map((l) => [l, state])) }));
   const newSubjects = [...new Set(rows.filter((r) => r.newSubject).map((r) => r.newSubject))];
-  const subjectName = (slug: string): string =>
-    slug.startsWith('new:') ? slug.slice(4) : (subjects.find((s) => s.slug === slug)?.name ?? slug);
+  const subjectName = (slug: string): string => subjectNameOf(slug);
+  function subjectNameOf(slug: string): string {
+    return slug.startsWith('new:')
+      ? slug.slice(4)
+      : (subjects.find((s) => s.slug === slug)?.name ?? slug);
+  }
   const targetOf = (g: ImportGroup): string => targets[g.key] ?? 'new';
   const creatable = (g: ImportGroup): boolean =>
     !g.sid.startsWith('new:') && !(targetOf(g) === 'new' && g.rows.length < 3);
+
+  const runReview = async (list: ImportRow[], only?: Set<number>): Promise<void> => {
+    const batches = rowBatches(list, only);
+    if (!batches.length) return;
+    const id = runId.current;
+    let done = 0;
+    setFailed(null);
+    setReviewing({ done, total: batches.length });
+    const outcomes = await runBatches(batches, async (b) => {
+      try {
+        const res = await client.reviewImport({
+          questions: b.items.map(rowToContent),
+          subject: subjectNameOf(b.group.sid),
+          topic: b.group.topic || undefined,
+          age_min: b.group.ages?.min ?? null,
+          age_max: b.group.ages?.max ?? null,
+        });
+        if (id !== runId.current) return;
+        setReview((prev) => {
+          const next = { ...prev };
+          for (const it of res.items) {
+            const row = b.items[it.index];
+            if (row) next[row.line] = it;
+          }
+          return next;
+        });
+      } catch (err) {
+        throw new Error(adminErrorMessage(err));
+      } finally {
+        done += 1;
+        if (id === runId.current) setReviewing({ done, total: batches.length });
+      }
+    });
+    if (id !== runId.current) return;
+    setReviewing(null);
+    const lines = outcomes.flatMap((o, i) =>
+      o.ok ? [] : (batches[i]?.items ?? []).map((r) => r.line),
+    );
+    const first = outcomes.find((o) => !o.ok);
+    if (lines.length && first && !first.ok) setFailed({ lines, message: first.error });
+  };
 
   const check = (value = text): void => {
     setOverrides({});
     setTargets({});
     setOutcomes([]);
     setParsed(value);
+    runId.current += 1;
+    setReview({});
+    setFixState({});
+    setFailed(null);
+    setReviewing(null);
+    if (reviewReady) {
+      const list = parseImport(value, subjects, today);
+      if (rowBatches(list).length <= AUTO_REVIEW_CALLS) void runReview(list);
+    }
   };
 
   const readFile = async (file: File | undefined): Promise<void> => {
@@ -138,6 +241,7 @@ export function ImportScreen(): JSX.Element {
             age_min: g.ages?.min ?? null,
             age_max: g.ages?.max ?? null,
             imported: true,
+            ai_fixes: acceptedIn(g.rows),
             questions,
           });
           results.push({
@@ -147,7 +251,7 @@ export function ImportScreen(): JSX.Element {
             quizId: made.id,
           });
         } else {
-          await client.append(target, questions, { imported: true });
+          await client.append(target, questions, { imported: true, ai_fixes: acceptedIn(g.rows) });
           const title = quizzes.data?.find((q) => q.id === target)?.title ?? 'the quiz';
           results.push({
             key: g.key,
@@ -245,9 +349,14 @@ export function ImportScreen(): JSX.Element {
                 variant="ghost"
                 size="sm"
                 onClick={() => {
+                  runId.current += 1;
                   setText('');
                   setParsed(null);
                   setOutcomes([]);
+                  setReview({});
+                  setFixState({});
+                  setReviewing(null);
+                  setFailed(null);
                 }}
               >
                 Clear
@@ -312,6 +421,72 @@ export function ImportScreen(): JSX.Element {
               {ready.filter((r) => r.notes.length).length} worth a second look
             </Pill>
           </div>
+          <div
+            role="status"
+            className="mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-primary/25 bg-primary/[0.06] p-3 text-sm"
+          >
+            {!reviewReady ? (
+              <span className="font-bold">
+                AI review off: add the generator keys to have the AI check these questions.
+              </span>
+            ) : reviewing ? (
+              <span className="font-bold">
+                AI is reviewing… {reviewing.done} of {plural(reviewing.total, 'call', 'calls')} done
+              </span>
+            ) : (
+              <>
+                <b>AI review</b>
+                <span className="text-content-muted">
+                  {plural(reviewable(rows).length, 'question', 'questions')}, about{' '}
+                  {plural(reviewCalls, 'AI call', 'AI calls')}
+                </span>
+                {reviewedCount > 0 && (
+                  <>
+                    <Pill tone="ok">
+                      {verdicts.filter((v) => v.verdict === 'ok').length} look fine
+                    </Pill>
+                    <Pill tone="grape">
+                      {fixLines.length} fixes ({fixLines.length - pendingFixes.length} decided)
+                    </Pill>
+                    <Pill tone="warn">
+                      {verdicts.filter((v) => v.verdict === 'flag').length} flagged
+                    </Pill>
+                  </>
+                )}
+                <Button
+                  size="sm"
+                  className="h-9"
+                  variant={reviewedCount ? 'ghost' : 'primary'}
+                  disabled={!reviewCalls}
+                  onClick={() => void runReview(rows)}
+                >
+                  {reviewedCount ? 'Review again' : 'Review with AI'}
+                </Button>
+                {pendingFixes.length > 0 && (
+                  <Button
+                    size="sm"
+                    className="h-9"
+                    onClick={() => setFix(pendingFixes, 'accepted')}
+                  >
+                    Accept all {plural(pendingFixes.length, 'fix', 'fixes')}
+                  </Button>
+                )}
+              </>
+            )}
+            {failed && !reviewing && (
+              <span className="font-bold text-wrong">
+                {plural(failed.lines.length, 'question was', 'questions were')} not reviewed (
+                {failed.message}).{' '}
+                <button
+                  type="button"
+                  className={linkButtonClass}
+                  onClick={() => void runReview(rows, new Set(failed.lines))}
+                >
+                  Retry
+                </button>
+              </span>
+            )}
+          </div>
           <Table
             label="Questions found"
             head={[
@@ -322,7 +497,7 @@ export function ImportScreen(): JSX.Element {
               { label: 'Check' },
             ]}
           >
-            {rows.map((r, i) => (
+            {finalRows.map((r, i) => (
               <Tr key={`${r.line}-${i}`} className={r.block.length ? 'bg-wrong/[0.04]' : undefined}>
                 <Td label="Line" className="text-content-muted">
                   {r.line}
@@ -402,8 +577,18 @@ export function ImportScreen(): JSX.Element {
                         ? {e}
                       </span>
                     ))}
-                    {!r.block.length && !r.later.length && !r.notes.length && (
+                    {!r.block.length && !r.later.length && !r.notes.length && !review[r.line] && (
                       <Pill tone="ok">Ready</Pill>
+                    )}
+                    {review[r.line] && rows[i] && (
+                      <AiVerdict
+                        question={rows[i].q}
+                        item={review[r.line]!}
+                        state={fixState[r.line] ?? 'pending'}
+                        onAccept={() => setFix([r.line], 'accepted')}
+                        onReject={() => setFix([r.line], 'rejected')}
+                        onUndo={() => setFix([r.line], 'pending')}
+                      />
                     )}
                   </span>
                 </Td>
@@ -434,6 +619,26 @@ export function ImportScreen(): JSX.Element {
                     {isNew && (
                       <p className="text-[12.5px] font-extrabold text-[#9A6400]">
                         Create the subject first.
+                      </p>
+                    )}
+                    {g.rows.some((r) => review[r.line]?.fix) && (
+                      <p className="text-[12.5px] font-bold text-content-muted">
+                        AI fixes: {acceptedIn(g.rows)} accepted of{' '}
+                        {g.rows.filter((r) => review[r.line]?.fix).length}{' '}
+                        {g.rows.some((r) => pendingFixes.includes(r.line)) && (
+                          <button
+                            type="button"
+                            className={linkButtonClass}
+                            onClick={() =>
+                              setFix(
+                                g.rows.map((r) => r.line).filter((l) => pendingFixes.includes(l)),
+                                'accepted',
+                              )
+                            }
+                          >
+                            Accept all for this quiz
+                          </button>
+                        )}
                       </p>
                     )}
                     {!isNew && small && (

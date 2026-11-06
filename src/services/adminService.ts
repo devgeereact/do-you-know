@@ -1,6 +1,7 @@
 import { ApiError } from '@/lib/api';
 import { env } from '@/lib/env';
 import type { WorldKey } from '@/lib/art';
+import type { ReviewItem, ReviewRequest } from '@/lib/aiReview';
 
 /**
  * Staff calls for DYK Studio. Every one carries a Clerk session token and is checked again on the
@@ -219,6 +220,8 @@ export interface NewQuiz {
   questions?: QuestionContent[];
   /** From Studio → Import: questions arrive checked (ADR-019). */
   imported?: boolean;
+  /** How many AI review fixes the importer accepted, for the audit (ADR-021). */
+  ai_fixes?: number;
 }
 
 export type TodoKey =
@@ -386,6 +389,9 @@ export interface GeneratorStatus {
   /** The writing helpers (intro, explanation) need a model key only, not search. */
   writer_ready: boolean;
   writer_cap: { used: number; limit: number };
+  /** AI review of imported questions (ADR-021): needs a model key, its own daily cap of calls. */
+  review_ready: boolean;
+  review_cap: { used: number; limit: number };
   usage_30d: GeneratorUsage & { runs: number; drafts: number; sent: number };
   runs: GeneratorRunListItem[];
 }
@@ -455,11 +461,16 @@ export function adminClient(getToken: GetToken) {
     saveQuiz: (id: string, body: { meta?: QuizMetaPatch; questions?: QuestionContent[] }) =>
       post<QuizDetail>(quiz(id), body),
     /** imported: from Studio → Import, so the server stores the questions as checked (ADR-019). */
-    append: (id: string, questions: QuestionContent[], options: { imported?: boolean } = {}) =>
-      post<QuizDetail>(
-        `${quiz(id)}/append`,
-        options.imported ? { questions, imported: true } : { questions },
-      ),
+    append: (
+      id: string,
+      questions: QuestionContent[],
+      options: { imported?: boolean; ai_fixes?: number } = {},
+    ) =>
+      post<QuizDetail>(`${quiz(id)}/append`, {
+        questions,
+        ...(options.imported ? { imported: true } : {}),
+        ...(options.ai_fixes ? { ai_fixes: options.ai_fixes } : {}),
+      }),
     submit: (id: string) => post<QuizDetail>(`${quiz(id)}/submit`),
     unsubmit: (id: string) => post<QuizDetail>(`${quiz(id)}/unsubmit`),
     check: (id: string, index: number, checked: boolean) =>
@@ -498,6 +509,9 @@ export function adminClient(getToken: GetToken) {
       post<Subject>(`/admin/subjects/${encodeURIComponent(slug)}`, body),
 
     generator: () => get<GeneratorStatus>('/admin/generator'),
+    /** AI review of up to 25 multiple-choice questions: ok, fix or flag each. Nothing is saved. */
+    reviewImport: (body: ReviewRequest) =>
+      post<{ items: ReviewItem[]; model: string }>('/admin/import/review', body),
     /** A draft intro or explanation for an editor field. Nothing is saved by the server. */
     write: (body: WriteRequest) =>
       post<{ text: string; model: string }>('/admin/generator/write', body),
@@ -540,6 +554,7 @@ const MESSAGES: Record<string, string> = {
   generator_daily_cap: 'Today’s AI allowance is used up. Try again tomorrow.',
   generator_bad_output: 'The AI answer could not be used. Try again, or write it yourself.',
   invalid_write: 'Fill in the title, or the question and its right answer, first.',
+  invalid_review: 'Only multiple-choice questions can be reviewed, up to 25 at a time.',
   draft_has_problems: 'Fix the problems on this draft before approving it.',
   drafts_not_approved: 'Only approved drafts can be sent.',
   draft_already_sent: 'That draft has already been sent to a quiz.',

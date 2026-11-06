@@ -1,5 +1,11 @@
 # Changelog
 
+## 6 November 2026 (branch `studio/ai-import-review`) — AI review of imports
+- Studio → Import: after "Check questions" the AI reviews every multiple-choice question (by itself for up to about 100 questions; a "Review with AI" button for bigger files, with the number of AI calls shown first). Each question shows "looks fine", a flag with its reason, or a suggested fix as before and after with Accept and Reject; "Accept all" for the whole import or one quiz. Accepted fixes replace the question before the drafts are created, and the import audit records how many were accepted. A failed batch is shown with a Retry.
+- Studio → Editor: the same "Review with AI" for a quiz already imported; an accepted fix is an edit, so the question needs ticking again.
+- Server (ADR-021): `POST /admin/import/review`, up to 25 questions a call, questions fenced as untrusted data, every fix checked like hand-written content and turned into a flag if it fails, sources never changed, nothing saved; audited (`generator.review`) with a daily cap of 100 calls. Off until the generator keys are set.
+- Studio on phones: the main area scrolls again (long pages such as Import could not be scrolled to their buttons).
+
 ## 2 November 2026 — 4–5 age band
 - A 4–5 age chip on the home page and every subject page (it shows quizzes for ages 4–5 and the KS1 quizzes that start at 5); the 6–8 chip no longer needs to stand in for the youngest players.
 
