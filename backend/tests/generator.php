@@ -53,8 +53,8 @@ check('an Anthropic key alone is enough: Claude searches and writes', $only(['an
 check('an OpenRouter key alone is enough as the backup', $only(['openrouter_api_key' => 'x'])['ready'] === true);
 check('Bright Data alone cannot write questions', $only(['brightdata_api_key' => 'x', 'brightdata_serp_zone' => 'z', 'brightdata_unlocker_zone' => 'u'])['ready'] === false);
 check('keys switched off stay off', (new Generator($db, ['environment' => 'production', 'generator' => ['enabled' => false, 'anthropic_api_key' => 'x']], $offAdmin, new AdminContent($db, $offAdmin)))->status()['ready'] === false);
-check('the backup model defaults to Opus 5.5 on OpenRouter', $status['backup_model'] === 'anthropic/claude-opus-5.5');
-check('the default model is claude-opus-5-5', $status['model'] === 'claude-opus-5-5');
+check('the backup model defaults to Sonnet 5.5 on OpenRouter', $status['backup_model'] === 'anthropic/claude-sonnet-5.5');
+check('the default model is claude-sonnet-5-5', $status['model'] === 'claude-sonnet-5-5');
 
 // ---- Through the API with recorded answers ----
 $r = gen('GET', '/generator');
@@ -66,7 +66,7 @@ check('a run refuses unknown fields', gen('POST', '/generator/runs', ['topic' =>
 
 $r = gen('POST', '/generator/runs', ['topic' => 'The water cycle', 'ages' => '7-11', 'count' => 4, 'category' => $subject]);
 $run = $r['body']['id'] ?? '';
-check('a run starts at the search step', $r['status'] === 201 && $r['body']['stage'] === 'search' && $r['body']['model'] === 'claude-opus-5-5');
+check('a run starts at the search step', $r['status'] === 201 && $r['body']['stage'] === 'search' && $r['body']['model'] === 'claude-sonnet-5-5');
 Database::execute($db, 'UPDATE generator_runs SET busy_until=DATE_ADD(UTC_TIMESTAMP(6), INTERVAL 1 MINUTE) WHERE id=?', [$run]);
 $r = gen('POST', "/generator/runs/$run/step");
 check('a step already running elsewhere is not repeated', $r['body']['busy'] === true && $r['body']['stage'] === 'search' && $r['body']['usage']['search_calls'] === 0);

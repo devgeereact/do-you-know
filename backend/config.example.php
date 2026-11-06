@@ -41,9 +41,9 @@ return [
     'generator' => [
         'enabled' => false,
         'anthropic_api_key' => '',
-        'model' => 'claude-opus-5-5',
+        'model' => 'claude-sonnet-5-5',
         'openrouter_api_key' => '',
-        'openrouter_model' => 'anthropic/claude-opus-5.5',
+        'openrouter_model' => 'anthropic/claude-sonnet-5.5',
         'brightdata_api_key' => '',        // optional
         'brightdata_serp_zone' => '',      // optional: a SERP API zone name
         'brightdata_unlocker_zone' => '',  // optional: a Web Unlocker zone name

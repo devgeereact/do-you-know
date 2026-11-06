@@ -1,5 +1,8 @@
 # Changelog
 
+## 6 November 2026 — Sonnet 5.5 by default
+- The generator, the editor's AI helpers and the AI import review use Claude Sonnet 5.5 (`claude-sonnet-5-5`), with OpenRouter's `anthropic/claude-sonnet-5.5` as backup (ADR-022). Re-running `scripts/set-generator-keys.sh` moves a saved config off the old Opus default and prints the model in use.
+
 ## 6 November 2026 (branch `studio/ai-import-review`) — AI review of imports
 - Studio → Import: after "Check questions" the AI reviews every multiple-choice question (by itself for up to about 100 questions; a "Review with AI" button for bigger files, with the number of AI calls shown first). Each question shows "looks fine", a flag with its reason, or a suggested fix as before and after with Accept and Reject; "Accept all" for the whole import or one quiz. Accepted fixes replace the question before the drafts are created, and the import audit records how many were accepted. A failed batch is shown with a Retry.
 - Studio → Editor: the same "Review with AI" for a quiz already imported; an accepted fix is an edit, so the question needs ticking again.

@@ -55,7 +55,7 @@ final class Generator
         $sources = array_values(array_filter($g['sources'] ?? self::DEFAULT_SOURCES, static fn($d): bool => is_string($d) && preg_match('/^[a-z0-9-]+(\.[a-z0-9-]+)+$/D', $d) === 1));
         return [
             'enabled' => ($g['enabled'] ?? false) === true || $fixtures !== null,
-            'model' => is_string($g['model'] ?? null) && $g['model'] !== '' ? $g['model'] : 'claude-opus-5-5',
+            'model' => is_string($g['model'] ?? null) && $g['model'] !== '' ? $g['model'] : 'claude-sonnet-5-5',
             'daily_runs' => is_int($g['daily_runs'] ?? null) ? max(0, $g['daily_runs']) : 20,
             // Writing helpers make one short call each, so they have their own, larger daily cap.
             'writer_daily' => is_int($g['writer_daily'] ?? null) ? max(0, $g['writer_daily']) : 200,
@@ -65,7 +65,7 @@ final class Generator
             'fixtures' => $fixtures,
             'anthropic_api_key' => (string) ($g['anthropic_api_key'] ?? ''),
             'openrouter_api_key' => (string) ($g['openrouter_api_key'] ?? ''),
-            'openrouter_model' => is_string($g['openrouter_model'] ?? null) && $g['openrouter_model'] !== '' ? $g['openrouter_model'] : 'anthropic/claude-opus-5.5',
+            'openrouter_model' => is_string($g['openrouter_model'] ?? null) && $g['openrouter_model'] !== '' ? $g['openrouter_model'] : 'anthropic/claude-sonnet-5.5',
             'brightdata_api_key' => (string) ($g['brightdata_api_key'] ?? ''),
             'brightdata_serp_zone' => (string) ($g['brightdata_serp_zone'] ?? ''),
             'brightdata_unlocker_zone' => (string) ($g['brightdata_unlocker_zone'] ?? ''),

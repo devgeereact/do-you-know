@@ -71,8 +71,9 @@ $c = require $argv[1];
 $g = is_array($c["generator"] ?? null) ? $c["generator"] : [];
 $keep = static fn(string $new, string $key) => $new !== "" ? $new : (string) ($g[$key] ?? "");
 $g["enabled"] = true;
-$g["model"] = $g["model"] ?? "claude-opus-5-5";
-$g["openrouter_model"] = $g["openrouter_model"] ?? "anthropic/claude-opus-5.5";
+// Sonnet 5.5 is the default (owner, 6 Nov 2026). The old Opus default is moved over; any other model someone set by hand is kept.
+$g["model"] = in_array($g["model"] ?? "", ["", "claude-opus-5-5"], true) ? "claude-sonnet-5-5" : $g["model"];
+$g["openrouter_model"] = in_array($g["openrouter_model"] ?? "", ["", "anthropic/claude-opus-5.5"], true) ? "anthropic/claude-sonnet-5.5" : $g["openrouter_model"];
 $g["anthropic_api_key"] = $keep($in["ANTHROPIC"], "anthropic_api_key");
 $g["openrouter_api_key"] = $keep($in["OPENROUTER"], "openrouter_api_key");
 $g["brightdata_api_key"] = $keep($in["BRIGHTDATA"], "brightdata_api_key");
@@ -95,6 +96,7 @@ $check = static function (string $url, array $headers): int {
 };
 if (!empty($g["anthropic_api_key"])) { $s = $check("https://api.anthropic.com/v1/models?limit=1", ["x-api-key: " . $g["anthropic_api_key"], "anthropic-version: 2023-06-01"]); echo "  Anthropic:  ", $s === 200 ? "OK" : "FAILED (HTTP $s)", "\n"; }
 if (!empty($g["openrouter_api_key"])) { $s = $check("https://openrouter.ai/api/v1/key", ["Authorization: Bearer " . $g["openrouter_api_key"]]); echo "  OpenRouter: ", $s === 200 ? "OK" : "FAILED (HTTP $s)", "\n"; }
+echo "  Model:      ", $g["model"], " (backup ", $g["openrouter_model"], ")\n";
 echo "  Generator:  switched on, ", $g["daily_runs"], " runs a day\n";' "$f"
 EOF
 )
