@@ -11,6 +11,8 @@ What a release does (`release.json`):
 5. Upload: `build/release/private` into `~/do-you-know-private/current` (the live backend release folder), then `build/release/public` into `~/doyouknow.space` with entry files last.
 6. Smoke: `/`, `/api/v1/health` (`"status":"ok"`), `/api/v1/daily`. A failure restores the snapshot automatically. Undo by hand: `pnpm release --rollback --go`.
 
+Pending migration: `0017_daily_deals.sql` (private daily hands; additive). The code on `feat/daily-live-crown` needs it before it reaches `main`: start a daily without the `daily_deals` table and the start fails.
+
 Database migrations are not part of a release. Take a backup (`bash ~/do-you-know-private/shared/backup-db.sh`, then copy the newest file from `~/backups/do-you-know/dykspace/rolling/` to `~/backups/do-you-know/dykspace/db-pre-migrate-<what>-<time>.sql.gz`; the newest 3 pinned copies are kept), then run `bin/migrate.php` in `~/do-you-know-private/current` with `DYK_CONFIG=$HOME/do-you-know-private/shared/migration.php`. A code change that needs a migration must not reach `main` before the migration has run, or must tolerate the old schema. Migration `.sql` files reach the server only because the private part in `release.json` allows `*.sql` (added 31 October 2026; before that 0012 was never uploaded).
 
 All backend code, vendor, config, uploads, logs and backups stay outside the web root.

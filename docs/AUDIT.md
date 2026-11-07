@@ -2,6 +2,19 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · Daily challenge: private hands, live board, crown (security, integrity, child safety)
+
+Reviewer: Claude Code, on branch `feat/daily-live-crown`. Scope: `Game::start/dealDaily/question/finish`, `Competition::record/createChallenge/dailyDetails`, `daily_deals` (migration 0017), Studio attribution queries, `DailyPage`, `DailyLeader`, `ResultsView`, `useLeaderboard`.
+
+- No two players share a question: a unique key on `(daily_challenge_id, question_id, deal_no)` refuses a duplicate, and a row lock on the day serialises deals. Four simultaneous starts got 40 distinct questions (tested); with the lock removed the same test failed 3 runs out of 3 (mutation check), so the test can catch a regression. PASS.
+- Answers stay hidden: the bank query reads only question ids; the page, the stops and the dealt state contain no prompt or `is_correct` (tested); grading is unchanged and still server-side against the version each question was dealt from (tested with a hand spanning several quizzes). PASS.
+- Nothing computed in the browser: scores, ranks, the leader and the crown come from the server's board; the browser only polls (read-only, `GET /leaderboards`, `GET /daily`). Polling load: one request per open tab every 10 s, well under the 600 per minute per address limit; it stops while the tab is hidden. PASS.
+- Child data: the leader card and board show nickname, preset avatar and score only. The ledger holds ids and counts, and goes with the attempt when a player is erased (cascade). PASS.
+- Daily results no longer feed any single quiz's all-time or weekly board (a private mix of quizzes is not comparable there). Behaviour change, tested. A daily hand cannot be made into a friend challenge (it would break the friend's game); tested and the button is hidden.
+- Fairness: hands are random across ages 4 to 16, so a very young player can draw hard questions and the board partly rewards luck. ACCEPTED for now; the planned parent-set level (replan Stage 3) lets each level have its own pool and crown.
+- Capacity: with about 20 questions per quiz the bank is a few thousand questions, so roughly 100 to 500 players a day fit before a second lap (the exact number depends on the live bank; NOT TESTED against the live database). A fresh deal takes about 10 ms on the local database (about 1,400 questions); live is NOT TESTED.
+- NOT TESTED: the migration and the new code against the live database (needs owner approval); Clerk sign-in; 18+ filter relies on `quizzes.age_min`, so a quiz with no age set is dealt.
+
 ## 2026-11-06 · AI review of imports (security, child safety, privacy, cost)
 
 Reviewer: Claude Code. Scope: `Generator::review`, `POST /admin/import/review`, `AdminContent` `ai_fixes`, the Import and Editor review UI (ADR-021).

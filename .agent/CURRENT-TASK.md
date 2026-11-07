@@ -1,5 +1,11 @@
 # Current task
 
+## Daily: private hands, live board, crown (branch `feat/daily-live-crown`, 7 Nov 2026, NOT committed, NOT deployed)
+- Built: each player's daily is their own 10 questions from all live quizzes except 18+, no question shared until the bank has gone round once; live board (10 s) with a crown on rank 1; "Top score today" card; Studio stats credit the right quiz. Details in `CHANGELOG.md`, audit in `docs/AUDIT.md` (7 Nov).
+- Checks: `pnpm check` PASS (219 unit) · `pnpm verify` PASS · backend 13 suites PASS (incl. new `daily_deal`, 43 checks) · e2e 46/46 PASS · phone walk on the local stack (hands disjoint, board refreshes in about 9 s). NOT TESTED: live database, Clerk.
+- Owner decisions needed before any deploy: (1) approve running `0017_daily_deals.sql` on the server (backup first, `docs/07-operations/DEPLOYMENT.md`), and it must run BEFORE this code reaches `main`; (2) approve commit and push. The Studio Daily calendar still schedules a quiz, but that quiz is now only the day's anchor.
+- Open: the Gate 1 replan docs (`docs/DIRECTION.md`) still list public boards as a default-off parent switch; this feature makes the daily board visible by default, so Direction should say "the daily board stays on". Per-level pools and crowns are the natural next step once parents set levels.
+
 Updated 1 November 2026 (evening). Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`.
 
 ## Goal
@@ -43,4 +49,4 @@ Quiz page CLS (0.08–0.11); footer subject links; generator hardening (per-hop 
 - Done: 180 quizzes now hold 20 new, clear, label-free questions each (3,600 in all), checked for exact and near repeats against every other new question and everything staying on the site (0 repeats). Bible questions follow the neutrality rule (what a named book says, or plain facts; no doctrine, sacraments, saints or denominational practice). All published; To do "drafts with problems" 0.
 - Live now: Technology 54, Bible and faith 54, General Knowledge 60, School Science 60 published quizzes.
 - Left: 54 old duplicate Technology drafts remain unpublished (Studio has no delete for never-published drafts; a small delete endpoint needs a deploy). The 41 newly published Technology/Bible quizzes serve the app shell until the next release prerenders them. Writers' fact-check notes (about 150 items) are in the session only; source files and the 316-quiz backup are in `.local-test/rewrite/` (gitignored).
-- Delete for never-published drafts: built on branch `feat/delete-unpublished-draft` (`POST /admin/quizzes/{id}/delete`, "Delete draft…" in the editor), backend tests and `pnpm verify` PASS, not deployed. After a deploy: delete the 54 old duplicate Technology drafts in Studio (Draft tab, those with no version), then run a release so the 41 new quizzes get prerendered pages.
+- Delete for never-published drafts: built on branch `feat/delete-unpublished-draft` (`POST /admin/quizzes/{id}/delete`, "Delete draft…" in the editor), backend tests and `pnpm verify` PASS, deployed 7 Nov 2026 (main `32648cd`, prerender 283 pages incl. all 262 quizzes, smoke 3/3). The 54 old duplicate Technology drafts were then deleted in Studio: library is 262 published, 0 drafts.

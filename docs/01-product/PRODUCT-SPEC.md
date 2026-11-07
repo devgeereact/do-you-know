@@ -109,9 +109,11 @@ Targets are starting assumptions; tune them against real data after launch.
 
 ### 4.4 Daily challenge
 
-- One featured quiz per day, scheduled in the CMS calendar, live at **00:00 Europe/London**.
-- Same questions in the same order for everyone; one ranked play per player per day.
-- Daily, weekly and all-time boards; **streak** of consecutive days played.
+- One challenge per day, live at **00:00 Europe/London**. The quiz in the CMS calendar (or the automatic pick) is only the day's anchor for the board; it no longer decides the questions.
+- Every player is dealt their **own hand of 10 questions** from all live quizzes except 18+. The server hands out the least-dealt questions first, so no two players share a question until the whole bank has been dealt once; then a second lap starts. A database unique key enforces this even for simultaneous starts. One play per player per day, ranked on the day's board only (a mixed hand never counts on one quiz's all-time or weekly boards).
+- **Live board and crown:** the daily page and the results board refresh about every 10 seconds while open. Rank 1 (with at least one right answer) wears a crown; the page shows the top score, the leader's nickname and preset avatar, and nothing else about them.
+- A daily hand is private, so it cannot be turned into a friend challenge.
+- **Streak** of consecutive days played.
 
 ### 4.5 Friend challenges
 

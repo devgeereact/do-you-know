@@ -191,7 +191,7 @@ interface UseDailyChallenge {
   loading: boolean;
   error: string | null;
 }
-export function useDailyChallenge(): UseDailyChallenge;
+export function useDailyChallenge(liveMs?: number): UseDailyChallenge; // liveMs: refresh the day's numbers on that beat, reload when the London day turns
 ```
 
 ### 12. `useFriendChallenge`
