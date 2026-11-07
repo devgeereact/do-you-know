@@ -42,7 +42,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 **In.**
 - Close the typing bypass: the "I'm 18 or over" tick no longer lets an unsigned-in visitor reach typed fields; typed nickname, the contact free-text fields and the reply box are for signed-in adults only (server refuses to set the adult band without an adult identity; the preset-only player feedback stays).
 - No forced capitals in the play stage; the play stage's hard-coded hex colours become tokens (the table in `docs/SCREENS.md` section 8); no "Ranked" tag on the child path.
-- Safe defaults for everyone until P4 gives parents the switches: untimed sessions, quiz leaderboards, challenge-a-friend and trivia/18+ sets off the default path (direct links still work).
+- Untimed sessions by default (the quiz timer applies only when asked for). *Scope change at planning (7 Nov): hiding quiz leaderboards, challenge-a-friend and trivia/18+ sets moved to P4, so they are hidden and switchable together.*
 - Fix the Play-tab dead end (a finished daily no longer sends a child to "Uh-oh").
 - An area label for every quiz, derived in code from the mapping table in `docs/LEARNING-DESIGN.md` section 5 (no database change; a stored `area` column only if Studio needs to edit it later), and a level derived from the quiz's age band.
 - Housekeeping that blocks later work: one `/me` fetch instead of four, the duplicated types and London-date helper merged, the e2e README recipe for the project's own MariaDB, `.agent/CURRENT-TASK.md` made current.
@@ -56,7 +56,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 - Every existing route still loads; all existing tests pass unchanged except the ones that pinned the old behaviour, and those are updated in the same commit with the reason.
 - Area and level appear on `GET /quizzes` and are covered by a test using the live catalogue's shapes.
 
-**Risks.** Adults lose their quick "I'm 18" path to feedback until P4: they use the existing Clerk sign-in at `/account` meanwhile. Untimed by default changes feel and pacing for existing players. Some e2e tests pin the old defaults. All three are called out in the phase report.
+**Risks.** Adults lose their quick "I'm 18" path to feedback until P4: they use the contact email meanwhile (the Clerk account is not linked to play until P4). Untimed by default changes feel and pacing for existing players. Some e2e tests pin the old defaults. All three are called out in the phase report.
 
 ### P2: Tap-only types with server grading
 
@@ -103,7 +103,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 - Migration 0019 (additive): children linked to a parent account with a preset nickname, preset avatar and level; parent settings (the switches).
 - API: add, change and remove a child (up to 5), read and set switches, hand-over; every call scoped to the signed-in parent; a child session cannot reach any of it.
 - `/grown-ups` with Children, Switches and Contact tabs and the hand-over action; leaving child mode needs the parent's email code again. Typed fields (contact message, reply box) live only here.
-- The switches work as defined in `docs/DIRECTION.md`: Public boards, Challenge a friend, Beat the clock, Slider questions, Trivia and grown-up sets, plus Sound and Easy-read font (Atkinson Hyperlegible, self-hosted). All off by default; direct links still work.
+- Hide quiz leaderboards, challenge-a-friend and trivia/18+ sets from the default path *(moved here from P1)*. The switches work as defined in `docs/DIRECTION.md`: Public boards, Challenge a friend, Beat the clock, Slider questions, Trivia and grown-up sets, plus Sound and Easy-read font (Atkinson Hyperlegible, self-hosted). All off by default; direct links still work.
 - Child data erasure through the existing delete flow, extended to children.
 
 **Out.** The skill map and Practise next (P5 supplies their data).
