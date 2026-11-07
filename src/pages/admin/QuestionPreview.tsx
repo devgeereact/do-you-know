@@ -2,7 +2,7 @@ import { Scene, WorldGlyph } from '@/components/art/Art';
 import { isWorld, type WorldKey } from '@/lib/art';
 import { cn } from '@/lib/utils';
 import { world } from '@/lib/worlds';
-import type { QuestionContent } from '@/services/adminService';
+import type { AssignSpec, BuildSpec, QuestionContent } from '@/services/adminService';
 
 const LETTERS = 'ABCDEF';
 
@@ -81,9 +81,95 @@ export function QuestionPreview({
             </div>
           </div>
         )}
+        {question.type === 'build' && question.build && <BuildPreview build={question.build} />}
+        {question.type === 'assign' && question.assign && (
+          <AssignPreview assign={question.assign} />
+        )}
         <p className="relative mt-2 inline-block rounded-lg bg-white/90 px-2 py-1 text-xs font-bold text-[#17153A]">
           Green shows the right answer. Players only see it after answering.
         </p>
+      </div>
+    </div>
+  );
+}
+
+const chip =
+  'inline-flex min-h-[34px] items-center rounded-xl border-2 border-[#17153A] bg-white px-2.5 text-[13px] font-bold text-[#17153A] shadow-[0_2px_0_#17153A]';
+const rightChip =
+  'inline-flex min-h-[34px] items-center rounded-xl border-2 border-[#1FB57A] bg-[#E2F6EC] px-2.5 text-[13px] font-bold text-[#17153A]';
+
+/** The slots with the right answer filled in (green), then the tiles a child would see. */
+function BuildPreview({ build }: { build: BuildSpec }): JSX.Element {
+  const answer = build.answers[0] ?? [];
+  const filled = (label: string, k: number): JSX.Element => (
+    <span key={k} className={rightChip}>
+      {label || '…'}
+    </span>
+  );
+  return (
+    <div className="grid gap-2 text-[#17153A]">
+      {build.variant === 'gap' && build.template ? (
+        <p className="rounded-xl bg-white/90 p-2 text-sm font-semibold leading-[2.1rem]">
+          {build.template.split('___').map((part, i) => (
+            <span key={i}>
+              {part}
+              {i < answer.length && (
+                <span className="mx-1 align-middle">{filled(answer[i] ?? '', i)}</span>
+              )}
+            </span>
+          ))}
+        </p>
+      ) : (
+        <div className={cn('flex gap-1.5', build.variant === 'order' ? 'flex-col' : 'flex-wrap')}>
+          {answer.map((label, k) => (
+            <span key={k} className={rightChip}>
+              {build.variant === 'order' && <b className="mr-1.5 opacity-60">{k + 1}</b>}
+              {label || '…'}
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="flex flex-wrap gap-1.5" aria-label="Tiles a child taps">
+        {build.tiles.map((label, k) => (
+          <span key={k} className={chip}>
+            {label || '…'}
+          </span>
+        ))}
+      </div>
+      {build.speak && (
+        <p className="rounded-lg bg-white/90 px-2 py-1 text-xs font-bold">
+          Read aloud: “{build.speak}”. Practice only.
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** Each place with the things that belong in it (green), as the answer would look. */
+function AssignPreview({ assign }: { assign: AssignSpec }): JSX.Element {
+  return (
+    <div className="grid gap-2 text-[#17153A]">
+      <div
+        className="grid gap-1.5"
+        style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(7rem,1fr))' }}
+      >
+        {assign.targets.map((target, k) => (
+          <div
+            key={k}
+            className="rounded-xl border-2 border-dashed border-[#17153A] bg-white/80 p-1.5"
+          >
+            <p className="mb-1 text-[13px] font-extrabold">{target || '…'}</p>
+            <div className="flex flex-wrap gap-1">
+              {assign.items
+                .filter((i) => i.to.trim().toLowerCase() === target.trim().toLowerCase())
+                .map((i, j) => (
+                  <span key={j} className={rightChip}>
+                    {i.label || '…'}
+                  </span>
+                ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

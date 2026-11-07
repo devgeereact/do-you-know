@@ -5,7 +5,8 @@ import {
   toContent,
   validateQuestion,
 } from '@/lib/adminValidation';
-import type { KeyStage, QuestionContent } from '@/services/adminService';
+import { gapSpec, orderSpec, spellSpec, splitList } from '@/lib/tileAuthoring';
+import type { AssignSpec, KeyStage, QuestionContent } from '@/services/adminService';
 
 /**
  * Turns pasted text or a CSV into draft questions for DYK Studio. Pure: no network, no DOM.
@@ -18,6 +19,11 @@ import type { KeyStage, QuestionContent } from '@/services/adminService';
  *   Answer: b                      or name the right option (or true / false)
  *   True* / False                a true-or-false question (star the right one)
  *   Slider: 300-400 = 366 ±0 days  a slider: min-max = right answer, ± accepted band, unit
+ *   Spell: cat | extra: xz | speak a spelling question: the word, extra letters, and read it aloud (practice only)
+ *   Gap: The cat ___ on the ___. = sat, mat | extra: dog | also: sits, mat   fill the gaps
+ *   Order: morning, noon, night    cards to put in order
+ *   Match: Fish = Sea; Bird = Nest match pairs (2 to 5)
+ *   Sort: Odd = 3, 5; Even = 8, 12 sort into groups (2 or 3 groups, 3 to 6 things)
  *   Why: …                         the explanation
  *   Source: https://…              the source link (optional; a markdown [link](url) works too)
  * CSV: a header row with subject, ks, topic, question, a..f, answer, explanation, source.
@@ -225,6 +231,63 @@ function csvRecords(lines: string[]): { line: number; text: string }[] {
   });
   if (buf !== null) out.push({ line: start, text: buf });
   return out;
+}
+
+/** "extra: x z", "also: sits, mat" and the bare word "speak" after the first `|` of a tile line. */
+function tileOptions(parts: string[]): { extra: string; also: string[]; speak: boolean } {
+  let extra = '';
+  const also: string[] = [];
+  let speak = false;
+  for (const part of parts) {
+    const p = part.trim();
+    let m: RegExpMatchArray | null;
+    if ((m = p.match(/^extra\s*:\s*(.*)$/i))) extra = m[1] ?? '';
+    else if ((m = p.match(/^also\s*:\s*(.*)$/i))) also.push(m[1] ?? '');
+    else if (/^speak(\s*:.*)?$/i.test(p)) speak = true;
+  }
+  return { extra, also, speak };
+}
+
+/** `Spell: cat | extra: xz | speak`, `Gap: … ___ … = a, b | extra: c`, `Order: a, b, c`. */
+function parseBuildLine(kind: string, rest: string): NonNullable<QuestionContent['build']> {
+  const [head = '', ...options] = rest.split('|');
+  const o = tileOptions(options);
+  if (kind === 'spell') return spellSpec(head.trim(), o.extra.replace(/[\s,]+/g, ''), o.speak);
+  if (kind === 'gap') {
+    const at = head.search(/\s=\s/);
+    const template = (at < 0 ? head : head.slice(0, at)).trim();
+    const answer = at < 0 ? [] : splitList(head.slice(at + 3));
+    return gapSpec(template, answer, splitList(o.extra), o.also.map(splitList));
+  }
+  return orderSpec(splitList(head));
+}
+
+/** `Match: Fish = Sea; Bird = Nest` (a thing and its partner), `Sort: Odd = 3, 5; Even = 8` (a group and its things). */
+function parseAssignLine(kind: string, rest: string): AssignSpec {
+  const parts = rest
+    .split(';')
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const split = (part: string): [string, string] => {
+    const at = part.indexOf('=');
+    return at < 0 ? [part.trim(), ''] : [part.slice(0, at).trim(), part.slice(at + 1).trim()];
+  };
+  if (kind === 'match') {
+    const pairs = parts.map(split);
+    return {
+      variant: 'match',
+      targets: pairs.map(([, partner]) => partner),
+      items: pairs.map(([thing, partner]) => ({ label: thing, to: partner })),
+    };
+  }
+  const groups = parts.map(split);
+  return {
+    variant: 'sort',
+    targets: groups.map(([name]) => name),
+    items: groups.flatMap(([name, things]) =>
+      splitList(things).map((label) => ({ label, to: name })),
+    ),
+  };
 }
 
 /** Adds blocking and "later" messages to a parsed row. */
@@ -543,6 +606,20 @@ export function parseImport(raw: string, subjects: ImportSubject[], today: strin
       row.marks = 1;
       return;
     }
+    if ((m = L.match(/^(spell|gap|order|match|sort)\s*:\s*(.+)$/i))) {
+      const kind = (m[1] ?? '').toLowerCase();
+      const rest = (m[2] ?? '').trim();
+      delete row.q.options;
+      delete row.q.answer;
+      delete row.q.slider;
+      if (kind === 'match' || kind === 'sort') {
+        row.q = { ...row.q, type: 'assign', assign: parseAssignLine(kind, rest) };
+      } else {
+        row.q = { ...row.q, type: 'build', build: parseBuildLine(kind, rest) };
+      }
+      row.marks = 1;
+      return;
+    }
     if (/^true\s*\*?\s*\/\s*false\s*\*?$/i.test(L)) {
       const answer = /true\s*\*/i.test(L) ? true : /false\s*\*/i.test(L) ? false : undefined;
       row.q = { ...q, type: 'boolean' };
@@ -670,4 +747,19 @@ Q: The Sun is a star.
 True*/False
 
 Q: Days in a leap year?
-Slider: 300-400 = 366 ±0 days`;
+Slider: 300-400 = 366 ±0 days
+
+Q: Spell the pet that purrs.
+Spell: cat | extra: xz | speak
+
+Q: Finish the sentence.
+Gap: The cat ___ on the ___. = sat, mat | extra: dog
+
+Q: Put the day in order.
+Order: morning, noon, night
+
+Q: Match each animal to its home.
+Match: Fish = Sea; Bird = Nest
+
+Q: Sort the numbers.
+Sort: Odd = 3, 5; Even = 8, 12`;

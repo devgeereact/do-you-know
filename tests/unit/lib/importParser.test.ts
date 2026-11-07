@@ -230,3 +230,97 @@ describe('the owner’s science import (backend/tests/fixtures/import/science-bo
     expect(rows.filter((r) => r.notes.length).every((r) => r.block.length === 0)).toBe(true);
   });
 });
+
+describe('parseImport (tile questions)', () => {
+  const parse = (text: string) => parseImport(text, SUBJECTS, TODAY);
+
+  it('reads a spelling question with extra letters and dictation', () => {
+    const [row] = parse(
+      'Q: Spell the pet that purrs.\nSpell: cat | extra: xz | speak\nWhy: It purrs.',
+    );
+    expect(row?.q.type).toBe('build');
+    expect(row?.q.build).toEqual({
+      variant: 'spell',
+      tiles: ['c', 'a', 't', 'x', 'z'],
+      answers: [['c', 'a', 't']],
+      speak: 'cat',
+    });
+    expect(row?.q.options).toBeUndefined();
+    expect(row?.block).toEqual([]);
+  });
+
+  it('reads a gap question with decoys and another right answer', () => {
+    const [row] = parse(
+      'Q: Finish the sentence.\nGap: The cat ___ on the ___. = sat, mat | extra: dog | also: sits, mat\nWhy: Grammar.',
+    );
+    expect(row?.q.build).toEqual({
+      variant: 'gap',
+      template: 'The cat ___ on the ___.',
+      tiles: ['sat', 'mat', 'sits', 'dog'],
+      answers: [
+        ['sat', 'mat'],
+        ['sits', 'mat'],
+      ],
+    });
+    expect(row?.block).toEqual([]);
+  });
+
+  it('reads an order question', () => {
+    const [row] = parse('Q: Put the day in order.\nOrder: morning, noon, night\nWhy: Time passes.');
+    expect(row?.q.build).toEqual({
+      variant: 'order',
+      tiles: ['morning', 'noon', 'night'],
+      answers: [['morning', 'noon', 'night']],
+    });
+    expect(row?.block).toEqual([]);
+  });
+
+  it('reads a match question', () => {
+    const [row] = parse(
+      'Q: Match each animal to its home.\nMatch: Fish = Sea; Bird = Nest; Rabbit = Burrow\nWhy: Habitats.',
+    );
+    expect(row?.q.type).toBe('assign');
+    expect(row?.q.assign).toEqual({
+      variant: 'match',
+      targets: ['Sea', 'Nest', 'Burrow'],
+      items: [
+        { label: 'Fish', to: 'Sea' },
+        { label: 'Bird', to: 'Nest' },
+        { label: 'Rabbit', to: 'Burrow' },
+      ],
+    });
+    expect(row?.block).toEqual([]);
+  });
+
+  it('reads a sort question', () => {
+    const [row] = parse('Q: Sort the numbers.\nSort: Odd = 3, 5; Even = 8, 12\nWhy: Odd and even.');
+    expect(row?.q.assign).toEqual({
+      variant: 'sort',
+      targets: ['Odd', 'Even'],
+      items: [
+        { label: '3', to: 'Odd' },
+        { label: '5', to: 'Odd' },
+        { label: '8', to: 'Even' },
+        { label: '12', to: 'Even' },
+      ],
+    });
+    expect(row?.block).toEqual([]);
+  });
+
+  it('blocks a tile question the server would refuse, in plain words', () => {
+    const [gap] = parse('Q: Finish it.\nGap: The cat sat on the mat. = sat, mat\nWhy: x');
+    expect(gap?.block.join(' ')).toMatch(/___/);
+    const [match] = parse('Q: Match.\nMatch: Fish = Sea; Bird = Sea\nWhy: x');
+    expect(match?.block.length).toBeGreaterThan(0);
+    const [spell] = parse('Q: Spell.\nSpell:\nWhy: x');
+    expect(spell?.q.type).toBe('choice');
+  });
+
+  it('turns a tile row into content without the client id', () => {
+    const [row] = parse('Q: Put the day in order.\nOrder: morning, noon, night\nWhy: Time passes.');
+    const c = rowToContent(row!);
+    expect(c.type).toBe('build');
+    expect(c.build?.answers).toEqual([['morning', 'noon', 'night']]);
+    expect(c).not.toHaveProperty('id');
+  });
+});

@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState, type DragEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
-import { londonToday } from '@/lib/adminValidation';
+import { londonToday, markedAnswer } from '@/lib/adminValidation';
 import {
   applyFix,
   planBatches,
@@ -513,6 +513,10 @@ export function ImportScreen(): JSX.Element {
                     {r.q.type === 'slider' && r.q.slider ? (
                       <span>
                         Slider {r.q.slider.min}–{r.q.slider.max}: <b>{r.q.slider.correct}</b>
+                      </span>
+                    ) : r.q.type === 'build' || r.q.type === 'assign' ? (
+                      <span>
+                        Tiles: <b>{markedAnswer(r.q)}</b>
                       </span>
                     ) : r.q.type === 'boolean' ? (
                       [true, false].map((v) => (

@@ -102,7 +102,7 @@ export type QuizStatus = 'draft' | 'review' | 'published' | 'retired';
 export type KeyStage = 'KS1' | 'KS2' | 'KS3' | 'KS4';
 export const KEY_STAGES: readonly KeyStage[] = ['KS1', 'KS2', 'KS3', 'KS4'];
 export type Difficulty = 'easy' | 'medium' | 'hard';
-export type QuestionType = 'choice' | 'boolean' | 'slider';
+export type QuestionType = 'choice' | 'boolean' | 'slider' | 'build' | 'assign';
 
 export interface ChoiceOption {
   label: string;
@@ -119,6 +119,24 @@ export interface SliderSpec {
   accept_max: number;
 }
 
+/** A tile question (spell, gap, order) in the content-file shape: tiles and accepted answers are plain labels. */
+export interface BuildSpec {
+  variant: 'spell' | 'gap' | 'order';
+  tiles: string[];
+  /** Each accepted answer is a list of tile labels in order; all have the same length. */
+  answers: string[][];
+  template?: string;
+  /** The word to read aloud (dictation). Practice only: the server keeps it out of ranked rounds and the daily. */
+  speak?: string;
+}
+
+/** A match or sort question in the content-file shape: each item names the target it belongs to. */
+export interface AssignSpec {
+  variant: 'match' | 'sort';
+  targets: string[];
+  items: { label: string; to: string }[];
+}
+
 /** A question in the server's content shape (what the Studio sends). */
 export interface QuestionContent {
   id?: string;
@@ -127,6 +145,8 @@ export interface QuestionContent {
   options?: ChoiceOption[];
   answer?: boolean;
   slider?: SliderSpec;
+  build?: BuildSpec;
+  assign?: AssignSpec;
   explanation: string | null;
   source_url: string | null;
   review_by: string | null;

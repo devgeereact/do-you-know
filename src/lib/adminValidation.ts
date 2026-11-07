@@ -1,4 +1,6 @@
 import type {
+  AssignSpec,
+  BuildSpec,
   ChoiceOption,
   QuestionContent,
   QuestionType,
@@ -25,7 +27,15 @@ export const LIMITS = {
 } as const;
 
 export type FieldKey =
-  'prompt' | 'options' | 'answer' | 'slider' | 'explanation' | 'source_url' | 'review_by';
+  | 'prompt'
+  | 'options'
+  | 'answer'
+  | 'slider'
+  | 'build'
+  | 'assign'
+  | 'explanation'
+  | 'source_url'
+  | 'review_by';
 
 export interface FieldError {
   field: FieldKey;
@@ -98,6 +108,123 @@ function sliderErrors(s: SliderSpec | undefined): string[] {
     out.push('The accepted range can be at most half the scale');
   }
   return out;
+}
+
+/** A tile or item label: plain text, 1 to 24 characters, no control characters (Content::tileLabel). */
+const TILE_LABEL_MAX = 24;
+function labelOk(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    value.trim() !== '' &&
+    textLength(value.trim()) <= TILE_LABEL_MAX &&
+    !CONTROL_RE.test(value)
+  );
+}
+const norm = (label: string): string => label.trim().toLowerCase();
+
+/** Problems with a tile question (spell, gap, order). Mirrors Content::validateBuild. */
+function buildErrors(b: BuildSpec | undefined): string[] {
+  if (!b) return ['Fill in the tiles and the right answer'];
+  const e: string[] = [];
+  if (!['spell', 'gap', 'order'].includes(b.variant)) return ['Pick spell, fill the gap or order'];
+  const tiles = b.tiles ?? [];
+  if (tiles.length < 2 || tiles.length > 20) return ['Use 2 to 20 tiles'];
+  if (!tiles.every(labelOk)) {
+    return [`Every tile needs a label of up to ${TILE_LABEL_MAX} characters`];
+  }
+  const answers = b.answers ?? [];
+  if (answers.length < 1 || answers.length > 4) return ['Give 1 to 4 right answers'];
+  let slots: number | null = null;
+  const seen = new Set<string>();
+  const available = new Map<string, number>();
+  for (const t of tiles) available.set(norm(t), (available.get(norm(t)) ?? 0) + 1);
+  for (const answer of answers) {
+    if (answer.length < 1 || answer.length > 12) return ['Each right answer is 1 to 12 tiles'];
+    slots ??= answer.length;
+    if (answer.length !== slots) e.push('Every right answer must use the same number of tiles');
+    if (!answer.every(labelOk)) {
+      return [`Every answer tile needs a label of up to ${TILE_LABEL_MAX} characters`];
+    }
+    const need = new Map<string, number>();
+    for (const label of answer) need.set(norm(label), (need.get(norm(label)) ?? 0) + 1);
+    for (const [key, n] of need) {
+      if ((available.get(key) ?? 0) < n) {
+        e.push(`A right answer needs the tile “${key}” more often than the tiles provide`);
+        break;
+      }
+    }
+    const fingerprint = answer.map(norm).join('\u001f');
+    if (seen.has(fingerprint)) e.push('The same right answer is listed twice');
+    seen.add(fingerprint);
+  }
+  if (b.variant === 'spell' && tiles.some((t) => textLength(t.trim()) !== 1)) {
+    e.push('Spelling tiles are single letters');
+  }
+  if (b.variant === 'order' && (tiles.length !== slots || available.size !== tiles.length)) {
+    e.push('Order uses every card exactly once, with no extras and no repeats');
+  }
+  if (b.variant === 'gap') {
+    const gaps = (b.template ?? '').split('___').length - 1;
+    if (!(b.template ?? '').trim() || textLength(b.template) > 200 || gaps !== slots) {
+      e.push('A gap question needs a sentence with one ___ for each word in the answer');
+    }
+  } else if (b.template !== undefined) {
+    e.push('Only a gap question has a sentence');
+  }
+  if (b.speak !== undefined) {
+    if (b.variant !== 'spell') e.push('Only a spelling question can be read aloud');
+    else if (norm(b.speak) !== norm((answers[0] ?? []).join(''))) {
+      e.push('The spoken word must be the word being spelled');
+    }
+  }
+  return e;
+}
+
+/** Problems with a match or sort question. Mirrors Content::validateAssign. */
+function assignErrors(a: AssignSpec | undefined): string[] {
+  if (!a) return ['Fill in the things and where they go'];
+  if (a.variant !== 'match' && a.variant !== 'sort') return ['Pick match or sort'];
+  const match = a.variant === 'match';
+  const place = match ? 'partner' : 'group';
+  const [tMin, tMax, iMin, iMax] = match ? [2, 5, 2, 5] : [2, 3, 3, 6];
+  const targets = a.targets ?? [];
+  const items = a.items ?? [];
+  if (targets.length < tMin || targets.length > tMax) {
+    return [`Use ${tMin} to ${tMax} ${place}s`];
+  }
+  if (items.length < iMin || items.length > iMax) return [`Use ${iMin} to ${iMax} things`];
+  if (!targets.every(labelOk)) {
+    return [`Every ${place} needs a name of up to ${TILE_LABEL_MAX} characters`];
+  }
+  if (!items.every((i) => labelOk(i.label) && labelOk(i.to))) {
+    return [`Every thing needs a name and a ${place}, up to ${TILE_LABEL_MAX} characters each`];
+  }
+  const e: string[] = [];
+  const names = new Set(targets.map(norm));
+  if (names.size !== targets.length)
+    e.push(`${place[0]?.toUpperCase()}${place.slice(1)}s need different names`);
+  if (new Set(items.map((i) => norm(i.label))).size !== items.length) {
+    e.push('Two things have the same name');
+  }
+  const used = new Map<string, number>();
+  for (const i of items) {
+    if (!names.has(norm(i.to)))
+      e.push(`“${i.label}” goes to “${i.to}”, which is not one of the ${place}s`);
+    else used.set(norm(i.to), (used.get(norm(i.to)) ?? 0) + 1);
+  }
+  if (match && items.length !== targets.length) e.push('A match has one thing for each partner');
+  for (const name of names) {
+    const n = used.get(name) ?? 0;
+    if (n < 1 || (match && n > 1)) {
+      e.push(
+        match
+          ? `Partner “${name}” needs exactly one thing`
+          : `Group “${name}” needs at least one thing`,
+      );
+      break;
+    }
+  }
+  return e;
 }
 
 /**
@@ -173,6 +300,10 @@ export function validateQuestion(
     if (typeof q.answer !== 'boolean') e.push({ field: 'answer', message: 'Pick True or False' });
   } else if (q.type === 'slider') {
     for (const message of sliderErrors(q.slider)) e.push({ field: 'slider', message });
+  } else if (q.type === 'build') {
+    for (const message of buildErrors(q.build)) e.push({ field: 'build', message });
+  } else if (q.type === 'assign') {
+    for (const message of assignErrors(q.assign)) e.push({ field: 'assign', message });
   }
   return e;
 }
@@ -207,6 +338,22 @@ export function blankQuestion(type: QuestionType, today: string): QuestionConten
     scene: null,
   };
   if (type === 'boolean') return { ...base, type, answer: true };
+  if (type === 'build')
+    return { ...base, type, build: { variant: 'spell', tiles: [], answers: [[]] } };
+  if (type === 'assign') {
+    return {
+      ...base,
+      type,
+      assign: {
+        variant: 'match',
+        targets: ['', ''],
+        items: [
+          { label: '', to: '' },
+          { label: '', to: '' },
+        ],
+      },
+    };
+  }
   if (type === 'slider') {
     return {
       ...base,
@@ -256,6 +403,21 @@ export function toContent(q: QuestionContent): QuestionContent {
     out.options = (q.options ?? []).map((o) => ({ label: o.label.trim(), correct: o.correct }));
   } else if (q.type === 'boolean') {
     out.answer = q.answer;
+  } else if (q.type === 'build' && q.build) {
+    const b = q.build;
+    out.build = {
+      variant: b.variant,
+      tiles: b.tiles.map((t) => t.trim()),
+      answers: b.answers.map((a) => a.map((t) => t.trim())),
+      ...(b.template !== undefined ? { template: b.template.trim() } : {}),
+      ...(b.speak !== undefined ? { speak: b.speak.trim() } : {}),
+    };
+  } else if (q.type === 'assign' && q.assign) {
+    out.assign = {
+      variant: q.assign.variant,
+      targets: q.assign.targets.map((t) => t.trim()),
+      items: q.assign.items.map((i) => ({ label: i.label.trim(), to: i.to.trim() })),
+    };
   } else if (q.slider) {
     out.slider = { ...q.slider, unit: q.slider.unit?.trim() ? q.slider.unit.trim() : null };
   }
@@ -267,6 +429,15 @@ export function markedAnswer(q: QuestionContent): string {
   if (q.type === 'choice') return q.options?.find((o) => o.correct)?.label ?? 'None marked';
   if (q.type === 'boolean') {
     return q.answer === true ? 'True' : q.answer === false ? 'False' : 'None marked';
+  }
+  if (q.type === 'build') {
+    const first = q.build?.answers[0];
+    if (!first || first.length === 0) return 'None marked';
+    return first.join(q.build?.variant === 'spell' ? '' : ' ');
+  }
+  if (q.type === 'assign') {
+    const items = q.assign?.items ?? [];
+    return items.length ? items.map((i) => `${i.label} → ${i.to}`).join('; ') : 'None marked';
   }
   const s = q.slider;
   if (!s) return 'None marked';

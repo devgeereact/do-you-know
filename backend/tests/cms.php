@@ -384,6 +384,14 @@ $brokenAssign = $assignQs; $brokenAssign[1]['assign']['items'][0]['to'] = 'Sky';
 $problems = admin('POST', '/quizzes/'.$buildId, ['questions' => $brokenAssign])['body']['problems'] ?? [];
 check('a broken assign question is a problem on its assign field', count($problems) >= 1 && ($problems[0]['index'] ?? null) === 1 && ($problems[0]['field'] ?? null) === 'assign');
 
+// A question the author has only just added (nothing typed yet) is saved as a work-in-progress problem, never refused.
+$blanks = $assignQs;
+$blanks[] = ['type' => 'build', 'prompt' => '', 'build' => ['variant' => 'spell', 'tiles' => [], 'answers' => [[]]], 'explanation' => '', 'source_url' => null, 'review_by' => '2027-10-17', 'scene' => null];
+$blanks[] = ['type' => 'assign', 'prompt' => '', 'assign' => ['variant' => 'match', 'targets' => ['', ''], 'items' => [['label' => '', 'to' => ''], ['label' => '', 'to' => '']]], 'explanation' => '', 'source_url' => null, 'review_by' => '2027-10-17', 'scene' => null];
+$savedBlank = admin('POST', '/quizzes/'.$buildId, ['questions' => $blanks]);
+$blankFields = array_map(fn($p) => $p['index'].':'.$p['field'], $savedBlank['body']['problems'] ?? []);
+check('blank tile questions save as problems on their own fields', $savedBlank['status'] === 200 && in_array('3:build', $blankFields, true) && in_array('4:assign', $blankFields, true));
+
 // ---- Feedback inbox ----
 $adult = request('POST', '/guest-sessions', [])['body'];
 linkAdult($adult['profile_id']);

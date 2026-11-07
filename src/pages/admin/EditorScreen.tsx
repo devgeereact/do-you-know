@@ -30,6 +30,7 @@ import {
   type StudioQuestion,
 } from '@/services/adminService';
 import { QuestionPreview } from '@/pages/admin/QuestionPreview';
+import { AssignFields, BuildFields } from '@/pages/admin/TileFields';
 import {
   inputClass,
   linkButtonClass,
@@ -85,6 +86,8 @@ const TYPE_LABEL: Record<QuestionType, string> = {
   choice: 'Pick one',
   boolean: 'True or false',
   slider: 'Slider',
+  build: 'Tiles: spell, gap, order',
+  assign: 'Tiles: match or sort',
 };
 
 const round = (n: number): number => Number(n.toFixed(10));
@@ -278,9 +281,17 @@ export function EditorScreen(): JSX.Element {
   };
   const otherServerErrors = serverErrors.filter(
     (e) =>
-      !['prompt', 'options', 'answer', 'slider', 'explanation', 'source_url', 'review_by'].includes(
-        e.field,
-      ),
+      ![
+        'prompt',
+        'options',
+        'answer',
+        'slider',
+        'build',
+        'assign',
+        'explanation',
+        'source_url',
+        'review_by',
+      ].includes(e.field),
   );
   const problems = detail.problems;
   const dirty = save === 'pending' || save === 'saving' || save === 'error';
@@ -827,11 +838,11 @@ export function EditorScreen(): JSX.Element {
             {questions.length === 0 && (
               <p className="py-3 text-sm text-content-muted">No questions yet.</p>
             )}
-            <div className="mt-2 grid grid-cols-3 gap-1.5">
+            <div className="mt-2 grid grid-cols-6 gap-1.5">
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-9 px-1 text-[13px]"
+                className="col-span-2 h-9 px-1 text-[13px]"
                 onClick={() => addQuestion('choice')}
               >
                 + Choice
@@ -839,7 +850,7 @@ export function EditorScreen(): JSX.Element {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-9 px-1 text-[13px]"
+                className="col-span-2 h-9 px-1 text-[13px]"
                 onClick={() => addQuestion('boolean')}
               >
                 + True/false
@@ -847,10 +858,26 @@ export function EditorScreen(): JSX.Element {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-9 px-1 text-[13px]"
+                className="col-span-2 h-9 px-1 text-[13px]"
                 onClick={() => addQuestion('slider')}
               >
                 + Slider
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="col-span-3 h-9 px-1 text-[13px]"
+                onClick={() => addQuestion('build')}
+              >
+                + Spell, gap, order
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="col-span-3 h-9 px-1 text-[13px]"
+                onClick={() => addQuestion('assign')}
+              >
+                + Match, sort
               </Button>
             </div>
           </Panel>
@@ -877,7 +904,7 @@ export function EditorScreen(): JSX.Element {
                     }))
                   }
                 >
-                  {(['choice', 'boolean', 'slider'] as const).map((t) => (
+                  {(['choice', 'boolean', 'slider', 'build', 'assign'] as const).map((t) => (
                     <option key={t} value={t}>
                       {TYPE_LABEL[t]}
                     </option>
@@ -1006,6 +1033,24 @@ export function EditorScreen(): JSX.Element {
                   ))}
                 </div>
               </Field>
+            )}
+
+            {q.type === 'build' && q.build && (
+              <BuildFields
+                key={q.key}
+                build={q.build}
+                errors={fieldErrors('build')}
+                onChange={(build) => editQ(sel, (x) => ({ ...x, build }))}
+              />
+            )}
+
+            {q.type === 'assign' && q.assign && (
+              <AssignFields
+                key={q.key}
+                assign={q.assign}
+                errors={fieldErrors('assign')}
+                onChange={(assign) => editQ(sel, (x) => ({ ...x, assign }))}
+              />
             )}
 
             {q.type === 'slider' && q.slider && (

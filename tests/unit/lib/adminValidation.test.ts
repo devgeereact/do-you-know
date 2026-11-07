@@ -135,3 +135,205 @@ describe('helpers', () => {
     ).toBe('50 days (accepts 48 to 52)');
   });
 });
+
+// ---- Tile questions: build (spell, gap, order) and assign (match, sort) ----
+const meta = {
+  explanation: 'Because.',
+  source_url: null,
+  review_by: '2027-10-01',
+};
+const spell: QuestionContent = {
+  type: 'build',
+  prompt: 'Spell the pet that purrs.',
+  build: { variant: 'spell', tiles: ['c', 'a', 't', 'x'], answers: [['c', 'a', 't']] },
+  ...meta,
+};
+const gap: QuestionContent = {
+  type: 'build',
+  prompt: 'Finish the sentence.',
+  build: {
+    variant: 'gap',
+    template: 'The cat ___ on the ___.',
+    tiles: ['sat', 'mat', 'dog'],
+    answers: [['sat', 'mat']],
+  },
+  ...meta,
+};
+const order: QuestionContent = {
+  type: 'build',
+  prompt: 'Put the day in order.',
+  build: {
+    variant: 'order',
+    tiles: ['morning', 'noon', 'night'],
+    answers: [['morning', 'noon', 'night']],
+  },
+  ...meta,
+};
+const match: QuestionContent = {
+  type: 'assign',
+  prompt: 'Match each animal to its home.',
+  assign: {
+    variant: 'match',
+    targets: ['Sea', 'Nest'],
+    items: [
+      { label: 'Fish', to: 'Sea' },
+      { label: 'Bird', to: 'Nest' },
+    ],
+  },
+  ...meta,
+};
+const sort: QuestionContent = {
+  type: 'assign',
+  prompt: 'Sort the numbers.',
+  assign: {
+    variant: 'sort',
+    targets: ['Odd', 'Even'],
+    items: [
+      { label: '3', to: 'Odd' },
+      { label: '8', to: 'Even' },
+      { label: '5', to: 'Odd' },
+    ],
+  },
+  ...meta,
+};
+const edit = (
+  q: QuestionContent,
+  change: Partial<NonNullable<QuestionContent['build']>>,
+): QuestionContent => ({
+  ...q,
+  build: { ...q.build!, ...change },
+});
+const editA = (
+  q: QuestionContent,
+  change: Partial<NonNullable<QuestionContent['assign']>>,
+): QuestionContent => ({
+  ...q,
+  assign: { ...q.assign!, ...change },
+});
+
+describe('validateQuestion for tile questions (mirrors Content.php)', () => {
+  it('accepts a good spell, gap, order, match and sort question', () => {
+    for (const q of [spell, gap, order, match, sort]) expect(validateQuestion(q)).toEqual([]);
+  });
+
+  it('flags a build question with no data, an answer that needs a missing tile, or uneven answers', () => {
+    expect(fields({ ...spell, build: undefined })).toContain('build');
+    expect(fields(edit(spell, { answers: [['c', 'a', 'z']] }))).toContain('build');
+    expect(fields(edit(gap, { answers: [['sat', 'mat'], ['sat']] }))).toContain('build');
+    expect(fields(edit(spell, { answers: [] }))).toContain('build');
+    expect(
+      fields(
+        edit(spell, {
+          answers: [
+            ['c', 'a', 't'],
+            ['c', 'a', 't'],
+          ],
+        }),
+      ),
+    ).toContain('build');
+  });
+
+  it('flags the same rules as the server for each build variant', () => {
+    expect(fields(edit(spell, { tiles: ['ca', 't'], answers: [['ca', 't']] }))).toContain('build');
+    expect(fields(edit(order, { tiles: [...order.build!.tiles, 'extra'] }))).toContain('build');
+    expect(fields(edit(gap, { template: 'The cat ___ on the mat.' }))).toContain('build');
+    expect(fields(edit(gap, { template: undefined }))).toContain('build');
+    expect(fields(edit(spell, { template: 'Spell ___.' }))).toContain('build');
+    expect(fields(edit(gap, { speak: 'sat mat' }))).toContain('build');
+    expect(fields(edit(spell, { speak: 'dog' }))).toContain('build');
+    expect(fields(edit(spell, { speak: 'cat' }))).toEqual([]);
+  });
+
+  it('flags tile counts and label lengths', () => {
+    expect(fields(edit(order, { tiles: ['only'], answers: [['only']] }))).toContain('build');
+    const long = 'w'.repeat(25);
+    expect(fields(edit(gap, { tiles: ['sat', long, 'dog'], answers: [['sat', long]] }))).toContain(
+      'build',
+    );
+    const many = Array.from({ length: 13 }, () => 'a');
+    expect(fields(edit(spell, { tiles: many, answers: [many] }))).toContain('build');
+  });
+
+  it('flags assign problems: unknown target, repeated partner, empty group, counts, repeated names', () => {
+    expect(
+      fields(editA(match, { items: [{ label: 'Fish', to: 'Sky' }, match.assign!.items[1]!] })),
+    ).toContain('assign');
+    expect(
+      fields(
+        editA(match, {
+          items: [
+            { label: 'Fish', to: 'Sea' },
+            { label: 'Bird', to: 'Sea' },
+          ],
+        }),
+      ),
+    ).toContain('assign');
+    expect(fields(editA(sort, { targets: ['Odd', 'Even', 'Neither'] }))).toContain('assign');
+    expect(fields(editA(sort, { items: sort.assign!.items.slice(0, 2) }))).toContain('assign');
+    expect(
+      fields(
+        editA(match, {
+          targets: ['Sea', 'sea'],
+          items: [
+            { label: 'Fish', to: 'Sea' },
+            { label: 'Bird', to: 'sea' },
+          ],
+        }),
+      ),
+    ).toContain('assign');
+    expect(
+      fields(
+        editA(sort, {
+          items: [
+            { label: '3', to: 'Odd' },
+            { label: '3', to: 'Even' },
+            { label: '5', to: 'Odd' },
+          ],
+        }),
+      ),
+    ).toContain('assign');
+    expect(fields({ ...match, assign: undefined })).toContain('assign');
+  });
+
+  it('starts a new tile question with a re-check date and a valid blank shape to fill in', () => {
+    const b = blankQuestion('build', TODAY);
+    expect(b.type).toBe('build');
+    expect(b.build?.variant).toBe('spell');
+    const a = blankQuestion('assign', TODAY);
+    expect(a.type).toBe('assign');
+    expect(a.assign?.variant).toBe('match');
+    expect(a.assign?.items).toHaveLength(2);
+  });
+
+  it('toContent keeps the build and assign parts and trims labels', () => {
+    expect(toContent({ ...spell, id: 'q1' }).build).toEqual(spell.build);
+    expect(toContent(match).assign).toEqual(match.assign);
+    const trimmed = toContent(
+      editA(match, {
+        items: [
+          { label: ' Fish ', to: ' Sea ' },
+          { label: 'Bird', to: 'Nest' },
+        ],
+        targets: [' Sea ', 'Nest'],
+      }),
+    );
+    expect(trimmed.assign?.items[0]).toEqual({ label: 'Fish', to: 'Sea' });
+    expect(trimmed.assign?.targets[0]).toBe('Sea');
+    expect(toContent(spell).options).toBeUndefined();
+    expect(toContent(spell).slider).toBeUndefined();
+  });
+
+  it('describes the marked answer in words', () => {
+    expect(markedAnswer(spell)).toBe('cat');
+    expect(markedAnswer(gap)).toBe('sat mat');
+    expect(markedAnswer(match)).toBe('Fish → Sea; Bird → Nest');
+    expect(markedAnswer({ ...spell, build: undefined })).toBe('None marked');
+  });
+
+  it('changing a type to build or assign starts fresh but keeps the shared text', () => {
+    const q = changeType({ ...good, id: 'x' }, 'assign', TODAY);
+    expect(q.assign?.variant).toBe('match');
+    expect(q.prompt).toBe(good.prompt);
+    expect(q.options).toBeUndefined();
+  });
+});
