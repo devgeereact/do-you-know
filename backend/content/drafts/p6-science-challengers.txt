@@ -1,0 +1,52 @@
+# Science · Ages 12–14 · Atoms, elements and reactions
+Q: Match each chemical symbol to its element.
+Match: Na = sodium; Fe = iron; K = potassium; Au = gold; Cu = copper
+Why: Many symbols come from Latin-based names: natrium, ferrum, kalium, aurum and cuprum.
+
+Q: Sort the substances into elements and compounds.
+Sort: Elements = oxygen, iron, gold; Compounds = water, carbon dioxide, salt
+Why: An element has one kind of atom. A compound has two or more kinds joined together.
+
+Q: What is the pH of a neutral solution such as pure water?
+Slider: 0 to 14 = 7 ±0
+Why: Below 7 is acid and above 7 is alkali.
+
+Q: Which gas is made when a reactive metal such as magnesium reacts with an acid?
+A) hydrogen*
+B) oxygen
+C) helium
+Why: The metal and the acid make a salt and hydrogen gas.
+
+Q: Sort the liquids into acid, alkali and neutral.
+Sort: Acid = lemon juice, vinegar; Alkali = bleach, oven cleaner; Neutral = pure water
+Why: Acids have a pH below 7, alkalis above 7 and neutral substances are at 7.
+
+Q: Which particles in an atom have a negative charge?
+A) electrons*
+B) protons
+C) neutrons
+Why: Electrons are negative, protons are positive and neutrons have no charge.
+
+Q: What is the name of the reaction when a fuel burns in oxygen, giving out heat and light?
+A) combustion*
+B) neutralisation
+C) condensation
+Why: Combustion is a fuel reacting with oxygen. It makes new substances such as carbon dioxide and water.
+
+Q: In a chemical reaction, new substances are made.
+A) True*
+B) False
+Why: The atoms are rearranged to make different substances.
+
+Q: Melting ice is a chemical reaction.
+A) True
+B) False*
+Why: Melting is a physical change. No new substance is made.
+
+Q: Put these in order, from the particles with the least energy to the most.
+Order: solid, liquid, gas
+Why: The particles of a gas move fastest and spread the furthest.
+
+Q: Choose the missing word.
+Gap: In a reaction, the total ___ stays the same. = mass | extra: volume, colour
+Why: Atoms are not lost or made in a reaction, so the total mass stays the same.

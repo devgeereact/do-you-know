@@ -10,12 +10,14 @@ import { groupsOf, groupTitle, parseImport, type ImportSubject } from '@/lib/imp
  */
 const DIR = path.resolve(__dirname, '../../../backend/content/drafts');
 const SEED = path.resolve(__dirname, '../../../backend/content');
-const SUBJECTS: ImportSubject[] = [
-  { slug: 'school-english', name: 'English', kind: 'school' },
-  { slug: 'maths', name: 'Maths', kind: 'school' },
-];
+// The same subjects the Studio offers (the seed's categories), so a heading resolves as it will live.
+const SUBJECTS: ImportSubject[] = (
+  JSON.parse(readFileSync(path.join(SEED, 'categories.json'), 'utf8')) as {
+    categories: ImportSubject[];
+  }
+).categories.map(({ slug, name, kind }) => ({ slug, name, kind }));
 const TODAY = '2026-11-07';
-const files = readdirSync(DIR).filter((f) => /^p3-.*\.txt$/.test(f));
+const files = readdirSync(DIR).filter((f) => /^p[36]-.*\.txt$/.test(f));
 
 const rows = files.flatMap((file) =>
   parseImport(readFileSync(path.join(DIR, file), 'utf8'), SUBJECTS, TODAY).map((row) => ({
@@ -34,9 +36,9 @@ const groups = files.flatMap((file) =>
 const US =
   /\b(color|colour's|favorite|neighbor|center|meter|gray|math|mom|candy|soccer|recess|eraser|pants|sidewalk|zip code|organize|realize|practicing)\b/i;
 
-describe('P3 quiz drafts', () => {
+describe('P3 and P6 quiz drafts', () => {
   it('has the literacy and numeracy files', () => {
-    expect(files.length).toBeGreaterThanOrEqual(10);
+    expect(files.length).toBeGreaterThanOrEqual(19);
   });
 
   it('every question imports with no blocking problem and has a reason line', () => {

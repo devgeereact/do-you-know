@@ -1,0 +1,148 @@
+# Science · Ages 9–11 · Solids, liquids and gases
+Q: Sort the things into solid, liquid and gas.
+Sort: Solid = stone, wood; Liquid = water, milk; Gas = air, oxygen
+Why: A solid keeps its shape, a liquid pours and a gas spreads out to fill its space.
+
+Q: What is it called when a liquid turns into a gas?
+A) evaporation*
+B) freezing
+C) melting
+Why: Evaporation happens when a liquid warms up and its particles escape into the air.
+
+Q: At what temperature does pure water boil at sea level, in degrees Celsius?
+Slider: 0 to 150 = 100 ±0 °C
+Why: Water boils at 100 degrees Celsius and freezes at 0 degrees Celsius.
+
+Q: Put the water cycle in order. Start with the water in the sea.
+Order: water evaporates, vapour condenses, rain falls, water collects
+Why: The Sun warms the water, the vapour cools into clouds, rain falls and the water collects again.
+
+Q: A gas fills the space it is in.
+A) True*
+B) False
+Why: The particles of a gas spread out in every direction.
+
+Q: A solid changes shape when you put it in a different container.
+A) True
+B) False*
+Why: A solid keeps its own shape. A liquid takes the shape of its container.
+
+Q: What is melting?
+A) a solid turning into a liquid*
+B) a liquid turning into a solid
+C) a gas turning into a liquid
+Why: Ice melts into water when it warms up.
+
+Q: Match each change to its name.
+Match: Solid to liquid = melting; Liquid to solid = freezing; Liquid to gas = evaporating; Gas to liquid = condensing
+Why: These four changes happen when something is heated or cooled.
+
+Q: Which state of matter has a fixed shape?
+A) solid*
+B) liquid
+C) gas
+Why: The particles of a solid are held tightly in place.
+
+# Science · Ages 9–11 · Light, sound and electricity
+Q: A material that lets electricity pass through is called a...
+A) conductor*
+B) insulator
+C) shadow
+Why: Metals are conductors. Rubber and plastic are insulators.
+
+Q: Sort the things into conductors and insulators.
+Sort: Conductors = copper wire, steel spoon, foil; Insulators = rubber glove, plastic ruler, wooden spoon
+Why: Metals let electricity through. Rubber, plastic and wood do not.
+
+Q: Light travels in straight lines.
+A) True*
+B) False
+Why: This is why a shadow has a sharp edge.
+
+Q: What makes a shadow?
+A) something that blocks the light*
+B) a loud noise
+C) a magnet
+Why: A shadow forms behind an object that light cannot pass through.
+
+Q: Sound is made when something...
+A) vibrates*
+B) glows
+C) freezes
+Why: A vibration is a tiny, quick movement back and forth.
+
+Q: Sound can travel through space.
+A) True
+B) False*
+Why: Sound needs something to travel through, such as air. Space has almost none.
+
+Q: We see lightning before we hear thunder because light is faster than sound.
+A) True*
+B) False
+Why: Light travels much faster than sound, so it reaches us first.
+
+Q: Match each part of a simple circuit to its job.
+Match: Cell = gives the power; Wire = carries electricity; Bulb = gives out light; Switch = turns it on and off
+Why: A circuit is a complete loop. The switch opens or closes the loop.
+
+Q: Which of these gives out its own light?
+A) the Sun*
+B) the Moon
+C) a mirror
+Why: The Sun makes light. The Moon and a mirror only reflect it.
+
+Q: A fast vibration makes a sound with a...
+A) high pitch*
+B) low pitch
+C) no pitch
+Why: The faster the vibration, the higher the sound.
+
+# Science · Ages 9–11 · Rocks, the Earth and space
+Q: Put the planets in order from the Sun. Start with the closest.
+Order: Mercury, Venus, Earth, Mars
+Why: These four small, rocky planets are the closest to the Sun.
+
+Q: Put the planets in order from the Sun. Start with Jupiter.
+Order: Jupiter, Saturn, Uranus, Neptune
+Why: These are the four outer planets. Neptune is the farthest.
+
+Q: Sort the rocks by how they formed.
+Sort: Sedimentary = sandstone, limestone; Igneous = granite, basalt; Metamorphic = marble, slate
+Why: Sedimentary rocks form from layers, igneous rocks from cooled magma or lava and metamorphic rocks from heat and pressure.
+
+Q: What causes day and night?
+A) The Earth spinning*
+B) The Moon moving in front of the Sun
+C) The Sun going out
+Why: The Earth turns once a day, so each place faces the Sun and then faces away.
+
+Q: How many planets are in our solar system?
+Slider: 0 to 12 = 8 ±0
+Why: There are eight planets, from Mercury to Neptune.
+
+Q: Which planet is known as the Red Planet?
+A) Mars*
+B) Venus
+C) Saturn
+Why: Mars looks red because of the rusty dust on its ground.
+
+Q: The Sun is a star at the centre of our solar system.
+A) True*
+B) False
+Why: The Sun is a star: a huge ball of hot gas that gives out light and heat.
+
+Q: Put the layers of the Earth in order, from the outside to the centre.
+Order: crust, mantle, outer core, inner core
+Why: We live on the thin crust. The inner core is the hottest part.
+
+Q: What do we call the remains of a living thing that are found in rock?
+A) a fossil*
+B) a crystal
+C) a mineral
+Why: Fossils are the remains or marks of plants and animals that lived long ago.
+
+Q: How long does the Earth take to travel once around the Sun?
+A) one year*
+B) one day
+C) one month
+Why: The Earth's trip around the Sun takes about 365 days.

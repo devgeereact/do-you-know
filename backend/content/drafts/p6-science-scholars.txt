@@ -1,0 +1,56 @@
+# Computing · Ages 15–16 · Algorithms, binary and hardware
+Q: Put the steps of the fetch, decode, execute cycle in order.
+Order: fetch, decode, execute
+Why: The processor fetches an instruction, works out what it means, then carries it out.
+
+Q: What is the binary number 10110101 in decimal?
+Slider: 0 to 255 = 181 ±0
+Why: 128 + 32 + 16 + 4 + 1 = 181.
+
+Q: What is the binary number 11111111 in decimal?
+Slider: 0 to 300 = 255 ±0
+Why: Eight 1s means 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255, the largest value of one byte.
+
+Q: How many different values can one byte hold?
+Slider: 0 to 300 = 256 ±0
+Why: Eight bits give 2 to the power 8 = 256 values, from 0 to 255.
+
+Q: Which is the decimal number 77 in 7-bit binary?
+A) 1001101*
+B) 1011001
+C) 1100101
+D) 1001011
+Why: 77 = 64 + 8 + 4 + 1, so the bits are 1001101.
+
+Q: Sort the items into hardware and software.
+Sort: Hardware = keyboard, memory chip, processor; Software = web browser, operating system, spreadsheet
+Why: Hardware is the parts you can touch. Software is the programs that run on them.
+
+Q: Sort the devices into input and output.
+Sort: Input = keyboard, microphone, scanner; Output = monitor, speaker, printer
+Why: An input device sends data in. An output device shows or plays the result.
+
+Q: Match each device or component to its job.
+Match: CPU = runs instructions; RAM = holds data in use; SSD = stores files; Router = joins networks
+Why: Each part has its own job in the system.
+
+Q: Which kind of translator converts a whole program to machine code before it runs?
+A) a compiler*
+B) an interpreter
+C) a text editor
+Why: A compiler translates the whole program first. An interpreter translates and runs it one line at a time.
+
+Q: Which algorithm sorts a list by repeatedly swapping neighbours that are in the wrong order?
+A) bubble sort*
+B) binary search
+C) linear search
+Why: A bubble sort passes over the list again and again, swapping pairs.
+
+Q: A binary search only works on a list that is already sorted.
+A) True*
+B) False
+Why: It halves the list each time, so the order has to be known.
+
+Q: Complete the definition.
+Gap: Step-by-step instructions that solve a problem are called an ___. = algorithm | extra: variable, compiler
+Why: An algorithm is the plan. A program is that plan written in a language the computer understands.
