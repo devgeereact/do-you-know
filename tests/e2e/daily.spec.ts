@@ -41,10 +41,11 @@ test.describe('daily challenge', () => {
     await page.goto('/');
     await expect(page.getByText('Done for today. Back tomorrow.')).toBeVisible();
 
-    // Going straight to the play URL again is refused kindly rather than starting a second game.
+    // Going straight to the play URL again does not start a second game and is not an error screen:
+    // the player lands on the daily page, where the board is.
     await page.goto('/daily/play');
-    await expect(page.getByRole('alert')).toContainText('played today');
-    await expect(page.getByRole('link', { name: "Today's leaderboard" })).toBeVisible();
+    await expect(page).toHaveURL(/\/daily$/);
+    await expect(page.getByText('Done for today. Come back tomorrow!')).toBeVisible();
 
     api.assertNoAnswersLeaked();
     api.assertClientPostsNoScores();

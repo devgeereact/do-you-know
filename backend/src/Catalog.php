@@ -9,7 +9,8 @@ final class Catalog
     /** The one public quiz column list. Never add current_version_id or anything from quiz_versions. */
     private const QUIZ_COLUMNS = 'q.id,q.slug,q.title,q.intro,q.category_id,q.difficulty,q.age_min,q.age_max,q.curriculum_tags,
         q.cover_image_url,q.question_count,q.time_limit_seconds,q.shuffle_options,q.is_ranked,q.status,
-        q.publish_at,q.seo_title,q.seo_description,q.created_at,q.updated_at';
+        q.publish_at,q.seo_title,q.seo_description,q.created_at,q.updated_at,
+        (SELECT c.slug FROM categories c WHERE c.id=q.category_id) AS category_slug';
 
     /**
      * A quiz is live (public, playable, rankable) when it is published and its publish time has
@@ -156,6 +157,10 @@ final class Catalog
         $row['is_ranked'] = (bool) $row['is_ranked'];
         $row['age_min'] = $row['age_min'] === null ? null : (int) $row['age_min'];
         $row['age_max'] = $row['age_max'] === null ? null : (int) $row['age_max'];
+        // Labels for the child path: derived here, never stored. The category slug itself stays private.
+        $row['area'] = Areas::area($row['category_slug'], (string) $row['title']);
+        $row['level'] = Areas::level($row['age_min']);
+        unset($row['category_slug']);
         $row['curriculum_tags'] = $row['curriculum_tags'] === null ? [] : json_decode($row['curriculum_tags'], true, 16, JSON_THROW_ON_ERROR);
         foreach (['created_at', 'updated_at', 'publish_at'] as $field) {
             $row[$field] = Database::utc($row[$field]);

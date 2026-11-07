@@ -20,6 +20,7 @@ interface UseQuizAttempt {
   summary: AttemptSummary | null; // set in 'results'
   submitting: boolean;
   error: string | null; // friendly copy
+  errorCode: string | null; // the API's short code for a rule error, e.g. daily_already_played
   answerOption: (optionId: string) => Promise<void>;
   answerValue: (value: number) => Promise<void>; // slider
   timeUp: () => Promise<void>; // the display timer hit zero
@@ -55,12 +56,14 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
   const [summary, setSummary] = useState<AttemptSummary | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [failedWith, setFailedWith] = useState<string | null>(null);
 
   // Guards against stale async work after unmount, restart or a new question.
   const runRef = useRef(0);
   const busyRef = useRef(false);
 
   const fail = useCallback((err: unknown, area: string, fatal: boolean): void => {
+    setFailedWith(errorCode(err) ?? null);
     if (isGameError({ message: errorCode(err) })) {
       setError(gameErrorMessage({ message: errorCode(err) }));
     } else {
@@ -104,6 +107,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
     setSummary(null);
     setSubmitting(false);
     setError(null);
+    setFailedWith(null);
     try {
       await ensureSession();
       const s = await startAttempt({ mode, quizSlug, challengeCode });
@@ -127,6 +131,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
       busyRef.current = true;
       setSubmitting(true);
       setError(null);
+      setFailedWith(null);
       try {
         const result = await answerQuestion(state.attempt_id, answer);
         if (run !== runRef.current) return;
@@ -194,6 +199,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
     busyRef.current = true;
     setSubmitting(true);
     setError(null);
+    setFailedWith(null);
     try {
       if (lastResult?.is_last) {
         await finish(state.attempt_id, run);
@@ -215,6 +221,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
     summary,
     submitting,
     error,
+    errorCode: failedWith,
     answerOption,
     answerValue,
     timeUp,

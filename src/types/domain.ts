@@ -78,6 +78,12 @@ export type CurriculumTag = {
   sort_order: number;
 };
 
+/** The four learning areas, plus trivia (kept behind a parent switch). */
+export type LearningArea = 'literacy' | 'numeracy' | 'science' | 'humanities' | 'trivia';
+/** Starters 4-5, Explorers 6-8, Adventurers 9-11, Challengers 12-14, Scholars 15-16; adult is 18 and over. */
+export type LearningLevel =
+  'starters' | 'explorers' | 'adventurers' | 'challengers' | 'scholars' | 'adult';
+
 /** GET /quizzes */
 export type Quiz = Timestamps & {
   id: string;
@@ -98,4 +104,7 @@ export type Quiz = Timestamps & {
   publish_at: string | null;
   seo_title: string | null;
   seo_description: string | null;
+  /** Derived labels (never stored): what the quiz teaches and for which level. Trivia stays off the child path. */
+  area: LearningArea | null;
+  level: LearningLevel | null;
 };

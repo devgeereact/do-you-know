@@ -40,7 +40,15 @@ function completeGame(array $state,string $token,bool $correct=true,int $elapsed
     return $r['body'];
 }
 
-$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$first['token']);$state=$r['body'];
+// Children are not timed by default: the quiz timer applies only when the request asks for it (P4 sends it
+// when a parent turns on "Beat the clock"). A fresh guest starts a ranked game without asking.
+$calm=request('POST','/guest-sessions',[])['body'];
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$calm['token']);
+check('a game is untimed unless a timer is asked for',$r['status']===200&&$r['body']['time_limit_seconds']===null&&$r['body']['question_deadline']===null);
+$r2=request('POST','/attempts/'.$r['body']['attempt_id'].'/answer',['option_id'=>$r['body']['question']['options'][0]['id']],$calm['token']);
+Database::execute($db,'UPDATE attempts SET current_sent_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 600 SECOND) WHERE id=?',[$r['body']['attempt_id']]);
+check('an untimed answer is never marked timed out',$r2['status']===200&&$r2['body']['timed_out']===false);
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked','timed'=>true],$first['token']);$state=$r['body'];
 check('ranked mode starts',$r['status']===200&&$state['mode']==='ranked');
 check('deadline matches frozen server timer',abs((strtotime($state['question_deadline'])-strtotime($state['server_now']))-5)<=1);
 $r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$first['token']);

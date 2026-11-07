@@ -133,3 +133,32 @@ check('more than one paragraph is refused', $clean("One.\n\nTwo.") === null);
 check('text over the limit is refused', $clean(str_repeat('a', 301)) === null);
 check('empty text is refused', $clean('   ') === null);
 
+
+// Area and level labels: derived from the category and topic, never stored (docs/LEARNING-DESIGN.md section 5).
+use Dyk\Areas;
+$area = fn(?string $category, string $title) => Areas::area($category, $title);
+check('English is literacy', $area('school-english', 'Phonics and First Words') === 'literacy');
+check('Maths is numeracy', $area('maths', 'Times Tables and Number') === 'numeracy');
+foreach (['science-nature', 'school-science', 'school-computing', 'tech', 'technology-and-computing'] as $slug) {
+    check("$slug is science", $area($slug, 'Anything') === 'science');
+}
+foreach (['geography', 'school-geography', 'history', 'school-history', 'bible-faith', 'bible-and-faith'] as $slug) {
+    check("$slug is humanities", $area($slug, 'Anything') === 'humanities');
+}
+check('General Knowledge language topics are literacy', $area('general-knowledge', 'Language and literature · Ages 6-8') === 'literacy'
+    && $area('general-knowledge', 'Words and Language Challenge') === 'literacy');
+check('General Knowledge maths topics are numeracy', $area('general-knowledge', 'Maths and logic: ages 9-11') === 'numeracy'
+    && $area('general-knowledge', 'Time and Calendars') === 'numeracy');
+check('General Knowledge science and nature topics are science', $area('general-knowledge', 'Science and space') === 'science'
+    && $area('general-knowledge', 'Animals and nature (ages 4-5)') === 'science');
+check('General Knowledge history and geography are humanities', $area('general-knowledge', 'History') === 'humanities'
+    && $area('general-knowledge', 'Geography - ages 12-14') === 'humanities');
+check('the rest of General Knowledge is trivia', $area('general-knowledge', 'Sport and games') === 'trivia'
+    && $area('general-knowledge', 'Record Breakers') === 'trivia' && $area('general-knowledge', 'Art and culture') === 'trivia');
+check('an unknown category has no area', $area('something-new', 'Whatever') === null && $area(null, 'x') === null);
+$level = fn(?int $age) => Areas::level($age);
+check('levels follow the lowest age', [$level(4), $level(5), $level(6), $level(8), $level(9), $level(11), $level(12), $level(14), $level(15), $level(16)]
+    === ['starters', 'starters', 'explorers', 'explorers', 'adventurers', 'adventurers', 'challengers', 'challengers', 'scholars', 'scholars']);
+check('odd bands land in the level of their lower age', $level(7) === 'explorers' && $level(11) === 'adventurers' && $level(14) === 'challengers');
+check('18 and over is not a level', $level(18) === 'adult' && $level(99) === 'adult');
+check('no age means no level', $level(null) === null);

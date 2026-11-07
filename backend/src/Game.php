@@ -185,7 +185,9 @@ final class Game
                 $order = $hand !== null
                     ? array_column($hand, 'question')
                     : self::pickRound($ids, self::roundSize($mode, (int) $version['question_count'], count($ids)), $this->servedHistory($quizId));
-                $timer = $quiz['time_limit_seconds'];
+                // Children are not timed by default. The quiz's timer applies only when the request asks for
+                // it ("timed": true), which the parent switch "Beat the clock" will send (P4).
+                $timer = ($input['timed'] ?? false) === true ? $quiz['time_limit_seconds'] : null;
                 $shuffle = $quiz['shuffle_options'];
             }
             $id = Database::uuid();

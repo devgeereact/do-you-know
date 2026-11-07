@@ -127,12 +127,15 @@ describe('useQuizAttempt', () => {
     const { result } = setup();
     await waitFor(() => expect(result.current.phase).toBe('error'));
     expect(result.current.error).toMatch(/come back tomorrow/i);
+    // The page can tell this apart from other errors, so a finished daily goes to the daily page.
+    expect(result.current.errorCode).toBe('daily_already_played');
     expect(sentry.reportError).not.toHaveBeenCalled();
 
     start.mockResolvedValue(attemptState());
     await act(() => result.current.restart());
     expect(result.current.phase).toBe('question');
     expect(result.current.error).toBeNull();
+    expect(result.current.errorCode).toBeNull();
   });
 
   it('reports unexpected failures and shows the generic message', async () => {

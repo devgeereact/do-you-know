@@ -46,6 +46,9 @@ check('made-up bearer tokens add no throttle rows',$afterBuckets-$beforeBuckets<
 $r=request('GET','/me',null,'guest_forged');check('rejects forged guest token',$r['status']===401);
 $r=request('GET','/categories');check('published categories readable',$r['status']===200&&count($r['body'])>0);
 $r=request('GET','/quizzes/'.$slug);check('catalogue contains no snapshot',$r['status']===200&&!array_key_exists('snapshot',$r['body'])&&!array_key_exists('current_version_id',$r['body']));
+check('each quiz carries an area and level label, and the category slug stays private',array_key_exists('area',$r['body'])&&array_key_exists('level',$r['body'])&&!array_key_exists('category_slug',$r['body']));
+$rows=request('GET','/quizzes?category_id='.$category)['body'];
+check('the quiz list carries the labels too',$rows!==[]&&!array_filter($rows,fn($q)=>!array_key_exists('area',$q)||!array_key_exists('level',$q)||array_key_exists('category_slug',$q)));
 check('catalogue JSON uses typed booleans and arrays',is_bool($r['body']['shuffle_options'])&&is_bool($r['body']['is_ranked'])&&is_array($r['body']['curriculum_tags']));
 Database::execute($db,'UPDATE quizzes SET age_min=8,age_max=12,curriculum_tags=? WHERE id=?',[json_encode(['fixture-tag']),$quiz]);
 $r=request('GET','/quizzes?category_id='.$category.'&age=10&curriculum_tag=fixture-tag&search=Test');
@@ -139,7 +142,7 @@ $r=request('GET','/me',null,$extraToken);check('deletion revokes all profile ses
 $remaining=Database::one($db,'SELECT (SELECT COUNT(*) FROM attempts WHERE id=?) + (SELECT COUNT(*) FROM app_settings WHERE user_id=?) AS n',[$deletedAttempt,$deletable['profile_id']]);
 check('deletion removes attempts and preferences',(int)$remaining['n']===0);
 $r=request('GET','/me',null,$guest['token']);check('deletion cannot target another player',$r['status']===200);
-$r=request('POST','/attempts',['quiz_slug'=>$slug],$guest['token']);$id2=$r['body']['attempt_id'];
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'timed'=>true],$guest['token']);$id2=$r['body']['attempt_id'];
 Database::execute($db,'UPDATE attempts SET current_sent_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 10 SECOND) WHERE id=?',[$id2]);
 $r=request('POST','/attempts/'.$id2.'/answer',[],$guest['token']);check('server enforces time limit',$r['status']===200&&$r['body']['timed_out']===true&&$r['body']['is_correct']===false);
 $a=Database::one($db,'SELECT answer_time_ms,current_sent_at FROM attempts WHERE id=?',[$id2]);check('time is capped and explanation clock stopped',(int)$a['answer_time_ms']===5000&&$a['current_sent_at']===null);

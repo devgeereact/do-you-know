@@ -118,11 +118,8 @@ export function QuizPage(): JSX.Element {
                   )}
                   <li className={metaPill}>{difficultyLabel(quiz.difficulty)}</li>
                   {age && <li className={metaPill}>{age}</li>}
-                  <li className={metaPill}>
-                    {quiz.time_limit_seconds
-                      ? t.quiz.timeLimit(quiz.time_limit_seconds)
-                      : t.quiz.noTimer}
-                  </li>
+                  {/* Children are not timed by default; the parent switch "Beat the clock" (P4) brings the timer back. */}
+                  <li className={metaPill}>{t.quiz.noTimer}</li>
                 </ul>
                 {quiz.curriculum_tags.length > 0 && (
                   <ul

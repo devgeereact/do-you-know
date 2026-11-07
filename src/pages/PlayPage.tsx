@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { gsap, SplitText, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { burstConfetti } from '@/lib/confetti';
@@ -263,7 +263,11 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
         </Centered>
       )}
 
-      {phase === 'error' && (
+      {/* A finished daily is not an error: send the player to the daily page, where today's board is. */}
+      {phase === 'error' && daily && game.errorCode === 'daily_already_played' && (
+        <Navigate to="/daily" replace />
+      )}
+      {phase === 'error' && !(daily && game.errorCode === 'daily_already_played') && (
         <Centered>
           <div className="animate-fade-up">
             <h1 className="text-3xl font-semibold text-content">{t.play.errorTitle}</h1>
