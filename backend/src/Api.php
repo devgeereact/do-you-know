@@ -93,8 +93,8 @@ final class Api
             $gameRoute = preg_match('~^/attempts/([0-9a-f-]{36})/(next|answer|finish|challenge)$~D',$path,$parts);
             $dailyFinished = preg_match('~^/me/daily/([0-9a-f-]{36})/finished$~D',$path,$dailyId);
             $messageReply = preg_match('~^/me/messages/([0-9a-f-]{36})/reply$~D',$path,$messageId);
-            $parentRoute = $path==='/parent/children' || $path==='/parent/switches' || preg_match('~^/parent/children/([0-9a-f-]{36})(?:/(delete|hand-over))?$~D',$path,$childRoute);
-            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/me/nickname/suggestions','/me/messages','/me/messages/seen','/attempts','/likes','/feedback'],true) && !$gameRoute && !$dailyFinished && !$messageReply && !$parentRoute) { throw new ApiError('not_found',404); }
+            $parentRoute = $path==='/parent/children' || $path==='/parent/switches' || preg_match('~^/parent/children/([0-9a-f-]{36})(?:/(delete|hand-over|skills))?$~D',$path,$childRoute);
+            if (!in_array($path,['/session','/me','/me/age-band','/me/nickname','/me/nickname/random','/me/avatar','/me/settings','/me/games','/me/continue','/me/best','/me/delete','/me/nickname/suggestions','/me/messages','/me/messages/seen','/me/learn','/attempts','/likes','/feedback'],true) && !$gameRoute && !$dailyFinished && !$messageReply && !$parentRoute) { throw new ApiError('not_found',404); }
             if ($token==='') { throw new ApiError('not_signed_in',401); }
             $profile=Identity::profile($db,$config,$token);
             if ($path==='/session' && $method==='DELETE') {
@@ -108,8 +108,9 @@ final class Api
                 $family = new Family($db,$profile['id'],$config);
                 if ($path==='/parent/children') { self::reply($method==='GET' ? $family->children() : ($method==='POST' ? $family->add($body) : throw new ApiError('method_not_allowed',405)),$method==='POST'?201:200);return; }
                 if ($path==='/parent/switches') { self::reply($method==='GET' ? $family->switches() : ($method==='POST' ? $family->setSwitches($body) : throw new ApiError('method_not_allowed',405)));return; }
-                if ($method!=='POST') { throw new ApiError('method_not_allowed',405); }
                 $action = $childRoute[2] ?? '';
+                if ($action==='skills') { if ($method!=='GET') { throw new ApiError('method_not_allowed',405); } self::reply($family->skills($childRoute[1]));return; }
+                if ($method!=='POST') { throw new ApiError('method_not_allowed',405); }
                 if ($action==='delete') { $family->remove($childRoute[1],$body);self::reply(['deleted'=>true]);return; }
                 if ($action==='hand-over') { self::reply($family->handOver($childRoute[1]));return; }
                 self::reply($family->change($childRoute[1],$body));return;
@@ -117,6 +118,10 @@ final class Api
             $player = new Player($db, $profile['id']);
             if ($dailyFinished && $method==='GET') { self::reply(['finished'=>(new Competition($db,$profile['id']))->dailyFinished($dailyId[1])]);return; }
             if ($path==='/me' && $method==='GET') { self::reply($player->own());return; }
+            if ($path==='/me/learn' && $method==='GET') {
+                if (!Family::isChild($db,$profile['id'])) { throw new ApiError('child_required',403); }
+                self::reply(Learn::record($db,$profile['id']));return;
+            }
             if ($path==='/me/settings' && $method==='GET') { self::reply($player->settings());return; }
             if ($path==='/me/games' && $method==='GET') {
                 $limit = $_GET['limit'] ?? '20';

@@ -25,7 +25,7 @@ namespace Dyk;
  */
 final class AdminOps
 {
-    private const MODES = ['practice', 'ranked', 'daily', 'challenge'];
+    private const MODES = ['practice', 'ranked', 'daily', 'challenge', 'learn'];
 
     public function __construct(private readonly \PDO $db, private readonly Admin $admin) {}
 

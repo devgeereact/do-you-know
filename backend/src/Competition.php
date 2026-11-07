@@ -104,6 +104,9 @@ final class Competition
             if ($attempt['mode'] === 'daily') {
                 throw new ApiError('daily_not_shareable');
             }
+            if ($attempt['mode'] === 'learn') {
+                throw new ApiError('learn_not_shareable');
+            }
             $existing = Database::one($this->db,
                 'SELECT code,expires_at FROM friend_challenges WHERE creator_attempt_id=? AND expires_at>UTC_TIMESTAMP(6) ORDER BY created_at DESC LIMIT 1',
                 [$attemptId]);

@@ -70,8 +70,10 @@ final class Game
      */
     private function dealtVersions(array $a): array
     {
-        if ($a['daily_challenge_id'] === null) { return []; }
-        $s = $this->db->prepare('SELECT position,quiz_version_id FROM daily_deals WHERE attempt_id=?');
+        if ($a['daily_challenge_id'] === null && $a['mode'] !== 'learn') { return []; }
+        $s = $this->db->prepare($a['mode'] === 'learn'
+            ? 'SELECT position,quiz_version_id FROM learn_cards WHERE attempt_id=?'
+            : 'SELECT position,quiz_version_id FROM daily_deals WHERE attempt_id=?');
         $s->execute([$a['id']]);
         return array_column($s->fetchAll(), 'quiz_version_id', 'position');
     }
@@ -99,7 +101,7 @@ final class Game
         $q = null;
         if (!$complete && $a['current_sent_at'] !== null) {
             // A daily question wears the scene of the quiz it came from, not the day's anchor quiz.
-            $source = $a['daily_challenge_id'] === null ? $quiz : (Database::one($this->db,
+            $source = ($a['daily_challenge_id'] === null && $a['mode'] !== 'learn') ? $quiz : (Database::one($this->db,
                 'SELECT q.title,c.scene FROM quiz_versions v JOIN quizzes q ON q.id=v.quiz_id LEFT JOIN categories c ON c.id=q.category_id WHERE v.id=?',
                 [$this->currentVersion($a)]) ?? $quiz);
             $q = self::publicQuestion($this->question($a), $source['scene'], $source['title']);
@@ -139,17 +141,41 @@ final class Game
     public function start(array $input): array
     {
         $mode = $input['mode'] ?? 'practice';
-        if (!in_array($mode, ['practice', 'ranked', 'daily', 'challenge'], true)) {
+        if (!in_array($mode, ['practice', 'ranked', 'daily', 'challenge', 'learn'], true)) {
             throw new ApiError('invalid_mode');
+        }
+        $learnArea = null;
+        $learnLevel = null;
+        if ($mode === 'learn') {
+            // An adaptive session belongs to a child: guests save nothing, so only a parent's child has a record.
+            $learnArea = $input['area'] ?? null;
+            if (!is_string($learnArea) || !in_array($learnArea, Learn::AREAS, true)) { throw new ApiError('invalid_area'); }
+            $learnLevel = Family::levelOf($this->db, $this->userId);
+            if ($learnLevel === null) { throw new ApiError('child_required', 403); }
         }
         if ($mode === 'daily') {
             Daily::ensureToday($this->db);
         }
-        return $this->transaction(function () use ($input, $mode): array {
+        return $this->transaction(function () use ($input, $mode, $learnArea, $learnLevel): array {
             $daily = null;
             $challenge = null;
             $hand = null;
-            if ($mode === 'daily') {
+            $learnHand = null;
+            if ($mode === 'learn') {
+                // One open session per area: asking again resumes it.
+                $open = Database::one($this->db,
+                    "SELECT * FROM attempts WHERE user_id=? AND mode='learn' AND learn_area=? AND status='in_progress'
+                     AND started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 24 HOUR) ORDER BY started_at DESC LIMIT 1 FOR UPDATE", [$this->userId, $learnArea]);
+                if ($open) {
+                    if ($open['current_sent_at'] === null && (int) $open['current_index'] < count(json_decode($open['question_order'], true))) {
+                        Database::execute($this->db, 'UPDATE attempts SET current_sent_at=UTC_TIMESTAMP(6) WHERE id=?', [$open['id']]);
+                    }
+                    return $this->state($this->attempt($open['id']));
+                }
+                $learnHand = Learn::hand($this->db, $this->userId, $learnArea, $learnLevel, Learn::step($this->db, $this->userId, $learnArea));
+                $quizId = $learnHand[0]['quiz'];
+                $versionId = $learnHand[0]['version'];
+            } elseif ($mode === 'daily') {
                 // The lock keeps deals one at a time: two players starting together cannot take one question.
                 $daily = Database::one($this->db,
                     "SELECT * FROM daily_challenges WHERE challenge_date=? AND status='live' FOR UPDATE", [Competition::londonDate()]);
@@ -180,12 +206,12 @@ final class Game
             $quiz = Database::one($this->db, 'SELECT q.* FROM quizzes q WHERE q.id=? AND ' . Catalog::LIVE, [$quizId]);
             if (!$quiz) { throw new ApiError('quiz_not_found', 404); }
             if ($mode === 'ranked' && !$quiz['is_ranked']) { $mode = 'practice'; }
-            $existing = $daily
+            $existing = $learnHand !== null ? null : ($daily
                 ? Database::one($this->db, 'SELECT * FROM attempts WHERE user_id=? AND daily_challenge_id=? FOR UPDATE', [$this->userId, $daily['id']])
                 : Database::one($this->db,
                     "SELECT * FROM attempts WHERE user_id=? AND quiz_version_id=? AND mode=? AND friend_challenge_id <=> ?
                      AND status='in_progress' AND started_at>DATE_SUB(UTC_TIMESTAMP(),INTERVAL 24 HOUR) ORDER BY started_at DESC LIMIT 1 FOR UPDATE",
-                    [$this->userId, $versionId, $mode, $challenge['id'] ?? null]);
+                    [$this->userId, $versionId, $mode, $challenge['id'] ?? null]));
             if ($existing) {
                 if ($existing['status'] !== 'in_progress') { throw new ApiError('daily_already_played'); }
                 if ($existing['current_sent_at'] === null && (int) $existing['current_index'] < count(json_decode($existing['question_order'], true))) {
@@ -201,7 +227,11 @@ final class Game
             if (count($snapshot) < (int) $version['question_count'] || (int) $version['question_count'] < 3 || (int) $version['question_count'] > 50) {
                 throw new \RuntimeException('quiz_snapshot_invalid');
             }
-            if ($challenge) {
+            if ($learnHand !== null) {
+                $order = array_column($learnHand, 'question');
+                $timer = null;
+                $shuffle = true;
+            } elseif ($challenge) {
                 $creator = Database::one($this->db, "SELECT question_order,time_limit_seconds,shuffle_options FROM attempts WHERE id=? AND status='finished'", [$challenge['creator_attempt_id']]);
                 if (!$creator) { throw new ApiError('challenge_not_found'); }
                 $order = json_decode($creator['question_order'], true, 512, JSON_THROW_ON_ERROR);
@@ -222,9 +252,14 @@ final class Game
             }
             $id = Database::uuid();
             Database::execute($this->db,
-                'INSERT INTO attempts (id,user_id,quiz_id,quiz_version_id,mode,daily_challenge_id,friend_challenge_id,time_limit_seconds,shuffle_options,question_order,current_sent_at)
-                 VALUES (?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(6))',
-                [$id, $this->userId, $quizId, $versionId, $mode, $daily['id'] ?? null, $challenge['id'] ?? null, $timer, (int) $shuffle, json_encode($order, JSON_THROW_ON_ERROR)]);
+                'INSERT INTO attempts (id,user_id,quiz_id,quiz_version_id,mode,daily_challenge_id,friend_challenge_id,time_limit_seconds,shuffle_options,question_order,learn_area,current_sent_at)
+                 VALUES (?,?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(6))',
+                [$id, $this->userId, $quizId, $versionId, $mode, $daily['id'] ?? null, $challenge['id'] ?? null, $timer, (int) $shuffle, json_encode($order, JSON_THROW_ON_ERROR), $learnArea]);
+            foreach ($learnHand ?? [] as $i => $card) {
+                Database::execute($this->db,
+                    'INSERT INTO learn_cards (attempt_id,position,quiz_version_id,question_id,source) VALUES (?,?,?,?,?)',
+                    [$id, $i + 1, $card['version'], $card['question'], $card['source']]);
+            }
             foreach ($hand ?? [] as $i => $card) {
                 Database::execute($this->db,
                     'INSERT INTO daily_deals (attempt_id,position,daily_challenge_id,quiz_version_id,question_id,deal_no) VALUES (?,?,?,?,?,?)',
@@ -500,6 +535,7 @@ final class Game
             if ($a['status'] === 'in_progress') {
                 Database::execute($this->db, "UPDATE attempts SET status='finished',finished_at=UTC_TIMESTAMP(6) WHERE id=?", [$id]);
                 (new Competition($this->db, $this->userId))->record($a, $total);
+                if ($a['mode'] === 'learn') { Learn::complete($this->db, $a); }
             }
             // A daily hand mixes quizzes: read each answered question from the version it was dealt from.
             $dealt = $this->dealtVersions($a);
@@ -552,7 +588,8 @@ final class Game
             }
             return ['attempt_id'=>$id,'mode'=>$a['mode'],'correct'=>(int)$a['correct_count'],'total'=>$total,
                 'answer_time_ms'=>(int)$a['answer_time_ms'],'review'=>$review,'ranks'=>(object)$ranks,
-                'versus'=>$versus,'needs_nickname'=>$profile['nickname']===null,'streak'=>(int)$profile['streak_current']];
+                'versus'=>$versus,'needs_nickname'=>$profile['nickname']===null,'streak'=>(int)$profile['streak_current'],
+                'learn'=>$a['mode']==='learn' ? (json_decode((string)(Database::one($this->db,'SELECT learn_result FROM attempts WHERE id=?',[$id])['learn_result']??'null'),true)) : null];
         });
     }
 }

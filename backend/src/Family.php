@@ -105,6 +105,13 @@ final class Family
         return ['token' => $token, 'expires_at' => gmdate('c', strtotime($expires . ' UTC')), 'child' => $this->one($id)];
     }
 
+    /** One child's skill map and stickers, for their parent. */
+    public function skills(string $id): array
+    {
+        $this->owned($id);
+        return ['child' => $this->one($id)] + Learn::record($this->db, $id);
+    }
+
     public function switches(): array
     {
         return ['switches' => self::switchesFor($this->db, $this->parentId)];
