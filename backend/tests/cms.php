@@ -366,6 +366,24 @@ $broken = $detail['questions']; $broken[1]['build']['template'] = 'The cat ___ o
 $problems = admin('POST', '/quizzes/'.$buildId, ['questions' => $broken])['body']['problems'] ?? [];
 check('a broken build question is a problem on its build field', count($problems) >= 1 && ($problems[0]['index'] ?? null) === 1 && ($problems[0]['field'] ?? null) === 'build');
 
+// An `assign` question (match, sort) is edited like any other: it opens with its items and targets as labels,
+// a new one can be added in the Studio, and a broken one is a problem on its assign field.
+$assignQs = $detail['questions'];
+$assignQs[1] = ['type' => 'assign', 'prompt' => 'Match the animal to its home '.$word.'.', 'assign' => ['variant' => 'match', 'targets' => ['Sea', 'Nest', 'Burrow'],
+    'items' => [['label' => 'Fish', 'to' => 'Sea'], ['label' => 'Bird', 'to' => 'Nest'], ['label' => 'Rabbit', 'to' => 'Burrow']]],
+    'explanation' => 'Because.', 'source_url' => null, 'review_by' => '2027-10-17', 'scene' => null, 'checked' => true];
+$assignQs[2] = ['type' => 'assign', 'prompt' => 'Sort the numbers '.$word.'.', 'assign' => ['variant' => 'sort', 'targets' => ['Odd', 'Even'],
+    'items' => [['label' => '3', 'to' => 'Odd'], ['label' => '8', 'to' => 'Even'], ['label' => '5', 'to' => 'Odd']]],
+    'explanation' => 'Because.', 'source_url' => null, 'review_by' => '2027-10-17', 'scene' => null, 'checked' => true];
+$withAssignQs = admin('POST', '/quizzes/'.$buildId, ['questions' => $assignQs]);
+check('a new assign question is saved in the Studio with no problems', $withAssignQs['status'] === 200 && $withAssignQs['body']['problems'] === []
+    && ($withAssignQs['body']['questions'][1]['assign'] ?? null) === $assignQs[1]['assign'] && ($withAssignQs['body']['questions'][2]['assign'] ?? null) === $assignQs[2]['assign']);
+$reopened = admin('GET', '/quizzes/'.$buildId)['body'];
+check('and it reopens with its items and targets as labels', ($reopened['questions'][1]['assign'] ?? null) === $assignQs[1]['assign']);
+$brokenAssign = $assignQs; $brokenAssign[1]['assign']['items'][0]['to'] = 'Sky';
+$problems = admin('POST', '/quizzes/'.$buildId, ['questions' => $brokenAssign])['body']['problems'] ?? [];
+check('a broken assign question is a problem on its assign field', count($problems) >= 1 && ($problems[0]['index'] ?? null) === 1 && ($problems[0]['field'] ?? null) === 'assign');
+
 // ---- Feedback inbox ----
 $adult = request('POST', '/guest-sessions', [])['body'];
 linkAdult($adult['profile_id']);

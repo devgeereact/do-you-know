@@ -34,6 +34,13 @@ final class Game
                 + (isset($b['template']) ? ['template' => $b['template']] : [])
                 + (isset($b['speak']) ? ['speak' => $b['speak']] : []);
         }
+        if ($q['type'] === 'assign') {
+            // Items and targets only. Which item belongs to which target (the key) stays on the server.
+            $a = $q['assign'];
+            $out['assign'] = ['variant' => $a['variant'],
+                'items' => array_map(static fn(array $i): array => ['id' => $i['id'], 'label' => $i['label']], $a['items']),
+                'targets' => array_map(static fn(array $t): array => ['id' => $t['id'], 'label' => $t['label']], $a['targets'])];
+        }
         return $out;
     }
 
@@ -105,6 +112,13 @@ final class Game
                 // Tiles are always in handle order, whatever the quiz says: the file lists them in an order a child could read.
                 foreach ($q['build']['tiles'] as $i => $t) { $q['build']['tiles'][$i]['id'] = $this->handle($a['id'], $t['id']); }
                 usort($q['build']['tiles'], static fn(array $left, array $right): int => strcmp($left['id'], $right['id']));
+            }
+            if (isset($q['assign'])) {
+                // Items and targets get keyed handles and are always in handle order, so neither the order nor the ids give the key away.
+                foreach (['items', 'targets'] as $part) {
+                    foreach ($q['assign'][$part] as $i => $x) { $q['assign'][$part][$i]['id'] = $this->handle($a['id'], $x['id']); }
+                    usort($q['assign'][$part], static fn(array $left, array $right): int => strcmp($left['id'], $right['id']));
+                }
             }
         }
         $deadline = $a['current_sent_at'] !== null && $a['time_limit_seconds'] !== null
@@ -363,6 +377,41 @@ final class Game
         return $labels;
     }
 
+    /**
+     * The (item label, target label) pairs a child tapped, in the stored item order. $given must be a list
+     * with one [item handle, target handle] pair for every item, each handle one this attempt sent, no item
+     * twice, and (for a match) no partner twice. Anything else is a 400 invalid_pairs and is never counted.
+     *
+     * @return list<array{0:string,1:string}>
+     */
+    private function tappedPairs(string $attemptId, array $assign, mixed $given): array
+    {
+        if (!is_array($given) || !array_is_list($given) || count($given) !== count($assign['items'])) {
+            throw new ApiError('invalid_pairs');
+        }
+        $itemOf = [];
+        foreach ($assign['items'] as $i) { $itemOf[$this->handle($attemptId, $i['id'])] = $i; }
+        $targetOf = [];
+        foreach ($assign['targets'] as $t) { $targetOf[$this->handle($attemptId, $t['id'])] = $t; }
+        $to = [];
+        $partners = [];
+        foreach ($given as $pair) {
+            if (!is_array($pair) || !array_is_list($pair) || count($pair) !== 2 || !is_string($pair[0]) || !is_string($pair[1])
+                || !isset($itemOf[$pair[0]], $targetOf[$pair[1]]) || isset($to[$pair[0]])) {
+                throw new ApiError('invalid_pairs');
+            }
+            if ($assign['variant'] === 'match' && isset($partners[$pair[1]])) { throw new ApiError('invalid_pairs'); }
+            $to[$pair[0]] = $targetOf[$pair[1]];
+            $partners[$pair[1]] = true;
+        }
+        $out = [];
+        foreach ($assign['items'] as $i) {
+            $handle = $this->handle($attemptId, $i['id']);
+            $out[] = ['item' => $i, 'target' => $to[$handle]];
+        }
+        return $out;
+    }
+
     public function answer(string $id, array $input): array
     {
         return $this->transaction(function () use ($id, $input): array {
@@ -374,7 +423,7 @@ final class Game
             $elapsed = (int)$clock['elapsed'];
             $limit = $a['time_limit_seconds'] !== null ? (int)$a['time_limit_seconds']*1000 : null;
             $timedOut = $limit !== null && $elapsed > $limit+1500;
-            $correct = false; $option = null; $value = null; $correctIds = []; $chosen = null; $correctTiles = null;
+            $correct = false; $option = null; $value = null; $correctIds = []; $chosen = null; $correctTiles = null; $correctPairs = null;
             if (in_array($q['type'], ['choice','boolean'], true)) {
                 foreach ($q['options'] as $o) { if ($o['is_correct']) { $correctIds[] = $this->handle($id, $o['id']); } }
                 if (!$timedOut) {
@@ -398,13 +447,24 @@ final class Game
                         if (array_map($norm, $accepted) === $got) { $correct = true; break; }
                     }
                 }
+            } elseif ($q['type'] === 'assign') {
+                $correctPairs = self::keyPairs($q['assign']);
+                if (!$timedOut) {
+                    $given = $this->tappedPairs($id, $q['assign'], $input['pairs'] ?? null);
+                    $correct = true;
+                    $chosen = [];
+                    foreach ($given as $g) {
+                        $chosen[] = [$g['item']['label'], $g['target']['label']];
+                        if ($g['target']['id'] !== $g['item']['target']) { $correct = false; }
+                    }
+                }
             } else { throw new \RuntimeException('question_type_invalid'); }
             $position = (int)$a['current_index']+1;
             $total = count(json_decode($a['question_order'], true));
             $time = min($elapsed, $limit ?? 60000);
             Database::execute($this->db, 'INSERT INTO attempt_answers (attempt_id,position,question_id,chosen_option_id,chosen_value,chosen_json,is_correct,timed_out,time_ms) VALUES (?,?,?,?,?,?,?,?,?)', [$id,$position,$q['id'],$option,$value,$chosen === null ? null : json_encode($chosen, JSON_THROW_ON_ERROR),(int)$correct,(int)$timedOut,$time]);
             Database::execute($this->db, 'UPDATE attempts SET answered_count=answered_count+1,correct_count=correct_count+?,answer_time_ms=answer_time_ms+?,current_index=current_index+1,current_sent_at=NULL WHERE id=?', [(int)$correct,$time,$id]);
-            return ['is_correct'=>$correct,'timed_out'=>$timedOut,'correct_option_ids'=>$correctIds,'correct_tiles'=>$correctTiles,
+            return ['is_correct'=>$correct,'timed_out'=>$timedOut,'correct_option_ids'=>$correctIds,'correct_tiles'=>$correctTiles,'correct_pairs'=>$correctPairs,
                 'correct_value'=>$q['slider']['correct']??null,'accept_min'=>$q['slider']['accept_min']??null,
                 'accept_max'=>$q['slider']['accept_max']??null,'explanation'=>$q['explanation']??null,
                 'source_url'=>$q['source_url']??null,'position'=>$position,'total'=>$total,'is_last'=>$position===$total];
@@ -415,6 +475,19 @@ final class Game
     private static function joinTiles(string $variant, array $labels): string
     {
         return implode($variant === 'spell' ? '' : ' ', $labels);
+    }
+
+    /** The stored key as (item label, target label) pairs in item order. */
+    private static function keyPairs(array $assign): array
+    {
+        $targetLabel = array_column($assign['targets'], 'label', 'id');
+        return array_map(static fn(array $i): array => [$i['label'], $targetLabel[$i['target']]], $assign['items']);
+    }
+
+    /** Pairs shown as words: "Fish → Sea; Bird → Nest". */
+    private static function joinPairs(array $pairs): string
+    {
+        return implode('; ', array_map(static fn(array $p): string => $p[0] . ' → ' . $p[1], $pairs));
     }
 
     public function finish(string $id): array
@@ -445,9 +518,12 @@ final class Game
                     'is_correct'=>(bool)$answer['is_correct'],'timed_out'=>(bool)$answer['timed_out'],
                     'your_answer'=>$q['type']==='build'
                         ? ($answer['chosen_json']!==null ? self::joinTiles($q['build']['variant'], json_decode($answer['chosen_json'], true)) : null)
-                        : ($answer['chosen_option_id'] ? ($labels[$answer['chosen_option_id']]??null) : ($answer['chosen_value']!==null?(float)$answer['chosen_value']:null)),
+                        : ($q['type']==='assign'
+                        ? ($answer['chosen_json']!==null ? self::joinPairs(json_decode($answer['chosen_json'], true)) : null)
+                        : ($answer['chosen_option_id'] ? ($labels[$answer['chosen_option_id']]??null) : ($answer['chosen_value']!==null?(float)$answer['chosen_value']:null))),
                     'correct_answer'=>$q['type']==='build' ? self::joinTiles($q['build']['variant'], $q['build']['answers'][0])
-                        : ($q['type']==='slider'?($q['slider']['correct']??null):implode(', ',array_column($right,'label'))),
+                        : ($q['type']==='assign' ? self::joinPairs(self::keyPairs($q['assign']))
+                        : ($q['type']==='slider'?($q['slider']['correct']??null):implode(', ',array_column($right,'label')))),
                     'explanation'=>$q['explanation']??null,'source_url'=>$q['source_url']??null,'time_ms'=>(int)$answer['time_ms']];
             }
             $profile=Database::one($this->db,'SELECT nickname,streak_current FROM profiles WHERE id=?',[$this->userId]);

@@ -10,6 +10,8 @@ use Dyk\Database;
 $tag=substr(Database::uuid(),0,8);
 $category=Database::uuid();
 Database::execute($db,'INSERT INTO categories (id,slug,name) VALUES (?,?,?)',[$category,'build-'.$tag,'Build fixture']);
+// The public category list holds 100 at most: leave none of this suite's fixture behind to crowd it.
+register_shutdown_function(static function () use ($db,$category): void { Database::execute($db,'UPDATE categories SET is_active=0 WHERE id=?',[$category]); });
 $meta=['explanation'=>'Because it is.','source_url'=>null,'review_by'=>'2027-10-17'];
 $quizFile=['slug'=>'build-'.$tag,'title'=>'Build fixture','questions'=>[
     ['type'=>'build','prompt'=>'Spell the yellow fruit.','build'=>['variant'=>'spell','tiles'=>['b','a','n','a','n','a','x','y'],'answers'=>[['b','a','n','a','n','a']]]]+$meta,

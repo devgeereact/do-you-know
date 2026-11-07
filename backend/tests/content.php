@@ -121,6 +121,48 @@ check('a build snapshot holds keyed tiles and the accepted sequences', $snap['ty
     && $snap['build']['answers'] === [['b', 'a', 'n', 'a', 'n', 'a']] && count(array_unique(array_column($snap['build']['tiles'], 'id'))) === 7);
 check('build snapshots are deterministic', Content::snapshot($withBuild) === Content::snapshot($withBuild));
 
+// ---- The `assign` question: match pairs, sort into groups (each item is tapped to its target) ----
+$match = ['type' => 'assign', 'prompt' => 'Match each animal to its home.', 'assign' => ['variant' => 'match',
+    'targets' => ['Sea', 'Nest', 'Burrow'], 'items' => [['label' => 'Fish', 'to' => 'Sea'], ['label' => 'Bird', 'to' => 'Nest'], ['label' => 'Rabbit', 'to' => 'Burrow']]]] + $meta;
+$sort = ['type' => 'assign', 'prompt' => 'Sort the numbers.', 'assign' => ['variant' => 'sort',
+    'targets' => ['Odd', 'Even'], 'items' => [['label' => '3', 'to' => 'Odd'], ['label' => '8', 'to' => 'Even'], ['label' => '5', 'to' => 'Odd'], ['label' => '12', 'to' => 'Even']]]] + $meta;
+$withAssign = $good; $withAssign['questions'] = [...$good['questions'], $match, $sort];
+check('validator accepts match and sort questions', $validate($withAssign) === []);
+$badAssign = [
+    'an unknown variant' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['variant'] = 'drag'),
+    'no assign data' => fn(array $q) => tap($q, function (&$x) { unset($x['questions'][3]['assign']); }),
+    'an unknown key' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['hint'] = 'x'),
+    'an item sent to a target that does not exist' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['items'][0]['to'] = 'Sky'),
+    'an item with no target' => fn(array $q) => tap($q, function (&$x) { unset($x['questions'][3]['assign']['items'][0]['to']); }),
+    'a match target used twice' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['items'][1]['to'] = 'Sea'),
+    'a match with more items than targets' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['items'][] = ['label' => 'Bee', 'to' => 'Sea']),
+    'a match of one pair' => fn(array $q) => tap($q, function (&$x) { $x['questions'][3]['assign']['targets'] = ['Sea']; $x['questions'][3]['assign']['items'] = [['label' => 'Fish', 'to' => 'Sea']]; }),
+    'a match of six pairs' => fn(array $q) => tap($q, function (&$x) { $n = range(1, 6); $x['questions'][3]['assign']['targets'] = array_map(fn($i) => "T$i", $n); $x['questions'][3]['assign']['items'] = array_map(fn($i) => ['label' => "I$i", 'to' => "T$i"], $n); }),
+    'a sort group left empty' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][4]['assign']['targets'][] = 'Neither'),
+    'a sort with four groups' => fn(array $q) => tap($q, function (&$x) { $x['questions'][4]['assign']['targets'] = ['A', 'B', 'C', 'D']; $x['questions'][4]['assign']['items'] = [['label' => '1', 'to' => 'A'], ['label' => '2', 'to' => 'B'], ['label' => '3', 'to' => 'C'], ['label' => '4', 'to' => 'D']]; }),
+    'a sort of seven items' => fn(array $q) => tap($q, function (&$x) { for ($i = 0; $i < 3; $i++) { $x['questions'][4]['assign']['items'][] = ['label' => 'n'.$i, 'to' => 'Odd']; } }),
+    'a sort of two items' => fn(array $q) => tap($q, function (&$x) { $x['questions'][4]['assign']['items'] = [['label' => '3', 'to' => 'Odd'], ['label' => '8', 'to' => 'Even']]; }),
+    'two items with the same label' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][4]['assign']['items'][2]['label'] = '3'),
+    'two targets with the same name' => fn(array $q) => tap($q, function (&$x) { $x['questions'][4]['assign']['targets'] = ['Odd', 'odd']; $x['questions'][4]['assign']['items'][1]['to'] = 'odd'; $x['questions'][4]['assign']['items'][3]['to'] = 'odd'; }),
+    'an item label of 25 characters' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['items'][0]['label'] = str_repeat('w', 25)),
+    'a control character in a label' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['targets'][0] = "Se\x07a"),
+    'an unknown key on an item' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['assign']['items'][0]['note'] = 'x'),
+    'assign data on a choice question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][0]['assign'] = $x['questions'][3]['assign']),
+    'options on an assign question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['options'] = $x['questions'][0]['options']),
+    'build data on an assign question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build'] = $x['questions'][3]['assign']),
+];
+foreach ($badAssign as $name => $mutate) {
+    check('validator rejects an assign question with '.$name, $validate($mutate($withAssign)) !== []);
+}
+$aSnap = Content::snapshot($withAssign)[4];
+check('an assign snapshot holds keyed items and targets and a key that points at target ids', $aSnap['type'] === 'assign'
+    && count($aSnap['assign']['items']) === 4 && count($aSnap['assign']['targets']) === 2
+    && count(array_unique(array_merge(array_column($aSnap['assign']['items'], 'id'), array_column($aSnap['assign']['targets'], 'id')))) === 6
+    && in_array($aSnap['assign']['items'][0]['target'], array_column($aSnap['assign']['targets'], 'id'), true)
+    && $aSnap['assign']['items'][0]['label'] === '3');
+check('assign snapshots are deterministic', Content::snapshot($withAssign) === Content::snapshot($withAssign));
+check('an assign question is allowed in a ranked quiz (it is graded on the server)', $validate($withAssign + ['is_ranked' => true]) === []);
+
 // Directory-level checks: duplicate slugs and file naming.
 $tmp = sys_get_temp_dir().'/dyk-content-'.bin2hex(random_bytes(4));
 $writeDir = function (string $dir, array $quizzes) use ($root): void {

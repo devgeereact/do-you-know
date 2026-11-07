@@ -9,7 +9,7 @@ namespace Dyk;
  */
 final class Content
 {
-    public const TYPES = ['choice', 'boolean', 'slider', 'build'];
+    public const TYPES = ['choice', 'boolean', 'slider', 'build', 'assign'];
     public const DIFFICULTIES = ['easy', 'medium', 'hard'];
     private const SLUG = '/^[a-z0-9]+(?:-[a-z0-9]+)*$/D';
     /** Quiz slugs that clash with API routes such as GET /quizzes/trending. */
@@ -18,9 +18,11 @@ final class Content
         'curriculum_tags', 'time_limit_seconds', 'shuffle_options', 'is_ranked', 'round_size', 'questions'];
     /** Questions in one round when a quiz file does not set round_size. */
     public const DEFAULT_ROUND = 10;
-    private const QUESTION_KEYS = ['type', 'prompt', 'options', 'answer', 'slider', 'build', 'explanation', 'source_url', 'review_by', 'scene'];
+    private const QUESTION_KEYS = ['type', 'prompt', 'options', 'answer', 'slider', 'build', 'assign', 'explanation', 'source_url', 'review_by', 'scene'];
     public const BUILD_VARIANTS = ['spell', 'gap', 'order'];
     private const BUILD_KEYS = ['variant', 'tiles', 'answers', 'speak', 'template'];
+    public const ASSIGN_VARIANTS = ['match', 'sort'];
+    private const ASSIGN_KEYS = ['variant', 'targets', 'items'];
     /** Cosmetic backdrops a question (or a category) may name. Keep identical to the frontend list. */
     public const SCENES = ['ocean', 'space', 'jungle', 'desert', 'arctic', 'body', 'past', 'city'];
     private const SLIDER_KEYS = ['min', 'max', 'step', 'unit', 'correct', 'accept_min', 'accept_max'];
@@ -272,7 +274,7 @@ final class Content
         }
         $type = $q['type'] ?? null;
         if (!in_array($type, self::TYPES, true)) {
-            return array_merge($e, ["$at: type must be choice, boolean, slider or build"]);
+            return array_merge($e, ["$at: type must be choice, boolean, slider, build or assign"]);
         }
         if (!self::text($q['prompt'] ?? null, 300)) {
             $e[] = "$at: prompt required (up to 300 characters)";
@@ -292,7 +294,7 @@ final class Content
             $e[] = "$at: review_by must be a date like 2027-10-17";
         }
         if ($type === 'choice') {
-            if (isset($q['answer']) || isset($q['slider']) || isset($q['build'])) {
+            if (isset($q['answer']) || isset($q['slider']) || isset($q['build']) || isset($q['assign'])) {
                 $e[] = "$at: choice questions use options only";
             }
             $options = $q['options'] ?? null;
@@ -316,22 +318,96 @@ final class Content
                 $e[] = "$at: option labels must be distinct";
             }
         } elseif ($type === 'boolean') {
-            if (isset($q['options']) || isset($q['slider']) || isset($q['build'])) {
+            if (isset($q['options']) || isset($q['slider']) || isset($q['build']) || isset($q['assign'])) {
                 $e[] = "$at: boolean questions use answer only";
             }
             if (!is_bool($q['answer'] ?? null)) {
                 $e[] = "$at: boolean needs answer true or false";
             }
         } elseif ($type === 'slider') {
-            if (isset($q['options']) || isset($q['answer']) || isset($q['build'])) {
+            if (isset($q['options']) || isset($q['answer']) || isset($q['build']) || isset($q['assign'])) {
                 $e[] = "$at: slider questions use slider only";
             }
             $e = array_merge($e, self::validateSlider($q['slider'] ?? null, $at));
-        } else {
-            if (isset($q['options']) || isset($q['answer']) || isset($q['slider'])) {
+        } elseif ($type === 'build') {
+            if (isset($q['options']) || isset($q['answer']) || isset($q['slider']) || isset($q['assign'])) {
                 $e[] = "$at: build questions use build only";
             }
             $e = array_merge($e, self::validateBuild($q['build'] ?? null, $at));
+        } else {
+            if (isset($q['options']) || isset($q['answer']) || isset($q['slider']) || isset($q['build'])) {
+                $e[] = "$at: assign questions use assign only";
+            }
+            $e = array_merge($e, self::validateAssign($q['assign'] ?? null, $at));
+        }
+        return $e;
+    }
+
+    /**
+     * The `assign` question: a child taps each item, then the target it belongs to. `match` pairs each item
+     * with its own target; `sort` puts items into 2 or 3 groups. The key (which item belongs to which
+     * target) is stored here and never sent before answering. Labels are compared without case.
+     */
+    private static function validateAssign(mixed $a, string $at): array
+    {
+        if (!is_array($a) || array_is_list($a)) {
+            return ["$at: assign needs variant, targets and items"];
+        }
+        $e = [];
+        if ($extra = array_diff(array_keys($a), self::ASSIGN_KEYS)) {
+            $e[] = "$at: assign has unknown keys " . implode(', ', $extra);
+        }
+        $variant = $a['variant'] ?? null;
+        if (!in_array($variant, self::ASSIGN_VARIANTS, true)) {
+            return array_merge($e, ["$at: assign variant must be match or sort"]);
+        }
+        $match = $variant === 'match';
+        $targets = $a['targets'] ?? null;
+        $items = $a['items'] ?? null;
+        [$tMin, $tMax, $iMin, $iMax] = $match ? [2, 5, 2, 5] : [2, 3, 3, 6];
+        if (!is_array($targets) || !array_is_list($targets) || count($targets) < $tMin || count($targets) > $tMax) {
+            return array_merge($e, ["$at: assign: a $variant question needs $tMin to $tMax " . ($match ? 'partners' : 'groups')]);
+        }
+        if (!is_array($items) || !array_is_list($items) || count($items) < $iMin || count($items) > $iMax) {
+            return array_merge($e, ["$at: assign: a $variant question needs $iMin to $iMax items"]);
+        }
+        $norm = static fn(string $t): string => mb_strtolower(trim($t));
+        $names = [];
+        foreach ($targets as $t) {
+            if (!self::tileLabel($t)) {
+                return array_merge($e, ["$at: assign: every " . ($match ? 'partner' : 'group') . ' needs a label of up to 24 characters']);
+            }
+            $names[$norm($t)] = true;
+        }
+        if (count($names) !== count($targets)) {
+            $e[] = "$at: assign: " . ($match ? 'partners' : 'groups') . ' must have different names';
+        }
+        $labels = [];
+        $used = [];
+        foreach ($items as $item) {
+            if (!is_array($item) || array_is_list($item) || array_diff(array_keys($item), ['label', 'to'])
+                || !self::tileLabel($item['label'] ?? null) || !self::tileLabel($item['to'] ?? null)) {
+                return array_merge($e, ["$at: assign: every item needs a label and a target, each up to 24 characters"]);
+            }
+            $labels[$norm($item['label'])] = true;
+            if (!isset($names[$norm($item['to'])])) {
+                $e[] = "$at: assign: item '{$item['label']}' goes to '{$item['to']}', which is not one of the " . ($match ? 'partners' : 'groups');
+                continue;
+            }
+            $used[$norm($item['to'])] = ($used[$norm($item['to'])] ?? 0) + 1;
+        }
+        if (count($labels) !== count($items)) {
+            $e[] = "$at: assign: items must have different labels";
+        }
+        if (count($items) !== count($targets) && $match) {
+            $e[] = "$at: assign: a match question has one item for each partner";
+        }
+        foreach ($names as $name => $_) {
+            $n = $used[$name] ?? 0;
+            if ($n < 1 || ($match && $n > 1)) {
+                $e[] = "$at: assign: " . ($match ? "partner '$name' must be used by exactly one item" : "group '$name' needs at least one item");
+                break;
+            }
         }
         return $e;
     }
@@ -577,11 +653,26 @@ final class Content
                     }
                 }
             }
+            $assign = null;
+            if ($q['type'] === 'assign') {
+                $a = $q['assign'];
+                $norm = static fn(string $t): string => mb_strtolower(trim($t));
+                $targets = [];
+                foreach ($a['targets'] as $k => $label) {
+                    $targets[] = ['id' => self::id($qid, 'target', (string) $k, $label), 'label' => $label];
+                }
+                $byName = [];
+                foreach ($targets as $t) { $byName[$norm($t['label'])] = $t['id']; }
+                $assign = ['variant' => $a['variant'], 'targets' => $targets, 'items' => array_map(
+                    static fn(array $item, int $k): array => ['id' => self::id($qid, 'item', (string) $k, $item['label']), 'label' => $item['label'], 'target' => $byName[$norm($item['to'])]],
+                    $a['items'], array_keys($a['items']))];
+            }
             $s = $q['type'] === 'slider' ? $q['slider'] : null;
             $out[] = [
                 'id' => $qid, 'type' => $q['type'], 'prompt' => $q['prompt'], 'image_url' => null,
                 'options' => $options,
                 'build' => $build,
+                'assign' => $assign,
                 'slider' => $s === null ? null : ['min' => $s['min'], 'max' => $s['max'], 'step' => $s['step'],
                     'unit' => $s['unit'] ?? null, 'correct' => $s['correct'], 'accept_min' => $s['accept_min'], 'accept_max' => $s['accept_max']],
                 'explanation' => $q['explanation'], 'source_url' => ($q['source_url'] ?? '') === '' ? null : $q['source_url'], 'review_by' => $q['review_by'],
