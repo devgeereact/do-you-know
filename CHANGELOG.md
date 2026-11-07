@@ -1,10 +1,10 @@
 # Changelog
 
-## 7 November 2026 (branch `feat/daily-live-crown`, not deployed) — private daily hands, live board, crown
+## 7 November 2026 (branch `feat/daily-live-crown`, deployed the same day) — private daily hands, live board, crown
 - The daily gives every player their own 10 questions from all live quizzes except 18+, with no question shared between players until the whole bank has been dealt once (then a second lap). The least-dealt questions go first; one lock per day plus a unique key on the new `daily_deals` ledger make it hold for simultaneous starts.
 - Daily page and results: a live board (refreshes every 10 s while open, quietly, and again when you return to the tab), a "Top score today" card, a crown on rank 1 and a "You're wearing the crown!" banner. The page is named "Today's challenge" instead of one quiz title; a short ten-stop route stays as decoration.
 - A daily result now counts on the day's board only (before, it also fed one quiz's all-time and weekly boards). A daily hand cannot be sent as a friend challenge (`daily_not_shareable`), and its button is not shown. The Studio credits each daily answer to the quiz its question came from.
-- Migration `0017_daily_deals.sql` (additive). **It must run on the server before this code reaches `main`.** Phone layout: the three small stat tiles move to tablet and up; the leaderboard list no longer overflows narrow columns.
+- Migration `0017_daily_deals.sql` (additive). It was released alone first, backed up and run on the server (backup `db-pre-migrate-0017-20261107T131208Z.sql.gz`) before this code went out. Phone layout: the three small stat tiles move to tablet and up; the leaderboard list no longer overflows narrow columns.
 
 ## 7 November 2026 (branch `feat/delete-unpublished-draft`) — delete a draft that was never published
 - Studio → Editor: "Delete draft…" for a quiz with no published version; it removes the quiz for good after a confirmation. A quiz that has ever been published can only be retired (players, boards and dailies point at its versions).

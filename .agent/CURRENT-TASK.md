@@ -1,9 +1,9 @@
 # Current task
 
-## Daily: private hands, live board, crown (branch `feat/daily-live-crown`, 7 Nov 2026, NOT committed, NOT deployed)
+## Daily: private hands, live board, crown (branch `feat/daily-live-crown`, 7 Nov 2026, committed; migration applied on the server, code pushed to `main`)
 - Built: each player's daily is their own 10 questions from all live quizzes except 18+, no question shared until the bank has gone round once; live board (10 s) with a crown on rank 1; "Top score today" card; Studio stats credit the right quiz. Details in `CHANGELOG.md`, audit in `docs/AUDIT.md` (7 Nov).
 - Checks: `pnpm check` PASS (219 unit) · `pnpm verify` PASS · backend 13 suites PASS (incl. new `daily_deal`, 43 checks) · e2e 46/46 PASS · phone walk on the local stack (hands disjoint, board refreshes in about 9 s). NOT TESTED: live database, Clerk.
-- Owner decisions needed before any deploy: (1) approve running `0017_daily_deals.sql` on the server (backup first, `docs/07-operations/DEPLOYMENT.md`), and it must run BEFORE this code reaches `main`; (2) approve commit and push. The Studio Daily calendar still schedules a quiz, but that quiz is now only the day's anchor.
+- Owner approved 7 Nov: migration 0017 released alone, backed up (`db-pre-migrate-0017-20261107T131208Z.sql.gz`) and applied; then the code pushed. The Studio Daily calendar still schedules a quiz, but that quiz is now only the day's anchor.
 - Open: the Gate 1 replan docs (`docs/DIRECTION.md`) still list public boards as a default-off parent switch; this feature makes the daily board visible by default, so Direction should say "the daily board stays on". Per-level pools and crowns are the natural next step once parents set levels.
 
 Updated 1 November 2026 (evening). Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`.
