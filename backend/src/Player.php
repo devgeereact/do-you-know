@@ -33,6 +33,10 @@ final class Player
         $row['nickname_locked'] = $row['nickname_changed_at'] !== null;
         $row['nickname_changed_at'] = Database::utc($row['nickname_changed_at']);
         $row['unread_messages'] = Feedback::unreadFor($this->db, $this->userId);
+        // What the parent has switched on (all off for a guest), and the level when this profile is a child.
+        $row['switches'] = Family::switchesFor($this->db, $this->userId);
+        $level = Family::levelOf($this->db, $this->userId);
+        $row['child'] = $level === null ? null : ['level' => $level];
         return $row;
     }
 
@@ -271,15 +275,32 @@ final class Player
         if (($input['confirmed'] ?? false) !== true) {
             throw new ApiError('deletion_confirmation_required');
         }
-        // Cascades revoke every guest session and remove owned attempts/settings.
-        // The Clerk account itself is separate and must be deleted through Clerk.
-        // Feedback stays for the owner's records, but anything personal in it (a written message
-        // and a reply address) goes with the player. The row keeps only its type and presets.
-        // Written answers in their message threads go too (privacy notice: any message they wrote is wiped).
-        Database::transaction($this->db, function (): array {
-            Database::execute($this->db, "DELETE FROM feedback_messages WHERE kind='player' AND author_id=?", [$this->userId]);
-            Database::execute($this->db, 'UPDATE feedback SET message=NULL, email=NULL, question_prompt=NULL WHERE profile_id=?', [$this->userId]);
-            Database::execute($this->db, 'DELETE FROM profiles WHERE id=?', [$this->userId]);
+        // A child is erased by their parent from the parent area, never from the child's own device.
+        if (Family::isChild($this->db, $this->userId)) {
+            throw new ApiError('child_managed_by_parent', 403);
+        }
+        // A parent's children go with them.
+        $ids = array_column(Database::all($this->db, 'SELECT profile_id FROM children WHERE parent_profile_id=?', [$this->userId]), 'profile_id');
+        self::erase($this->db, [...$ids, $this->userId]);
+    }
+
+    /**
+     * Erases profiles. Cascades revoke every guest session and remove owned attempts/settings.
+     * The Clerk account itself is separate and must be deleted through Clerk.
+     * Feedback stays for the owner's records, but anything personal in it (a written message
+     * and a reply address) goes with the player. The row keeps only its type and presets.
+     * Written answers in their message threads go too (privacy notice: any message they wrote is wiped).
+     *
+     * @param list<string> $ids
+     */
+    public static function erase(\PDO $db, array $ids): void
+    {
+        Database::transaction($db, function () use ($db, $ids): array {
+            foreach ($ids as $id) {
+                Database::execute($db, "DELETE FROM feedback_messages WHERE kind='player' AND author_id=?", [$id]);
+                Database::execute($db, 'UPDATE feedback SET message=NULL, email=NULL, question_prompt=NULL WHERE profile_id=?', [$id]);
+                Database::execute($db, 'DELETE FROM profiles WHERE id=?', [$id]);
+            }
             return [];
         });
     }
