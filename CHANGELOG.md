@@ -1,5 +1,10 @@
 # Changelog
 
+## 7 November 2026 (branch `phase/p6-spread`, not deployed) — P6: science and humanities content
+- **20 quiz drafts (187 questions)**, not yet imported: 10 Science (including Computing) and 10 Humanities, led by the tile formats (order, match, sort, gap). They fill the topic gaps: materials, forces, light, sound, electricity, earth and space, living things at the younger levels; timelines, places and capitals; and Christian religious knowledge (the Christian year, books of the Bible, church words). Christian only, as decided on 7 Nov.
+- **Finding:** the "at least 6 per cell" test was already met (Science 21 to 27 per level, Humanities 11 to 21), so P6 targeted topics and formats instead. Coverage report: `docs/LEARNING-DESIGN.md` section 8.
+- Guard tests: `p3Drafts.test.ts` now covers both P3 and P6 files with the real subjects; new `p6Drafts.test.ts` checks area, level, tile use and the Christian-only rule. No code or database change; nothing goes live until the owner imports the drafts.
+
 ## 7 November 2026 (branch `phase/p5-adapt`, not deployed) — P5: learning sessions, stickers, skill map, sound
 - **Migration 0020 (needs the two-step release):** the attempt mode check allows `learn` (relaxing only), plus `learn_cards`, `skills`, `retry_questions` and `stickers`, all hanging off the child's profile and holding ids, counts and dates only.
 - **Learning sessions** (`POST /attempts {mode:'learn', area}`, screen `/learn/:area`): ten questions from the child's level in one of four areas (literacy, numeracy, science, humanities), nearest the child's step, least recently seen first, and at most two earlier mistakes brought back first. Only a child set up by a parent can start one (guests save nothing). A session is private: no boards, no sharing, no friend challenge. Step is read from each quiz's existing difficulty (1-2 easy, 3 medium, 4-5 hard), so no content had to change.

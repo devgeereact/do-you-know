@@ -153,3 +153,42 @@ No quiz is rewritten, retired or moved in the database by this design. An area i
 - **RISK** Tile questions on a small phone: slots and tiles must stay at least 44 px high. Checked in Stage 4 and in the phase's phone walk.
 - **RISK** Letter-tile spelling shows the letters of the word by design. That is the task, not a leak, but it means spelling is easier than free typing; decoy letters keep it honest.
 - **NOT TESTED** Everything in this document is a design; none of it is built.
+
+## 8. P6 coverage report: science and humanities (7 Nov 2026)
+
+Counted from the live catalogue (all 262 quizzes, read through the public API by category). The roadmap's test for P6, at least 6 quizzes in every Science and Humanities cell, was already met before P6 began, so the work targets topics and formats. The 20 drafts below are in `backend/content/drafts/p6-*.txt`; they are **not imported**, so the live counts only change when the owner imports and publishes them in the Studio.
+
+Quizzes per area and level (not counting adult 18+):
+
+| Area | Starters 4-5 | Explorers 6-8 | Adventurers 9-11 | Challengers 12-14 | Scholars 15-16 |
+|---|---|---|---|---|---|
+| Science, live | 22 | 27 | 22 | 24 | 21 |
+| Science, after import | 24 | 30 | 25 | 25 | 22 |
+| Humanities, live | 11 | 21 | 13 | 13 | 13 |
+| Humanities, after import | 13 | 24 | 16 | 15 | 13 |
+
+Topic coverage, live today and what the drafts add:
+
+| Topic | Live today | P6 drafts |
+|---|---|---|
+| Biology and the body | 9 topics at every level, plus plants, animals, human body | nothing needed |
+| Computing | 9 topics at every level, plus GCSE | Scholars: algorithms, binary and hardware (order, sort, match, gap) |
+| Chemistry and materials | GCSE Chemistry (14-16) and "Forces, Matter and Cells" (11-14) only | Starters: hard, soft and bendy; Explorers: materials and what they are for; Challengers: atoms, elements and reactions |
+| Physics: forces, light, sound, electricity | GCSE Physics only | Explorers: pushes, pulls and magnets; Adventurers: light, sound and electricity |
+| Earth and space | "Our Solar System" (7+) and the space sets | Adventurers: solids, liquids and gases (water cycle); rocks, the Earth and space (planet order, layers, rock types) |
+| Living things and habitats | animals and plants sets | Starters: living or not living; Explorers: food chains and habitats |
+| History and timelines | one History set per band, Egypt, Greece, Tudors, Kings and Queens, Stone Age, GCSE, world history | Explorers: before and after; Adventurers: a timeline of Britain; Challengers: the twentieth century and before (all with order and sort) |
+| Places | one Geography set per band, continents, oceans, UK, capitals | Explorers: continents and oceans; Adventurers: Europe, countries and capitals |
+| Christian religious knowledge | 9 topics at every level (Christian only) | Starters: Christmas story, Easter and other celebrations; Explorers: the Christian year; Adventurers: books of the Bible; Challengers: church, gospels and the Last Week |
+
+**Not covered by P6, for a later decision:** humanities at Scholars (15-16) has no new set. World religions are not planned: religious knowledge stays Christian only (owner, 7 Nov).
+
+Existing quizzes whose age bands straddle two levels. A level is read from the lowest age (`Areas::level`), so these land one level lower than their band suggests. No quiz was changed; any change is a Studio edit and a live content change that needs the owner's approval.
+
+| Quiz | Band | Shown at | Aimed at |
+|---|---|---|---|
+| The Tudors, Weather and Climate, Binary and Data, Forces Matter and Cells | 11-14 | Adventurers | Challengers |
+| GCSE Geography, GCSE History, GCSE Biology, Chemistry, Computer Science, Physics | 14-16 | Challengers | Scholars |
+| Animal Babies and Homes, My Body and Senses | 5-8, 5-7 | Starters | Explorers |
+| Geography Masters, World History Challenge, Science for Grown-Ups | 16+ | Scholars | Scholars (fine) |
+

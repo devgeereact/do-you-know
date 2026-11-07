@@ -1,5 +1,12 @@
 # Current task
 
+## P6: science and humanities content (branch `phase/p6-spread`, 7 Nov 2026, committed, NOT pushed, nothing imported)
+- P5 is LIVE (04a686d, migration 0020 applied after backup `db-pre-migrate-0020-20261107-163054.sql.gz`). Plan: `.planning/phases/P6-spread/P6-PLAN.md`.
+- Finding: the roadmap's "6 per cell" was already true, so P6 fills topics and formats. Built: 20 drafts (10 Science, 10 Humanities; 187 questions) in `backend/content/drafts/p6-*.txt`, guard tests, coverage report (`docs/LEARNING-DESIGN.md` section 8), review in `docs/AUDIT.md`. Christian only for religious knowledge.
+- **Owner:** import the P6 files in the Studio (and the 38 P3 files still waiting), read them, publish, then set quiz difficulty (easy, medium, hard) so steps differ; then one release so the pages are prerendered. No code release is needed for P6 itself.
+- Open: the new home (waiting for your landing notes); a Scholars (15-16) humanities set; odd age bands on existing quizzes (list in section 8, a Studio edit needing approval).
+
+
 ## P5: learning sessions, stickers, skill map, sound (branch `phase/p5-adapt`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
 - Plan: `.planning/phases/P5-adapt/P5-PLAN.md`. P4 is LIVE (be2a57b, migration 0019 applied after backup `db-pre-migrate-0019-20261107-152805.sql.gz`); P3 code live, its 38 drafts still wait for you in the Studio.
 - Built: migration 0020, `Learn` (hand, step rule, retry queue, stickers), `/learn/:area`, end-of-session panel, sticker book, skill map in `/grown-ups`, home tiles for children, sound (off until the parent turns it on), gentle tilt on a wrong answer. Audit: `docs/AUDIT.md` (P5).
