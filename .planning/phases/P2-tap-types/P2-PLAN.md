@@ -23,3 +23,6 @@ Migration 0018 is additive and goes out alone first: its own commit on `main`, b
 
 ## Verification
 `pnpm check`, `pnpm verify`, `bash scripts/test-backend.sh`, `pnpm test:e2e`; a phone walk of every changed screen with axe; `/security-audit` on the grading; then a stop.
+
+## Slice 2.2 (7 Nov 2026, branch `phase/p2-assign`)
+Built: `assign` (match, sort) with server grading and `invalid_pairs` refusals, tap-to-place screen, Studio forms and preview for build and assign, client validator mirror, import lines (Spell, Gap, Order, Match, Sort). No migration. Audit and checks: `docs/AUDIT.md` and `.agent/CURRENT-TASK.md`. Release needs the owner's "approved".

@@ -5,7 +5,7 @@ import { t } from '@/i18n';
 interface ReadAloudProps {
   /** What to say. Never an answer the child has not given (dictation says its word on purpose). */
   text: string;
-  /** Accessible name; defaults to "Read it aloud". */
+  /** Accessible name; defaults to "Listen: read it aloud". */
   label?: string;
   /** Visible words on the button. */
   children?: string;

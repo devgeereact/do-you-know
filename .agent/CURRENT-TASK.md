@@ -1,9 +1,16 @@
 # Current task
 
+## P2 slice 2.2: match and sort, Studio forms, import (branch `phase/p2-assign`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
+- Slice 2.1 is LIVE (migration 0018 applied after backup `db-pre-migrate-0018-20261107-130845.sql.gz`, code on `main` 301ed25; CI, Semgrep, Deploy passed).
+- Built: `assign` type (server grading with `invalid_pairs` refusals, tap-to-place screen), Studio forms and preview for build and assign, validator mirror, import lines, fix for the Studio dropping `build` on save. No migration needed.
+- Checks: `pnpm check` PASS (31 files, 329 unit) · backend all suites PASS (new `assign` 38; content 134; cms 160) · e2e 56/56 (4 repeat runs; one mobile assign failure once, not reproduced) · phone audit axe clean. NOT TESTED: Studio forms in a browser (admin sign-in), live site.
+- Next: your "approved" to release slice 2.2 (code only, no migration), then P3 (literacy and numeracy content).
+
+
 ## P2 slice 2.1: build questions and number tiles (branch `phase/p2-tap-types`, 7 Nov 2026, committed in parts, NOT pushed, NOT deployed)
 - Plan: `.planning/phases/P2-tap-types/P2-PLAN.md`. Built: the `build` question end to end (content format, server grading, forged-input refusals, dictation practice-only, Studio keeps them), tile screen, number keypad, read aloud. Audit: `docs/AUDIT.md` (7 Nov, P2).
 - **Needs migration 0018** (additive) applied on the server BEFORE the code is released: release the `.sql` alone, back up, run `bin/migrate.php`, then the code (see `docs/07-operations/DEPLOYMENT.md`). Needs your "approved".
-- Left for slice 2.2: `assign` (match, sort), Studio editing forms and import syntax for build and assign.
+
 - P1 is live (deployed 7 Nov, `fc7b41e`). Untimed default kept as built.
 
 ## P1 clean-up and foundations (branch `phase/p1-cleanup`, 7 Nov 2026, committed, NOT pushed, NOT deployed)

@@ -390,7 +390,7 @@ export const enGB = {
       answer: 'Answer',
       yourPick: 'Your pick',
     },
-    readAloud: { button: 'Listen', buttonWord: 'Hear the word', label: 'Read it aloud' },
+    readAloud: { button: 'Listen', buttonWord: 'Hear the word', label: 'Listen: read it aloud' },
     numbers: {
       label: 'Your number',
       empty: 'Tap the numbers',

@@ -2,6 +2,19 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · P2 slice 2.2: the assign question and the Studio forms (grading, answer hiding, authoring)
+
+Reviewer: Claude Code, focused review of `Game::tappedPairs`, `Game::answer` (assign branch), `Game::state`, `Content::validateAssign`, the snapshot and the Studio save path (security-audit skill, guidance mode, local tests only).
+
+- **Answer hiding.** The payload is the variant plus items and targets as per-attempt keyed handles, sorted by handle. The key (`target` on each stored item) is never sent; items and targets never appear with a stored id (tested on every served question). The right pairs are returned only by `/answer`, as labels. PASS.
+- **Grading is server-side and strict.** The input must be a list with exactly one `[item handle, target handle]` pair per item; every handle must be one this attempt issued, no item twice, and for a match no partner twice. 18 forged shapes (unknown, stored, foreign handles, an item used as a target, repeats, missing or extra pairs, objects, numbers, flat lists, strings, null), an `option_id` and a `tiles` body each return `400 invalid_pairs` and are never counted; extra fields such as a score are ignored. Mutation check: removing the repeated-item check and the match-partner check each made the suite fail. PASS.
+- **Fairness.** One try per question, so guessing gains nothing beyond the same odds as a choice question (a 3-item match has 6 arrangements). Timer, daily hand and ranked round treat assign like any other type (tested). PASS.
+- **Child safety.** Everything is a tap; no text box on the new screen (browser-tested at 390 px and desktop); stored answers are content labels. PASS.
+- **Studio.** Tile text is entered by signed-in staff only and rendered as text, never HTML. Authoring forms only build the exact shapes the server validates; the server remains the authority (blank and broken tile questions save as problems, never as errors). The previous save path silently dropped the `build` part; fixed and unit-tested. PASS.
+- **Phone audit** (390 px, axe-core): no violations and no sideways scroll on the assign screen. It found the Listen button's accessible name ("Read it aloud") did not contain its visible word; fixed.
+- **Flake, honest note:** one mobile assign spec failed in the first full browser run and did not fail in 5 later runs (4 full, 1 isolated); the cause was not captured, so it is not explained.
+- NOT TESTED: the Studio forms in a real browser (they need an admin sign-in; covered by 22 unit tests and the server round-trip tests only); a real device voice; the live database.
+
 ## 2026-11-07 · P2 slice 2.1: the build question (grading, answer hiding, child safety)
 
 Reviewer: Claude Code, focused review of `Game::state`, `Game::answer`, `Game::tappedLabels`, `Game::start`, `dealDaily`, `Content::validateBuild` and the new screens (security-audit skill, guidance mode, local tests only).

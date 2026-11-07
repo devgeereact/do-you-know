@@ -55,7 +55,7 @@ describe('ReadAloud', () => {
       { lang: 'en-GB', name: 'Daniel' },
     ];
     render(<ReadAloud text="What is a noun?" />);
-    await userEvent.click(screen.getByRole('button', { name: 'Read it aloud' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Listen: read it aloud' }));
     expect(speak).toHaveBeenCalledTimes(1);
     const said = speak.mock.calls[0]?.[0] as { text: string; lang: string; voice: Voice };
     expect(said.text).toBe('What is a noun?');

@@ -116,7 +116,7 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | POST /attempts/:id/challenge | `{}`, creates/reuses a 30-day friend link                                                                          |
 | POST /attempts               | practice/ranked with quiz_slug, daily, or challenge with challenge_code                                            |
 | POST /attempts/:id/next      | `{}`; original server clock retained on repeated next                                                              |
-| POST /attempts/:id/answer    | `{ "option_id": "…" }`, `{ "value": 5 }` or `{ "tiles": ["handle", …] }` (build); server grades/times                |
+| POST /attempts/:id/answer    | `{ "option_id": "…" }`, `{ "value": 5 }` or `{ "tiles": ["handle", …] }` (build) or `{ "pairs": [["item","target"], …] }` (assign); server grades/times                |
 | POST /attempts/:id/finish    | `{}`; owner-only result/review, idempotent                                                                         |
 
 Staff routes under `/admin/` (Clerk subject in `admin_subjects` only) are documented at the top of

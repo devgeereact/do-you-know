@@ -54,7 +54,7 @@ So the real engine change is two types, `build` and `assign`, each with variants
 - **After answering:** the right sequence and the one-line reason; wrong answers join the retry-later queue.
 - **Limits:** up to 12 slots, 20 tiles, labels up to 24 characters, so it fits a phone.
 
-### 2.2 `assign`: item to target (match, sort)
+### 2.2 `assign`: item to target (match, sort) — BUILT 7 Nov 2026 (slice 2.2, not yet released)
 
 - **Payload:** `items` and `targets` (handles and labels, shuffled). No key.
 - **Child's answer:** a list of item-to-target pairs; every item must be placed before it can be sent.
