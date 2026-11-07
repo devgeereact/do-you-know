@@ -480,6 +480,7 @@ final class AdminContent
                 (bool) preg_match('/^(choice|exactly one option|option)/', $message) => 'options',
                 (bool) preg_match('/^boolean/', $message) => 'answer',
                 (bool) preg_match('/^slider/', $message) => 'slider',
+                (bool) preg_match('/^build/', $message) => 'build',
                 (bool) preg_match('/^duplicate prompt/', $message) => 'prompt',
                 (bool) preg_match('/^(prompt|explanation|source_url|review_by|scene|type)\b/', $message, $f) => $f[1],
                 default => 'question',
@@ -550,6 +551,12 @@ final class AdminContent
             $out['answer'] = (bool) ($true['is_correct'] ?? false);
         } elseif ($q['type'] === 'slider') {
             $out['slider'] = $q['slider'];
+        } elseif ($q['type'] === 'build') {
+            // Back to the content-file shape: tiles are plain labels again (the keyed ids are rebuilt on publish).
+            $b = $q['build'];
+            $out['build'] = ['variant' => $b['variant'], 'tiles' => array_column($b['tiles'], 'label'), 'answers' => $b['answers']]
+                + (isset($b['template']) ? ['template' => $b['template']] : [])
+                + (isset($b['speak']) ? ['speak' => $b['speak']] : []);
         }
         $out['explanation'] = $q['explanation'] ?? null;
         $out['source_url'] = $q['source_url'] ?? null;

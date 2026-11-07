@@ -9,7 +9,7 @@ namespace Dyk;
  */
 final class Content
 {
-    public const TYPES = ['choice', 'boolean', 'slider'];
+    public const TYPES = ['choice', 'boolean', 'slider', 'build'];
     public const DIFFICULTIES = ['easy', 'medium', 'hard'];
     private const SLUG = '/^[a-z0-9]+(?:-[a-z0-9]+)*$/D';
     /** Quiz slugs that clash with API routes such as GET /quizzes/trending. */
@@ -18,7 +18,9 @@ final class Content
         'curriculum_tags', 'time_limit_seconds', 'shuffle_options', 'is_ranked', 'round_size', 'questions'];
     /** Questions in one round when a quiz file does not set round_size. */
     public const DEFAULT_ROUND = 10;
-    private const QUESTION_KEYS = ['type', 'prompt', 'options', 'answer', 'slider', 'explanation', 'source_url', 'review_by', 'scene'];
+    private const QUESTION_KEYS = ['type', 'prompt', 'options', 'answer', 'slider', 'build', 'explanation', 'source_url', 'review_by', 'scene'];
+    public const BUILD_VARIANTS = ['spell', 'gap', 'order'];
+    private const BUILD_KEYS = ['variant', 'tiles', 'answers', 'speak', 'template'];
     /** Cosmetic backdrops a question (or a category) may name. Keep identical to the frontend list. */
     public const SCENES = ['ocean', 'space', 'jungle', 'desert', 'arctic', 'body', 'past', 'city'];
     private const SLIDER_KEYS = ['min', 'max', 'step', 'unit', 'correct', 'accept_min', 'accept_max'];
@@ -234,6 +236,12 @@ final class Content
         if ($round !== null && (!is_int($round) || $round < 3 || $round > count($questions))) {
             $e[] = "$label: round_size must be null or 3 up to the number of questions";
         }
+        if (($quiz['is_ranked'] ?? true) === true) {
+            $spoken = count(array_filter($questions, static fn($q): bool => is_array($q) && isset($q['build']['speak'])));
+            if (count($questions) - $spoken < 3) {
+                $e[] = "$label: a ranked quiz needs at least 3 questions that are not dictation";
+            }
+        }
         $prompts = [];
         foreach ($questions as $i => $q) {
             $at = "$label: question " . ($i + 1);
@@ -264,7 +272,7 @@ final class Content
         }
         $type = $q['type'] ?? null;
         if (!in_array($type, self::TYPES, true)) {
-            return array_merge($e, ["$at: type must be choice, boolean or slider"]);
+            return array_merge($e, ["$at: type must be choice, boolean, slider or build"]);
         }
         if (!self::text($q['prompt'] ?? null, 300)) {
             $e[] = "$at: prompt required (up to 300 characters)";
@@ -284,7 +292,7 @@ final class Content
             $e[] = "$at: review_by must be a date like 2027-10-17";
         }
         if ($type === 'choice') {
-            if (isset($q['answer']) || isset($q['slider'])) {
+            if (isset($q['answer']) || isset($q['slider']) || isset($q['build'])) {
                 $e[] = "$at: choice questions use options only";
             }
             $options = $q['options'] ?? null;
@@ -308,19 +316,130 @@ final class Content
                 $e[] = "$at: option labels must be distinct";
             }
         } elseif ($type === 'boolean') {
-            if (isset($q['options']) || isset($q['slider'])) {
+            if (isset($q['options']) || isset($q['slider']) || isset($q['build'])) {
                 $e[] = "$at: boolean questions use answer only";
             }
             if (!is_bool($q['answer'] ?? null)) {
                 $e[] = "$at: boolean needs answer true or false";
             }
-        } else {
-            if (isset($q['options']) || isset($q['answer'])) {
+        } elseif ($type === 'slider') {
+            if (isset($q['options']) || isset($q['answer']) || isset($q['build'])) {
                 $e[] = "$at: slider questions use slider only";
             }
             $e = array_merge($e, self::validateSlider($q['slider'] ?? null, $at));
+        } else {
+            if (isset($q['options']) || isset($q['answer']) || isset($q['slider'])) {
+                $e[] = "$at: build questions use build only";
+            }
+            $e = array_merge($e, self::validateBuild($q['build'] ?? null, $at));
         }
         return $e;
+    }
+
+    /** A tile label: plain text, 1 to 24 characters, no control characters. */
+    private static function tileLabel(mixed $v): bool
+    {
+        return self::text($v, 24);
+    }
+
+    /**
+     * The `build` question (spell, gap, order): a child taps tiles into slots. The tiles may include
+     * decoys; the accepted answers are lists of tile labels in order. Everything the child could use
+     * to cheat stays on the server (see Game::state for what is sent).
+     */
+    private static function validateBuild(mixed $b, string $at): array
+    {
+        if (!is_array($b) || array_is_list($b)) {
+            return ["$at: build needs variant, tiles and answers"];
+        }
+        $e = [];
+        if ($extra = array_diff(array_keys($b), self::BUILD_KEYS)) {
+            $e[] = "$at: build has unknown keys " . implode(', ', $extra);
+        }
+        $variant = $b['variant'] ?? null;
+        if (!in_array($variant, self::BUILD_VARIANTS, true)) {
+            return array_merge($e, ["$at: build variant must be spell, gap or order"]);
+        }
+        $tiles = $b['tiles'] ?? null;
+        if (!is_array($tiles) || !array_is_list($tiles) || count($tiles) < 2 || count($tiles) > 20) {
+            return array_merge($e, ["$at: build needs 2 to 20 tiles"]);
+        }
+        foreach ($tiles as $tile) {
+            if (!self::tileLabel($tile)) {
+                return array_merge($e, ["$at: build: every tile needs a label of up to 24 characters"]);
+            }
+        }
+        $answers = $b['answers'] ?? null;
+        if (!is_array($answers) || !array_is_list($answers) || count($answers) < 1 || count($answers) > 4) {
+            return array_merge($e, ["$at: build needs 1 to 4 accepted answers"]);
+        }
+        $slots = null;
+        $seen = [];
+        $available = array_count_values(array_map(static fn(string $t): string => mb_strtolower(trim($t)), $tiles));
+        foreach ($answers as $answer) {
+            if (!is_array($answer) || !array_is_list($answer) || count($answer) < 1 || count($answer) > 12) {
+                return array_merge($e, ["$at: build: each accepted answer is a list of 1 to 12 tiles"]);
+            }
+            $slots ??= count($answer);
+            if (count($answer) !== $slots) {
+                $e[] = "$at: build: every accepted answer must have the same number of tiles";
+            }
+            $need = [];
+            foreach ($answer as $label) {
+                if (!self::tileLabel($label)) {
+                    return array_merge($e, ["$at: build: every answer tile needs a label of up to 24 characters"]);
+                }
+                $key = mb_strtolower(trim($label));
+                $need[$key] = ($need[$key] ?? 0) + 1;
+            }
+            foreach ($need as $key => $count) {
+                if (($available[$key] ?? 0) < $count) {
+                    $e[] = "$at: build: an accepted answer needs the tile '$key' more often than the tiles provide";
+                    break;
+                }
+            }
+            $fingerprint = implode("\x1f", array_map(static fn(string $t): string => mb_strtolower(trim($t)), $answer));
+            if (isset($seen[$fingerprint])) {
+                $e[] = "$at: build: the same accepted answer is listed twice";
+            }
+            $seen[$fingerprint] = true;
+        }
+        if ($variant === 'spell') {
+            foreach ($tiles as $tile) {
+                if (mb_strlen(trim($tile)) !== 1) {
+                    $e[] = "$at: build: spell tiles are single letters";
+                    break;
+                }
+            }
+        }
+        if ($variant === 'order') {
+            if (count($tiles) !== $slots || count($available) !== count($tiles)) {
+                $e[] = "$at: build: order uses every tile exactly once, with no decoys and no repeats";
+            }
+        }
+        $template = $b['template'] ?? null;
+        if ($variant === 'gap') {
+            if (!self::text($template, 200) || ($slots !== null && substr_count($template, '___') !== $slots)) {
+                $e[] = "$at: build: a gap question needs a sentence with one ___ for each tile in the answer";
+            }
+        } elseif (array_key_exists('template', $b)) {
+            $e[] = "$at: build: only a gap question has a sentence template";
+        }
+        if (array_key_exists('speak', $b)) {
+            $speak = $b['speak'];
+            if ($variant !== 'spell') {
+                $e[] = "$at: build: only a spell question can be read aloud as dictation";
+            } elseif (!self::text($speak, 60) || mb_strtolower(trim($speak)) !== mb_strtolower(implode('', $answers[0]))) {
+                $e[] = "$at: build: spoken text must be the word being spelled";
+            }
+        }
+        return $e;
+    }
+
+    /** A dictation question speaks its answer, so it is practice only (never ranked, never the daily). */
+    public static function isDictation(array $question): bool
+    {
+        return $question['type'] === 'build' && isset($question['build']['speak']);
     }
 
     private static function validateSlider(mixed $s, string $at): array
@@ -446,10 +565,23 @@ final class Content
                     ['id' => self::id($qid, 'false'), 'label' => 'False', 'is_correct' => $q['answer'] === false],
                 ];
             }
+            $build = null;
+            if ($q['type'] === 'build') {
+                $b = $q['build'];
+                $build = ['variant' => $b['variant'],
+                    'tiles' => array_map(static fn(string $label, int $k): array => ['id' => self::id($qid, 'tile', (string) $k, $label), 'label' => $label], $b['tiles'], array_keys($b['tiles'])),
+                    'answers' => $b['answers']];
+                foreach (['template', 'speak'] as $key) {
+                    if (isset($b[$key])) {
+                        $build[$key] = $b[$key];
+                    }
+                }
+            }
             $s = $q['type'] === 'slider' ? $q['slider'] : null;
             $out[] = [
                 'id' => $qid, 'type' => $q['type'], 'prompt' => $q['prompt'], 'image_url' => null,
                 'options' => $options,
+                'build' => $build,
                 'slider' => $s === null ? null : ['min' => $s['min'], 'max' => $s['max'], 'step' => $s['step'],
                     'unit' => $s['unit'] ?? null, 'correct' => $s['correct'], 'accept_min' => $s['accept_min'], 'accept_max' => $s['accept_max']],
                 'explanation' => $q['explanation'], 'source_url' => ($q['source_url'] ?? '') === '' ? null : $q['source_url'], 'review_by' => $q['review_by'],

@@ -20,12 +20,21 @@ final class Game
     public static function publicQuestion(array $q, ?string $categoryScene = null, ?string $quizTitle = null): array
     {
         $slider = $q['slider'] ?? null;
-        return [
+        $out = [
             'id' => $q['id'], 'type' => $q['type'], 'prompt' => $q['prompt'],
             'image_url' => $q['image_url'] ?? null, 'scene' => Content::sceneFor($q, $categoryScene, $q['id'], $quizTitle),
             'options' => array_map(fn(array $o): array => ['id' => $o['id'], 'label' => $o['label']], $q['options'] ?? []),
             'slider' => $slider ? ['min' => $slider['min'], 'max' => $slider['max'], 'step' => $slider['step'], 'unit' => $slider['unit'] ?? null] : null,
         ];
+        if ($q['type'] === 'build') {
+            // Slots and tiles only. The accepted sequences stay on the server; the spoken word is sent only for dictation.
+            $b = $q['build'];
+            $out['build'] = ['variant' => $b['variant'], 'slots' => count($b['answers'][0]),
+                'tiles' => array_map(static fn(array $t): array => ['id' => $t['id'], 'label' => $t['label']], $b['tiles'])]
+                + (isset($b['template']) ? ['template' => $b['template']] : [])
+                + (isset($b['speak']) ? ['speak' => $b['speak']] : []);
+        }
+        return $out;
     }
 
     private function transaction(callable $fn): array
@@ -92,6 +101,11 @@ final class Game
             foreach ($q['options'] as $i => $o) { $q['options'][$i]['id'] = $this->handle($a['id'], $o['id']); }
             // Ordering by the keyed handle: a player cannot recompute it from what they are sent.
             if ($a['shuffle_options']) { usort($q['options'], static fn(array $left, array $right): int => strcmp($left['id'], $right['id'])); }
+            if (isset($q['build'])) {
+                // Tiles are always in handle order, whatever the quiz says: the file lists them in an order a child could read.
+                foreach ($q['build']['tiles'] as $i => $t) { $q['build']['tiles'][$i]['id'] = $this->handle($a['id'], $t['id']); }
+                usort($q['build']['tiles'], static fn(array $left, array $right): int => strcmp($left['id'], $right['id']));
+            }
         }
         $deadline = $a['current_sent_at'] !== null && $a['time_limit_seconds'] !== null
             ? (new \DateTimeImmutable($a['current_sent_at'], new \DateTimeZone('UTC')))->modify('+' . (int) $a['time_limit_seconds'] . ' seconds')->format('Y-m-d\TH:i:s.v\Z')
@@ -180,7 +194,9 @@ final class Game
                 $timer = $creator['time_limit_seconds'];
                 $shuffle = $creator['shuffle_options'];
             } else {
-                $ids = array_column($snapshot, 'id');
+                // Dictation speaks its answer, so it is practice only: never in a ranked round (or the daily).
+                $ids = array_column($mode === 'ranked' ? array_filter($snapshot, static fn(array $q): bool => !Content::isDictation($q)) : $snapshot, 'id');
+                if (count($ids) < 3) { throw new \RuntimeException('quiz_snapshot_invalid'); }
                 $hand = $daily ? $this->dealDaily($daily['id']) : null;
                 $order = $hand !== null
                     ? array_column($hand, 'question')
@@ -223,8 +239,8 @@ final class Game
         $bank = $this->db->prepare(
             "SELECT q.current_version_id AS version_id,jt.qid FROM quizzes q
              JOIN quiz_versions v ON v.id=q.current_version_id AND v.quiz_id=q.id
-             JOIN JSON_TABLE(v.snapshot,'$[*]' COLUMNS (qid CHAR(36) PATH '$.id')) AS jt
-             WHERE " . Catalog::LIVE . ' AND (q.age_min IS NULL OR q.age_min<18) ORDER BY q.id,jt.qid');
+             JOIN JSON_TABLE(v.snapshot,'$[*]' COLUMNS (qid CHAR(36) PATH '$.id', speak VARCHAR(80) PATH '$.build.speak')) AS jt
+             WHERE " . Catalog::LIVE . ' AND jt.speak IS NULL AND (q.age_min IS NULL OR q.age_min<18) ORDER BY q.id,jt.qid');
         $bank->execute();
         $versionOf = [];
         foreach ($bank->fetchAll() as $row) { $versionOf[$row['qid']] ??= $row['version_id']; }
@@ -323,6 +339,30 @@ final class Game
         });
     }
 
+    /**
+     * The labels a child tapped, in order. $given must be a list of exactly as many tile handles as there
+     * are slots, each one a handle this attempt sent, none repeated. Anything else is a 400 invalid_tiles
+     * and is never counted.
+     *
+     * @return list<string>
+     */
+    private function tappedLabels(string $attemptId, array $build, mixed $given): array
+    {
+        if (!is_array($given) || !array_is_list($given) || count($given) !== count($build['answers'][0])) {
+            throw new ApiError('invalid_tiles');
+        }
+        $labelOf = [];
+        foreach ($build['tiles'] as $t) { $labelOf[$this->handle($attemptId, $t['id'])] = $t['label']; }
+        $labels = [];
+        $used = [];
+        foreach ($given as $handle) {
+            if (!is_string($handle) || !isset($labelOf[$handle]) || isset($used[$handle])) { throw new ApiError('invalid_tiles'); }
+            $used[$handle] = true;
+            $labels[] = $labelOf[$handle];
+        }
+        return $labels;
+    }
+
     public function answer(string $id, array $input): array
     {
         return $this->transaction(function () use ($id, $input): array {
@@ -334,7 +374,7 @@ final class Game
             $elapsed = (int)$clock['elapsed'];
             $limit = $a['time_limit_seconds'] !== null ? (int)$a['time_limit_seconds']*1000 : null;
             $timedOut = $limit !== null && $elapsed > $limit+1500;
-            $correct = false; $option = null; $value = null; $correctIds = [];
+            $correct = false; $option = null; $value = null; $correctIds = []; $chosen = null; $correctTiles = null;
             if (in_array($q['type'], ['choice','boolean'], true)) {
                 foreach ($q['options'] as $o) { if ($o['is_correct']) { $correctIds[] = $this->handle($id, $o['id']); } }
                 if (!$timedOut) {
@@ -348,17 +388,33 @@ final class Game
                     if ((!is_int($value) && !is_float($value)) || !is_finite((float)$value) || $value < $q['slider']['min'] || $value > $q['slider']['max']) { throw new ApiError('invalid_value'); }
                     $correct = $value >= $q['slider']['accept_min'] && $value <= $q['slider']['accept_max'];
                 }
+            } elseif ($q['type'] === 'build') {
+                $correctTiles = $q['build']['answers'][0];
+                if (!$timedOut) {
+                    $chosen = $this->tappedLabels($id, $q['build'], $input['tiles'] ?? null);
+                    $norm = static fn(string $label): string => mb_strtolower(trim($label));
+                    $got = array_map($norm, $chosen);
+                    foreach ($q['build']['answers'] as $accepted) {
+                        if (array_map($norm, $accepted) === $got) { $correct = true; break; }
+                    }
+                }
             } else { throw new \RuntimeException('question_type_invalid'); }
             $position = (int)$a['current_index']+1;
             $total = count(json_decode($a['question_order'], true));
             $time = min($elapsed, $limit ?? 60000);
-            Database::execute($this->db, 'INSERT INTO attempt_answers (attempt_id,position,question_id,chosen_option_id,chosen_value,is_correct,timed_out,time_ms) VALUES (?,?,?,?,?,?,?,?)', [$id,$position,$q['id'],$option,$value,(int)$correct,(int)$timedOut,$time]);
+            Database::execute($this->db, 'INSERT INTO attempt_answers (attempt_id,position,question_id,chosen_option_id,chosen_value,chosen_json,is_correct,timed_out,time_ms) VALUES (?,?,?,?,?,?,?,?,?)', [$id,$position,$q['id'],$option,$value,$chosen === null ? null : json_encode($chosen, JSON_THROW_ON_ERROR),(int)$correct,(int)$timedOut,$time]);
             Database::execute($this->db, 'UPDATE attempts SET answered_count=answered_count+1,correct_count=correct_count+?,answer_time_ms=answer_time_ms+?,current_index=current_index+1,current_sent_at=NULL WHERE id=?', [(int)$correct,$time,$id]);
-            return ['is_correct'=>$correct,'timed_out'=>$timedOut,'correct_option_ids'=>$correctIds,
+            return ['is_correct'=>$correct,'timed_out'=>$timedOut,'correct_option_ids'=>$correctIds,'correct_tiles'=>$correctTiles,
                 'correct_value'=>$q['slider']['correct']??null,'accept_min'=>$q['slider']['accept_min']??null,
                 'accept_max'=>$q['slider']['accept_max']??null,'explanation'=>$q['explanation']??null,
                 'source_url'=>$q['source_url']??null,'position'=>$position,'total'=>$total,'is_last'=>$position===$total];
         });
+    }
+
+    /** Tiles shown as a word or a phrase: letters run together, words and cards are spaced. */
+    private static function joinTiles(string $variant, array $labels): string
+    {
+        return implode($variant === 'spell' ? '' : ' ', $labels);
     }
 
     public function finish(string $id): array
@@ -387,8 +443,11 @@ final class Game
                 $right=array_values(array_filter($q['options']??[], fn(array $o): bool => (bool)$o['is_correct']));
                 $review[]=['position'=>(int)$answer['position'],'prompt'=>$q['prompt'],'type'=>$q['type'],
                     'is_correct'=>(bool)$answer['is_correct'],'timed_out'=>(bool)$answer['timed_out'],
-                    'your_answer'=>$answer['chosen_option_id'] ? ($labels[$answer['chosen_option_id']]??null) : ($answer['chosen_value']!==null?(float)$answer['chosen_value']:null),
-                    'correct_answer'=>$q['type']==='slider'?($q['slider']['correct']??null):implode(', ',array_column($right,'label')),
+                    'your_answer'=>$q['type']==='build'
+                        ? ($answer['chosen_json']!==null ? self::joinTiles($q['build']['variant'], json_decode($answer['chosen_json'], true)) : null)
+                        : ($answer['chosen_option_id'] ? ($labels[$answer['chosen_option_id']]??null) : ($answer['chosen_value']!==null?(float)$answer['chosen_value']:null)),
+                    'correct_answer'=>$q['type']==='build' ? self::joinTiles($q['build']['variant'], $q['build']['answers'][0])
+                        : ($q['type']==='slider'?($q['slider']['correct']??null):implode(', ',array_column($right,'label'))),
                     'explanation'=>$q['explanation']??null,'source_url'=>$q['source_url']??null,'time_ms'=>(int)$answer['time_ms']];
             }
             $profile=Database::one($this->db,'SELECT nickname,streak_current FROM profiles WHERE id=?',[$this->userId]);

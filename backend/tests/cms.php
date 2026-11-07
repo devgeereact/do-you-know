@@ -5,6 +5,7 @@ declare(strict_types=1);
 // admin_subjects, and .local-test/jwt-test-private.pem (or DYK_TEST_JWT_PRIVATE), as admin.php.
 require __DIR__.'/http.php';
 use Dyk\Competition;
+use Dyk\Content;
 use Dyk\Database;
 use Firebase\JWT\JWT;
 
@@ -339,6 +340,31 @@ for ($i = 0; $i < 9; $i++) {
 request('POST', '/attempts/'.$state['attempt_id'].'/finish', [], $mixer['token']);
 $cDetail = admin('GET', '/quizzes/'.$mixIds['c']['quiz'])['body']['questions'];
 check('the Studio credits mixed daily answers to the quiz each question came from, not the anchor', array_sum(array_map(fn($q) => $q['stats']['answered'], $cDetail)) === 3);
+
+// A published quiz holding `build` questions opens in the Studio with its tiles intact and survives a save
+// (the editing forms come in the next step; until then nothing may be lost).
+$buildFile = ['slug' => 'cms-build-'.$tag, 'title' => 'Cms build '.$tag, 'questions' => [
+    ['type' => 'build', 'prompt' => 'Spell the yellow fruit '.$word.'.', 'build' => ['variant' => 'spell', 'tiles' => ['b', 'a', 'n', 'a', 'n', 'a', 'x'], 'answers' => [['b', 'a', 'n', 'a', 'n', 'a']], 'speak' => 'banana'],
+        'explanation' => 'Because.', 'source_url' => null, 'review_by' => '2027-10-17'],
+    ['type' => 'build', 'prompt' => 'Finish it '.$word.'.', 'build' => ['variant' => 'gap', 'template' => 'The cat ___ on the ___.', 'tiles' => ['sat', 'mat', 'dog'], 'answers' => [['sat', 'mat']]],
+        'explanation' => 'Because.', 'source_url' => null, 'review_by' => '2027-10-17'],
+    ['type' => 'build', 'prompt' => 'Order the day '.$word.'.', 'build' => ['variant' => 'order', 'tiles' => ['morning', 'noon', 'night'], 'answers' => [['morning', 'noon', 'night']]],
+        'explanation' => 'Because.', 'source_url' => null, 'review_by' => '2027-10-17'],
+]];
+$buildId = Database::uuid(); $buildVersion = Database::uuid();
+Database::execute($db, "INSERT INTO quizzes (id,slug,title,intro,category_id,status,current_version_id,is_ranked) VALUES (?,?,?,?,?,'published',?,0)", [$buildId, $buildFile['slug'], $buildFile['title'], 'Tap the tiles.', $mixCategory, $buildVersion]);
+Database::execute($db, 'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)', [$buildVersion, $buildId, json_encode(Content::snapshot($buildFile))]);
+$detail = admin('GET', '/quizzes/'.$buildId)['body'];
+$first = $detail['questions'][0] ?? [];
+check('a build question opens in the Studio with its tiles, answers and spoken word', ($first['type'] ?? null) === 'build'
+    && ($first['build']['tiles'] ?? null) === ['b', 'a', 'n', 'a', 'n', 'a', 'x'] && ($first['build']['answers'] ?? null) === [['b', 'a', 'n', 'a', 'n', 'a']]
+    && ($first['build']['speak'] ?? null) === 'banana' && ($detail['questions'][1]['build']['template'] ?? null) === 'The cat ___ on the ___.');
+check('a build quiz has no problems in the Studio', ($detail['problems'] ?? null) === []);
+$saved = admin('POST', '/quizzes/'.$buildId, ['questions' => $detail['questions']]);
+check('saving the questions back loses nothing', $saved['status'] === 200 && array_map(fn($q) => $q['build'], $saved['body']['questions']) === array_map(fn($q) => $q['build'], $detail['questions']) && $saved['body']['problems'] === []);
+$broken = $detail['questions']; $broken[1]['build']['template'] = 'The cat ___ on the mat.';
+$problems = admin('POST', '/quizzes/'.$buildId, ['questions' => $broken])['body']['problems'] ?? [];
+check('a broken build question is a problem on its build field', count($problems) >= 1 && ($problems[0]['index'] ?? null) === 1 && ($problems[0]['field'] ?? null) === 'build');
 
 // ---- Feedback inbox ----
 $adult = request('POST', '/guest-sessions', [])['body'];

@@ -61,6 +61,66 @@ foreach ($bad as $name => $mutate) {
 $noSource = $good; unset($noSource['questions'][1]['source_url']);
 check('validator accepts a question with no source', $validate($noSource) === []);
 
+// ---- The `build` question: spell, fill the gap, order the cards (all tapped, never typed) ----
+$meta = ['explanation' => 'Because.', 'source_url' => 'https://example.org/d', 'review_by' => '2027-10-17'];
+$spell = ['type' => 'build', 'prompt' => 'Spell the yellow fruit monkeys like.', 'build' => ['variant' => 'spell',
+    'tiles' => ['b', 'a', 'n', 'a', 'n', 'a', 'x'], 'answers' => [['b', 'a', 'n', 'a', 'n', 'a']]]] + $meta;
+$gap = ['type' => 'build', 'prompt' => 'Finish the sentence.', 'build' => ['variant' => 'gap', 'template' => 'The cat ___ on the ___.',
+    'tiles' => ['sat', 'mat', 'dog', 'ran'], 'answers' => [['sat', 'mat']]]] + $meta;
+$order = ['type' => 'build', 'prompt' => 'Put these in order.', 'build' => ['variant' => 'order',
+    'tiles' => ['first', 'then', 'last'], 'answers' => [['first', 'then', 'last']]]] + $meta;
+$withBuild = $good; $withBuild['questions'] = [...$good['questions'], $spell, $gap, $order];
+check('validator accepts spell, gap and order questions', $validate($withBuild) === []);
+$dictation = $spell; $dictation['prompt'] = 'Listen and spell the word.'; $dictation['build']['speak'] = 'banana';
+$withDictation = $good; $withDictation['questions'] = [...$good['questions'], $dictation];
+check('validator accepts a dictation question in a practice quiz', $validate($withDictation) === []);
+$twoAnswers = $withBuild; $twoAnswers['questions'][3]['build']['answers'][] = ['b', 'a', 'n', 'a', 'n', 'x'];
+$twoAnswers['questions'][3]['build']['tiles'][] = 'x';
+$bq = fn(callable $m): array => $m($withBuild);
+$badBuild = [
+    'unknown variant' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['variant'] = 'drag'),
+    'no tiles' => fn(array $q) => tap($q, function (&$x) { unset($x['questions'][3]['build']['tiles']); }),
+    'one tile' => fn(array $q) => tap($q, function (&$x) { $x['questions'][5]['build'] = ['variant' => 'order', 'tiles' => ['only'], 'answers' => [['only']]]; }),
+    'answer uses a tile that is not there' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['answers'] = [['b', 'a', 'n', 'a', 'n', 'z']]),
+    'answer needs more of a letter than the tiles hold' => fn(array $q) => tap($q, function (&$x) { $x['questions'][3]['build']['tiles'] = ['b', 'a', 'n', 'x']; }),
+    'accepted answers of different lengths' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['answers'][] = ['b', 'a', 'n']),
+    'no answers' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['answers'] = []),
+    'five accepted answers' => fn(array $q) => tap($q, function (&$x) { $x['questions'][3]['build']['answers'] = array_fill(0, 5, ['b', 'a', 'n', 'a', 'n', 'a']); }),
+    'the same accepted answer twice' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['answers'][] = ['b', 'a', 'n', 'a', 'n', 'a']),
+    'a spell tile of two letters' => fn(array $q) => tap($q, function (&$x) { $x['questions'][3]['build']['tiles'] = ['ba', 'n', 'a', 'n', 'a']; $x['questions'][3]['build']['answers'] = [['ba', 'n', 'a', 'n', 'a']]; }),
+    'order with a decoy tile' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][5]['build']['tiles'][] = 'extra'),
+    'order with repeated tiles' => fn(array $q) => tap($q, function (&$x) { $x['questions'][5]['build']['tiles'] = ['first', 'first', 'last']; $x['questions'][5]['build']['answers'] = [['first', 'first', 'last']]; }),
+    'gap template with the wrong number of gaps' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][4]['build']['template'] = 'The cat ___ on the mat.'),
+    'gap without a template' => fn(array $q) => tap($q, function (&$x) { unset($x['questions'][4]['build']['template']); }),
+    'a template on a spell question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['template'] = 'Spell ___.'),
+    'spoken text on a gap question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][4]['build']['speak'] = 'sat mat'),
+    'spoken text that is not the word' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['speak'] = 'bandana'),
+    'thirteen slots' => fn(array $q) => tap($q, function (&$x) { $w = array_fill(0, 13, 'a'); $x['questions'][3]['build']['tiles'] = $w; $x['questions'][3]['build']['answers'] = [$w]; }),
+    'a tile label of 25 characters' => fn(array $q) => tap($q, function (&$x) { $x['questions'][4]['build']['tiles'][2] = str_repeat('w', 25); }),
+    'twenty-one tiles' => fn(array $q) => tap($q, function (&$x) { $x['questions'][4]['build']['tiles'] = array_map(fn($i) => "w$i", range(0, 20)); $x['questions'][4]['build']['answers'] = [['w0', 'w1']]; }),
+    'a control character in a tile' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][4]['build']['tiles'][2] = "do\x07g"),
+    'build data on a choice question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][0]['build'] = $x['questions'][3]['build']),
+    'options on a build question' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['options'] = $x['questions'][0]['options']),
+    'a build question with no build data' => fn(array $q) => tap($q, function (&$x) { unset($x['questions'][3]['build']); }),
+    'an unknown key inside build' => fn(array $q) => tap($q, fn(&$x) => $x['questions'][3]['build']['hint'] = 'x'),
+];
+function tap(array $q, callable $f): array { $f($q); return $q; }
+foreach ($badBuild as $name => $mutate) {
+    check('validator rejects a build question with '.$name, $validate($mutate($withBuild)) !== []);
+}
+$dict = fn(string $prompt, string $word): array => ['type' => 'build', 'prompt' => $prompt, 'build' => ['variant' => 'spell',
+    'tiles' => [...str_split($word), 'x'], 'answers' => [str_split($word)], 'speak' => $word]] + $meta;
+$rankedDictation = $good;
+$rankedDictation['is_ranked'] = true;
+$rankedDictation['questions'] = [$dict('Spell the yellow fruit.', 'banana'), $dict('Spell the green hopper.', 'frog'), $dict('Spell the cold white stuff.', 'snow')];
+check('a ranked quiz needs at least three questions that are not dictation', $validate($rankedDictation) !== []);
+$rankedDictation['is_ranked'] = false;
+check('the same dictation quiz is fine for practice', $validate($rankedDictation) === []);
+$snap = Content::snapshot($withBuild)[3];
+check('a build snapshot holds keyed tiles and the accepted sequences', $snap['type'] === 'build' && count($snap['build']['tiles']) === 7
+    && $snap['build']['answers'] === [['b', 'a', 'n', 'a', 'n', 'a']] && count(array_unique(array_column($snap['build']['tiles'], 'id'))) === 7);
+check('build snapshots are deterministic', Content::snapshot($withBuild) === Content::snapshot($withBuild));
+
 // Directory-level checks: duplicate slugs and file naming.
 $tmp = sys_get_temp_dir().'/dyk-content-'.bin2hex(random_bytes(4));
 $writeDir = function (string $dir, array $quizzes) use ($root): void {
