@@ -121,6 +121,11 @@ check('a build snapshot holds keyed tiles and the accepted sequences', $snap['ty
     && $snap['build']['answers'] === [['b', 'a', 'n', 'a', 'n', 'a']] && count(array_unique(array_column($snap['build']['tiles'], 'id'))) === 7);
 check('build snapshots are deterministic', Content::snapshot($withBuild) === Content::snapshot($withBuild));
 
+// A comprehension question may carry a short passage: up to 600 characters, no more.
+$longOk = $good; $longOk['questions'][0]['prompt'] = str_repeat('a', 600);
+$longBad = $good; $longBad['questions'][0]['prompt'] = str_repeat('a', 601);
+check('a prompt of 600 characters is accepted and 601 is not', $validate($longOk) === [] && $validate($longBad) !== []);
+
 // ---- The `assign` question: match pairs, sort into groups (each item is tapped to its target) ----
 $match = ['type' => 'assign', 'prompt' => 'Match each animal to its home.', 'assign' => ['variant' => 'match',
     'targets' => ['Sea', 'Nest', 'Burrow'], 'items' => [['label' => 'Fish', 'to' => 'Sea'], ['label' => 'Bird', 'to' => 'Nest'], ['label' => 'Rabbit', 'to' => 'Burrow']]]] + $meta;

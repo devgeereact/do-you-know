@@ -414,7 +414,13 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                     ref={promptRef}
                     tabIndex={-1}
                     data-q-prompt
-                    className="mx-auto mb-6 mt-3 max-w-[22ch] text-balance font-display text-[1.6rem] font-extrabold leading-[1.08] focus:outline-none md:text-[2.4rem]"
+                    className={cn(
+                      'mx-auto mb-6 mt-3 font-display font-extrabold focus:outline-none',
+                      // A short passage with its question reads as text, not as a headline.
+                      question.prompt.length > 140
+                        ? 'max-w-[44ch] text-pretty text-left text-[1.15rem] font-bold leading-snug md:text-[1.45rem]'
+                        : 'max-w-[22ch] text-balance text-[1.6rem] leading-[1.08] md:text-[2.4rem]',
+                    )}
                   >
                     {question.prompt}
                   </h1>

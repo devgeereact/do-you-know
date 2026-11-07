@@ -59,6 +59,8 @@ interface Meta {
   ks: KeyStage | '';
   difficulty: Difficulty;
   time_limit_seconds: number | null;
+  /** Off for a practice-only set (for example one made of dictation questions). */
+  is_ranked: boolean;
 }
 
 type SaveState = 'idle' | 'pending' | 'saving' | 'saved' | 'error';
@@ -79,6 +81,7 @@ function metaOf(detail: QuizDetail): Meta {
     ks: q.ks ?? '',
     difficulty: q.difficulty ?? 'medium',
     time_limit_seconds: q.time_limit_seconds,
+    is_ranked: q.is_ranked !== false,
   };
 }
 
@@ -183,6 +186,7 @@ export function EditorScreen(): JSX.Element {
           ks: m.ks || null,
           difficulty: m.difficulty,
           time_limit_seconds: m.time_limit_seconds,
+          is_ranked: m.is_ranked,
         },
         questions: qs.map((q) => toContent(q)),
       });
@@ -792,6 +796,18 @@ export function EditorScreen(): JSX.Element {
                 />
               </Field>
             </div>
+            <label className="mt-2 flex items-start gap-2 text-sm font-semibold">
+              <input
+                type="checkbox"
+                className="mt-0.5 h-5 w-5 accent-primary"
+                checked={meta.is_ranked}
+                onChange={(e) => editMeta({ is_ranked: e.target.checked })}
+              />
+              <span>
+                Allow ranked rounds. Untick for a practice-only set, such as dictation: spoken words
+                are never used in ranked rounds.
+              </span>
+            </label>
           </Panel>
 
           <Panel as="div" className="!p-4">

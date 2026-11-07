@@ -276,8 +276,9 @@ final class Content
         if (!in_array($type, self::TYPES, true)) {
             return array_merge($e, ["$at: type must be choice, boolean, slider, build or assign"]);
         }
-        if (!self::text($q['prompt'] ?? null, 300)) {
-            $e[] = "$at: prompt required (up to 300 characters)";
+        // Up to 600 so a comprehension question can carry its short passage.
+        if (!self::text($q['prompt'] ?? null, 600)) {
+            $e[] = "$at: prompt required (up to 600 characters)";
         }
         if (!self::text($q['explanation'] ?? null, 400)) {
             $e[] = "$at: explanation required (up to 400 characters)";

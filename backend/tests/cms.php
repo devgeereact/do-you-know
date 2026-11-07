@@ -392,6 +392,10 @@ $savedBlank = admin('POST', '/quizzes/'.$buildId, ['questions' => $blanks]);
 $blankFields = array_map(fn($p) => $p['index'].':'.$p['field'], $savedBlank['body']['problems'] ?? []);
 check('blank tile questions save as problems on their own fields', $savedBlank['status'] === 200 && in_array('3:build', $blankFields, true) && in_array('4:assign', $blankFields, true));
 
+// A quiz can be made practice-only from the Studio (needed for a set made of dictation questions).
+$practiceOnly = admin('POST', '/quizzes/'.$buildId, ['meta' => ['is_ranked' => false]]);
+check('the Studio can switch ranked rounds off for a quiz', $practiceOnly['status'] === 200 && ($practiceOnly['body']['quiz']['is_ranked'] ?? null) === false);
+
 // ---- Feedback inbox ----
 $adult = request('POST', '/guest-sessions', [])['body'];
 linkAdult($adult['profile_id']);

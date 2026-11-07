@@ -76,7 +76,7 @@ describe('parseImport (text)', () => {
       'A) 4*  B) 5*',
       'Q: What is 2+2',
       'A) 4*  B) 5',
-      `Q: ${'x'.repeat(301)}`,
+      `Q: ${'x'.repeat(601)}`,
       'A) a*  B) b',
       'Q: One option only',
       'A) a*',
@@ -84,7 +84,7 @@ describe('parseImport (text)', () => {
     const r = parseImport(text, SUBJECTS, TODAY);
     expect(r[0]?.block).toContain('More than one answer is marked right');
     expect(r[1]?.block).toContain('Same as line 1 in this file');
-    expect(r[2]?.block.join()).toMatch(/limit is 300/);
+    expect(r[2]?.block.join()).toMatch(/limit is 600/);
     expect(r[3]?.block).toContain('Choice questions need 2 to 6 answers');
   });
 

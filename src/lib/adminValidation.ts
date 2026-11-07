@@ -14,7 +14,7 @@ import type {
  */
 
 export const LIMITS = {
-  prompt: 300,
+  prompt: 600,
   explanation: 400,
   option: 120,
   sourceUrl: 500,

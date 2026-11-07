@@ -226,6 +226,7 @@ export interface QuizMetaPatch {
   ks?: KeyStage | null;
   difficulty?: Difficulty;
   time_limit_seconds?: number | null;
+  is_ranked?: boolean;
 }
 
 export interface NewQuiz {
