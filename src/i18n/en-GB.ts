@@ -165,6 +165,8 @@ export const enGB = {
       invalid_value: 'Please pick a number on the slider.',
       not_all_answered: 'Answer every question to see your score.',
       attempt_not_finished: 'Finish the quiz first, then challenge a friend.',
+      daily_not_shareable:
+        'Your daily questions are just for you, so they can’t be sent as a challenge. Try a quiz instead!',
       invalid_board: "We couldn't load that leaderboard.",
       invalid_age_band: 'Please choose an age group.',
       age_band_locked: 'Your age group is already set. Ask a grown-up to contact us to change it.',
@@ -502,9 +504,9 @@ export const enGB = {
 
   daily: {
     metaDescription:
-      'One quiz a day, the same questions for everyone. Play once and climb today’s board.',
+      'One challenge a day. Every player gets their own 10 questions, so nobody can copy. Play once and race for the crown.',
     today: 'Today',
-    lead: 'Everyone gets the same questions in the same order. One go each, so make it count!',
+    lead: 'You get your own 10 questions, picked just for you. Nobody else gets the same ones. One go each, so make it count!',
     notReady: 'Today’s challenge isn’t ready yet. It usually appears just after midnight.',
     tryAQuiz: 'Try a quiz while you wait',
     yourStreak: 'Your streak:',
@@ -518,7 +520,7 @@ export const enGB = {
     kicker: (date: string): string => `Daily challenge · ${date}`,
     countdown: (time: string): string => `New challenge in ${time}`,
     route: (questions: number, worlds: number): string =>
-      `${questions} questions across ${worlds} ${worlds === 1 ? 'world' : 'worlds'}. Everyone gets the same ones today, and you get one go.`,
+      `${questions} questions across ${worlds} ${worlds === 1 ? 'world' : 'worlds'}. They are yours alone today, and you get one go.`,
     routeLabel: 'Today’s route',
     stopLabel: (n: number, world: string): string => `Question ${n}: ${world}`,
     stopNow: (world: string, n: number): string => `${world} · question ${n}`,
@@ -529,6 +531,17 @@ export const enGB = {
     streakBest: (days: number): string => `Best ${days}`,
     boardTitle: 'Today’s board',
     allSubjects: 'All subjects',
+    live: 'Live',
+    liveHint: 'The board updates by itself every few seconds.',
+    leaderTitle: 'Top score today',
+    leaderLabel: 'Today’s leader',
+    noLeader: 'No crown yet. Be the first on the board!',
+    leaderIsYou: 'That’s you! Keep the crown.',
+    chaseUnplayed: (correct: number, total: number): string =>
+      `Can you beat ${correct}/${total} and win the crown?`,
+    chasePlayed: (nickname: string): string => `Catch ${nickname} to win the crown.`,
+    youHaveCrown: 'You’re wearing the crown!',
+    youHaveCrownBody: 'Top of today’s board. Look again later to see if you keep it.',
   },
 
   feedback: {
@@ -863,7 +876,8 @@ export const enGB = {
         'is for fun and learning, with 10 questions a game. Practice games never go on a leaderboard. A few quizzes are practice only.',
       dailyTitle: 'The daily challenge',
       daily: [
-        'There is one daily challenge, and everyone gets the same 10 questions in the same order.',
+        'There is one daily challenge. Every player gets their own 10 questions, picked at random from all the quizzes, and no two players get the same question.',
+        'The leader of today’s board wears the crown, and the board updates while you watch.',
         'You get one go each day, and it counts as a ranked game.',
         'A new challenge starts each day, shortly after midnight UK time.',
         'Play on days in a row to grow your streak. Miss a day and your streak starts again from one.',

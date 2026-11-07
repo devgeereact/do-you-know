@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { AvatarBadge } from '@/components/AvatarBadge';
+import { Crown } from '@/components/game/Crown';
 import { LikeButton } from '@/components/game/LikeButton';
 import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { cn } from '@/lib/utils';
@@ -53,7 +54,7 @@ export function LeaderboardTable({
 
   return (
     <div ref={root}>
-      <ol className="grid gap-2">
+      <ol className="grid grid-cols-[minmax(0,1fr)] gap-2">
         {data.top.map((row) => (
           <li
             key={`${row.rank}-${row.nickname}-${row.achieved_at}`}
@@ -75,6 +76,12 @@ export function LeaderboardTable({
             <AvatarBadge avatarId={row.avatar_id} nickname={row.nickname} />
             <span className="flex min-w-0 flex-1 items-center gap-2">
               <span className="truncate font-semibold text-content">{row.nickname}</span>
+              {board === 'daily' && row.rank === 1 && row.correct > 0 && (
+                <span data-crown className="inline-flex shrink-0 items-center">
+                  <Crown className="h-5 w-5" />
+                  <span className="sr-only">{t.daily.leaderLabel}</span>
+                </span>
+              )}
               {row.is_me && (
                 <span className="shrink-0 text-sm font-bold text-primary">{t.common.you}</span>
               )}

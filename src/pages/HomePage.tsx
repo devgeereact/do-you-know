@@ -476,7 +476,7 @@ function DailyCard({
         {t.home.dailyKicker(today ? shortDate(today.date) : '')}
       </span>
       <h3 className="mt-2 text-[1.75rem] leading-tight [text-shadow:0_2px_0_rgb(0_0_0/0.2)]">
-        {today ? today.quiz.title : t.home.dailyNone}
+        {today ? t.common.todaysChallenge : t.home.dailyNone}
       </h3>
       <p className="mt-1 text-sm font-semibold text-white/90">
         {daily.playedToday ? t.home.dailyDone : t.home.dailyBody}

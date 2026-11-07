@@ -25,6 +25,7 @@ export function ResultsBoard({ quizSlug, board, needsNickname }: ResultsBoardPro
     board === 'daily' ? null : quizSlug,
     board,
     5,
+    board === 'daily' ? 10_000 : undefined, // today's board keeps moving while others play
   );
 
   return (

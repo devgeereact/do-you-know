@@ -8,6 +8,8 @@ interface ShareResultProps {
   quizTitle: string;
   correct: number;
   total: number;
+  /** Where the shared link goes; defaults to the quiz page. A daily shares the daily page. */
+  path?: string;
 }
 
 /**
@@ -19,11 +21,12 @@ export function ShareResult({
   quizTitle,
   correct,
   total,
+  path,
 }: ShareResultProps): JSX.Element {
   const [status, setStatus] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  const url = `${window.location.origin}/q/${quizSlug}`;
+  const url = `${window.location.origin}${path ?? `/q/${quizSlug}`}`;
   const text = t.results.share.text(correct, total, quizTitle);
 
   const onClick = async (): Promise<void> => {

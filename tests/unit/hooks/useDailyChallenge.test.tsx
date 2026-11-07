@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import * as game from '@/services/gameService';
@@ -95,5 +95,39 @@ describe('useDailyChallenge', () => {
     await waitFor(() => expect(result.current.error).toMatch(/couldn.t load today/i));
     expect(result.current.today).toBeNull();
     expect(result.current.loading).toBe(false);
+  });
+
+  describe('live numbers', () => {
+    beforeEach(() => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      vi.setSystemTime(new Date('2026-10-17T12:00:00Z'));
+    });
+
+    it('refreshes today’s numbers on the beat without reloading the page', async () => {
+      const { result } = renderHook(() => useDailyChallenge(10_000));
+      await waitFor(() => expect(result.current.loading).toBe(false));
+      vi.mocked(game.getDailyToday).mockResolvedValue({
+        ...daily,
+        stats: { played: 7, average: 6.5, perfect: 1 },
+      });
+      await act(() => vi.advanceTimersByTimeAsync(10_000));
+      expect(result.current.today?.stats).toEqual({ played: 7, average: 6.5, perfect: 1 });
+      expect(result.current.loading).toBe(false);
+    });
+
+    it('starts over when the London day turns', async () => {
+      const { result } = renderHook(() => useDailyChallenge(10_000));
+      await waitFor(() => expect(result.current.today?.date).toBe('2026-10-17'));
+      vi.mocked(game.getDailyToday).mockResolvedValue({ ...daily, id: 'd2', date: '2026-10-18' });
+      await act(() => vi.advanceTimersByTimeAsync(10_000));
+      await waitFor(() => expect(result.current.today?.date).toBe('2026-10-18'));
+    });
+
+    it('does nothing on a beat unless asked for one', async () => {
+      const { result } = renderHook(() => useDailyChallenge());
+      await waitFor(() => expect(result.current.loading).toBe(false));
+      await act(() => vi.advanceTimersByTimeAsync(60_000));
+      expect(game.getDailyToday).toHaveBeenCalledTimes(1);
+    });
   });
 });

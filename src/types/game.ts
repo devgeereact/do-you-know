@@ -159,6 +159,7 @@ export type GameErrorCode =
   | 'invalid_value'
   | 'not_all_answered'
   | 'attempt_not_finished'
+  | 'daily_not_shareable'
   | 'invalid_board'
   | 'invalid_age_band'
   | 'age_band_locked'

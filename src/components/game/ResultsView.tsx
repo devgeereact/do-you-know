@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { ChallengeFriend } from '@/components/game/ChallengeFriend';
+import { Crown } from '@/components/game/Crown';
 import { ResultsBoard } from '@/components/game/ResultsBoard';
 import { ShareResult } from '@/components/game/ShareResult';
 import { VersusPanel } from '@/components/game/VersusPanel';
@@ -260,6 +261,18 @@ export function ResultsView({
               {summary.correct} <span className="text-content-muted">/ {summary.total}</span>
               <span className="sr-only"> {t.results.correctSuffix}</span>
             </h1>
+            {summary.mode === 'daily' && summary.ranks.daily === 1 && summary.correct > 0 && (
+              <div
+                data-results-rise
+                className="mx-auto mt-3 flex max-w-sm items-center justify-center gap-2 rounded-2xl border-2 border-secondary bg-secondary/15 px-4 py-2 text-left"
+              >
+                <Crown className="h-9 w-9" />
+                <p>
+                  <strong className="block text-lg">{t.daily.youHaveCrown}</strong>
+                  <span className="text-sm text-content-muted">{t.daily.youHaveCrownBody}</span>
+                </p>
+              </div>
+            )}
             <p data-results-rise className="mx-auto mt-3 max-w-sm text-lg text-content">
               {cheer(summary.correct, summary.total)}
             </p>
@@ -292,8 +305,10 @@ export function ResultsView({
               quizTitle={quizTitle}
               correct={summary.correct}
               total={summary.total}
+              path={summary.mode === 'daily' ? '/daily' : undefined}
             />
-            {summary.mode !== 'challenge' && (
+            {/* A daily hand is private to its player, so it is never turned into a friend challenge. */}
+            {summary.mode !== 'challenge' && summary.mode !== 'daily' && (
               <ChallengeFriend
                 attemptId={summary.attempt_id}
                 quizTitle={quizTitle}

@@ -179,7 +179,8 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     wasOnline.current = online;
   }, [online, phase, restart]);
 
-  const title = state?.quiz.title ?? (daily ? t.play.dailyTitle : t.play.fallbackTitle);
+  // A daily hand mixes quizzes, so the day's anchor quiz title would be wrong; it is just "today's challenge".
+  const title = daily ? t.play.dailyTitle : (state?.quiz.title ?? t.play.fallbackTitle);
   const slug = state?.quiz.slug ?? routeSlug;
   const leaveTo = daily ? '/daily' : challenge ? `/challenge/${code}` : `/q/${slug}`;
   const backLabel = daily

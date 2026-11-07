@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Character, WorldBackdrop, WorldGlyph } from '@/components/art/Art';
+import { DailyLeader } from '@/components/game/DailyLeader';
 import { LeaderboardTable } from '@/components/game/LeaderboardTable';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useDailyChallenge } from '@/hooks/useDailyChallenge';
@@ -47,15 +48,19 @@ function useCountdown(): string {
   return left;
 }
 
+/** How often the board and the day's numbers refresh while this page is open. */
+const LIVE_MS = 10_000;
+
 /**
  * Today's challenge. One screen, no page scroll: an animated route through today's worlds
  * (the scene changes at each stop, the owl moves along the track and a deck of postcards
  * shows the next stops), today's numbers, the player's week and today's board. It never
- * shows the questions themselves, so nothing can be looked up in advance.
+ * shows the questions themselves, so nothing can be looked up in advance: every player is dealt
+ * their own ten. The board is live and the leader wears the crown.
  */
 export function DailyPage(): JSX.Element {
-  const { today, playedToday, streak, loading, error } = useDailyChallenge();
-  const board = useLeaderboard(null, 'daily', 50);
+  const { today, playedToday, streak, loading, error } = useDailyChallenge(LIVE_MS);
+  const board = useLeaderboard(null, 'daily', 50, LIVE_MS);
   const reduce = useReducedMotion();
   const countdown = useCountdown();
   useDocumentMeta({ title: t.common.todaysChallenge, description: t.daily.metaDescription });
@@ -116,7 +121,7 @@ export function DailyPage(): JSX.Element {
 
   return (
     <main className="mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-3 lg:px-6 lg:py-5">
-      <div className="grid min-h-0 flex-1 grid-rows-[minmax(17rem,1.25fr)_minmax(0,1fr)] gap-3 lg:grid-cols-[minmax(0,1.6fr)_minmax(20rem,1fr)] lg:grid-rows-1 lg:gap-5">
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[minmax(16rem,1fr)_minmax(0,1fr)] gap-3 lg:grid-cols-[minmax(0,1.6fr)_minmax(20rem,1fr)] lg:grid-rows-1 lg:gap-5">
         <section
           ref={stage}
           aria-label={t.common.todaysChallenge}
@@ -152,7 +157,7 @@ export function DailyPage(): JSX.Element {
 
           <div className="grid gap-2.5 lg:max-w-[46%]">
             <h1 className="text-[2rem] leading-none [text-shadow:0_3px_0_rgb(0_0_0/0.25)] lg:text-[3rem]">
-              {loading ? t.common.loading : today ? today.quiz.title : t.daily.notReady}
+              {loading ? t.common.loading : today ? t.common.todaysChallenge : t.daily.notReady}
             </h1>
             {error && <p role="alert">{error}</p>}
             {today && (
@@ -261,8 +266,9 @@ export function DailyPage(): JSX.Element {
           </div>
         </section>
 
-        <aside className="grid min-h-0 grid-rows-[auto_minmax(0,1fr)] gap-3 lg:grid-rows-[auto_auto_minmax(0,1fr)]">
-          <dl className="grid grid-cols-3 gap-2">
+        <aside className="grid min-h-0 grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)] gap-3 md:grid-rows-[auto_auto_minmax(0,1fr)] lg:grid-rows-[auto_auto_auto_minmax(0,1fr)]">
+          <DailyLeader leader={rows.find((r) => r.rank === 1)} playedToday={playedToday} />
+          <dl className="hidden grid-cols-3 gap-2 md:grid">
             {[
               [today?.stats?.played ?? rows.length, t.daily.stats.played],
               [average === null ? '–' : average.toFixed(1), t.daily.stats.average],
@@ -313,7 +319,17 @@ export function DailyPage(): JSX.Element {
           </div>
           <section className="flex min-h-0 flex-col rounded-2xl border border-surface-border bg-surface p-3 shadow-soft">
             <div className="flex items-center justify-between px-1 pb-2">
-              <h2 className="text-xl">{t.daily.boardTitle}</h2>
+              <h2 className="flex items-center gap-2 text-xl">
+                {t.daily.boardTitle}
+                <span
+                  title={t.daily.liveHint}
+                  className="inline-flex items-center gap-1 rounded-full bg-correct/15 px-2 py-0.5 text-xs font-bold text-content"
+                >
+                  <span aria-hidden="true" className="h-2 w-2 rounded-full bg-correct" />
+                  {t.daily.live}
+                  <span className="sr-only">. {t.daily.liveHint}</span>
+                </span>
+              </h2>
               <Link to="/leaderboards" className="text-sm font-bold text-primary hover:underline">
                 {t.daily.allSubjects}
               </Link>

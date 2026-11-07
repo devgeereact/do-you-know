@@ -188,4 +188,34 @@ describe('ResultsView', () => {
     renderResults(summary(), { isGuest: false });
     expect(screen.queryByText(/playing as a guest/i)).not.toBeInTheDocument();
   });
+
+  describe('the daily challenge', () => {
+    it('crowns the leader of today’s board', () => {
+      renderResults(summary({ mode: 'daily', correct: 9, total: 10, ranks: { daily: 1 } }));
+      expect(screen.getByText('You’re wearing the crown!')).toBeInTheDocument();
+    });
+
+    it.each([
+      ['second place', { daily: 2 }, 9],
+      ['first with nothing right', { daily: 1 }, 0],
+    ])('does not crown %s', (_name, ranks, correct) => {
+      renderResults(summary({ mode: 'daily', correct, total: 10, ranks }));
+      expect(screen.queryByText('You’re wearing the crown!')).not.toBeInTheDocument();
+    });
+
+    it('never crowns a practice game', () => {
+      renderResults(summary({ mode: 'practice', ranks: { daily: 1 } }));
+      expect(screen.queryByText('You’re wearing the crown!')).not.toBeInTheDocument();
+    });
+
+    it('does not offer a friend challenge for a private daily hand', () => {
+      renderResults(summary({ mode: 'daily', ranks: { daily: 2 } }));
+      expect(screen.queryByRole('button', { name: 'Challenge a friend' })).not.toBeInTheDocument();
+    });
+
+    it('still offers a friend challenge after a ranked game', () => {
+      renderResults(summary({ mode: 'ranked' }));
+      expect(screen.getByRole('button', { name: 'Challenge a friend' })).toBeInTheDocument();
+    });
+  });
 });
