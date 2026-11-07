@@ -103,6 +103,9 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | GET/POST /parent/children    | Clerk token only (guest and child tokens 403 `parent_sign_in_required`). POST `{ "level", "avatar_id"? }` adds a child (max 5, generated nickname, 409 `child_limit`) |
 | POST /parent/children/:id    | `{ level?, avatar_id?, new_nickname: true? }`; another parent's child is 404 `child_not_found` |
 | POST /parent/children/:id/delete, /hand-over | `{ "confirmed": true }` erases the child; hand-over returns a new `guest_` token for the child (older ones revoked) |
+| GET /parent/children/:id/skills | A child's skill map and stickers for their parent: steps, session counts, last five results, next area. Ids and counts only |
+| POST /attempts `{ "mode": "learn", "area": "literacy" }` | A child's adaptive session of ten (403 `child_required` for anyone else, 404 `no_learn_content`); finish returns a `learn` summary with stars, step change and sticker |
+| GET /me/learn | A child's own steps, stickers and sticker book (403 `child_required` otherwise) |
 | GET/POST /parent/switches    | Seven booleans (`public_boards`, `challenge_friend`, `beat_clock`, `slider_questions`, `trivia_sets`, `sound`, `easy_read`), all off; `GET /me` carries the effective `switches` and `child.level` |
 | GET /curriculum-tags         | Public filter options                                                                                              |
 | GET /categories/:slug        | Active category detail                                                                                             |

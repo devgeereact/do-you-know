@@ -20,3 +20,6 @@ Roadmap goal: a session adapts to the child, comes back to mistakes, and feels a
 
 ## Release
 Migration 0020 goes out alone first, backed up, then the code. Needs the owner's "approved".
+
+## Status (7 Nov 2026)
+5.1 and 5.2 built and tested. 5.3: sound and the wrong-answer tilt built; the new home is held for the owner's landing notes (the owner said the landing needs other work). `step` stayed derived from `difficulty` (no column).

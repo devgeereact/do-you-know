@@ -110,6 +110,7 @@ other), "Play again" where allowed and "More <category> quizzes".
 | `/me/settings`                              | Device settings (light or dark colours); no account needed |
 | `/account`                                  | Adult (parent/staff) sign-in with Clerk, loaded lazily     |
 | `/grown-ups`                                | Parent area (Clerk): children, switches, contact, hand-over |
+| `/learn/:area`                              | A child's learning session of ten (literacy, numeracy, science, humanities) |
 | `/login`                                    | Redirects to `/account`                                    |
 | `/dashboard`                                | Redirects to `/me/settings`                                |
 | `/preview`                                  | Redirects to `/`                                           |

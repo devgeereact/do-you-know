@@ -941,7 +941,7 @@ export const enGB = {
         },
         sound: {
           label: 'Sound',
-          body: 'Gentle sound effects. Sound arrives in a coming update; your choice is saved now.',
+          body: 'Gentle sound effects for right and wrong answers and when a round ends. Made on the device, nothing is downloaded.',
         },
         easy_read: {
           label: 'Easy-read font',

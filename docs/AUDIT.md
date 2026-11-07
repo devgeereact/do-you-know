@@ -2,6 +2,19 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · P5 learning sessions (scope, data, fairness, sound)
+
+Reviewer: Claude Code, focused review of `Learn`, the learn branches in `Game`, `/me/learn`, `/parent/children/:id/skills` and the new screens (security-audit skill, guidance mode, local tests only).
+
+- **Who may play.** Only a profile with a `children` row can start a session (403 `child_required` for guests and adults, tested); area is checked against a fixed list (400 `invalid_area`). Sessions are excluded from every board and from friend challenges (`learn_not_shareable`), tested.
+- **Answers stay hidden.** A learn hand is an ordinary attempt: the same keyed handles, the same grading, answers only after `/answer`. The hand is chosen by id on the server and the browser sees only questions one at a time.
+- **Data.** The skill record, queue and stickers hold ids, counts and dates; the parent's skill map reply is tested to contain no question text, prompt or nickname. All four tables cascade with the child's profile; removing a child erased skills, queue, stickers and sessions in the test.
+- **Scope.** A parent can read only their own child's skills (another parent gets 404, a child's token 403). Mutation checks: raising the retry cap, dropping the one-change-a-day rule, keeping a queue row after a right answer and removing the ownership check each made the suite fail.
+- **Correctness.** The step rule is table-tested (14 cases: caps at 1 and 5, one change a day, scaled for shorter rounds). Finishing twice records once and returns the same stored summary. A queued question that no longer exists is dropped, not dealt. Queued questions wait as retries and are never dealt as fresh ones meanwhile.
+- **Sound.** Web Audio tones made on the device; no files, no network. With the switch off no audio context is created at all (tested); a device without Web Audio or one that blocks it stays quiet without an error.
+- **Known limits.** Steps follow each quiz's existing difficulty: the P3 quizzes were imported as "medium", so until their difficulty is set in the Studio a child at step 1 to 5 sees mostly the same medium sets (the session still works; adaptivity grows as difficulty varies). Dictation questions can be dealt in a learn session; each has a written clue for a device with no voice.
+- **NOT TESTED:** migration 0020 on the live database; a full child session on a real phone; the new screens with a real Clerk sign-in (the skill map shows inside `/grown-ups`).
+
 ## 2026-11-07 · P4 parent area (sign-in scoping, children's data, hand-over, erasure)
 
 Reviewer: Claude Code, focused review of `Family`, the `/parent/*` routes in `Api.php`, `Player::own`/`delete`/`erase`, `bin/cleanup.php`, the `/grown-ups` page and the switch effects (security-audit skill, guidance mode, local tests with locally signed test tokens only; nothing run against the live site).

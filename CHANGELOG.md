@@ -1,6 +1,14 @@
 # Changelog
 
-## 7 November 2026 (branch `phase/p4-parent`, not deployed) — P4: the parent area
+## 7 November 2026 (branch `phase/p5-adapt`, not deployed) — P5: learning sessions, stickers, skill map, sound
+- **Migration 0020 (needs the two-step release):** the attempt mode check allows `learn` (relaxing only), plus `learn_cards`, `skills`, `retry_questions` and `stickers`, all hanging off the child's profile and holding ids, counts and dates only.
+- **Learning sessions** (`POST /attempts {mode:'learn', area}`, screen `/learn/:area`): ten questions from the child's level in one of four areas (literacy, numeracy, science, humanities), nearest the child's step, least recently seen first, and at most two earlier mistakes brought back first. Only a child set up by a parent can start one (guests save nothing). A session is private: no boards, no sharing, no friend challenge. Step is read from each quiz's existing difficulty (1-2 easy, 3 medium, 4-5 hard), so no content had to change.
+- **The step rule:** 8 in 10 right twice running moves up one step, 4 in 10 or fewer moves down, at most one change a day, steps 1 to 5, start at 2. **Retry queue:** a wrong answer waits; a right answer removes it; a question that has gone is dropped quietly.
+- **End of session:** stars, how the step moved, one sticker and a single next step. **Stickers (9)** are kept in a book on the child's profile. **Parents** see a step bar per area, sessions so far, where to practise next and stickers earned on each child's card, never which question was missed.
+- **Home** shows four area tiles to a child. **Sound** (Web Audio, made on the device, silent unless the parent's Sound switch is on, no audio context even created while off) and a gentle tilt from the friend on the stage after a wrong answer.
+- Not in this phase yet: the new home redesign (waiting for your landing notes).
+
+## 7 November 2026 (branch `phase/p4-parent`, live since `be2a57b`) — P4: the parent area
 - **Migration 0019 (needs the two-step release):** `children` and `parent_settings`. A child is a guest-role profile with a generated nickname, a preset avatar and a level; the parent's seven switches are all off until turned on.
 - **Server:** parent routes need a verified Clerk sign-in (guest and child tokens get 403), every child call is scoped to its parent (another parent's child is 404), at most 5 children, hand-over issues a fresh child session and revokes older ones, removing a child or deleting a parent erases the children and their games. A child's device cannot delete the child. `GET /me` carries `switches` and `child.level`. **Fix:** the hourly clean-up of unused guests no longer deletes a child a parent set up.
 - **`/grown-ups`** (Children, Switches, Contact; footer link): add a child by picking a level and a picture (nothing typed), change level or picture, re-roll the made-up name, hand over (the parent is signed out so coming back needs a new email code), remove. Typed contact fields live here for signed-in grown-ups.

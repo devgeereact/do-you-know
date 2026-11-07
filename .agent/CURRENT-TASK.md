@@ -1,5 +1,13 @@
 # Current task
 
+## P5: learning sessions, stickers, skill map, sound (branch `phase/p5-adapt`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
+- Plan: `.planning/phases/P5-adapt/P5-PLAN.md`. P4 is LIVE (be2a57b, migration 0019 applied after backup `db-pre-migrate-0019-20261107-152805.sql.gz`); P3 code live, its 38 drafts still wait for you in the Studio.
+- Built: migration 0020, `Learn` (hand, step rule, retry queue, stickers), `/learn/:area`, end-of-session panel, sticker book, skill map in `/grown-ups`, home tiles for children, sound (off until the parent turns it on), gentle tilt on a wrong answer. Audit: `docs/AUDIT.md` (P5).
+- **Needs migration 0020 applied on the server BEFORE the code** (release the `.sql` alone, back up, `bin/migrate.php`, then the code). Needs your "approved".
+- **Not built:** the new home redesign (waiting for your landing notes) and the Studio difficulty on the P3 quizzes (steps follow quiz difficulty, which the import left at "medium").
+- Next: your landing notes and the new home; then P6 (humanities and science content).
+
+
 ## P4: the parent area (branch `phase/p4-parent`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
 - Plan: `.planning/phases/P4-parent/P4-PLAN.md`. P3 code is LIVE (6eed8e1); the 38 P3 quiz drafts are waiting for the owner to import them in the Studio (nothing imported).
 - Built: migration 0019 (`children`, `parent_settings`), `Family` class and `/parent/*` routes, `/grown-ups` page, seven switches acting on the child path, privacy notice, a clean-up fix so children are never purged. Audit: `docs/AUDIT.md` (P4).

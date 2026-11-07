@@ -16,6 +16,7 @@ import { SliderAnswer } from '@/components/game/SliderAnswer';
 import { TileBuild } from '@/components/game/TileBuild';
 import { useSwitches } from '@/hooks/useSwitches';
 import { areaName, isLearnArea } from '@/lib/learnAreas';
+import { playCue } from '@/lib/sound';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
@@ -173,11 +174,28 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
         gsap.from('[data-stage-sheet]', { yPercent: 100, duration: 0.32, ease: 'power2.out' });
         if (lastResult?.is_correct) {
           gsap.fromTo('[data-q-host]', { y: 0 }, { y: -16, duration: 0.16, yoyo: true, repeat: 1 });
+        } else if (lastResult) {
+          // A wrong answer gets a slow, gentle tilt from the friend on the stage: never a shake.
+          gsap.fromTo(
+            '[data-q-host]',
+            { rotation: 0 },
+            { rotation: -5, duration: 0.3, yoyo: true, repeat: 1 },
+          );
         }
       });
     },
     { scope: stage, dependencies: [phase, question?.id] },
   );
+
+  // Gentle sound, only when a parent turned it on (silent otherwise; nothing is created while it is off).
+  useEffect(() => {
+    if (phase === 'feedback' && lastResult)
+      playCue(lastResult.is_correct ? 'right' : 'wrong', switches.sound);
+  }, [phase, lastResult, switches.sound]);
+  useEffect(() => {
+    if (phase === 'results' && summary)
+      playCue(summary.learn?.sticker ? 'sticker' : 'done', switches.sound);
+  }, [phase, summary, switches.sound]);
 
   // A right answer earns a little confetti from the button (or slider) the player used.
   useEffect(() => {
