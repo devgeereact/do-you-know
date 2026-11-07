@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Character } from '@/components/art/Art';
 import { AvatarBadge } from '@/components/AvatarBadge';
 import { NicknamePicker } from '@/components/game/NicknamePicker';
+import { StickerBook } from '@/components/learn/StickerBook';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { Card } from '@/components/ui/Card';
@@ -88,6 +89,7 @@ export function MePage(): JSX.Element {
 
         <div className="grid min-w-0 gap-10">
           <CharacterPicker profile={p} onPick={profile.setAvatar} />
+          {user?.level && <StickerBook />}
           {user && <Messages key={user.id} />}
           <section id="games" aria-labelledby="games-title" className="scroll-mt-24">
             <div className="grid gap-8 xl:grid-cols-2">

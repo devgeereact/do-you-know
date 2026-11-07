@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Character, Scene, WorldBackdrop, WorldGlyph } from '@/components/art/Art';
 import { AvatarBadge } from '@/components/AvatarBadge';
+import { LearnTiles } from '@/components/learn/LearnTiles';
 import { QuizCard } from '@/components/game/QuizCard';
 import { AnswerButton } from '@/components/game/AnswerButton';
 import { buttonClasses } from '@/components/ui/buttonClasses';
@@ -186,6 +187,8 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
           </div>
         </div>
       </section>
+
+      <LearnTiles />
 
       <div className="mx-auto max-w-6xl px-6">
         <section
@@ -851,6 +854,8 @@ function PhoneHome({
         </p>
         <h1 className="text-[2rem] leading-tight">{t.home.mobileTitle}</h1>
       </section>
+
+      <LearnTiles />
 
       <DailyCard daily={daily} compact />
 

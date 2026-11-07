@@ -173,6 +173,30 @@ Database::execute(
     'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
     [$passageVersion, $passageQuiz, json_encode(Dyk\Content::snapshot($passageFile))],
 );
+// A literacy quiz for Explorers (ages 6 to 8) so a child's learning session has questions to deal. It sits in the
+// school-english category, which is what makes it a literacy quiz.
+$learnCategory = Database::one($db, "SELECT id FROM categories WHERE slug='school-english'")['id'] ?? null;
+if ($learnCategory === null) {
+    $learnCategory = Database::uuid();
+    Database::execute($db, 'INSERT INTO categories (id,slug,name,sort_order) VALUES (?,?,?,0)', [$learnCategory, 'school-english', 'English']);
+}
+$learnQuestions = [];
+for ($i = 1; $i <= 12; $i++) {
+    $learnQuestions[] = ['type' => 'choice', 'prompt' => "Which word is number $i in the learning quiz?", 'options' => [['label' => "Word $i", 'correct' => true], ['label' => 'Other', 'correct' => false], ['label' => 'Another', 'correct' => false]]] + $meta;
+}
+$learnQuiz = Database::uuid();
+$learnVersion = Database::uuid();
+Database::execute(
+    $db,
+    "INSERT INTO quizzes (id,slug,title,intro,category_id,status,current_version_id,question_count,difficulty,age_min,age_max,is_ranked) VALUES (?,?,?,?,?,'published',?,12,'easy',6,8,1)",
+    [$learnQuiz, 'e2e-learn-quiz', 'E2E Learn Quiz', 'Twelve questions for the learning session.', $learnCategory, $learnVersion],
+);
+Database::execute(
+    $db,
+    'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,12)',
+    [$learnVersion, $learnQuiz, json_encode(Dyk\Content::snapshot(['slug' => 'e2e-learn-quiz', 'questions' => $learnQuestions]))],
+);
+
 // Two children who already hold a session (known tokens, see tests/e2e/parent.spec.ts): one whose parent has
 // every switch off (the default) and one whose parent has every switch on.
 foreach (['off', 'on'] as $name) {

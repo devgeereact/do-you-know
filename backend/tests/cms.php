@@ -456,7 +456,7 @@ check('to-do counts are numbers with labels', !array_filter($r['body']['items'],
 check('drafts with problems are counted', $r['body']['items'][2]['count'] === $problemsBefore + 1);
 $r = admin('GET', '/stats');
 check('stats report plays, finish rate, guests, modes, top quizzes and hard questions', $r['status'] === 200 && $r['body']['plays']['today'] >= 2
-    && array_keys($r['body']['modes_7d']) === ['practice', 'ranked', 'daily', 'challenge'] && is_array($r['body']['top_quizzes_7d']) && is_array($r['body']['hardest']));
+    && array_keys($r['body']['modes_7d']) === ['practice', 'ranked', 'daily', 'challenge', 'learn'] && is_array($r['body']['top_quizzes_7d']) && is_array($r['body']['hardest']));
 check('stats carry no player identities', !str_contains($r['raw'], 'nickname') && !str_contains($r['raw'], 'user_id'));
 
 // ---- Import (owner decision, 1 November 2026, ADR-019): imported questions arrive checked ----

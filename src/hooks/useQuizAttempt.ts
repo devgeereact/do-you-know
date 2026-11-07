@@ -49,7 +49,7 @@ function errorCode(err: unknown): string | undefined {
  * Nothing here holds or derives an answer before answer_question returns it.
  */
 export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
-  const { mode, quizSlug, challengeCode } = args;
+  const { mode, quizSlug, challengeCode, area } = args;
   const { ensureSession } = useGuestSession();
 
   const [phase, setPhase] = useState<AttemptPhase>('loading');
@@ -117,12 +117,13 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
         quizSlug,
         challengeCode,
         timed: me?.switches?.beat_clock === true,
+        area,
       });
       await settle(s, run);
     } catch (err) {
       if (run === runRef.current) fail(err, 'start', true);
     }
-  }, [ensureSession, mode, quizSlug, challengeCode, settle, fail]);
+  }, [ensureSession, mode, quizSlug, challengeCode, area, settle, fail]);
 
   useEffect(() => {
     void start();

@@ -28,8 +28,30 @@ const off: ParentSwitches = {
   easy_read: false,
 };
 
+const record = {
+  child: {
+    id: 'c1',
+    nickname: 'BraveOtter42',
+    avatar_id: 'fox',
+    level: 'explorers',
+    created_at: 'x',
+  },
+  areas: [
+    { area: 'literacy', step: 3, sessions: 4, recent: [], last_played: null },
+    { area: 'numeracy', step: 2, sessions: 0, recent: [], last_played: null },
+    { area: 'science', step: 2, sessions: 0, recent: [], last_played: null },
+    { area: 'humanities', step: 2, sessions: 0, recent: [], last_played: null },
+  ],
+  stickers: [{ id: 'perfect', label: 'Perfect round', earned_at: 'x' }],
+  sticker_book: [
+    { id: 'perfect', label: 'Perfect round', earned: true },
+    { id: 'step-up', label: 'Level up', earned: false },
+  ],
+  next_area: 'numeracy',
+} as never;
 beforeEach(() => {
   vi.resetAllMocks();
+  vi.mocked(service.getChildSkills).mockResolvedValue(record);
   getToken.mockResolvedValue('clerk-token');
 });
 
@@ -122,6 +144,17 @@ describe('ChildrenPanel', () => {
     await user.click(screen.getByRole('button', { name: 'New name' }));
     expect(await screen.findByText(/did not work/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'BraveOtter42' })).toBeInTheDocument();
+  });
+});
+
+describe('SkillMap on a child card', () => {
+  it('shows a step in each area, the sessions so far and where to practise next, with no question detail', async () => {
+    vi.mocked(service.listChildren).mockResolvedValue([child()]);
+    render(<ChildrenPanel getToken={getToken} onHandOver={vi.fn()} />);
+    expect(await screen.findByText(/Step 3 of 5 · 4 sessions/)).toBeInTheDocument();
+    expect(screen.getAllByText('Not started yet')).toHaveLength(3);
+    expect(screen.getByText('Practise next: Numbers')).toBeInTheDocument();
+    expect(screen.getByText('1 of 2 stickers')).toBeInTheDocument();
   });
 });
 

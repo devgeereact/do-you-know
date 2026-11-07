@@ -263,7 +263,7 @@ export interface Stats {
   plays: { today: number; d7: number; d30: number };
   finish_rate_7d: number | null;
   new_guests_7d: number;
-  modes_7d: { practice: number; ranked: number; daily: number; challenge: number };
+  modes_7d: { practice: number; ranked: number; daily: number; challenge: number; learn: number };
   top_quizzes_7d: { slug: string; title: string; plays: number }[];
   hardest: {
     quiz_slug: string;

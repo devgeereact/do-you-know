@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/Card';
 import { AVATARS } from '@/lib/avatars';
 import { LEVELS, levelLabel } from '@/lib/levels';
 import { cn } from '@/lib/utils';
+import { SkillMap } from '@/components/parent/SkillMap';
 import {
   addChild,
   changeChild,
@@ -77,13 +78,21 @@ function LevelSelect({
 
 interface ChildCardProps {
   child: Child;
+  getToken: GetToken;
   busy: boolean;
   onChange: (change: { level?: ChildLevel; avatar_id?: string; new_nickname?: true }) => void;
   onHandOver: () => void;
   onRemove: () => void;
 }
 
-function ChildCard({ child, busy, onChange, onHandOver, onRemove }: ChildCardProps): JSX.Element {
+function ChildCard({
+  child,
+  busy,
+  getToken,
+  onChange,
+  onHandOver,
+  onRemove,
+}: ChildCardProps): JSX.Element {
   const [confirm, setConfirm] = useState<'hand' | 'remove' | null>(null);
   const levelId = `level-${child.id}`;
   return (
@@ -112,6 +121,8 @@ function ChildCard({ child, busy, onChange, onHandOver, onRemove }: ChildCardPro
           onPick={(avatar_id) => onChange({ avatar_id })}
         />
       </div>
+
+      <SkillMap getToken={getToken} childId={child.id} />
 
       {confirm === null ? (
         <div className="flex flex-wrap gap-2">
@@ -216,6 +227,7 @@ export function ChildrenPanel({ getToken, onHandOver }: ChildrenPanelProps): JSX
           <li key={child.id} className="grid">
             <ChildCard
               child={child}
+              getToken={getToken}
               busy={busy}
               onChange={(change) =>
                 void act(async () => {

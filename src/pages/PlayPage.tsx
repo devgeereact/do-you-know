@@ -15,6 +15,7 @@ import { ReadAloud } from '@/components/game/ReadAloud';
 import { SliderAnswer } from '@/components/game/SliderAnswer';
 import { TileBuild } from '@/components/game/TileBuild';
 import { useSwitches } from '@/hooks/useSwitches';
+import { areaName, isLearnArea } from '@/lib/learnAreas';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
@@ -94,12 +95,17 @@ interface PlayPageProps {
    * quiz:      /play/:slug (ranked, or practice with ?mode=practice)
    * daily:     /daily/play, today's challenge, one play per day
    * challenge: /challenge/:code/play, a friend's exact questions
+   * learn:     /learn/:area, ten questions for a child at their level and step
    */
-  kind?: 'quiz' | 'daily' | 'challenge';
+  kind?: 'quiz' | 'daily' | 'challenge' | 'learn';
 }
 
 export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
-  const { slug: routeSlug = '', code = '' } = useParams<{ slug: string; code: string }>();
+  const {
+    slug: routeSlug = '',
+    code = '',
+    area: routeArea,
+  } = useParams<{ slug: string; code: string; area: string }>();
   const [params] = useSearchParams();
   const daily = kind === 'daily';
   const challenge = kind === 'challenge';
@@ -109,6 +115,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     mode,
     quizSlug: kind === 'quiz' ? routeSlug : undefined,
     challengeCode: challenge ? code : undefined,
+    area: kind === 'learn' ? routeArea : undefined,
   });
   const { isGuest } = useGuestSession();
   const { switches } = useSwitches();
@@ -186,14 +193,27 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
   }, [online, phase, restart]);
 
   // A daily hand mixes quizzes, so the day's anchor quiz title would be wrong; it is just "today's challenge".
-  const title = daily ? t.play.dailyTitle : (state?.quiz.title ?? t.play.fallbackTitle);
+  const learnArea = isLearnArea(routeArea) ? routeArea : null;
+  const title = daily
+    ? t.play.dailyTitle
+    : kind === 'learn' && learnArea
+      ? areaName(learnArea)
+      : (state?.quiz.title ?? t.play.fallbackTitle);
   const slug = state?.quiz.slug ?? routeSlug;
-  const leaveTo = daily ? '/daily' : challenge ? `/challenge/${code}` : `/q/${slug}`;
+  const leaveTo = daily
+    ? '/daily'
+    : kind === 'learn'
+      ? '/'
+      : challenge
+        ? `/challenge/${code}`
+        : `/q/${slug}`;
   const backLabel = daily
     ? t.common.todaysChallenge
-    : challenge
-      ? t.play.backToChallenge
-      : t.play.backToQuiz;
+    : kind === 'learn'
+      ? t.learn.backHome
+      : challenge
+        ? t.play.backToChallenge
+        : t.play.backToQuiz;
   useDocumentMeta({ title, noindex: true });
 
   const inStage = (phase === 'question' || phase === 'feedback') && Boolean(state && question);
@@ -305,7 +325,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
           title={title}
           isGuest={isGuest}
           restarting={submitting}
-          onPlayAgain={kind === 'quiz' ? () => void game.restart() : undefined}
+          onPlayAgain={kind === 'quiz' || kind === 'learn' ? () => void game.restart() : undefined}
         />
       )}
 

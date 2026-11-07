@@ -54,6 +54,13 @@ beforeEach(() => {
   });
   vi.mocked(parent.confirmGrownUp).mockResolvedValue();
   vi.mocked(parent.listChildren).mockResolvedValue([kid]);
+  vi.mocked(parent.getChildSkills).mockResolvedValue({
+    child: kid,
+    areas: [],
+    stickers: [],
+    sticker_book: [],
+    next_area: 'literacy',
+  } as never);
   vi.mocked(parent.getSwitches).mockResolvedValue({
     public_boards: false,
     challenge_friend: false,

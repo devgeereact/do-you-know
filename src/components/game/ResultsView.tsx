@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { ChallengeFriend } from '@/components/game/ChallengeFriend';
+import { LearnEnd } from '@/components/game/LearnEnd';
 import { useSwitches } from '@/hooks/useSwitches';
 import { Crown } from '@/components/game/Crown';
 import { ResultsBoard } from '@/components/game/ResultsBoard';
@@ -302,17 +303,21 @@ export function ResultsView({
                 </Button>
               )}
             </div>
-            <ShareResult
-              quizSlug={quizSlug}
-              quizTitle={quizTitle}
-              correct={summary.correct}
-              total={summary.total}
-              path={summary.mode === 'daily' ? '/daily' : undefined}
-            />
+            {summary.learn && <LearnEnd learn={summary.learn} />}
+            {summary.mode !== 'learn' && (
+              <ShareResult
+                quizSlug={quizSlug}
+                quizTitle={quizTitle}
+                correct={summary.correct}
+                total={summary.total}
+                path={summary.mode === 'daily' ? '/daily' : undefined}
+              />
+            )}
             {/* A daily hand is private to its player, so it is never turned into a friend challenge. */}
             {switches.challenge_friend &&
               summary.mode !== 'challenge' &&
-              summary.mode !== 'daily' && (
+              summary.mode !== 'daily' &&
+              summary.mode !== 'learn' && (
                 <ChallengeFriend
                   attemptId={summary.attempt_id}
                   quizTitle={quizTitle}

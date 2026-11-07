@@ -1,5 +1,6 @@
 import { api } from '@/lib/api';
 import type { Child, ChildLevel, ParentSwitches } from '@/types';
+import type { LearnRecord } from '@/types/game';
 
 /** Every parent call carries the Clerk session token; the server refuses guests and children. */
 export type GetToken = () => Promise<string | null>;
@@ -44,6 +45,14 @@ export function handOver(
   id: string,
 ): Promise<{ token: string; expires_at: string; child: Child }> {
   return call(getToken, `/parent/children/${encodeURIComponent(id)}/hand-over`, {});
+}
+
+/** One child's skill map and stickers (ids, counts and dates only). */
+export function getChildSkills(
+  getToken: GetToken,
+  id: string,
+): Promise<LearnRecord & { child: Child }> {
+  return call(getToken, `/parent/children/${encodeURIComponent(id)}/skills`);
 }
 
 export async function getSwitches(getToken: GetToken): Promise<ParentSwitches> {

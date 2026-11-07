@@ -1,5 +1,6 @@
 import { api, clearSession } from '@/lib/api';
 import type { AgeBand, MyMessage, Profile } from '@/types';
+import type { LearnRecord } from '@/types/game';
 
 /** The player's own profile. The server only ever returns the caller's row. */
 export function getProfile(): Promise<Profile> {
@@ -47,6 +48,11 @@ export async function replyToMessage(id: string, body: string): Promise<void> {
 /** Picks one of the preset avatars in src/lib/avatars.ts. */
 export async function setAvatar(avatarId: string): Promise<void> {
   await api<unknown>('/me/avatar', { body: { avatar_id: avatarId } });
+}
+
+/** A child's own steps, sessions and stickers. A guest has none (the server answers 403). */
+export function getMyLearn(): Promise<LearnRecord> {
+  return api<LearnRecord>('/me/learn');
 }
 
 /** Removes the player; attempts, settings and board rows go with it. */

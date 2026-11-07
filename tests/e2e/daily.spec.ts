@@ -1,4 +1,4 @@
-import { expect, expectNoHorizontalOverflow, playThrough, test } from './support/test';
+import { expect, expectNoHorizontalOverflow, test } from './support/test';
 
 test.describe('daily challenge', () => {
   // Replaying a finished daily is refused by the server, which the browser logs as a 4xx.
@@ -20,10 +20,27 @@ test.describe('daily challenge', () => {
 
     await page.getByRole('link', { name: 'Play today’s challenge' }).click();
     await expect(page).toHaveURL(/\/daily\/play$/);
-    await playThrough(page, [true, true, false]);
+    // The hand is ten questions drawn from every live quiz for children, so answer whatever comes up.
+    const total = Number(
+      /of (\d+)/.exec((await page.getByText(/Question 1 of \d+/).textContent()) ?? '')?.[1],
+    );
+    expect(total).toBeGreaterThanOrEqual(3);
+    for (let i = 0; i < total; i += 1) {
+      await expect(page.getByText(`Question ${i + 1} of ${total}`)).toBeVisible();
+      const keypad = page.getByRole('group', { name: 'Your number' });
+      if (await keypad.isVisible()) {
+        await keypad.getByRole('button', { name: '5', exact: true }).click();
+        await page.getByRole('button', { name: 'Check', exact: true }).click();
+      } else {
+        await page.getByRole('region', { name: 'Answers' }).getByRole('button').first().click();
+      }
+      await page
+        .getByRole('button', { name: i === total - 1 ? 'See my score' : 'Next question' })
+        .click();
+    }
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(`/ ${total}`);
 
     // Results show today's board, with no "play again" because it is one go a day.
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('2 / 3');
     await expect(page.getByRole('heading', { name: "Today's leaderboard" })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Play again' })).toHaveCount(0);
     // A daily hand is private to its player, so it cannot be sent to a friend.

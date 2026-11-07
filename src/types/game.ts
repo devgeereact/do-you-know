@@ -113,6 +113,37 @@ export interface ReviewItem {
 }
 
 /** finish_attempt */
+/** The four learning areas a child's sessions are dealt from (trivia is not one of them). */
+export type LearnArea = 'literacy' | 'numeracy' | 'science' | 'humanities';
+
+/** What a finished learn session tells the child: stars, a sticker and where to go next. */
+export interface LearnSummary {
+  area: LearnArea;
+  correct: number;
+  total: number;
+  stars: 0 | 1 | 2 | 3;
+  step_before: number;
+  step_after: number;
+  stepped: 'up' | 'down' | null;
+  sticker: { id: string; label: string } | null;
+  new_stickers: string[];
+  next_area: LearnArea;
+}
+
+/** GET /me/learn and the parent's skills route: ids, counts and dates only. */
+export interface LearnRecord {
+  areas: {
+    area: LearnArea;
+    step: number;
+    sessions: number;
+    recent: { date: string; correct: number; total: number }[];
+    last_played: string | null;
+  }[];
+  stickers: { id: string; label: string; earned_at: string }[];
+  sticker_book: { id: string; label: string; earned: boolean }[];
+  next_area: LearnArea;
+}
+
 export interface AttemptSummary {
   attempt_id: string;
   mode: AttemptMode;
@@ -130,6 +161,8 @@ export interface AttemptSummary {
   } | null;
   needs_nickname: boolean;
   streak: number;
+  /** Present for a learn session. */
+  learn?: LearnSummary | null;
 }
 
 export interface LeaderboardRow {
@@ -193,6 +226,10 @@ export type GameErrorCode =
   | 'invalid_value'
   | 'invalid_tiles'
   | 'invalid_pairs'
+  | 'invalid_area'
+  | 'no_learn_content'
+  | 'child_required'
+  | 'learn_not_shareable'
   | 'not_all_answered'
   | 'attempt_not_finished'
   | 'daily_not_shareable'

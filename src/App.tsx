@@ -94,6 +94,7 @@ export function App(): JSX.Element {
             {/* Play screens are full focus: their own Leave link, no site chrome. */}
             <Route path="/play/:slug" element={<PlayPage />} />
             <Route path="/daily/play" element={<PlayPage kind="daily" />} />
+            <Route path="/learn/:area" element={<PlayPage kind="learn" />} />
             <Route path="/challenge/:code/play" element={<PlayPage kind="challenge" />} />
 
             {/* The Studio has its own full-screen shell, outside the site chrome and page-enter motion. */}
