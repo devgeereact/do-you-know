@@ -163,10 +163,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
 
   const answerValue = useCallback((value: number): Promise<void> => submit({ value }), [submit]);
 
-  const answerTiles = useCallback(
-    (tiles: string[]): Promise<void> => submit({ tiles }),
-    [submit],
-  );
+  const answerTiles = useCallback((tiles: string[]): Promise<void> => submit({ tiles }), [submit]);
 
   const timeUp = useCallback(async (): Promise<void> => {
     if (!state || phase !== 'question') return;
