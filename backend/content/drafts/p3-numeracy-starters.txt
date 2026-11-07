@@ -1,0 +1,163 @@
+# Maths · Ages 4–5 · Counting to 20
+Q: How many legs does a dog have?
+Slider: 0 to 20 = 4 ±0
+Why: A dog walks on four legs.
+
+Q: How many fingers are on one hand?
+Slider: 0 to 20 = 5 ±0
+Why: There are four fingers and one thumb, which makes five.
+
+Q: What number comes after 7?
+Slider: 0 to 20 = 8 ±0
+Why: Count on: 6, 7, 8.
+
+Q: What number comes before 10?
+Slider: 0 to 20 = 9 ±0
+Why: Count back from 10: 10, 9.
+
+Q: What number is between 4 and 6?
+Slider: 0 to 20 = 5 ±0
+Why: Count: 4, 5, 6.
+
+Q: How many wheels does a bicycle have?
+Slider: 0 to 20 = 2 ±0
+Why: A bicycle has two wheels, one at the front and one at the back.
+
+Q: How many days are in a week?
+Slider: 0 to 20 = 7 ±0
+Why: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday make seven.
+
+Q: What number comes after 14?
+Slider: 0 to 20 = 15 ±0
+Why: Count on: 14, 15.
+
+Q: What number comes before 20?
+Slider: 0 to 20 = 19 ±0
+Why: Count back from 20: 20, 19.
+
+Q: How many eyes do you have?
+Slider: 0 to 20 = 2 ±0
+Why: You have one eye on each side of your nose.
+
+# Maths · Ages 4–5 · Adding and taking away to 10
+Q: You have 3 apples and get 2 more. How many apples do you have now?
+Slider: 0 to 10 = 5 ±0
+Why: 3 and 2 more make 5.
+
+Q: Four ducks are swimming. Three more join them. How many ducks are there?
+Slider: 0 to 10 = 7 ±0
+Why: 4 and 3 more make 7.
+
+Q: There are 5 balloons and 2 pop. How many are left?
+Slider: 0 to 10 = 3 ±0
+Why: Take away 2 from 5 and 3 are left.
+
+Q: There are 6 cakes and you eat 1. How many cakes are left?
+Slider: 0 to 10 = 5 ±0
+Why: Take away 1 from 6 and 5 are left.
+
+Q: What is 2 plus 2?
+Slider: 0 to 10 = 4 ±0
+Why: 2 and 2 more make 4.
+
+Q: What is 5 plus 4?
+Slider: 0 to 10 = 9 ±0
+Why: Start at 5 and count on 4: 6, 7, 8, 9.
+
+Q: What is 8 take away 3?
+Slider: 0 to 10 = 5 ±0
+Why: Start at 8 and count back 3: 7, 6, 5.
+
+Q: What is 10 take away 6?
+Slider: 0 to 10 = 4 ±0
+Why: Start at 10 and count back 6 to reach 4.
+
+Q: What is 1 plus 9?
+Slider: 0 to 10 = 10 ±0
+Why: 1 and 9 make 10. They are a pair of friends that make ten.
+
+Q: What is 7 take away 7?
+Slider: 0 to 10 = 0 ±0
+Why: If you take away everything, there is nothing left: 0.
+
+# Maths · Ages 4–5 · Shapes and sizes
+Q: How many corners does a triangle have?
+A) 2
+B) 3*
+C) 4
+Why: A triangle has three corners. "Tri" means three.
+
+Q: Which shape has no corners?
+A) circle*
+B) square
+C) triangle
+Why: A circle is round all the way, so it has no corners.
+
+Q: Which shape has four sides that are all the same length?
+A) circle
+B) triangle
+C) square*
+Why: A square has four equal sides.
+
+Q: Which number is the biggest: 3, 9 or 6?
+A) 3
+B) 9*
+C) 6
+Why: 9 is further along the number line than 3 or 6.
+
+Q: Which number is the smallest: 5, 2 or 8?
+A) 5
+B) 2*
+C) 8
+Why: 2 comes before 5 and 8 when you count.
+
+Q: Which shape has three corners?
+A) triangle*
+B) square
+C) circle
+Why: A triangle has three corners and three sides.
+
+Q: Sort the shapes by corners.
+Sort: Has corners = square, triangle, rectangle; No corners = circle, oval
+Why: Squares, triangles and rectangles have corners. Circles and ovals curve all the way.
+
+Q: Sort the shapes by sides.
+Sort: 3 sides = triangle; 4 sides = square, rectangle
+Why: A triangle has three sides. A square and a rectangle have four.
+
+# Maths · Ages 4–5 · Put numbers in order
+Q: Put these numbers in order, smallest first: 3, 1, 2.
+Order: 1, 2, 3
+Why: Count up: 1, 2, 3.
+
+Q: Put these numbers in order, smallest first: 5, 2, 4.
+Order: 2, 4, 5
+Why: 2 is smallest, then 4, then 5.
+
+Q: Put these numbers in order, smallest first: 9, 7, 8.
+Order: 7, 8, 9
+Why: Count up: 7, 8, 9.
+
+Q: Put these numbers in order, biggest first: 6, 10, 8.
+Order: 10, 8, 6
+Why: 10 is biggest, then 8, then 6.
+
+Q: Match each number to its word.
+Match: 1 = one; 2 = two; 3 = three; 4 = four
+Why: Each number has a name you can say and write.
+
+Q: Match the numbers 5 to 8 to their words.
+Match: 5 = five; 6 = six; 7 = seven; 8 = eight
+Why: Each number has a name you can say and write.
+
+Q: Which number is the biggest: 12, 8 or 15?
+A) 12
+B) 8
+C) 15*
+Why: 15 is more than 12 and 8.
+
+Q: Which number is the smallest: 14, 11 or 19?
+A) 14
+B) 11*
+C) 19
+Why: 11 comes before 14 and 19.

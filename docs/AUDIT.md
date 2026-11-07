@@ -2,6 +2,15 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · P3 content review (literacy and numeracy drafts)
+
+Reviewer: Claude Code authored; two independent review agents then read every file cold (one as an English teacher, one as a maths teacher, with no access to my conclusions) and recomputed every answer.
+
+- **Mechanical checks (all PASS).** Every question parses with the Studio importer with no blocking problem and a reason line; the real server validator (`Content::validateQuiz`) accepts all 38 quizzes, with ranked rounds on except for the five dictation sets; no prompt repeats within the drafts or against the 46 seed quizzes; no American spellings (word list); every quiz has 6 or more questions. Numeracy answers are computed by code from the same expressions the prompt describes.
+- **Review findings, all fixed.** Maths: no wrong answers; fixed one garbled reason, the pound sign shown after a number (now "in pounds" in the prompt), a true minus sign versus a hyphen on negative cards, "about how many" wording on an exact answer, and several items too easy for 12–16 (replaced with GCSE-style items). English: fixed decoys that also fit their gap ("The cat sat on the dog"), two gap questions with no time word so two tenses fitted, a dictation clue that used another answer, false spelling hints (stationery, twelfth, privilege, vegetable, queue, whole, principle, disagree), a sort item that is also a noun, alliteration in the personification and alliteration examples, and KS1-level grammar and vocabulary in the 9–14 sets and KS2-level terms in the 15–16 set (replaced).
+- **Not covered.** Nobody has yet read these as the owner will (tone, fit with your classes). The AI review cannot grade tile questions. The questions were not played on a device: the tile screens were exercised in the browser suite, the new content was only parsed and validated.
+- **Child safety.** No personal data, no names of real people (generic first names only), nothing frightening; dictation sets carry a written clue so a device with no English voice can still play.
+
 ## 2026-11-07 · P2 slice 2.2: the assign question and the Studio forms (grading, answer hiding, authoring)
 
 Reviewer: Claude Code, focused review of `Game::tappedPairs`, `Game::answer` (assign branch), `Game::state`, `Content::validateAssign`, the snapshot and the Studio save path (security-audit skill, guidance mode, local tests only).

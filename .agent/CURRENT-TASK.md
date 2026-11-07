@@ -1,5 +1,12 @@
 # Current task
 
+## P3: literacy and numeracy content (branch `phase/p3-content`, 7 Nov 2026, committed, NOT pushed, nothing imported or published)
+- Slice 2.2 is LIVE (95a4c26). Built on top: prompts up to 600 characters, Studio "Allow ranked rounds" tickbox, 38 quiz drafts (364 questions) in `backend/content/drafts/p3-*.txt`, a guard test, an e2e passage check. Review and fixes: `docs/AUDIT.md` (P3 content review).
+- To publish (owner, in the Studio): release this branch first (it carries the 600-character limit and the ranked tickbox the drafts need). Then Studio → Import → paste one file at a time → read the notes → Create drafts → for each of the 5 "Listen and spell" quizzes untick "Allow ranked rounds" → read each quiz → Publish. Then one more release so the new pages are prerendered. Nothing here has been imported.
+- Counts after publishing: every literacy and numeracy level cell reaches 6 (check the live catalogue).
+- Next: P4 (parent area, migration 0019) after your "approved".
+
+
 ## P2 slice 2.2: match and sort, Studio forms, import (branch `phase/p2-assign`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
 - Slice 2.1 is LIVE (migration 0018 applied after backup `db-pre-migrate-0018-20261107-130845.sql.gz`, code on `main` 301ed25; CI, Semgrep, Deploy passed).
 - Built: `assign` type (server grading with `invalid_pairs` refusals, tap-to-place screen), Studio forms and preview for build and assign, validator mirror, import lines, fix for the Studio dropping `build` on save. No migration needed.

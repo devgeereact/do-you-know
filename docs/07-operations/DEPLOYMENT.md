@@ -13,6 +13,8 @@ What a release does (`release.json`):
 
 Migration `0017_daily_deals.sql` (private daily hands) was applied on 7 Nov 2026. **Pending: `0018_build_answers.sql`** (adds `attempt_answers.chosen_json`, additive) for the build question; the code on `phase/p2-tap-types` writes that column, so release the migration alone first, back up, run it, then release the code. Method for a migration the new code needs: release the `.sql` file alone first (a commit with only the migration), back up, run `bin/migrate.php`, then release the code.
 
+New quiz content is not part of a release either: it goes in through the Studio. The P3 drafts (`backend/content/drafts/p3-*.txt`) are Studio import text: release the code first (it raises the prompt limit to 600 characters and adds the "Allow ranked rounds" tickbox), then Import, create drafts, switch ranked rounds off for each "Listen and spell" quiz, read, publish, and release again so the new pages are prerendered.
+
 Database migrations are not part of a release. Take a backup (`bash ~/do-you-know-private/shared/backup-db.sh`, then copy the newest file from `~/backups/do-you-know/dykspace/rolling/` to `~/backups/do-you-know/dykspace/db-pre-migrate-<what>-<time>.sql.gz`; the newest 3 pinned copies are kept), then run `bin/migrate.php` in `~/do-you-know-private/current` with `DYK_CONFIG=$HOME/do-you-know-private/shared/migration.php`. A code change that needs a migration must not reach `main` before the migration has run, or must tolerate the old schema. Migration `.sql` files reach the server only because the private part in `release.json` allows `*.sql` (added 31 October 2026; before that 0012 was never uploaded).
 
 All backend code, vendor, config, uploads, logs and backups stay outside the web root.

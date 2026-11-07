@@ -126,4 +126,23 @@ Database::execute(
     'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
     [$assignVersion, $assignQuiz, json_encode(Dyk\Content::snapshot($assignFile))],
 );
-echo "seeded e2e-quick-quiz, e2e-build-quiz, e2e-assign-quiz and the daily challenge for $today\n";
+// A fourth quiz whose questions carry a short reading passage (a long prompt). 18 and over, for the same reason.
+$passage = 'Maya\'s grandfather kept bees at the bottom of his garden. Every summer she helped him collect the honey. She wore a net hat so the bees could not sting her face.';
+$passageFile = ['slug' => 'e2e-passage-quiz', 'questions' => [
+    ['type' => 'choice', 'prompt' => $passage.' Why did Maya wear a net hat?', 'options' => [['label' => 'To stop the bees stinging her face', 'correct' => true], ['label' => 'To keep her hair tidy', 'correct' => false], ['label' => 'Because it was raining', 'correct' => false]]] + $meta,
+    ['type' => 'choice', 'prompt' => $passage.' Who helped Maya collect the honey?', 'options' => [['label' => 'Her grandfather', 'correct' => false], ['label' => 'Nobody', 'correct' => false], ['label' => 'She helped her grandfather', 'correct' => true]]] + $meta,
+    ['type' => 'choice', 'prompt' => $passage.' Where were the bees kept?', 'options' => [['label' => 'At the bottom of the garden', 'correct' => true], ['label' => 'In the kitchen', 'correct' => false], ['label' => 'At school', 'correct' => false]]] + $meta,
+]];
+$passageQuiz = Database::uuid();
+$passageVersion = Database::uuid();
+Database::execute(
+    $db,
+    "INSERT INTO quizzes (id,slug,title,intro,category_id,status,current_version_id,question_count,difficulty,age_min,is_ranked) VALUES (?,?,?,?,?,'published',?,3,'easy',18,0)",
+    [$passageQuiz, 'e2e-passage-quiz', 'E2E Passage Quiz', 'Read a short passage, then answer.', $category, $passageVersion],
+);
+Database::execute(
+    $db,
+    'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
+    [$passageVersion, $passageQuiz, json_encode(Dyk\Content::snapshot($passageFile))],
+);
+echo "seeded e2e-quick-quiz, e2e-build-quiz, e2e-assign-quiz, e2e-passage-quiz and the daily challenge for $today\n";
