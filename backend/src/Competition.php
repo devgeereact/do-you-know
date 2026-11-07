@@ -32,8 +32,9 @@ final class Competition
     }
 
     /**
-     * GET /daily: today's live daily plus "stops" (one cosmetic scene per question, in the round's
-     * order; never prompts or answers) and "stats" for today's daily board.
+     * GET /daily: today's live daily, "stops" (a cosmetic route of ten scenes, the same all day and
+     * never tied to any question) and "stats" for today's board. Every player is dealt their own
+     * questions, so this page cannot show them.
      */
     public function dailyDetails(): ?array
     {
@@ -42,14 +43,11 @@ final class Competition
         if ($daily === null) {
             return null;
         }
-        $row = Database::one($this->db,
-            'SELECT d.challenge_date,d.quiz_id,v.snapshot,v.question_count,c.scene,q.title FROM daily_challenges d
-             JOIN quiz_versions v ON v.id=d.quiz_version_id JOIN quizzes q ON q.id=d.quiz_id
-             LEFT JOIN categories c ON c.id=q.category_id WHERE d.id=?', [$daily['id']]);
-        $snapshot = json_decode($row['snapshot'], true, 512, JSON_THROW_ON_ERROR);
-        $byId = array_column($snapshot, null, 'id');
-        $stops = array_map(static fn(string $qid): string => Content::sceneFor($byId[$qid], $row['scene'], $qid, $row['title']),
-            Game::dailyOrder(array_column($snapshot, 'id'), $row['challenge_date'], (int) $row['question_count']));
+        $row = Database::one($this->db, 'SELECT challenge_date,quiz_id FROM daily_challenges WHERE id=?', [$daily['id']]);
+        $stops = [];
+        for ($i = 0; $i < Game::DAILY_ROUND; $i++) {
+            $stops[] = Content::SCENES[hexdec(substr(hash('sha256', 'dyk-stop|' . $row['challenge_date'] . '|' . $i), 0, 7)) % count(Content::SCENES)];
+        }
         $stats = Database::one($this->db,
             "SELECT COUNT(*) AS played,AVG(e.correct_count) AS average,COALESCE(SUM(e.correct_count=e.total),0) AS perfect
              FROM leaderboard_entries e JOIN profiles p ON p.id=e.user_id
@@ -101,6 +99,10 @@ final class Competition
             }
             if ($attempt['status'] !== 'finished') {
                 throw new ApiError('attempt_not_finished');
+            }
+            // A daily hand is private and mixes quizzes, so a friend could not replay it as one quiz.
+            if ($attempt['mode'] === 'daily') {
+                throw new ApiError('daily_not_shareable');
             }
             $existing = Database::one($this->db,
                 'SELECT code,expires_at FROM friend_challenges WHERE creator_attempt_id=? AND expires_at>UTC_TIMESTAMP(6) ORDER BY created_at DESC LIMIT 1',
@@ -160,7 +162,8 @@ final class Competition
     /** Caller holds the player's row and attempt row locks. */
     public function record(array $attempt, int $total): void
     {
-        if (in_array($attempt['mode'], ['ranked', 'daily'], true)) {
+        // A daily hand mixes quizzes, so it counts on the day's board only, never on one quiz's boards.
+        if ($attempt['mode'] === 'ranked') {
             $this->best('all_time', '1970-01-01', $attempt, $total);
             $this->best('weekly', self::weekStart(), $attempt, $total);
         }

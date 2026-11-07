@@ -23,6 +23,19 @@ function request(string $method,string $path,?array $body=null,?string $token=nu
     $status=curl_getinfo($c,CURLINFO_RESPONSE_CODE);$size=curl_getinfo($c,CURLINFO_HEADER_SIZE);$h=substr($reply,0,$size);$j=json_decode(substr($reply,$size),true);
     return ['status'=>$status,'body'=>$j,'headers'=>$h,'raw'=>substr($reply,$size)];
 }
+/**
+ * The daily deals every hand from all live quizzes, so a suite that plays a daily must say which quizzes
+ * exist. Hides every other published quiz and puts them back when the script ends (even on a failed check).
+ */
+function isolateBank(array $keepQuizIds): void {
+    global $db;
+    $s=$db->prepare("SELECT id FROM quizzes WHERE status='published'");$s->execute();
+    $hidden=array_values(array_diff($s->fetchAll(PDO::FETCH_COLUMN),$keepQuizIds));
+    foreach($hidden as $id){Database::execute($db,"UPDATE quizzes SET status='draft' WHERE id=?",[$id]);}
+    register_shutdown_function(static function () use ($db,$hidden): void {
+        foreach($hidden as $id){Database::execute($db,"UPDATE quizzes SET status='published' WHERE id=?",[$id]);}
+    });
+}
 /** The id this attempt shows for a stored option: players get per-attempt handles, never snapshot ids. */
 function servedId(array $question,array $option): string {
     foreach($question['options']??[] as $o){if($o['label']===$option['label']){return $o['id'];}}

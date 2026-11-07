@@ -50,8 +50,11 @@ final class AdminContent
                 c.slug AS category_slug,c.name AS category_name,COALESCE(p.plays,0) AS plays,r.n AS answered,r.r AS right_answers
             FROM quizzes q LEFT JOIN quiz_versions v ON v.id=q.current_version_id LEFT JOIN categories c ON c.id=q.category_id
             LEFT JOIN (SELECT quiz_id,COUNT(*) AS plays FROM attempts WHERE status='finished' GROUP BY quiz_id) p ON p.quiz_id=q.id
-            LEFT JOIN (SELECT a.quiz_id,COUNT(*) AS n,SUM(aa.is_correct) AS r FROM attempt_answers aa JOIN attempts a ON a.id=aa.attempt_id
-                GROUP BY a.quiz_id) r ON r.quiz_id=q.id WHERE 1=1";
+            LEFT JOIN (SELECT COALESCE(dv.quiz_id,a.quiz_id) AS quiz_id,COUNT(*) AS n,SUM(aa.is_correct) AS r FROM attempt_answers aa
+                JOIN attempts a ON a.id=aa.attempt_id
+                LEFT JOIN daily_deals dd ON dd.attempt_id=aa.attempt_id AND dd.position=aa.position
+                LEFT JOIN quiz_versions dv ON dv.id=dd.quiz_version_id
+                GROUP BY COALESCE(dv.quiz_id,a.quiz_id)) r ON r.quiz_id=q.id WHERE 1=1";
         $args = [];
         $status = Admin::queryEnum($query, 'status', self::STATUSES);
         if ($status === 'review') {
@@ -100,8 +103,12 @@ final class AdminContent
         $row = $this->find($id);
         $work = $this->workCopy($row);
         $stats = [];
+        // A daily answer is credited to the quiz its question was dealt from, not the day's anchor quiz.
         $statement = $this->db->prepare('SELECT aa.question_id,COUNT(*) AS n,SUM(aa.is_correct) AS r FROM attempt_answers aa
-            JOIN attempts a ON a.id=aa.attempt_id WHERE a.quiz_id=? GROUP BY aa.question_id');
+            JOIN attempts a ON a.id=aa.attempt_id
+            LEFT JOIN daily_deals dd ON dd.attempt_id=aa.attempt_id AND dd.position=aa.position
+            LEFT JOIN quiz_versions dv ON dv.id=dd.quiz_version_id
+            WHERE COALESCE(dv.quiz_id,a.quiz_id)=? GROUP BY aa.question_id');
         $statement->execute([$id]);
         foreach ($statement->fetchAll() as $s) {
             $stats[$s['question_id']] = ['answered' => (int) $s['n'], 'right' => (int) $s['r']];

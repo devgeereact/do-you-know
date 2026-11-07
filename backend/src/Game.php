@@ -45,9 +45,29 @@ final class Game
         return $a;
     }
 
+    /**
+     * Where each question of a daily hand came from: position => the immutable version that held it. A
+     * daily hand mixes quizzes, so the attempt's own version is only the day's anchor. Empty for every
+     * other mode (and for a daily started before hands were dealt), which read the attempt's version.
+     *
+     * @return array<int,string>
+     */
+    private function dealtVersions(array $a): array
+    {
+        if ($a['daily_challenge_id'] === null) { return []; }
+        $s = $this->db->prepare('SELECT position,quiz_version_id FROM daily_deals WHERE attempt_id=?');
+        $s->execute([$a['id']]);
+        return array_column($s->fetchAll(), 'quiz_version_id', 'position');
+    }
+
+    private function currentVersion(array $a): string
+    {
+        return $this->dealtVersions($a)[(int) $a['current_index'] + 1] ?? $a['quiz_version_id'];
+    }
+
     private function question(array $a): array
     {
-        $version = Database::one($this->db, 'SELECT snapshot FROM quiz_versions WHERE id=?', [$a['quiz_version_id']]);
+        $version = Database::one($this->db, 'SELECT snapshot FROM quiz_versions WHERE id=?', [$this->currentVersion($a)]);
         $questions = json_decode($version['snapshot'], true, 512, JSON_THROW_ON_ERROR);
         $order = json_decode($a['question_order'], true, 512, JSON_THROW_ON_ERROR);
         $qid = $order[(int)$a['current_index']] ?? null;
@@ -60,7 +80,14 @@ final class Game
         $quiz = Database::one($this->db, 'SELECT q.slug,q.title,c.scene FROM quizzes q LEFT JOIN categories c ON c.id=q.category_id WHERE q.id=?', [$a['quiz_id']]);
         $total = count(json_decode($a['question_order'], true, 512, JSON_THROW_ON_ERROR));
         $complete = (int)$a['answered_count'] >= $total;
-        $q = (!$complete && $a['current_sent_at'] !== null) ? self::publicQuestion($this->question($a), $quiz['scene'], $quiz['title']) : null;
+        $q = null;
+        if (!$complete && $a['current_sent_at'] !== null) {
+            // A daily question wears the scene of the quiz it came from, not the day's anchor quiz.
+            $source = $a['daily_challenge_id'] === null ? $quiz : (Database::one($this->db,
+                'SELECT q.title,c.scene FROM quiz_versions v JOIN quizzes q ON q.id=v.quiz_id LEFT JOIN categories c ON c.id=q.category_id WHERE v.id=?',
+                [$this->currentVersion($a)]) ?? $quiz);
+            $q = self::publicQuestion($this->question($a), $source['scene'], $source['title']);
+        }
         if ($q) {
             foreach ($q['options'] as $i => $o) { $q['options'][$i]['id'] = $this->handle($a['id'], $o['id']); }
             // Ordering by the keyed handle: a player cannot recompute it from what they are sent.
@@ -93,9 +120,11 @@ final class Game
         return $this->transaction(function () use ($input, $mode): array {
             $daily = null;
             $challenge = null;
+            $hand = null;
             if ($mode === 'daily') {
+                // The lock keeps deals one at a time: two players starting together cannot take one question.
                 $daily = Database::one($this->db,
-                    "SELECT * FROM daily_challenges WHERE challenge_date=? AND status='live'", [Competition::londonDate()]);
+                    "SELECT * FROM daily_challenges WHERE challenge_date=? AND status='live' FOR UPDATE", [Competition::londonDate()]);
                 if (!$daily) { throw new ApiError('no_daily_today'); }
                 $quizId = $daily['quiz_id'];
                 $versionId = $daily['quiz_version_id'];
@@ -152,8 +181,9 @@ final class Game
                 $shuffle = $creator['shuffle_options'];
             } else {
                 $ids = array_column($snapshot, 'id');
-                $order = $daily
-                    ? self::dailyOrder($ids, $daily['challenge_date'], (int) $version['question_count'])
+                $hand = $daily ? $this->dealDaily($daily['id']) : null;
+                $order = $hand !== null
+                    ? array_column($hand, 'question')
                     : self::pickRound($ids, self::roundSize($mode, (int) $version['question_count'], count($ids)), $this->servedHistory($quizId));
                 $timer = $quiz['time_limit_seconds'];
                 $shuffle = $quiz['shuffle_options'];
@@ -163,13 +193,57 @@ final class Game
                 'INSERT INTO attempts (id,user_id,quiz_id,quiz_version_id,mode,daily_challenge_id,friend_challenge_id,time_limit_seconds,shuffle_options,question_order,current_sent_at)
                  VALUES (?,?,?,?,?,?,?,?,?,?,UTC_TIMESTAMP(6))',
                 [$id, $this->userId, $quizId, $versionId, $mode, $daily['id'] ?? null, $challenge['id'] ?? null, $timer, (int) $shuffle, json_encode($order, JSON_THROW_ON_ERROR)]);
+            foreach ($hand ?? [] as $i => $card) {
+                Database::execute($this->db,
+                    'INSERT INTO daily_deals (attempt_id,position,daily_challenge_id,quiz_version_id,question_id,deal_no) VALUES (?,?,?,?,?,?)',
+                    [$id, $i + 1, $daily['id'], $card['version'], $card['question'], $card['deal']]);
+            }
             return $this->state($this->attempt($id));
         });
     }
 
+    /** Questions in one player's daily hand. */
+    public const DAILY_ROUND = 10;
+
     /**
-     * The daily round: the same for everyone on one London date, but a different slice of the
-     * bank each time a quiz comes back as the daily. Sorted by a hash of the date and question id.
+     * One player's hand for today's daily: DAILY_ROUND questions drawn from every live quiz that children
+     * may see (adult 18+ quizzes are left out). The least-dealt questions go first, so no two players hold
+     * the same question until the whole bank has been dealt once; after that a second lap begins. The
+     * caller holds the day's row lock, which makes deals one at a time, and the unique key on
+     * daily_deals refuses a duplicate even if that lock were ever skipped.
+     *
+     * @return list<array{version:string,question:string,deal:int}>
+     */
+    private function dealDaily(string $dailyId): array
+    {
+        // A bank question counts once even if two quizzes carry the same id. Only ids are read here,
+        // so no prompt or answer leaves the database.
+        $bank = $this->db->prepare(
+            "SELECT q.current_version_id AS version_id,jt.qid FROM quizzes q
+             JOIN quiz_versions v ON v.id=q.current_version_id AND v.quiz_id=q.id
+             JOIN JSON_TABLE(v.snapshot,'$[*]' COLUMNS (qid CHAR(36) PATH '$.id')) AS jt
+             WHERE " . Catalog::LIVE . ' AND (q.age_min IS NULL OR q.age_min<18) ORDER BY q.id,jt.qid');
+        $bank->execute();
+        $versionOf = [];
+        foreach ($bank->fetchAll() as $row) { $versionOf[$row['qid']] ??= $row['version_id']; }
+        if (count($versionOf) < 3) { throw new ApiError('no_daily_today'); }
+
+        $dealt = $this->db->prepare('SELECT question_id,COUNT(*) AS n FROM daily_deals WHERE daily_challenge_id=? GROUP BY question_id');
+        $dealt->execute([$dailyId]);
+        $times = array_column($dealt->fetchAll(), 'n', 'question_id');
+
+        $ids = array_keys($versionOf);
+        shuffle($ids);
+        // Stable sort: least dealt first, and the shuffle decides between equals.
+        usort($ids, static fn(string $a, string $b): int => ((int) ($times[$a] ?? 0)) <=> ((int) ($times[$b] ?? 0)));
+        $picked = array_slice($ids, 0, min(self::DAILY_ROUND, count($ids)));
+        shuffle($picked);
+        return array_map(static fn(string $qid): array => ['version' => $versionOf[$qid], 'question' => $qid, 'deal' => (int) ($times[$qid] ?? 0) + 1], $picked);
+    }
+
+    /**
+     * The daily round used when every player got the same questions: sorted by a hash of the date and
+     * question id. No longer used to deal a daily (see dealDaily); kept for the tests that pin its shape.
      *
      * @param list<string> $ids every question ID in the pinned version
      * @return list<string>
@@ -296,12 +370,18 @@ final class Game
                 Database::execute($this->db, "UPDATE attempts SET status='finished',finished_at=UTC_TIMESTAMP(6) WHERE id=?", [$id]);
                 (new Competition($this->db, $this->userId))->record($a, $total);
             }
-            $version = Database::one($this->db, 'SELECT snapshot FROM quiz_versions WHERE id=?', [$a['quiz_version_id']]);
-            $questions = array_column(json_decode($version['snapshot'], true), null, 'id');
+            // A daily hand mixes quizzes: read each answered question from the version it was dealt from.
+            $dealt = $this->dealtVersions($a);
+            $byVersion = [];
             $s=$this->db->prepare('SELECT * FROM attempt_answers WHERE attempt_id=? ORDER BY position'); $s->execute([$id]);
             $review=[];
             foreach ($s->fetchAll() as $answer) {
-                $q=$questions[$answer['question_id']]; $labels=array_column($q['options']??[], 'label', 'id');
+                $versionId = $dealt[(int) $answer['position']] ?? $a['quiz_version_id'];
+                if (!isset($byVersion[$versionId])) {
+                    $version = Database::one($this->db, 'SELECT snapshot FROM quiz_versions WHERE id=?', [$versionId]);
+                    $byVersion[$versionId] = array_column(json_decode($version['snapshot'], true), null, 'id');
+                }
+                $q=$byVersion[$versionId][$answer['question_id']]; $labels=array_column($q['options']??[], 'label', 'id');
                 $right=array_values(array_filter($q['options']??[], fn(array $o): bool => (bool)$o['is_correct']));
                 $review[]=['position'=>(int)$answer['position'],'prompt'=>$q['prompt'],'type'=>$q['type'],
                     'is_correct'=>(bool)$answer['is_correct'],'timed_out'=>(bool)$answer['timed_out'],
@@ -312,13 +392,14 @@ final class Game
             $profile=Database::one($this->db,'SELECT nickname,streak_current FROM profiles WHERE id=?',[$this->userId]);
             $competition = new Competition($this->db, $this->userId);
             $ranks = [];
-            if (in_array($a['mode'], ['ranked', 'daily'], true)) {
+            // A daily hand is a private mix of quizzes, so it is ranked on the day's board only.
+            if ($a['mode'] === 'ranked') {
                 $ranks['all_time'] = $competition->rank('all_time', $a['quiz_id'], '1970-01-01');
                 $ranks['weekly'] = $competition->rank('weekly', $a['quiz_id'], Competition::weekStart());
-                if ($a['daily_challenge_id']) {
-                    $daily = Database::one($this->db, 'SELECT challenge_date FROM daily_challenges WHERE id=?', [$a['daily_challenge_id']]);
-                    $ranks['daily'] = $competition->rank('daily', $a['quiz_id'], $daily['challenge_date']);
-                }
+            }
+            if ($a['mode'] === 'daily' && $a['daily_challenge_id']) {
+                $daily = Database::one($this->db, 'SELECT challenge_date FROM daily_challenges WHERE id=?', [$a['daily_challenge_id']]);
+                $ranks['daily'] = $competition->rank('daily', $a['quiz_id'], $daily['challenge_date']);
             }
             $versus = null;
             if ($a['friend_challenge_id']) {

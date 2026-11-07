@@ -92,9 +92,13 @@ final class AdminOps
      */
     private function questionStats(int $min, int $belowPercent, int $limit): array
     {
-        $statement = $this->db->prepare('SELECT a.quiz_id,aa.question_id,COUNT(*) AS n,SUM(aa.is_correct) AS r
-            FROM attempt_answers aa JOIN attempts a ON a.id=aa.attempt_id JOIN quizzes q ON q.id=a.quiz_id AND ' . Catalog::LIVE . '
-            GROUP BY a.quiz_id,aa.question_id HAVING COUNT(*)>=? AND 100*SUM(aa.is_correct)<?*COUNT(*)
+        // A daily answer belongs to the quiz its question was dealt from (daily_deals), not the day's anchor quiz.
+        $statement = $this->db->prepare('SELECT COALESCE(dv.quiz_id,a.quiz_id) AS quiz_id,aa.question_id,COUNT(*) AS n,SUM(aa.is_correct) AS r
+            FROM attempt_answers aa JOIN attempts a ON a.id=aa.attempt_id
+            LEFT JOIN daily_deals dd ON dd.attempt_id=aa.attempt_id AND dd.position=aa.position
+            LEFT JOIN quiz_versions dv ON dv.id=dd.quiz_version_id
+            JOIN quizzes q ON q.id=COALESCE(dv.quiz_id,a.quiz_id) AND ' . Catalog::LIVE . '
+            GROUP BY COALESCE(dv.quiz_id,a.quiz_id),aa.question_id HAVING COUNT(*)>=? AND 100*SUM(aa.is_correct)<?*COUNT(*)
             ORDER BY SUM(aa.is_correct)/COUNT(*),COUNT(*) DESC LIMIT 2000');
         $statement->execute([$min, $belowPercent]);
         $snapshots = $this->liveSnapshots(true);

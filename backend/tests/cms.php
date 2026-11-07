@@ -291,14 +291,13 @@ Database::execute($db, 'DELETE FROM attempts WHERE daily_challenge_id IN (SELECT
 Database::execute($db, 'DELETE FROM daily_challenges WHERE challenge_date=?', [$today]);
 $liveVersion = Database::one($db, 'SELECT current_version_id FROM quizzes WHERE id=?', [$id])['current_version_id'];
 Database::execute($db, "INSERT INTO daily_challenges (id,challenge_date,quiz_id,quiz_version_id,status) VALUES (?,?,?,?,'live')", [Database::uuid(), $today, $id, $liveVersion]);
-$order = Dyk\Game::dailyOrder(array_keys($snapshot), $today, 3);
-$expected = array_map(fn(string $qid): string => isset($snapshot[$qid]['scene']) ? $snapshot[$qid]['scene'] : 'space', $order);
+isolateBank([$id]); // the daily deals from every live quiz; here the bank is this quiz
 $daily = request('GET', '/daily')['body'];
-check('the daily lists one scene stop per question in round order', $daily['quiz']['slug'] === $slug && $daily['stops'] === $expected && in_array('ocean', $expected, true));
+check('the daily lists ten cosmetic scene stops', $daily['quiz']['slug'] === $slug && count($daily['stops']) === 10 && array_diff($daily['stops'], Dyk\Content::SCENES) === []);
 check('the daily stops hold no prompts or answers', !str_contains(json_encode($daily), 'prompt') && !str_contains(json_encode($daily), 'is_correct'));
 check('the daily starts with an empty board', $daily['stats'] === ['played' => 0, 'average' => null, 'perfect' => 0]);
 $state = request('POST', '/attempts', ['mode' => 'daily'], $star['token'])['body'];
-check('the daily round follows the same order', $state['question']['id'] === $order[0]);
+check('the daily deals a question from the live bank', isset($snapshot[$state['question']['id']]));
 for ($i = 0; $i < 3; $i++) {
     $pick = array_values(array_filter($snapshot[$state['question']['id']]['options'], fn($o) => $o['is_correct']))[0];
     request('POST', '/attempts/'.$state['attempt_id'].'/answer', ['option_id' => servedId($state['question'], $pick)], $star['token']);
@@ -307,6 +306,39 @@ for ($i = 0; $i < 3; $i++) {
 request('POST', '/attempts/'.$state['attempt_id'].'/finish', [], $star['token']);
 $stats = request('GET', '/daily')['body']['stats'];
 check('the daily stats count the board', $stats['played'] === 1 && $stats['perfect'] === 1 && $stats['average'] == 3);
+
+// A daily hand mixes quizzes. The Studio credits each answer to the quiz its question came from, not to
+// the day's anchor quiz: three quizzes of three questions, anchored on the first of the new ones.
+$mixCategory = Database::one($db, 'SELECT id FROM categories WHERE slug=?', [$subject])['id'];
+$mixKeys = []; $mixQuiz = []; $mixIds = [];
+foreach ($snapshot as $qid => $q) { $mixKeys[$qid] = $q; $mixQuiz[$qid] = $id; }
+foreach (['b', 'c'] as $n) {
+    $quizId = Database::uuid(); $versionId = Database::uuid(); $questions = [];
+    for ($i = 0; $i < 3; $i++) {
+        $q = ['id' => Database::uuid(), 'type' => 'choice', 'prompt' => 'Mixed daily '.$n.' '.$word.' '.($i + 1), 'explanation' => 'Because.',
+            'image_url' => null, 'source_url' => null, 'slider' => null,
+            'options' => [['id' => Database::uuid(), 'label' => 'Right', 'is_correct' => true], ['id' => Database::uuid(), 'label' => 'Wrong', 'is_correct' => false]]];
+        $questions[] = $q; $mixKeys[$q['id']] = $q; $mixQuiz[$q['id']] = $quizId;
+    }
+    Database::execute($db, "INSERT INTO quizzes (id,slug,title,category_id,status) VALUES (?,?,?,?,'published')", [$quizId, 'cms-mix-'.$n.'-'.$tag, 'Mixed daily '.$n, $mixCategory]);
+    Database::execute($db, 'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)', [$versionId, $quizId, json_encode($questions)]);
+    Database::execute($db, 'UPDATE quizzes SET current_version_id=? WHERE id=?', [$versionId, $quizId]);
+    $mixIds[$n] = ['quiz' => $quizId, 'version' => $versionId];
+}
+Database::execute($db, 'DELETE FROM attempts WHERE daily_challenge_id IN (SELECT id FROM daily_challenges WHERE challenge_date=?)', [$today]);
+Database::execute($db, 'DELETE FROM daily_challenges WHERE challenge_date=?', [$today]);
+Database::execute($db, "INSERT INTO daily_challenges (id,challenge_date,quiz_id,quiz_version_id,status) VALUES (?,?,?,?,'live')", [Database::uuid(), $today, $mixIds['b']['quiz'], $mixIds['b']['version']]);
+$mixer = request('POST', '/guest-sessions', [])['body'];
+$state = request('POST', '/attempts', ['mode' => 'daily'], $mixer['token'])['body'];
+check('a daily hand spans every live quiz in the bank', $state['total'] === 9);
+for ($i = 0; $i < 9; $i++) {
+    $pick = array_values(array_filter($mixKeys[$state['question']['id']]['options'], fn($o) => $o['is_correct']))[0];
+    request('POST', '/attempts/'.$state['attempt_id'].'/answer', ['option_id' => servedId($state['question'], $pick)], $mixer['token']);
+    if ($i < 8) { $state = request('POST', '/attempts/'.$state['attempt_id'].'/next', [], $mixer['token'])['body']; }
+}
+request('POST', '/attempts/'.$state['attempt_id'].'/finish', [], $mixer['token']);
+$cDetail = admin('GET', '/quizzes/'.$mixIds['c']['quiz'])['body']['questions'];
+check('the Studio credits mixed daily answers to the quiz each question came from, not the anchor', array_sum(array_map(fn($q) => $q['stats']['answered'], $cDetail)) === 3);
 
 // ---- Feedback inbox ----
 $adult = request('POST', '/guest-sessions', [])['body'];

@@ -33,7 +33,7 @@ if ! curl --silent --fail "$DYK_TEST_API/health" > /dev/null 2>&1; then
   for _ in $(seq 1 50); do curl --silent --fail "$DYK_TEST_API/health" > /dev/null 2>&1 && break; sleep 0.2; done
 fi
 
-suites="${*:-unit integration competition daily concurrency feeds content cleanup seo admin feedback cms generator}"
+suites="${*:-unit integration competition daily daily_deal concurrency feeds content cleanup seo admin feedback cms generator}"
 for s in $suites; do
   echo "== $s"
   php "$ROOT/backend/tests/$s.php" | tail -n 3

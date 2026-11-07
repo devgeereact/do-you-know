@@ -70,14 +70,18 @@ Database::execute($db,'DELETE FROM attempts WHERE daily_challenge_id IN (SELECT 
 Database::execute($db,'DELETE FROM daily_challenges WHERE challenge_date=?',[$today]);
 $daily=Database::uuid();
 Database::execute($db,"INSERT INTO daily_challenges (id,challenge_date,quiz_id,quiz_version_id,status) VALUES (?,?,?,?,'live')",[$daily,$today,$quiz,$version]);
+isolateBank([$quiz]);// the daily deals from every live quiz; here the bank is this fixture's three questions
 $r=request('GET','/daily');check('daily uses London server date',$r['status']===200&&$r['body']['date']===$today&&$r['body']['quiz']['slug']===$slug);
 $r=request('POST','/attempts',['mode'=>'daily'],$first['token']);$dailyState=$r['body'];
 $r=request('POST','/attempts',['mode'=>'daily'],$second['token']);$otherDaily=$r['body'];
 $a=Database::one($db,'SELECT question_order FROM attempts WHERE id=?',[$dailyState['attempt_id']]);
 $b=Database::one($db,'SELECT question_order FROM attempts WHERE id=?',[$otherDaily['attempt_id']]);
-// The daily order is a hash of the London date and question id, not file order, so a quiz that
-// comes back as the daily serves a different slice; it is still the same for everyone that day.
-check('daily players receive identical question order',$a['question_order']===$b['question_order']&&json_decode($a['question_order'],true)===\Dyk\Game::dailyOrder(array_column($snapshot,'id'),$today,3)&&$dailyState['question']['id']===json_decode($a['question_order'],true)[0]);
+// Each player is dealt a private hand. With a bank of only three questions the second player gets the
+// second lap: the same three questions, recorded as deal 2 so the ledger still shows who held what.
+$handA=json_decode($a['question_order'],true);$handB=json_decode($b['question_order'],true);$ids=array_column($snapshot,'id');
+sort($handA);sort($handB);sort($ids);
+$laps=$db->query('SELECT deal_no,COUNT(*) AS n FROM daily_deals WHERE daily_challenge_id='.$db->quote($daily).' GROUP BY deal_no ORDER BY deal_no')->fetchAll();
+check('daily players are each dealt a hand from the live bank',$handA===$ids&&$handB===$ids&&$dailyState['question']['id']===json_decode($a['question_order'],true)[0]&&count($laps)===2&&(int)$laps[0]['n']===3&&(int)$laps[1]['n']===3);
 $dailyResult=completeGame($dailyState,$first['token']);
 check('daily finish updates streak once',$dailyResult['streak']===1&&$dailyResult['ranks']['daily']===1);
 $r=request('POST','/attempts/'.$dailyState['attempt_id'].'/finish',[],$first['token']);check('daily finish retry does not increment streak',$r['body']['streak']===1);
