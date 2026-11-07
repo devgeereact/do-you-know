@@ -33,7 +33,7 @@ export function SliderAnswer({
   useEffect(() => setValue(midpoint), [questionKey, midpoint]);
 
   return (
-    <div className="w-full max-w-xl rounded-[1.75rem] border-[3px] border-[var(--fd)] bg-white p-5 text-[#17153A] shadow-[0_4px_0_var(--fd)]">
+    <div className="w-full max-w-xl rounded-[1.75rem] border-[3px] border-[var(--fd)] bg-stage-paper p-5 text-stage-ink shadow-[0_4px_0_var(--fd)]">
       <label htmlFor={id} className="sr-only">
         {prompt}
       </label>
@@ -63,7 +63,7 @@ export function SliderAnswer({
       {result === null ? (
         <button
           type="button"
-          className="mt-4 h-12 w-full rounded-full bg-[var(--fd)] font-display text-lg font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
+          className="mt-4 h-12 w-full rounded-full bg-[var(--fd)] font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
           disabled={disabled}
           onClick={() => onSubmit(value)}
         >

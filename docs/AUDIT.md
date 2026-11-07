@@ -2,6 +2,19 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · P1 clean-up: typed-field gate, timer default, labels (security, child safety)
+
+Reviewer: Claude Code, focused review of the P1 diff on `phase/p1-cleanup` (security-audit skill, guidance mode, source and local tests only; nothing run against the live site).
+
+- **Typed-field gate (T1).** `Player::ageBand` is the only code that writes `profiles.age_band`, and it now refuses 13_17 and 18_plus (403 `adult_sign_in_required`) unless the profile has a Clerk identity. Only `Identity::adult` (a verified Clerk token plus an adult confirmation) and the local-only `bin/dev-admin-token.php` create a Clerk identity, so a guest cannot give itself one. `Feedback::mayWrite` already allowed any Clerk-linked profile, so the two rules now agree. Tested: both bands refused for a guest, band left unset, typed nickname still refused (`age_band_required`), under_13 still allowed (it only restricts), a Clerk-linked profile may set an older band. PASS.
+- **UI (T1).** Guests are never asked their age, never shown a nickname box and have no "I'm 18 or over" tick; Contact shows the grown-up email only when one is configured. Unit-tested, and the tests were shown to fail on the old code. PASS.
+- **Timer default (T4).** The timer applies only when the request has `timed` exactly `true`; any other value is untimed. A client can only choose a timer for itself, so there is no privilege issue. PASS.
+- **Labels (T5).** `area` and `level` are derived in code from the category and title, hold no personal data and expose no new identifier (the category slug is removed from the row). PASS.
+- **FINDING (decision, not changed): the untimed default also removes the brake on looking answers up.** Before P1 the quiz timer (about 20 s a question) limited how long anyone could take on a daily or ranked round. Now there is no limit, so a player can search for answers and win the daily crown; ties still prefer the faster total time but correct answers rank first. Severity: low (it weakens a deterrent, not an access control, and affects only board fairness). **Owner decision needed:** keep it as it is (calm sessions, matches DIRECTION.md), or give daily and ranked rounds a generous server cap (for example 45 s a question) while practice stays untimed.
+- **Residual (documented):** profiles that already hold an adult band from the old tick keep typed fields. Fix when approved: count them with the read-only live tool and, if wanted, reset the band for profiles with no Clerk identity (a live data change, so it needs approval).
+- **Pre-existing, found by axe, not fixed here:** home page quiz-card title is white on the lagoon fill (2.48:1, large bold text needs 3:1). The new home in P5 replaces that card.
+- NOT TESTED: the real Clerk sign-in (owner tests it on the live site); the live database.
+
 ## 2026-11-07 · Daily challenge: private hands, live board, crown (security, integrity, child safety)
 
 Reviewer: Claude Code, on branch `feat/daily-live-crown`. Scope: `Game::start/dealDaily/question/finish`, `Competition::record/createChallenge/dailyDetails`, `daily_deals` (migration 0017), Studio attribution queries, `DailyPage`, `DailyLeader`, `ResultsView`, `useLeaderboard`.

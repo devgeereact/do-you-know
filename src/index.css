@@ -26,6 +26,24 @@
     --correct: 15 122 79; /* #0F7A4F */
     --wrong: 198 49 47; /* #C6312F */
     --warning: 245 158 11; /* #F59E0B, dark text only */
+    /* The play stage is always light, in either theme (it sits on an illustrated world).
+       Measured: ink on paper 17.4:1; right ink on right fill 5.3:1; wrong ink on wrong fill 5.5:1;
+       ink on the right sky 9.4:1 and on the wrong sky 6.4:1; edge text on paper 6.5:1. */
+    --stage-paper: 255 255 255;
+    --stage-ink: 23 21 58; /* #17153A */
+    --stage-frame: 45 155 224; /* #2D9BE0 default frame; each world sets its own */
+    --stage-edge: 11 95 168; /* #0B5FA8 default answer edge */
+    --stage-right-top: 95 211 154; /* #5FD39A */
+    --stage-right-bot: 236 251 243; /* #ECFBF3 */
+    --stage-wrong-top: 242 122 94; /* #F27A5E */
+    --stage-wrong-bot: 255 241 236; /* #FFF1EC */
+    --right-fill: 200 240 218; /* #C8F0DA */
+    --right-ink: 11 107 67; /* #0B6B43 */
+    --right-edge: 143 216 177; /* #8FD8B1 */
+    --wrong-fill: 255 227 223; /* #FFE3DF */
+    --wrong-ink: 176 38 42; /* #B0262A */
+    --wrong-edge: 229 72 77; /* #E5484D */
+    --correct-soft: 31 181 122; /* #1FB57A, the countdown bar */
     /* Preset avatar circles (src/lib/avatars.ts): soft pastels behind the characters. */
     --avatar-fox: 255 230 213;
     --avatar-owl: 246 227 200;
@@ -118,8 +136,8 @@
 /* ---------- The game stage: a framed card over a full-bleed illustrated world ---------- */
 @layer components {
   .stage-frame {
-    --fc: #2d9be0;
-    --fd: #0b5fa8;
+    --fc: rgb(var(--stage-frame));
+    --fd: rgb(var(--stage-edge));
     position: relative;
     border-radius: 2.5rem;
     background: var(--fc);
@@ -134,10 +152,10 @@
     height: 100%;
     flex-direction: column;
     overflow: hidden;
-    border: 6px solid #fff;
+    border: 6px solid rgb(var(--stage-paper));
     border-radius: 2rem;
     background: linear-gradient(180deg, var(--sky-top), var(--sky-bot));
-    color: #17153a;
+    color: rgb(var(--stage-ink));
   }
   /* The frame's sky is always light, so the light theme's tokens apply inside it (dark mode too). */
   .stage-inner {
@@ -153,17 +171,17 @@
     --wrong: 198 49 47;
   }
   .stage-inner[data-dark='true'] {
-    color: #fff;
+    color: rgb(var(--stage-paper));
   }
   .stage-inner[data-result='right'] {
-    --sky-top: #5fd39a !important;
-    --sky-bot: #ecfbf3 !important;
-    color: #17153a;
+    --sky-top: rgb(var(--stage-right-top)) !important;
+    --sky-bot: rgb(var(--stage-right-bot)) !important;
+    color: rgb(var(--stage-ink));
   }
   .stage-inner[data-result='wrong'] {
-    --sky-top: #f27a5e !important;
-    --sky-bot: #fff1ec !important;
-    color: #17153a;
+    --sky-top: rgb(var(--stage-wrong-top)) !important;
+    --sky-bot: rgb(var(--stage-wrong-bot)) !important;
+    color: rgb(var(--stage-ink));
   }
   .stage-tab {
     position: absolute;
@@ -182,11 +200,11 @@
     font-size: 2rem;
     font-weight: 800;
     line-height: 1;
-    color: #fff;
+    color: rgb(var(--stage-paper));
     text-shadow: 0 3px 0 rgb(0 0 0 / 0.22);
     box-shadow:
       0 5px 0 rgb(0 0 0 / 0.2),
-      0 0 0 5px #fff;
+      0 0 0 5px rgb(var(--stage-paper));
   }
   .stage-answer {
     display: flex;
@@ -197,13 +215,12 @@
     gap: 0.5rem;
     border: 3px solid var(--fd);
     border-radius: 9999px;
-    background: #fff;
+    background: rgb(var(--stage-paper));
     padding: 0.5rem 1.1rem;
     font-family: theme('fontFamily.display');
     font-size: 1.1rem;
     font-weight: 800;
     line-height: 1.1;
-    text-transform: uppercase;
     color: var(--fd);
     box-shadow: 0 4px 0 var(--fd);
     transition:
@@ -221,20 +238,20 @@
     box-shadow: 0 1px 0 var(--fd);
   }
   .stage-answer:focus-visible {
-    outline: 3px solid #17153a;
+    outline: 3px solid rgb(var(--stage-ink));
     outline-offset: 3px;
   }
   .stage-answer[data-state='right'] {
-    border-color: #c8f0da;
-    background: #c8f0da;
-    color: #0b6b43;
-    box-shadow: 0 4px 0 #8fd8b1;
+    border-color: rgb(var(--right-fill));
+    background: rgb(var(--right-fill));
+    color: rgb(var(--right-ink));
+    box-shadow: 0 4px 0 rgb(var(--right-edge));
   }
   .stage-answer[data-state='wrong'] {
-    border-color: #e5484d;
-    background: #ffe3df;
-    color: #b0262a;
-    box-shadow: 0 4px 0 #e5484d;
+    border-color: rgb(var(--wrong-edge));
+    background: rgb(var(--wrong-fill));
+    color: rgb(var(--wrong-ink));
+    box-shadow: 0 4px 0 rgb(var(--wrong-edge));
   }
   .stage-answer[data-state='dimmed'] {
     opacity: 0.4;
@@ -247,8 +264,8 @@
     position: relative;
     z-index: 4;
     flex: none;
-    background: #fff;
-    color: #17153a;
+    background: rgb(var(--stage-paper));
+    color: rgb(var(--stage-ink));
     padding: 1.75rem 2rem 1.4rem;
   }
   .stage-sheet-tag {
@@ -256,12 +273,11 @@
     left: 1.5rem;
     top: -1.35rem;
     border-radius: 1rem;
-    background: #fff;
+    background: rgb(var(--stage-paper));
     padding: 0.35rem 1.1rem 0.1rem;
     font-family: theme('fontFamily.display');
     font-size: 1.35rem;
     font-weight: 800;
-    text-transform: uppercase;
   }
   .stage-pill {
     display: inline-flex;
@@ -270,7 +286,7 @@
     gap: 0.35rem;
     border: 3px solid var(--fd);
     border-radius: 9999px;
-    background: #fff;
+    background: rgb(var(--stage-paper));
     padding: 0 0.85rem;
     font-family: theme('fontFamily.display');
     font-size: 1.1rem;
@@ -279,9 +295,9 @@
     font-variant-numeric: tabular-nums;
   }
   .stage-pill[data-low='true'] {
-    border-color: #c6312f;
-    background: #c6312f;
-    color: #fff;
+    border-color: rgb(var(--wrong));
+    background: rgb(var(--wrong));
+    color: rgb(var(--stage-paper));
   }
   @media (max-width: 759px) {
     .stage-frame {
@@ -298,7 +314,7 @@
       padding: 0.5rem 1.1rem 0.35rem;
       box-shadow:
         0 4px 0 rgb(0 0 0 / 0.2),
-        0 0 0 4px #fff;
+        0 0 0 4px rgb(var(--stage-paper));
     }
     .stage-answer {
       min-height: 3.35rem;

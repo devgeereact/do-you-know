@@ -76,14 +76,16 @@ export function FeedbackPanel({
           )}
           <div id={whyId} hidden={!whyOpen}>
             {result.explanation && (
-              <p className="max-w-[70ch] leading-relaxed text-[#4A4770]">{result.explanation}</p>
+              <p className="max-w-[70ch] leading-relaxed text-content-muted">
+                {result.explanation}
+              </p>
             )}
             {isWebUrl(result.source_url) && (
               <a
                 href={result.source_url}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="mt-1 inline-flex min-h-tap items-center text-sm font-bold text-[#6C4CF5] underline underline-offset-2"
+                className="mt-1 inline-flex min-h-tap items-center text-sm font-bold text-primary underline underline-offset-2"
               >
                 {t.common.whereThisComesFrom}
               </a>
@@ -92,14 +94,14 @@ export function FeedbackPanel({
           {autoAdvance && (
             <div className="mt-2 flex items-center gap-3">
               <div className="min-w-0 flex-1">
-                <p role="status" className="text-sm font-semibold text-[#5A5680]">
+                <p role="status" className="text-sm font-semibold text-content-muted">
                   {t.play.feedback.comingUp}
                 </p>
                 <div
                   aria-hidden="true"
-                  className="mt-1 h-1.5 overflow-hidden rounded-full bg-[#ECE8F6]"
+                  className="mt-1 h-1.5 overflow-hidden rounded-full bg-surface-border"
                 >
-                  <div className="h-full origin-left animate-countdown rounded-full bg-[#1FB57A]" />
+                  <div className="h-full origin-left animate-countdown rounded-full bg-correct-soft" />
                 </div>
               </div>
               <button
@@ -118,7 +120,7 @@ export function FeedbackPanel({
             type="button"
             disabled={blocked}
             onClick={onNext}
-            className="h-12 flex-1 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50 md:flex-none"
+            className="h-12 flex-1 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50 md:flex-none"
           >
             {result.is_last ? t.play.feedback.seeScore : t.play.feedback.next}{' '}
             <span aria-hidden="true">→</span>

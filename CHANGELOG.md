@@ -1,5 +1,13 @@
 # Changelog
 
+## 7 November 2026 (branch `phase/p1-cleanup`, not deployed) — P1 clean-up and foundations
+- A guest can no longer gain typed fields: the server accepts the 13-17 and 18+ age bands only for a profile linked to a Clerk sign-in (`403 adult_sign_in_required`). Guests are not asked their age or shown a nickname box, and the Contact page loses the "I'm 18 or over" tick (grown-ups get the contact email until the parent area). Profiles that already hold an adult band keep working.
+- Children are not timed by default: `POST /attempts` uses the quiz timer only when the request says `timed: true`; the quiz page says "No timer".
+- A finished daily opened at `/daily/play` goes to `/daily` instead of an error screen.
+- The play stage uses design tokens (new `stage-*`, `right-*`, `wrong-*` and `correct-soft`) instead of hex colours, shows normal case everywhere (no forced capitals, no small caps), and no longer says "Ranked". A unit test stops hex colours and forced capitals returning.
+- Quizzes carry derived `area` and `level` labels (nothing stored).
+- Not in this phase, moved to P4 with the parent switches: hiding quiz leaderboards, challenge-a-friend and trivia/18+ sets from the default path.
+
 ## 7 November 2026 (branch `feat/daily-live-crown`, deployed the same day) — private daily hands, live board, crown
 - The daily gives every player their own 10 questions from all live quizzes except 18+, with no question shared between players until the whole bank has been dealt once (then a second lap). The least-dealt questions go first; one lock per day plus a unique key on the new `daily_deals` ledger make it hold for simultaneous starts.
 - Daily page and results: a live board (refreshes every 10 s while open, quietly, and again when you return to the tab), a "Top score today" card, a crown on rank 1 and a "You're wearing the crown!" banner. The page is named "Today's challenge" instead of one quiz title; a short ten-stop route stays as decoration.

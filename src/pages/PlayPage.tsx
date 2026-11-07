@@ -192,7 +192,8 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
 
   const inStage = (phase === 'question' || phase === 'feedback') && Boolean(state && question);
   const w = question ? worldFor(question) : null;
-  const modeLabel = t.play.mode[mode];
+  // "Ranked" is a competition label, not for the child path: a ranked quiz shows just its title.
+  const modeLabel = mode === 'ranked' ? null : t.play.mode[mode];
 
   return (
     <main
@@ -234,8 +235,8 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
         >
           {inStage ? (
             <>
-              {modeLabel}
-              <span className="hidden sm:inline">{` · ${title}`}</span>
+              {modeLabel ?? title}
+              {modeLabel && <span className="hidden sm:inline">{` · ${title}`}</span>}
             </>
           ) : (
             title
@@ -386,7 +387,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                       ref={feedbackRef}
                       tabIndex={-1}
                       data-q-verdict
-                      className="mt-3 font-display text-[2.1rem] font-extrabold uppercase leading-none focus:outline-none md:text-[3.4rem]"
+                      className="mt-3 font-display text-[2.1rem] font-extrabold leading-none focus:outline-none md:text-[3.4rem]"
                     >
                       {lastResult.timed_out
                         ? t.play.feedback.timeUp
@@ -394,7 +395,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                           ? t.play.feedback.correct
                           : t.play.feedback.wrong}
                     </h2>
-                    <p className="mb-5 mt-2 text-sm font-semibold opacity-75 [font-variant:small-caps]">
+                    <p className="mb-5 mt-2 text-sm font-semibold opacity-75">
                       {lastResult.timed_out
                         ? t.play.cheerTime
                         : lastResult.is_correct
@@ -408,7 +409,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                     ref={promptRef}
                     tabIndex={-1}
                     data-q-prompt
-                    className="mx-auto mb-6 mt-3 max-w-[22ch] text-balance font-display text-[1.6rem] font-extrabold uppercase leading-[1.08] focus:outline-none md:text-[2.4rem]"
+                    className="mx-auto mb-6 mt-3 max-w-[22ch] text-balance font-display text-[1.6rem] font-extrabold leading-[1.08] focus:outline-none md:text-[2.4rem]"
                   >
                     {question.prompt}
                   </h1>
@@ -465,7 +466,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                 {phase === 'question' && error && (
                   <p
                     role="alert"
-                    className="mt-3 rounded-full bg-white/90 px-4 py-2 text-center font-semibold text-[#17153A]"
+                    className="mt-3 rounded-full bg-white/90 px-4 py-2 text-center font-semibold text-stage-ink"
                   >
                     {error}
                   </p>

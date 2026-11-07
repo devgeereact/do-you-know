@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NicknamePicker } from '@/components/game/NicknamePicker';
@@ -22,6 +22,10 @@ vi.mock('@/hooks/useProfile', () => ({
 vi.mock('@/hooks/useSession', () => ({ useSession: () => ({ ensureSession: vi.fn() }) }));
 vi.mock('@/hooks/useQuizCatalog', () => ({ useQuizCatalog: () => ({ quizzes: [] }) }));
 vi.mock('@/hooks/useDocumentMeta', () => ({ useDocumentMeta: vi.fn() }));
+vi.mock('@/lib/site', async (original) => ({
+  ...(await original<typeof import('@/lib/site')>()),
+  CONTACT_EMAIL: 'hello@example.org',
+}));
 
 beforeEach(() => {
   state.profile = profile({ age_band: null, nickname: 'BraveOtter42' });
@@ -63,6 +67,11 @@ describe('ContactPage for a guest', () => {
   it('points grown-ups to the contact email instead', () => {
     renderContact();
     expect(screen.getByText(/grown-ups: to write to us, email/i)).toBeInTheDocument();
+    const line = screen.getByText(/grown-ups: to write to us, email/i).closest('p') as HTMLElement;
+    expect(within(line).getByRole('link', { name: 'hello@example.org' })).toHaveAttribute(
+      'href',
+      'mailto:hello@example.org',
+    );
   });
 
   it('keeps the grown-up form for a profile that already holds an adult band', () => {

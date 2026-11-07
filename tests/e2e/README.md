@@ -19,7 +19,7 @@ Run with `pnpm test:e2e` (Playwright, Chromium). Two projects run every journey:
 ## Needs
 
 - Node 20.9 or newer, PHP 8.2 or newer with `pdo_mysql`, and `composer install --no-dev` run once in `backend/`.
-- A local MariaDB or MySQL. By default the `mysql` client logs in as it does on the developer machine. For a password login over TCP (as in CI) set `E2E_DB_ADMIN_HOST`, `E2E_DB_ADMIN_USER` and `E2E_DB_ADMIN_PASSWORD`, and `E2E_DB_USER_HOST='%'` when the database is in a container.
+- A local MariaDB or MySQL. By default the `mysql` client logs in as it does on the developer machine. To use the project's own throwaway MariaDB (`.local-test/db`, port 33999, the one `scripts/test-backend.sh` starts), start it first and set `E2E_DB_PORT=33999 E2E_DB_ADMIN_HOST=127.0.0.1 E2E_DB_ADMIN_PORT=33999 E2E_DB_ADMIN_USER=root E2E_DB_ADMIN_PASSWORD= E2E_DB_USER_HOST=127.0.0.1` (without them the run stops at the first database step). For a password login over TCP (as in CI) set `E2E_DB_ADMIN_HOST`, `E2E_DB_ADMIN_USER` and `E2E_DB_ADMIN_PASSWORD`, and `E2E_DB_USER_HOST='%'` when the database is in a container.
 - Chromium: `npx playwright install chromium` (add `--with-deps` on a fresh Linux machine).
 - Overrides: `E2E_WEB_PORT`, `E2E_API_PORT`, `E2E_DB_NAME`, `E2E_DB_USER`.
 

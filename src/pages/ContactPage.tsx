@@ -172,14 +172,14 @@ export function ContactPage(): JSX.Element {
                     className="w-full max-w-sm"
                   />
                 </div>
-              ) : (
+              ) : CONTACT_EMAIL ? (
                 <p className="text-sm text-content-muted">
                   {f.grownUpsEmail}{' '}
                   <a className={proseLinkClass} href={`mailto:${CONTACT_EMAIL}`}>
                     {CONTACT_EMAIL}
                   </a>
                 </p>
-              )}
+              ) : null}
               <div className="grid gap-2">
                 <span className="text-sm font-bold text-content-muted">{f.about}</span>
                 <div role="group" aria-label={f.about} className="flex flex-wrap gap-2">

@@ -1,5 +1,10 @@
 # Current task
 
+## P1 clean-up and foundations (branch `phase/p1-cleanup`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
+- Plan: `.planning/phases/P1-cleanup/P1-PLAN.md`. Built: server refuses adult age bands for guests, no age question or typed fields for guests, untimed by default, finished daily goes to /daily, play stage on tokens and sentence case, area and level labels. Details in `CHANGELOG.md`; audit in `docs/AUDIT.md` (7 Nov, P1).
+- Owner decision needed: keep the untimed default for daily and ranked rounds (easier to look answers up, so the crown is easier to cheat), or cap them at a generous limit? See the audit.
+- No migration in P1. Deploy needs your "approved" (push to `main` deploys).
+
 ## Daily: private hands, live board, crown (branch `feat/daily-live-crown`, 7 Nov 2026, committed; migration applied on the server, code pushed to `main`)
 - Built: each player's daily is their own 10 questions from all live quizzes except 18+, no question shared until the bank has gone round once; live board (10 s) with a crown on rank 1; "Top score today" card; Studio stats credit the right quiz. Details in `CHANGELOG.md`, audit in `docs/AUDIT.md` (7 Nov).
 - Checks: `pnpm check` PASS (219 unit) · `pnpm verify` PASS · backend 13 suites PASS (incl. new `daily_deal`, 43 checks) · e2e 46/46 PASS · phone walk on the local stack (hands disjoint, board refreshes in about 9 s). NOT TESTED: live database, Clerk.

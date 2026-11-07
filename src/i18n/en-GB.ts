@@ -399,7 +399,7 @@ export const enGB = {
       daily: 'Daily challenge',
       challenge: 'Friend challenge',
     },
-    worldTab: (world: string): string => world.toUpperCase(),
+    worldTab: (world: string): string => world,
     cheerRight: '+1 · keep going',
     cheerWrong: 'Don’t worry, most people miss this one too',
     cheerTime: 'The clock beat you this time',
