@@ -1,5 +1,10 @@
 # Changelog
 
+## 7 November 2026 (branch `feat/delete-unpublished-draft`) — delete a draft that was never published
+- Studio → Editor: "Delete draft…" for a quiz with no published version; it removes the quiz for good after a confirmation. A quiz that has ever been published can only be retired (players, boards and dailies point at its versions).
+- Server: `POST /admin/quizzes/{id}/delete` answers `{id, deleted:true}`; 409 `quiz_published` for a quiz that has a version; 404 `quiz_not_found` when it is gone. Recorded in the audit log as `quiz.delete` with the title. No migration.
+- Content (done in Studio on live data, no code): 180 quizzes rewritten with 20 new label-free questions each, no repeats between bands, Bible questions limited to what a named book says or plain facts (see `.agent/CURRENT-TASK.md`).
+
 ## 6 November 2026 — Sonnet 5.5 by default
 - The generator, the editor's AI helpers and the AI import review use Claude Sonnet 5.5 (`claude-sonnet-5-5`), with OpenRouter's `anthropic/claude-sonnet-5.5` as backup (ADR-022). Re-running `scripts/set-generator-keys.sh` moves a saved config off the old Opus default and prints the model in use.
 

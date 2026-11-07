@@ -433,6 +433,30 @@ export function EditorScreen(): JSX.Element {
         >
           Retire…
         </Button>
+        {!quiz.version && (
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={busy}
+            className="!border-wrong/40 !text-wrong"
+            onClick={async () => {
+              const ok = await confirm({
+                title: 'Delete this draft?',
+                body: 'It was never published, so it is removed for good. This can’t be undone.',
+                confirmLabel: 'Delete draft',
+                tone: 'danger',
+              });
+              if (!ok) return;
+              const done = await run(() => client.deleteQuiz(id), 'Draft deleted');
+              if (done) {
+                refreshCounts();
+                navigate('/admin/library');
+              }
+            }}
+          >
+            Delete draft…
+          </Button>
+        )}
       </>
     );
   }

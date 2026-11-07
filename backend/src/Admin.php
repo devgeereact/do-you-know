@@ -104,7 +104,7 @@ final class Admin
             if ($get) { return $content->list($query); }
             if ($post) { $this->status = 201; return $content->create($body); }
         }
-        if (preg_match("~^/admin/quizzes/$uuid(?:/(append|submit|unsubmit|check|publish|retire|restore|discard))?$~D", $path, $m)) {
+        if (preg_match("~^/admin/quizzes/$uuid(?:/(append|submit|unsubmit|check|publish|retire|restore|discard|delete))?$~D", $path, $m)) {
             $action = $m[2] ?? '';
             if ($get && $action === '') { return $content->detail($m[1]); }
             if ($post) {
@@ -112,7 +112,7 @@ final class Admin
                     '' => $content->save($m[1], $body), 'append' => $content->append($m[1], $body),
                     'submit' => $content->submit($m[1]), 'unsubmit' => $content->unsubmit($m[1]),
                     'check' => $content->check($m[1], $body), 'publish' => $content->publish($m[1], $body),
-                    'retire' => $content->retire($m[1]), 'restore' => $content->restore($m[1]), 'discard' => $content->discard($m[1]),
+                    'retire' => $content->retire($m[1]), 'restore' => $content->restore($m[1]), 'discard' => $content->discard($m[1]), 'delete' => $content->delete($m[1]),
                 };
             }
         }

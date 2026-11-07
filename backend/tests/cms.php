@@ -394,4 +394,18 @@ check('the imported flag must be true or false', admin('POST', '/quizzes', ['tit
 check('an age band must be in order', admin('POST', '/quizzes', ['title' => 'Bad ages '.$tag, 'category' => $subject, 'age_min' => 9, 'age_max' => 5])['status'] === 422);
 check('an append flag must be true or false', admin('POST', '/quizzes/'.$importId.'/append', ['questions' => [$question('Flag fixture '.$word.'?')], 'imported' => 1])['status'] === 422);
 
+// ---- Deleting a draft that was never published ----
+$r = admin('POST', '/quizzes', ['title' => 'Delete fixture '.$tag, 'category' => $subject, 'questions' => [$question('Delete fixture '.$word.'?')]]);
+$deleteId = $r['body']['id'] ?? '';
+$r = admin('POST', '/quizzes/'.$deleteId.'/delete');
+check('a draft that was never published can be deleted', $r['status'] === 200 && ($r['body']['deleted'] ?? null) === true && $r['body']['id'] === $deleteId);
+check('a deleted draft is gone from the list and detail', admin('GET', '/quizzes/'.$deleteId)['status'] === 404
+    && !in_array($deleteId, array_column(admin('GET', '/quizzes')['body']['items'], 'id'), true));
+$audit = Database::one($db, "SELECT detail FROM admin_audit WHERE action='quiz.delete' AND target_id=?", [$deleteId]);
+check('the deletion is recorded in the audit log', $audit && str_contains($audit['detail'], 'Delete fixture'));
+check('deleting twice says the quiz is not found', admin('POST', '/quizzes/'.$deleteId.'/delete')['body']['error']['code'] === 'quiz_not_found');
+$r = admin('POST', '/quizzes/'.$id.'/delete');
+check('a quiz that has been published cannot be deleted', $r['status'] === 409 && $r['body']['error']['code'] === 'quiz_published');
+check('the published quiz is still there after a refused delete', admin('GET', '/quizzes/'.$id)['status'] === 200);
+
 fwrite(STDOUT, "$count cms checks passed\n");

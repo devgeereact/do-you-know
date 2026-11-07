@@ -480,6 +480,8 @@ export function adminClient(getToken: GetToken) {
     retire: (id: string) => post<QuizDetail>(`${quiz(id)}/retire`),
     restore: (id: string) => post<QuizDetail>(`${quiz(id)}/restore`),
     discard: (id: string) => post<QuizDetail>(`${quiz(id)}/discard`),
+    /** Only for a quiz that was never published; anything else answers 409 quiz_published. */
+    deleteQuiz: (id: string) => post<{ id: string; deleted: true }>(`${quiz(id)}/delete`),
 
     daily: (month?: string) => get<DailyMonth>('/admin/daily', { month }),
     setDaily: (date: string, quizId: string | null) =>
@@ -563,6 +565,7 @@ const MESSAGES: Record<string, string> = {
   rate_limited: 'Too many changes at once. Wait a minute, then try again.',
   quiz_not_found: 'That quiz no longer exists.',
   quiz_retired: 'This quiz is retired. Restore it first.',
+  quiz_published: 'This quiz has been published, so it can only be retired.',
   not_retired: 'This quiz isn’t retired.',
   invalid_quiz: 'Check the quiz details.',
   invalid_questions: 'Some questions need fixing.',

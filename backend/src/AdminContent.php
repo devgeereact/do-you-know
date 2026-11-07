@@ -22,8 +22,8 @@ namespace Dyk;
  *      imported:true (Studio → Import) stores the questions as checked: the person importing them is
  *      the reviewer (owner decision, 1 November 2026, ADR-019). The audit row records it.
  * POST /admin/quizzes/{id}/submit | /unsubmit | /check {index,checked} | /publish {publish_at?:Y-m-d}
- * POST /admin/quizzes/{id}/retire | /restore | /discard
- * Errors: 404 quiz_not_found; 409 quiz_retired | not_retired; 422 invalid_quiz | invalid_questions |
+ * POST /admin/quizzes/{id}/retire | /restore | /discard | /delete (only a quiz that was never published)
+ * Errors: 404 quiz_not_found; 409 quiz_retired | not_retired | quiz_published; 422 invalid_quiz | invalid_questions |
  * too_many_questions | invalid_index | invalid_publish_at | not_enough_questions | has_problems |
  * unchecked_questions | nothing_to_submit, each with details.
  */
@@ -387,6 +387,23 @@ final class AdminContent
             Database::execute($this->db, "UPDATE quizzes SET draft=NULL,status=IF(status='review','draft',status),updated_at=CURRENT_TIMESTAMP(6) WHERE id=?", [$id]);
             $this->admin->audit('quiz.discard', 'quiz', $id, ['had_draft' => $row['draft'] !== null]);
             return $this->detail($id);
+        });
+    }
+
+    /**
+     * Removes a quiz that was never published, such as a leftover draft. A quiz with a version keeps
+     * its history (players, boards and dailies point at it), so it can only be retired.
+     */
+    public function delete(string $id): array
+    {
+        return Database::transaction($this->db, function () use ($id): array {
+            $row = $this->find($id, true);
+            $versions = (int) Database::one($this->db, 'SELECT COUNT(*) AS n FROM quiz_versions WHERE quiz_id=?', [$id])['n'];
+            if ($row['current_version_id'] || $versions > 0) { throw new ApiError('quiz_published', 409); }
+            $title = (string) (($this->workCopy($row)['meta']['title'] ?? null) ?: ($row['title'] ?? ''));
+            Database::execute($this->db, 'DELETE FROM quizzes WHERE id=?', [$id]);
+            $this->admin->audit('quiz.delete', 'quiz', $id, ['title' => $title, 'status' => $row['status']]);
+            return ['id' => $id, 'deleted' => true];
         });
     }
 
