@@ -1,5 +1,4 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { AgeBandPicker } from '@/components/game/AgeBandPicker';
 import { Button } from '@/components/ui/Button';
 import { useProfile } from '@/hooks/useProfile';
 import { t } from '@/i18n';
@@ -9,16 +8,18 @@ interface NicknamePickerProps {
 }
 
 /**
- * Age band once, then a nickname. Under-13s only get generated nicknames
- * ("BraveOtter42") and can shuffle; 13+ may type their own. Nothing here asks
- * for a real name, birthday or anything else personal.
+ * A nickname for the child path: generated ("BraveOtter42"), shuffled by tapping. A guest is never
+ * asked their age and never gets a text box. Only a profile that already holds an adult age band
+ * (signed-in grown-ups, and older guest profiles) may type its own. Nothing here asks for a real
+ * name, birthday or anything else personal.
  */
 export function NicknamePicker({ onDone }: NicknamePickerProps): JSX.Element | null {
-  const { profile, isChild, loading, error, setAgeBand, shuffleNickname, setNickname } =
-    useProfile();
+  const { profile, isChild, loading, error, shuffleNickname, setNickname } = useProfile();
   const [busy, setBusy] = useState(false);
   const [typed, setTyped] = useState('');
   const autoShuffled = useRef(false);
+  // No age band means a guest: treated as a child (generated names only).
+  const generatedOnly = isChild || profile?.age_band === null;
   const inputId = useId();
 
   const act = async (fn: () => Promise<unknown>): Promise<void> => {
@@ -32,11 +33,11 @@ export function NicknamePicker({ onDone }: NicknamePickerProps): JSX.Element | n
 
   // A child gets a generated nickname straight away (once); they can shuffle it.
   useEffect(() => {
-    if (autoShuffled.current || !profile || !isChild || profile.nickname !== null) return;
+    if (autoShuffled.current || !profile || !generatedOnly || profile.nickname !== null) return;
     autoShuffled.current = true;
     setBusy(true);
     void shuffleNickname().finally(() => setBusy(false));
-  }, [profile, isChild, shuffleNickname]);
+  }, [profile, generatedOnly, shuffleNickname]);
 
   if (loading || !profile) return null;
 
@@ -46,17 +47,7 @@ export function NicknamePicker({ onDone }: NicknamePickerProps): JSX.Element | n
     </p>
   );
 
-  if (profile.age_band === null) {
-    return (
-      <AgeBandPicker
-        busy={busy}
-        error={error}
-        onPick={(band) => void act(() => setAgeBand(band))}
-      />
-    );
-  }
-
-  if (isChild) {
+  if (generatedOnly) {
     return (
       <section className="text-center">
         <h2 className="text-xl font-semibold text-content">{t.me.nickname.childTitle}</h2>

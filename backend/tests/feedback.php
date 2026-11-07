@@ -16,7 +16,7 @@ Database::execute($db,"INSERT INTO quizzes (id,slug,title,status,current_version
 Database::execute($db,'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',[$version,$quiz,json_encode($snapshot)]);
 $guest=function (?string $band=null): array {
     $g=request('POST','/guest-sessions',[])['body'];
-    if($band!==null){request('POST','/me/age-band',['band'=>$band],$g['token']);}
+    if($band!==null){if($band!=='under_13'){linkAdult($g['profile_id']);}request('POST','/me/age-band',['band'=>$band],$g['token']);}
     return $g;
 };
 $rows=fn(string $profile): int=>(int)Database::one($db,'SELECT COUNT(*) AS n FROM feedback WHERE profile_id=?',[$profile])['n'];

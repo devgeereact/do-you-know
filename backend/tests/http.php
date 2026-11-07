@@ -36,6 +36,11 @@ function isolateBank(array $keepQuizIds): void {
         foreach($hidden as $id){Database::execute($db,"UPDATE quizzes SET status='published' WHERE id=?",[$id]);}
     });
 }
+/** Give a test profile a Clerk identity: the only thing that lets a profile claim an adult age band. */
+function linkAdult(string $profileId): void {
+    global $db;
+    Database::execute($db,"INSERT IGNORE INTO identities (provider,subject,profile_id) VALUES ('clerk',?,?)",['user_Test'.bin2hex(random_bytes(8)),$profileId]);
+}
 /** The id this attempt shows for a stored option: players get per-attempt handles, never snapshot ids. */
 function servedId(array $question,array $option): string {
     foreach($question['options']??[] as $o){if($o['label']===$option['label']){return $o['id'];}}

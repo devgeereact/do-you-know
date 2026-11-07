@@ -164,6 +164,7 @@ export type GameErrorCode =
   | 'invalid_age_band'
   | 'age_band_locked'
   | 'age_band_required'
+  | 'adult_sign_in_required'
   | 'kids_use_generated_nickname'
   | 'invalid_nickname'
   | 'nickname_not_allowed'

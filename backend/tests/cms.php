@@ -342,6 +342,7 @@ check('the Studio credits mixed daily answers to the quiz each question came fro
 
 // ---- Feedback inbox ----
 $adult = request('POST', '/guest-sessions', [])['body'];
+linkAdult($adult['profile_id']);
 request('POST', '/me/age-band', ['band' => '18_plus'], $adult['token']);
 $sent = request('POST', '/feedback', ['type' => 'question', 'presets' => ['The answer looks wrong'], 'message' => 'Question one looks wrong to me.', 'email' => 'cms.'.$tag.'@example.org'], $adult['token'])['body']['id'];
 $child = request('POST', '/feedback', ['type' => 'feedback', 'presets' => ['I loved it']], $guest['token'])['body']['id'];
@@ -380,6 +381,7 @@ check('a grown-up answers in their thread', $r['status'] === 201);
 $r = admin('GET', '/feedback/'.$sent);
 check('the answer reaches the Studio inbox as new', $r['body']['status'] === 'new' && end($r['body']['thread'])['kind'] === 'player' && end($r['body']['thread'])['body'] === 'Thanks, it looks right now.');
 $stranger = request('POST', '/guest-sessions', [])['body'];
+linkAdult($stranger['profile_id']);
 request('POST', '/me/age-band', ['band' => '18_plus'], $stranger['token']);
 check('nobody else can answer in that thread', request('POST', '/me/messages/'.$sent.'/reply', ['body' => 'Hello there'], $stranger['token'])['status'] === 404);
 check('a child cannot write an answer', request('POST', '/me/messages/'.$child.'/reply', ['body' => 'Hello there'], $guest['token'])['body']['error']['code'] === 'free_text_not_allowed');

@@ -31,7 +31,7 @@ export function ContactPage(): JSX.Element {
   useDocumentMeta({ title: copy.metaTitle, description: copy.metaDescription });
   const [params] = useSearchParams();
   const { ensureSession } = useSession();
-  const { profile, isChild, setAgeBand } = useProfile();
+  const { profile, isChild } = useProfile();
   const { quizzes } = useQuizCatalog();
   const typeParam = params.get('type');
 
@@ -39,13 +39,12 @@ export function ContactPage(): JSX.Element {
   const [type, setType] = useState<FeedbackType>(isType(typeParam) ? typeParam : 'feedback');
   const [presets, setPresets] = useState<string[]>([]);
   const [quiz, setQuiz] = useState(params.get('quiz') ?? '');
-  const [adultOk, setAdultOk] = useState(false);
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState<'player' | 'adult' | null>(null);
-  const ids = { email: useId(), message: useId(), quiz: useId(), adult: useId() };
+  const ids = { email: useId(), message: useId(), quiz: useId() };
   const adultKnown = profile?.age_band === '18_plus' || profile?.age_band === '13_17';
 
   function toggle(m: string): void {
@@ -59,7 +58,6 @@ export function ContactPage(): JSX.Element {
     if (who === 'player' && presets.length === 0) return setError(f.errors.pick);
     if (who === 'adult') {
       if (isChild) return setError(f.errors.notAllowed);
-      if (!adultKnown && !adultOk) return setError(f.errors.adult);
       if (email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim()))
         return setError(f.errors.email);
       if (message.trim().length < 10) return setError(f.errors.message);
@@ -67,7 +65,6 @@ export function ContactPage(): JSX.Element {
     setSending(true);
     try {
       await ensureSession();
-      if (who === 'adult' && !adultKnown) await setAgeBand('18_plus');
       await sendFeedback(
         who === 'player'
           ? { type, presets, ...(quiz ? { quiz_slug: quiz } : {}) }
@@ -158,22 +155,31 @@ export function ContactPage(): JSX.Element {
             </div>
           ) : (
             <form noValidate onSubmit={(e) => void submit(e)} className="grid gap-5">
-              <div className="grid gap-2">
-                <span className="text-sm font-bold text-content-muted">{f.who}</span>
-                <SegmentedControl
-                  label={f.who}
-                  options={[
-                    { value: 'player', label: f.whoPlayer },
-                    { value: 'adult', label: f.whoAdult },
-                  ]}
-                  value={who}
-                  onChange={(v) => {
-                    setWho(v);
-                    setError(null);
-                  }}
-                  className="w-full max-w-sm"
-                />
-              </div>
+              {adultKnown ? (
+                <div className="grid gap-2">
+                  <span className="text-sm font-bold text-content-muted">{f.who}</span>
+                  <SegmentedControl
+                    label={f.who}
+                    options={[
+                      { value: 'player', label: f.whoPlayer },
+                      { value: 'adult', label: f.whoAdult },
+                    ]}
+                    value={who}
+                    onChange={(v) => {
+                      setWho(v);
+                      setError(null);
+                    }}
+                    className="w-full max-w-sm"
+                  />
+                </div>
+              ) : (
+                <p className="text-sm text-content-muted">
+                  {f.grownUpsEmail}{' '}
+                  <a className={proseLinkClass} href={`mailto:${CONTACT_EMAIL}`}>
+                    {CONTACT_EMAIL}
+                  </a>
+                </p>
+              )}
               <div className="grid gap-2">
                 <span className="text-sm font-bold text-content-muted">{f.about}</span>
                 <div role="group" aria-label={f.about} className="flex flex-wrap gap-2">
@@ -215,18 +221,6 @@ export function ContactPage(): JSX.Element {
                 </div>
               ) : (
                 <>
-                  {!adultKnown && (
-                    <label htmlFor={ids.adult} className="flex items-start gap-3 text-sm">
-                      <input
-                        id={ids.adult}
-                        type="checkbox"
-                        checked={adultOk}
-                        onChange={(e) => setAdultOk(e.target.checked)}
-                        className="mt-0.5 h-5 w-5 accent-[rgb(var(--primary))]"
-                      />
-                      {f.adultConfirm}
-                    </label>
-                  )}
                   <div className="grid gap-1.5">
                     <label htmlFor={ids.email} className="text-sm font-bold text-content-muted">
                       {f.email}

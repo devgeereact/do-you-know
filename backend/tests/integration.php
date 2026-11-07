@@ -108,7 +108,19 @@ $r=request('POST','/me/avatar',['avatar_id'=>'owl'],$guest['token']);check('pres
 $r=request('GET','/me',null,$guest['token']);check('own profile shows chosen avatar',$r['status']===200&&$r['body']['avatar_id']==='owl');
 $r=request('POST','/me/avatar',['avatar_id'=>'https://example.com/x.png'],$guest['token']);check('unknown avatar refused',$r['status']===400&&$r['body']['error']['code']==='invalid_avatar');
 $r=request('GET','/me',null,$guest['token']);check('profile has no real name email or external identity',$r['body']['role']==='guest'&&!isset($r['body']['email'])&&!isset($r['body']['full_name'])&&!isset($r['body']['subject']));
-$r=request('POST','/me/age-band',['band'=>'13_17'],$other['token']);check('older player may set age band',$r['status']===200);
+// A guest cannot claim to be 13 or over: that unlocks typed names and free-text messages, so it needs a Clerk sign-in.
+$claimer=request('POST','/guest-sessions',[])['body'];
+foreach(['13_17','18_plus'] as $band){
+    $r=request('POST','/me/age-band',['band'=>$band],$claimer['token']);
+    check("a guest cannot claim the $band age band",$r['status']===403&&$r['body']['error']['code']==='adult_sign_in_required');
+}
+check('a refused claim leaves the age unset',request('GET','/me',null,$claimer['token'])['body']['age_band']===null);
+$r=request('POST','/me/nickname',['nickname'=>'Typed Name'],$claimer['token']);
+check('so a guest still cannot type a nickname',$r['status']===400&&$r['body']['error']['code']==='age_band_required');
+$r=request('POST','/me/age-band',['band'=>'under_13'],$claimer['token']);
+check('a guest may still say they are under 13 (that only restricts)',$r['status']===200);
+linkAdult($other['profile_id']);
+$r=request('POST','/me/age-band',['band'=>'13_17'],$other['token']);check('a profile linked to a Clerk sign-in may set an older age band',$r['status']===200);
 Database::execute($db,'INSERT IGNORE INTO blocked_words (word) VALUES (?)',['forbiddenfixture']);
 $r=request('POST','/me/nickname',['nickname'=>'ForbiddenFixture'],$other['token']);check('nickname moderation ignores case',$r['status']===400&&$r['body']['error']['code']==='nickname_not_allowed');
 $chosen='Safe '.substr(bin2hex(random_bytes(4)),0,8);

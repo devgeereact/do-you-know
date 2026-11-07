@@ -41,6 +41,12 @@ final class Player
         if (!in_array($band, ['under_13', '13_17', '18_plus'], true)) {
             throw new ApiError('invalid_age_band');
         }
+        // Saying "13 or over" unlocks typed names and free-text messages, so a guest cannot say it: only a
+        // profile linked to a Clerk sign-in can. "Under 13" only restricts, so anyone may say that.
+        if ($band !== 'under_13' && Database::one($this->db,
+                "SELECT 1 AS ok FROM identities WHERE profile_id=? AND provider='clerk' LIMIT 1", [$this->userId]) === null) {
+            throw new ApiError('adult_sign_in_required', 403);
+        }
         // The condition is atomic: two concurrent requests cannot change a set band.
         Database::execute($this->db,
             'UPDATE profiles SET age_band=? WHERE id=? AND (age_band IS NULL OR age_band=?)',
