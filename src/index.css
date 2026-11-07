@@ -380,6 +380,21 @@
   .stage-slot:disabled {
     cursor: default;
   }
+  /* Assign questions: a picked-up thing, a place that is ready to take it. */
+  .stage-tile[aria-pressed='true'] {
+    background: var(--fd);
+    color: white;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--fd);
+  }
+  .stage-zone {
+    border: 3px dashed var(--fd);
+    background: rgb(var(--stage-paper) / 0.55);
+  }
+  .stage-key[data-ready='true'] {
+    background: rgb(var(--stage-ink));
+    color: rgb(var(--stage-paper));
+  }
   @media (max-width: 759px) {
     .stage-frame {
       border-radius: 1.9rem;

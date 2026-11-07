@@ -108,4 +108,22 @@ Database::execute(
     'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
     [$buildVersion, $buildQuiz, json_encode(Dyk\Content::snapshot($buildFile))],
 );
-echo "seeded e2e-quick-quiz, e2e-build-quiz and the daily challenge for $today\n";
+// A third quiz, of assign questions (match, sort). Also 18 and over, for the same reason.
+$assignFile = ['slug' => 'e2e-assign-quiz', 'questions' => [
+    ['type' => 'assign', 'prompt' => 'Match each animal to its home.', 'assign' => ['variant' => 'match', 'targets' => ['Sea', 'Nest', 'Burrow'], 'items' => [['label' => 'Fish', 'to' => 'Sea'], ['label' => 'Bird', 'to' => 'Nest'], ['label' => 'Rabbit', 'to' => 'Burrow']]]] + $meta,
+    ['type' => 'assign', 'prompt' => 'Sort the numbers.', 'assign' => ['variant' => 'sort', 'targets' => ['Odd', 'Even'], 'items' => [['label' => '3', 'to' => 'Odd'], ['label' => '8', 'to' => 'Even'], ['label' => '5', 'to' => 'Odd'], ['label' => '12', 'to' => 'Even']]]] + $meta,
+    ['type' => 'assign', 'prompt' => 'Sort the things by how hot they are.', 'assign' => ['variant' => 'sort', 'targets' => ['Hot', 'Cold', 'Warm'], 'items' => [['label' => 'Fire', 'to' => 'Hot'], ['label' => 'Ice', 'to' => 'Cold'], ['label' => 'Tea', 'to' => 'Warm']]]] + $meta,
+]];
+$assignQuiz = Database::uuid();
+$assignVersion = Database::uuid();
+Database::execute(
+    $db,
+    "INSERT INTO quizzes (id,slug,title,intro,category_id,status,current_version_id,question_count,difficulty,age_min,is_ranked) VALUES (?,?,?,?,?,'published',?,3,'easy',18,0)",
+    [$assignQuiz, 'e2e-assign-quiz', 'E2E Assign Quiz', 'Tap things into the right place.', $category, $assignVersion],
+);
+Database::execute(
+    $db,
+    'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
+    [$assignVersion, $assignQuiz, json_encode(Dyk\Content::snapshot($assignFile))],
+);
+echo "seeded e2e-quick-quiz, e2e-build-quiz, e2e-assign-quiz and the daily challenge for $today\n";

@@ -5,7 +5,7 @@
  */
 import type { AttemptMode, AttemptStatus } from '@/types/domain';
 
-export type QuestionType = 'choice' | 'boolean' | 'slider' | 'build';
+export type QuestionType = 'choice' | 'boolean' | 'slider' | 'build' | 'assign';
 
 export interface PublicOption {
   id: string;
@@ -37,6 +37,16 @@ export interface PublicBuild {
   speak?: string;
 }
 
+/**
+ * An assign question (match, sort): tap an item, then the target it belongs to. Items and targets arrive
+ * as per-attempt handles in handle order; which item belongs to which target stays on the server.
+ */
+export interface PublicAssign {
+  variant: 'match' | 'sort';
+  items: PublicTile[];
+  targets: PublicTile[];
+}
+
 /** A question as the player sees it — no answer fields. */
 export interface PublicQuestion {
   id: string;
@@ -46,6 +56,7 @@ export interface PublicQuestion {
   options: PublicOption[];
   slider: PublicSlider | null;
   build?: PublicBuild;
+  assign?: PublicAssign;
   /** Cosmetic world the question is shown in (one of src/lib/art.ts WORLD_KEYS), if set. */
   scene?: string | null;
 }
@@ -76,6 +87,8 @@ export interface AnswerResult {
   correct_option_ids: string[];
   /** The right tile labels, for a build question; only ever sent after answering. */
   correct_tiles: string[] | null;
+  /** The right (item label, target label) pairs, for an assign question; only ever sent after answering. */
+  correct_pairs: [string, string][] | null;
   correct_value: number | null;
   accept_min: number | null;
   accept_max: number | null;
@@ -179,6 +192,7 @@ export type GameErrorCode =
   | 'invalid_option'
   | 'invalid_value'
   | 'invalid_tiles'
+  | 'invalid_pairs'
   | 'not_all_answered'
   | 'attempt_not_finished'
   | 'daily_not_shareable'

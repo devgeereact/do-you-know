@@ -9,6 +9,7 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { AnswerButton, type AnswerButtonState } from '@/components/game/AnswerButton';
 import { FeedbackPanel } from '@/components/game/FeedbackPanel';
 import { ResultsView } from '@/components/game/ResultsView';
+import { AssignBoard } from '@/components/game/AssignBoard';
 import { NumberTiles } from '@/components/game/NumberTiles';
 import { ReadAloud } from '@/components/game/ReadAloud';
 import { SliderAnswer } from '@/components/game/SliderAnswer';
@@ -437,7 +438,18 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                 )}
 
                 <section aria-label={t.play.answersLabel} className="flex w-full justify-center">
-                  {question.type === 'build' && question.build ? (
+                  {question.type === 'assign' && question.assign ? (
+                    <div data-q-answer className="flex w-full justify-center">
+                      <AssignBoard
+                        assign={question.assign}
+                        prompt={question.prompt}
+                        questionKey={question.id}
+                        result={lastResult}
+                        disabled={submitting || phase !== 'question' || !online}
+                        onSubmit={(pairs) => void game.answerPairs(pairs)}
+                      />
+                    </div>
+                  ) : question.type === 'build' && question.build ? (
                     <div data-q-answer className="flex w-full justify-center">
                       <TileBuild
                         build={question.build}

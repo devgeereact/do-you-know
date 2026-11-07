@@ -25,7 +25,7 @@ export const QUIZ = {
 
 /** Fields that only an answered or finished question may carry. */
 const ANSWER_FIELDS =
-  /is_correct|correct_option_ids|correct_tiles|correct_value|correct_answer|accept_min|accept_max|explanation|snapshot/;
+  /is_correct|correct_option_ids|correct_tiles|correct_pairs|correct_value|correct_answer|accept_min|accept_max|explanation|snapshot/;
 
 interface ApiRecord {
   method: string;
@@ -79,6 +79,7 @@ export class ApiWatcher {
           options: object[];
           slider: object | null;
           build?: Record<string, unknown>;
+          assign?: Record<string, unknown>;
         } | null;
       };
       if (!parsed.question) continue;
@@ -92,6 +93,7 @@ export class ApiWatcher {
           'slider',
           'type',
           ...(parsed.question.build ? ['build'] : []),
+          ...(parsed.question.assign ? ['assign'] : []),
         ].sort(),
       );
       if (parsed.question.build) {
@@ -99,6 +101,15 @@ export class ApiWatcher {
         expect(Object.keys(parsed.question.build).every((k) => allowed.includes(k))).toBe(true);
         for (const tile of parsed.question.build.tiles as object[]) {
           expect(Object.keys(tile).sort()).toEqual(['id', 'label']);
+        }
+      }
+      if (parsed.question.assign) {
+        // Items and targets only: no key, no flag, no stored id.
+        expect(Object.keys(parsed.question.assign).sort()).toEqual(['items', 'targets', 'variant']);
+        for (const part of ['items', 'targets'] as const) {
+          for (const entry of parsed.question.assign[part] as object[]) {
+            expect(Object.keys(entry).sort()).toEqual(['id', 'label']);
+          }
         }
       }
       for (const option of parsed.question.options) {
@@ -129,9 +140,11 @@ export class ApiWatcher {
     }
     for (const answer of this.records.filter((r) => r.path.endsWith('/answer'))) {
       const keys = Object.keys(JSON.parse(answer.requestBody ?? '{}') as object);
-      expect(keys.every((key) => key === 'option_id' || key === 'value' || key === 'tiles')).toBe(
-        true,
-      );
+      expect(
+        keys.every(
+          (key) => key === 'option_id' || key === 'value' || key === 'tiles' || key === 'pairs',
+        ),
+      ).toBe(true);
     }
   }
 

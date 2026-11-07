@@ -37,6 +37,7 @@ export const answerResult = (overrides: Partial<AnswerResult> = {}): AnswerResul
   timed_out: false,
   correct_option_ids: ['q1-a'],
   correct_tiles: null,
+  correct_pairs: null,
   correct_value: null,
   accept_min: null,
   accept_max: null,
