@@ -14,7 +14,7 @@ import { NumberTiles } from '@/components/game/NumberTiles';
 import { ReadAloud } from '@/components/game/ReadAloud';
 import { SliderAnswer } from '@/components/game/SliderAnswer';
 import { TileBuild } from '@/components/game/TileBuild';
-import { childPath } from '@/lib/childPath';
+import { useSwitches } from '@/hooks/useSwitches';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
@@ -111,6 +111,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
     challengeCode: challenge ? code : undefined,
   });
   const { isGuest } = useGuestSession();
+  const { switches } = useSwitches();
   const online = useOnlineStatus();
   const reduceMotion = useReducedMotion();
   const { phase, state, lastResult, summary, submitting, error, restart } = game;
@@ -369,7 +370,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
 
               <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-10">
                 <p
-                  className="flex items-center gap-2.5 text-sm font-semibold tracking-wider opacity-70"
+                  className="flex items-center gap-2.5 text-sm font-semibold opacity-70"
                   aria-hidden="true"
                 >
                   {state.position} / {state.total}
@@ -468,7 +469,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                     </div>
                   ) : question.type === 'slider' && question.slider ? (
                     <div data-q-answer data-q-slider className="flex w-full justify-center">
-                      {childPath.numberTiles ? (
+                      {!switches.slider_questions ? (
                         <NumberTiles
                           slider={question.slider}
                           prompt={question.prompt}

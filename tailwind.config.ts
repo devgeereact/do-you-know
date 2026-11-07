@@ -52,6 +52,15 @@ const config: Config = {
           star: token('avatar-star'),
         },
       },
+      // A calm type scale: nothing in the app is heavier than 500 (strong text is 600, see index.css).
+      // The class names stay so existing markup keeps working; hierarchy comes from size and colour.
+      fontWeight: {
+        medium: '500',
+        semibold: '500',
+        bold: '500',
+        extrabold: '500',
+        black: '500',
+      },
       fontFamily: {
         sans: [
           '"Outfit Variable"',

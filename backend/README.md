@@ -99,7 +99,11 @@ Private endpoints require `Authorization: Bearer <token>`; no credentials in URL
 | GET /me/games?limit=20       | Own server-written finished results, capped at 100                                                                 |
 | GET /me/continue             | Own unfinished attempts that would still resume (same rules as POST /attempts), max 5                              |
 | GET /me/best                 | Own best finished result per published quiz (most correct, then lowest time), max 50                               |
-| POST /me/delete              | `{ "confirmed": true }`, cascades own app data and sessions                                                        |
+| POST /me/delete              | `{ "confirmed": true }`, cascades own app data and sessions; a parent's children go with them; a child's token gets 403 `child_managed_by_parent` |
+| GET/POST /parent/children    | Clerk token only (guest and child tokens 403 `parent_sign_in_required`). POST `{ "level", "avatar_id"? }` adds a child (max 5, generated nickname, 409 `child_limit`) |
+| POST /parent/children/:id    | `{ level?, avatar_id?, new_nickname: true? }`; another parent's child is 404 `child_not_found` |
+| POST /parent/children/:id/delete, /hand-over | `{ "confirmed": true }` erases the child; hand-over returns a new `guest_` token for the child (older ones revoked) |
+| GET/POST /parent/switches    | Seven booleans (`public_boards`, `challenge_friend`, `beat_clock`, `slider_questions`, `trivia_sets`, `sound`, `easy_read`), all off; `GET /me` carries the effective `switches` and `child.level` |
 | GET /curriculum-tags         | Public filter options                                                                                              |
 | GET /categories/:slug        | Active category detail                                                                                             |
 | GET /categories              | Active categories that hold at least one live quiz                                                                 |

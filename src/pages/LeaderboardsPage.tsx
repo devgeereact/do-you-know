@@ -132,7 +132,7 @@ function Overall({
           <Podium rows={rows} />
           {board && board.facts.rounds > 0 && (
             <dl className="hidden grid-cols-2 gap-2 [@media(min-height:800px)]:grid">
-              <p className="col-span-2 text-xs font-bold uppercase tracking-widest text-content-muted">
+              <p className="col-span-2 text-xs font-bold text-content-muted">
                 {t.leaderboards.factsTitle(periodName)}
               </p>
               <Fact
@@ -161,7 +161,7 @@ function Overall({
           )}
           <div className="mt-auto hidden gap-2.5 rounded-2xl bg-background p-3.5 lg:grid">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-widest text-content-muted">
+              <span className="text-xs font-bold text-content-muted">
                 {t.leaderboards.you} · {periodName}
               </span>
               {me && (
@@ -195,7 +195,7 @@ function Overall({
         <section className="flex min-h-0 flex-col rounded-2xl border border-surface-border bg-surface p-3 shadow-soft">
           <div
             aria-hidden="true"
-            className="grid grid-cols-[2rem_2.25rem_minmax(0,1fr)_4.5rem_4rem] gap-2.5 border-b border-surface-border px-2 pb-2 text-[0.7rem] font-bold uppercase tracking-wider text-content-muted lg:grid-cols-[2rem_2.25rem_minmax(0,1fr)_5rem_4rem_4rem]"
+            className="grid grid-cols-[2rem_2.25rem_minmax(0,1fr)_4.5rem_4rem] gap-2.5 border-b border-surface-border px-2 pb-2 text-[0.7rem] font-bold text-content-muted lg:grid-cols-[2rem_2.25rem_minmax(0,1fr)_5rem_4rem_4rem]"
           >
             <span>{t.leaderboards.columns.rank}</span>
             <span />

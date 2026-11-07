@@ -1,12 +1,13 @@
 import { useCallback, useState } from 'react';
 import { reportError } from '@/lib/sentry';
 import { useSession } from '@/hooks/useSession';
+import type { SessionUser } from '@/context/SessionContext';
 import { t } from '@/i18n';
 
 interface UseGuestSession {
   ready: boolean; // a guest session exists
   isGuest: boolean; // every player is a guest; adults sign in separately at /account
-  ensureSession: () => Promise<void>; // idempotent; call before starting a game
+  ensureSession: () => Promise<SessionUser | null>; // idempotent; call before starting a game
   error: string | null;
 }
 
@@ -15,10 +16,10 @@ export function useGuestSession(): UseGuestSession {
   const { user, ensureSession: ensure } = useSession();
   const [error, setError] = useState<string | null>(null);
 
-  const ensureSession = useCallback(async (): Promise<void> => {
+  const ensureSession = useCallback(async (): Promise<SessionUser | null> => {
     setError(null);
     try {
-      await ensure();
+      return await ensure();
     } catch (err) {
       reportError(err, { area: 'guest-session' });
       setError(t.errors.load.session);

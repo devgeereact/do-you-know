@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { NAV_ITEMS, isNavActive } from '@/components/navItems';
+import { NAV_ITEMS, isNavActive, visibleNav } from '@/components/navItems';
+import { useSwitches } from '@/hooks/useSwitches';
 import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { t } from '@/i18n';
@@ -13,7 +14,9 @@ import { t } from '@/i18n';
 export function TabBar(): JSX.Element {
   const { pathname } = useLocation();
   const root = useRef<HTMLElement>(null);
-  const activeIndex = NAV_ITEMS.findIndex((item) => isNavActive(item, pathname));
+  const { switches } = useSwitches();
+  const items = visibleNav(NAV_ITEMS, switches);
+  const activeIndex = items.findIndex((item) => isNavActive(item, pathname));
 
   const placed = useRef(false);
   useGSAP(
@@ -57,13 +60,16 @@ export function TabBar(): JSX.Element {
         <span
           aria-hidden="true"
           data-tab-pill
-          className="pointer-events-none absolute inset-y-0 left-0 flex w-1/4 flex-col items-center justify-center gap-0.5"
+          className={cn(
+            'pointer-events-none absolute inset-y-0 left-0 flex flex-col items-center justify-center gap-0.5',
+            items.length === 3 ? 'w-1/3' : 'w-1/4',
+          )}
         >
           <span className="h-8 w-14 rounded-full bg-primary/15" />
           <span className="h-4" />
         </span>
-        <ul className="relative grid grid-cols-4">
-          {NAV_ITEMS.map((item, i) => {
+        <ul className={cn('relative grid', items.length === 3 ? 'grid-cols-3' : 'grid-cols-4')}>
+          {items.map((item, i) => {
             const active = isNavActive(item, pathname);
             return (
               <li key={item.to}>

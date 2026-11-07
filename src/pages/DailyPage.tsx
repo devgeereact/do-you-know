@@ -219,7 +219,7 @@ export function DailyPage(): JSX.Element {
                 >
                   <WorldBackdrop world={key} className="-z-10" />
                   <span className="absolute bottom-2 left-2.5 grid font-display text-lg font-extrabold leading-tight [text-shadow:0_2px_0_rgb(0_0_0/0.3)]">
-                    <span className="font-sans text-[0.65rem] font-bold uppercase tracking-widest opacity-90">
+                    <span className="font-sans text-[0.65rem] font-bold opacity-90">
                       {t.daily.stop(i + 1)}
                     </span>
                     {world(key).name}

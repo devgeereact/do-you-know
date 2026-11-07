@@ -230,7 +230,7 @@ export function Table({
                   key={`${h.label}-${i}`}
                   scope="col"
                   className={cn(
-                    'whitespace-nowrap border-b border-surface-border bg-content/[0.025] px-3 py-2 text-left text-[11.5px] font-extrabold uppercase tracking-wider text-content-muted',
+                    'whitespace-nowrap border-b border-surface-border bg-content/[0.025] px-3 py-2 text-left text-[11.5px] font-extrabold text-content-muted',
                     h.num && 'text-right',
                   )}
                 >

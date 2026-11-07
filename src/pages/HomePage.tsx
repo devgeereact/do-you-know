@@ -13,6 +13,7 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { DESKTOP, useMediaQuery } from '@/hooks/useMediaQuery';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
 import { useReveal } from '@/hooks/useReveal';
+import { useSwitches } from '@/hooks/useSwitches';
 import { useSession } from '@/hooks/useSession';
 import { useTrendingQuizzes } from '@/hooks/useTrendingQuizzes';
 import { WORLD_KEYS, type WorldKey } from '@/lib/art';
@@ -79,6 +80,7 @@ interface HomeData {
 
 function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData): JSX.Element {
   const root = useRef<HTMLElement>(null);
+  const { switches } = useSwitches();
   const { categories, quizzes } = catalog;
   const featured = trending[0] ?? quizzes[0] ?? null;
   useReveal(root, [quizzes.length, trending.length, categories.length]);
@@ -186,10 +188,15 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
       </section>
 
       <div className="mx-auto max-w-6xl px-6">
-        <section className="mt-10 grid grid-cols-3 items-stretch gap-6">
+        <section
+          className={cn(
+            'mt-10 grid items-stretch gap-6',
+            switches.public_boards ? 'grid-cols-3' : 'grid-cols-2',
+          )}
+        >
           <ProgressCard />
           <DailyCard daily={daily} />
-          <TopThisWeek />
+          {switches.public_boards && <TopThisWeek />}
         </section>
 
         <section id="worlds" className="mt-14 scroll-mt-24">
@@ -322,10 +329,8 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
         <div className="relative z-[2] flex flex-1 flex-col items-center justify-center gap-4 px-6 pb-7 pt-12 text-center">
           {!state ? (
             <>
-              <p className="text-sm font-bold uppercase tracking-wider opacity-70">
-                {t.home.tryOne.kicker}
-              </p>
-              <h2 className="max-w-[18ch] font-display text-[1.8rem] uppercase leading-[1.08]">
+              <p className="text-sm font-bold opacity-70">{t.home.tryOne.kicker}</p>
+              <h2 className="max-w-[18ch] font-display text-[1.8rem] leading-[1.08]">
                 {quiz.title}
               </h2>
               <p className="max-w-[34ch] text-[0.95rem] font-medium opacity-80">
@@ -335,14 +340,14 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
                 type="button"
                 disabled={status === 'loading'}
                 onClick={() => void start()}
-                className="h-12 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] active:translate-y-[3px] disabled:opacity-60"
+                className="h-12 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] active:translate-y-[3px] disabled:opacity-60"
               >
                 {status === 'loading' ? t.home.tryOne.loading : t.home.tryOne.start}
               </button>
             </>
           ) : result ? (
             <>
-              <h2 role="status" className="font-display text-[2.4rem] uppercase leading-none">
+              <h2 role="status" className="font-display text-[2.4rem] leading-none">
                 {result.is_correct ? t.play.feedback.correct : t.play.feedback.wrong}
               </h2>
               {result.explanation && (
@@ -352,7 +357,7 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
               )}
               <Link
                 to={`/play/${quiz.slug}?mode=practice`}
-                className="h-12 rounded-full bg-[var(--fd)] px-7 pt-[0.7rem] font-display text-lg font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_rgb(0_0_0/0.25)]"
+                className="h-12 rounded-full bg-[var(--fd)] px-7 pt-[0.7rem] font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)]"
               >
                 {t.home.tryOne.keepGoing}
               </Link>
@@ -362,7 +367,7 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
               <p className="text-sm font-semibold opacity-70">
                 {state.position} / {state.total}
               </p>
-              <h2 className="max-w-[22ch] font-display text-[1.55rem] uppercase leading-[1.1]">
+              <h2 className="max-w-[22ch] font-display text-[1.55rem] leading-[1.1]">
                 {question.prompt}
               </h2>
               <ul
@@ -411,9 +416,7 @@ function ProgressCard(): JSX.Element {
   const name = user?.nickname || null;
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-surface-border bg-surface p-6 shadow-soft">
-      <p className="text-xs font-bold uppercase tracking-widest text-content-muted">
-        {t.home.progressKicker}
-      </p>
+      <p className="text-xs font-bold text-content-muted">{t.home.progressKicker}</p>
       <div className="flex items-center gap-3">
         <AvatarBadge avatarId={user?.avatarId} nickname={name} size="md" />
         <div className="min-w-0">
@@ -519,9 +522,7 @@ function TopThisWeek(): JSX.Element {
   return (
     <div className="flex flex-col gap-2 rounded-2xl border border-surface-border bg-surface p-6 shadow-soft">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-bold uppercase tracking-widest text-content-muted">
-          {t.home.topKicker}
-        </p>
+        <p className="text-xs font-bold text-content-muted">{t.home.topKicker}</p>
         <Link
           to="/leaderboards?period=week"
           className="text-sm font-bold text-primary hover:underline"
@@ -616,6 +617,14 @@ function WorldTiles({
   );
 }
 
+const SPARE_SPAN: Record<number, string> = {
+  1: 'lg:col-span-1',
+  2: 'lg:col-span-2',
+  3: 'lg:col-span-3',
+  4: 'lg:col-span-4',
+  5: 'lg:col-span-5',
+};
+
 /** Subject tiles in full rows of six (three or two on smaller screens): gaps become suggestions. */
 function SubjectTiles({
   categories,
@@ -651,21 +660,23 @@ function SubjectTiles({
           </Link>
         </li>
       ))}
-      {Array.from({ length: spare }, (_, i) => (
-        <li key={`s${i}`}>
+      {/* One suggestion that fills the rest of the row, instead of the same tile repeated. */}
+      {spare > 0 && (
+        <li className={cn('col-span-2 sm:col-span-3', SPARE_SPAN[spare])}>
           <Link
             to="/contact?type=idea"
-            className={cn(
-              tile,
-              'border-2 border-dashed border-surface-border text-content-muted hover:border-primary hover:bg-primary/5',
-            )}
+            className="flex h-full min-h-[8rem] items-center justify-center gap-4 rounded-[1.4rem] border-2 border-dashed border-surface-border p-4 text-content-muted transition-colors hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
           >
             <Character name="mug" size={60} />
-            <span className="font-bold leading-tight text-content">{t.home.suggestSubject}</span>
-            <span className="text-xs">{t.home.suggestSubjectLead}</span>
+            <span className="grid text-left">
+              <span className="text-lg font-medium leading-tight text-content">
+                {t.home.suggestSubject}
+              </span>
+              <span className="text-sm">{t.home.suggestSubjectLead}</span>
+            </span>
           </Link>
         </li>
-      ))}
+      )}
     </ul>
   );
 }

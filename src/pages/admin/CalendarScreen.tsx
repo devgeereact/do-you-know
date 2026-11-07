@@ -138,10 +138,7 @@ export function CalendarScreen(): JSX.Element {
           ) : (
             <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
               {DOW.map((d) => (
-                <div
-                  key={d}
-                  className="text-center text-[11px] font-extrabold uppercase text-content-muted"
-                >
+                <div key={d} className="text-center text-[11px] font-extrabold text-content-muted">
                   {d}
                 </div>
               ))}

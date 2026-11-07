@@ -19,6 +19,12 @@ vi.mock('@/components/game/ChallengeFriend', () => ({
   ChallengeFriend: () => <button type="button">Challenge a friend</button>,
 }));
 
+// The parent's switches for the player; both default to on here so the older tests keep their meaning.
+const switches = { public_boards: true, challenge_friend: true };
+vi.mock('@/hooks/useSwitches', () => ({
+  useSwitches: () => ({ switches, level: null }),
+}));
+
 function renderResults(
   data: AttemptSummary,
   props: Partial<React.ComponentProps<typeof ResultsView>> = {},
@@ -127,6 +133,29 @@ describe('ResultsView', () => {
   it('uses the daily board for a daily result', () => {
     renderResults(summary({ mode: 'daily' }));
     expect(screen.getByLabelText('board stub')).toHaveTextContent('daily named');
+  });
+
+  it('hides the ranked board and the friend challenge until the parent switches them on', () => {
+    switches.public_boards = false;
+    switches.challenge_friend = false;
+    try {
+      renderResults(summary({ mode: 'ranked' }));
+      expect(screen.queryByLabelText('board stub')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Challenge a friend' })).not.toBeInTheDocument();
+    } finally {
+      switches.public_boards = true;
+      switches.challenge_friend = true;
+    }
+  });
+
+  it('keeps the daily board on even with Public boards off', () => {
+    switches.public_boards = false;
+    try {
+      renderResults(summary({ mode: 'daily' }));
+      expect(screen.getByLabelText('board stub')).toHaveTextContent('daily named');
+    } finally {
+      switches.public_boards = true;
+    }
   });
 
   it('shows no board for practice', () => {

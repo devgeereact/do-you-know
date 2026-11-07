@@ -26,3 +26,6 @@ Skill map and Practise next (P5), sound itself (P5), a PIN lock (possible later)
 
 ## Release
 Migration 0019 goes out alone first, backed up, then the code; needs the owner's "approved". Real Clerk sign-in is NOT TESTED locally; the owner tests it on the live site.
+
+## Status (7 Nov 2026)
+T1-T7 built and tested; see `.agent/CURRENT-TASK.md` and `docs/AUDIT.md`. Release waits for the owner's approval. Found while building: the unused-guest clean-up would have purged children; fixed with a test.

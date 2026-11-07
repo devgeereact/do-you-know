@@ -1,4 +1,14 @@
-import { expect, expectNoHorizontalOverflow, playThrough, QUIZ, test } from './support/test';
+import {
+  asChildWithBoardsAndChallenges,
+  expect,
+  expectNoHorizontalOverflow,
+  playThrough,
+  QUIZ,
+  test,
+} from './support/test';
+
+// Friend challenges belong to a parent switch (off by default), so these journeys play as a child whose parent turned it on.
+test.beforeEach(async ({ page }) => asChildWithBoardsAndChallenges(page));
 
 test.describe('friend challenge', () => {
   test('create a link, open it as another player and play head to head', async ({

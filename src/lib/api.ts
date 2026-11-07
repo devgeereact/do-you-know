@@ -105,6 +105,19 @@ export async function ensureGuest(): Promise<void> {
   await pendingGuest;
 }
 
+/**
+ * Makes this browser play as the given session (a child handed over by a parent). The server issued the
+ * token for that child's profile; the browser just keeps it like any guest token.
+ */
+export function adoptGuestToken(guest: StoredGuest): void {
+  token = guest.token;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(guest));
+  } catch {
+    /* Optional persistence. */
+  }
+}
+
 /** Forgets this browser's guest token. */
 export function clearSession(): void {
   token = null;

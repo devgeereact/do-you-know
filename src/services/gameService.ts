@@ -24,6 +24,8 @@ export interface StartAttemptArgs {
   mode: AttemptMode;
   quizSlug?: string;
   challengeCode?: string;
+  /** Ask for the countdown. Only a parent's "Beat the clock" switch does; otherwise the round is untimed. */
+  timed?: boolean;
 }
 
 /** Opens a new attempt, or resumes an unfinished one of the same kind. */
@@ -33,6 +35,7 @@ export function startAttempt(args: StartAttemptArgs): Promise<AttemptState> {
       mode: args.mode,
       ...(args.quizSlug ? { quiz_slug: args.quizSlug } : {}),
       ...(args.challengeCode ? { challenge_code: args.challengeCode } : {}),
+      ...(args.timed ? { timed: true } : {}),
     },
   });
 }

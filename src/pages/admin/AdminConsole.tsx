@@ -227,14 +227,12 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
                 <span className="block font-display text-[17px] font-extrabold text-content">
                   Do You Know?
                 </span>
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-content-muted">
-                  Studio
-                </span>
+                <span className="block text-[11px] font-semibold text-content-muted">Studio</span>
               </span>
             </div>
             {GROUPS.map((group) => (
               <div key={group} className="contents">
-                <p className="hidden px-2.5 pb-1.5 pt-3.5 text-[11px] font-bold uppercase tracking-[0.1em] text-content-muted/80 lg:block">
+                <p className="hidden px-2.5 pb-1.5 pt-3.5 text-[11px] font-bold text-content-muted/80 lg:block">
                   {group}
                 </p>
                 {NAV.filter((item) => item.group === group).map((item) => (

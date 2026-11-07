@@ -31,8 +31,36 @@ if ($command === 'reset-limits') {
     exit(0);
 }
 
+/**
+ * A parent with one child who already holds a session under $token. $flags is 'on' (every switch on), 'off' (the
+ * default) or 'social' (only Public boards and Challenge a friend: the journeys that need boards and challenges).
+ */
+$makeChild = static function (string $name, string $token, string $flags) use ($db): void {
+    $parentId = Database::uuid();
+    $childId = Database::uuid();
+    Database::execute($db, "INSERT INTO profiles (id,role,nickname) VALUES (?, 'player', ?)", [$parentId, 'E2EParent' . substr(md5($name), 0, 10)]);
+    Database::execute($db, "INSERT INTO profiles (id,role,nickname,avatar_id) VALUES (?, 'guest', ?, 'fox')", [$childId, 'E2EChild' . substr(md5($name), 0, 10)]);
+    Database::execute($db, "INSERT INTO children (profile_id,parent_profile_id,level) VALUES (?,?,'explorers')", [$childId, $parentId]);
+    Database::execute($db, 'INSERT INTO guest_sessions (token_hash,profile_id,expires_at) VALUES (?,?,DATE_ADD(UTC_TIMESTAMP(6), INTERVAL 30 DAY))', [hash('sha256', $token), $childId]);
+    if ($flags === 'on') {
+        Database::execute($db, 'INSERT INTO parent_settings (parent_profile_id,public_boards,challenge_friend,beat_clock,slider_questions,trivia_sets,sound,easy_read) VALUES (?,1,1,1,1,1,1,1)', [$parentId]);
+    } elseif ($flags === 'social') {
+        Database::execute($db, 'INSERT INTO parent_settings (parent_profile_id,public_boards,challenge_friend) VALUES (?,1,1)', [$parentId]);
+    }
+};
+
+if ($command === 'child') {
+    // php fixture.php child on|off|social <token>: one fresh child per test, so parallel tests never share a player.
+    if (!in_array($argv[2] ?? '', ['on', 'off', 'social'], true) || !preg_match('/^guest_e2e_[a-z0-9_]{8,60}$/D', $argv[3] ?? '')) {
+        fwrite(STDERR, "Usage: php fixture.php child on|off guest_e2e_<token>\n");
+        exit(1);
+    }
+    $makeChild($argv[3], $argv[3], $argv[2]);
+    exit(0);
+}
+
 if ($command !== 'seed') {
-    fwrite(STDERR, "Usage: php fixture.php seed|reset-limits\n");
+    fwrite(STDERR, "Usage: php fixture.php seed|reset-limits|child\n");
     exit(1);
 }
 
@@ -145,4 +173,9 @@ Database::execute(
     'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
     [$passageVersion, $passageQuiz, json_encode(Dyk\Content::snapshot($passageFile))],
 );
-echo "seeded e2e-quick-quiz, e2e-build-quiz, e2e-assign-quiz, e2e-passage-quiz and the daily challenge for $today\n";
+// Two children who already hold a session (known tokens, see tests/e2e/parent.spec.ts): one whose parent has
+// every switch off (the default) and one whose parent has every switch on.
+foreach (['off', 'on'] as $name) {
+    $makeChild($name, 'guest_e2e_child_' . $name, $name);
+}
+echo "seeded e2e-quick-quiz, e2e-build-quiz, e2e-assign-quiz, e2e-passage-quiz, two children and the daily challenge for $today\n";

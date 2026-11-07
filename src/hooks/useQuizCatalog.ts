@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSwitches } from '@/hooks/useSwitches';
 import { reportError } from '@/lib/sentry';
 import {
   getCategory,
@@ -30,6 +31,7 @@ const LOAD_ERROR = t.errors.load.catalog;
 /** Published categories, quizzes and curriculum tags with age/curriculum filters. */
 export function useQuizCatalog(filters: CatalogFilters = {}): UseQuizCatalog {
   const { categorySlug, age, curriculumTag, search } = filters;
+  const { switches } = useSwitches();
   const [categories, setCategories] = useState<Category[]>([]);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [curriculumTags, setCurriculumTags] = useState<CurriculumTag[]>([]);
@@ -76,5 +78,15 @@ export function useQuizCatalog(filters: CatalogFilters = {}): UseQuizCatalog {
 
   const refresh = useCallback((): Promise<void> => load(() => true), [load]);
 
-  return { categories, quizzes, curriculumTags, loading, error, refresh };
+  // Trivia and the sets written for adults stay out of a child's lists unless the parent switched them on.
+  // A direct link to one still opens, so nothing shared or bookmarked breaks.
+  const shown = useMemo(
+    () =>
+      switches.trivia_sets
+        ? quizzes
+        : quizzes.filter((q) => q.area !== 'trivia' && q.level !== 'adult'),
+    [quizzes, switches.trivia_sets],
+  );
+
+  return { categories, quizzes: shown, curriculumTags, loading, error, refresh };
 }

@@ -1,3 +1,4 @@
+import type { ParentSwitches } from '@/types';
 import { t } from '@/i18n';
 
 /** Main destinations, shared by the desktop header and the phone tab bar. */
@@ -10,6 +11,8 @@ export interface NavItem {
   icon: JSX.Element;
   /** Shown only in the phone tab bar (the header has a Play button instead). */
   tabOnly?: boolean;
+  /** Hidden unless the parent has turned this switch on (the default path is calm: no public boards). */
+  needs?: 'public_boards';
 }
 
 const iconProps = {
@@ -64,6 +67,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     to: '/leaderboards',
+    needs: 'public_boards',
     label: t.nav.leaderboards.label,
     short: t.nav.leaderboards.short,
     matches: (path) => path === '/leaderboards',
@@ -77,4 +81,9 @@ export const NAV_ITEMS: NavItem[] = [
 
 export function isNavActive(item: NavItem, pathname: string): boolean {
   return item.matches(pathname);
+}
+
+/** The items this player may see: those behind a switch appear only when the parent turned it on. */
+export function visibleNav(items: NavItem[], switches: ParentSwitches): NavItem[] {
+  return items.filter((item) => !item.needs || switches[item.needs]);
 }

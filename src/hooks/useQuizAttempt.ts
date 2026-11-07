@@ -111,8 +111,13 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
     setError(null);
     setFailedWith(null);
     try {
-      await ensureSession();
-      const s = await startAttempt({ mode, quizSlug, challengeCode });
+      const me = await ensureSession();
+      const s = await startAttempt({
+        mode,
+        quizSlug,
+        challengeCode,
+        timed: me?.switches?.beat_clock === true,
+      });
       await settle(s, run);
     } catch (err) {
       if (run === runRef.current) fail(err, 'start', true);

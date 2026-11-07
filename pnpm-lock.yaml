@@ -181,6 +181,9 @@ importers:
       '@fontsource-variable/outfit':
         specifier: ^5.3.0
         version: 5.3.0
+      '@fontsource/atkinson-hyperlegible':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@18.3.1)
@@ -1068,6 +1071,9 @@ packages:
 
   '@fontsource-variable/outfit@5.3.0':
     resolution: {integrity: sha512-fPb5XnYK0k7SbR++HEmm4+ZqDszmLKQ+sPRUr8oQ/KNC0vy6r6hazJFe8iYozv4cqlHbvJ/JECkJWrfDodUMVQ==}
+
+  '@fontsource/atkinson-hyperlegible@5.3.0':
+    resolution: {integrity: sha512-Sp8Ve8+rQmENY2Lv02VH7sLpntzTTvnncnJMTbRE7DX6TLxGraN4ykZfzaUWIoCFmaomwkvNiqmlPkrKBuDoSA==}
 
   '@gsap/react@2.1.2':
     resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
@@ -4167,6 +4173,8 @@ snapshots:
   '@fontsource-variable/nunito@5.3.0': {}
 
   '@fontsource-variable/outfit@5.3.0': {}
+
+  '@fontsource/atkinson-hyperlegible@5.3.0': {}
 
   '@gsap/react@2.1.2(gsap@3.15.0)(react@18.3.1)':
     dependencies:

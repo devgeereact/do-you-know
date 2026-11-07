@@ -3,19 +3,37 @@ declare(strict_types=1);
 namespace Dyk;
 final class Database
 {
+    /** How many times a transaction that lost a deadlock is run again (the first run counts). */
+    public const DEADLOCK_TRIES = 3;
+
+    /**
+     * Runs the action in a transaction. When the database picks it as the loser of a deadlock (MySQL error 1213,
+     * or a lock wait timeout) the whole transaction has already been undone, so it is simply run again: two
+     * players starting a game at the same moment must not see an error because their locks crossed.
+     */
     public static function transaction(\PDO $db, callable $action): mixed
     {
-        $db->beginTransaction();
-        try {
-            $result = $action();
-            $db->commit();
-            return $result;
-        } catch (\Throwable $error) {
-            if ($db->inTransaction()) {
-                $db->rollBack();
+        for ($try = 1; ; $try++) {
+            $db->beginTransaction();
+            try {
+                $result = $action();
+                $db->commit();
+                return $result;
+            } catch (\Throwable $error) {
+                if ($db->inTransaction()) {
+                    $db->rollBack();
+                }
+                if ($try >= self::DEADLOCK_TRIES || !self::isDeadlock($error)) {
+                    throw $error;
+                }
+                usleep(random_int(5000, 40000) * $try);
             }
-            throw $error;
         }
+    }
+
+    private static function isDeadlock(\Throwable $error): bool
+    {
+        return $error instanceof \PDOException && in_array((int) ($error->errorInfo[1] ?? 0), [1213, 1205], true);
     }
 
     public static function utc(?string $value): ?string

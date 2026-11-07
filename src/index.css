@@ -107,6 +107,11 @@
     min-height: 100dvh;
   }
 
+  strong,
+  b {
+    font-weight: 600;
+  }
+
   h1,
   h2,
   h3 {
@@ -198,7 +203,7 @@
     padding: 0.6rem 1.75rem 0.45rem;
     font-family: theme('fontFamily.display');
     font-size: 2rem;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1;
     color: rgb(var(--stage-paper));
     text-shadow: 0 3px 0 rgb(0 0 0 / 0.22);
@@ -219,7 +224,7 @@
     padding: 0.5rem 1.1rem;
     font-family: theme('fontFamily.display');
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1.1;
     color: var(--fd);
     box-shadow: 0 4px 0 var(--fd);
@@ -277,7 +282,7 @@
     padding: 0.35rem 1.1rem 0.1rem;
     font-family: theme('fontFamily.display');
     font-size: 1.35rem;
-    font-weight: 800;
+    font-weight: 500;
   }
   .stage-pill {
     display: inline-flex;
@@ -290,7 +295,7 @@
     padding: 0 0.85rem;
     font-family: theme('fontFamily.display');
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 500;
     color: var(--fd);
     font-variant-numeric: tabular-nums;
   }
@@ -313,7 +318,7 @@
     padding: 0.25rem 0.9rem;
     font-family: theme('fontFamily.display');
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1;
     color: var(--fd);
     box-shadow: 0 4px 0 var(--fd);
@@ -356,7 +361,7 @@
     padding: 0.25rem 0.75rem;
     font-family: theme('fontFamily.display');
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1;
     color: rgb(var(--stage-ink));
     touch-action: manipulation;
@@ -485,4 +490,11 @@
 .pulse-sun {
   transform-origin: 660px 90px;
   animation: pulse-sun 5s ease-in-out infinite;
+}
+
+/* "Easy-read font" parent switch: Atkinson Hyperlegible replaces every typeface while it is on. */
+html[data-easy-read='true'],
+html[data-easy-read='true'] *,
+html[data-easy-read='true'] .font-display {
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif !important;
 }

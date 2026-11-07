@@ -2,6 +2,19 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · P4 parent area (sign-in scoping, children's data, hand-over, erasure)
+
+Reviewer: Claude Code, focused review of `Family`, the `/parent/*` routes in `Api.php`, `Player::own`/`delete`/`erase`, `bin/cleanup.php`, the `/grown-ups` page and the switch effects (security-audit skill, guidance mode, local tests with locally signed test tokens only; nothing run against the live site).
+
+- **Who may call.** The parent routes sit behind `Identity::profile` (a verified Clerk token: issuer, authorised party, expiry, not-before, issued-at, `user_` subject, `sess_` id), then refuse any `guest_` token with 403 `parent_sign_in_required`, so a child's token can never reach them. A verified sign-in with no linked profile is 401. Tested for no token, guest, child, unlinked and made-up tokens on every route. Mutation check: removing the guest refusal made the suite fail. PASS.
+- **Scope.** Every child action calls `owned()`: the child must be in `children` with this parent's id; anything else, existing or not, is the same 404 `child_not_found`, so ids cannot be probed. Tested both ways across two parents for change, remove and hand-over. Mutation check: dropping the parent condition made the suite fail. PASS.
+- **Children's data.** A child holds a generated nickname, one of 12 preset avatars and one of five level names. The routes reject any other key (typed nickname, name, birthday, age, URL avatar) with 400, tested. No identity row, no age band and no email exist for a child; a child cannot claim an adult band (403). PASS.
+- **Hand-over.** A 256-bit random `guest_` token, stored only as its hash, replaces any earlier session of that child, and the response goes only to the signed-in parent. The browser installs it, then signs the parent out; if the sign-out fails the child token is dropped again so the device is never half handed over (unit-tested). **Residual (accepted):** the lock is the Clerk sign-out in the browser; the server does not end the parent's Clerk session, so a parent who is signed in on another tab or device stays signed in there. A PIN is a possible later change.
+- **Erasure.** Removing a child, or deleting a parent, erases child profiles, their sessions, games and feedback text; `/me/delete` from a child device is refused (403). Tested including the games. **Found in review and fixed:** the hourly clean-up of unused guests would have deleted a child who had not played for 30 days after their code expired; children are now excluded (clean-up test added).
+- **Switches.** Names come from a fixed list and values must be real booleans (tested: unknown, numbers, strings, empty all 400); the column name interpolated in the update is taken from that list only. A child sees only its own parent's switches; guests see all off (tested). PASS.
+- **Disclosed limits.** "Trivia and grown-up sets" hides lists but not the daily hand, which is drawn from all live non-18+ quizzes (trivia questions can appear there). "Public boards" off makes the play buttons practice, but a direct `/play/:slug` link is still a ranked round. The daily board and its crown stay on for everyone, as decided.
+- **NOT TESTED:** the real Clerk sign-in, modal and email code (the owner tests this on the live site after release; locally the server side was tested with locally signed tokens); the page at `/grown-ups` in a browser with a real session; migration 0019 on the live database.
+
 ## 2026-11-07 · P3 content review (literacy and numeracy drafts)
 
 Reviewer: Claude Code authored; two independent review agents then read every file cold (one as an English teacher, one as a maths teacher, with no access to my conclusions) and recomputed every answer.
@@ -21,7 +34,7 @@ Reviewer: Claude Code, focused review of `Game::tappedPairs`, `Game::answer` (as
 - **Child safety.** Everything is a tap; no text box on the new screen (browser-tested at 390 px and desktop); stored answers are content labels. PASS.
 - **Studio.** Tile text is entered by signed-in staff only and rendered as text, never HTML. Authoring forms only build the exact shapes the server validates; the server remains the authority (blank and broken tile questions save as problems, never as errors). The previous save path silently dropped the `build` part; fixed and unit-tested. PASS.
 - **Phone audit** (390 px, axe-core): no violations and no sideways scroll on the assign screen. It found the Listen button's accessible name ("Read it aloud") did not contain its visible word; fixed.
-- **Flake, honest note:** one mobile assign spec failed in the first full browser run and did not fail in 5 later runs (4 full, 1 isolated); the cause was not captured, so it is not explained.
+- **Flake, explained later (7 Nov, P4):** the one-off mobile assign failure was a database deadlock between two game starts (HTTP 503). Fixed in P4 by retrying a transaction that loses a deadlock (`Database::transaction`, tested).
 - NOT TESTED: the Studio forms in a real browser (they need an admin sign-in; covered by 22 unit tests and the server round-trip tests only); a real device voice; the live database.
 
 ## 2026-11-07 · P2 slice 2.1: the build question (grading, answer hiding, child safety)

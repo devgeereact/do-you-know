@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AvatarBadge } from '@/components/AvatarBadge';
 import { Logo } from '@/components/brand/Logo';
-import { NAV_ITEMS, isNavActive } from '@/components/navItems';
+import { NAV_ITEMS, isNavActive, visibleNav } from '@/components/navItems';
+import { useSwitches } from '@/hooks/useSwitches';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { useSession } from '@/hooks/useSession';
 import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
@@ -43,7 +44,8 @@ function placeBar(root: HTMLElement | null, animate: boolean): void {
 export function SiteHeader(): JSX.Element {
   const { pathname } = useLocation();
   const nav = useRef<HTMLElement>(null);
-  const items = NAV_ITEMS.filter((item) => !item.tabOnly);
+  const { switches } = useSwitches();
+  const items = visibleNav(NAV_ITEMS, switches).filter((item) => !item.tabOnly);
   const activeIndex = items.findIndex((item) => isNavActive(item, pathname));
 
   useGSAP(

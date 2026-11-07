@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from 'react';
 import { api, ensureGuest, hasSession, signOutGuest } from '@/lib/api';
-import type { Profile } from '@/types';
+import type { ChildLevel, ParentSwitches, Profile } from '@/types';
 
 export interface SessionUser {
   id: string; // the player's profile id on the server
@@ -18,12 +18,17 @@ export interface SessionUser {
   avatarId?: string | null;
   streak?: number;
   unreadMessages?: number;
+  /** What the parent switched on for this player; all off for a guest. */
+  switches?: ParentSwitches;
+  /** The level a parent set, when this player is a child. */
+  level?: ChildLevel | null;
 }
 
 export interface SessionContextValue {
   user: SessionUser | null;
   loading: boolean;
-  ensureSession: () => Promise<void>;
+  /** Makes sure a session exists and returns the player (their switches say how this game should run). */
+  ensureSession: () => Promise<SessionUser | null>;
   signOut: () => Promise<void>;
   /** Reload the header details (nickname, avatar, streak) after a change. */
   reload: () => Promise<void>;
@@ -36,18 +41,23 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
   const [user, setUser] = useState<SessionUser | null>(null);
   const [loading, setLoading] = useState(hasSession());
 
-  const load = useCallback(async (): Promise<void> => {
+  const load = useCallback(async (): Promise<SessionUser | null> => {
     try {
       const me = await api<Profile>('/me');
-      setUser({
+      const next: SessionUser = {
         id: me.id,
         nickname: me.nickname,
         avatarId: me.avatar_id,
         streak: me.streak_current,
         unreadMessages: me.unread_messages ?? 0,
-      });
+        switches: me.switches,
+        level: me.child?.level ?? null,
+      };
+      setUser(next);
+      return next;
     } catch {
       setUser(null); // expired or revoked token; api() already forgot it
+      return null;
     }
   }, []);
 
@@ -60,16 +70,17 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
   // game depend on it, and a new function each time the user loads restarted their game.
   const userRef = useRef(user);
   userRef.current = user;
-  const ensureSession = useCallback(async (): Promise<void> => {
-    if (hasSession() && userRef.current) return;
+  const ensureSession = useCallback(async (): Promise<SessionUser | null> => {
+    if (hasSession() && userRef.current) return userRef.current;
     await ensureGuest();
-    await load();
+    let me = await load();
     // A stored code that has expired is only discovered by that load (its 401 clears the code),
     // so make a fresh guest once instead of starting the game with no session.
     if (!hasSession()) {
       await ensureGuest();
-      await load();
+      me = await load();
     }
+    return me;
   }, [load]);
 
   const value = useMemo<SessionContextValue>(

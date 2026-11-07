@@ -239,9 +239,7 @@ export function InboxScreen(): JSX.Element {
                 )}
                 {detail.quiz && (
                   <div className="grid gap-1 rounded-[14px] bg-content/[0.04] p-3">
-                    <span className="text-xs font-extrabold uppercase tracking-wider text-content-muted">
-                      About
-                    </span>
+                    <span className="text-xs font-extrabold text-content-muted">About</span>
                     <b>{detail.quiz.title}</b>
                     {detail.question_prompt && (
                       <span className="text-sm">“{detail.question_prompt}”</span>

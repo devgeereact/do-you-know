@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react';
 import { SessionProvider } from '@/context/SessionContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { AppLayout } from '@/components/AppLayout';
+import { EasyReadFont } from '@/components/EasyReadFont';
 import { InstallPrompt } from '@/components/InstallPrompt';
 import { UpdatePrompt } from '@/components/UpdatePrompt';
 import { OfflineBanner } from '@/components/OfflineBanner';
@@ -27,6 +28,10 @@ const AccountPage = lazy(() =>
   import('@/pages/AccountPage').then((m) => ({ default: m.AccountPage })),
 );
 
+const GrownUpsPage = lazy(() =>
+  import('@/pages/GrownUpsPage').then((m) => ({ default: m.GrownUpsPage })),
+);
+
 const AdminApp = lazy(() =>
   import('@/pages/admin/AdminApp').then((m) => ({ default: m.AdminApp })),
 );
@@ -37,6 +42,7 @@ export function App(): JSX.Element {
       <SessionProvider>
         <BrowserRouter>
           <SmoothScroll />
+          <EasyReadFont />
           <Routes>
             {/* Browse pages share the header, footer and phone tab bar. */}
             <Route element={<AppLayout />}>
@@ -65,6 +71,20 @@ export function App(): JSX.Element {
                     }
                   >
                     <AccountPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/grown-ups"
+                element={
+                  <Suspense
+                    fallback={
+                      <p role="status" className="px-4 py-16 text-center text-content-muted">
+                        Loading…
+                      </p>
+                    }
+                  >
+                    <GrownUpsPage />
                   </Suspense>
                 }
               />

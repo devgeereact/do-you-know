@@ -1,6 +1,6 @@
 /**
- * Defaults for the child's path. Each is replaced by a parent switch in P4 (docs/DIRECTION.md); until
- * then they are the safe defaults for everyone.
+ * Defaults for the child's path before a parent has chosen anything. Since P4 the live values come from the
+ * parent's switches (src/hooks/useSwitches.ts, docs/DIRECTION.md); this file is kept as the record of the defaults.
  */
 export const childPath = {
   /** Number questions use a tile keypad instead of the slider ("Slider questions" switch, default off). */

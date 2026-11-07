@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { randomBytes } from 'node:crypto';
 import {
   test as base,
   expect,
@@ -279,4 +280,24 @@ export async function playThrough(
       .click();
   }
   await expect(page.getByRole('heading', { level: 1 })).toContainText('/ 3');
+}
+
+/**
+ * Plays as a fresh child whose parent turned on Public boards and Challenge a friend and nothing else
+ * (tests/e2e/support/fixture.php). The default path hides boards, ranked play and friend challenges; the
+ * journeys that test those use this player. Everything else stays at its default.
+ */
+export async function asChildWithBoardsAndChallenges(page: Page): Promise<void> {
+  // A fresh child for every test: parallel tests must never share a player (a second start would resume the first's game).
+  const token = `guest_e2e_on_${randomBytes(8).toString('hex')}`;
+  execFileSync('php', [FIXTURE_PHP, 'child', 'social', token], {
+    cwd: REPO_ROOT,
+    env: process.env,
+  });
+  await page.addInitScript((t) => {
+    localStorage.setItem(
+      'dyk-guest',
+      JSON.stringify({ token: t, expires_at: '2099-01-01T00:00:00Z' }),
+    );
+  }, token);
 }

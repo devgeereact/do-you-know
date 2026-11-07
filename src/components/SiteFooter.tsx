@@ -11,6 +11,7 @@ const LINKS: { to: string; label: string }[] = [
   { to: '/privacy', label: t.footer.links.privacy },
   { to: '/terms', label: t.footer.links.terms },
   { to: '/contact', label: t.footer.links.contact },
+  { to: '/grown-ups', label: t.footer.links.grownUps },
   { to: '/me/settings', label: t.footer.links.settings },
 ];
 

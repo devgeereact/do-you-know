@@ -8,8 +8,11 @@ import { answerResult, attemptState, question, summary } from '../support/fixtur
 
 vi.mock('@/services/gameService');
 vi.mock('@/lib/sentry', () => ({ reportError: vi.fn() }));
+const player: { beatClock: boolean } = { beatClock: false };
 vi.mock('@/hooks/useGuestSession', () => {
-  const ensureSession = vi.fn(() => Promise.resolve());
+  const ensureSession = vi.fn(() =>
+    Promise.resolve({ id: 'p1', switches: { beat_clock: player.beatClock } }),
+  );
   return { useGuestSession: () => ({ ensureSession, ready: true, isGuest: true, error: null }) };
 });
 
@@ -36,10 +39,23 @@ describe('useQuizAttempt', () => {
       mode: 'practice',
       quizSlug: 'space',
       challengeCode: undefined,
+      timed: false,
     });
     const shown = result.current.state?.question;
     expect(shown?.prompt).toBe('Prompt q1');
     expect(JSON.stringify(shown)).not.toMatch(/correct|is_correct|answer/i);
+  });
+
+  it('asks for the countdown only when the parent turned on Beat the clock', async () => {
+    start.mockResolvedValue(attemptState());
+    player.beatClock = true;
+    try {
+      const { result } = setup();
+      await waitFor(() => expect(result.current.phase).toBe('question'));
+      expect(start).toHaveBeenCalledWith(expect.objectContaining({ timed: true }));
+    } finally {
+      player.beatClock = false;
+    }
   });
 
   it('moves to feedback with the server verdict after an option is answered', async () => {

@@ -14,6 +14,28 @@ export type AttemptStatus = 'in_progress' | 'finished' | 'abandoned';
 export type Board = 'all_time' | 'weekly' | 'daily';
 export type ThemeMode = 'dark' | 'light';
 
+/** What a parent has switched on. All off until they do (docs/DIRECTION.md); a guest always has them off. */
+export interface ParentSwitches {
+  public_boards: boolean;
+  challenge_friend: boolean;
+  beat_clock: boolean;
+  slider_questions: boolean;
+  trivia_sets: boolean;
+  sound: boolean;
+  easy_read: boolean;
+}
+
+export type ChildLevel = 'starters' | 'explorers' | 'adventurers' | 'challengers' | 'scholars';
+
+/** A child the parent set up: a generated nickname, a preset avatar and a level. Nothing typed. */
+export interface Child {
+  id: string;
+  nickname: string;
+  avatar_id: string;
+  level: ChildLevel;
+  created_at: string;
+}
+
 /** GET /me */
 export type Profile = Timestamps & {
   id: string;
@@ -29,6 +51,10 @@ export type Profile = Timestamps & {
   nickname_changed_at: string | null;
   /** Threads with a staff reply the player has not opened. */
   unread_messages: number;
+  /** The switches that apply to this player: their parent's if this is a child. */
+  switches: ParentSwitches;
+  /** Set when this profile is a child a parent set up. */
+  child: { level: ChildLevel } | null;
 };
 
 /** GET /me/messages */

@@ -117,6 +117,7 @@ export const enGB = {
       privacy: 'Privacy',
       terms: 'Terms',
       contact: 'Contact',
+      grownUps: 'For grown-ups',
       settings: 'Settings',
     },
   },
@@ -219,7 +220,7 @@ export const enGB = {
       noAds: 'adverts or trackers',
     },
     tryOne: {
-      tab: 'DO YOU KNOW?',
+      tab: 'Do you know?',
       kicker: 'Try one, no sign-up',
       lead: 'One real question from today’s most played quiz. The answer is checked on our server.',
       start: 'Try a question',
@@ -479,10 +480,10 @@ export const enGB = {
 
   results: {
     tab: {
-      perfect: 'YOU ARE GENIUS!',
-      great: 'GREAT ROUND!',
-      good: 'NICE WORK!',
-      keepGoing: 'GOOD TRY!',
+      perfect: 'You are a genius!',
+      great: 'Great round!',
+      good: 'Nice work!',
+      keepGoing: 'Good try!',
     },
     correctSuffix: 'correct',
     cheer: {
@@ -845,6 +846,88 @@ export const enGB = {
     signedIn: 'You’re signed in to your adult account.',
     signIn: 'Sign in',
     signUp: 'Create an adult account',
+  },
+
+  grownUps: {
+    metaTitle: 'For grown-ups',
+    title: 'For grown-ups',
+    lead: 'Set up each child, choose their level and decide what they see. Children never type anything: their name, picture and level are all picked from a list.',
+    unavailable: 'Grown-up sign-in is not available yet. Children can still play as guests.',
+    loading: 'Loading…',
+    signInTitle: 'Sign in with an email code',
+    signInBody:
+      'We send a code to your email, so there is no password to remember. We keep no name, photo or birthday for you or for your children.',
+    signIn: 'Sign in',
+    signUp: 'Create a grown-up account',
+    tabs: { label: 'Parent area', children: 'Children', switches: 'Switches', contact: 'Contact' },
+    children: {
+      empty: 'No children yet. Add the first one below.',
+      level: 'Level',
+      levelHint: 'The years only describe the questions. They are never shown as your child’s age.',
+      character: 'Picture',
+      add: 'Add a child',
+      addTitle: 'Add a child',
+      limit: 'You can add up to 5 children.',
+      newName: 'New name',
+      handOver: 'Hand over',
+      handOverBody: (name: string): string =>
+        `${name} will play on this device. Your sign-in ends, so to come back here you will need a new email code.`,
+      handOverConfirm: 'Hand over and sign out',
+      remove: 'Remove',
+      removeBody: (name: string): string =>
+        `Remove ${name}? Their games and scores are erased and cannot be brought back.`,
+      removeConfirm: 'Remove and erase',
+      cancel: 'Cancel',
+      nameNote: 'Names are made up for you, like BraveOtter42, so no real name is ever used.',
+      failed: 'That did not work. Check your connection and try again.',
+      saved: 'Saved',
+    },
+    switches: {
+      lead: 'These apply to every child you add. They are all off until you turn them on.',
+      failed: 'That did not save. Try again.',
+      items: {
+        public_boards: {
+          label: 'Public boards',
+          body: 'Show the quiz leaderboards, likes and ranked rounds. The daily challenge board is always on.',
+        },
+        challenge_friend: {
+          label: 'Challenge a friend',
+          body: 'Let children send a quiz challenge by link.',
+        },
+        beat_clock: {
+          label: 'Beat the clock',
+          body: 'Add a countdown to each question. Off means children take their time.',
+        },
+        slider_questions: {
+          label: 'Slider questions',
+          body: 'Use a slider instead of the number keypad for number questions.',
+        },
+        trivia_sets: {
+          label: 'Trivia and grown-up sets',
+          body: 'Show general knowledge trivia and the quizzes written for adults.',
+        },
+        sound: {
+          label: 'Sound',
+          body: 'Gentle sound effects. Sound arrives in a coming update; your choice is saved now.',
+        },
+        easy_read: {
+          label: 'Easy-read font',
+          body: 'Use Atkinson Hyperlegible, a font designed to be easy to tell letters apart.',
+        },
+      },
+    },
+    contact: {
+      lead: 'Write to us about the app or a question. Replies appear in My messages.',
+      type: 'About',
+      types: { feedback: 'Feedback', question: 'Question', idea: 'Idea', problem: 'Problem' },
+      email: 'Your email (optional, only if you want a reply there)',
+      message: 'Your message',
+      send: 'Send',
+      sending: 'Sending…',
+      sent: 'Thank you, we have your message.',
+      short: 'Please write at least 10 characters.',
+      failed: 'That did not send. Try again in a moment.',
+    },
   },
 
   info: {

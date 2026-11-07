@@ -5,6 +5,7 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { sectionLinkClass } from '@/components/ui/cardClasses';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { useLeaderboard } from '@/hooks/useLeaderboard';
+import { useSwitches } from '@/hooks/useSwitches';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
@@ -61,8 +62,12 @@ export function QuizPage(): JSX.Element {
     description: (quiz && quizSeoDescription(quiz)) ?? undefined,
   });
 
+  const { switches } = useSwitches();
+
   if (notFound) return <NotFoundPage />;
 
+  // Ranked rounds and boards belong to the "Public boards" switch; without it the game is practice.
+  const ranked = !!quiz?.is_ranked && switches.public_boards;
   const age = quiz ? ageLabel(quiz) : null;
 
   return (
@@ -113,13 +118,15 @@ export function QuizPage(): JSX.Element {
                 )}
                 <ul className="flex flex-wrap gap-2 text-sm font-bold">
                   <li className={metaPill}>{t.common.questionCount(quiz.question_count)}</li>
-                  {quiz.is_ranked && (
+                  {ranked && (
                     <li className={metaPill}>{t.common.rankedQuestionCount(RANKED_ROUND)}</li>
                   )}
                   <li className={metaPill}>{difficultyLabel(quiz.difficulty)}</li>
                   {age && <li className={metaPill}>{age}</li>}
-                  {/* Children are not timed by default; the parent switch "Beat the clock" (P4) brings the timer back. */}
-                  <li className={metaPill}>{t.quiz.noTimer}</li>
+                  {/* Children are not timed unless the parent turned on "Beat the clock". */}
+                  {(!switches.beat_clock || !quiz.time_limit_seconds) && (
+                    <li className={metaPill}>{t.quiz.noTimer}</li>
+                  )}
                 </ul>
                 {quiz.curriculum_tags.length > 0 && (
                   <ul
@@ -134,10 +141,13 @@ export function QuizPage(): JSX.Element {
                   </ul>
                 )}
                 <div className="flex flex-wrap gap-3">
-                  <Link to={`/play/${quiz.slug}`} className={buttonClasses('play', 'lg')}>
+                  <Link
+                    to={ranked ? `/play/${quiz.slug}` : `/play/${quiz.slug}?mode=practice`}
+                    className={buttonClasses('play', 'lg')}
+                  >
                     {t.quiz.playNow}
                   </Link>
-                  {quiz.is_ranked && (
+                  {ranked && (
                     <Link
                       to={`/play/${quiz.slug}?mode=practice`}
                       className={buttonClasses('ghost', 'lg')}
@@ -148,7 +158,7 @@ export function QuizPage(): JSX.Element {
                 </div>
                 <p className="text-sm text-content-muted">{t.quiz.noSignUp}</p>
               </Card>
-              {quiz.is_ranked && (
+              {ranked && (
                 <Card>
                   <TopPlayers slug={quiz.slug} />
                 </Card>

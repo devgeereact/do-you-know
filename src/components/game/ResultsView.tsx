@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonClasses';
 import { ChallengeFriend } from '@/components/game/ChallengeFriend';
+import { useSwitches } from '@/hooks/useSwitches';
 import { Crown } from '@/components/game/Crown';
 import { ResultsBoard } from '@/components/game/ResultsBoard';
 import { ShareResult } from '@/components/game/ShareResult';
@@ -150,6 +151,7 @@ export function ResultsView({
   nextQuiz,
   moreTo,
 }: ResultsViewProps): JSX.Element {
+  const { switches } = useSwitches();
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => headingRef.current?.focus(), []);
   const percent = accuracy(summary.correct, summary.total);
@@ -308,14 +310,16 @@ export function ResultsView({
               path={summary.mode === 'daily' ? '/daily' : undefined}
             />
             {/* A daily hand is private to its player, so it is never turned into a friend challenge. */}
-            {summary.mode !== 'challenge' && summary.mode !== 'daily' && (
-              <ChallengeFriend
-                attemptId={summary.attempt_id}
-                quizTitle={quizTitle}
-                correct={summary.correct}
-                total={summary.total}
-              />
-            )}
+            {switches.challenge_friend &&
+              summary.mode !== 'challenge' &&
+              summary.mode !== 'daily' && (
+                <ChallengeFriend
+                  attemptId={summary.attempt_id}
+                  quizTitle={quizTitle}
+                  correct={summary.correct}
+                  total={summary.total}
+                />
+              )}
             {isGuest && (
               <p className="mt-5 text-sm text-content-muted">
                 {t.results.guestNote}{' '}
@@ -337,7 +341,7 @@ export function ResultsView({
         />
       )}
 
-      {(summary.mode === 'ranked' || summary.mode === 'daily') && (
+      {(summary.mode === 'daily' || (summary.mode === 'ranked' && switches.public_boards)) && (
         <ResultsBoard
           quizSlug={quizSlug}
           board={summary.mode === 'daily' ? 'daily' : 'all_time'}

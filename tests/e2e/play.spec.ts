@@ -1,5 +1,6 @@
 import {
   answerCurrentQuestion,
+  asChildWithBoardsAndChallenges,
   expect,
   expectNoHorizontalOverflow,
   playThrough,
@@ -8,6 +9,9 @@ import {
 } from './support/test';
 
 test.describe('playing a quiz', () => {
+  // The quiz page offers ranked play and "Just practise" only when the parent turned on Public boards.
+  test.beforeEach(async ({ page }) => asChildWithBoardsAndChallenges(page));
+
   test('practice: quiz page to results with a full review, and no answer leaks before answering', async ({
     page,
     api,

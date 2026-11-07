@@ -1,4 +1,11 @@
-import { expect, expectNoHorizontalOverflow, playThrough, QUIZ, test } from './support/test';
+import {
+  asChildWithBoardsAndChallenges,
+  expect,
+  expectNoHorizontalOverflow,
+  playThrough,
+  QUIZ,
+  test,
+} from './support/test';
 
 test.describe('ranked play, nickname, avatar and leaderboard', () => {
   // Every new player gets a generated nickname (since 26 October 2026), so a ranked round goes
@@ -7,6 +14,7 @@ test.describe('ranked play, nickname, avatar and leaderboard', () => {
     page,
     api,
   }) => {
+    await asChildWithBoardsAndChallenges(page); // boards and ranked play are a parent switch, off by default
     await page.goto(`/q/${QUIZ.slug}`);
     await page.getByRole('link', { name: 'Play now' }).click();
     await expect(page).toHaveURL(new RegExp(`/play/${QUIZ.slug}$`));
@@ -65,10 +73,14 @@ test.describe('ranked play, nickname, avatar and leaderboard', () => {
     await page.goto(`/play/${QUIZ.slug}`);
     await playThrough(page, [true, false, true]);
     await page.goto('/me');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/^[A-Z][a-z]+[A-Z][a-z]+\d{2}$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      /^[A-Z][a-z]+[A-Z][a-z]+\d{2}$/,
+    );
 
     await page.getByRole('button', { name: 'Change my nickname' }).click();
-    const options = page.getByRole('radiogroup', { name: 'Pick a new nickname' }).getByRole('radio');
+    const options = page
+      .getByRole('radiogroup', { name: 'Pick a new nickname' })
+      .getByRole('radio');
     await expect(options).toHaveCount(4);
     const pick = (await options.nth(2).textContent())?.trim() ?? '';
     await options.nth(2).click();

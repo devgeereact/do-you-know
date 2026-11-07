@@ -49,9 +49,7 @@ export function InfoShell({
     <main className="w-full">
       <header className="border-b border-surface-border bg-surface">
         <div className="mx-auto w-full max-w-7xl px-4 py-8 lg:px-8 lg:py-12">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-content-muted">
-            {t.info.shell.eyebrow}
-          </p>
+          <p className="text-xs font-bold text-content-muted">{t.info.shell.eyebrow}</p>
           <h1 className="mt-2 text-[2.2rem] leading-tight lg:text-5xl">{title}</h1>
           {lead && <p className="mt-3 max-w-[60ch] text-lg text-content-muted">{lead}</p>}
         </div>
@@ -94,9 +92,7 @@ export function InfoShell({
         {contents && toc.length > 1 && (
           <aside aria-label={t.info.shell.onThisPage} className="hidden xl:block">
             <div className="sticky top-24">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-content-muted">
-                {t.info.shell.onThisPage}
-              </p>
+              <p className="text-xs font-bold text-content-muted">{t.info.shell.onThisPage}</p>
               <ul className="mt-3 grid gap-1 border-l border-surface-border">
                 {toc.map((item) => (
                   <li key={item.id}>

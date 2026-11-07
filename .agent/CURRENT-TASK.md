@@ -1,5 +1,13 @@
 # Current task
 
+## P4: the parent area (branch `phase/p4-parent`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
+- Plan: `.planning/phases/P4-parent/P4-PLAN.md`. P3 code is LIVE (6eed8e1); the 38 P3 quiz drafts are waiting for the owner to import them in the Studio (nothing imported).
+- Built: migration 0019 (`children`, `parent_settings`), `Family` class and `/parent/*` routes, `/grown-ups` page, seven switches acting on the child path, privacy notice, a clean-up fix so children are never purged. Audit: `docs/AUDIT.md` (P4).
+- **Needs migration 0019 applied on the server BEFORE the code** (release the `.sql` alone, back up, `bin/migrate.php`, then the code). Needs the owner's "approved".
+- **Owner after release:** test the real sign-in at `/grown-ups` (Clerk email code), add a child, flip a switch, hand over, and check you cannot get back without a new code.
+- Next: P5 (adapt, retry later, stickers, sound, mascot, new home; migration 0020) after approval.
+
+
 ## P3: literacy and numeracy content (branch `phase/p3-content`, 7 Nov 2026, committed, NOT pushed, nothing imported or published)
 - Slice 2.2 is LIVE (95a4c26). Built on top: prompts up to 600 characters, Studio "Allow ranked rounds" tickbox, 38 quiz drafts (364 questions) in `backend/content/drafts/p3-*.txt`, a guard test, an e2e passage check. Review and fixes: `docs/AUDIT.md` (P3 content review).
 - To publish (owner, in the Studio): release this branch first (it carries the 600-character limit and the ranked tickbox the drafts need). Then Studio → Import → paste one file at a time → read the notes → Create drafts → for each of the 5 "Listen and spell" quizzes untick "Allow ranked rounds" → read each quiz → Publish. Then one more release so the new pages are prerendered. Nothing here has been imported.

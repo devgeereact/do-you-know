@@ -153,4 +153,15 @@ $r=request('GET','/me',null,$other['token']);check('expired session rejected',$r
 Dyk\RateLimit::check($db,$config,'test-limit','fixture',1,60);
 $limited=false;try{Dyk\RateLimit::check($db,$config,'test-limit','fixture',1,60);}catch(Dyk\ApiError $error){$limited=$error->status===429;}
 check('rate limits enforced',$limited);
+// A transaction that loses a deadlock is run again; any other failure is not, and it gives up after three tries.
+$deadlock=static function (): \PDOException { $e=new \PDOException('Deadlock found'); $e->errorInfo=['40001',1213,'Deadlock found']; return $e; };
+$runs=0;
+$r=Database::transaction($db,function() use (&$runs,$deadlock){ $runs++; if($runs<3){ throw $deadlock(); } return 'ok'; });
+check('a transaction that loses a deadlock is run again and then succeeds',$r==='ok'&&$runs===3);
+$runs=0;$thrown=null;
+try { Database::transaction($db,function() use (&$runs,$deadlock){ $runs++; throw $deadlock(); }); } catch(\PDOException $e){ $thrown=$e; }
+check('it gives up after three tries and says so',$thrown!==null&&$runs===Database::DEADLOCK_TRIES);
+$runs=0;$thrown=null;
+try { Database::transaction($db,function() use (&$runs){ $runs++; throw new \RuntimeException('not a deadlock'); }); } catch(\RuntimeException $e){ $thrown=$e; }
+check('any other failure is not retried',$thrown!==null&&$runs===1&&!$db->inTransaction());
 fwrite(STDOUT,"$count HTTP/database checks passed\n");

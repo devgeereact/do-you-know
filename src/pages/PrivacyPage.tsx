@@ -123,8 +123,19 @@ export function PrivacyPage(): JSX.Element {
           </Link>{' '}
           page. Sign-in is handled by Clerk, which holds the adult’s email address and sign-in
           details. Our own database stores only Clerk’s account number, linked to a player record:
-          no email, name or photo. Children should not use this sign-in. Adult accounts are not
-          linked to a child’s games.
+          no email, name or photo. Children should not use this sign-in.
+        </p>
+        <p>
+          A parent can also sign in on the{' '}
+          <Link to="/grown-ups" className={proseLinkClass}>
+            For grown-ups
+          </Link>{' '}
+          page to set up to five children. A child there is only a made-up nickname such as
+          BraveOtter42, a ready-made picture and a level (Starters to Scholars). Nobody types a
+          name, age, birthday, photo or place for a child, and we ask for none. The parent also
+          chooses seven switches (public boards, challenge a friend, beat the clock, slider
+          questions, trivia and grown-up sets, sound and an easy-read font). Handing a device to a
+          child ends the parent’s sign-in on it, so the parent needs a new email code to come back.
         </p>
       </InfoSection>
 
@@ -197,6 +208,11 @@ export function PrivacyPage(): JSX.Element {
         <p>
           A grown-up’s Clerk sign-in is separate: delete it from the account menu on the Parents and
           staff page.
+        </p>
+        <p>
+          A parent can remove a child at any time on the For grown-ups page, which erases that
+          child’s games straight away. If a parent deletes their own account, every child they set
+          up is erased with it. A child’s device cannot delete the child.
         </p>
       </InfoSection>
 
