@@ -32,6 +32,9 @@ const config: Config = {
           muted: token('content-muted'),
         },
         correct: { DEFAULT: token('correct'), fg: '#FFFFFF' },
+        'correct-soft': token('correct-soft'), // decorative: the countdown bar
+        'stage-paper': token('stage-paper'), // the play stage's cards: always light
+        'stage-ink': token('stage-ink'), // the play stage's text: always dark
         wrong: { DEFAULT: token('wrong'), fg: '#FFFFFF' },
         warning: { DEFAULT: token('warning'), fg: '#1B2A3A' },
         avatar: {
@@ -50,8 +53,21 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['"Outfit Variable"', 'Outfit', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
-        display: ['"Baloo 2 Variable"', '"Baloo 2"', '"Outfit Variable"', 'system-ui', 'sans-serif'],
+        sans: [
+          '"Outfit Variable"',
+          'Outfit',
+          'system-ui',
+          '-apple-system',
+          '"Segoe UI"',
+          'sans-serif',
+        ],
+        display: [
+          '"Baloo 2 Variable"',
+          '"Baloo 2"',
+          '"Outfit Variable"',
+          'system-ui',
+          'sans-serif',
+        ],
         mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
