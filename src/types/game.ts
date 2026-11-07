@@ -5,7 +5,7 @@
  */
 import type { AttemptMode, AttemptStatus } from '@/types/domain';
 
-export type QuestionType = 'choice' | 'boolean' | 'slider';
+export type QuestionType = 'choice' | 'boolean' | 'slider' | 'build';
 
 export interface PublicOption {
   id: string;
@@ -19,6 +19,24 @@ export interface PublicSlider {
   unit: string | null;
 }
 
+/** A tile for a build question. The id is a per-attempt handle, never a stored id. */
+export interface PublicTile {
+  id: string;
+  label: string;
+}
+
+/**
+ * A build question (spell, gap, order): tap tiles into slots. Tiles arrive in handle order, never in
+ * authoring order, and the accepted sequences stay on the server. `speak` is sent for dictation only.
+ */
+export interface PublicBuild {
+  variant: 'spell' | 'gap' | 'order';
+  slots: number;
+  tiles: PublicTile[];
+  template?: string;
+  speak?: string;
+}
+
 /** A question as the player sees it — no answer fields. */
 export interface PublicQuestion {
   id: string;
@@ -27,6 +45,7 @@ export interface PublicQuestion {
   image_url: string | null;
   options: PublicOption[];
   slider: PublicSlider | null;
+  build?: PublicBuild;
   /** Cosmetic world the question is shown in (one of src/lib/art.ts WORLD_KEYS), if set. */
   scene?: string | null;
 }
@@ -55,6 +74,8 @@ export interface AnswerResult {
   is_correct: boolean;
   timed_out: boolean;
   correct_option_ids: string[];
+  /** The right tile labels, for a build question; only ever sent after answering. */
+  correct_tiles: string[] | null;
   correct_value: number | null;
   accept_min: number | null;
   accept_max: number | null;
@@ -157,6 +178,7 @@ export type GameErrorCode =
   | 'question_not_shown'
   | 'invalid_option'
   | 'invalid_value'
+  | 'invalid_tiles'
   | 'not_all_answered'
   | 'attempt_not_finished'
   | 'daily_not_shareable'

@@ -2,6 +2,20 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-07 · P2 slice 2.1: the build question (grading, answer hiding, child safety)
+
+Reviewer: Claude Code, focused review of `Game::state`, `Game::answer`, `Game::tappedLabels`, `Game::start`, `dealDaily`, `Content::validateBuild` and the new screens (security-audit skill, guidance mode, local tests only).
+
+- **Answer hiding.** The payload holds the variant, the number of spaces, the tiles as per-attempt keyed handles (HMAC of attempt and tile id, never the stored id) and, only for a gap, its sentence. The accepted sequences are never sent (tested: no `answers`, no flag, no stored tile id in the payload). Tiles are always in handle order, never authoring order, so the order of a file cannot spell the answer. The right tiles come back only in the reply to `/answer`. PASS.
+- **Grading is server-side and strict.** The input must be a list of exactly as many strings as there are spaces, each a handle this attempt issued, none repeated; anything else (unknown handle, a stored tile id, another attempt's handle, repeats, too few or too many, numbers, nested lists, an object, a string, null, an option id) is a `400 invalid_tiles` and is never counted (12 forged shapes tested). Extra fields such as a score are ignored. Mutation checks: allowing repeated handles, and allowing dictation in ranked rounds, each made the tests fail. PASS.
+- **Timer.** A timed build question that runs out scores nothing and needs no input (tested). PASS.
+- **Dictation (the one disclosed exception).** The spoken word is in the payload of a dictation question by necessity (the device has to say it), so someone with browser tools can read it. It is therefore practice only: excluded from ranked rounds and the daily (tested), and a ranked quiz must keep 3 non-dictation questions (validated). It touches no board. ACCEPTED.
+- **Letters are visible by design.** A spelling question shows its letters (plus decoys), so it is easier than free typing; this is the task, not a leak. ACCEPTED.
+- **Child safety.** Everything is a tap: no text box on any new screen (browser-tested), answers are stored as tile labels from content, never text typed by a child, and the rows go with the attempt. Read aloud uses the device's own voice and sends nothing anywhere; it speaks only when tapped. PASS.
+- **Input handling.** Content labels are plain text, 1 to 24 characters, no control characters, at most 20 tiles and 12 spaces; all SQL is prepared; labels are rendered as text, never HTML. PASS.
+- **Known gap (not a security issue):** a dictation question is unplayable on a device with no English voice. Dictation will be offered as its own quiz sets (P3), so a child can choose not to play one.
+- NOT TESTED: migration 0018 and the new code on the live database (needs your approval and the two-step release); a real device voice (headless browsers have none).
+
 ## 2026-11-07 · P1 clean-up: typed-field gate, timer default, labels (security, child safety)
 
 Reviewer: Claude Code, focused review of the P1 diff on `phase/p1-cleanup` (security-audit skill, guidance mode, source and local tests only; nothing run against the live site).

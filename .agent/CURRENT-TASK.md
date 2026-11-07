@@ -1,5 +1,11 @@
 # Current task
 
+## P2 slice 2.1: build questions and number tiles (branch `phase/p2-tap-types`, 7 Nov 2026, committed in parts, NOT pushed, NOT deployed)
+- Plan: `.planning/phases/P2-tap-types/P2-PLAN.md`. Built: the `build` question end to end (content format, server grading, forged-input refusals, dictation practice-only, Studio keeps them), tile screen, number keypad, read aloud. Audit: `docs/AUDIT.md` (7 Nov, P2).
+- **Needs migration 0018** (additive) applied on the server BEFORE the code is released: release the `.sql` alone, back up, run `bin/migrate.php`, then the code (see `docs/07-operations/DEPLOYMENT.md`). Needs your "approved".
+- Left for slice 2.2: `assign` (match, sort), Studio editing forms and import syntax for build and assign.
+- P1 is live (deployed 7 Nov, `fc7b41e`). Untimed default kept as built.
+
 ## P1 clean-up and foundations (branch `phase/p1-cleanup`, 7 Nov 2026, committed, NOT pushed, NOT deployed)
 - Plan: `.planning/phases/P1-cleanup/P1-PLAN.md`. Built: server refuses adult age bands for guests, no age question or typed fields for guests, untimed by default, finished daily goes to /daily, play stage on tokens and sentence case, area and level labels. Details in `CHANGELOG.md`; audit in `docs/AUDIT.md` (7 Nov, P1).
 - Owner decision needed: keep the untimed default for daily and ranked rounds (easier to look answers up, so the crown is easier to cheat), or cap them at a generous limit? See the audit.

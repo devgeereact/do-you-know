@@ -88,4 +88,24 @@ Database::execute(
     "INSERT INTO daily_challenges (id,challenge_date,quiz_id,quiz_version_id,status) VALUES (?,?,?,?,'live')",
     [Database::uuid(), $today, $quiz, $version],
 );
-echo "seeded e2e-quick-quiz and the daily challenge for $today\n";
+// A second quiz of build questions (spell, gap, order). It is for 18 and over only so the daily, which deals
+// from every live quiz for children, never picks it up; the build journey plays it by its own address.
+$meta = ['explanation' => 'Because it is.', 'source_url' => null, 'review_by' => '2027-10-17'];
+$buildFile = ['slug' => 'e2e-build-quiz', 'questions' => [
+    ['type' => 'build', 'prompt' => 'Spell the pet that purrs.', 'build' => ['variant' => 'spell', 'tiles' => ['c', 'a', 't', 'x'], 'answers' => [['c', 'a', 't']]]] + $meta,
+    ['type' => 'build', 'prompt' => 'Finish the sentence.', 'build' => ['variant' => 'gap', 'template' => 'The cat ___ on the ___.', 'tiles' => ['sat', 'mat', 'dog'], 'answers' => [['sat', 'mat']]]] + $meta,
+    ['type' => 'build', 'prompt' => 'Put the day in order.', 'build' => ['variant' => 'order', 'tiles' => ['morning', 'noon', 'night'], 'answers' => [['morning', 'noon', 'night']]]] + $meta,
+]];
+$buildQuiz = Database::uuid();
+$buildVersion = Database::uuid();
+Database::execute(
+    $db,
+    "INSERT INTO quizzes (id,slug,title,intro,category_id,status,current_version_id,question_count,difficulty,age_min,is_ranked) VALUES (?,?,?,?,?,'published',?,3,'easy',18,0)",
+    [$buildQuiz, 'e2e-build-quiz', 'E2E Build Quiz', 'Tap tiles to spell, fill gaps and put cards in order.', $category, $buildVersion],
+);
+Database::execute(
+    $db,
+    'INSERT INTO quiz_versions (id,quiz_id,version,snapshot,question_count) VALUES (?,?,1,?,3)',
+    [$buildVersion, $buildQuiz, json_encode(Dyk\Content::snapshot($buildFile))],
+);
+echo "seeded e2e-quick-quiz, e2e-build-quiz and the daily challenge for $today\n";

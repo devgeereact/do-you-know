@@ -170,4 +170,4 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 | Milestone | Phases | Status |
 |-----------|--------|--------|
 | v1.0 Baseline | n/a (pre-GSD history in `.agent/HANDOFF.md`) | Live |
-| v2.0 Learning app | P1 to P6 | P1 built on `phase/p1-cleanup` (not deployed); P2 to P6 not started |
+| v2.0 Learning app | P1 to P6 | P1 live (7 Nov); P2 slice 2.1 built on `phase/p2-tap-types` (not deployed); rest not started |

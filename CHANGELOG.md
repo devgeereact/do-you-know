@@ -1,5 +1,13 @@
 # Changelog
 
+## 7 November 2026 (branch `phase/p2-tap-types`, not deployed) — P2 slice 2.1: build questions and number tiles
+- **New question type `build`** (spell, fill the gap, put cards in order): the child taps tiles into spaces. The content format, validator and snapshot accept it (up to 20 tiles, up to 4 accepted answers, one `___` per gap, dictation by `speak`). The server sends the spaces and tiles as keyed per-attempt handles, always in handle order and never with an accepted sequence, grades the tapped handles on the server, refuses every malformed answer (`400 invalid_tiles`) and reveals the right tiles only after answering. The answer is stored as labels in `attempt_answers.chosen_json` (**migration 0018**, additive, not yet applied on the server).
+- **Dictation is practice only**: a spell question with `speak` is never dealt in a ranked round or the daily, and a ranked quiz must keep at least 3 questions that are not dictation.
+- **Number tiles**: number questions (the old slider) are answered on a tile keypad, no keyboard and no dragging; same `value`, same server check. The slider component stays for the parent switch (P4).
+- **Read aloud**: a Listen button reads the question (or the dictation word) with the device's own British voice; hidden when the device has no English voice.
+- The Studio opens and saves quizzes holding build questions without losing them (editing forms come in slice 2.2). Tile and key targets are at least 56 px.
+- Docs: API and data model notes brought up to date (including the earlier daily ledger).
+
 ## 7 November 2026 (branch `phase/p1-cleanup`, not deployed) — P1 clean-up and foundations
 - A guest can no longer gain typed fields: the server accepts the 13-17 and 18+ age bands only for a profile linked to a Clerk sign-in (`403 adult_sign_in_required`). Guests are not asked their age or shown a nickname box, and the Contact page loses the "I'm 18 or over" tick (grown-ups get the contact email until the parent area). Profiles that already hold an adult band keep working.
 - Children are not timed by default: `POST /attempts` uses the quiz timer only when the request says `timed: true`; the quiz page says "No timer".

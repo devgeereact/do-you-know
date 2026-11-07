@@ -45,12 +45,16 @@ export function nextQuestion(attemptId: string): Promise<AttemptState> {
   return api<AttemptState>(attempt(attemptId, 'next'), { body: {} });
 }
 
-/** Grades one answer. Pass an option for choice/boolean, a value for slider. */
+/** Grades one answer: an option for choice/boolean, a value for a number, tile handles for a build. */
 export function answerQuestion(
   attemptId: string,
-  answer: { optionId?: string | null; value?: number | null },
+  answer: { optionId?: string | null; value?: number | null; tiles?: string[] | null },
 ): Promise<AnswerResult> {
-  const body = answer.optionId ? { option_id: answer.optionId } : { value: answer.value };
+  const body = answer.optionId
+    ? { option_id: answer.optionId }
+    : answer.tiles
+      ? { tiles: answer.tiles }
+      : { value: answer.value };
   return api<AnswerResult>(attempt(attemptId, 'answer'), { body });
 }
 

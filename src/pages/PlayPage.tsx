@@ -9,7 +9,11 @@ import { buttonClasses } from '@/components/ui/buttonClasses';
 import { AnswerButton, type AnswerButtonState } from '@/components/game/AnswerButton';
 import { FeedbackPanel } from '@/components/game/FeedbackPanel';
 import { ResultsView } from '@/components/game/ResultsView';
+import { NumberTiles } from '@/components/game/NumberTiles';
+import { ReadAloud } from '@/components/game/ReadAloud';
 import { SliderAnswer } from '@/components/game/SliderAnswer';
+import { TileBuild } from '@/components/game/TileBuild';
+import { childPath } from '@/lib/childPath';
 import { useGuestSession } from '@/hooks/useGuestSession';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { useQuestionTimer } from '@/hooks/useQuestionTimer';
@@ -414,6 +418,16 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                     {question.prompt}
                   </h1>
                 )}
+                {phase === 'question' && (
+                  <div className="mb-4 flex justify-center">
+                    <ReadAloud
+                      text={question.build?.speak ?? question.prompt}
+                      label={question.build?.speak ? t.play.readAloud.buttonWord : undefined}
+                    >
+                      {question.build?.speak ? t.play.readAloud.buttonWord : undefined}
+                    </ReadAloud>
+                  </div>
+                )}
                 {isWebUrl(question.image_url) && phase === 'question' && (
                   <img
                     src={question.image_url}
@@ -423,16 +437,38 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                 )}
 
                 <section aria-label={t.play.answersLabel} className="flex w-full justify-center">
-                  {question.type === 'slider' && question.slider ? (
-                    <div data-q-answer data-q-slider className="flex w-full justify-center">
-                      <SliderAnswer
-                        slider={question.slider}
+                  {question.type === 'build' && question.build ? (
+                    <div data-q-answer className="flex w-full justify-center">
+                      <TileBuild
+                        build={question.build}
                         prompt={question.prompt}
                         questionKey={question.id}
                         result={lastResult}
                         disabled={submitting || phase !== 'question' || !online}
-                        onSubmit={(value) => void game.answerValue(value)}
+                        onSubmit={(handles) => void game.answerTiles(handles)}
                       />
+                    </div>
+                  ) : question.type === 'slider' && question.slider ? (
+                    <div data-q-answer data-q-slider className="flex w-full justify-center">
+                      {childPath.numberTiles ? (
+                        <NumberTiles
+                          slider={question.slider}
+                          prompt={question.prompt}
+                          questionKey={question.id}
+                          result={lastResult}
+                          disabled={submitting || phase !== 'question' || !online}
+                          onSubmit={(value) => void game.answerValue(value)}
+                        />
+                      ) : (
+                        <SliderAnswer
+                          slider={question.slider}
+                          prompt={question.prompt}
+                          questionKey={question.id}
+                          result={lastResult}
+                          disabled={submitting || phase !== 'question' || !online}
+                          onSubmit={(value) => void game.answerValue(value)}
+                        />
+                      )}
                     </div>
                   ) : (
                     <ul

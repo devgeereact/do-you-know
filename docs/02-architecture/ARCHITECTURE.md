@@ -147,7 +147,7 @@ to `index.html`; Workbox's `navigateFallback` does the same offline.
 ```text
 Player taps an option
   → useQuizAttempt.answerOption(optionId)
-    → gameService → api('/attempts/{id}/answer', { option_id })   (or { value } for a slider)
+    → gameService → api('/attempts/{id}/answer', { option_id })   (or { value } for a number, { tiles } for a build question)
       [PHP Game.php, inside a transaction]
       · lock the profile, then the attempt; check owner and status
       · read the answer key from the frozen quiz_versions snapshot

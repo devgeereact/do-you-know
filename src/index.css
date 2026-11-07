@@ -299,6 +299,87 @@
     background: rgb(var(--wrong));
     color: rgb(var(--stage-paper));
   }
+  /* Tap-to-build questions (spell, gap, order) and number tiles. Every target is at least 3.5rem (56px). */
+  .stage-tile,
+  .stage-key {
+    display: inline-flex;
+    min-width: 3.5rem;
+    min-height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--fd);
+    border-radius: 1rem;
+    background: rgb(var(--stage-paper));
+    padding: 0.25rem 0.9rem;
+    font-family: theme('fontFamily.display');
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--fd);
+    box-shadow: 0 4px 0 var(--fd);
+    transition:
+      transform 120ms ease-out,
+      box-shadow 120ms ease-out,
+      opacity 200ms;
+    touch-action: manipulation;
+  }
+  .stage-tile:active:not(:disabled),
+  .stage-key:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--fd);
+  }
+  .stage-tile:focus-visible,
+  .stage-key:focus-visible,
+  .stage-slot:focus-visible {
+    outline: 3px solid rgb(var(--stage-ink));
+    outline-offset: 3px;
+  }
+  .stage-tile:disabled {
+    cursor: default;
+    opacity: 0.3;
+    box-shadow: none;
+  }
+  .stage-key:disabled {
+    cursor: default;
+    opacity: 0.45;
+  }
+  .stage-slot {
+    display: inline-flex;
+    min-width: 3.5rem;
+    min-height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 3px dashed var(--fd);
+    border-radius: 1rem;
+    background: rgb(var(--stage-paper) / 0.55);
+    padding: 0.25rem 0.75rem;
+    font-family: theme('fontFamily.display');
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    color: rgb(var(--stage-ink));
+    touch-action: manipulation;
+  }
+  .stage-slot[data-filled='true'] {
+    border-style: solid;
+    background: rgb(var(--stage-paper));
+  }
+  .stage-slot[data-state='right'] {
+    border-style: solid;
+    border-color: rgb(var(--right-edge));
+    background: rgb(var(--right-fill));
+    color: rgb(var(--right-ink));
+  }
+  .stage-slot[data-state='wrong'] {
+    border-style: solid;
+    border-color: rgb(var(--wrong-edge));
+    background: rgb(var(--wrong-fill));
+    color: rgb(var(--wrong-ink));
+  }
+  .stage-slot:disabled {
+    cursor: default;
+  }
   @media (max-width: 759px) {
     .stage-frame {
       border-radius: 1.9rem;

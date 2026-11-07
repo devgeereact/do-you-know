@@ -25,7 +25,7 @@ export const QUIZ = {
 
 /** Fields that only an answered or finished question may carry. */
 const ANSWER_FIELDS =
-  /is_correct|correct_option_ids|correct_value|correct_answer|accept_min|accept_max|explanation|snapshot/;
+  /is_correct|correct_option_ids|correct_tiles|correct_value|correct_answer|accept_min|accept_max|explanation|snapshot/;
 
 interface ApiRecord {
   method: string;
@@ -71,15 +71,36 @@ export class ApiWatcher {
       );
     }
     // The question shown to the player is exactly id, type, prompt, image, options, slider and
-    // its cosmetic scene (the world it is drawn in, which says nothing about the answer).
+    // its cosmetic scene (the world it is drawn in, which says nothing about the answer), plus
+    // `build` (slots and tiles, never an accepted sequence) for a build question.
     for (const record of checked.filter((r) => /\/attempts(\/[^/]+\/next)?$/.test(r.path))) {
       const parsed = JSON.parse(record.body) as {
-        question: { options: object[]; slider: object | null } | null;
+        question: {
+          options: object[];
+          slider: object | null;
+          build?: Record<string, unknown>;
+        } | null;
       };
       if (!parsed.question) continue;
       expect(Object.keys(parsed.question).sort()).toEqual(
-        ['id', 'image_url', 'options', 'prompt', 'scene', 'slider', 'type'].sort(),
+        [
+          'id',
+          'image_url',
+          'options',
+          'prompt',
+          'scene',
+          'slider',
+          'type',
+          ...(parsed.question.build ? ['build'] : []),
+        ].sort(),
       );
+      if (parsed.question.build) {
+        const allowed = ['variant', 'slots', 'tiles', 'template', 'speak'];
+        expect(Object.keys(parsed.question.build).every((k) => allowed.includes(k))).toBe(true);
+        for (const tile of parsed.question.build.tiles as object[]) {
+          expect(Object.keys(tile).sort()).toEqual(['id', 'label']);
+        }
+      }
       for (const option of parsed.question.options) {
         expect(Object.keys(option).sort()).toEqual(['id', 'label']);
       }
@@ -108,7 +129,9 @@ export class ApiWatcher {
     }
     for (const answer of this.records.filter((r) => r.path.endsWith('/answer'))) {
       const keys = Object.keys(JSON.parse(answer.requestBody ?? '{}') as object);
-      expect(keys.every((key) => key === 'option_id' || key === 'value')).toBe(true);
+      expect(keys.every((key) => key === 'option_id' || key === 'value' || key === 'tiles')).toBe(
+        true,
+      );
     }
   }
 
@@ -212,8 +235,14 @@ export async function answerCurrentQuestion(page: Page, correct: boolean): Promi
   )[prompt];
   if (!spec) throw new Error(`Unexpected question: ${prompt}`);
   if (spec.kind === 'slider') {
-    await page.getByRole('slider').fill(String(correct ? spec.right : spec.wrong));
-    await page.getByRole('button', { name: 'Lock it in' }).click();
+    // Number questions are answered on a tile keypad: taps only, no slider and no keyboard.
+    for (const digit of String(correct ? spec.right : spec.wrong)) {
+      await page
+        .getByRole('group', { name: 'Your number' })
+        .getByRole('button', { name: digit, exact: true })
+        .click();
+    }
+    await page.getByRole('button', { name: 'Check', exact: true }).click();
   } else {
     await page
       .getByRole('region', { name: 'Answers' })

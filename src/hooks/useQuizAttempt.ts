@@ -22,7 +22,8 @@ interface UseQuizAttempt {
   error: string | null; // friendly copy
   errorCode: string | null; // the API's short code for a rule error, e.g. daily_already_played
   answerOption: (optionId: string) => Promise<void>;
-  answerValue: (value: number) => Promise<void>; // slider
+  answerValue: (value: number) => Promise<void>; // slider or number tiles
+  answerTiles: (handles: string[]) => Promise<void>; // build: tile handles in slot order
   timeUp: () => Promise<void>; // the display timer hit zero
   next: () => Promise<void>; // next_question, or finish_attempt after the last
   restart: () => Promise<void>; // new attempt, same quiz/mode
@@ -125,7 +126,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
   }, [start]);
 
   const submit = useCallback(
-    async (answer: { optionId?: string; value?: number }): Promise<void> => {
+    async (answer: { optionId?: string; value?: number; tiles?: string[] }): Promise<void> => {
       if (!state || phase !== 'question' || busyRef.current) return;
       const run = runRef.current;
       busyRef.current = true;
@@ -162,6 +163,11 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
 
   const answerValue = useCallback((value: number): Promise<void> => submit({ value }), [submit]);
 
+  const answerTiles = useCallback(
+    (tiles: string[]): Promise<void> => submit({ tiles }),
+    [submit],
+  );
+
   const timeUp = useCallback(async (): Promise<void> => {
     if (!state || phase !== 'question') return;
     const run = runRef.current;
@@ -180,8 +186,8 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
         return;
       } catch (err) {
         const code = errorCode(err);
-        // invalid_option / invalid_value: not timed out on the server yet, so wait.
-        if (code !== 'invalid_option' && code !== 'invalid_value') {
+        // invalid_option / invalid_value / invalid_tiles: not timed out on the server yet, so wait.
+        if (code !== 'invalid_option' && code !== 'invalid_value' && code !== 'invalid_tiles') {
           if (run === runRef.current && code !== 'attempt_closed') fail(err, 'time-up', true);
           return;
         }
@@ -224,6 +230,7 @@ export function useQuizAttempt(args: StartAttemptArgs): UseQuizAttempt {
     errorCode: failedWith,
     answerOption,
     answerValue,
+    answerTiles,
     timeUp,
     next,
     restart: start,
