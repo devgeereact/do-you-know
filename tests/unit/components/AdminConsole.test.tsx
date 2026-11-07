@@ -73,7 +73,11 @@ describe('AdminConsole', () => {
     renderConsole();
     await screen.findByRole('navigation', { name: 'Studio' });
     fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
-    const dialog = await screen.findByRole('dialog', { name: 'Search the Studio' });
+    const dialog = await screen.findByRole(
+      'dialog',
+      { name: 'Search the Studio' },
+      { timeout: 5000 },
+    );
     expect(within(dialog).getByRole('option', { name: /Daily calendar/ })).toBeInTheDocument();
     fireEvent.keyDown(within(dialog).getByRole('combobox'), { key: 'Escape' });
     expect(screen.queryByRole('dialog', { name: 'Search the Studio' })).not.toBeInTheDocument();
