@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Learning app
-status: executing
-stopped_at: GSD baseline written to `.planning/` (uncommitted)
-last_updated: "2026-11-08T02:22:15.064Z"
+status: ready_to_plan
+stopped_at: Phase 1 complete (1/1), 4 phone checks pending in 01-HUMAN-UAT.md. P2-P6 were built before GSD tracked them (see .agent/CURRENT-TASK.md); nothing to plan next in GSD
+last_updated: 2026-11-08T21:24:54.295Z
 last_activity: 2026-11-08 -- Phase 1 execution started
 progress:
   total_phases: 6
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-07)
 
 **Core value:** Children can play fair, trustworthy quizzes safely (server-graded, no personal data from children).
-**Current focus:** Phase 1 — Clean-up and foundations
+**Current focus:** owner's phone checks (01-HUMAN-UAT.md), then release of phase/p1-housekeeping. P2-P6 already built; GSD roadmap not yet reconciled with them.
 
 ## Current Position
 
-Phase: 1 (Clean-up and foundations) — EXECUTING
-Plan: 1 of 1
-Status: Executing Phase 1
-Last activity: 2026-11-08 -- Phase 1 execution started
+Phase: 2
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-11-08
 
 Progress: n/a
 

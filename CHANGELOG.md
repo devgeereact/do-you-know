@@ -1,5 +1,9 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Owner calls recorded, Phase 1 closed in GSD
+- ADR-023 (`docs/08-change-management/DECISIONS.md`) records a default for each open owner call: time cap, daily by level, 18+ gate, baptism and Last Supper questions, odd age bands, landing direction, Dependabot, the 61 drafts, `mail_from`. Docs only; nothing built, imported or published.
+- GSD Phase 1 marked complete; the four phone checks stay pending in `01-HUMAN-UAT.md`.
+
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Phase 1 review fixes
 - **Found by the Phase 1 code review** (`.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`): the shared `/me` request could be handed to a different player after a hand-over or sign-out. It now carries a session counter and is never reused across one.
 - **Yesterday and the seven-day strip** were wrong for the first hour after the clocks go forward and could repeat a date on clock-change days (they subtracted 24-hour blocks). They now count calendar days (`londonDaysAgo`).

@@ -1,5 +1,11 @@
 # Current task
 
+## Owner calls and Phase 1 wrap-up (8 Nov 2026, branch `phase/p1-housekeeping`, committed, NOT pushed)
+- Owner said "go with your best recommendation": defaults recorded as ADR-023 (`docs/08-change-management/DECISIONS.md`). GSD Phase 1 marked complete (`phase.complete`); STATE.md corrected (P2-P6 were built before GSD tracked them).
+- **Not done, on purpose:** push and release (needs "approved: push and release"), closing/merging Dependabot PRs, dead-code delete, Studio imports and age-band edits, `mail_from`.
+- **Owner:** the four phone checks in `.planning/phases/01-clean-up-and-foundations/01-HUMAN-UAT.md`; then say "approved: push and release".
+- Checks: docs only; `pnpm check` NOT re-run for this commit (no code change).
+
 ## Goal run: phase 1 (branch `phase/p1-housekeeping`, 8 Nov 2026, committed, NOT pushed)
 - Phase 1 (P1 clean-up) was already LIVE (fc7b41e). The GSD tooling cannot see this project's `P1-cleanup` folder naming, so I checked P1's done criteria directly and closed the one deferred housekeeping item that was still real: the duplicated `londonToday` helper (test first, `src/lib/london.ts`, commit f269425). The branch also carries 228823a (smoke-test leftovers) from `phase/p7-home`.
 - Also done (test first): one shared `/me` request (`getProfile` shares an in-flight call, forgets it on any profile change; session context uses it). Tests in `tests/unit/services/profileService.test.ts`.
