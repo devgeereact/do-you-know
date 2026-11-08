@@ -1,5 +1,8 @@
 # Changelog
 
+## 8 November 2026 (branch `design/content-pipeline`, docs only) — Content pipeline design proposed
+- `docs/CONTENT-PIPELINE-DESIGN.md`: the seams in idea-to-live, and six slices to make it one door in, one door out, and proactive. Nothing built.
+
 ## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Dead code removed
 - Removed the unused ImageKit helper and ImageKit and PostHog settings, the ImageKit service-worker cache rule and one CI variable. No visible change. Privacy sentence, `.htaccess` and `.env.example` left for you (`docs/AUDIT.md`, 8 Nov).
 

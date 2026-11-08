@@ -1,5 +1,9 @@
 # Current task
 
+## Content pipeline design (8 Nov 2026, branch `design/content-pipeline`, committed, NOT pushed)
+- Owner asked to brainstorm a seamless, proactive flow from questions to live. Proposal: `docs/CONTENT-PIPELINE-DESIGN.md` (six slices, four owner decisions). Nothing built.
+- Next: the owner's answers to the four decisions, then a plan for S1 and S2.
+
 ## Owner calls built (8 Nov 2026, branch `phase/p8-owner-calls`, committed, NOT pushed, NOT released)
 - Owner said "go ahead". Built: 30 s cap on ranked and daily for declared teens and adults (af0f3cc, test first, `backend/tests/competition.php`); dead ImageKit and PostHog code removed; vulnerability triage in `docs/AUDIT.md`.
 - Not built: age-gate publish warning (the Studio's problems list blocks publishing; all 262 live quizzes have `age_min`). Not touched: privacy sentence about ImageKit, `.htaccess` CSP host, `.env.example`.
