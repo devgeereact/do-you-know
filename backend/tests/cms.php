@@ -79,6 +79,8 @@ $r = admin('GET', '/quizzes/'.$id);
 $fields = array_column($r['body']['problems'], 'field');
 check('a new draft lists its problems', $r['status'] === 200 && in_array('intro', $fields, true) && in_array('questions', $fields, true) && $r['body']['quiz']['ks'] === 'KS2');
 check('a new draft is invisible to players', request('GET', '/quizzes/'.$slug)['status'] === 404);
+$row = array_values(array_filter(admin('GET', '/quizzes')['body']['items'], fn($i) => $i['id'] === $id))[0] ?? null;
+check('the Studio list carries the child-facing level and the difficulty', $row !== null && array_key_exists('level', $row) && array_key_exists('difficulty', $row));
 check('unknown quiz ids are 404', admin('GET', '/quizzes/'.Database::uuid())['status'] === 404);
 $prompts = ["Cms fixture $word one?", "Cms fixture $word two?", "Cms fixture $word three?"];
 $r = admin('POST', '/quizzes/'.$id, ['meta' => ['intro' => 'An original fixture quiz.'], 'questions' => array_map($question, $prompts)]);

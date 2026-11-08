@@ -40,6 +40,16 @@ function matches(q: QuizListItem, status: StatusFilter): boolean {
   return q.status === status;
 }
 
+const LEVEL_NAME = {
+  starters: 'Starters',
+  explorers: 'Explorers',
+  adventurers: 'Adventurers',
+  challengers: 'Challengers',
+  scholars: 'Scholars',
+  adult: 'Adults',
+} as const;
+const DIFFICULTY_NAME: Record<string, string> = { easy: 'Easy', medium: 'Medium', hard: 'Tricky' };
+
 /** Every quiz with filters; rows open the editor. */
 export function LibraryScreen(): JSX.Element {
   const { client, subjects } = useStudio();
@@ -153,6 +163,7 @@ export function LibraryScreen(): JSX.Element {
             { label: 'Quiz' },
             { label: 'Subject' },
             { label: 'Level' },
+            { label: 'Difficulty' },
             { label: 'Status' },
             { label: 'Version', num: true },
             { label: 'Questions', num: true },
@@ -179,7 +190,20 @@ export function LibraryScreen(): JSX.Element {
                 </Link>
               </Td>
               <Td label="Subject">{q.category?.name ?? '–'}</Td>
-              <Td label="Level">{q.ks ?? <span className="text-content-muted">All</span>}</Td>
+              <Td label="Level">
+                {q.level ? (
+                  LEVEL_NAME[q.level]
+                ) : (
+                  <span className="text-content-muted">All ages</span>
+                )}
+              </Td>
+              <Td label="Difficulty">
+                {q.difficulty ? (
+                  DIFFICULTY_NAME[q.difficulty]
+                ) : (
+                  <span className="text-content-muted">–</span>
+                )}
+              </Td>
               <Td label="Status">
                 <span className="inline-flex flex-wrap justify-end gap-1 min-[720px]:justify-start">
                   {quizState(q).map((p) => (

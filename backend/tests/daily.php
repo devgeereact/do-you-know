@@ -65,6 +65,14 @@ $schedule('2099-01-05',$quizzes['a']);
 $r=$daily->activate('2099-01-06');
 check('missed scheduled day is closed, never made live later',$row('2099-01-05')['status']==='done'&&$row('2099-01-04')['status']==='done'&&$r['closed']===2);
 
+// An 18+ set is never the automatic anchor of a children's challenge, even when it is the least recently used.
+Database::execute($db,'UPDATE quizzes SET age_min=18 WHERE id=?',[$quizzes['b']['id']]);
+$pickedBefore=$db->query("SELECT COUNT(*) FROM daily_challenges WHERE quiz_id='".$quizzes['b']['id']."' AND challenge_date>='2099-03-01'")->fetchColumn();
+for($i=1;$i<=4;$i++){$daily->activate(sprintf('2099-03-%02d',$i));}
+check('an 18+ quiz is never picked as the daily anchor',(int)$db->query("SELECT COUNT(*) FROM daily_challenges WHERE quiz_id='".$quizzes['b']['id']."' AND challenge_date BETWEEN '2099-03-01' AND '2099-03-04'")->fetchColumn()===(int)$pickedBefore);
+Database::execute($db,'UPDATE quizzes SET age_min=NULL WHERE id=?',[$quizzes['b']['id']]);
+Database::execute($db,"DELETE FROM daily_challenges WHERE challenge_date BETWEEN '2099-03-01' AND '2099-03-04'");
+
 Database::execute($db,"UPDATE daily_challenges SET status='done' WHERE challenge_date='2099-01-06'");
 $r=$daily->activate('2099-01-06');
 check('owner-closed day stays closed',$r['action']==='closed_today'&&$row('2099-01-06')['status']==='done');

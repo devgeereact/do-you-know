@@ -146,7 +146,7 @@ final class AdminOps
         if ($last >= $today) {
             $used = array_column($this->db->query('SELECT quiz_id,MAX(challenge_date) AS d FROM daily_challenges GROUP BY quiz_id')->fetchAll(), 'd', 'quiz_id');
             $pool = $this->db->query('SELECT q.id,q.slug,q.title,q.publish_at FROM quizzes q JOIN quiz_versions v ON v.id=q.current_version_id AND v.quiz_id=q.id
-                WHERE q.status=\'published\'')->fetchAll();
+                WHERE q.status=\'published\' AND (q.age_min IS NULL OR q.age_min<18)')->fetchAll();
             for ($day = new \DateTimeImmutable($today); $day->format('Y-m-d') <= $last; $day = $day->modify('+1 day')) {
                 $date = $day->format('Y-m-d');
                 if (isset($rows[$date])) { continue; }

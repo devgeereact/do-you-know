@@ -20,6 +20,8 @@ Scope: https://doyouknow.space on a desktop window, read-only for the parent are
 9. **The Studio daily calendar** lists anchor quizzes such as "Geography (adults)" although the daily now deals mixed hands and never includes 18+ questions; it reads as if adults' questions will be asked.
 10. **The `/grown-ups` page shows plain "Loading…" for about two seconds**, and with no children yet it is mostly empty. A friendlier first-run (what a child gets, what the switches do) would help.
 
+**Status (8 Nov, branch `phase/p7-home`, not released):** items 1, 2, 3, 4, 5, 6, 8 and 9 are fixed on the branch with tests (counts and paging, adult sets, update timing, guest screen, area browsing, scene by quiz title, Studio level and difficulty, daily anchor). Still open: 7 (feedback screen: tiny "+1" text, friend hidden behind the answer panel) and 10 (`/grown-ups` first-run).
+
 **How to make it better.**
 - One honest source for counts (a `quiz_count` on each category and a total on `GET /categories`), and paging on the quiz list instead of a hard cap.
 - Make the four areas (Words, Numbers, Science, Our world) the front door for everyone, with the daily as the one big card and the sample question as a live, playable card.

@@ -3,7 +3,8 @@
 ## Home page polish (branch `phase/p7-home`, 8 Nov 2026, committed locally, NOT pushed, NOT deployed)
 - Triggered by the owner's smoke-test request (findings in `docs/AUDIT.md`, 8 Nov) and "landing page needs a polish that will make it super attractive". Built so far: honest counts, areas for everyone, adult sets out of the front door, guest "Ask a grown-up" screen (details in `CHANGELOG.md`). No migration.
 - Checks: `pnpm check` and `bash scripts/test-backend.sh`, browser suite on the throwaway database: see the last commit. NOT TESTED: the live site with the new build (needs the release), a real child session on a phone.
-- Next: owner's "approved" to release; then the visual polish pass (hero, motion, cards) once the owner picks a direction; then fix the other smoke-test items (Studio level labels, daily calendar anchors, PWA update on next page change).
+- Also done: update-on-calm-page, scene by quiz title, Studio level and difficulty columns, no 18+ daily anchor. Still open: feedback screen tidy (+1 text, friend hidden), `/grown-ups` first-run, the visual polish (needs a direction from the owner).
+- Next: owner's "approved" to release (code only, no migration).
 
 ## P6: science and humanities content (branch `phase/p6-spread`, 7 Nov 2026, committed, NOT pushed, nothing imported)
 - P5 is LIVE (04a686d, migration 0020 applied after backup `db-pre-migrate-0020-20261107-163054.sql.gz`). Plan: `.planning/phases/P6-spread/P6-PLAN.md`.

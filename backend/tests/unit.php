@@ -100,7 +100,13 @@ foreach (['Bones and movement','Brain and nerves','Heart and blood','Breathing',
 }
 check('a question’s own scene still wins over the topic',$topic('Pick one','Heart and blood','past')==='past');
 check('a topic with no theme falls back to the prompt',$topic('How many planets are there?','General knowledge mix')==='space');
-check('only body topics are read from the title, so other quizzes keep per-question worlds',$topic('Pick one','World Capitals')==='ocean');
+check('a quiz about animals is not the pyramids because nothing in a prompt matched',$topic('What do koalas eat?','Animal Babies and Homes')==='jungle');
+foreach (['Animals and nature (ages 9–11)','Amazing Animals','Plants and Living Things','Food chains and habitats','Living or not living?'] as $t) {
+    check("“{$t}” is a living-things topic",$topic('Pick one',$t)==='jungle');
+}
+check('a space quiz stays in space',$topic('What is the Moon?','Rocks, the Earth and space')==='space'&&$topic('Pick one','Our Solar System')==='space');
+check('a topic world still gives way to a question’s own scene',$topic('Pick one','Amazing Animals','city')==='city');
+check('only themed topics (body, living things, space) are read from the title, so other quizzes keep per-question worlds',$topic('Pick one','World Capitals')==='ocean');
 // Daily order: the same for one date, a different slice on another date, never file order by design.
 $ids=array_map(fn(int $i): string => sprintf('00000000-0000-4000-8000-%012d',$i),range(1,30));
 check('daily order is deterministic for a date',Game::dailyOrder($ids,'2026-11-01',10)===Game::dailyOrder($ids,'2026-11-01',10));

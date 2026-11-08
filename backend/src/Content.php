@@ -584,9 +584,13 @@ final class Content
 
     /**
      * Quiz-title words that put every question of the quiz in one world, before any prompt word:
-     * a quiz about digestion stays in the body world even when a prompt says "waves" or "map".
+     * a quiz about digestion stays in the body world even when a prompt says "waves" or "map", and a quiz about
+     * animals stays in the jungle instead of a world picked by chance.
      */
     private const TOPIC_RULES = [
+        // Living things first, so "Food chains and habitats" is the jungle and not the body world.
+        'jungle' => '/\b(?:animals?|babies|wildlife|habitats?|food chains?|plants?|insects?|birds?|pets?|living)\b/iu',
+        'space' => '/\b(?:space|solar system|planets?|stars?|astronomy)\b/iu',
         'body' => '/\b(?:body|bodies|human|anatomy|digestion|digestive|food|nutrition|bones?|skeleton|muscles?|movement|senses?|sight|hearing|brain|nerves?|nervous|heart|blood|circulation|breathing|lungs?|respiration|hormones?|growth|development|puberty|health|healthy|medical|medicine|teeth|tooth|skin)\b/iu',
     ];
 

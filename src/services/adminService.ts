@@ -207,6 +207,9 @@ export interface QuizListItem {
   title: string;
   category: { slug: string; name: string } | null;
   ks: KeyStage | null;
+  /** Starters to Scholars, or adult (18+), from the lowest age; null with no age. */
+  level: 'starters' | 'explorers' | 'adventurers' | 'challengers' | 'scholars' | 'adult' | null;
+  difficulty: Difficulty | null;
   status: QuizStatus;
   in_review: boolean;
   version: number | null;

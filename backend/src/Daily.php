@@ -80,7 +80,7 @@ final class Daily
              JOIN quiz_versions v ON v.id=q.current_version_id AND v.quiz_id=q.id
              LEFT JOIN (SELECT quiz_id,MAX(challenge_date) AS last_used FROM daily_challenges GROUP BY quiz_id) u
                ON u.quiz_id=q.id
-             WHERE " . Catalog::LIVE . "
+             WHERE " . Catalog::LIVE . " AND (q.age_min IS NULL OR q.age_min<18)
              ORDER BY u.last_used IS NOT NULL, u.last_used, SHA2(CONCAT(?,q.id),256)
              LIMIT 1", [$today]);
     }

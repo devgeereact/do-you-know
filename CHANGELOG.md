@@ -6,6 +6,7 @@
 - **Home:** hero, world and subject tiles use the real counts; adult sets stay out of Popular, Everyone and the first lists (the Adult chip still finds them); "Show all" fetches the rest of the library; subjects with nothing for children are not tiled.
 - **Four areas for everyone:** Words, Numbers, Science and Our world appear on the home page for guests too (for a set-up child they still start a learning session). A tap narrows the list to that area; a "Show everything" chip clears it on the phone and the desktop.
 - **Fix:** a guest who opens a learning link now sees "Ask a grown-up" and a Home button, not "Uh-oh" with a "Try again" that can never work.
+- **Also fixed from the smoke test:** a waiting app update now applies itself on a calm page (right after the app opens, or when the player moves to another page), never in a game, a form, sign-in or the Studio, so returning visitors do not keep an old design; the world drawn for a question follows the quiz's title when it is about animals, living things or space (an animal quiz no longer lands in the pyramids by chance); the Studio Library shows the child-facing level and the difficulty (learning steps follow it) instead of KS labels; the daily's automatic anchor never picks an 18+ quiz (the calendar preview matches).
 - Tests: backend (counts match the list, bad offset refused, adult sets never in trending), two browser tests, all existing suites unchanged.
 
 ## 7 November 2026 (branch `phase/p6-spread`, not deployed) — P6: science and humanities content

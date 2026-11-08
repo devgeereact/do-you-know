@@ -44,7 +44,7 @@ final class AdminContent
 
     public function list(array $query): array
     {
-        $sql = "SELECT q.id,q.slug,q.title,q.status,q.updated_at,q.publish_at,q.curriculum_tags,q.draft IS NOT NULL AS has_draft,
+        $sql = "SELECT q.id,q.slug,q.title,q.status,q.updated_at,q.publish_at,q.curriculum_tags,q.difficulty,q.age_min,q.age_max,q.draft IS NOT NULL AS has_draft,
                 JSON_VALUE(q.draft,'$.review') AS review,v.version,
                 COALESCE(JSON_LENGTH(q.draft,'$.questions'),JSON_LENGTH(v.snapshot),0) AS bank,
                 c.slug AS category_slug,c.name AS category_name,COALESCE(p.plays,0) AS plays,r.n AS answered,r.r AS right_answers
@@ -89,6 +89,8 @@ final class AdminContent
             'id' => $r['id'], 'slug' => $r['slug'], 'title' => $r['title'],
             'category' => $r['category_slug'] === null ? null : ['slug' => $r['category_slug'], 'name' => $r['category_name']],
             'ks' => self::ks(json_decode((string) $r['curriculum_tags'], true) ?: []),
+            // The child-facing level (from the lowest age) and the difficulty a learning step follows.
+            'level' => Areas::level($r['age_min'] === null ? null : (int) $r['age_min']), 'difficulty' => $r['difficulty'],
             'status' => $r['status'], 'in_review' => $r['status'] === 'review' || in_array((string) $r['review'], ['true', '1'], true),
             'version' => $r['version'] === null ? null : (int) $r['version'], 'question_count' => (int) $r['bank'],
             'plays' => (int) $r['plays'],
