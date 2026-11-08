@@ -48,6 +48,22 @@ check('a game is untimed unless a timer is asked for',$r['status']===200&&$r['bo
 $r2=request('POST','/attempts/'.$r['body']['attempt_id'].'/answer',['option_id'=>$r['body']['question']['options'][0]['id']],$calm['token']);
 Database::execute($db,'UPDATE attempts SET current_sent_at=DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 600 SECOND) WHERE id=?',[$r['body']['attempt_id']]);
 check('an untimed answer is never marked timed out',$r2['status']===200&&$r2['body']['timed_out']===false);
+// ADR-023: a ranked round for a declared teenager or adult carries a generous cap (30 s) even when no timer was asked for;
+// a new guest (no age band) and a child (under_13) stay untimed. Practice is never capped.
+foreach (['13_17','18_plus'] as $band) {
+    $who=request('POST','/guest-sessions',[])['body'];
+    $uid=request('GET','/me',null,$who['token'])['body']['id'];
+    Database::execute($db,'UPDATE profiles SET age_band=? WHERE id=?',[$band,$uid]);
+    $r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$who['token']);
+    check("ranked round for $band is capped at 30 s",$r['status']===200&&$r['body']['time_limit_seconds']===30&&$r['body']['question_deadline']!==null);
+    $r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'practice'],$who['token']);
+    check("practice round for $band stays untimed",$r['status']===200&&$r['body']['time_limit_seconds']===null);
+}
+$kid=request('POST','/guest-sessions',[])['body'];
+$kidId=request('GET','/me',null,$kid['token'])['body']['id'];
+Database::execute($db,"UPDATE profiles SET age_band='under_13' WHERE id=?",[$kidId]);
+$r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked'],$kid['token']);
+check('ranked round for under_13 stays untimed',$r['status']===200&&$r['body']['time_limit_seconds']===null);
 $r=request('POST','/attempts',['quiz_slug'=>$slug,'mode'=>'ranked','timed'=>true],$first['token']);$state=$r['body'];
 check('ranked mode starts',$r['status']===200&&$state['mode']==='ranked');
 check('deadline matches frozen server timer',abs((strtotime($state['question_deadline'])-strtotime($state['server_now']))-5)<=1);

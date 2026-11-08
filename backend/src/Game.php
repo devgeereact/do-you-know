@@ -248,6 +248,12 @@ final class Game
                 // Children are not timed by default. The quiz's timer applies only when the request asks for
                 // it ("timed": true), which the parent switch "Beat the clock" will send (P4).
                 $timer = ($input['timed'] ?? false) === true ? $quiz['time_limit_seconds'] : null;
+                // ADR-023: a declared teenager or adult in a ranked round or the daily gets a generous cap, so the crown
+                // cannot be won by looking answers up. Children (under 13, or no age band yet) and practice stay untimed.
+                if ($timer === null && ($mode === 'ranked' || $daily)) {
+                    $band = Database::one($this->db, 'SELECT age_band FROM profiles WHERE id=?', [$this->userId]);
+                    if (in_array($band['age_band'] ?? null, ['13_17', '18_plus'], true)) { $timer = self::COMPETITION_CAP_SECONDS; }
+                }
                 $shuffle = $quiz['shuffle_options'];
             }
             $id = Database::uuid();
@@ -268,6 +274,9 @@ final class Game
             return $this->state($this->attempt($id));
         });
     }
+
+    /** Seconds allowed per question in a ranked round or the daily for a declared teenager or adult (ADR-023). */
+    public const COMPETITION_CAP_SECONDS = 30;
 
     /** Questions in one player's daily hand. */
     public const DAILY_ROUND = 10;

@@ -1,5 +1,8 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Ranked and daily time cap
+- A player who has said they are 13 to 17 or 18 and over now has 30 seconds per question in a ranked round and in the daily, so the crown cannot be won by looking answers up. Children (under 13, or no age band yet) and practice stay untimed. The server decides; no migration. Tests in `backend/tests/competition.php`.
+
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Owner calls recorded, Phase 1 closed in GSD
 - ADR-023 (`docs/08-change-management/DECISIONS.md`) records a default for each open owner call: time cap, daily by level, 18+ gate, baptism and Last Supper questions, odd age bands, landing direction, Dependabot, the 61 drafts, `mail_from`. Docs only; nothing built, imported or published.
 - GSD Phase 1 marked complete; the four phone checks stay pending in `01-HUMAN-UAT.md`.

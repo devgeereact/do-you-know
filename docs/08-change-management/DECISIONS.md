@@ -30,7 +30,7 @@
 
 Status words: DECIDED = adopted default; PLANNED = not built; OWNER = needs your own action (Studio, server, GitHub).
 
-1. **Ranked and daily time cap.** DECIDED: cap each question at 30 seconds in ranked and daily rounds only; practice, learning sessions and children stay untimed. The server checks the time (never the browser). PLANNED, no migration expected.
+1. **Ranked and daily time cap.** DECIDED: cap each question at 30 seconds in ranked and daily rounds only; practice, learning sessions and children stay untimed. The server checks the time (never the browser). BUILT 8 Nov 2026 on `phase/p8-owner-calls` (`Game::COMPETITION_CAP_SECONDS`; teen and adult bands only; tests in `backend/tests/competition.php`); not released.
 2. **Daily by level.** DECIDED: keep today's all-bank hands until parents have set levels for a while; then per-level hands and crowns. PLANNED.
 3. **18+ age gate.** DECIDED: a quiz with no minimum age counts as suitable for everyone; adult sets must carry `age_min` 18 and the server already keeps them from guests and children. PLANNED: a Studio publish warning when an adult-looking set has no `age_min`.
 4. **Christian baptism and Last Supper questions.** DECIDED: do not publish. They are sacraments, which the Christian-only rule keeps out (`docs/AUDIT.md`, 8 Nov). Kept as unpublished drafts, nothing deleted.
