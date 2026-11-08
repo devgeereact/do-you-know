@@ -2,6 +2,23 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+
+## 8 Nov 2026: dependency alerts triaged, dead code removed (branch `phase/p8-owner-calls`)
+
+**GitHub reported 4 open alerts on `main`.** Read-only triage, nothing upgraded.
+
+| Alert | Where | Reachable? | Decision |
+| --- | --- | --- | --- |
+| react-router, open redirect via backslash in `<Link>` / `useNavigate` (medium, 2 alerts with the SSR one below) | runtime | Not as far as read: every `navigate(...)` target in `src` is a constant or a Studio menu path (`CommandPalette`, `TodoScreen`), none comes from the URL or a form. | Fix is react-router 7.18 or later, a major upgrade from 6.30.6. PLANNED as its own task; not a drive-by. |
+| react-router, `deserializeErrors()` constructor injection in SSR hydration (medium) | runtime | No: the app is a client-side SPA with no server rendering. | Same planned upgrade. |
+| minimatch (medium) | dev only | Build tooling, no user input. | Update with the next dev-dependency round. |
+| deepmerge (low) | dev only, no patched version | Build tooling. | Accept. |
+`pnpm audit --prod` shows only the two react-router advisories.
+
+**Dead code (owner: "go ahead", 8 Nov).** Removed: `src/lib/imagekit.ts`, the ImageKit and PostHog fields in `src/lib/env.ts` and `src/vite-env.d.ts`, their names in `vite.config.ts`, the Workbox `CacheFirst` rule for `ik.imagekit.io`, and `VITE_POSTHOG_KEY` in `verify.yml`. Devices keep an unused `imagekit-media` cache until cleared; harmless. **Kept on purpose:** the privacy sentence about ImageKit (`PrivacyPage.tsx:165`) and the `.htaccess` CSP host, because the audit could not confirm against the live database that no quiz picture is served from ImageKit; and `.env.example`, which the project guard forbids opening. Remove those three when you have checked. `pnpm check` PASS (408 unit).
+
+**Age-gate publish warning (ADR-023 item 3): not built.** The Studio's `problems()` list blocks publishing, so a warning there would stop every quiz without a minimum age from going live. A non-blocking notice needs a new channel in the editor. All 262 live quizzes already carry an `age_min` (public API, 8 Nov), so the gap is not open today.
+
 ## 2026-11-08 · Phase 1 code review (standard depth, 12 files), by the GSD reviewer
 
 Result: 0 critical, 5 warnings, 5 info. Fixed with tests the same day: WR-01 (shared `/me` across sessions), WR-03 (DST in yesterday and the 7-day strip), the tap interception in WR-04. Open: WR-02 (out-of-order profile responses), WR-05 (`/grown-ups` loading with no timeout), the info items. Full report and resolution table: `.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`. Checks after the fixes: `pnpm check` 405 unit PASS, browser suite 86 of 86 PASS. NOT TESTED: a phone.

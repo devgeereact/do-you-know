@@ -1,5 +1,8 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Dead code removed
+- Removed the unused ImageKit helper and ImageKit and PostHog settings, the ImageKit service-worker cache rule and one CI variable. No visible change. Privacy sentence, `.htaccess` and `.env.example` left for you (`docs/AUDIT.md`, 8 Nov).
+
 ## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Ranked and daily time cap
 - A player who has said they are 13 to 17 or 18 and over now has 30 seconds per question in a ranked round and in the daily, so the crown cannot be won by looking answers up. Children (under 13, or no age band yet) and practice stay untimed. The server decides; no migration. Tests in `backend/tests/competition.php`.
 

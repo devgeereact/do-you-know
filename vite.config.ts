@@ -38,11 +38,7 @@ export default defineConfig({
     'VITE_APP_URL',
     'VITE_CLERK_PUBLISHABLE_KEY',
     'VITE_CPANEL_API_URL',
-    'VITE_IMAGEKIT_URL_ENDPOINT',
-    'VITE_IMAGEKIT_PUBLIC_KEY',
     'VITE_SENTRY_DSN',
-    'VITE_POSTHOG_KEY',
-    'VITE_POSTHOG_HOST',
     'VITE_CONTACT_EMAIL',
   ],
 
@@ -125,16 +121,6 @@ export default defineConfig({
         clientsClaim: true,
         skipWaiting: false, // wait for user to accept the update
         runtimeCaching: [
-          {
-            // ImageKit CDN — cache-first, images rarely change.
-            urlPattern: /^https:\/\/ik\.imagekit\.io\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'imagekit-media',
-              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
           {
             // Public catalogue reads from the PHP API (categories, quizzes, tags, daily).
             // Network-first with a short fallback for offline browsing. Player routes

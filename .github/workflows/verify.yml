@@ -26,7 +26,6 @@ jobs:
       run: pnpm check
       env:
         VITE_SENTRY_DSN: ''
-        VITE_POSTHOG_KEY: ''
     - name: Rebrand and deployment guard boundaries
       run: 'python3 scripts/check-rebrand.py
 

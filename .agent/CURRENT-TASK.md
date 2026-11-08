@@ -1,5 +1,11 @@
 # Current task
 
+## Owner calls built (8 Nov 2026, branch `phase/p8-owner-calls`, committed, NOT pushed, NOT released)
+- Owner said "go ahead". Built: 30 s cap on ranked and daily for declared teens and adults (af0f3cc, test first, `backend/tests/competition.php`); dead ImageKit and PostHog code removed; vulnerability triage in `docs/AUDIT.md`.
+- Not built: age-gate publish warning (the Studio's problems list blocks publishing; all 262 live quizzes have `age_min`). Not touched: privacy sentence about ImageKit, `.htaccess` CSP host, `.env.example`.
+- Checks: `pnpm check` PASS (408 unit); backend competition, daily, daily_deal, integration PASS. Full backend and browser suites NOT re-run.
+- Next: owner's "approved: push and release" for this branch (code only, no migration).
+
 - **8 Nov 2026, later: RELEASED.** Pushed to `main` at 8082450 (owner: "GO AHEAD APPROVED"); CI, Semgrep and Deploy passed; live `/`, health and daily return 200. Dependabot #11 and #8 closed; #10 left open (major bumps in deploy.yml, planned task). Phone checks still pending.
 
 ## Owner calls and Phase 1 wrap-up (8 Nov 2026, branch `phase/p1-housekeeping`, committed, NOT pushed)
