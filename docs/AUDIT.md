@@ -3,7 +3,7 @@
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
 
-## 8 Nov 2026: dependency alerts triaged, dead code removed (branch `phase/p8-owner-calls`)
+## 2026-11-08 · Dependency alerts triaged and dead code removed (branch `phase/p8-owner-calls`), by Claude Code
 
 **GitHub reported 4 open alerts on `main`.** Read-only triage, nothing upgraded.
 
