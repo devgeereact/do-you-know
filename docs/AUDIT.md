@@ -2,6 +2,51 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-08 · Phase 1 close-out (clean-up and foundations, shipped 7 Nov as fc7b41e), by Claude Code
+
+Scope: each "Done when" line of Phase 1 in `.planning/ROADMAP.md`, checked read-only on branch `phase/p1-housekeeping`. Commands run in this check: `pnpm vitest run <the five named files>` (5 files, 63 tests, all passed), the full `pnpm vitest run` (43 files, 398 tests, all passed), and `grep` over `src`, `tests`, `scripts`, `backend/src` and the config files. **Not run, by the owner's rule for this task:** any database, the PHP backend suites, the browser suite, the live site and a phone. Those results are NOT TESTED here, even where an older run passed; the test names are cited so they can be re-run.
+
+| # | Done-when line | Status | Evidence |
+| --- | --- | --- | --- |
+| 1 | Guest: no free-text field anywhere; server refuses an adult band without sign-in | **PARTIAL** | Seen passing now: `tests/unit/components/ChildPathTyping.test.tsx` (5 tests: nickname picker asks no age question and offers no text box; Contact has no "18 or over" tick and no free-text field; points to the contact email; a profile already holding an adult band keeps the form). Code present: `backend/src/Player.php:52` throws `adult_sign_in_required` (403). **NOT TESTED:** the refusal test `backend/tests/integration.php:127-136` (guest cannot claim `13_17` or `18_plus`; age stays unset; typed nickname still refused); the browser test `tests/e2e/ranked.spec.ts:100` "guests never get a free-text name box" (it covers the nickname change on `/me` only, not Contact); the by-hand phone check. |
+| 2 | No hex colour and no `uppercase` in the play-stage CSS or components | **DONE** | `grep -nE '#[0-9a-fA-F]{3,8}\b' src/components/game/*.tsx src/pages/PlayPage.tsx` returned nothing; `grep -nE '\buppercase\b\|small-caps'` on the same files returned nothing; the same two patterns over the stage block of `src/index.css` ("The game stage" to "Scene motion") returned nothing. Guard that fails if they return: `tests/unit/lib/stageStyle.test.ts`, passed now (part of the 63). The "Ranked" tag is gone from the child path: `src/pages/PlayPage.tsx:239-240` sets the mode label to `null` for ranked. World palettes in `src/lib/worlds.ts` are illustration data and outside the guard by design. |
+| 3 | The Play tab never shows "Uh-oh" after a finished daily; daily board and crown still work | **PARTIAL** | The fix is a redirect, not a changed link target. `src/pages/PlayPage.tsx:311-313` sends `daily_already_played` to `/daily` with `<Navigate replace />`, so the Play tab (`src/components/navItems.tsx:57`), the header button (`SiteHeader.tsx:108`) and the two Leaderboards links (`LeaderboardsPage.tsx:189, 257`) still point at `/daily/play` and rely on it. Only the home page picks its target from `playedToday` (`HomePage.tsx:180, 493`). Seen passing now: `tests/unit/hooks/useQuizAttempt.test.tsx` (the hook exposes `errorCode: 'daily_already_played'` with friendly copy) and `tests/unit/components/DailyLeader.test.tsx`. **Gap:** the plan expected a unit test of the link target by `playedToday`; none exists. The redirect itself is covered only by `tests/e2e/daily.spec.ts` ("play today once, then the app says it is done", which opens `/daily/play` again and expects `/daily`) and the backend refusal by `backend/tests/competition.php:96` and `daily_deal.php:124`: all NOT TESTED here. |
+| 4 | Area and level on `GET /quizzes`, covered by a test using the live catalogue's shapes | **PARTIAL** | Code present: `backend/src/Catalog.php:175-176` sets `area` and `level` on each row; the types are in `src/types/domain.ts` (lines 110 and 136). Tests exist and are NOT TESTED here (they need the backend): `backend/tests/unit.php:144-170` (category and topic cases, odd age bands, 18 and over, no age) and `backend/tests/integration.php:49, 51` (single quiz and list both carry `area` and `level`, and `category_slug` stays private). |
+| 5 | Every existing route still loads; existing tests pass unchanged except those that pinned the old behaviour | **PARTIAL** | Seen now: the whole unit suite passes (43 files, 398 tests). **NOT TESTED:** route loading and the browser suite (needs a database), the backend suites, `pnpm check`'s build step. |
+
+**Result.** One line is DONE (2). Four are PARTIAL because their server or browser proof was not run in this check, not because anything failed. No criterion failed anywhere that was run. To close the PARTIAL lines, run `bash scripts/test-backend.sh` (suites `unit integration competition`) and `pnpm test:e2e` (`ranked`, `daily`, `privacy`) on the throwaway stack, then add the results here. The missing link-target unit test (line 3) is a small test to add if you want the Play-tab behaviour pinned at unit level.
+
+### Dead code for your approval (nothing deleted, moved or edited)
+
+Searched `src`, `tests`, `scripts`, `backend/src`, `backend/tests`, `index.html`, config files and `docs`. The untracked copies under `.claude/worktrees/` are stale agent checkouts and are left out. `package.json` lists no ImageKit or PostHog package, so removal touches no dependency.
+
+**ImageKit** (no code requests an ImageKit URL; `docs/VERIFIED-STATE.md:56-57` agrees)
+
+| Path | Verdict | Grep evidence |
+| --- | --- | --- |
+| `src/lib/imagekit.ts` (`buildImageKitUrl`, `ImageTransform`) | REMOVABLE | No importer: the only hits for `lib/imagekit`, `buildImageKitUrl` and `ImageTransform` are inside the file itself. |
+| `src/lib/env.ts:11-12, 47-48` (`imagekitUrlEndpoint`, `imagekitPublicKey`) | REMOVABLE | Only reader is `src/lib/imagekit.ts:17`. |
+| `src/vite-env.d.ts:9-10` (`VITE_IMAGEKIT_*` types) | REMOVABLE | Type declarations only. |
+| `vite.config.ts:41-42` (env name list) and `129-136` (Workbox `CacheFirst` rule for `ik.imagekit.io`, cache `imagekit-media`) | REMOVABLE | Nothing in the app requests that host. Removing the rule changes the service worker; devices keep an old `imagekit-media` cache until it is cleared. |
+| `.env.example:10-11` (`VITE_IMAGEKIT_*`) | REMOVABLE | Example file only. |
+| `.htaccess:96` (`https://ik.imagekit.io` in the Report-Only CSP) | REMOVABLE | Server config; any change here is deployed, so it needs its own approval. |
+| `src/pages/PrivacyPage.tsx:165` (says ImageKit "may deliver some quiz pictures") | IN USE as visible copy | Read by every visitor to the privacy page. It should be edited in the same change as the code removal. `docs/VERIFIED-STATE.md:57` records that `image_url` is never set in the content; NOT TESTED against the live database. |
+| Docs: `docs/02-architecture/ARCHITECTURE.md:17, 58, 138, 193`, `docs/01-product/PRODUCT-SPEC.md:174`, `docs/08-change-management/DECISIONS.md:7`, `docs/DIRECTION.md:33`, `docs/REPLAN-CURRENT.md:40, 43`, `docs/VERIFIED-STATE.md:56-57`, `CHANGELOG.md:6`, `.agent/CURRENT-TASK.md:7` | IN USE as text | Mentions that would go stale on removal; update with it. |
+
+**PostHog** (settings only; no SDK, no network call, no consent code)
+
+| Path | Verdict | Grep evidence |
+| --- | --- | --- |
+| `src/lib/env.ts:15-16, 51-52` (`posthogKey`, `posthogHost`) | REMOVABLE | `posthogKey` and `posthogHost` are read nowhere in `src`, `tests`, `scripts`, `backend/src` or `index.html`. |
+| `src/vite-env.d.ts:12-13` (`VITE_POSTHOG_KEY`, `VITE_POSTHOG_HOST`) | REMOVABLE | Type declarations only. |
+| `vite.config.ts:44-45` (env name list) | REMOVABLE | Names only. |
+| `.env.example:12` (`VITE_POSTHOG_KEY`) | REMOVABLE | Example file only. |
+| `.github/workflows/verify.yml:29` (`VITE_POSTHOG_KEY: ''` in the check step) | REMOVABLE | Sets an empty value for a variable nothing reads. |
+| `.htaccess` | n/a | No PostHog entry in the CSP. |
+| Docs: `docs/02-architecture/ARCHITECTURE.md:36, 194` (calls PostHog "optional, consent-gated", which is no longer true), `docs/REPLAN-CURRENT.md:40, 43`, `docs/VERIFIED-STATE.md:58`, `docs/DIRECTION.md:33`, `CHANGELOG.md:6` | IN USE as text | Update with the removal. |
+
+**Decision for you.** Remove all of the above in one focused commit on a branch (files: `src/lib/imagekit.ts` deleted; `src/lib/env.ts`, `src/vite-env.d.ts`, `vite.config.ts`, `.env.example`, `.github/workflows/verify.yml`, `src/pages/PrivacyPage.tsx` and the docs edited), with the `.htaccess` line as a separate, later server change. It needs your explicit OK because it deletes a file and edits the privacy copy.
+
 ## 2026-11-08 · Live smoke test (guest and child path, parent area, Studio), by Claude Code in the owner's signed-in Chrome
 
 Scope: https://doyouknow.space on a desktop window, read-only for the parent area and Studio (nothing toggled, imported, published or deleted), one practice question answered as the signed-in guest. **NOT TESTED:** a real child session (hand-over would sign the parent out and needs an email code; the child path is covered by the browser suite, 82 of 82 on 7 Nov), the phone-width layout (the browser window would not resize the viewport), the new P3 and P6 content (not imported yet).
