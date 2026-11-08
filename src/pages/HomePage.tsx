@@ -88,7 +88,14 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
   const { switches } = useSwitches();
   const { categories, quizzes } = catalog;
   const [area, setArea] = useState<LearnArea | null>(null);
-  const featured = trending[0] ?? quizzes.find(isKids) ?? null;
+  // The front door shows a primary-age question, never a teenage one; fall back only if none exists.
+  const forYoung = (q: Quiz): boolean => isKids(q) && (q.age_min ?? 0) <= 11;
+  const featured =
+    trending.find(forYoung) ??
+    quizzes.find(forYoung) ??
+    trending[0] ??
+    quizzes.find(isKids) ??
+    null;
   const kidsTotal = categories.reduce((n, c) => n + c.kids_count, 0);
   useReveal(root, [quizzes.length, trending.length, categories.length]);
 

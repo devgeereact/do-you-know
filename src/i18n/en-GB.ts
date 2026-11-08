@@ -886,15 +886,21 @@ export const enGB = {
     title: 'For grown-ups',
     lead: 'Set up each child, choose their level and decide what they see. Children never type anything: their name, picture and level are all picked from a list.',
     unavailable: 'Grown-up sign-in is not available yet. Children can still play as guests.',
-    loading: 'Loading…',
+    loading: 'Getting your area ready…',
     signInTitle: 'Sign in with an email code',
+    whatYouGet: [
+      'Pick a level for each child, so questions fit.',
+      'Switch off sound, timers, boards and anything else you would rather not have.',
+      'See what each child has practised and what to try next.',
+    ],
     signInBody:
       'We send a code to your email, so there is no password to remember. We keep no name, photo or birthday for you or for your children.',
     signIn: 'Sign in',
     signUp: 'Create a grown-up account',
     tabs: { label: 'Parent area', children: 'Children', switches: 'Switches', contact: 'Contact' },
     children: {
-      empty: 'No children yet. Add the first one below.',
+      empty:
+        'No children yet. Add the first one below: choose a picture and a level, then hand the device over.',
       level: 'Level',
       levelHint: 'The years only describe the questions. They are never shown as your child’s age.',
       character: 'Picture',

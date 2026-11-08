@@ -4,7 +4,8 @@
 - Triggered by the owner's smoke-test request (findings in `docs/AUDIT.md`, 8 Nov) and "landing page needs a polish that will make it super attractive". Built so far: honest counts, areas for everyone, adult sets out of the front door, guest "Ask a grown-up" screen (details in `CHANGELOG.md`). No migration.
 - Checks: `pnpm check` and `bash scripts/test-backend.sh`, browser suite on the throwaway database: see the last commit. NOT TESTED: the live site with the new build (needs the release), a real child session on a phone.
 - Also done: update-on-calm-page, scene by quiz title, Studio level and difficulty columns, no 18+ daily anchor. Still open: feedback screen tidy (+1 text, friend hidden), `/grown-ups` first-run, the visual polish (needs a direction from the owner).
-- Next: owner's "approved" to release (code only, no migration).
+- 8 Nov, later: a22dd8c is LIVE. Since then, locally only (not pushed): feedback friend above the sheet and a bolder cheer line, `/grown-ups` first run, primary-age "Try one" card on the desktop hero. `pnpm check` (391), backend and browser suite (86) PASS; phone view NOT TESTED.
+- Next: owner's "approved" to release these (code only, no migration); landing visual direction if wanted; Dependabot PR #11 close and ignore (needs the owner's word).
 
 ## P6: science and humanities content (branch `phase/p6-spread`, 7 Nov 2026, committed, NOT pushed, nothing imported)
 - P5 is LIVE (04a686d, migration 0020 applied after backup `db-pre-migrate-0020-20261107-163054.sql.gz`). Plan: `.planning/phases/P6-spread/P6-PLAN.md`.

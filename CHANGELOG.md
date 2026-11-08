@@ -1,5 +1,11 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p7-home`, after a22dd8c, not deployed) — Smoke-test leftovers
+- **Front door:** the "Try one" question on the desktop home now comes from a primary-age quiz (ages 11 and under) when one exists, so a teenage sport quiz is no longer the first thing a child sees.
+- **Feedback screen:** the friend (owl, turtle, planet) now stands above the answer panel instead of behind it, no longer blurred; the line under the verdict ("+1 · keep going") is larger and bolder.
+- **`/grown-ups` first run:** a calm loading card replaces plain "Loading…"; the signed-out card lists what a grown-up can do here; the empty children panel says what to do next.
+- Tests: `pnpm check` (391 unit), backend suites, browser suite 86 of 86. Checked by eye on the throwaway stack (desktop). Not deployed.
+
 ## 8 November 2026 (branch `phase/p7-home`, not deployed) — Home page: honest counts, areas for everyone, no adult sets up front
 - **Found in the live smoke test** (`docs/AUDIT.md`, 8 Nov): the home page counted quizzes from a list capped at 100 while the library holds 262, so the hero said "100 quizzes", subjects showed "0 quizzes" and "Show all" stopped short.
 - **Server (no migration):** `GET /categories` now carries `quiz_count` and `kids_count` (without 18+ sets) for each subject; `GET /quizzes` takes `offset` to walk past the first 100; `/quizzes/trending` never lists an 18+ set.

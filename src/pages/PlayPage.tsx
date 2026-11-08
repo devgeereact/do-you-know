@@ -388,29 +388,25 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                   <span />
                 )}
               </div>
-              <div
-                data-q-host
-                aria-hidden="true"
-                className={cn(
-                  'absolute bottom-3 left-4 z-[3] transition-[filter] md:bottom-6 md:left-7',
-                  phase === 'feedback' && 'blur-[3px]',
-                )}
-              >
-                <Character
-                  name={w.host}
-                  size={150}
-                  mood={
-                    phase === 'feedback' && lastResult
-                      ? lastResult.is_correct
-                        ? 'happy'
-                        : 'sad'
-                      : 'happy'
-                  }
-                  className="h-24 w-24 md:h-[10.5rem] md:w-[10.5rem]"
-                />
-              </div>
-
               <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-10">
+                <div
+                  data-q-host
+                  aria-hidden="true"
+                  className={cn('absolute bottom-3 left-4 z-[3] md:bottom-6 md:left-7')}
+                >
+                  <Character
+                    name={w.host}
+                    size={150}
+                    mood={
+                      phase === 'feedback' && lastResult
+                        ? lastResult.is_correct
+                          ? 'happy'
+                          : 'sad'
+                        : 'happy'
+                    }
+                    className="h-24 w-24 md:h-[10.5rem] md:w-[10.5rem]"
+                  />
+                </div>
                 <p
                   className="flex items-center gap-2.5 text-sm font-semibold opacity-70"
                   aria-hidden="true"
@@ -443,7 +439,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                           ? t.play.feedback.correct
                           : t.play.feedback.wrong}
                     </h2>
-                    <p className="mb-5 mt-2 text-sm font-semibold opacity-75">
+                    <p className="mb-5 mt-2 text-lg font-bold md:text-xl">
                       {lastResult.timed_out
                         ? t.play.cheerTime
                         : lastResult.is_correct

@@ -19,6 +19,20 @@ import { t } from '@/i18n';
 type Tab = 'children' | 'switches' | 'contact';
 const copy = t.grownUps;
 
+/** A calm placeholder while Clerk and the parent record load, so the page never looks broken. */
+function ParentLoading(): JSX.Element {
+  return (
+    <Card role="status" className="grid gap-3" aria-live="polite">
+      <p className="font-semibold">{copy.loading}</p>
+      <div aria-hidden="true" className="grid gap-2 motion-safe:animate-pulse">
+        <div className="h-4 w-2/3 rounded-full bg-surface-border" />
+        <div className="h-4 w-1/2 rounded-full bg-surface-border" />
+        <div className="h-10 w-40 rounded-full bg-surface-border" />
+      </div>
+    </Card>
+  );
+}
+
 /** The signed-in parent area. Clerk gives the session token; every call is scoped to this parent on the server. */
 function ParentArea(): JSX.Element {
   const { isLoaded, isSignedIn, getToken } = useAuth();
@@ -56,13 +70,21 @@ function ParentArea(): JSX.Element {
     }
   }
 
-  if (!isLoaded) return <p role="status">{copy.loading}</p>;
+  if (!isLoaded) return <ParentLoading />;
 
   if (!isSignedIn) {
     return (
       <Card className="grid gap-4">
         <h2 className="text-2xl font-bold">{copy.signInTitle}</h2>
         <p className="text-content-muted">{copy.signInBody}</p>
+        <ul className="grid gap-2">
+          {copy.whatYouGet.map((line) => (
+            <li key={line} className="flex gap-2.5">
+              <span aria-hidden="true" className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />
+              <span>{line}</span>
+            </li>
+          ))}
+        </ul>
         <div className="flex flex-wrap gap-3">
           <SignInButton mode="modal">
             <Button>{copy.signIn}</Button>
@@ -75,7 +97,7 @@ function ParentArea(): JSX.Element {
     );
   }
 
-  if (!ready) return <p role="status">{copy.loading}</p>;
+  if (!ready) return <ParentLoading />;
 
   return (
     <div className="grid gap-5">
