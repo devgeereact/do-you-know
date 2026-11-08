@@ -315,14 +315,18 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
       {phase === 'error' && !(daily && game.errorCode === 'daily_already_played') && (
         <Centered>
           <div className="animate-fade-up">
-            <h1 className="text-3xl font-semibold text-content">{t.play.errorTitle}</h1>
+            <h1 className="text-3xl font-semibold text-content">
+              {game.errorCode === 'child_required' ? t.learn.needsParentTitle : t.play.errorTitle}
+            </h1>
             <p className="mx-auto mb-6 mt-3 max-w-xs text-content-muted" role="alert">
               {error}
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button disabled={!online} onClick={() => void game.restart()}>
-                {t.common.tryAgain}
-              </Button>
+              {game.errorCode !== 'child_required' && (
+                <Button disabled={!online} onClick={() => void game.restart()}>
+                  {t.common.tryAgain}
+                </Button>
+              )}
               {daily && (
                 <Link to="/leaderboards?board=daily" className={buttonClasses('ghost')}>
                   {t.play.dailyLeaderboard}

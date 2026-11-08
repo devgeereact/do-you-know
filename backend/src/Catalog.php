@@ -24,7 +24,11 @@ final class Catalog
     {
         // Listed only while active and holding at least one live quiz; a direct link to an active
         // category still resolves (the sitemap lists active categories).
-        $sql = 'SELECT c.id,c.slug,c.name,c.description,c.kind,c.icon,c.scene,c.sort_order,c.is_active,c.created_at,c.updated_at FROM categories c WHERE c.is_active=1';
+        // quiz_count is every live quiz; kids_count leaves out 18+ sets, which the public lists do not show by default.
+        $sql = 'SELECT c.id,c.slug,c.name,c.description,c.kind,c.icon,c.scene,c.sort_order,c.is_active,c.created_at,c.updated_at,
+            (SELECT COUNT(*) FROM quizzes q WHERE q.category_id=c.id AND ' . self::LIVE . ') AS quiz_count,
+            (SELECT COUNT(*) FROM quizzes q WHERE q.category_id=c.id AND ' . self::LIVE . ' AND (q.age_min IS NULL OR q.age_min<18)) AS kids_count
+            FROM categories c WHERE c.is_active=1';
         $args = [];
         if ($slug !== null) {
             $sql .= ' AND c.slug=?';
@@ -36,6 +40,8 @@ final class Catalog
         $statement->execute($args);
         return array_map(static function (array $row): array {
             $row['sort_order'] = (int) $row['sort_order'];
+            $row['quiz_count'] = (int) $row['quiz_count'];
+            $row['kids_count'] = (int) $row['kids_count'];
             $row['is_active'] = (bool) $row['is_active'];
             $row['created_at'] = Database::utc($row['created_at']);
             $row['updated_at'] = Database::utc($row['updated_at']);
@@ -56,7 +62,7 @@ final class Catalog
             $sql .= ' AND slug=?';
             $args[] = $slug;
         }
-        foreach (['category_id', 'age', 'curriculum_tag', 'search'] as $key) {
+        foreach (['category_id', 'age', 'curriculum_tag', 'search', 'offset'] as $key) {
             if (isset($filters[$key]) && (!is_string($filters[$key]) || strlen($filters[$key]) > 100)) {
                 throw new ApiError('invalid_filter');
             }
@@ -87,7 +93,15 @@ final class Catalog
             $sql .= " AND title LIKE ? ESCAPE '!'";
             $args[] = '%' . str_replace(['!', '%', '_'], ['!!', '!%', '!_'], trim($filters['search'])) . '%';
         }
-        $statement = $this->db->prepare($sql . ' ORDER BY q.updated_at DESC,q.id LIMIT 100');
+        // A page of up to 100; `offset` walks the rest of the library in the same stable order.
+        $offset = 0;
+        if (isset($filters['offset'])) {
+            if (!preg_match('/^[0-9]{1,5}$/D', $filters['offset'])) {
+                throw new ApiError('invalid_filter');
+            }
+            $offset = (int) $filters['offset'];
+        }
+        $statement = $this->db->prepare($sql . ' ORDER BY q.updated_at DESC,q.id LIMIT 100 OFFSET ' . $offset);
         $statement->execute($args);
         return array_map(self::quizRow(...), $statement->fetchAll());
     }
@@ -102,7 +116,7 @@ final class Catalog
         $statement = $this->db->query('SELECT ' . self::QUIZ_COLUMNS . " FROM quizzes q
             LEFT JOIN (SELECT quiz_id,COUNT(*) AS plays FROM attempts
                 WHERE status='finished' AND finished_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 7 DAY) GROUP BY quiz_id) p
-            ON p.quiz_id=q.id WHERE " . self::LIVE . "
+            ON p.quiz_id=q.id WHERE " . self::LIVE . " AND (q.age_min IS NULL OR q.age_min<18)
             ORDER BY COALESCE(p.plays,0) DESC,q.updated_at DESC,q.id LIMIT 6");
         return array_map(self::quizRow(...), $statement->fetchAll());
     }

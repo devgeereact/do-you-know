@@ -92,6 +92,9 @@ export type Category = Timestamps & {
   scene: string | null;
   sort_order: number;
   is_active: boolean;
+  /** Live quizzes in this subject, and the same without 18+ sets (what the public lists show). */
+  quiz_count: number;
+  kids_count: number;
 };
 
 /** GET /curriculum-tags */

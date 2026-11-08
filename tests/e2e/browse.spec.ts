@@ -22,6 +22,37 @@ test.describe('browse', () => {
     await expectNoHorizontalOverflow(page);
   });
 
+  test('a guest can browse by area, and the hero counts are real', async ({ page }, info) => {
+    await page.goto('/');
+    const words = page.getByRole('button', { name: /^Words/ });
+    await expect(page.getByRole('heading', { name: 'Pick an area' })).toBeVisible();
+    await words.click();
+    await expect(words).toHaveAttribute('aria-pressed', 'true');
+    // The list narrows to that area, with one chip to clear it again.
+    const clear = page.getByRole('button', { name: 'Show everything' });
+    await expect(clear).toBeVisible();
+    await expect(page.getByRole('link', { name: /^E2E Learn Quiz/ }).last()).toBeVisible();
+    await clear.click();
+    await expect(clear).toHaveCount(0);
+    if (info.project.name === 'desktop') {
+      // The hero counts the library through the server's own totals, not whatever list loaded.
+      await expect(
+        page.locator('dt', { hasText: /^quizzes$/ }).locator('xpath=following-sibling::dd'),
+      ).toHaveText(/^[1-9]\d*$/);
+    }
+  });
+
+  test.describe('a learning link without a set-up child', () => {
+    // The refused start is a 403 the page turns into a plain message, so the console line is expected.
+    test.use({ allowConsoleErrors: [/403/] });
+    test('a guest is told to ask a grown-up, with nothing that cannot work', async ({ page }) => {
+      await page.goto('/learn/literacy');
+      await expect(page.getByRole('heading', { name: 'Ask a grown-up' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Try again' })).toHaveCount(0);
+      await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
+    });
+  });
+
   test('a category page lists its quizzes', async ({ page }, info) => {
     await page.goto('/');
     if (info.project.name === 'desktop') {

@@ -8,6 +8,8 @@ export interface QuizFilters {
   age?: number;
   curriculumTag?: string;
   search?: string;
+  /** Skip this many quizzes: the list comes 100 at a time. */
+  offset?: number;
 }
 
 /** Turns a 404 into null so pages can show a friendly "not found". */
@@ -39,6 +41,7 @@ export function listQuizzes(filters: QuizFilters = {}): Promise<Quiz[]> {
       age: filters.age,
       curriculum_tag: filters.curriculumTag,
       search: filters.search?.trim(),
+      offset: filters.offset || undefined,
     },
   });
 }

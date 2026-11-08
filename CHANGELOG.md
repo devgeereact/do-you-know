@@ -1,5 +1,13 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p7-home`, not deployed) — Home page: honest counts, areas for everyone, no adult sets up front
+- **Found in the live smoke test** (`docs/AUDIT.md`, 8 Nov): the home page counted quizzes from a list capped at 100 while the library holds 262, so the hero said "100 quizzes", subjects showed "0 quizzes" and "Show all" stopped short.
+- **Server (no migration):** `GET /categories` now carries `quiz_count` and `kids_count` (without 18+ sets) for each subject; `GET /quizzes` takes `offset` to walk past the first 100; `/quizzes/trending` never lists an 18+ set.
+- **Home:** hero, world and subject tiles use the real counts; adult sets stay out of Popular, Everyone and the first lists (the Adult chip still finds them); "Show all" fetches the rest of the library; subjects with nothing for children are not tiled.
+- **Four areas for everyone:** Words, Numbers, Science and Our world appear on the home page for guests too (for a set-up child they still start a learning session). A tap narrows the list to that area; a "Show everything" chip clears it on the phone and the desktop.
+- **Fix:** a guest who opens a learning link now sees "Ask a grown-up" and a Home button, not "Uh-oh" with a "Try again" that can never work.
+- Tests: backend (counts match the list, bad offset refused, adult sets never in trending), two browser tests, all existing suites unchanged.
+
 ## 7 November 2026 (branch `phase/p6-spread`, not deployed) — P6: science and humanities content
 - **23 quiz drafts (215 questions)**, not yet imported: 10 Science (including Computing) and 13 Humanities (three of them for ages 15 to 16), led by the tile formats (order, match, sort, gap). They fill the topic gaps: materials, forces, light, sound, electricity, earth and space, living things at the younger levels; timelines, places and capitals; and Christian religious knowledge (the Christian year, books of the Bible, people in the gospels). Christian only, as decided on 7 Nov.
 - **Finding:** the "at least 6 per cell" test was already met (Science 21 to 27 per level, Humanities 11 to 21), so P6 targeted topics and formats instead. Coverage report: `docs/LEARNING-DESIGN.md` section 8.

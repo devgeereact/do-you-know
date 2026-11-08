@@ -13,6 +13,7 @@ import { useDailyChallenge } from '@/hooks/useDailyChallenge';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { DESKTOP, useMediaQuery } from '@/hooks/useMediaQuery';
 import { useQuizCatalog } from '@/hooks/useQuizCatalog';
+import { listQuizzes } from '@/services/catalogService';
 import { useReveal } from '@/hooks/useReveal';
 import { useSwitches } from '@/hooks/useSwitches';
 import { useSession } from '@/hooks/useSession';
@@ -31,7 +32,7 @@ import {
   startAttempt,
 } from '@/services/gameService';
 import type { Category, Quiz } from '@/types';
-import type { AnswerResult, AttemptState, OverallRow } from '@/types/game';
+import type { AnswerResult, AttemptState, LearnArea, OverallRow } from '@/types/game';
 import { t } from '@/i18n';
 
 /** "31 Oct" from a London YYYY-MM-DD date. */
@@ -41,6 +42,9 @@ function shortDate(date: string): string {
     month: 'short',
   });
 }
+
+/** The public lists leave out 18+ sets; adults find them with the Adult age chip or in a subject. */
+const isKids = (q: Pick<Quiz, 'age_min'>): boolean => (q.age_min ?? 0) < 18;
 
 export function HomePage(): JSX.Element {
   useDocumentMeta({});
@@ -60,7 +64,7 @@ export function HomePage(): JSX.Element {
   const props = {
     catalog,
     daily,
-    trending: trending.quizzes,
+    trending: trending.quizzes.filter(isKids),
     trendingLoading: trending.loading,
     bestBySlug,
     slugOf,
@@ -83,7 +87,9 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
   const root = useRef<HTMLElement>(null);
   const { switches } = useSwitches();
   const { categories, quizzes } = catalog;
-  const featured = trending[0] ?? quizzes[0] ?? null;
+  const [area, setArea] = useState<LearnArea | null>(null);
+  const featured = trending[0] ?? quizzes.find(isKids) ?? null;
+  const kidsTotal = categories.reduce((n, c) => n + c.kids_count, 0);
   useReveal(root, [quizzes.length, trending.length, categories.length]);
 
   // Hero entrance: words rise, then the lead, buttons and proof; the frame lands with a tilt.
@@ -177,8 +183,11 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
               </a>
             </div>
             <dl data-hero-fade className="mt-8 flex flex-wrap gap-7">
-              <ProofStat value={quizzes.length} label={t.home.hero.quizzes} />
-              <ProofStat value={categories.length} label={t.home.hero.subjects} />
+              <ProofStat value={kidsTotal} label={t.home.hero.quizzes} />
+              <ProofStat
+                value={categories.filter((c) => c.kids_count > 0).length}
+                label={t.home.hero.subjects}
+              />
               <ProofStat value={0} label={t.home.hero.noAds} />
             </dl>
           </div>
@@ -188,7 +197,7 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
         </div>
       </section>
 
-      <LearnTiles />
+      <LearnTiles area={area} onPick={setArea} />
 
       <div className="mx-auto max-w-6xl px-6">
         <section
@@ -204,24 +213,31 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
 
         <section id="worlds" className="mt-14 scroll-mt-24">
           <SectionHead title={t.home.worldsTitle} lead={t.home.worldsLead} />
-          <WorldTiles categories={categories} quizzes={quizzes} />
+          <WorldTiles categories={categories} />
         </section>
 
         <section className="mt-14">
           <SectionHead title={t.home.subjectsTitle} lead={t.home.subjectsLead} />
-          <SubjectTiles categories={categories} quizzes={quizzes} />
+          <SubjectTiles categories={categories} />
         </section>
 
         <section className="mt-14">
           <SectionHead title={t.home.popularTitle} />
           <QuizRows
-            quizzes={(trending.length ? trending : quizzes).slice(0, 8)}
+            quizzes={(trending.length ? trending : quizzes.filter(isKids)).slice(0, 8)}
             bestBySlug={bestBySlug}
             slugOf={slugOf}
           />
         </section>
 
-        <AllQuizzes quizzes={quizzes} bestBySlug={bestBySlug} slugOf={slugOf} />
+        <AllQuizzes
+          quizzes={quizzes}
+          categories={categories}
+          area={area}
+          onClearArea={() => setArea(null)}
+          bestBySlug={bestBySlug}
+          slugOf={slugOf}
+        />
 
         <ParentsBand />
       </div>
@@ -575,19 +591,13 @@ function TopThisWeek(): JSX.Element {
 }
 
 /** The eight worlds; each opens the first subject that lives in it. */
-function WorldTiles({
-  categories,
-  quizzes,
-}: {
-  categories: Category[];
-  quizzes: Quiz[];
-}): JSX.Element {
+function WorldTiles({ categories }: { categories: Category[] }): JSX.Element {
   return (
     <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
       {WORLD_KEYS.map((key) => {
         const w = world(key);
         const cats = categories.filter((c) => categoryStyle(c.slug, c).world === key);
-        const count = quizzes.filter((q) => cats.some((c) => c.id === q.category_id)).length;
+        const count = cats.reduce((n, c) => n + c.kids_count, 0);
         const to = cats[0] ? `/c/${cats[0].slug}` : '/daily';
         return (
           <li key={key}>
@@ -629,17 +639,8 @@ const SPARE_SPAN: Record<number, string> = {
 };
 
 /** Subject tiles in full rows of six (three or two on smaller screens): gaps become suggestions. */
-function SubjectTiles({
-  categories,
-  quizzes,
-}: {
-  categories: Category[];
-  quizzes: Quiz[];
-}): JSX.Element {
-  const tiles = categories.map((c) => ({
-    c,
-    n: quizzes.filter((q) => q.category_id === c.id).length,
-  }));
+function SubjectTiles({ categories }: { categories: Category[] }): JSX.Element {
+  const tiles = categories.filter((c) => c.kids_count > 0).map((c) => ({ c, n: c.kids_count }));
   const spare = (6 - (tiles.length % 6)) % 6;
   const tile =
     'flex aspect-square flex-col items-center justify-center gap-1.5 rounded-[1.4rem] p-3 text-center transition-transform duration-200 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary';
@@ -739,22 +740,72 @@ function SuggestRow(): JSX.Element {
 
 const PREVIEW = 8;
 
+/** The first page of the catalogue holds 100 quizzes and the library is bigger: fetch the rest when asked. */
+function useFullLibrary(
+  quizzes: Quiz[],
+  categories: Category[],
+  enabled: boolean,
+): { pool: Quiz[]; loading: boolean } {
+  const [rest, setRest] = useState<Quiz[]>([]);
+  const [loading, setLoading] = useState(false);
+  const total = categories.reduce((n, c) => n + c.quiz_count, 0);
+  useEffect(() => {
+    if (!enabled || rest.length > 0 || quizzes.length === 0 || quizzes.length >= total) return;
+    let live = true;
+    setLoading(true);
+    void (async () => {
+      const more: Quiz[] = [];
+      for (let offset = quizzes.length; offset < total && more.length < 1000;) {
+        const page = await listQuizzes({ offset }).catch(() => [] as Quiz[]);
+        if (page.length === 0) break;
+        more.push(...page);
+        offset += page.length;
+      }
+      if (live) {
+        setRest(more);
+        setLoading(false);
+      }
+    })();
+    return () => {
+      live = false;
+    };
+  }, [enabled, quizzes.length, total, rest.length]);
+  const pool = useMemo(() => {
+    const seen = new Set<string>();
+    return [...quizzes, ...rest].filter((q) => !seen.has(q.id) && seen.add(q.id));
+  }, [quizzes, rest]);
+  return { pool, loading };
+}
+
 function AllQuizzes({
   quizzes,
+  categories,
+  area,
+  onClearArea,
   bestBySlug,
   slugOf,
 }: {
   quizzes: Quiz[];
+  categories: Category[];
+  area: LearnArea | null;
+  onClearArea: () => void;
   bestBySlug: Map<string, number>;
   slugOf: Map<string, string>;
 }): JSX.Element {
   const [age, setAge] = useState<number | null>(null);
   const [all, setAll] = useState(false);
-  const shown = age === null ? quizzes : quizzes.filter((q) => suitsAge(q, age));
-  const visible = all ? shown : shown.slice(0, PREVIEW);
+  const { pool, loading: loadingRest } = useFullLibrary(quizzes, categories, all || area !== null);
+  const byAge = age === null ? pool.filter(isKids) : pool.filter((q) => suitsAge(q, age));
+  const shown = area === null ? byAge : byAge.filter((q) => q.area === area);
+  const kidsTotal = categories.reduce((n, c) => n + c.kids_count, 0);
+  const total = age === null && area === null && !all ? kidsTotal : shown.length;
+  const visible = all || area !== null ? shown : shown.slice(0, PREVIEW);
   return (
-    <section className="mt-14">
-      <SectionHead title={t.home.allTitle} lead={t.home.pickCount(visible.length, shown.length)} />
+    <section id="all-quizzes" className="mt-14 scroll-mt-24">
+      <SectionHead
+        title={t.home.allTitle}
+        lead={t.home.pickCount(visible.length, Math.max(total, visible.length))}
+      />
       <div role="group" aria-label={t.home.whoLabel} className="mb-4 flex flex-wrap gap-2">
         <button
           type="button"
@@ -775,22 +826,31 @@ function AllQuizzes({
             {band.label}
           </button>
         ))}
+        {area !== null && (
+          <button type="button" onClick={onClearArea} className={chipClass(false)}>
+            {t.learn.browseAll}
+          </button>
+        )}
       </div>
       {shown.length === 0 ? (
-        <p className="rounded-2xl bg-surface p-6 text-center font-semibold text-content-muted">
-          {t.home.noneForAge}
+        <p className="rounded-2xl bg-surface p-6 text-center font-medium text-content-muted">
+          {loadingRest
+            ? t.home.loadingMore
+            : area !== null
+              ? t.learn.browseNone
+              : t.home.noneForAge}
         </p>
       ) : (
         <QuizRows quizzes={visible} bestBySlug={bestBySlug} slugOf={slugOf} />
       )}
-      {shown.length > PREVIEW && (
+      {area === null && shown.length > PREVIEW && (
         <div className="mt-4 flex justify-center">
           <button
             type="button"
             onClick={() => setAll((v) => !v)}
             className={buttonClasses('ghost')}
           >
-            {all ? t.home.showFewer : t.home.showAll(shown.length)}
+            {all ? t.home.showFewer : t.home.showAll(Math.max(total, shown.length))}
           </button>
         </div>
       )}
@@ -836,15 +896,26 @@ function PhoneHome({
   slugOf,
 }: HomeData): JSX.Element {
   const { user } = useSession();
+  const { level: childLevel } = useSwitches();
   const { items: unfinished } = useContinuePlaying();
   const { categories, quizzes } = catalog;
   const [subject, setSubject] = useState<string | null>(null);
   const name = user?.nickname || null;
-  const list = subject
-    ? quizzes.filter((q) => q.category_id === subject)
-    : trending.length
-      ? trending
-      : quizzes;
+  const [area, setArea] = useState<LearnArea | null>(null);
+  const { pool, loading: loadingMore } = useFullLibrary(
+    quizzes,
+    categories,
+    Boolean(subject || area),
+  );
+  // Children's lists leave out 18+ sets; everything else follows the chips.
+  const list =
+    subject || area
+      ? pool.filter(
+          (q) => isKids(q) && (!subject || q.category_id === subject) && (!area || q.area === area),
+        )
+      : trending.length
+        ? trending
+        : quizzes.filter(isKids);
 
   return (
     <main className="mx-auto grid max-w-xl gap-6 px-4 pb-6 pt-5 [&>*]:min-w-0">
@@ -855,9 +926,17 @@ function PhoneHome({
         <h1 className="text-[2rem] leading-tight">{t.home.mobileTitle}</h1>
       </section>
 
-      <LearnTiles />
-
-      <DailyCard daily={daily} compact />
+      {childLevel ? (
+        <>
+          <LearnTiles />
+          <DailyCard daily={daily} compact />
+        </>
+      ) : (
+        <>
+          <DailyCard daily={daily} compact />
+          <LearnTiles area={area} onPick={setArea} />
+        </>
+      )}
 
       <Link
         to="/daily"
@@ -972,6 +1051,15 @@ function PhoneHome({
             <span aria-hidden="true">→</span>
           </Link>
         )}
+        {area && (
+          <button
+            type="button"
+            onClick={() => setArea(null)}
+            className={cn(chipClass(false), 'mt-3')}
+          >
+            {t.learn.browseAll}
+          </button>
+        )}
         <ul className="mt-3 grid gap-2.5">
           {list.map((quiz) => (
             <li key={quiz.id}>
@@ -983,8 +1071,8 @@ function PhoneHome({
             </li>
           ))}
           {list.length === 0 && (
-            <li className="rounded-2xl bg-surface p-5 text-center font-semibold text-content-muted">
-              {t.home.empty}
+            <li className="rounded-2xl bg-surface p-5 text-center font-medium text-content-muted">
+              {loadingMore ? t.home.loadingMore : t.home.empty}
             </li>
           )}
         </ul>

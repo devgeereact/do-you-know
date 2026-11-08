@@ -1,5 +1,10 @@
 # Current task
 
+## Home page polish (branch `phase/p7-home`, 8 Nov 2026, committed locally, NOT pushed, NOT deployed)
+- Triggered by the owner's smoke-test request (findings in `docs/AUDIT.md`, 8 Nov) and "landing page needs a polish that will make it super attractive". Built so far: honest counts, areas for everyone, adult sets out of the front door, guest "Ask a grown-up" screen (details in `CHANGELOG.md`). No migration.
+- Checks: `pnpm check` and `bash scripts/test-backend.sh`, browser suite on the throwaway database: see the last commit. NOT TESTED: the live site with the new build (needs the release), a real child session on a phone.
+- Next: owner's "approved" to release; then the visual polish pass (hero, motion, cards) once the owner picks a direction; then fix the other smoke-test items (Studio level labels, daily calendar anchors, PWA update on next page change).
+
 ## P6: science and humanities content (branch `phase/p6-spread`, 7 Nov 2026, committed, NOT pushed, nothing imported)
 - P5 is LIVE (04a686d, migration 0020 applied after backup `db-pre-migrate-0020-20261107-163054.sql.gz`). Plan: `.planning/phases/P6-spread/P6-PLAN.md`.
 - Finding: the roadmap's "6 per cell" was already true, so P6 fills topics and formats. Built: 23 drafts (10 Science, 13 Humanities; 215 questions) in `backend/content/drafts/p6-*.txt`, guard tests, coverage report (`docs/LEARNING-DESIGN.md` section 8), review in `docs/AUDIT.md`. Christian only for religious knowledge.

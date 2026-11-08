@@ -8,12 +8,12 @@ Scope: https://doyouknow.space on a desktop window, read-only for the parent are
 
 **Worked.** Home, `/daily` (countdown, live board, streak), practice play with feedback, `/grown-ups` (parent sign-in recognised; Children, Switches and Contact tabs load; seven switches all off), Studio (To do, Library 262 quizzes and 5,689 questions all live, Check and publish, Import, Players), `/health`. No console errors on the pages visited.
 
-**Needs fixing (most important first).**
+**Needs fixing (most important first).** (Phone-width home checked after the window resized.)
 1. **Wrong counts on the home page.** The hero says "100 quizzes" and "Showing 8 of 100", and the subject tiles show "0 quizzes" for Science & Nature, Geography, History, Tech, Bible & Faith, Maths, English, Computing and more. Cause: the home counts the list returned by `GET /quizzes`, which is capped at 100 (`LIMIT 100` in `Catalog.php`), but the library holds 262. After the P3 and P6 imports the gap grows. Also "Show all 76 quizzes" appears after "100" for the same list.
-2. **Adult sets on a children's front door.** "Popular this week" lists "Brain and nerves (adults)" and "The senses (adults)"; the "Try one" card showed "Sport and games (ages 15 to 16)".
-3. **Forced capitals are still there** on the home page ("Try one, no sign-up", the sample quiz title, "Try a question", "Your progress", "Top this week"), against the calm type rule; 161 text elements on the home page are set at weight 600 or more.
+2. **Adult sets on a children's front door**, on desktop and on the phone home: "Everyone" and "Popular this week" list "Brain and nerves (adults)" and "The senses (adults)"; the "Try one" card showed "Sport and games (ages 15 to 16)".
+3. **Returning visitors see the previous build until they tap "Update now".** My first look at the home page was served from the old cache (it still had capitals and bold labels); after the update the current build is clean (no uppercase, no bold, no wide tracking, checked in the page). A child on a stored home-screen app can therefore see an older design for days. The update should apply on the next page change, not wait for a tap.
 4. **A dead end for a guest on `/learn/:area`:** "Uh-oh" with a "Try again" button that can never work. It should say plainly that a grown-up sets this up, with one button home.
-5. **"Suggest a subject" appears four times** in the subject grid, and empty subjects show "0 quizzes".
+5. **Phone home dead end and no areas.** The phone home ends after six quizzes with no way to browse the rest except 14 subject chips (General Knowledge first); the four areas (Words, Numbers, Science, Our world) are not offered to guests, and the "Carry on" card is cut off at two thirds width. On desktop the subject grid repeated "Suggest a subject" four times and showed "0 quizzes" for empty subjects (before the update).
 6. **Scene does not match the topic:** the animal quiz is drawn in the "Long ago" world with pyramids.
 7. **Feedback screen:** the "+1 · keep going" text is tiny and sits under the confetti; the friend (owl) is hidden behind the answer panel.
 8. **The Studio Library "Level" column still shows KS1, KS3 and All**, not the child-facing levels (Starters to Scholars).
