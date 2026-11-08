@@ -35,7 +35,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 
 ## Phases
 
-### P1: Clean-up and foundations
+### Phase 1: Clean-up and foundations (P1)
 
 **Goal.** The child path is tap-only, calm and token-based, and the safe defaults are in, so every later phase lands on a clean base.
 
@@ -58,7 +58,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 
 **Risks.** Adults lose their quick "I'm 18" path to feedback until P4: they use the contact email meanwhile (the Clerk account is not linked to play until P4). Untimed by default changes feel and pacing for existing players. Some e2e tests pin the old defaults. All three are called out in the phase report.
 
-### P2: Tap-only types with server grading
+### Phase 2: Tap-only types with server grading (P2)
 
 **Goal.** Every new answer format works end to end, graded on the server with the answer hidden until the child has answered.
 
@@ -77,7 +77,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 
 **Risks.** The largest phase, so it ships as two slices and 2.1 can go live without 2.2. Letter tiles show the letters of the word by design, so spelling is easier than free typing; decoy letters limit that. Dictation puts the word in the payload (practice only; the audit says so plainly). A validator or importer bug could let a bad question through, so the existing checks and the AI review stay in the loop.
 
-### P3: Literacy and numeracy content
+### Phase 3: Literacy and numeracy content (P3)
 
 **Goal.** Literacy and numeracy stop being the thin areas: at least 6 quiz sets in each area at every level (they have about 2 each today).
 
@@ -95,7 +95,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 
 **Risks.** Authoring volume and quality are the real cost; a person must check every question. The AI review cannot grade tile questions, so those get a manual pass. Word lists for spelling and dictation must be original wording. Live content and the repo seed have already diverged (46 versus 262 quizzes); live stays the source of truth and new content is exported to the repo only if you ask.
 
-### P4: Parent area
+### Phase 4: Parent area (P4)
 
 **Goal.** A parent signs in, sets up each child with no personal data, chooses the level and the switches, and hands the device over.
 
@@ -116,7 +116,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 
 **Risks.** Clerk sign-in cannot be tested locally without Clerk keys (secrets I will not handle). **Owner decision 7 Nov:** the owner tests sign-in on the live site, so locally it stays NOT TESTED and the audit records it as owner-tested after release. Guest history is never merged into an account (existing rule), so a child added by a parent starts fresh. Handing over on a shared device relies on the email-code lock; a PIN is a possible later change.
 
-### P5: Adapt, retry later, stickers, sound, mascot
+### Phase 5: Adapt, retry later, stickers, sound, mascot (P5)
 
 **Goal.** A session adapts to the child, comes back to mistakes, and feels alive: stars, stickers, a friendly owl and optional sound.
 
@@ -138,7 +138,7 @@ Sizes are relative effort, not dates. The order follows your brief; P3 content w
 
 **Risks.** The `step` for old content is coarse (three difficulties spread over five steps), so adaptivity can feel uneven until P3 and P6 add content. Thin pools at some levels. Motion and sound must stay calm. Replacing the home touches the most visited page, so its tests are written first and the old home is kept to compare.
 
-### P6: Humanities and science spread
+### Phase 6: Humanities and science spread (P6)
 
 **Goal.** Humanities and science cover their ground at every level, with the tile formats used where they teach best.
 
