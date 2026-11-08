@@ -44,11 +44,11 @@ const level = (min: number): string =>
           : 'scholars';
 
 describe('P6 science and humanities drafts', () => {
-  it('has 10 science and 10 humanities quizzes', () => {
+  it('has 10 science and 13 humanities quizzes', () => {
     const by = (prefix: string): number =>
       groups.filter(({ file }) => file.startsWith(prefix)).length;
     expect(by('p6-science')).toBe(10);
-    expect(by('p6-humanities')).toBe(10);
+    expect(by('p6-humanities')).toBe(13);
   });
 
   it('every quiz lands in the area its file says, at the level its age band says', () => {

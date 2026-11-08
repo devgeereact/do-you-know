@@ -38,7 +38,7 @@ const US =
 
 describe('P3 and P6 quiz drafts', () => {
   it('has the literacy and numeracy files', () => {
-    expect(files.length).toBeGreaterThanOrEqual(19);
+    expect(files.length).toBeGreaterThanOrEqual(20);
   });
 
   it('every question imports with no blocking problem and has a reason line', () => {
