@@ -1,5 +1,9 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — P1 housekeeping closed
+- The London-date helper existed twice (daily service and Studio validation). It now lives once in `src/lib/london.ts`; both old paths re-export it. Behaviour unchanged. New unit test covers winter, summer time, the midnight edge and that the copies are the same function.
+- Phase 1 itself (T1 to T6) shipped on 7 November (fc7b41e). Still deferred and unchanged: one `/me` fetch instead of four (touches the profile hooks P4/P5 rewrote; needs its own look), dead code listing (ImageKit helper, PostHog settings) for your approval.
+
 ## 8 November 2026 (branch `phase/p7-home`, after a22dd8c, not deployed) — Smoke-test leftovers
 - **Front door:** the "Try one" question on the desktop home now comes from a primary-age quiz (ages 11 and under) when one exists, so a teenage sport quiz is no longer the first thing a child sees.
 - **Feedback screen:** the friend (owl, turtle, planet) now stands above the answer panel instead of behind it, no longer blurred; the line under the verdict ("+1 · keep going") is larger and bolder.
