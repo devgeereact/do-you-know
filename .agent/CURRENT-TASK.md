@@ -2,8 +2,9 @@
 
 ## Goal run: phase 1 (branch `phase/p1-housekeeping`, 8 Nov 2026, committed, NOT pushed)
 - Phase 1 (P1 clean-up) was already LIVE (fc7b41e). The GSD tooling cannot see this project's `P1-cleanup` folder naming, so I checked P1's done criteria directly and closed the one deferred housekeeping item that was still real: the duplicated `londonToday` helper (test first, `src/lib/london.ts`, commit f269425). The branch also carries 228823a (smoke-test leftovers) from `phase/p7-home`.
-- Checks: `pnpm check` PASS (394 unit) · `pnpm verify` PASS (37/37 Apache) · e2e and backend not re-run (no backend or UI change since the last full run).
-- Still open from P1: one `/me` fetch instead of four; dead-code clean-up list (needs your OK to delete).
+- Also done (test first): one shared `/me` request (`getProfile` shares an in-flight call, forgets it on any profile change; session context uses it). Tests in `tests/unit/services/profileService.test.ts`.
+- Checks: `pnpm check` PASS (398 unit) · `npm run verify` PASS (37/37 Apache) · browser suite 86/86 PASS. Backend suites not re-run (no backend change).
+- Still open from P1: dead-code clean-up (ImageKit helper, PostHog settings); needs your OK to delete.
 
 ## Home page polish (branch `phase/p7-home`, 8 Nov 2026, committed locally, NOT pushed, NOT deployed)
 - Triggered by the owner's smoke-test request (findings in `docs/AUDIT.md`, 8 Nov) and "landing page needs a polish that will make it super attractive". Built so far: honest counts, areas for everyone, adult sets out of the front door, guest "Ask a grown-up" screen (details in `CHANGELOG.md`). No migration.

@@ -2,19 +2,47 @@ import { api, clearSession } from '@/lib/api';
 import type { AgeBand, MyMessage, Profile } from '@/types';
 import type { LearnRecord } from '@/types/game';
 
-/** The player's own profile. The server only ever returns the caller's row. */
+let profileRequest: Promise<Profile> | null = null;
+
+/** Forgets the request in flight, so the next caller sees what a change made here has just saved. */
+function profileChanged(): void {
+  profileRequest = null;
+}
+
+/** Runs a change to the profile; requests started before or during it are never reused. */
+async function change<T>(run: () => Promise<T>): Promise<T> {
+  profileChanged();
+  try {
+    return await run();
+  } finally {
+    profileChanged();
+  }
+}
+
+/**
+ * The player's own profile. The server only ever returns the caller's row. Callers that ask
+ * while a request is already on its way share it (the session, the daily and My games all ask on
+ * the same page load); nothing is kept once it has finished, and a change made through this
+ * service starts a new request, so the answer is never older than the last save.
+ */
 export function getProfile(): Promise<Profile> {
-  return api<Profile>('/me');
+  if (profileRequest) return profileRequest;
+  const request = api<Profile>('/me').finally(() => {
+    if (profileRequest === request) profileRequest = null;
+  });
+  profileRequest = request;
+  return request;
 }
 
 /** Sets the age band once; the server refuses a change afterwards. */
 export async function setAgeBand(band: AgeBand): Promise<void> {
-  await api<unknown>('/me/age-band', { body: { band } });
+  await change(() => api<unknown>('/me/age-band', { body: { band } }));
 }
 
 /** A generated nickname such as "BraveOtter42", saved straight away (first name or the one change). */
 export async function assignRandomNickname(): Promise<string> {
-  return (await api<{ nickname: string }>('/me/nickname/random', { body: {} })).nickname;
+  return (await change(() => api<{ nickname: string }>('/me/nickname/random', { body: {} })))
+    .nickname;
 }
 
 /** Four fresh generated nicknames nobody uses. Saves nothing. */
@@ -27,7 +55,8 @@ export async function getNicknameSuggestions(): Promise<string[]> {
  * against the blocked-words list and other players' names. 409 nickname_locked afterwards.
  */
 export async function setNickname(nickname: string): Promise<string> {
-  return (await api<{ nickname: string }>('/me/nickname', { body: { nickname } })).nickname;
+  return (await change(() => api<{ nickname: string }>('/me/nickname', { body: { nickname } })))
+    .nickname;
 }
 
 /** The player's own messages: what they sent and the site's replies. */
@@ -37,7 +66,7 @@ export async function getMyMessages(): Promise<{ items: MyMessage[]; can_write: 
 
 /** Clears the unread dot. */
 export async function markMessagesSeen(): Promise<void> {
-  await api<unknown>('/me/messages/seen', { body: {} });
+  await change(() => api<unknown>('/me/messages/seen', { body: {} }));
 }
 
 /** A teenager or adult writes back in their own thread. */
@@ -47,7 +76,7 @@ export async function replyToMessage(id: string, body: string): Promise<void> {
 
 /** Picks one of the preset avatars in src/lib/avatars.ts. */
 export async function setAvatar(avatarId: string): Promise<void> {
-  await api<unknown>('/me/avatar', { body: { avatar_id: avatarId } });
+  await change(() => api<unknown>('/me/avatar', { body: { avatar_id: avatarId } }));
 }
 
 /** A child's own steps, sessions and stickers. A guest has none (the server answers 403). */
@@ -57,6 +86,6 @@ export function getMyLearn(): Promise<LearnRecord> {
 
 /** Removes the player; attempts, settings and board rows go with it. */
 export async function deleteMyAccount(): Promise<void> {
-  await api<unknown>('/me/delete', { body: { confirmed: true } });
+  await change(() => api<unknown>('/me/delete', { body: { confirmed: true } }));
   clearSession(); // the server already revoked this guest token
 }

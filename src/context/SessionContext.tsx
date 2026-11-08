@@ -8,8 +8,9 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { api, ensureGuest, hasSession, signOutGuest } from '@/lib/api';
-import type { ChildLevel, ParentSwitches, Profile } from '@/types';
+import { ensureGuest, hasSession, signOutGuest } from '@/lib/api';
+import { getProfile } from '@/services/profileService';
+import type { ChildLevel, ParentSwitches } from '@/types';
 
 export interface SessionUser {
   id: string; // the player's profile id on the server
@@ -43,7 +44,7 @@ export function SessionProvider({ children }: { children: ReactNode }): JSX.Elem
 
   const load = useCallback(async (): Promise<SessionUser | null> => {
     try {
-      const me = await api<Profile>('/me');
+      const me = await getProfile();
       const next: SessionUser = {
         id: me.id,
         nickname: me.nickname,
