@@ -2,6 +2,31 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-08 · Live smoke test (guest and child path, parent area, Studio), by Claude Code in the owner's signed-in Chrome
+
+Scope: https://doyouknow.space on a desktop window, read-only for the parent area and Studio (nothing toggled, imported, published or deleted), one practice question answered as the signed-in guest. **NOT TESTED:** a real child session (hand-over would sign the parent out and needs an email code; the child path is covered by the browser suite, 82 of 82 on 7 Nov), the phone-width layout (the browser window would not resize the viewport), the new P3 and P6 content (not imported yet).
+
+**Worked.** Home, `/daily` (countdown, live board, streak), practice play with feedback, `/grown-ups` (parent sign-in recognised; Children, Switches and Contact tabs load; seven switches all off), Studio (To do, Library 262 quizzes and 5,689 questions all live, Check and publish, Import, Players), `/health`. No console errors on the pages visited.
+
+**Needs fixing (most important first).**
+1. **Wrong counts on the home page.** The hero says "100 quizzes" and "Showing 8 of 100", and the subject tiles show "0 quizzes" for Science & Nature, Geography, History, Tech, Bible & Faith, Maths, English, Computing and more. Cause: the home counts the list returned by `GET /quizzes`, which is capped at 100 (`LIMIT 100` in `Catalog.php`), but the library holds 262. After the P3 and P6 imports the gap grows. Also "Show all 76 quizzes" appears after "100" for the same list.
+2. **Adult sets on a children's front door.** "Popular this week" lists "Brain and nerves (adults)" and "The senses (adults)"; the "Try one" card showed "Sport and games (ages 15 to 16)".
+3. **Forced capitals are still there** on the home page ("Try one, no sign-up", the sample quiz title, "Try a question", "Your progress", "Top this week"), against the calm type rule; 161 text elements on the home page are set at weight 600 or more.
+4. **A dead end for a guest on `/learn/:area`:** "Uh-oh" with a "Try again" button that can never work. It should say plainly that a grown-up sets this up, with one button home.
+5. **"Suggest a subject" appears four times** in the subject grid, and empty subjects show "0 quizzes".
+6. **Scene does not match the topic:** the animal quiz is drawn in the "Long ago" world with pyramids.
+7. **Feedback screen:** the "+1 · keep going" text is tiny and sits under the confetti; the friend (owl) is hidden behind the answer panel.
+8. **The Studio Library "Level" column still shows KS1, KS3 and All**, not the child-facing levels (Starters to Scholars).
+9. **The Studio daily calendar** lists anchor quizzes such as "Geography (adults)" although the daily now deals mixed hands and never includes 18+ questions; it reads as if adults' questions will be asked.
+10. **The `/grown-ups` page shows plain "Loading…" for about two seconds**, and with no children yet it is mostly empty. A friendlier first-run (what a child gets, what the switches do) would help.
+
+**How to make it better.**
+- One honest source for counts (a `quiz_count` on each category and a total on `GET /categories`), and paging on the quiz list instead of a hard cap.
+- Make the four areas (Words, Numbers, Science, Our world) the front door for everyone, with the daily as the one big card and the sample question as a live, playable card.
+- Hide 18+ sets from every public list unless the viewer chose them; keep the Trivia switch for children.
+- Studio: show the child-facing level and a difficulty picker in the Library list, since learning steps follow difficulty and every import lands as "medium".
+- Phone-width and screen-reader passes on the new learning screens, and a real hand-over test by the owner.
+
 ## 2026-11-07 · P6 content review (science and humanities drafts)
 
 Reviewer: Claude Code authored 23 drafts (215 questions); one independent review agent then read every file cold as a fact-checker and primary teacher, with no access to my conclusions.
