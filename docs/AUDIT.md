@@ -2,6 +2,10 @@
 
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
+## 2026-11-08 · Phase 1 code review (standard depth, 12 files), by the GSD reviewer
+
+Result: 0 critical, 5 warnings, 5 info. Fixed with tests the same day: WR-01 (shared `/me` across sessions), WR-03 (DST in yesterday and the 7-day strip), the tap interception in WR-04. Open: WR-02 (out-of-order profile responses), WR-05 (`/grown-ups` loading with no timeout), the info items. Full report and resolution table: `.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`. Checks after the fixes: `pnpm check` 405 unit PASS, browser suite 86 of 86 PASS. NOT TESTED: a phone.
+
 ## 2026-11-08 · Phase 1 close-out (clean-up and foundations, shipped 7 Nov as fc7b41e), by Claude Code
 
 Scope: each "Done when" line of Phase 1 in `.planning/ROADMAP.md`, checked read-only on branch `phase/p1-housekeeping`. Commands run in this check: `pnpm vitest run <the five named files>` (5 files, 63 tests, all passed), the full `pnpm vitest run` (43 files, 398 tests, all passed), and `grep` over `src`, `tests`, `scripts`, `backend/src` and the config files. **Not run, by the owner's rule for this task:** any database, the PHP backend suites, the browser suite, the live site and a phone. Those results are NOT TESTED here, even where an older run passed; the test names are cited so they can be re-run.

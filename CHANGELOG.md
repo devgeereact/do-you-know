@@ -1,5 +1,11 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Phase 1 review fixes
+- **Found by the Phase 1 code review** (`.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`): the shared `/me` request could be handed to a different player after a hand-over or sign-out. It now carries a session counter and is never reused across one.
+- **Yesterday and the seven-day strip** were wrong for the first hour after the clocks go forward and could repeat a date on clock-change days (they subtracted 24-hour blocks). They now count calendar days (`londonDaysAgo`).
+- The friend on the play screen can no longer catch a tap.
+- Open and advisory: out-of-order profile responses in the session context, a timeout for `/grown-ups` if Clerk never loads, and five info items.
+
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — P1 housekeeping closed
 - The London-date helper existed twice (daily service and Studio validation). It now lives once in `src/lib/london.ts`; both old paths re-export it. Behaviour unchanged. New unit test covers winter, summer time, the midnight edge and that the copies are the same function.
 - **One `/me` fetch:** the session, the daily and My games each asked for the profile on the same page load. `getProfile()` now lets callers that ask while a request is in flight share it. Nothing is kept once it finishes, and every change made through the profile service (age band, nickname, avatar, messages seen, delete) forgets the request in flight, so an answer is never older than the last save. The session context now uses the same call. Limit: a token swap outside this service (hand-over) is not tracked; it ends in a full page navigation, so no request survives it.

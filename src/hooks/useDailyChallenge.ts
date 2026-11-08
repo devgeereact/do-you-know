@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { reportError } from '@/lib/sentry';
 import { useSession } from '@/hooks/useSession';
 import { getProfile } from '@/services/profileService';
+import { londonDaysAgo } from '@/lib/london';
 import { getDailyToday, hasFinishedDaily, londonToday } from '@/services/gameService';
 import type { Quiz } from '@/types';
 import { t } from '@/i18n';
@@ -22,7 +23,7 @@ interface UseDailyChallenge {
 
 /** Yesterday in London, as YYYY-MM-DD. */
 function londonYesterday(): string {
-  return londonToday(new Date(Date.now() - 24 * 60 * 60 * 1000));
+  return londonDaysAgo(1);
 }
 
 /**

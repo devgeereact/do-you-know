@@ -82,6 +82,15 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
   return data as T;
 }
 
+/**
+ * Counts every change of who this browser plays as (a new guest, a hand-over, signing out or a revoked
+ * token). Anything shared between callers, such as an in-flight `/me` request, must not outlive it.
+ */
+let epoch = 0;
+export function sessionEpoch(): number {
+  return epoch;
+}
+
 export function hasSession(): boolean {
   return token !== null;
 }
@@ -92,6 +101,7 @@ export async function ensureGuest(): Promise<void> {
   pendingGuest ??= api<StoredGuest>('/guest-sessions', { body: {} })
     .then((guest) => {
       token = guest.token;
+      epoch += 1;
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(guest));
       } catch {
@@ -111,6 +121,7 @@ export async function ensureGuest(): Promise<void> {
  */
 export function adoptGuestToken(guest: StoredGuest): void {
   token = guest.token;
+  epoch += 1;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(guest));
   } catch {
@@ -121,6 +132,7 @@ export function adoptGuestToken(guest: StoredGuest): void {
 /** Forgets this browser's guest token. */
 export function clearSession(): void {
   token = null;
+  epoch += 1;
   try {
     localStorage.removeItem(STORAGE_KEY);
   } catch {

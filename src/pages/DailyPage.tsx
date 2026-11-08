@@ -12,6 +12,7 @@ import { WORLD_KEYS, isWorld, type WorldKey } from '@/lib/art';
 import { gsap, useGSAP, REDUCED_MOTION } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { world } from '@/lib/worlds';
+import { londonDaysAgo } from '@/lib/london';
 import { londonToday } from '@/services/gameService';
 import { t } from '@/i18n';
 
@@ -115,9 +116,7 @@ export function DailyPage(): JSX.Element {
 
   const rows = board.data?.top ?? [];
   const average = today?.stats?.average ?? null;
-  const days = Array.from({ length: 7 }, (_, i) =>
-    londonToday(new Date(Date.now() - (6 - i) * 86400000)),
-  );
+  const days = Array.from({ length: 7 }, (_, i) => londonDaysAgo(6 - i));
 
   return (
     <main className="mx-auto flex h-full w-full max-w-6xl flex-col px-4 py-3 lg:px-6 lg:py-5">

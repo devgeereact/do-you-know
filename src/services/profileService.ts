@@ -1,8 +1,8 @@
-import { api, clearSession } from '@/lib/api';
+import { api, clearSession, sessionEpoch } from '@/lib/api';
 import type { AgeBand, MyMessage, Profile } from '@/types';
 import type { LearnRecord } from '@/types/game';
 
-let profileRequest: Promise<Profile> | null = null;
+let profileRequest: { epoch: number; promise: Promise<Profile> } | null = null;
 
 /** Forgets the request in flight, so the next caller sees what a change made here has just saved. */
 function profileChanged(): void {
@@ -22,16 +22,20 @@ async function change<T>(run: () => Promise<T>): Promise<T> {
 /**
  * The player's own profile. The server only ever returns the caller's row. Callers that ask
  * while a request is already on its way share it (the session, the daily and My games all ask on
- * the same page load); nothing is kept once it has finished, and a change made through this
- * service starts a new request, so the answer is never older than the last save.
+ * the same page load), but only while the browser is still playing as the same player: a new
+ * guest, a hand-over or a sign-out starts a new request. Nothing is kept once it has finished,
+ * and a change made through this service starts a new request, so a caller that asks after a
+ * save never gets an older answer. A caller already waiting on an older request still receives
+ * what it asked for.
  */
 export function getProfile(): Promise<Profile> {
-  if (profileRequest) return profileRequest;
-  const request = api<Profile>('/me').finally(() => {
-    if (profileRequest === request) profileRequest = null;
+  const epoch = sessionEpoch();
+  if (profileRequest?.epoch === epoch) return profileRequest.promise;
+  const promise = api<Profile>('/me').finally(() => {
+    if (profileRequest?.promise === promise) profileRequest = null;
   });
-  profileRequest = request;
-  return request;
+  profileRequest = { epoch, promise };
+  return promise;
 }
 
 /** Sets the age band once; the server refuses a change afterwards. */

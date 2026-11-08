@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v2.0
+milestone_name: Learning app
+status: executing
+stopped_at: GSD baseline written to `.planning/` (uncommitted)
+last_updated: "2026-11-08T02:22:15.064Z"
+last_activity: 2026-11-08 -- Phase 1 execution started
+progress:
+  total_phases: 6
+  completed_phases: 1
+  total_plans: 1
+  completed_plans: 1
+  percent: 17
+---
+
 # Project State
 
 ## Project Reference
@@ -5,14 +21,14 @@
 See: .planning/PROJECT.md (updated 2026-11-07)
 
 **Core value:** Children can play fair, trustworthy quizzes safely (server-graded, no personal data from children).
-**Current focus:** Phases 1 to 6 built; 1 to 5 live, P6 content waiting for Studio import. Phase 1 close-out (plan 01-01) executed 8 Nov 2026 through the GSD workflow: criteria checked, dead-code list ready, awaiting the owner's approval to remove it.
+**Current focus:** Phase 1 — Clean-up and foundations
 
 ## Current Position
 
-Phase: 0 of 6 (roadmap proposed, none started)
-Plan: none
-Status: Roadmap in `.planning/ROADMAP.md` proposed; waiting for Gate 3 approval
-Last activity: 2026-11-07 — Gates 1 and 2 approved; Stage 5 roadmap written; the daily upgrade (private hands, live board, crown) is deployed
+Phase: 1 (Clean-up and foundations) — EXECUTING
+Plan: 1 of 1
+Status: Executing Phase 1
+Last activity: 2026-11-08 -- Phase 1 execution started
 
 Progress: n/a
 

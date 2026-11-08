@@ -392,7 +392,9 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                 <div
                   data-q-host
                   aria-hidden="true"
-                  className={cn('absolute bottom-3 left-4 z-[3] md:bottom-6 md:left-7')}
+                  className={cn(
+                    'pointer-events-none absolute bottom-3 left-4 z-[3] md:bottom-6 md:left-7',
+                  )}
                 >
                   <Character
                     name={w.host}
