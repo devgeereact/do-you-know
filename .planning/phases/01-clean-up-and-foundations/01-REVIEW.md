@@ -154,7 +154,7 @@ _Depth: standard_
 
 | Finding | Outcome |
 | --- | --- |
-| WR-01 shared `/me` crossing sessions | **Fixed.** `lib/api.ts` exports `sessionEpoch()`, bumped on a new guest, hand-over and clear-session; `getProfile()` only joins a request sent under the same epoch. Tests: token swap between two calls, same-session sharing, failed change. |
+| WR-01 shared `/me` crossing sessions | **Fixed in two steps.** (1) `lib/api.ts` exports `sessionEpoch()`, bumped on a new guest, hand-over and clear-session; `getProfile()` only joins a request sent under the same epoch (tests: token swap between two calls, same-session sharing, failed change). (2) The verifier found that a late 401 from an old session could still wipe the new token, so `api()` now clears the session on a 401 only if the epoch is unchanged since the request was sent (tests in `tests/unit/lib/api.test.ts`: real epoch bumps, late 401 ignored, current-session 401 still clears). |
 | WR-03 yesterday and the 7-day strip around clock changes | **Fixed.** `londonDaysAgo` and `addDays` live in `lib/london.ts` and count calendar days; `useDailyChallenge` and `DailyPage` use them. Tests: 29 Mar 2027, 31 Oct 2027, a seven-day run, month and year ends. |
 | WR-04 character taps | **Fixed in part.** `pointer-events-none` on the character host. The md-and-up overlap with long answer lists was not reproduced on the desktop screenshots; NOT TESTED on a phone. |
 | WR-02 out-of-order responses in `SessionContext.load` and `useProfile.reload` | **Open (advisory).** Needs a per-consumer sequence check and a call to invalidate from game results; planned, not done here. Doc comment corrected to say "new callers". |

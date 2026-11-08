@@ -3,6 +3,7 @@
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Phase 1 review fixes
 - **Found by the Phase 1 code review** (`.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`): the shared `/me` request could be handed to a different player after a hand-over or sign-out. It now carries a session counter and is never reused across one.
 - **Yesterday and the seven-day strip** were wrong for the first hour after the clocks go forward and could repeat a date on clock-change days (they subtracted 24-hour blocks). They now count calendar days (`londonDaysAgo`).
+- A late "not signed in" answer for an old session no longer wipes the token of a new guest or a child just handed the device (found by the phase verifier).
 - The friend on the play screen can no longer catch a tap.
 - Open and advisory: out-of-order profile responses in the session context, a timeout for `/grown-ups` if Clerk never loads, and five info items.
 

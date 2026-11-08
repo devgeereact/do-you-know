@@ -25,6 +25,12 @@ interface StoredGuest {
 
 const STORAGE_KEY = 'dyk-guest';
 let token: string | null = readStoredToken();
+
+/**
+ * Counts every change of who this browser plays as (a new guest, a hand-over, signing out or a revoked
+ * token). Anything shared between callers, such as an in-flight `/me` request, must not outlive it.
+ */
+let epoch = 0;
 let pendingGuest: Promise<string> | null = null;
 
 function readStoredToken(): string | null {
@@ -58,6 +64,7 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
   const search = params.toString();
   const url = `${env.apiUrl.replace(/\/$/, '')}${path}${search ? `?${search}` : ''}`;
   const bearer = options.authToken ?? token;
+  const sentUnder = epoch;
   let response: Response;
   try {
     response = await fetch(url, {
@@ -76,17 +83,15 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
   const data = (await response.json().catch(() => null)) as
     (T & { error?: { code?: string } }) | null;
   if (!response.ok) {
-    if (response.status === 401 && options.authToken === undefined) clearSession();
+    // Only forget the token if the browser is still playing as the player this request was for;
+    // a late 401 from an old session must not wipe a new guest or a child just handed the device.
+    if (response.status === 401 && options.authToken === undefined && sentUnder === epoch)
+      clearSession();
     throw new ApiError(data?.error?.code ?? 'request_failed', response.status);
   }
   return data as T;
 }
 
-/**
- * Counts every change of who this browser plays as (a new guest, a hand-over, signing out or a revoked
- * token). Anything shared between callers, such as an in-flight `/me` request, must not outlive it.
- */
-let epoch = 0;
 export function sessionEpoch(): number {
   return epoch;
 }

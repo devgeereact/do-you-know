@@ -243,3 +243,43 @@ describe('guest session', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
+
+describe('api(): who the browser plays as', () => {
+  const stored = (token: string): { token: string; expires_at: string } => ({
+    token,
+    expires_at: future(),
+  });
+
+  it('counts every change of player in sessionEpoch', async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse(stored('guest-a')));
+    const { ensureGuest, adoptGuestToken, clearSession, sessionEpoch } = await load();
+    const start = sessionEpoch();
+    await ensureGuest();
+    expect(sessionEpoch()).toBe(start + 1);
+    adoptGuestToken(stored('child-b'));
+    expect(sessionEpoch()).toBe(start + 2);
+    clearSession();
+    expect(sessionEpoch()).toBe(start + 3);
+  });
+
+  it('a late 401 for an old session does not wipe the token of the new one', async () => {
+    const { api, adoptGuestToken, hasSession } = await load();
+    adoptGuestToken(stored('old-token'));
+    let reply: (r: Response) => void = () => undefined;
+    fetchMock.mockReturnValueOnce(new Promise<Response>((resolve) => (reply = resolve)));
+    const pending = api('/me');
+    adoptGuestToken(stored('new-token')); // a hand-over while the request is on its way
+    reply(jsonResponse({ error: { code: 'unauthorised' } }, 401));
+    await expect(pending).rejects.toMatchObject({ status: 401 });
+    expect(hasSession()).toBe(true);
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}').token).toBe('new-token');
+  });
+
+  it('a 401 for the current session still clears it', async () => {
+    const { api, adoptGuestToken, hasSession } = await load();
+    adoptGuestToken(stored('only-token'));
+    fetchMock.mockResolvedValueOnce(jsonResponse({ error: { code: 'unauthorised' } }, 401));
+    await expect(api('/me')).rejects.toMatchObject({ status: 401 });
+    expect(hasSession()).toBe(false);
+  });
+});
