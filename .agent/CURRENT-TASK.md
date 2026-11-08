@@ -1,5 +1,11 @@
 # Current task
 
+## Router 7, phone sizes, ImageKit (8 Nov 2026, branch `phase/p9-router-v7`, committed, NOT pushed)
+- Owner: "Fix all". Done: react-router 7.18.5; friend overlap on tablets fixed; ImageKit privacy line and CSP host removed; Dependabot #10 closed; size checks added (`tests/e2e/sizes.spec.ts`, 9 sizes, Chromium emulation).
+- Checks: `pnpm check` PASS (408) · browser suite PASS (113, 27 skipped by design) · `npm run verify` PASS earlier on router 7 (re-run before release).
+- Open: Next button below the fold on small phones for tall questions (needs a sticky answer sheet; its own task); `.env.example` ImageKit and PostHog lines (guard forbids me opening it); Safari and real-phone checks; the real Clerk sign-in; Studio imports and age bands; `mail_from`.
+- Release: needs "approved: push and release" for this branch.
+
 ## Owner calls built (8 Nov 2026, branch `phase/p8-owner-calls`, committed, NOT pushed, NOT released)
 - Owner said "go ahead". Built: 30 s cap on ranked and daily for declared teens and adults (af0f3cc, test first, `backend/tests/competition.php`); dead ImageKit and PostHog code removed; vulnerability triage in `docs/AUDIT.md`.
 - Not built: age-gate publish warning (the Studio's problems list blocks publishing; all 262 live quizzes have `age_min`). Not touched: privacy sentence about ImageKit, `.htaccess` CSP host, `.env.example`.

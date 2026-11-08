@@ -10,14 +10,14 @@ Updated 16 October 2026. Supabase was removed from the code on this date (ADR-00
 │                  Client browser / installed PWA                      │
 │   React 18 + Vite + Tailwind · service worker (Workbox)              │
 │   Static files from cPanel: SPA app shell                            │
-└──────┬───────────────────────┬───────────────┬──────────────┬────────┘
-       │ HTTPS JSON /api/v1     │ adult sign-in │ images       │ errors (optional)
-       ▼                       ▼ (/account)    ▼              ▼
-┌────────────────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐
-│ cPanel (same origin)   │ │   Clerk    │ │  ImageKit  │ │   Sentry   │
-│ api/api.php → private  │ │ (adults    │ │ (quiz cover│ │ (EU, PII   │
-│ PHP 8.2+ in            │ │  only)     │ │  images)   │ │  scrubbed) │
-│ ~/do-you-know-private          │ └────────────┘ └────────────┘ └────────────┘
+└──────┬───────────────────────┬───────────────┬───────────────────────┘
+       │ HTTPS JSON /api/v1     │ adult sign-in │ errors (optional)
+       ▼                       ▼ (/account)    ▼
+┌────────────────────────┐ ┌────────────┐ ┌────────────┐
+│ cPanel (same origin)   │ │   Clerk    │ │   Sentry   │
+│ api/api.php → private  │ │ (adults    │ │ (EU, PII   │
+│ PHP 8.2+ in            │ │  only)     │ │  scrubbed) │
+│ ~/do-you-know-private          │ └────────────┘ └────────────┘
 │ MySQL/MariaDB          │
 └────────────────────────┘
 ```
@@ -33,7 +33,7 @@ Updated 16 October 2026. Supabase was removed from the code on this date (ADR-00
   avatars) runs in the PHP API against MySQL/MariaDB.
 - Clerk is loaded lazily on `/account` only. Its session tokens are verified server-side
   with `clerkinc/backend-php`. Children never use accounts.
-- PostHog (optional, consent-gated) is configured through `VITE_POSTHOG_KEY`.
+- There is no analytics SDK (the PostHog settings were removed on 8 Nov 2026).
 
 ## 2. Directory layout
 
@@ -55,7 +55,6 @@ src/
 │   ├── avatars.ts     # 12 preset avatars (must match Player::AVATARS on the server)
 │   ├── env.ts         # validated, typed import.meta.env
 │   ├── gameErrors.ts  # API error code → friendly copy
-│   ├── imagekit.ts    # ImageKit URL builder (quiz cover images)
 │   ├── quizLabels.ts  # display labels
 │   ├── sentry.ts      # optional Sentry init (EU, PII scrubbing)
 │   └── utils.ts       # cn() and small helpers
@@ -86,7 +85,7 @@ may read copy from `i18n`, which imports nothing from the app.
 
 ## 3. Rendering and routing
 
-SPA with React Router. Prerendered SEO pages are not built yet.
+SPA with React Router 7. Prerendered SEO pages are not built yet.
 
 Browse pages render inside `AppLayout`: `SiteHeader` (logo home, and the main nav from
 tablet width), the page, `SiteFooter` (settings, parents and staff) and, on phones, the
@@ -135,7 +134,7 @@ to `index.html`; Workbox's `navigateFallback` does the same offline.
 
 - `vite-plugin-pwa` (Workbox `generateSW`) precaches the hashed app shell, icons and
   self-hosted fonts. Manifest: `orientation: any`, `display: standalone`.
-- **Runtime caching:** ImageKit → `CacheFirst` (30 days, 200 entries). Public catalogue
+- **Runtime caching:** public catalogue
   GETs only (`/api/v1/categories|quizzes|curriculum-tags|daily`) → `NetworkFirst`
   (5 s timeout, 5-minute expiry). Player routes (`/me`, `/attempts`, `/session`,
   `/guest-sessions`) are never cached.
@@ -190,8 +189,7 @@ The server has no Node. Full playbook and safety rules: `docs/07-operations/DEPL
 
 ## 9. Security posture
 
-- Browser-safe values only in `VITE_*`: API URL, Clerk publishable key, ImageKit URL
-  endpoint and public key, Sentry DSN, PostHog key.
+- Browser-safe values only in `VITE_*`: API URL, Clerk publishable key, Sentry DSN.
 - Database credentials, the Clerk secret or JWT key and the rate-limit key live only in
   the private `config.php`.
 - **Answers:** quiz versions (with answers) stay in MySQL. Public question payloads

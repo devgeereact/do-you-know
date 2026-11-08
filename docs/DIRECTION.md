@@ -30,7 +30,7 @@ A guest (no parent) can try a short session that saves nothing.
 | Typed nickname (13+), reply box, contact form, "I'm 18 or over" tick | **parent area only** | the child path no longer reaches any keyboard field; the age-band tick is no longer reachable by a child. The column and the API stay |
 | Daily challenge | stays, plays once a day; the Play tab stops sending children to a finished daily | fix, not removal |
 | Ranked label, uppercase answers | child path shows normal case, no "Ranked" tag | restyle, no feature lost |
-| Dead code (ImageKit helper, PostHog settings, unused columns) | **left in place**, listed for a later owner-approved clean-up | not on any child path |
+| Dead code (ImageKit helper, PostHog settings, unused columns) | **removed 8 Nov 2026** with the owner's approval (the unused columns stay) | not on any child path |
 
 **Kept as they are:** server-side grading and answer-hiding, the Studio, import and AI review, versions and audit, prerendered SEO pages, the release pipeline, UK English, the Pop & Ink tokens (softened), all 262 live quizzes.
 

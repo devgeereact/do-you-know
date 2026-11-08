@@ -3,6 +3,16 @@
 Every audit, review and checklist run for this project, newest first. Add new results here as a dated section; do not create separate audit files.
 
 
+
+## 2026-11-08 · Phone and tablet sizes, router 7, ImageKit removed, by Claude Code
+
+- **Phone checks 1 to 3, emulated.** New `tests/e2e/sizes.spec.ts` runs the guest, friend and child journeys at nine sizes (iPhone SE, 15, Pro Max, small Android, iPad mini, Air, landscape, 1280 and 1440 laptops) with touch on. Chromium only: Playwright's WebKit is not installed and installing it is a download that needs the owner's word. Real phones, Safari itself and the Clerk sign-in (check 4) are NOT TESTED.
+- **Found and fixed: the friend covered an answer on tablets.** At 768 to 1024 wide the friend (168 px) sat over an answer because the column reserved 40 px. It is now 96 px up to laptop width (`xl:`), with 128 px reserved from `md`, and the big friend and the old 40 px only from 1280. First attempt (reserve 216 px at `md`) pushed the Next button off tall iPad screens and was replaced.
+- **Open, not fixed: the Next button is below the fold on small phones for tall questions.** At 375x667 the sheet's Next button ends between 633 and 764 px (viewport 667) for number-keypad and similar questions, the same before and after this change. The player scrolls, or the round auto-advances after about three seconds ("Stay here" cancels). A proper fix makes the answer sheet stick to the bottom of the phone screen; it is a redesign of the sheet, so it is a separate task with its own phone check.
+- **react-router-dom 6.30.6 to 7.18.5.** Clears both runtime advisories (`pnpm audit --prod`: none). No code change was needed. `pnpm check` 408 unit, 86 browser tests and `npm run verify` (prerender and 37 Apache checks) all pass.
+- **ImageKit.** Verified that no picture can come from it: questions are built with `image_url: null`, the Studio has no picture field, and none of the 262 live quizzes has a cover. Removed the privacy sentence and the `.htaccess` CSP host. `.env.example` still names ImageKit and PostHog: the project guard forbids opening `.env*`, so the two lines are left for the owner.
+- **Dependabot #10** closed (major bumps of `actions/checkout` and `pnpm/action-setup` inside `deploy.yml`; Dependabot will raise it again).
+
 ## 2026-11-08 · Dependency alerts triaged and dead code removed (branch `phase/p8-owner-calls`), by Claude Code
 
 **GitHub reported 4 open alerts on `main`.** Read-only triage, nothing upgraded.

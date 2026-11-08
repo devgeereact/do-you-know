@@ -388,7 +388,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                   <span />
                 )}
               </div>
-              <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-10">
+              <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-32 xl:pb-10">
                 <div
                   data-q-host
                   aria-hidden="true"
@@ -406,7 +406,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                           : 'sad'
                         : 'happy'
                     }
-                    className="h-24 w-24 md:h-[10.5rem] md:w-[10.5rem]"
+                    className="h-24 w-24 xl:h-[10.5rem] xl:w-[10.5rem]"
                   />
                 </div>
                 <p

@@ -1,5 +1,11 @@
 # Changelog
 
+## 8 November 2026 (branch `phase/p9-router-v7`, not deployed) — Router 7, friend clear of answers on tablets, privacy line
+- `react-router-dom` 6.30.6 to 7.18.5 (closes the two runtime security advisories; no code change).
+- Play screen: on tablets the friend no longer sits over an answer (it stays 96 px up to laptop width and the column reserves matching room).
+- Privacy page no longer mentions ImageKit and the CSP no longer allows its host: no quiz can show a picture. Architecture, spec and direction docs updated to match.
+- New `tests/e2e/sizes.spec.ts`: guest, friend and child journeys at nine phone, tablet and laptop sizes.
+
 ## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Dead code removed
 - Removed the unused ImageKit helper and ImageKit and PostHog settings, the ImageKit service-worker cache rule and one CI variable. No visible change. Privacy sentence, `.htaccess` and `.env.example` left for you (`docs/AUDIT.md`, 8 Nov).
 

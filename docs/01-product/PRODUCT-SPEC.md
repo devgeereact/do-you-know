@@ -171,8 +171,7 @@ Super Admin only (Clerk subject in the private `admin_subjects` config, checked 
   no personalised ads to anyone under 18; analytics cookieless for under-13s; children
   never use accounts.
 - **UK GDPR / PECR:** optional analytics only after consent; privacy policy names every
-  processor actually in use (hosting provider, Clerk, ImageKit, Sentry, analytics
-  provider).
+  processor actually in use (hosting provider, Clerk, Sentry).
 - **Accessibility:** WCAG 2.2 AA; 48 px touch targets; 16 px minimum body text; visible
   focus; reduced-motion mode; never colour alone for right/wrong.
 - **Type-safe:** TypeScript strict, no implicit `any`.
