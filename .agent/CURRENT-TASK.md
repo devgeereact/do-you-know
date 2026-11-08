@@ -1,5 +1,7 @@
 # Current task
 
+- **8 Nov 2026, later: RELEASED.** Pushed to `main` at 8082450 (owner: "GO AHEAD APPROVED"); CI, Semgrep and Deploy passed; live `/`, health and daily return 200. Dependabot #11 and #8 closed; #10 left open (major bumps in deploy.yml, planned task). Phone checks still pending.
+
 ## Owner calls and Phase 1 wrap-up (8 Nov 2026, branch `phase/p1-housekeeping`, committed, NOT pushed)
 - Owner said "go with your best recommendation": defaults recorded as ADR-023 (`docs/08-change-management/DECISIONS.md`). GSD Phase 1 marked complete (`phase.complete`); STATE.md corrected (P2-P6 were built before GSD tracked them).
 - **Not done, on purpose:** push and release (needs "approved: push and release"), closing/merging Dependabot PRs, dead-code delete, Studio imports and age-band edits, `mail_from`.
