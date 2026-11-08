@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-11-07)
 
 **Core value:** Children can play fair, trustworthy quizzes safely (server-graded, no personal data from children).
-**Current focus:** v2.0 Learning app roadmap drafted (P1 to P6); waiting for the owner's approval (Gate 3). No phase started.
+**Current focus:** Phases 1 to 6 built; 1 to 5 live, P6 content waiting for Studio import. Phase 1 close-out (plan 01-01) executed 8 Nov 2026 through the GSD workflow: criteria checked, dead-code list ready, awaiting the owner's approval to remove it.
 
 ## Current Position
 
