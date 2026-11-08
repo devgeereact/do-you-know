@@ -183,7 +183,7 @@ Topic coverage, live today and what the drafts add:
 
 **Not covered by P6, for a later decision:** World religions are not planned: religious knowledge stays Christian only (owner, 7 Nov).
 
-Existing quizzes whose age bands straddle two levels. A level is read from the lowest age (`Areas::level`), so these land one level lower than their band suggests. No quiz was changed; any change is a Studio edit and a live content change that needs the owner's approval.
+Existing quizzes whose age bands straddle two levels. A level is read from the lowest age (`Areas::level`), so these land one level lower than their band suggests. On 8 Nov 2026 the owner approved the clear cases: the GCSE sets are now 15 to 16 and the four 11 to 14 sets are 12 to 14 (table below shows the bands as they were). The two early-years sets were left alone.
 
 | Quiz | Band | Shown at | Aimed at |
 |---|---|---|---|

@@ -1,5 +1,8 @@
 # Changelog
 
+## 8 November 2026 (live content, no code) — Studio: 61 drafts imported, odd age bands fixed
+- Imported the 38 P3 and 23 P6 quizzes (579 questions) as drafts in the Studio. Nothing is published. Age bands: eight GCSE sets now 15 to 16, four Key Stage 3 sets now 12 to 14. Details and the duplicate-drafts clean-up in `docs/AUDIT.md`.
+
 ## 8 November 2026 (branch `phase/p9-router-v7`, not deployed) — Router 7, friend clear of answers on tablets, privacy line
 - `react-router-dom` 6.30.6 to 7.18.5 (closes the two runtime security advisories; no code change).
 - Play screen: on tablets the friend no longer sits over an answer (it stays 96 px up to laptop width and the column reserves matching room).

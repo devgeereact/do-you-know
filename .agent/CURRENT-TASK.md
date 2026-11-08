@@ -1,5 +1,9 @@
 # Current task
 
+## Studio work done on the live site (8 Nov 2026)
+- 61 drafts imported (38 P3 + 23 P6, 579 questions), **none published**. Owner next, in the Studio: read each, set difficulty (easy, medium, hard; all are "medium" now), untick "Allow ranked rounds" on the five "Listen and spell" quizzes (the server already keeps dictation out of ranked rounds), then publish, then one release so the pages prerender. Read the Christian quiz in `p6-humanities-challengers` on your own terms: five questions mention John baptising Jesus or the Last Supper (as events in the gospels and as Maundy Thursday); they are narrative and calendar facts, not teaching about the sacraments, but ADR-023 says to leave sacraments out, so keep or cut each one.
+- Age bands fixed on 12 live quizzes. `mail_from` still unset: add `'mail_from' => 'no-reply@doyouknow.space'` to the private server config (SPF, DKIM, DMARC already exist).
+
 ## Router 7, phone sizes, ImageKit (8 Nov 2026, branch `phase/p9-router-v7`, committed, NOT pushed)
 - Owner: "Fix all". Done: react-router 7.18.5; friend overlap on tablets fixed; ImageKit privacy line and CSP host removed; Dependabot #10 closed; size checks added (`tests/e2e/sizes.spec.ts`, 9 sizes, Chromium emulation).
 - Checks: `pnpm check` PASS (408) · browser suite PASS (113, 27 skipped by design) · `npm run verify` PASS earlier on router 7 (re-run before release).
