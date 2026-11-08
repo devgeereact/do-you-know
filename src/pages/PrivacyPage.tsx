@@ -161,10 +161,6 @@ export function PrivacyPage(): JSX.Element {
             nothing is sent while the app works normally, and reports do not include nicknames or
             player numbers.
           </li>
-          <li>
-            <strong>ImageKit</strong> may deliver some quiz pictures. Like any website that sends a
-            picture, it sees your IP address and browser details.
-          </li>
         </ul>
         <p>
           Some of these companies may handle information outside the UK. Where they do, they use the
