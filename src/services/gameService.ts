@@ -132,15 +132,7 @@ export function getOverallBoard(period: OverallPeriod, limit = 50): Promise<Over
   return api<OverallBoard>('/leaderboards/overall', { query: { period, limit } });
 }
 
-/** Today's date in Europe/London, the calendar the daily challenge runs on. */
-export function londonToday(now: Date = new Date()): string {
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Europe/London',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(now);
-}
+export { londonToday } from '@/lib/london';
 
 /** Today's live daily challenge, or null when none is live yet. */
 export function getDailyToday(): Promise<DailyToday | null> {

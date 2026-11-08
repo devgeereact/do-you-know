@@ -310,15 +310,7 @@ export function validateQuestion(
 
 // ---- Dates ----
 
-/** Today's date in London (the server's calendar), as YYYY-MM-DD. */
-export function londonToday(now: Date = new Date()): string {
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Europe/London',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(now);
-}
+export { londonToday } from '@/lib/london';
 
 export function addDays(date: string, days: number): string {
   const d = new Date(`${date}T12:00:00Z`);
