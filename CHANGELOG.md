@@ -1,7 +1,7 @@
 # Changelog
 
 ## 7 November 2026 (branch `phase/p6-spread`, not deployed) — P6: science and humanities content
-- **23 quiz drafts (215 questions)**, not yet imported: 10 Science (including Computing) and 13 Humanities (three of them for ages 15 to 16), led by the tile formats (order, match, sort, gap). They fill the topic gaps: materials, forces, light, sound, electricity, earth and space, living things at the younger levels; timelines, places and capitals; and Christian religious knowledge (the Christian year, books of the Bible, church words). Christian only, as decided on 7 Nov.
+- **23 quiz drafts (215 questions)**, not yet imported: 10 Science (including Computing) and 13 Humanities (three of them for ages 15 to 16), led by the tile formats (order, match, sort, gap). They fill the topic gaps: materials, forces, light, sound, electricity, earth and space, living things at the younger levels; timelines, places and capitals; and Christian religious knowledge (the Christian year, books of the Bible, people in the gospels). Christian only, as decided on 7 Nov.
 - **Finding:** the "at least 6 per cell" test was already met (Science 21 to 27 per level, Humanities 11 to 21), so P6 targeted topics and formats instead. Coverage report: `docs/LEARNING-DESIGN.md` section 8.
 - Guard tests: `p3Drafts.test.ts` now covers both P3 and P6 files with the real subjects; new `p6Drafts.test.ts` checks area, level, tile use and the Christian-only rule. No code or database change; nothing goes live until the owner imports the drafts.
 

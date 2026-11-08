@@ -179,7 +179,7 @@ Topic coverage, live today and what the drafts add:
 | Living things and habitats | animals and plants sets | Starters: living or not living; Explorers: food chains and habitats |
 | History and timelines | one History set per band, Egypt, Greece, Tudors, Kings and Queens, Stone Age, GCSE, world history | Explorers: before and after; Adventurers: a timeline of Britain; Challengers: the twentieth century and before; Scholars: the Cold War and after (all with order and sort) |
 | Places | one Geography set per band, continents, oceans, UK, capitals | Explorers: continents and oceans; Adventurers: Europe, countries and capitals; Scholars: plate tectonics, rivers and climate |
-| Christian religious knowledge | 9 topics at every level (Christian only) | Starters: Christmas story, Easter and other celebrations; Explorers: the Christian year; Adventurers: books of the Bible; Challengers: church, gospels and the Last Week; Scholars: Acts and the letters |
+| Christian religious knowledge | 9 topics at every level (Christian only) | Starters: Christmas story, Easter and other celebrations; Explorers: the Christian year; Adventurers: books of the Bible; Challengers: people, gospels and the Last Week; Scholars: Acts and the letters |
 
 **Not covered by P6, for a later decision:** World religions are not planned: religious knowledge stays Christian only (owner, 7 Nov).
 
