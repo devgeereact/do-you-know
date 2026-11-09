@@ -58,3 +58,6 @@ __pycache__/
 graphify-out/
 .graphify*
 *.graphify-bak
+
+# GSD planning scratch (local only)
+.planning/
