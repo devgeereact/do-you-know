@@ -1,0 +1,24 @@
+# A daily, read-only check: are there published quizzes or subjects whose search page has not been built yet?
+# It only looks at the public site and never releases anything (deploys stay on push to main, see deploy.yml).
+# When pages are missing the run fails, which is the nudge to run Deploy once (Actions > Deploy > Run workflow).
+name: Page check
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Look for pages with no prerendered head
+        run: node scripts/prerender-gap.mjs --fail-on-gap

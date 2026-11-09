@@ -1,7 +1,7 @@
 # Current task
 
 ## Content pipeline, later on 9 Nov: committed on `feat/content-pipeline`, NOT pushed
-- Built test-first: the "read five first" dialog before a batch publishes (`AdminBatches::sample`, `BatchScreen`), and slice 4 as a daily gap check (`scripts/prerender-gap.mjs`, a `schedule` trigger and a `gap` job in `deploy.yml`). Both need a release (code only, no migration); the schedule only starts once this is on `main`. Next: slices 5 and 6.
+- Built test-first: the "read five first" dialog before a batch publishes (`AdminBatches::sample`, `BatchScreen`), and slice 4 as a daily report-only gap check (`scripts/prerender-gap.mjs`, `.github/workflows/page-check.yml`; my first version put a schedule into `deploy.yml`, which the project guard rightly refused, so CI went red on 10fef9c until it was moved out). Next: slices 5 and 6.
 
 ## Content pipeline (9 Nov 2026, LIVE: main 26d71e9; migration 0021 applied after backup `db-pre-migrate-0021-20261109-012239.sql.gz`)
 - Owner: "just implement the content pipeline". Built test-first: **slice 3** (Batches screen: ready or needs a look, bulk difficulty, level and ranked, publish at a pace, undo; `AdminBatches.php`, `BatchScreen.tsx`), **slice 1** (house-rule warnings: `HouseRules.php`, `src/lib/houseRules.ts`, shared word list `backend/rules/house-rules.json`, shown in the editor and import preview) and **slice 2** (an import is safe to repeat: content fingerprint, batch id, `GET /admin/quizzes?batch=`; Import screen reads as you type, takes up to 40 files, AI review is its own button). Design and defaults: `docs/CONTENT-PIPELINE-DESIGN.md`, ADR-024.

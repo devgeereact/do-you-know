@@ -2,8 +2,6 @@
 # Checks and build run first; any failure stops before upload. A failed smoke test restores the
 # previous files automatically (snapshot in ~/backups/<project>/releases on the server).
 # Docs-only pushes do not deploy. A commit message with [skip ci] does not deploy.
-# Every day at 04:17 UTC a short check looks for quiz and subject pages that are published but have no prerendered
-# head yet (scripts/prerender-gap.mjs) and releases only then, so publishing in the Studio never needs a manual release.
 # Secrets (set by ~/Developer/build-kit/scripts/setup-github-deploy.zsh): CPANEL_SSH_KEY, CPANEL_KNOWN_HOSTS.
 name: Deploy
 
@@ -12,8 +10,6 @@ on:
     branches: [main]
     paths-ignore: ["docs/**", "**/*.md", ".agent/**"]
   workflow_dispatch:
-  schedule:
-    - cron: "17 4 * * *"
 
 permissions:
   contents: read
@@ -23,23 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  gap:
-    if: github.event_name == 'schedule'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      release: ${{ steps.gap.outputs.release }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .node-version
-      - id: gap
-        run: node scripts/prerender-gap.mjs
-
   deploy:
-    needs: [gap]
-    if: ${{ always() && (github.event_name != 'schedule' || needs.gap.outputs.release == 'true') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
