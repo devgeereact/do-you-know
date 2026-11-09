@@ -1,0 +1,21 @@
+{
+  "_note": "The single word list behind the Studio's house-rule warnings. Read by backend/src/HouseRules.php and src/lib/houseRules.ts, which are tested against each other. Whole words only, any case.",
+  "religious_categories": ["bible-faith", "bible-and-faith"],
+  "us_spelling": {
+    "color": "colour", "colors": "colours", "colored": "coloured", "favorite": "favourite", "favorites": "favourites",
+    "neighbor": "neighbour", "neighbors": "neighbours", "behavior": "behaviour", "center": "centre", "centers": "centres",
+    "theater": "theatre", "realize": "realise", "realized": "realised", "organize": "organise", "organized": "organised",
+    "analyze": "analyse", "gray": "grey", "defense": "defence", "honor": "honour", "humor": "humour", "flavor": "flavour",
+    "labor": "labour", "harbor": "harbour", "jewelry": "jewellery", "catalog": "catalogue", "traveling": "travelling",
+    "math": "maths", "mom": "mum"
+  },
+  "other_faith": [
+    "islam", "islamic", "muslim", "muslims", "quran", "koran", "hindu", "hindus", "hinduism", "buddhism", "buddhist",
+    "buddhists", "sikh", "sikhs", "sikhism", "judaism", "mosque", "synagogue", "gurdwara"
+  ],
+  "sacrament": [
+    "baptise", "baptised", "baptises", "baptising", "baptism", "baptize", "baptized", "baptizing", "communion",
+    "eucharist", "sacrament", "sacraments", "last supper", "saint", "saints", "pope", "rosary", "purgatory",
+    "transubstantiation"
+  ]
+}

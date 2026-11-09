@@ -88,6 +88,15 @@ $detail = $r['body'];
 check('saving returns no problems for a valid work copy', $r['status'] === 200 && $detail['problems'] === [] && count($detail['questions']) === 3);
 check('saved questions start unchecked with ids and a default scene', !in_array(true, array_column($detail['questions'], 'checked'), true)
     && count(array_filter(array_column($detail['questions'], 'id'))) === 3 && $detail['questions'][0]['scene'] === null && $detail['questions'][0]['scene_default'] === 'space');
+// House rules: warnings come with the detail, and a warning is never a problem (it does not block publishing).
+check('the detail carries house-rule warnings', array_key_exists('warnings', $detail) && in_array('no_min_age', array_column($detail['warnings'], 'code'), true) && $detail['problems'] === []);
+$r = admin('POST', '/quizzes', ['title' => 'Cms Warn '.$tag, 'category' => $subject, 'age_min' => 12, 'age_max' => 14,
+    'questions' => array_map($question, ["What color is cms $word one?", "Cms warn $word two?", "Cms warn $word three?"])]);
+$warnId = $r['body']['id'] ?? '';
+$w = admin('GET', '/quizzes/'.$warnId)['body']['warnings'] ?? [];
+check('US spelling is warned on the question that has it, and only there', count($w) === 1 && $w[0]['code'] === 'us_spelling' && $w[0]['index'] === 0 && $w[0]['level'] === 'warning');
+check('an age band inside one level gives no age warning', !in_array('age_spans_levels', array_column($w, 'code'), true) && !in_array('no_min_age', array_column($w, 'code'), true));
+admin('POST', '/quizzes/'.$warnId.'/delete');
 $r = admin('POST', '/quizzes/'.$id, ['questions' => [['type' => 'essay']]]);
 check('saving keeps problems instead of refusing', $r['status'] === 200 && in_array('type', array_column($r['body']['problems'], 'field'), true));
 check('a problem names its question', $r['body']['problems'][array_search('type', array_column($r['body']['problems'], 'field'))]['index'] === 0);

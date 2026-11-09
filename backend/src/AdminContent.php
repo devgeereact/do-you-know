@@ -15,7 +15,7 @@ namespace Dyk;
  * GET  /admin/quizzes?status=draft|review|published|retired&category=<slug>&ks=KS1..KS4&q=<text>
  *      200 {"items":[{id,slug,title,category:{slug,name}|null,ks,status,in_review,version,question_count,
  *                      plays,right_rate,updated_at,publish_at,has_draft}]}
- * GET  /admin/quizzes/{id}      200 {"quiz":{...},"questions":[...],"versions":[...],"problems":[...]}
+ * GET  /admin/quizzes/{id}      200 {"quiz":{...},"questions":[...],"versions":[...],"problems":[...],"warnings":[...]}
  * POST /admin/quizzes           {title,category,ks?,intro?,difficulty?,time_limit_seconds?,age_min?,age_max?,questions?,imported?,ai_fixes?} 201 {id,slug}
  * POST /admin/quizzes/{id}      {meta?,questions?}  save the work copy
  * POST /admin/quizzes/{id}/append   {questions:[...],imported?,ai_fixes?}
@@ -142,6 +142,8 @@ final class AdminContent
                 'created_at' => Database::utc($v['created_at']), 'question_count' => (int) $v['question_count'],
                 'live' => $v['id'] === $live], $versions->fetchAll()),
             'problems' => $this->problems($row, $work),
+            // House rules (slice 1): shown beside the quiz, never blocking. See HouseRules.
+            'warnings' => HouseRules::check($this->contentQuiz($row, $work)),
         ];
     }
 
