@@ -534,4 +534,29 @@ $list = admin('GET', '/quizzes?batch='.$batch)['body']['items'] ?? [];
 check('the Studio list can show one batch on its own', count($list) === 1 && $list[0]['id'] === $first['body']['id']);
 check('a bad batch filter is refused', admin('GET', '/quizzes?batch=nope')['status'] === 422);
 check('create refuses a bad batch id', admin('POST', '/quizzes', ['title' => 'X', 'category' => $subject, 'batch' => 'nope'])['status'] === 422);
+// ---- Ready, and a paced publish (slice 3) ----
+$pb = Database::uuid();
+$mk = fn(string $label, string $extra = ''): string => admin('POST', '/quizzes', ['title' => "Cms Pace $label $tag", 'category' => $subject, 'age_min' => 9, 'age_max' => 11,
+    'intro' => 'An original fixture quiz.', 'imported' => true, 'batch' => $pb,
+    'questions' => array_map($question, ["Cms pace $word $label one$extra?", "Cms pace $word $label two?", "Cms pace $word $label three?"])])['body']['id'];
+$qa = $mk('A'); $qb = $mk('B'); $qc = $mk('C'); $qd = $mk('D', ' color');
+$s = admin('GET', '/batches/'.$pb);
+check('a batch sorts its quizzes into ready and needs a look', $s['status'] === 200 && $s['body']['counts']['total'] === 4 && $s['body']['counts']['ready'] === 3 && $s['body']['counts']['look'] === 1);
+$byId = array_column($s['body']['quizzes'], null, 'id');
+check('the one with a warning needs a look, and says why', $byId[$qd]['state'] === 'look' && $byId[$qd]['warnings'] === 1 && $byId[$qa]['state'] === 'ready');
+check('the batch list shows this batch', in_array($pb, array_column(admin('GET', '/batches')['body']['items'], 'id'), true));
+check('a bad pace is refused', admin('POST', '/batches/'.$pb.'/publish', ['per_day' => -1])['status'] === 422 && admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 'x'])['status'] === 422 && admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 500])['status'] === 422);
+check('an unknown batch is 404', admin('GET', '/batches/'.Database::uuid())['status'] === 404);
+$r = admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 2]);
+check('publish takes the ready ones and skips the one that needs a look', $r['status'] === 200 && $r['body']['published'] === 3 && count($r['body']['skipped']) === 1 && $r['body']['skipped'][0]['id'] === $qd);
+$st = fn(string $id): array => Database::one($db, 'SELECT status,publish_at FROM quizzes WHERE id=?', [$id]);
+check('two go live now', $st($qa)['status'] === 'published' && strtotime($st($qa)['publish_at'].' UTC') <= time() && strtotime($st($qb)['publish_at'].' UTC') <= time());
+check('the third is scheduled for tomorrow', $st($qc)['status'] === 'published' && strtotime($st($qc)['publish_at'].' UTC') > time());
+check('the one that needed a look is still a draft', $st($qd)['status'] === 'draft');
+$s2 = admin('GET', '/batches/'.$pb)['body'];
+check('the batch now counts live, scheduled and needs a look', $s2['counts']['live'] === 2 && $s2['counts']['scheduled'] === 1 && $s2['counts']['look'] === 1);
+$u = admin('POST', '/batches/'.$pb.'/undo');
+check('undo takes back only what has not gone live yet', $u['status'] === 200 && $u['body']['undone'] === 1 && $st($qc)['status'] === 'retired' && $st($qa)['status'] === 'published');
+check('publishing again with nothing ready changes nothing', admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 0])['body']['published'] === 0);
+
 fwrite(STDOUT, "$count cms checks passed\n");

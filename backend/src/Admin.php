@@ -116,6 +116,14 @@ final class Admin
                 };
             }
         }
+        $batches = new AdminBatches($this->db, $this, $content);
+        if ($get && $path === '/admin/batches') { return $batches->list(); }
+        if (preg_match("~^/admin/batches/$uuid(?:/(publish|undo))?$~D", $path, $m)) {
+            $action = $m[2] ?? '';
+            if ($get && $action === '') { return $batches->detail($m[1]); }
+            if ($post && $action === 'publish') { return $batches->publish($m[1], $body); }
+            if ($post && $action === 'undo') { return $batches->undo($m[1]); }
+        }
         if ($get && $path === '/admin/todo') { return $ops->todo(); }
         if ($get && $path === '/admin/stats') { return $ops->stats(); }
         if ($path === '/admin/daily') {
