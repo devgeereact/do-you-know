@@ -36,6 +36,7 @@ const CheckScreen = lazy(() => import('./CheckScreen').then((m) => ({ default: m
 const ImportScreen = lazy(() =>
   import('./ImportScreen').then((m) => ({ default: m.ImportScreen })),
 );
+const BatchScreen = lazy(() => import('./BatchScreen').then((m) => ({ default: m.BatchScreen })));
 const GeneratorScreen = lazy(() =>
   import('./GeneratorScreen').then((m) => ({ default: m.GeneratorScreen })),
 );
@@ -123,6 +124,7 @@ const NAV: {
   { to: '/admin/library', label: 'Library', icon: 'book', group: 'Content' },
   { to: '/admin/check', label: 'Check & publish', icon: 'check', count: 'check', group: 'Content' },
   { to: '/admin/import', label: 'Import', icon: 'up', group: 'Content' },
+  { to: '/admin/batch', label: 'Batches', icon: 'book', group: 'Content' },
   { to: '/admin/generator', label: 'Generator', icon: 'spark', group: 'Content' },
   { to: '/admin/subjects', label: 'Subjects', icon: 'tag', group: 'Content' },
   { to: '/admin/calendar', label: 'Daily calendar', icon: 'cal', group: 'Site' },
@@ -340,6 +342,8 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
                   <Route path="edit/:id" element={<EditorScreen />} />
                   <Route path="check" element={<CheckScreen />} />
                   <Route path="import" element={<ImportScreen />} />
+                  <Route path="batch" element={<BatchScreen />} />
+                  <Route path="batch/:id" element={<BatchScreen />} />
                   <Route path="generator" element={<GeneratorScreen />} />
                   <Route path="calendar" element={<CalendarScreen />} />
                   <Route path="players" element={<PlayersScreen />} />

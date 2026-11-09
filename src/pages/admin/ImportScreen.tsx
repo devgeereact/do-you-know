@@ -74,6 +74,8 @@ export function ImportScreen(): JSX.Element {
   const [over, setOver] = useState(false);
   const [busy, setBusy] = useState(false);
   const [outcomes, setOutcomes] = useState<Outcome[]>([]);
+  // The batch the last Add made, so the results can lead straight to it.
+  const [lastBatch, setLastBatch] = useState<string | null>(null);
   const quizzes = useLoad(() => client.quizzes(), []);
   const gen = useLoad(() => client.generator(), [client]);
   const reviewReady = gen.data?.review_ready === true;
@@ -240,6 +242,7 @@ export function ImportScreen(): JSX.Element {
     const results: Outcome[] = [];
     // One id for this Add: the quizzes it makes can be listed together, and pressing it twice repeats nothing.
     const batch = crypto.randomUUID();
+    let createdNew = 0;
     for (const g of todo) {
       const questions = g.rows.map(rowToContent);
       const target = targetOf(g);
@@ -257,6 +260,7 @@ export function ImportScreen(): JSX.Element {
             batch,
             questions,
           });
+          if (!made.duplicate) createdNew += 1;
           results.push({
             key: g.key,
             ok: true,
@@ -293,6 +297,7 @@ export function ImportScreen(): JSX.Element {
       }
     }
     setOutcomes(results);
+    setLastBatch(createdNew > 0 ? batch : null);
     setBusy(false);
     refreshCounts();
     quizzes.reload();
@@ -698,6 +703,13 @@ export function ImportScreen(): JSX.Element {
           {outcomes.length > 0 && (
             <Panel className="mt-4 grid gap-2">
               <h2 className="font-display text-lg font-extrabold">Results</h2>
+              {lastBatch && (
+                <div>
+                  <Link to={`/admin/batch/${lastBatch}`}>
+                    <Button size="sm">Review and publish this batch</Button>
+                  </Link>
+                </div>
+              )}
               {outcomes.map((o) => (
                 <div key={o.key} className="text-sm">
                   <span className={o.ok ? 'font-bold text-correct' : 'font-bold text-wrong'}>

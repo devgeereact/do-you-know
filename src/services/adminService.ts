@@ -234,6 +234,62 @@ export interface QuizMetaPatch {
   difficulty?: Difficulty;
   time_limit_seconds?: number | null;
   is_ranked?: boolean;
+  age_min?: number | null;
+  age_max?: number | null;
+}
+
+/** Where a quiz of a batch stands: ready, needs a look, scheduled for a later day, live, or retired. */
+export type BatchState = 'ready' | 'look' | 'scheduled' | 'live' | 'retired';
+
+export interface BatchQuiz {
+  id: string;
+  slug: string;
+  title: string;
+  category: { slug: string | null; name: string | null };
+  level: string | null;
+  age_min: number | null;
+  age_max: number | null;
+  difficulty: Difficulty;
+  is_ranked: boolean;
+  questions: number;
+  status: QuizListItem['status'];
+  publish_at: string | null;
+  state: BatchState;
+  problems: number;
+  warnings: number;
+  /** Why it needs a look: blocking problems first, then house-rule warnings. */
+  reasons: string[];
+}
+
+export interface BatchSummary {
+  id: string;
+  counts: {
+    total: number;
+    ready: number;
+    look: number;
+    scheduled: number;
+    live: number;
+    retired: number;
+    questions: number;
+  };
+  quizzes: BatchQuiz[];
+}
+
+export interface BatchListItem {
+  id: string;
+  started_at: string;
+  quizzes: number;
+  drafts: number;
+  published: number;
+  retired: number;
+}
+
+export interface BatchPublished {
+  published: number;
+  per_day: number;
+  first: string | null;
+  last: string | null;
+  skipped: { id: string; title: string; reason: string }[];
 }
 
 export interface NewQuiz {
@@ -487,6 +543,12 @@ export function adminClient(getToken: GetToken) {
     quizzes: (filter: { status?: QuizStatus; category?: string; ks?: KeyStage; q?: string } = {}) =>
       get<{ items: QuizListItem[] }>('/admin/quizzes', filter).then((r) => r.items),
     quiz: (id: string) => get<QuizDetail>(quiz(id)),
+    batches: () => get<{ items: BatchListItem[] }>('/admin/batches').then((r) => r.items),
+    batch: (id: string) => get<BatchSummary>(`/admin/batches/${id}`),
+    publishBatch: (id: string, body: { per_day: number; start?: string }) =>
+      post<BatchPublished>(`/admin/batches/${id}/publish`, body),
+    undoBatch: (id: string) =>
+      post<{ undone: number; kept_live: number }>(`/admin/batches/${id}/undo`),
     createQuiz: (body: NewQuiz) =>
       post<{ id: string; slug: string; duplicate: boolean }>('/admin/quizzes', body),
     saveQuiz: (id: string, body: { meta?: QuizMetaPatch; questions?: QuestionContent[] }) =>
