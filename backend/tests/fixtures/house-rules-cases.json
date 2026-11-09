@@ -1,0 +1,44 @@
+[
+  { "name": "a clean quiz", "expect": [],
+    "quiz": { "category": "maths", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "What is half of 18?", "explanation": "Nine.", "options": [{ "label": "9", "correct": true }, { "label": "8", "correct": false }] } ] } },
+  { "name": "US spelling in a prompt", "expect": ["us_spelling@0"],
+    "quiz": { "category": "maths", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "What color is the sky?", "explanation": "Blue.", "options": [{ "label": "blue", "correct": true }, { "label": "red", "correct": false }] } ] } },
+  { "name": "US spelling in an answer and a reason, one warning per question", "expect": ["us_spelling@1"],
+    "quiz": { "category": "maths", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "Fine?", "explanation": "Yes.", "options": [{ "label": "yes", "correct": true }, { "label": "no", "correct": false }] },
+      { "type": "choice", "prompt": "Fine?", "explanation": "A favorite.", "options": [{ "label": "gray", "correct": true }, { "label": "blue", "correct": false }] } ] } },
+  { "name": "whole words only", "expect": [],
+    "quiz": { "category": "geography", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "Which river carved the Grand Canyon in Colorado?", "explanation": "I like maths.", "options": [{ "label": "Colorado", "correct": true }, { "label": "Thames", "correct": false }] } ] } },
+  { "name": "tile strings are read", "expect": ["us_spelling@0"],
+    "quiz": { "category": "maths", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "assign", "prompt": "Match.", "explanation": "Ok.", "assign": { "items": ["color", "size"], "targets": ["a", "b"] } } ] } },
+  { "name": "another faith in the religious subject", "expect": ["other_faith@0"],
+    "quiz": { "category": "bible-faith", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "Which holy book do Muslims read?", "explanation": "The Quran.", "options": [{ "label": "x", "correct": true }, { "label": "y", "correct": false }] } ] } },
+  { "name": "a sacrament in the religious subject, and the Last Supper", "expect": ["sacrament@0", "sacrament@1"],
+    "quiz": { "category": "bible-and-faith", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "Who was baptised in the Jordan?", "explanation": "Jesus.", "options": [{ "label": "Jesus", "correct": true }, { "label": "Noah", "correct": false }] },
+      { "type": "choice", "prompt": "At the Last Supper, what was shared?", "explanation": "Bread.", "options": [{ "label": "bread", "correct": true }, { "label": "fish", "correct": false }] } ] } },
+  { "name": "the same words are fine outside the religious subject", "expect": [],
+    "quiz": { "category": "history", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "Which holy book do Muslims read? Who was baptised?", "explanation": "Ok.", "options": [{ "label": "x", "correct": true }, { "label": "y", "correct": false }] } ] } },
+  { "name": "plain Bible questions are clean", "expect": [],
+    "quiz": { "category": "bible-faith", "age_min": 9, "age_max": 11, "questions": [
+      { "type": "choice", "prompt": "Who built the ark?", "explanation": "Noah.", "options": [{ "label": "Noah", "correct": true }, { "label": "Moses", "correct": false }] } ] } },
+  { "name": "no minimum age", "expect": ["no_min_age@quiz"],
+    "quiz": { "category": "maths", "age_min": null, "age_max": null, "questions": [] } },
+  { "name": "an age band across two levels", "expect": ["age_spans_levels@quiz"],
+    "quiz": { "category": "maths", "age_min": 11, "age_max": 14, "questions": [] } },
+  { "name": "a band inside one level, and an adult set, are fine", "expect": [],
+    "quiz": { "category": "maths", "age_min": 12, "age_max": 14, "questions": [] } },
+  { "name": "an adult set is fine", "expect": [],
+    "quiz": { "category": "maths", "age_min": 18, "age_max": null, "questions": [] } },
+  { "name": "quiz-level first, then questions in order", "expect": ["no_min_age@quiz", "us_spelling@0", "us_spelling@2"],
+    "quiz": { "category": "maths", "age_min": null, "age_max": null, "questions": [
+      { "type": "choice", "prompt": "A color?", "explanation": "Ok.", "options": [{ "label": "a", "correct": true }, { "label": "b", "correct": false }] },
+      { "type": "choice", "prompt": "Fine?", "explanation": "Ok.", "options": [{ "label": "a", "correct": true }, { "label": "b", "correct": false }] },
+      { "type": "choice", "prompt": "A favorite?", "explanation": "Ok.", "options": [{ "label": "a", "correct": true }, { "label": "b", "correct": false }] } ] } }
+]

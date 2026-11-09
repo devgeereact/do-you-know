@@ -5,6 +5,8 @@ import {
   toContent,
   validateQuestion,
 } from '@/lib/adminValidation';
+import rules from '../../backend/content/house-rules.json';
+import { questionWarnings } from '@/lib/houseRules';
 import { gapSpec, orderSpec, spellSpec, splitList } from '@/lib/tileAuthoring';
 import type { AssignSpec, KeyStage, QuestionContent } from '@/services/adminService';
 
@@ -308,7 +310,7 @@ export function finishRow(row: ImportRow): ImportRow {
   }
   row.block = block;
   row.later = later;
-  row.notes = contentNotes(row);
+  row.notes = [...contentNotes(row), ...houseNotes(row)];
   return row;
 }
 
@@ -354,6 +356,13 @@ function askedThing(prompt: string): string | null {
 const PROCESS_ANSWER = /^(?:it|they|to)\s|(?:tion|sion)$|^[a-z]+ing\b/i;
 const YES_NO_QUESTION =
   /^(?:is|are|do|does|did|can|could|was|were|will|would|has|have|had|should|must)\b/i;
+
+/** The house rules (UK spelling, Christian only) for one question; the same words the Studio editor warns about. */
+function houseNotes(row: ImportRow): string[] {
+  if (row.block.length) return [];
+  const religious = rules.religious_categories.includes(row.subject);
+  return questionWarnings(row.q, religious, 0).map((w) => w.message);
+}
 
 /** Checks a person should look at, for a choice question that is otherwise valid. */
 function contentNotes(row: ImportRow): string[] {

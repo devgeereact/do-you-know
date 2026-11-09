@@ -60,6 +60,12 @@ $mixed = HouseRules::check(quiz([q('A color?'), q('Fine?'), q('A favorite?')], [
 check('quiz-level warnings come first, then questions in order', codes($mixed) === ['no_min_age@quiz', 'us_spelling@0', 'us_spelling@2']);
 check('a question with two US words is still one warning', count(HouseRules::check(quiz([q('Your favorite color?')]))) === 1);
 
+// the same cases the TypeScript rules are tested against (tests/unit/lib/houseRules.test.ts)
+$golden = json_decode((string) file_get_contents(__DIR__.'/fixtures/house-rules-cases.json'), true);
+foreach ($golden as $case) {
+    check('shared case: '.$case['name'], codes(HouseRules::check($case['quiz'])) === $case['expect']);
+}
+
 // the shared word list is the single source
 $rules = json_decode((string) file_get_contents(dirname(__DIR__).'/content/house-rules.json'), true);
 check('the word list file has the three lists', isset($rules['us_spelling'], $rules['other_faith'], $rules['sacrament']));

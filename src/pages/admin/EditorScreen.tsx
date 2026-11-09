@@ -601,6 +601,23 @@ export function EditorScreen(): JSX.Element {
           </p>
         </div>
       )}
+      {detail.warnings.length > 0 && !retired && (
+        <div className="mb-3 rounded-2xl border border-warning/40 bg-warning/[0.12] px-4 py-3">
+          <b className="text-sm">
+            {detail.warnings.length === 1 ? '1 thing' : `${detail.warnings.length} things`} worth a
+            look. They do not stop you publishing.
+          </b>
+          <ul className="mt-1 grid gap-0.5 text-xs text-content-muted">
+            {detail.warnings.slice(0, 6).map((w, i) => (
+              <li key={`${w.code}-${w.index ?? 'quiz'}-${i}`}>
+                {typeof w.index === 'number' ? `Question ${w.index + 1}: ` : ''}
+                {w.message}
+              </li>
+            ))}
+            {detail.warnings.length > 6 && <li>… and {detail.warnings.length - 6} more</li>}
+          </ul>
+        </div>
+      )}
       {quiz.in_review && (
         <p className="mb-3 rounded-2xl bg-warning/15 px-4 py-2.5 text-sm font-semibold">
           Waiting for checks. Any edit here sends it back to draft.

@@ -1,3 +1,4 @@
+import type { HouseWarning } from '@/lib/houseRules';
 import { ApiError } from '@/lib/api';
 import { env } from '@/lib/env';
 import type { WorldKey } from '@/lib/art';
@@ -198,7 +199,10 @@ export interface QuizDetail {
   quiz: QuizInfo;
   questions: StudioQuestion[];
   versions: QuizVersion[];
+  /** Errors: they block checking and publishing. */
   problems: Problem[];
+  /** House-rule warnings: shown beside the quiz, never blocking (backend HouseRules). */
+  warnings: HouseWarning[];
 }
 
 export interface QuizListItem {
