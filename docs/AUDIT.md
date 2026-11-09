@@ -4,6 +4,15 @@ Every audit, review and checklist run for this project, newest first. Add new re
 
 
 
+## 2026-11-09 · Content pipeline, slices 1 to 4, by Claude Code
+
+- **Tests.** Test first for the rules, the repeat-safe import, batches and the page check. `pnpm check` 452 unit; backend, all suites (house rules 37, cms 190); browser suite 113; `npm run verify` 37/37 including a check that `backend/rules/` is packaged for the server.
+- **House rules against real content.** Run over all 579 drafted questions: 6 warnings, all the baptism and Last Supper questions, no false alarms. The PHP and TypeScript rules are tested against one shared case file.
+- **Migration 0021** (additive: `quizzes.content_hash` unique, `quizzes.batch_id`) was released alone, applied on the server after backup `db-pre-migrate-0021-20261109-012239.sql.gz` (gzip-tested), then the code was released. Live reads afterwards: batches route 200, quiz detail carries `warnings`, Batches screen and menu entry present.
+- **Live data change, with approval.** The 60 imported quizzes that were not live were put into one batch by a one-off script piped over SSH (dry run matched exactly 60; checked transaction; nothing written to the server's files). Result: 45 ready, 15 need a look (5 spelling-by-ear quizzes need Ranked off, 9 repeat a question already in the library, 6 mention baptism or the Last Supper).
+- **Incident.** The push `10fef9c` turned CI red: it added a `schedule` trigger to `deploy.yml`, which `scripts/check-rebrand.py` forbids by owner decision (30 Oct 2026). The deploy itself was an ordinary push deploy and was fine. Fixed in `49c3791` by moving the daily check to `page-check.yml`, which only reports. Lesson: run the guard script before changing a workflow.
+- **Not tested.** The Import and Batches screens in a real browser (Studio sign-in), the live read-five endpoint after the Chrome connection dropped (covered by backend tests), Safari and real phones.
+
 ## 2026-11-08 · Phone and tablet sizes, router 7, ImageKit removed, by Claude Code
 
 - **Phone checks 1 to 3, emulated.** New `tests/e2e/sizes.spec.ts` runs the guest, friend and child journeys at nine sizes (iPhone SE, 15, Pro Max, small Android, iPad mini, Air, landscape, 1280 and 1440 laptops) with touch on. Chromium only: Playwright's WebKit is not installed and installing it is a download that needs the owner's word. Real phones, Safari itself and the Clerk sign-in (check 4) are NOT TESTED.
