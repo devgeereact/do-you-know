@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type DragEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type DragEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { londonToday, markedAnswer } from '@/lib/adminValidation';
@@ -9,6 +9,7 @@ import {
   type ReviewBatch,
   type ReviewItem,
 } from '@/lib/aiReview';
+import { combineImportFiles, MAX_IMPORT_FILES } from '@/lib/importFiles';
 import {
   IMPORT_CHEATSHEET,
   agesLabel,
@@ -36,9 +37,6 @@ import {
 import { AHead, Panel, Pill, Table, Td, Tr } from '@/pages/admin/ui';
 import { AiVerdict, type FixState } from '@/pages/admin/AiReview';
 
-/** Up to this many AI calls (about 100 questions) the review starts by itself after a check. */
-const AUTO_REVIEW_CALLS = 5;
-
 /** Questions the AI can review: multiple choice and not blocked by the format checks. */
 const reviewable = (list: ImportRow[]): ImportRow[] =>
   list.filter((r) => !r.block.length && r.q.type === 'choice');
@@ -60,6 +58,8 @@ interface Outcome {
   ok: boolean;
   text: string;
   quizId?: string;
+  /** The same questions were already imported, so nothing new was made. */
+  duplicate?: boolean;
   errors?: { line: number; message: string }[];
 }
 
@@ -170,31 +170,41 @@ export function ImportScreen(): JSX.Element {
     setFixState({});
     setFailed(null);
     setReviewing(null);
-    if (reviewReady) {
-      const list = parseImport(value, subjects, today);
-      if (rowBatches(list).length <= AUTO_REVIEW_CALLS) void runReview(list);
-    }
   };
 
-  const readFile = async (file: File | undefined): Promise<void> => {
-    if (!file) return;
-    if (!/\.(txt|csv|md)$/i.test(file.name)) {
-      toast('Use a .txt, .csv or .md file.', 'bad');
+  // The text is read as it is typed or dropped. The AI review never starts by itself: it costs credits,
+  // so it is its own button below.
+  useEffect(() => {
+    if (!text.trim() || text === parsed) return;
+    const t = window.setTimeout(() => check(text), 400);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- check() only sets state from the text
+  }, [text]);
+
+  const readFiles = async (list: File[]): Promise<void> => {
+    if (list.length === 0) return;
+    const big = list.find((f) => f.size > MAX_IMPORT_BYTES);
+    if (big) {
+      toast(`“${big.name}” is over 256 KB. Split it into smaller files.`, 'bad');
       return;
     }
-    if (file.size > MAX_IMPORT_BYTES) {
-      toast('That file is over 256 KB. Split it into smaller files.', 'bad');
+    const picked = await Promise.all(
+      list.map(async (f) => ({ name: f.name, text: await f.text() })),
+    );
+    const joined = combineImportFiles(picked);
+    if (!joined.ok) {
+      toast(joined.message, 'bad');
       return;
     }
-    const value = await file.text();
-    setText(value);
-    check(value);
+    setText(joined.text);
+    check(joined.text);
+    if (joined.count > 1) toast(`Read ${joined.count} files`);
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
     setOver(false);
-    void readFile(e.dataTransfer.files[0]);
+    void readFiles(Array.from(e.dataTransfer.files));
   };
 
   const makeSubject = async (name: string): Promise<void> => {
@@ -228,6 +238,8 @@ export function ImportScreen(): JSX.Element {
     if (!ok) return;
     setBusy(true);
     const results: Outcome[] = [];
+    // One id for this Add: the quizzes it makes can be listed together, and pressing it twice repeats nothing.
+    const batch = crypto.randomUUID();
     for (const g of todo) {
       const questions = g.rows.map(rowToContent);
       const target = targetOf(g);
@@ -242,13 +254,17 @@ export function ImportScreen(): JSX.Element {
             age_max: g.ages?.max ?? null,
             imported: true,
             ai_fixes: acceptedIn(g.rows),
+            batch,
             questions,
           });
           results.push({
             key: g.key,
             ok: true,
-            text: `New draft “${groupTitle(g, subjectName(g.sid))}” with ${plural(questions.length, 'question', 'questions')}`,
+            text: made.duplicate
+              ? `Already in the library, skipped: “${groupTitle(g, subjectName(g.sid))}”`
+              : `New draft “${groupTitle(g, subjectName(g.sid))}” with ${plural(questions.length, 'question', 'questions')}`,
             quizId: made.id,
+            duplicate: made.duplicate,
           });
         } else {
           await client.append(target, questions, { imported: true, ai_fixes: acceptedIn(g.rows) });
@@ -280,8 +296,13 @@ export function ImportScreen(): JSX.Element {
     setBusy(false);
     refreshCounts();
     quizzes.reload();
-    const made = results.filter((r) => r.ok).length;
-    if (made) toast(`Created ${plural(made, 'draft', 'drafts')}`);
+    const skipped = results.filter((r) => r.ok && r.duplicate).length;
+    const made = results.filter((r) => r.ok).length - skipped;
+    const parts = [
+      made ? `Created ${plural(made, 'draft', 'drafts')}` : '',
+      skipped ? `${skipped} already in the library` : '',
+    ].filter(Boolean);
+    if (parts.length) toast(parts.join(', '));
   };
 
   return (
@@ -304,20 +325,21 @@ export function ImportScreen(): JSX.Element {
               over ? 'border-primary bg-primary/10' : 'border-surface-border',
             )}
           >
-            <b className="text-content">Drop a file</b> or{' '}
+            <b className="text-content">Drop files</b> or{' '}
             <label className="cursor-pointer font-bold text-primary hover:underline">
-              choose one
+              choose them
               <input
                 type="file"
+                multiple
                 accept=".txt,.csv,.md,text/plain,text/csv,text/markdown"
                 className="sr-only"
                 onChange={(e) => {
-                  void readFile(e.target.files?.[0]);
+                  void readFiles(Array.from(e.target.files ?? []));
                   e.target.value = '';
                 }}
               />
             </label>{' '}
-            · up to 256 KB
+            · up to {MAX_IMPORT_FILES} files, 256 KB each
           </div>
           <label htmlFor="imp-text" className="sr-only">
             Questions
@@ -331,9 +353,6 @@ export function ImportScreen(): JSX.Element {
             onChange={(e) => setText(e.target.value)}
           />
           <div className="flex flex-wrap gap-2">
-            <Button size="sm" disabled={!text.trim()} onClick={() => check()}>
-              Check questions
-            </Button>
             <Button
               variant="ghost"
               size="sm"

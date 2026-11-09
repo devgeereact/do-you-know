@@ -250,6 +250,8 @@ export interface NewQuiz {
   imported?: boolean;
   /** How many AI review fixes the importer accepted, for the audit (ADR-021). */
   ai_fixes?: number;
+  /** One id per Add action: the quizzes it makes can be listed together. */
+  batch?: string;
 }
 
 export type TodoKey =
@@ -485,7 +487,8 @@ export function adminClient(getToken: GetToken) {
     quizzes: (filter: { status?: QuizStatus; category?: string; ks?: KeyStage; q?: string } = {}) =>
       get<{ items: QuizListItem[] }>('/admin/quizzes', filter).then((r) => r.items),
     quiz: (id: string) => get<QuizDetail>(quiz(id)),
-    createQuiz: (body: NewQuiz) => post<{ id: string; slug: string }>('/admin/quizzes', body),
+    createQuiz: (body: NewQuiz) =>
+      post<{ id: string; slug: string; duplicate: boolean }>('/admin/quizzes', body),
     saveQuiz: (id: string, body: { meta?: QuizMetaPatch; questions?: QuestionContent[] }) =>
       post<QuizDetail>(quiz(id), body),
     /** imported: from Studio → Import, so the server stores the questions as checked (ADR-019). */
