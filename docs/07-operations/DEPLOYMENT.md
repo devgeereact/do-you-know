@@ -1,6 +1,6 @@
 # Deployment: doyouknow.space
 
-Since 30 October 2026 (owner decision) every push to `main` deploys. `.github/workflows/deploy.yml` runs `scripts/release.mjs --go` over SSH with a restricted deploy key (secrets `CPANEL_SSH_KEY`, `CPANEL_KNOWN_HOSTS`, label `github-deploy-do-you-know` on the server). Docs-only pushes and `[skip ci]` commits do not deploy. By hand from the Mac: `pnpm release` (dry run), then `pnpm release --go`. No FTP.
+Since 30 October 2026 (owner decision) every push to `main` deploys. A scheduled run at 04:17 UTC also releases when a published quiz or subject page has no prerendered head yet (`scripts/prerender-gap.mjs`), so new quizzes get their search pages without a manual release; with no gap it does nothing. `.github/workflows/deploy.yml` runs `scripts/release.mjs --go` over SSH with a restricted deploy key (secrets `CPANEL_SSH_KEY`, `CPANEL_KNOWN_HOSTS`, label `github-deploy-do-you-know` on the server). Docs-only pushes and `[skip ci]` commits do not deploy. By hand from the Mac: `pnpm release` (dry run), then `pnpm release --go`. No FTP.
 
 What a release does (`release.json`):
 

@@ -1,6 +1,6 @@
 # Content pipeline and proactive app: design
 
-Status: IN PROGRESS, 9 Nov 2026. Slices 1, 2 and 3 are BUILT and tested on branch `feat/content-pipeline` (not released; slice 2 needs migration 0021 first). Slice 3 as built: batches, ready or needs a look, bulk edit of difficulty, level and ranked, and a paced publish with undo. Not yet in slice 3: the "read five first" step before publishing, the three-state Draft, Ready, Live view in the Library, and an AI-free "approve by exception" queue (Review). Slices 4 to 6 are PLANNED. Written for the owner; the Studio is the owner's daily tool.
+Status: IN PROGRESS, 9 Nov 2026. Slices 1, 2 and 3 are BUILT and tested on branch `feat/content-pipeline` (not released; slice 2 needs migration 0021 first). Slice 3 as built: batches, ready or needs a look, bulk edit of difficulty, level and ranked, and a paced publish with undo. Slice 3 also has the "read five first" step. Not yet in slice 3: the three-state Draft, Ready, Live view in the Library, and an AI-free "approve by exception" queue (Review). Slice 4 is BUILT as the daily gap check (a scheduled release only when a published page has no prerendered head), not the PHP page builder: porting 385 lines of page-building to PHP would have duplicated it and risked drift, and search engines index slowly anyway. The PHP builder stays an option if hours matter. Slices 5 and 6 are PLANNED. Written for the owner; the Studio is the owner's daily tool.
 
 ## Why
 
