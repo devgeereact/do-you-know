@@ -1,10 +1,10 @@
 # Changelog
 
-## 9 November 2026 (branch `feat/content-pipeline`, not deployed) — Content pipeline, slices 1 to 3
+## 9 November 2026 (LIVE, 26d71e9) — Content pipeline, slices 1 to 3
 - **Slice 1, house rules as warnings.** The Studio now shows warnings beside a quiz that never stop you publishing: US spelling (with the UK word), another faith named or a sacrament mentioned in the religious subject, no minimum age, and an age band across two levels. One word list (`backend/rules/house-rules.json`) feeds both the server (`HouseRules.php`) and the editor and import preview (`src/lib/houseRules.ts`); both are tested against the same cases. Run over all 579 drafted questions it raised 6 warnings, exactly the baptism and Last Supper questions, and nothing else.
 - **Slice 2, one safe Add door.** Importing the same questions twice now makes one quiz (a fingerprint of the subject and questions; a repeat answers 200 "already there"). Each Add carries a batch id, and the quiz list can be filtered to one batch. The Import screen reads as you type (no "Check" button), takes up to 40 files at once, and the AI review never starts by itself: it is its own button and says what it costs.
 - **Slice 3, batches.** New **Batches** screen in the Studio (and "Review and publish this batch" after an Add). A batch sorts each quiz into Ready (no problems, no warnings) or Needs a look (with the reason), lets you set difficulty, level and ranked for several quizzes at once, and publishes the ready ones at a pace you choose (all now, or 10, 5, 3 or 1 a day, using the existing scheduled publish). One click per batch; anything not yet live can be undone. Server: `GET /admin/batches`, `GET /admin/batches/{id}`, `POST /admin/batches/{id}/publish` and `/undo` (`AdminBatches.php`).
-- **Needs migration 0021 on the server before this code is released** (adds `content_hash` and `batch_id` to quizzes; additive).
+- Migration 0021 (adds `content_hash` and `batch_id` to quizzes; additive) was released alone first (0299310), applied on the server after backup `db-pre-migrate-0021-20261109-012239.sql.gz`, then the code was released.
 
 ## 8 November 2026 (live content, no code) — Studio: 61 drafts imported, odd age bands fixed
 - Imported the 38 P3 and 23 P6 quizzes (579 questions) as drafts in the Studio. Nothing is published. Age bands: eight GCSE sets now 15 to 16, four Key Stage 3 sets now 12 to 14. Details and the duplicate-drafts clean-up in `docs/AUDIT.md`.

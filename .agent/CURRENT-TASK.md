@@ -1,9 +1,9 @@
 # Current task
 
-## Content pipeline (9 Nov 2026, branch `feat/content-pipeline`, committed, NOT pushed, NOT released)
+## Content pipeline (9 Nov 2026, LIVE: main 26d71e9; migration 0021 applied after backup `db-pre-migrate-0021-20261109-012239.sql.gz`)
 - Owner: "just implement the content pipeline". Built test-first: **slice 3** (Batches screen: ready or needs a look, bulk difficulty, level and ranked, publish at a pace, undo; `AdminBatches.php`, `BatchScreen.tsx`), **slice 1** (house-rule warnings: `HouseRules.php`, `src/lib/houseRules.ts`, shared word list `backend/rules/house-rules.json`, shown in the editor and import preview) and **slice 2** (an import is safe to repeat: content fingerprint, batch id, `GET /admin/quizzes?batch=`; Import screen reads as you type, takes up to 40 files, AI review is its own button). Design and defaults: `docs/CONTENT-PIPELINE-DESIGN.md`, ADR-024.
 - Checks: `pnpm check` PASS (444 unit, including a render test of the Batches screen) · backend, all suites PASS (house rules 37, cms 186) · browser suite 113 PASS · `npm run verify` PASS (37/37, `rules/` is packaged). NOT TESTED: the Import and Batches screens in a real browser (they need the Studio sign-in), the live site.
-- **Release order (needs the owner's "approved" for each step):** release migration `0021_content_pipeline.sql` alone first, back up, run `bin/migrate.php`, then release the code (the new create code writes the two new columns).
+- Released 9 Nov with the owner's "go ahead": migration alone first, backup, `bin/migrate.php`, then the code. Checked read-only on the live Studio: `/admin/batches` answers, quiz details carry `warnings`, the Batches screen and menu entry appear. The 61 drafts imported on 8 Nov have no batch id (they predate it), so they are not in a batch; publish them from the Library, or ask for a one-off to put them in a batch.
 - Next: the rest of slice 3 (read five first, Draft/Ready/Live in the Library), then slice 4 (publish without a release), 5 (proactive digest), 6 (proactive app). Owner decision still open for slice 4: dynamic SEO in PHP (default) or a nightly redeploy.
 
 ## Studio work done on the live site (8 Nov 2026)
