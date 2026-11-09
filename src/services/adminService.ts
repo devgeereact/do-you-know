@@ -284,6 +284,17 @@ export interface BatchListItem {
   retired: number;
 }
 
+/** One question picked for the owner to read before a batch goes live. */
+export interface BatchSampleItem {
+  quiz_id: string;
+  title: string;
+  number: number;
+  type: string;
+  prompt: string;
+  answer: string;
+  explanation: string;
+}
+
 export interface BatchPublished {
   published: number;
   per_day: number;
@@ -545,6 +556,7 @@ export function adminClient(getToken: GetToken) {
     quiz: (id: string) => get<QuizDetail>(quiz(id)),
     batches: () => get<{ items: BatchListItem[] }>('/admin/batches').then((r) => r.items),
     batch: (id: string) => get<BatchSummary>(`/admin/batches/${id}`),
+    batchSample: (id: string) => get<{ items: BatchSampleItem[] }>(`/admin/batches/${id}/sample`),
     publishBatch: (id: string, body: { per_day: number; start?: string }) =>
       post<BatchPublished>(`/admin/batches/${id}/publish`, body),
     undoBatch: (id: string) =>

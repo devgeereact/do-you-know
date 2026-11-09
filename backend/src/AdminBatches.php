@@ -65,6 +65,55 @@ final class AdminBatches
     }
 
     /**
+     * Up to five questions from the ready quizzes, spread across them and the same every time, for the owner to
+     * read before a batch goes live. Each carries the right answer and the reason children will see.
+     */
+    public function sample(string $batch, int $count = 5): array
+    {
+        $ready = array_values(array_filter($this->detail($batch)['quizzes'], static fn(array $q): bool => $q['state'] === 'ready'));
+        $pools = [];
+        foreach ($ready as $q) { $pools[] = ['quiz' => $q, 'questions' => $this->content->detail($q['id'])['questions']]; }
+        $items = [];
+        $seen = [];
+        $n = count($pools);
+        for ($i = 0; $n > 0 && count($items) < $count && $i < $count * 4; $i++) {
+            $pool = $pools[$i % $n];
+            $total = count($pool['questions']);
+            if ($total === 0) { continue; }
+            $at = intdiv($i, $n) % $total;
+            $key = $pool['quiz']['id'] . ':' . $at;
+            if (isset($seen[$key])) { continue; }
+            $seen[$key] = true;
+            $q = $pool['questions'][$at];
+            $items[] = ['quiz_id' => $pool['quiz']['id'], 'title' => $pool['quiz']['title'], 'number' => $at + 1,
+                'type' => (string) ($q['type'] ?? ''), 'prompt' => (string) ($q['prompt'] ?? ''),
+                'answer' => self::answerText($q), 'explanation' => (string) ($q['explanation'] ?? '')];
+        }
+        return ['items' => $items];
+    }
+
+    /** The right answer in words, for any question type. */
+    private static function answerText(array $q): string
+    {
+        switch ($q['type'] ?? '') {
+            case 'choice':
+                foreach (($q['options'] ?? []) as $o) { if (($o['correct'] ?? false) === true) { return (string) ($o['label'] ?? ''); } }
+                return '';
+            case 'boolean':
+                return ($q['answer'] ?? false) === true ? 'True' : 'False';
+            case 'slider':
+                $s = $q['slider'] ?? [];
+                return trim(($s['correct'] ?? '') . ' ' . ($s['unit'] ?? ''));
+            case 'build':
+                $first = $q['build']['answers'][0] ?? [];
+                return implode(($q['build']['variant'] ?? '') === 'spell' ? '' : ' ', array_map('strval', is_array($first) ? $first : []));
+            case 'assign':
+                return implode('; ', array_map(static fn($i): string => ($i['label'] ?? '') . ' = ' . ($i['to'] ?? ''), $q['assign']['items'] ?? []));
+        }
+        return '';
+    }
+
+    /**
      * Publishes the batch's ready quizzes: per_day at a time from the start date (0 or missing: all now).
      * Quizzes that need a look are left as drafts and listed as skipped. The owner's one click per batch.
      */

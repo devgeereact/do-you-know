@@ -545,6 +545,12 @@ check('a batch sorts its quizzes into ready and needs a look', $s['status'] === 
 $byId = array_column($s['body']['quizzes'], null, 'id');
 check('the one with a warning needs a look, and says why', $byId[$qd]['state'] === 'look' && $byId[$qd]['warnings'] === 1 && $byId[$qa]['state'] === 'ready');
 check('the batch list shows this batch', in_array($pb, array_column(admin('GET', '/batches')['body']['items'], 'id'), true));
+$sm = admin('GET', '/batches/'.$pb.'/sample');
+$smItems = $sm['body']['items'] ?? [];
+check('five questions to read come from the ready quizzes only', $sm['status'] === 200 && count($smItems) === 5 && !in_array($qd, array_column($smItems, 'quiz_id'), true));
+check('each sample has the question, the right answer and the reason', count(array_filter($smItems, static fn(array $i): bool => $i['prompt'] !== '' && $i['answer'] === 'True' && $i['explanation'] !== '' && is_int($i['number']))) === 5);
+check('the sample is spread over the ready quizzes and never repeats a question', count(array_unique(array_column($smItems, 'quiz_id'))) === 3 && count(array_unique(array_map(static fn(array $i): string => $i['quiz_id'].':'.$i['number'], $smItems))) === 5);
+check('the same batch gives the same sample twice', admin('GET', '/batches/'.$pb.'/sample')['body']['items'] === $smItems);
 check('a bad pace is refused', admin('POST', '/batches/'.$pb.'/publish', ['per_day' => -1])['status'] === 422 && admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 'x'])['status'] === 422 && admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 500])['status'] === 422);
 check('an unknown batch is 404', admin('GET', '/batches/'.Database::uuid())['status'] === 404);
 $r = admin('POST', '/batches/'.$pb.'/publish', ['per_day' => 2]);

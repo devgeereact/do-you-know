@@ -4,10 +4,26 @@ import { Button } from '@/components/ui/Button';
 import { londonToday } from '@/lib/adminValidation';
 import { PACES, dayLabel, paceFinish } from '@/lib/batchPace';
 import { LEVELS } from '@/lib/levels';
-import { adminErrorMessage, type BatchQuiz, type BatchState } from '@/services/adminService';
+import {
+  adminErrorMessage,
+  type BatchQuiz,
+  type BatchSampleItem,
+  type BatchState,
+} from '@/services/adminService';
 import type { Tone } from '@/pages/admin/studio';
 import { niceDateTime, plural, selectClass, useLoad, useStudio } from '@/pages/admin/studio';
-import { AHead, Empty, ErrorNote, Loading, Panel, Pill, Table, Td, Tr } from '@/pages/admin/ui';
+import {
+  AHead,
+  Empty,
+  ErrorNote,
+  Loading,
+  Modal,
+  Panel,
+  Pill,
+  Table,
+  Td,
+  Tr,
+} from '@/pages/admin/ui';
 
 const LEVEL_AGES: Record<string, [number, number]> = {
   starters: [4, 5],
@@ -113,6 +129,9 @@ function OneBatch({ id }: { id: string }): JSX.Element {
   const [difficulty, setDifficulty] = useState('');
   const [level, setLevel] = useState('');
   const [ranked, setRanked] = useState('');
+  // The five questions to read before publishing, and which are ticked as read.
+  const [reading, setReading] = useState<BatchSampleItem[] | null>(null);
+  const [read, setRead] = useState<Set<number>>(new Set());
 
   const counts = data?.counts;
   const finish = useMemo(
@@ -157,18 +176,24 @@ function OneBatch({ id }: { id: string }): JSX.Element {
     }
   };
 
-  const publish = async (): Promise<void> => {
+  // Step one: pick up to five questions from the ready quizzes and ask for them to be read.
+  const startPublish = async (): Promise<void> => {
     if (!counts || counts.ready === 0) return;
-    const when =
-      perDay === 0
-        ? 'All of them go live now.'
-        : `${perDay} go live each day, starting today. The last one is live on ${dayLabel(finish.last)}.`;
-    const ok = await confirm({
-      title: `Publish ${plural(counts.ready, 'quiz', 'quizzes')}?`,
-      body: `${when} ${counts.look ? `${counts.look} that need a look stay as drafts. ` : ''}Anything not yet live can be taken back with Undo.`,
-      confirmLabel: 'Publish',
-    });
-    if (!ok) return;
+    setBusy(true);
+    try {
+      const { items } = await client.batchSample(id);
+      setRead(new Set());
+      setReading(items);
+    } catch (err) {
+      toast(adminErrorMessage(err), 'bad');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  // Step two: once every one is ticked as read, publish at the chosen pace.
+  const publish = async (): Promise<void> => {
+    setReading(null);
     setBusy(true);
     try {
       const r = await client.publishBatch(id, { per_day: perDay });
@@ -387,7 +412,7 @@ function OneBatch({ id }: { id: string }): JSX.Element {
           )}
 
           <Panel className="mt-3 flex flex-wrap items-center gap-3">
-            <Button disabled={busy || data.counts.ready === 0} onClick={() => void publish()}>
+            <Button disabled={busy || data.counts.ready === 0} onClick={() => void startPublish()}>
               {perDay === 0
                 ? `Publish ${data.counts.ready} ready now`
                 : `Publish ${data.counts.ready} ready, ${perDay} a day`}
@@ -415,6 +440,70 @@ function OneBatch({ id }: { id: string }): JSX.Element {
                   : `The last one goes live ${dayLabel(finish.last)} (${plural(finish.days, 'day', 'days')}).`}
             </span>
           </Panel>
+
+          {reading && (
+            <Modal
+              wide
+              title={`Read ${reading.length === 1 ? 'this question' : `these ${reading.length} questions`} first`}
+              onClose={() => setReading(null)}
+              footer={
+                <>
+                  <Button variant="ghost" size="sm" onClick={() => setReading(null)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    size="sm"
+                    disabled={read.size < reading.length}
+                    onClick={() => void publish()}
+                  >
+                    Publish
+                  </Button>
+                </>
+              }
+            >
+              <p className="mb-3 text-[15px] text-content-muted">
+                {perDay === 0
+                  ? `All ${plural(data.counts.ready, 'quiz', 'quizzes')} go live now.`
+                  : `${perDay} go live each day, the last on ${dayLabel(finish.last)}.`}{' '}
+                Here is a spread from across the batch. Tick each one once you have read it.
+                {data.counts.look > 0 && ` ${data.counts.look} that need a look stay as drafts.`}
+              </p>
+              <ul className="grid gap-3">
+                {reading.map((it, i) => (
+                  <li
+                    key={`${it.quiz_id}-${it.number}`}
+                    className="rounded-2xl bg-content/[0.04] p-3"
+                  >
+                    <label className="flex cursor-pointer items-start gap-3">
+                      <input
+                        type="checkbox"
+                        className="mt-1 h-[18px] w-[18px] shrink-0 accent-primary"
+                        checked={read.has(i)}
+                        onChange={() =>
+                          setRead((r) => {
+                            const n = new Set(r);
+                            if (n.has(i)) n.delete(i);
+                            else n.add(i);
+                            return n;
+                          })
+                        }
+                      />
+                      <span className="min-w-0">
+                        <span className="block text-xs text-content-muted">
+                          {it.title}, question {it.number}
+                        </span>
+                        <b className="block text-[15px] [overflow-wrap:anywhere]">{it.prompt}</b>
+                        <span className="block text-sm">
+                          Right answer: <b>{it.answer}</b>
+                        </span>
+                        <span className="block text-sm text-content-muted">{it.explanation}</span>
+                      </span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </Modal>
+          )}
         </>
       )}
     </>

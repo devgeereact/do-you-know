@@ -56,6 +56,7 @@ function setup(quizzes: BatchQuiz[], confirmAnswer = true) {
     ),
     undoBatch: vi.fn(() => Promise.resolve({ undone: 1, kept_live: 0 })),
     saveQuiz: vi.fn(() => Promise.resolve({})),
+    batchSample: vi.fn(() => Promise.resolve({ items: SAMPLE })),
   };
   const toast = vi.fn();
   const confirm = vi.fn(() => Promise.resolve(confirmAnswer));
@@ -80,6 +81,16 @@ function setup(quizzes: BatchQuiz[], confirmAnswer = true) {
   return { client, toast, confirm };
 }
 
+const SAMPLE = Array.from({ length: 5 }, (_, i) => ({
+  quiz_id: i % 2 ? 'a' : 'b',
+  title: i % 2 ? 'Fractions' : 'Rivers',
+  number: i + 1,
+  type: 'choice',
+  prompt: `Sample question ${i + 1}?`,
+  answer: `Answer ${i + 1}`,
+  explanation: `Because ${i + 1}.`,
+}));
+
 const MIXED = [
   quiz({ id: 'a', title: 'Fractions' }),
   quiz({ id: 'b', title: 'Rivers' }),
@@ -103,19 +114,31 @@ describe('the Batch screen', () => {
     expect(screen.getByText('Needs a look')).toBeInTheDocument();
   });
 
-  it('publishes the ready ones at the chosen pace after a confirmation', async () => {
-    const { client, confirm } = setup(MIXED);
+  it('asks you to read five questions first, and publishes only once they are all ticked', async () => {
+    const { client } = setup(MIXED);
     const user = userEvent.setup();
-    const button = await screen.findByRole('button', { name: /Publish 2 ready, 5 a day/ });
-    await user.click(button);
-    expect(confirm).toHaveBeenCalledTimes(1);
+    await user.click(await screen.findByRole('button', { name: /Publish 2 ready, 5 a day/ }));
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByText('Sample question 1?')).toBeInTheDocument();
+    expect(within(dialog).getByText('Answer 3')).toBeInTheDocument();
+    const go = within(dialog).getByRole('button', { name: 'Publish' });
+    expect(go).toBeDisabled();
+    const ticks = within(dialog).getAllByRole('checkbox');
+    expect(ticks).toHaveLength(5);
+    for (const t of ticks.slice(0, 4)) await user.click(t);
+    expect(go).toBeDisabled();
+    await user.click(ticks[4]!);
+    expect(go).toBeEnabled();
+    await user.click(go);
     await waitFor(() => expect(client.publishBatch).toHaveBeenCalledWith(BATCH, { per_day: 5 }));
   });
 
-  it('publishes nothing when the confirmation is refused', async () => {
-    const { client } = setup(MIXED, false);
+  it('publishes nothing when the reading is cancelled', async () => {
+    const { client } = setup(MIXED);
     const user = userEvent.setup();
     await user.click(await screen.findByRole('button', { name: /Publish 2 ready/ }));
+    const dialog = await screen.findByRole('dialog');
+    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     expect(client.publishBatch).not.toHaveBeenCalled();
   });
 

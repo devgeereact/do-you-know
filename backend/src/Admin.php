@@ -118,9 +118,10 @@ final class Admin
         }
         $batches = new AdminBatches($this->db, $this, $content);
         if ($get && $path === '/admin/batches') { return $batches->list(); }
-        if (preg_match("~^/admin/batches/$uuid(?:/(publish|undo))?$~D", $path, $m)) {
+        if (preg_match("~^/admin/batches/$uuid(?:/(publish|undo|sample))?$~D", $path, $m)) {
             $action = $m[2] ?? '';
             if ($get && $action === '') { return $batches->detail($m[1]); }
+            if ($get && $action === 'sample') { return $batches->sample($m[1]); }
             if ($post && $action === 'publish') { return $batches->publish($m[1], $body); }
             if ($post && $action === 'undo') { return $batches->undo($m[1]); }
         }
