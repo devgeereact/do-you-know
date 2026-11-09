@@ -1,6 +1,6 @@
 # Content pipeline and proactive app: design
 
-Status: IN PROGRESS, 9 Nov 2026. Slices 1 and 2 are BUILT and tested on branch `feat/content-pipeline` (not released; slice 2 needs migration 0021 first). Slices 3 to 6 are PLANNED. Written for the owner; the Studio is the owner's daily tool.
+Status: IN PROGRESS, 9 Nov 2026. Slices 1, 2 and 3 are BUILT and tested on branch `feat/content-pipeline` (not released; slice 2 needs migration 0021 first). Slice 3 as built: batches, ready or needs a look, bulk edit of difficulty, level and ranked, and a paced publish with undo. Not yet in slice 3: the "read five first" step before publishing, the three-state Draft, Ready, Live view in the Library, and an AI-free "approve by exception" queue (Review). Slices 4 to 6 are PLANNED. Written for the owner; the Studio is the owner's daily tool.
 
 ## Why
 
