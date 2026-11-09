@@ -16,7 +16,7 @@ namespace Dyk;
  *      200 {"items":[{id,slug,title,category:{slug,name}|null,ks,status,in_review,version,question_count,
  *                      plays,right_rate,updated_at,publish_at,has_draft}]}
  * GET  /admin/quizzes/{id}      200 {"quiz":{...},"questions":[...],"versions":[...],"problems":[...],"warnings":[...]}
- * POST /admin/quizzes           {title,category,ks?,intro?,difficulty?,time_limit_seconds?,age_min?,age_max?,questions?,imported?,ai_fixes?} 201 {id,slug}
+ * POST /admin/quizzes           {title,category,ks?,intro?,difficulty?,time_limit_seconds?,age_min?,age_max?,questions?,imported?,ai_fixes?,batch?} 201 {id,slug,duplicate:false}; 200 {id,slug,duplicate:true} when an import of the same questions already exists
  * POST /admin/quizzes/{id}      {meta?,questions?}  save the work copy
  * POST /admin/quizzes/{id}/append   {questions:[...],imported?,ai_fixes?}
  *      imported:true (Studio → Import) stores the questions as checked: the person importing them is
@@ -69,6 +69,13 @@ final class AdminContent
             }
             $sql .= ' AND c.slug=?';
             $args[] = $query['category'];
+        }
+        if (isset($query['batch'])) {
+            if (!is_string($query['batch']) || !Admin::isUuid($query['batch'])) {
+                throw ApiError::invalid('invalid_filter', ['field' => 'batch']);
+            }
+            $sql .= ' AND q.batch_id=?';
+            $args[] = $query['batch'];
         }
         $ks = Admin::queryEnum($query, 'ks', array_keys(self::KS));
         if ($ks !== null) {
@@ -177,7 +184,9 @@ final class AdminContent
         if (!is_bool($imported)) { $problems[] = ['field' => 'imported', 'message' => 'imported must be true or false']; }
         $aiFixes = self::aiFixes($body);
         if ($aiFixes === false) { $problems[] = ['field' => 'ai_fixes', 'message' => 'ai_fixes must be a whole number from 0 to 50']; }
-        if ($extra = array_diff(array_keys($body), ['title', 'category', 'ks', 'intro', 'difficulty', 'time_limit_seconds', 'age_min', 'age_max', 'questions', 'imported', 'ai_fixes'])) {
+        $batch = $body['batch'] ?? null;
+        if ($batch !== null && !(is_string($batch) && Admin::isUuid($batch))) { $problems[] = ['field' => 'batch', 'message' => 'batch must be an id from one Add action']; }
+        if ($extra = array_diff(array_keys($body), ['title', 'category', 'ks', 'intro', 'difficulty', 'time_limit_seconds', 'age_min', 'age_max', 'questions', 'imported', 'ai_fixes', 'batch'])) {
             $problems[] = ['field' => 'body', 'message' => 'unknown keys ' . implode(', ', $extra)];
         }
         if ($problems) { throw ApiError::invalid('invalid_quiz', $problems); }
@@ -186,17 +195,23 @@ final class AdminContent
         $meta = ['title' => $title, 'intro' => trim($intro), 'category' => $category['slug'], 'difficulty' => $difficulty,
             'age_min' => $ageMin, 'age_max' => $ageMax, 'curriculum_tags' => $tags, 'time_limit_seconds' => $timer,
             'shuffle_options' => true, 'is_ranked' => true, 'round_size' => null];
-        return Database::transaction($this->db, function () use ($title, $intro, $category, $difficulty, $timer, $tags, $meta, $questions, $imported, $aiFixes): array {
+        // An import is safe to repeat: the same questions in the same subject are one quiz, however often it is pressed.
+        $hash = $imported === true ? self::contentHash($category['slug'], $questions) : null;
+        return Database::transaction($this->db, function () use ($title, $intro, $category, $difficulty, $timer, $tags, $meta, $questions, $imported, $aiFixes, $hash, $batch): array {
+            if ($hash !== null) {
+                $same = Database::one($this->db, 'SELECT id,slug FROM quizzes WHERE content_hash=?', [$hash]);
+                if ($same) { return ['id' => $same['id'], 'slug' => $same['slug'], 'duplicate' => true]; }
+            }
             $id = Database::uuid();
             $slug = $this->uniqueSlug($title);
             Database::execute($this->db,
-                "INSERT INTO quizzes (id,slug,status,title,intro,category_id,difficulty,time_limit_seconds,question_count,curriculum_tags,draft)
-                 VALUES (?,?,'draft',?,?,?,?,?,3,?,?)",
+                "INSERT INTO quizzes (id,slug,status,title,intro,category_id,difficulty,time_limit_seconds,question_count,curriculum_tags,draft,content_hash,batch_id)
+                 VALUES (?,?,'draft',?,?,?,?,?,3,?,?,?,?)",
                 [$id, $slug, $title, trim($intro), $category['id'], $difficulty, $timer, json_encode($tags, JSON_THROW_ON_ERROR),
-                 self::encode(['meta' => $meta, 'questions' => $questions, 'review' => false])]);
+                 self::encode(['meta' => $meta, 'questions' => $questions, 'review' => false]), $hash, $batch]);
             $this->admin->audit('quiz.create', 'quiz', $id, ['slug' => $slug, 'questions' => count($questions), 'imported' => $imported]
-                + ($aiFixes ? ['ai_fixes' => $aiFixes] : []));
-            return ['id' => $id, 'slug' => $slug];
+                + ($aiFixes ? ['ai_fixes' => $aiFixes] : []) + ($batch !== null ? ['batch' => $batch] : []));
+            return ['id' => $id, 'slug' => $slug, 'duplicate' => false];
         });
     }
 
@@ -588,6 +603,22 @@ final class AdminContent
         }
         $quiz['questions'] = array_map(self::contentQuestion(...), $work['questions']);
         return $quiz;
+    }
+
+    /**
+     * A fingerprint of what an import contains: the subject and every question's content, in order. Ids, checked flags,
+     * title, ages and difficulty are left out, so the same questions pressed twice (or under another heading) match.
+     */
+    private static function contentHash(string $categorySlug, array $questions): string
+    {
+        $canon = static function (mixed $v) use (&$canon): mixed {
+            if (!is_array($v)) { return $v; }
+            $v = array_map($canon, $v);
+            if (!array_is_list($v)) { ksort($v); }
+            return $v;
+        };
+        $content = array_map(static fn(array $q): array => $canon(self::contentQuestion($q)), $questions);
+        return hash('sha256', json_encode(['category' => $categorySlug, 'questions' => $content], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     }
 
     private static function contentQuestion(array $q): array

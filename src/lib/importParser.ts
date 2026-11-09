@@ -5,7 +5,7 @@ import {
   toContent,
   validateQuestion,
 } from '@/lib/adminValidation';
-import rules from '../../backend/content/house-rules.json';
+import rules from '../../backend/rules/house-rules.json';
 import { questionWarnings } from '@/lib/houseRules';
 import { gapSpec, orderSpec, spellSpec, splitList } from '@/lib/tileAuthoring';
 import type { AssignSpec, KeyStage, QuestionContent } from '@/services/adminService';

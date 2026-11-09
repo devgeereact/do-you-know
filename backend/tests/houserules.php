@@ -67,7 +67,7 @@ foreach ($golden as $case) {
 }
 
 // the shared word list is the single source
-$rules = json_decode((string) file_get_contents(dirname(__DIR__).'/content/house-rules.json'), true);
+$rules = json_decode((string) file_get_contents(dirname(__DIR__).'/rules/house-rules.json'), true);
 check('the word list file has the three lists', isset($rules['us_spelling'], $rules['other_faith'], $rules['sacrament']));
 
 fwrite(STDOUT, $count.' house-rule checks passed'.PHP_EOL);

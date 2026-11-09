@@ -6,7 +6,7 @@ namespace Dyk;
 /**
  * The house rules as warnings (docs/CONTENT-PIPELINE-DESIGN.md, slice 1). They show beside a quiz in the
  * Studio and never block anything: blocking errors stay in Content::validateQuiz and AdminContent::problems.
- * The word lists live in backend/content/house-rules.json, shared with src/lib/houseRules.ts.
+ * The word lists live in backend/rules/house-rules.json, shared with src/lib/houseRules.ts.
  */
 final class HouseRules
 {
@@ -14,7 +14,7 @@ final class HouseRules
 
     private static function rules(): array
     {
-        return self::$rules ??= json_decode((string) file_get_contents(dirname(__DIR__) . '/content/house-rules.json'), true, 512, JSON_THROW_ON_ERROR);
+        return self::$rules ??= json_decode((string) file_get_contents(dirname(__DIR__) . '/rules/house-rules.json'), true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**

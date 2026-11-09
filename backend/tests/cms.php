@@ -509,4 +509,29 @@ $r = admin('POST', '/quizzes/'.$id.'/delete');
 check('a quiz that has been published cannot be deleted', $r['status'] === 409 && $r['body']['error']['code'] === 'quiz_published');
 check('the published quiz is still there after a refused delete', admin('GET', '/quizzes/'.$id)['status'] === 200);
 
+// ---- One Add door, safe to repeat (docs/CONTENT-PIPELINE-DESIGN.md, slice 2) ----
+$batch = Database::uuid();
+$dupBody = ['title' => 'Cms Dup '.$tag, 'category' => $subject, 'age_min' => 9, 'age_max' => 11, 'imported' => true, 'batch' => $batch,
+    'questions' => array_map($question, ["Cms dup $word one?", "Cms dup $word two?", "Cms dup $word three?"])];
+$first = admin('POST', '/quizzes', $dupBody);
+check('an import creates a draft and says it is new', $first['status'] === 201 && ($first['body']['duplicate'] ?? null) === false);
+$again = admin('POST', '/quizzes', $dupBody);
+check('pressing the same import again changes nothing', $again['status'] === 200 && ($again['body']['duplicate'] ?? null) === true && $again['body']['id'] === $first['body']['id']);
+$n = Database::one($db, 'SELECT COUNT(*) AS n FROM quizzes WHERE title LIKE ?', ['Cms Dup '.$tag.'%'])['n'];
+check('no second quiz was made', (int) $n === 1);
+$renamed = ['title' => 'Cms Dup renamed '.$tag] + $dupBody;
+check('the same questions under a new title are still the same import', (admin('POST', '/quizzes', $renamed)['body']['duplicate'] ?? null) === true);
+$changed = $dupBody;
+$changed['batch'] = Database::uuid();
+$changed['questions'][0]['prompt'] = "Cms dup $word one changed?";
+$r = admin('POST', '/quizzes', $changed);
+check('changed questions are a new quiz', $r['status'] === 201 && ($r['body']['duplicate'] ?? null) === false && $r['body']['id'] !== $first['body']['id']);
+$manual = $dupBody;
+unset($manual['imported'], $manual['batch']);
+$r = admin('POST', '/quizzes', $manual);
+check('a quiz written by hand is never treated as a repeat', $r['status'] === 201 && ($r['body']['duplicate'] ?? null) === false);
+$list = admin('GET', '/quizzes?batch='.$batch)['body']['items'] ?? [];
+check('the Studio list can show one batch on its own', count($list) === 1 && $list[0]['id'] === $first['body']['id']);
+check('a bad batch filter is refused', admin('GET', '/quizzes?batch=nope')['status'] === 422);
+check('create refuses a bad batch id', admin('POST', '/quizzes', ['title' => 'X', 'category' => $subject, 'batch' => 'nope'])['status'] === 422);
 fwrite(STDOUT, "$count cms checks passed\n");

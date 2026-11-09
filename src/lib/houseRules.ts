@@ -1,8 +1,8 @@
-import rules from '../../backend/content/house-rules.json';
+import rules from '../../backend/rules/house-rules.json';
 
 /**
  * The house rules as warnings: the same checks as backend/src/HouseRules.php, from the same word list
- * (backend/content/house-rules.json) and tested against the same cases. They never block anything.
+ * (backend/rules/house-rules.json) and tested against the same cases. They never block anything.
  */
 export interface HouseWarning {
   index: number | null;

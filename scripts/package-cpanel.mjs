@@ -18,7 +18,7 @@ for (const name of await readdir(path.join(root, 'dist'))) {
 }
 await cp(path.join(root, '.htaccess'), path.join(publicDir, '.htaccess'));
 await cp(path.join(root, 'backend/public'), path.join(publicDir, 'api'), { recursive: true });
-for (const name of ['src', 'bin', 'migrations', 'content', 'vendor', 'composer.json', 'composer.lock', 'config.example.php', 'README.md', '.htaccess']) {
+for (const name of ['src', 'bin', 'migrations', 'content', 'rules', 'vendor', 'composer.json', 'composer.lock', 'config.example.php', 'README.md', '.htaccess']) {
   await cp(path.join(root, 'backend', name), path.join(privateDir, name), { recursive: true });
 }
 // Generate only a blank private config, never copy the live backend/config.php.

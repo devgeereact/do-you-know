@@ -102,7 +102,7 @@ final class Admin
         $uuid = '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})';
         if ($path === '/admin/quizzes') {
             if ($get) { return $content->list($query); }
-            if ($post) { $this->status = 201; return $content->create($body); }
+            if ($post) { $made = $content->create($body); $this->status = ($made['duplicate'] ?? false) ? 200 : 201; return $made; }
         }
         if (preg_match("~^/admin/quizzes/$uuid(?:/(append|submit|unsubmit|check|publish|retire|restore|discard|delete))?$~D", $path, $m)) {
             $action = $m[2] ?? '';
