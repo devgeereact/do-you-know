@@ -1,5 +1,11 @@
 # Current task
 
+## Content pipeline (9 Nov 2026, branch `feat/content-pipeline`, committed, NOT pushed, NOT released)
+- Owner: "just implement the content pipeline". Built test-first: **slice 1** (house-rule warnings: `HouseRules.php`, `src/lib/houseRules.ts`, shared word list `backend/rules/house-rules.json`, shown in the editor and import preview) and **slice 2** (an import is safe to repeat: content fingerprint, batch id, `GET /admin/quizzes?batch=`; Import screen reads as you type, takes up to 40 files, AI review is its own button). Design and defaults: `docs/CONTENT-PIPELINE-DESIGN.md`, ADR-024.
+- Checks: `pnpm check` PASS (431 unit) · backend, all suites PASS (house rules 37, cms 174) · `npm run verify` PASS (37/37, `rules/` is packaged). NOT TESTED: the Import screen in a browser (needs the Studio sign-in), the live site.
+- **Release order (needs the owner's "approved" for each step):** release migration `0021_content_pipeline.sql` alone first, back up, run `bin/migrate.php`, then release the code (the new create code writes the two new columns).
+- Next: slice 3 (Ready, bulk edit, paced publish), then 4 to 6.
+
 ## Studio work done on the live site (8 Nov 2026)
 - 61 drafts imported (38 P3 + 23 P6, 579 questions), **none published**. Owner next, in the Studio: read each, set difficulty (easy, medium, hard; all are "medium" now), untick "Allow ranked rounds" on the five "Listen and spell" quizzes (the server already keeps dictation out of ranked rounds), then publish, then one release so the pages prerender. Read the Christian quiz in `p6-humanities-challengers` on your own terms: five questions mention John baptising Jesus or the Last Supper (as events in the gospels and as Maundy Thursday); they are narrative and calendar facts, not teaching about the sacraments, but ADR-023 says to leave sacraments out, so keep or cut each one.
 - Age bands fixed on 12 live quizzes. `mail_from` still unset: add `'mail_from' => 'no-reply@doyouknow.space'` to the private server config (SPF, DKIM, DMARC already exist).

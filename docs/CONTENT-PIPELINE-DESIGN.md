@@ -1,6 +1,6 @@
 # Content pipeline and proactive app: design
 
-Status: PROPOSED, 8 Nov 2026. Nothing here is built. Written for the owner; the Studio is the owner's daily tool.
+Status: IN PROGRESS, 9 Nov 2026. Slices 1 and 2 are BUILT and tested on branch `feat/content-pipeline` (not released; slice 2 needs migration 0021 first). Slices 3 to 6 are PLANNED. Written for the owner; the Studio is the owner's daily tool.
 
 ## Why
 

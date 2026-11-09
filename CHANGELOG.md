@@ -1,5 +1,10 @@
 # Changelog
 
+## 9 November 2026 (branch `feat/content-pipeline`, not deployed) — Content pipeline, slices 1 and 2
+- **Slice 1, house rules as warnings.** The Studio now shows warnings beside a quiz that never stop you publishing: US spelling (with the UK word), another faith named or a sacrament mentioned in the religious subject, no minimum age, and an age band across two levels. One word list (`backend/rules/house-rules.json`) feeds both the server (`HouseRules.php`) and the editor and import preview (`src/lib/houseRules.ts`); both are tested against the same cases. Run over all 579 drafted questions it raised 6 warnings, exactly the baptism and Last Supper questions, and nothing else.
+- **Slice 2, one safe Add door.** Importing the same questions twice now makes one quiz (a fingerprint of the subject and questions; a repeat answers 200 "already there"). Each Add carries a batch id, and the quiz list can be filtered to one batch. The Import screen reads as you type (no "Check" button), takes up to 40 files at once, and the AI review never starts by itself: it is its own button and says what it costs.
+- **Needs migration 0021 on the server before this code is released** (adds `content_hash` and `batch_id` to quizzes; additive).
+
 ## 8 November 2026 (live content, no code) — Studio: 61 drafts imported, odd age bands fixed
 - Imported the 38 P3 and 23 P6 quizzes (579 questions) as drafts in the Studio. Nothing is published. Age bands: eight GCSE sets now 15 to 16, four Key Stage 3 sets now 12 to 14. Details and the duplicate-drafts clean-up in `docs/AUDIT.md`.
 
