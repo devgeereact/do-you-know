@@ -1,53 +1,69 @@
 # Changelog
 
+## 14 November 2026 (branch `chore/house-standard`, not deployed) — Tailwind CSS v4, one docs tree
+
+- **Styling:** Tailwind 3 (PostCSS) to Tailwind CSS v4 through the Vite plugin. Tokens now live in `@theme inline` in `src/index.css`; `tailwind.config.ts`, `postcss.config.js` and autoprefixer are gone; `tailwind-merge` 2 to 3. No visible change intended; 113 browser tests pass.
+- **Docs:** one roadmap (`docs/ROADMAP.md`), one archive (`docs/ARCHIVE.md`), audits in `docs/AUDIT.md`; the GSD `.planning/` folder is retired. Unit test timeout raised to 20 s.
+
 ## 9 November 2026 (branch `feat/content-pipeline`, not deployed) — Read five first; publishing needs no manual release
+
 - **Read five first.** Publishing a batch now opens a dialog with five questions spread across the ready quizzes (the same five every time), each with its right answer and reason. Publish stays disabled until all five are ticked as read. `GET /admin/batches/{id}/sample`.
 - **Slice 4, publishing needs no release.** The sitemap was already built from the database. What a release added was each quiz's prerendered page (title, description, structured data) for search engines and link previews. A daily check (`scripts/prerender-gap.mjs`, `.github/workflows/page-check.yml`, 04:17 UTC) lists sitemap pages the server still answers with the bare app shell. It only reports (the run fails, which is the nudge to run Deploy once): deploys stay on push to main by the owner's 30 Oct rule, which the project guard enforces. Until a release builds them, a new quiz still works for players (it uses the app shell). Checked against the live site: 0 of 277 pages missing.
 
 ## 9 November 2026 (LIVE, 26d71e9) — Content pipeline, slices 1 to 3
+
 - **Slice 1, house rules as warnings.** The Studio now shows warnings beside a quiz that never stop you publishing: US spelling (with the UK word), another faith named or a sacrament mentioned in the religious subject, no minimum age, and an age band across two levels. One word list (`backend/rules/house-rules.json`) feeds both the server (`HouseRules.php`) and the editor and import preview (`src/lib/houseRules.ts`); both are tested against the same cases. Run over all 579 drafted questions it raised 6 warnings, exactly the baptism and Last Supper questions, and nothing else.
 - **Slice 2, one safe Add door.** Importing the same questions twice now makes one quiz (a fingerprint of the subject and questions; a repeat answers 200 "already there"). Each Add carries a batch id, and the quiz list can be filtered to one batch. The Import screen reads as you type (no "Check" button), takes up to 40 files at once, and the AI review never starts by itself: it is its own button and says what it costs.
 - **Slice 3, batches.** New **Batches** screen in the Studio (and "Review and publish this batch" after an Add). A batch sorts each quiz into Ready (no problems, no warnings) or Needs a look (with the reason), lets you set difficulty, level and ranked for several quizzes at once, and publishes the ready ones at a pace you choose (all now, or 10, 5, 3 or 1 a day, using the existing scheduled publish). One click per batch; anything not yet live can be undone. Server: `GET /admin/batches`, `GET /admin/batches/{id}`, `POST /admin/batches/{id}/publish` and `/undo` (`AdminBatches.php`).
 - Migration 0021 (adds `content_hash` and `batch_id` to quizzes; additive) was released alone first (0299310), applied on the server after backup `db-pre-migrate-0021-20261109-012239.sql.gz`, then the code was released.
 
 ## 8 November 2026 (live content, no code) — Studio: 61 drafts imported, odd age bands fixed
+
 - Imported the 38 P3 and 23 P6 quizzes (579 questions) as drafts in the Studio. Nothing is published. Age bands: eight GCSE sets now 15 to 16, four Key Stage 3 sets now 12 to 14. Details and the duplicate-drafts clean-up in `docs/AUDIT.md`.
 
 ## 8 November 2026 (branch `phase/p9-router-v7`, not deployed) — Router 7, friend clear of answers on tablets, privacy line
+
 - `react-router-dom` 6.30.6 to 7.18.5 (closes the two runtime security advisories; no code change).
 - Play screen: on tablets the friend no longer sits over an answer (it stays 96 px up to laptop width and the column reserves matching room).
 - Privacy page no longer mentions ImageKit and the CSP no longer allows its host: no quiz can show a picture. Architecture, spec and direction docs updated to match.
 - New `tests/e2e/sizes.spec.ts`: guest, friend and child journeys at nine phone, tablet and laptop sizes.
 
 ## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Dead code removed
+
 - Removed the unused ImageKit helper and ImageKit and PostHog settings, the ImageKit service-worker cache rule and one CI variable. No visible change. Privacy sentence, `.htaccess` and `.env.example` left for you (`docs/AUDIT.md`, 8 Nov).
 
 ## 8 November 2026 (branch `phase/p8-owner-calls`, not deployed) — Ranked and daily time cap
+
 - A player who has said they are 13 to 17 or 18 and over now has 30 seconds per question in a ranked round and in the daily, so the crown cannot be won by looking answers up. Children (under 13, or no age band yet) and practice stay untimed. The server decides; no migration. Tests in `backend/tests/competition.php`.
 
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Owner calls recorded, Phase 1 closed in GSD
+
 - ADR-023 (`docs/08-change-management/DECISIONS.md`) records a default for each open owner call: time cap, daily by level, 18+ gate, baptism and Last Supper questions, odd age bands, landing direction, Dependabot, the 61 drafts, `mail_from`. Docs only; nothing built, imported or published.
 - GSD Phase 1 marked complete; the four phone checks stay pending in `01-HUMAN-UAT.md`.
 
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — Phase 1 review fixes
-- **Found by the Phase 1 code review** (`.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`): the shared `/me` request could be handed to a different player after a hand-over or sign-out. It now carries a session counter and is never reused across one.
+
+- **Found by the Phase 1 code review** (`git show 5aec7bd:.planning/phases/01-clean-up-and-foundations/01-REVIEW.md`): the shared `/me` request could be handed to a different player after a hand-over or sign-out. It now carries a session counter and is never reused across one.
 - **Yesterday and the seven-day strip** were wrong for the first hour after the clocks go forward and could repeat a date on clock-change days (they subtracted 24-hour blocks). They now count calendar days (`londonDaysAgo`).
 - A late "not signed in" answer for an old session no longer wipes the token of a new guest or a child just handed the device (found by the phase verifier).
 - The friend on the play screen can no longer catch a tap.
 - Open and advisory: out-of-order profile responses in the session context, a timeout for `/grown-ups` if Clerk never loads, and five info items.
 
 ## 8 November 2026 (branch `phase/p1-housekeeping`, not deployed) — P1 housekeeping closed
+
 - The London-date helper existed twice (daily service and Studio validation). It now lives once in `src/lib/london.ts`; both old paths re-export it. Behaviour unchanged. New unit test covers winter, summer time, the midnight edge and that the copies are the same function.
 - **One `/me` fetch:** the session, the daily and My games each asked for the profile on the same page load. `getProfile()` now lets callers that ask while a request is in flight share it. Nothing is kept once it finishes, and every change made through the profile service (age band, nickname, avatar, messages seen, delete) forgets the request in flight, so an answer is never older than the last save. The session context now uses the same call. Limit: a token swap outside this service (hand-over) is not tracked; it ends in a full page navigation, so no request survives it.
 - Phase 1 itself (T1 to T6) shipped on 7 November (fc7b41e). Still open: the dead code list (ImageKit helper, PostHog settings), which needs your OK before anything is deleted.
 
 ## 8 November 2026 (branch `phase/p7-home`, after a22dd8c, not deployed) — Smoke-test leftovers
+
 - **Front door:** the "Try one" question on the desktop home now comes from a primary-age quiz (ages 11 and under) when one exists, so a teenage sport quiz is no longer the first thing a child sees.
 - **Feedback screen:** the friend (owl, turtle, planet) now stands above the answer panel instead of behind it, no longer blurred; the line under the verdict ("+1 · keep going") is larger and bolder.
 - **`/grown-ups` first run:** a calm loading card replaces plain "Loading…"; the signed-out card lists what a grown-up can do here; the empty children panel says what to do next.
 - Tests: `pnpm check` (391 unit), backend suites, browser suite 86 of 86. Checked by eye on the throwaway stack (desktop). Not deployed.
 
 ## 8 November 2026 (branch `phase/p7-home`, not deployed) — Home page: honest counts, areas for everyone, no adult sets up front
+
 - **Found in the live smoke test** (`docs/AUDIT.md`, 8 Nov): the home page counted quizzes from a list capped at 100 while the library holds 262, so the hero said "100 quizzes", subjects showed "0 quizzes" and "Show all" stopped short.
 - **Server (no migration):** `GET /categories` now carries `quiz_count` and `kids_count` (without 18+ sets) for each subject; `GET /quizzes` takes `offset` to walk past the first 100; `/quizzes/trending` never lists an 18+ set.
 - **Home:** hero, world and subject tiles use the real counts; adult sets stay out of Popular, Everyone and the first lists (the Adult chip still finds them); "Show all" fetches the rest of the library; subjects with nothing for children are not tiled.
@@ -57,11 +73,13 @@
 - Tests: backend (counts match the list, bad offset refused, adult sets never in trending), two browser tests, all existing suites unchanged.
 
 ## 7 November 2026 (branch `phase/p6-spread`, not deployed) — P6: science and humanities content
+
 - **23 quiz drafts (215 questions)**, not yet imported: 10 Science (including Computing) and 13 Humanities (three of them for ages 15 to 16), led by the tile formats (order, match, sort, gap). They fill the topic gaps: materials, forces, light, sound, electricity, earth and space, living things at the younger levels; timelines, places and capitals; and Christian religious knowledge (the Christian year, books of the Bible, people in the gospels). Christian only, as decided on 7 Nov.
 - **Finding:** the "at least 6 per cell" test was already met (Science 21 to 27 per level, Humanities 11 to 21), so P6 targeted topics and formats instead. Coverage report: `docs/LEARNING-DESIGN.md` section 8.
 - Guard tests: `p3Drafts.test.ts` now covers both P3 and P6 files with the real subjects; new `p6Drafts.test.ts` checks area, level, tile use and the Christian-only rule. No code or database change; nothing goes live until the owner imports the drafts.
 
 ## 7 November 2026 (branch `phase/p5-adapt`, not deployed) — P5: learning sessions, stickers, skill map, sound
+
 - **Migration 0020 (needs the two-step release):** the attempt mode check allows `learn` (relaxing only), plus `learn_cards`, `skills`, `retry_questions` and `stickers`, all hanging off the child's profile and holding ids, counts and dates only.
 - **Learning sessions** (`POST /attempts {mode:'learn', area}`, screen `/learn/:area`): ten questions from the child's level in one of four areas (literacy, numeracy, science, humanities), nearest the child's step, least recently seen first, and at most two earlier mistakes brought back first. Only a child set up by a parent can start one (guests save nothing). A session is private: no boards, no sharing, no friend challenge. Step is read from each quiz's existing difficulty (1-2 easy, 3 medium, 4-5 hard), so no content had to change.
 - **The step rule:** 8 in 10 right twice running moves up one step, 4 in 10 or fewer moves down, at most one change a day, steps 1 to 5, start at 2. **Retry queue:** a wrong answer waits; a right answer removes it; a question that has gone is dropped quietly.
@@ -70,6 +88,7 @@
 - Not in this phase yet: the new home redesign (waiting for your landing notes).
 
 ## 7 November 2026 (branch `phase/p4-parent`, live since `be2a57b`) — P4: the parent area
+
 - **Migration 0019 (needs the two-step release):** `children` and `parent_settings`. A child is a guest-role profile with a generated nickname, a preset avatar and a level; the parent's seven switches are all off until turned on.
 - **Server:** parent routes need a verified Clerk sign-in (guest and child tokens get 403), every child call is scoped to its parent (another parent's child is 404), at most 5 children, hand-over issues a fresh child session and revokes older ones, removing a child or deleting a parent erases the children and their games. A child's device cannot delete the child. `GET /me` carries `switches` and `child.level`. **Fix:** the hourly clean-up of unused guests no longer deletes a child a parent set up.
 - **`/grown-ups`** (Children, Switches, Contact; footer link): add a child by picking a level and a picture (nothing typed), change level or picture, re-roll the made-up name, hand over (the parent is signed out so coming back needs a new email code), remove. Typed contact fields live here for signed-in grown-ups.
@@ -80,6 +99,7 @@
 - Browser tests: journeys that need boards or friend challenges play as a fresh child whose parent turned those switches on, one per test.
 
 ## 7 November 2026 (branch `phase/p3-content`, not deployed) — P3: literacy and numeracy content
+
 - **38 new quiz drafts, 364 questions** in `backend/content/drafts/p3-*.txt`, in the Studio import format: 19 English (spelling taps, listen-and-spell, grammar, vocabulary, reading short passages) and 19 Maths (number facts on the keypad, patterns, fractions, percentages, algebra, data, order and sort), four to five per age band from 4–5 to 15–16. Once imported and published they bring every literacy and numeracy cell to 6 quizzes. They are drafts only: nothing is live and nothing was imported.
 - Uses the new types: 50 tap-spell, 50 dictation, 15 gap, 19 order, 14 match, 17 sort, 143 number, 56 choice. Five sets are dictation, each with a written clue so it can still be answered where a device has no English voice; they must be switched to practice-only in the Studio.
 - Prompts may now be up to 600 characters (was 300) so a reading question can carry its short passage; a long prompt is set as reading text on the play screen.
@@ -87,12 +107,14 @@
 - A guard test (`tests/unit/content/p3Drafts.test.ts`) keeps the drafts importable: no blocking problem, every question has a reason, no repeated prompt (also against the seed quizzes), UK spelling, every quiz at least 6 questions.
 
 ## 7 November 2026 (branch `phase/p2-assign`, not deployed) — P2 slice 2.2: match and sort, Studio forms, import lines
+
 - **New question type `assign`** (match pairs: 2 to 5; sort into 2 or 3 groups: 3 to 6 things): the child taps a thing, then where it goes. Content format `assign: {variant, targets, items:[{label, to}]}`; the snapshot keys items and targets and stores the key as target ids. The server sends items and targets as per-attempt keyed handles in handle order and never the key, grades `{ "pairs": [[item, target], …] }` all-or-nothing, and refuses anything malformed with `400 invalid_pairs` (unknown, foreign or stored ids, repeats, missing items, two items on one match partner, wrong shapes). No migration: the answer is stored as labels in `attempt_answers.chosen_json`. Allowed in ranked rounds and the daily.
 - **Studio**: new forms for spell (word, extra letters, dictation tick), gap (sentence, right words, extras, other right answers), order (cards), match (rows) and sort (groups and things), a live preview showing the right answer in green, and the validator mirrored on the client. **Fix:** saving from the Studio used to drop the `build` part of a tile question (the client sent only the old answer types); it now carries `build` and `assign`.
 - **Import** reads `Spell: cat | extra: xz | speak`, `Gap: The cat ___ on the ___. = sat, mat | extra: dog | also: sits, mat`, `Order: a, b, c`, `Match: Fish = Sea; Bird = Nest` and `Sort: Odd = 3, 5; Even = 8, 12`. AI review stays for multiple-choice questions only.
 - The Listen button's accessible name now starts with its visible word (found by the phone audit).
 
 ## 7 November 2026 (branch `phase/p2-tap-types`, not deployed) — P2 slice 2.1: build questions and number tiles
+
 - **New question type `build`** (spell, fill the gap, put cards in order): the child taps tiles into spaces. The content format, validator and snapshot accept it (up to 20 tiles, up to 4 accepted answers, one `___` per gap, dictation by `speak`). The server sends the spaces and tiles as keyed per-attempt handles, always in handle order and never with an accepted sequence, grades the tapped handles on the server, refuses every malformed answer (`400 invalid_tiles`) and reveals the right tiles only after answering. The answer is stored as labels in `attempt_answers.chosen_json` (**migration 0018**, additive, not yet applied on the server).
 - **Dictation is practice only**: a spell question with `speak` is never dealt in a ranked round or the daily, and a ranked quiz must keep at least 3 questions that are not dictation.
 - **Number tiles**: number questions (the old slider) are answered on a tile keypad, no keyboard and no dragging; same `value`, same server check. The slider component stays for the parent switch (P4).
@@ -101,6 +123,7 @@
 - Docs: API and data model notes brought up to date (including the earlier daily ledger).
 
 ## 7 November 2026 (branch `phase/p1-cleanup`, not deployed) — P1 clean-up and foundations
+
 - A guest can no longer gain typed fields: the server accepts the 13-17 and 18+ age bands only for a profile linked to a Clerk sign-in (`403 adult_sign_in_required`). Guests are not asked their age or shown a nickname box, and the Contact page loses the "I'm 18 or over" tick (grown-ups get the contact email until the parent area). Profiles that already hold an adult band keep working.
 - Children are not timed by default: `POST /attempts` uses the quiz timer only when the request says `timed: true`; the quiz page says "No timer".
 - A finished daily opened at `/daily/play` goes to `/daily` instead of an error screen.
@@ -109,35 +132,42 @@
 - Not in this phase, moved to P4 with the parent switches: hiding quiz leaderboards, challenge-a-friend and trivia/18+ sets from the default path.
 
 ## 7 November 2026 (branch `feat/daily-live-crown`, deployed the same day) — private daily hands, live board, crown
+
 - The daily gives every player their own 10 questions from all live quizzes except 18+, with no question shared between players until the whole bank has been dealt once (then a second lap). The least-dealt questions go first; one lock per day plus a unique key on the new `daily_deals` ledger make it hold for simultaneous starts.
 - Daily page and results: a live board (refreshes every 10 s while open, quietly, and again when you return to the tab), a "Top score today" card, a crown on rank 1 and a "You're wearing the crown!" banner. The page is named "Today's challenge" instead of one quiz title; a short ten-stop route stays as decoration.
 - A daily result now counts on the day's board only (before, it also fed one quiz's all-time and weekly boards). A daily hand cannot be sent as a friend challenge (`daily_not_shareable`), and its button is not shown. The Studio credits each daily answer to the quiz its question came from.
 - Migration `0017_daily_deals.sql` (additive). It was released alone first, backed up and run on the server (backup `db-pre-migrate-0017-20261107T131208Z.sql.gz`) before this code went out. Phone layout: the three small stat tiles move to tablet and up; the leaderboard list no longer overflows narrow columns.
 
 ## 7 November 2026 (branch `feat/delete-unpublished-draft`) — delete a draft that was never published
+
 - Studio → Editor: "Delete draft…" for a quiz with no published version; it removes the quiz for good after a confirmation. A quiz that has ever been published can only be retired (players, boards and dailies point at its versions).
 - Server: `POST /admin/quizzes/{id}/delete` answers `{id, deleted:true}`; 409 `quiz_published` for a quiz that has a version; 404 `quiz_not_found` when it is gone. Recorded in the audit log as `quiz.delete` with the title. No migration.
 - Content (done in Studio on live data, no code): 180 quizzes rewritten with 20 new label-free questions each, no repeats between bands, Bible questions limited to what a named book says or plain facts (see `.agent/CURRENT-TASK.md`).
 
 ## 6 November 2026 — Sonnet 5.5 by default
+
 - The generator, the editor's AI helpers and the AI import review use Claude Sonnet 5.5 (`claude-sonnet-5-5`), with OpenRouter's `anthropic/claude-sonnet-5.5` as backup (ADR-022). Re-running `scripts/set-generator-keys.sh` moves a saved config off the old Opus default and prints the model in use.
 
 ## 6 November 2026 (branch `studio/ai-import-review`) — AI review of imports
+
 - Studio → Import: after "Check questions" the AI reviews every multiple-choice question (by itself for up to about 100 questions; a "Review with AI" button for bigger files, with the number of AI calls shown first). Each question shows "looks fine", a flag with its reason, or a suggested fix as before and after with Accept and Reject; "Accept all" for the whole import or one quiz. Accepted fixes replace the question before the drafts are created, and the import audit records how many were accepted. A failed batch is shown with a Retry.
 - Studio → Editor: the same "Review with AI" for a quiz already imported; an accepted fix is an edit, so the question needs ticking again.
 - Server (ADR-021): `POST /admin/import/review`, up to 25 questions a call, questions fenced as untrusted data, every fix checked like hand-written content and turned into a flag if it fails, sources never changed, nothing saved; audited (`generator.review`) with a daily cap of 100 calls. Off until the generator keys are set.
 - Studio on phones: the main area scrolls again (long pages such as Import could not be scrolled to their buttons).
 
 ## 2 November 2026 — 4–5 age band
+
 - A 4–5 age chip on the home page and every subject page (it shows quizzes for ages 4–5 and the KS1 quizzes that start at 5); the 6–8 chip no longer needs to stand in for the youngest players.
 
 ## 1 November 2026 (branch `studio/import-2026-11`) — Studio import fixes
+
 - Worlds: a quiz whose title is about the body (digestion, bones, senses, brain, heart, breathing, hormones, growth, medicine and similar) shows every question in the body world, so a prompt that says "waves" or "map" no longer gets an ocean or desert. A question's own scene still wins; other quizzes are unchanged.
 - Sources are optional (ADR-019): a question without a source can be published; a source that is given must be https. Site copy (description, About, Contact, llms.txt) no longer says every answer is sourced.
 - Studio → Import reads the owner's format: `# Science · Ages 4–5 · Topic` headings (each heading becomes its own quiz, titled "Topic (ages 4–5)" or "Topic (adults)", with its age band and a plain starting intro), `A) x  B) y*` options, `Why:` and markdown `Source: [url](url)` links. Imported questions arrive checked (ADR-019), so a quiz can be published straight away. The preview flags, without blocking, answers that repeat the question, yes/no answers to other questions, "which cells" questions answered with a process, repeated answer sets, repeated questions across quizzes and hard words for ages 8 and under.
 - Studio editor: "Write the intro with AI" (from the quiz title) and "Write the explanation with AI" (from the question and its right answer) fill the field with a short draft to read and change; nothing is saved by the server, every call is audited, and there is a daily cap of 200. Shown only when the generator is on and a model key is set (ADR-020).
 
 ## 1 November 2026 (go-live branch `golive/2026-11`) — Security fixes from the go-live audit
+
 - Answers: players now see per-attempt option ids keyed with a server secret instead of the stored ids. The stored ids were an unkeyed hash of each option's authored position, so a script could undo the shuffle; in the shipped content the right answer is written first in 59% of questions. Shuffling now follows the keyed ids too. No migration. Old ids are refused on purpose (accepting them would let a script submit "authored first option" directly), so a question on screen at the moment of release needs a reload; resuming a round works as before.
 - Privacy: "Delete my data" now also removes the written answers a player left in their message threads, and the hourly clean-up of unused guests wipes their feedback message, email and written answers the same way (before, both kept that text for staff, against the privacy notice).
 - Studio: source links on the Generator draft cards and the Check screen are only links when they are http(s), so a model-written `javascript:` source can never run in a staff session.
@@ -148,11 +178,13 @@
 - Dependencies: in-range updates only (no majors): react-router-dom 6.30.6 (fixes the open-redirect advisory), vite 6.4.5, @clerk/react 6.18.4, @sentry/react 8.55.2, TypeScript 5.9, ESLint/Prettier tooling. `pnpm audit`: 41 advisories (21 high, all build/dev-time) down to 5 (0 high); the 2 production ones need React Router 7 and do not apply (BrowserRouter only, no navigation to user-supplied URLs). `composer audit`: none.
 
 ## 1 November 2026 — Daily auto-pick fix, generator providers, clean-up
+
 - Daily auto-pick: the server's crontab had been emptied, so 1 Nov had no daily. Jobs restored; `GET /daily` and starting a daily round now activate today's daily themselves when the job missed it; the Studio calendar preview uses the quizzes live at pick time, so it matches the real pick.
 - Generator: Anthropic is the default writer and searcher, OpenRouter (same Claude Opus 5.5) the backup; Bright Data is optional. `scripts/set-generator-keys.sh` saves keys on the server with hidden prompts.
 - Clean-up: removed blank template docs and pre-launch records (FTPS setup, rebrand verification, old cPanel evidence, launch/release stubs, PWA/API/email templates); rewrote README, project memory, security, backup and deployment docs; removed dead code (`useOptimizedImage`, `settingsService`, unused helpers) and FTPS-era scripts; `check-rebrand.py` checks only tracked files; `cron-ensure.sh` refuses to install when the crontab cannot be read.
 
 ## 31 October 2026 (evening) — Profile, info pages and on-site replies
+
 - One profile page (`/me`): character picker, nickname, stats, messages, rounds and best scores. The avatar menu is gone; the avatar in the top bar links straight to the profile and shows a dot for a new reply. `/me/avatar` now opens the picker on the profile.
 - Nicknames can be changed once (migration 0016). Children and players with no age pick from four generated names; 13+ may also type one. No two players can take the same name in a change. A confirm step says it is final.
 - Replies live on the site: players read Studio replies under Messages; teenagers and adults can write back, which puts the thread back to "new" in the Studio inbox. Staff can now reply to any message (children can read, not write). Email is optional.
@@ -160,12 +192,14 @@
 - Footer: removed "Parents and staff" and the "nicknames only, no adverts" line.
 
 ## 31 October 2026 (later) — Generator, tidy-up
+
 - Sourced question generator built and switched off (Studio → Generator): trusted-site search and page reading through Bright Data, drafts from Claude using only that text, quote/source/rule/duplicate checks, approve and send to a quiz. Migrations 0014, 0015. ADR-016.
 - Removed HeroTeaser, SkyBackdrop, ProgressDots and TimerBadge (unused after the redesign).
 - Inbox reply emails tell grown-ups to answer through the contact form (sender is no-reply).
 - ESLint ignores `backend/vendor`.
 
 ## 31 October 2026 — Pop & Ink rebrand, Studio and one board for every subject
+
 - Our own logo (grape speech bubble, lemon question mark) across the header, footer, favicon, app icons and share image (`scripts/brand-assets.mjs`).
 - Pop & Ink colours, Baloo 2 + Outfit fonts, 13 illustrated object characters (avatar ids unchanged) and eight worlds. Every question now plays inside its own world on a framed game stage; the explanation is a sheet inside the frame. ADR-014.
 - New Home (desktop hero with a real practice question; separate phone layout), subject and quiz pages with world banners, Daily and Leaderboards that fit one screen, Me inside the avatar menu.
@@ -179,10 +213,11 @@
 - Studio: white sidebar grouped Work / Content / Site, breadcrumbs and a ⌘K search palette, matching design file v2.0.
 
 ## 2026-10-30
+
 - Docs tidy (owner rule: one source of truth): Markdown moved into docs/, audits and checklists merged into docs/AUDIT.md, exact duplicates removed, links updated. No code changed.
 
-
 ## 27 October 2026
+
 - Ranked games are 20 random questions from the quiz pool (practice 10, daily fixed at 10). Boards rank by correct/total so mixed round sizes compare fairly.
 - Leaderboard likes: one per player per entry, not your own, removable, totals only (migration 0011, `POST /likes`, heart button). Released to live (frontend run 40457359055, commit 501026a).
 - Live moved to a fresh database `devgeereact_doyouknow` (old `devgeereact_dykspace` dropped after a verified final dump; old players and scores not carried over).
@@ -191,6 +226,7 @@
 - Disposable test setup moved to gitignored `.local-test/`; DB-backed tests refuse to run unless the config is inside it and is a local `_test` database (`backend/tests/guard.php`). Reports, caches and temp files also go there.
 
 ## Unreleased — new-domain baseline, 25 October 2026
+
 - Rebrand imported Do You Know source for doyouknow.space.
 - Fresh README, project memory and Claude Code handoff.
 - Manual-only verification/public FTPS workflows and independent coming-soon payload.

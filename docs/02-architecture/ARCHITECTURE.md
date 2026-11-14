@@ -8,7 +8,7 @@ Updated 16 October 2026. Supabase was removed from the code on this date (ADR-00
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
 │                  Client browser / installed PWA                      │
-│   React 18 + Vite + Tailwind · service worker (Workbox)              │
+│   React 18 + Vite + Tailwind v4 · service worker (Workbox)              │
 │   Static files from cPanel: SPA app shell                            │
 └──────┬───────────────────────┬───────────────┬───────────────────────┘
        │ HTTPS JSON /api/v1     │ adult sign-in │ errors (optional)
@@ -66,7 +66,7 @@ src/
 ├── types/           # domain.ts (row shapes), game.ts (game payloads), index.ts
 ├── App.tsx          # providers + router
 ├── main.tsx         # bootstrap: Sentry, SW registration, render
-└── index.css        # Tailwind layers + theme CSS variables
+└── index.css        # Tailwind v4 (`@theme inline`) + theme CSS variables
 backend/
 ├── public/api.php   # public entry, deployed as api/api.php
 ├── src/             # Api, Catalog, Game, Competition, Daily, Player, Identity, RateLimit, Database, Config, Content, ContentImporter
@@ -96,23 +96,23 @@ layout and keep only their own back link. Every page below the top level starts 
 and account to My games. Results offer "Next quiz" (next in the same category, then any
 other), "Play again" where allowed and "More <category> quizzes".
 
-| Route                                       | View                                                       |
-| ------------------------------------------- | ---------------------------------------------------------- |
-| `/`                                         | Home: today's challenge, categories, quizzes               |
-| `/c/:slug`                                  | Category: quizzes with age/curriculum filters              |
-| `/q/:slug`                                  | Quiz landing: intro, details, Play, top scores             |
-| `/play/:slug`                               | Game (practice or ranked)                                  |
-| `/daily`, `/daily/play`                     | Today's challenge and its game                             |
-| `/challenge/:code`, `/challenge/:code/play` | Friend-challenge preview and game                          |
-| `/leaderboards`                             | Boards by quiz / daily                                     |
-| `/me`, `/me/avatar`                         | History, streak, age band, nickname, preset avatar, delete |
-| `/me/settings`                              | Device settings (light or dark colours); no account needed |
-| `/account`                                  | Adult (parent/staff) sign-in with Clerk, loaded lazily     |
-| `/grown-ups`                                | Parent area (Clerk): children, switches, contact, hand-over |
+| Route                                       | View                                                                        |
+| ------------------------------------------- | --------------------------------------------------------------------------- |
+| `/`                                         | Home: today's challenge, categories, quizzes                                |
+| `/c/:slug`                                  | Category: quizzes with age/curriculum filters                               |
+| `/q/:slug`                                  | Quiz landing: intro, details, Play, top scores                              |
+| `/play/:slug`                               | Game (practice or ranked)                                                   |
+| `/daily`, `/daily/play`                     | Today's challenge and its game                                              |
+| `/challenge/:code`, `/challenge/:code/play` | Friend-challenge preview and game                                           |
+| `/leaderboards`                             | Boards by quiz / daily                                                      |
+| `/me`, `/me/avatar`                         | History, streak, age band, nickname, preset avatar, delete                  |
+| `/me/settings`                              | Device settings (light or dark colours); no account needed                  |
+| `/account`                                  | Adult (parent/staff) sign-in with Clerk, loaded lazily                      |
+| `/grown-ups`                                | Parent area (Clerk): children, switches, contact, hand-over                 |
 | `/learn/:area`                              | A child's learning session of ten (literacy, numeracy, science, humanities) |
-| `/login`                                    | Redirects to `/account`                                    |
-| `/dashboard`                                | Redirects to `/me/settings`                                |
-| `/preview`                                  | Redirects to `/`                                           |
+| `/login`                                    | Redirects to `/account`                                                     |
+| `/dashboard`                                | Redirects to `/me/settings`                                                 |
+| `/preview`                                  | Redirects to `/`                                                            |
 
 Deep links work because `.htaccess` serves real files first and rewrites everything else
 to `index.html`; Workbox's `navigateFallback` does the same offline.

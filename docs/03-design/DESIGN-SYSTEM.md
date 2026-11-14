@@ -15,7 +15,7 @@
 
 ## 2. Design tokens
 
-Tokens map 1:1 to `tailwind.config.ts` and are RGB CSS variables in `src/index.css` (`:root` = light, `.dark` = dark). **Always use the token class, never a raw hex** (world gradients in `src/lib/art.ts` are the one exception: they are illustration).
+Tokens are RGB CSS variables in `src/index.css`, mapped 1:1 to Tailwind colours by the `@theme inline` block in the same file (`:root` = light, `.dark` = dark). **Always use the token class, never a raw hex** (world gradients in `src/lib/art.ts` are the one exception: they are illustration).
 
 ### Colour
 

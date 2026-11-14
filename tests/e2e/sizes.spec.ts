@@ -10,7 +10,7 @@ import {
   test,
 } from './support/test';
 
-// The Phase 1 phone checks (.planning/phases/01-clean-up-and-foundations/01-HUMAN-UAT.md, tests 1 to 3)
+// The Phase 1 phone checks (docs/ROADMAP.md, phone checks 1 to 3)
 // repeated at the common phone and tablet sizes. Chromium with touch, so this is the layout and tap
 // behaviour at each size, not Safari's own engine.
 const SIZES = [

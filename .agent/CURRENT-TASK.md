@@ -1,22 +1,27 @@
 # Current task
 
-Updated 9 November 2026. Everything built so far is on `main` and live (`49c3791`, deployed). Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`.
+Updated 14 November 2026. Branch `chore/house-standard` (local, not pushed) holds Stages 0 to 3 of the house-standard rollout: Tailwind CSS v4, one docs tree, the working method. `main` is live at `5aec7bd`. Finished work is in `HANDOFF.md`; the live setup is in `docs/00-foundation/PROJECT-MEMORY.md`; versions and open items are in `docs/ROADMAP.md`.
 
 ## Goal
-Make the Studio's route from questions to live clean and proactive (`docs/CONTENT-PIPELINE-DESIGN.md`, ADR-024), and keep the child and parent app calm, tap-only and server-graded.
+
+Stage 4: build and improve the app. Next build candidate is the content pipeline (`docs/CONTENT-PIPELINE-DESIGN.md`, ADR-024): the Library Draft, Ready and Live view, then slices 5 and 6. Keep the child and parent app calm, tap-only and server-graded.
 
 ## Status
-- **Content pipeline:** slices 1 to 4 are LIVE. Slice 5 (weekly Studio digest) and slice 6 (proactive app for children and grown-ups) are PLANNED. Still to build inside slice 3: the Draft, Ready and Live view in the Library.
-- **Checks on `49c3791`:** `pnpm check` 452 unit PASS; backend, all suites PASS (cms 190, house rules 37); browser suite 113 PASS; `npm run verify` 37/37 PASS; CI, Semgrep and Deploy green. NOT TESTED: the Batches and Import screens in a real browser (they need the Studio sign-in), Safari and real phones.
+
+- **Rollout:** READY TO BUILD once the branch is merged. Waiting on the owner's "approved: push and merge do-you-know". PUSH TO MAIN DEPLOYS do-you-know (deploy.yml runs on push to `main`); the change touches CSS, so a deploy is wanted.
+- **Checks on this branch (14 Nov, Ubuntu):** `pnpm check` PASS (452 unit, build ok); `pnpm test:e2e` PASS 113/113; `pnpm verify` see HANDOFF. NOT TESTED: real phones, Safari, signed-in Studio screens, a visual side-by-side of v3 against v4 beyond the 113 browser tests.
+- **CI on `main`:** verify.yml green on `49c3791` (run 42627529469); head `5aec7bd` is a docs-only `[skip ci]` commit; Deploy 42633420202 green; daily Page check green 13 Nov.
+- **Backup:** git bundle in `~/Backups/projects/do-you-know/` (verified), linked from `.local-state/backups`.
 
 ## Next steps (owner)
-1. **Batches screen:** the 60 imported quizzes are one batch, 45 ready and 15 need a look. Set Ranked to Practice only on the 5 "Listen and spell" quizzes (bulk edit), choose which copy to keep for the 9 repeated questions, keep or cut the 6 with baptism or Last Supper wording, then read five and publish the ready ones at a pace.
-2. **Phone checks** in `.planning/phases/01-clean-up-and-foundations/01-HUMAN-UAT.md` (a real phone, Safari, and the real Clerk sign-in at `/grown-ups`). Installing Playwright's WebKit for a Safari-engine run is a download that needs your OK.
-3. **`mail_from`:** one line in the private server config, `'mail_from' => 'no-reply@doyouknow.space'` (SPF, DKIM and DMARC already exist).
-4. **Your uncommitted change** to the config example file is still in the working tree; it is not mine and is in no commit.
-5. Say yes to delete the old local branches (all fully merged into `main`) and the stale `.claude/worktrees/` agent checkouts.
+
+1. Say "approved: push and merge do-you-know" (one push, one deploy). Then one scripted smoke of the live site.
+2. Batches screen (60 imported quizzes), phone checks, `mail_from`: see `docs/ROADMAP.md`.
+3. Remote branches left on GitHub, listed for you, none deleted: `chore/env-example-no-imagekit` (your `.env.example` edit, one commit), `design/content-pipeline` (superseded), `feat/content-pipeline`, `phase/p1-housekeeping`, `phase/p8-owner-calls`, `phase/p9-router-v7`.
 
 ## Next steps (code)
-- Slice 5 and slice 6; the Library state view; a sticky answer sheet so the Next button is on screen on small phones (it sits below the fold for tall questions on 375x667).
-- Dev-dependency alerts `minimatch` (update with the next dev round) and `deepmerge` (no patched version); `clerkinc/backend-php` 1 to 2 and the `actions/checkout` and `pnpm/action-setup` majors are planned tasks, not drive-by merges.
+
+- Library Draft, Ready and Live view; slices 5 and 6; sticky answer sheet for the Next button at 375x667.
+- Dev-dependency alerts and the planned majors are listed in `docs/ROADMAP.md`.
 - `page-check.yml` fails when a published page has no prerendered head: run Deploy once when it does.
+- Under load the e2e `sizes.spec.ts` friend test can miss by a few pixels while an animation runs; it passes alone.

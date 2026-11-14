@@ -22,5 +22,5 @@ connections:
     status: unknown
     purpose: design-source
 notes:
-- Confirm account, organisation, project and environment before every material action.
-- Record identifiers and evidence, never credentials.
+  - Confirm account, organisation, project and environment before every material action.
+  - Record identifiers and evidence, never credentials.

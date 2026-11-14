@@ -6,7 +6,7 @@ do not merge.
 ## 0. Type (owner, 7 November 2026)
 
 - **A clean, calm type scale everywhere, the Studio included.** No text is bold: every Tailwind weight class
-  (`medium` to `black`) maps to 500 or lighter in `tailwind.config.ts`, and only `<strong>`/`<b>` reaches 600.
+  (`medium` to `black`) maps to 500 or lighter in the `@theme` block of `src/index.css`, and only `<strong>`/`<b>` reaches 600.
   Hierarchy comes from size, colour and space, not weight. New CSS never sets a weight above 600.
 - **No forced capitals and no wide letter-spacing** (`uppercase`, `tracking-wide` and up). Copy is written in
   sentence case; no headline is typed in capitals.
@@ -46,7 +46,7 @@ do not merge.
 
 ## 4. Styling
 
-- Tailwind / NativeWind utilities **only**. Tokens from `tailwind.config.ts`.
+- Tailwind / NativeWind utilities **only**. Tokens from the `@theme inline` block in `src/index.css`.
 - **No** inline `style={{}}`, no `.css`/`.module.css`, no CSS-in-JS.
 - Mobile-first: base styles, then `sm:` / `md:` / `lg:` overrides.
 - Compose conditional classes with `cn()` (never string-concatenate classes).

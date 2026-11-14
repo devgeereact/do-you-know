@@ -6,8 +6,10 @@ project:
   location: /Users/realmrgee/Developer/Projects/do-you-know
   domain: doyouknow.space
 stack_profile: cpanel
-stack: [react-18, typescript-strict, vite, tailwind, private-php-8.2, mysql-mariadb, clerk]
+stack: [react-18, typescript-strict, vite, tailwind-v4, private-php-8.2, mysql-mariadb, clerk]
 package_manager: pnpm
+styling: tailwind-v4
+working_method: superpowers
 node: '24 (.node-version)'
 dev_server:
   port: 5202
@@ -31,6 +33,8 @@ identity:
   provider: clerk
   new_domain_configuration: verified (production app "do you know space")
 sources_of_truth:
+  roadmap: docs/ROADMAP.md
+  archive: docs/ARCHIVE.md
   memory: docs/00-foundation/PROJECT-MEMORY.md
   handoff: .agent/HANDOFF.md
   rules: docs/00-foundation/RULES.md
