@@ -68,7 +68,7 @@ export function ReportQuestion({
         type="button"
         aria-label={t.play.report.openLabel}
         onClick={() => setOpen(true)}
-        className="inline-flex min-h-tap items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-content-muted hover:bg-background hover:text-content focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+        className="inline-flex min-h-tap items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-content-muted hover:bg-background hover:text-content focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
       >
         <svg
           viewBox="0 0 24 24"
@@ -85,7 +85,7 @@ export function ReportQuestion({
       </button>
       {open && (
         <div
-          className="fixed inset-0 z-[90] grid place-items-center bg-[rgb(23_21_58/0.5)] p-4"
+          className="fixed inset-0 z-90 grid place-items-center bg-[rgb(23_21_58/0.5)] p-4"
           onPointerDown={(e) => e.target === e.currentTarget && close()}
         >
           <div
@@ -105,7 +105,7 @@ export function ReportQuestion({
               {t.play.report.reasons.map((r) => (
                 <label
                   key={r}
-                  className="flex min-h-tap cursor-pointer items-center gap-3 rounded-xl border-2 border-surface-border px-3 font-semibold has-[:checked]:border-primary has-[:checked]:bg-primary/10"
+                  className="flex min-h-tap cursor-pointer items-center gap-3 rounded-xl border-2 border-surface-border px-3 font-semibold has-checked:border-primary has-checked:bg-primary/10"
                 >
                   <input
                     type="radio"

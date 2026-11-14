@@ -390,7 +390,7 @@ export function ImportScreen(): JSX.Element {
         </Panel>
         <details open className={cn(cardClass, 'min-w-0 p-4 lg:p-5')}>
           <summary className="cursor-pointer font-bold">How to write them</summary>
-          <pre className="my-2.5 whitespace-pre-wrap rounded-[10px] bg-content/[0.05] px-3 py-2.5 font-mono text-[13px] [overflow-wrap:anywhere]">
+          <pre className="my-2.5 whitespace-pre-wrap rounded-[10px] bg-content/5 px-3 py-2.5 font-mono text-[13px] wrap-anywhere">
             {IMPORT_CHEATSHEET}
           </pre>
           <ul className="grid list-disc gap-1 pl-5 text-sm">
@@ -447,7 +447,7 @@ export function ImportScreen(): JSX.Element {
           </div>
           <div
             role="status"
-            className="mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-primary/25 bg-primary/[0.06] p-3 text-sm"
+            className="mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-primary/25 bg-primary/6 p-3 text-sm"
           >
             {!reviewReady ? (
               <span className="font-bold">
@@ -522,12 +522,12 @@ export function ImportScreen(): JSX.Element {
             ]}
           >
             {finalRows.map((r, i) => (
-              <Tr key={`${r.line}-${i}`} className={r.block.length ? 'bg-wrong/[0.04]' : undefined}>
+              <Tr key={`${r.line}-${i}`} className={r.block.length ? 'bg-wrong/4' : undefined}>
                 <Td label="Line" className="text-content-muted">
                   {r.line}
                 </Td>
                 <Td label="Question" lead>
-                  <b className="block [overflow-wrap:anywhere]">{r.q.prompt || '(no question)'}</b>
+                  <b className="block wrap-anywhere">{r.q.prompt || '(no question)'}</b>
                   {r.q.explanation && (
                     <span className="text-xs text-content-muted">{r.q.explanation}</span>
                   )}
@@ -741,9 +741,7 @@ function Opt({ ok, children }: { ok: boolean; children: string }): JSX.Element {
     <span
       className={cn(
         'inline-block rounded-full px-2 py-0.5 text-[12.5px] font-bold',
-        ok
-          ? 'bg-correct/10 text-correct ring-[1.5px] ring-inset ring-correct'
-          : 'bg-content/[0.06]',
+        ok ? 'bg-correct/10 text-correct ring-[1.5px] ring-inset ring-correct' : 'bg-content/6',
       )}
     >
       {children}

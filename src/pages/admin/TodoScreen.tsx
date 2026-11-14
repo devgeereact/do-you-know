@@ -176,7 +176,7 @@ export function TodoScreen(): JSX.Element {
                       key={t.key}
                       type="button"
                       onClick={go}
-                      className="mt-1.5 grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[14px] border border-surface-border bg-surface px-3 py-2.5 text-left transition-colors first-of-type:mt-0 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40"
+                      className="mt-1.5 grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-[14px] border border-surface-border bg-surface px-3 py-2.5 text-left transition-colors first-of-type:mt-0 hover:border-primary/40 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40"
                     >
                       <span
                         className={cn(
@@ -257,7 +257,7 @@ export function TodoScreen(): JSX.Element {
                     return (
                       <Tr key={h.question_id}>
                         <Td label="Question" lead>
-                          <b className="block [overflow-wrap:anywhere]">{h.prompt}</b>
+                          <b className="block wrap-anywhere">{h.prompt}</b>
                         </Td>
                         <Td label="Quiz">{h.quiz_title}</Td>
                         <Td label="Answered" num>

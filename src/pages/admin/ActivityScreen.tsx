@@ -83,7 +83,7 @@ export function ActivityScreen(): JSX.Element {
               <Td label="Action">
                 <span className="inline-flex flex-wrap items-center justify-end gap-1.5 min-[720px]:justify-start">
                   <b>{ACTIONS[a.action] ?? a.action}</b>
-                  <code className="rounded-full bg-content/[0.06] px-2 py-0.5 text-[11px] text-content-muted">
+                  <code className="rounded-full bg-content/6 px-2 py-0.5 text-[11px] text-content-muted">
                     {a.action}
                   </code>
                 </span>

@@ -69,7 +69,7 @@ export function FeedbackPanel({
               aria-expanded={false}
               aria-controls={whyId}
               onClick={() => setWhyOpen(true)}
-              className="inline-flex min-h-tap items-center gap-2 rounded-full border-2 border-surface-border px-4 font-bold hover:border-primary/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+              className="inline-flex min-h-tap items-center gap-2 rounded-full border-2 border-surface-border px-4 font-bold hover:border-primary/40 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
             >
               {t.play.feedback.why}
             </button>
@@ -120,7 +120,7 @@ export function FeedbackPanel({
             type="button"
             disabled={blocked}
             onClick={onNext}
-            className="h-12 flex-1 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50 md:flex-none"
+            className="h-12 flex-1 rounded-full bg-(--fd) px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50 md:flex-none"
           >
             {result.is_last ? t.play.feedback.seeScore : t.play.feedback.next}{' '}
             <span aria-hidden="true">→</span>

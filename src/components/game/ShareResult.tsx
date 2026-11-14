@@ -46,7 +46,7 @@ export function ShareResult({
       <Button variant="ghost" size="lg" disabled={busy} onClick={() => void onClick()}>
         {t.results.share.action}
       </Button>
-      <p aria-live="polite" className="mt-2 break-words text-sm font-semibold text-content">
+      <p aria-live="polite" className="mt-2 wrap-break-word text-sm font-semibold text-content">
         {status}
       </p>
     </div>

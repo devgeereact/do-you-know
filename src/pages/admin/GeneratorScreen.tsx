@@ -442,7 +442,7 @@ function DraftCard({
       className={cn(
         'grid gap-3 rounded-2xl border p-4',
         draft.decision === 'approved' || draft.decision === 'sent'
-          ? 'border-correct/40 bg-correct/[0.04]'
+          ? 'border-correct/40 bg-correct/4'
           : draft.decision === 'rejected'
             ? 'border-surface-border opacity-60'
             : 'border-surface-border',

@@ -470,10 +470,7 @@ function OneBatch({ id }: { id: string }): JSX.Element {
               </p>
               <ul className="grid gap-3">
                 {reading.map((it, i) => (
-                  <li
-                    key={`${it.quiz_id}-${it.number}`}
-                    className="rounded-2xl bg-content/[0.04] p-3"
-                  >
+                  <li key={`${it.quiz_id}-${it.number}`} className="rounded-2xl bg-content/4 p-3">
                     <label className="flex cursor-pointer items-start gap-3">
                       <input
                         type="checkbox"
@@ -492,7 +489,7 @@ function OneBatch({ id }: { id: string }): JSX.Element {
                         <span className="block text-xs text-content-muted">
                           {it.title}, question {it.number}
                         </span>
-                        <b className="block text-[15px] [overflow-wrap:anywhere]">{it.prompt}</b>
+                        <b className="block text-[15px] wrap-anywhere">{it.prompt}</b>
                         <span className="block text-sm">
                           Right answer: <b>{it.answer}</b>
                         </span>

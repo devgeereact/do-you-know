@@ -40,7 +40,7 @@ export function AccountPage(): JSX.Element {
         </Card>
         <Link
           to="/me"
-          className="mt-4 inline-flex min-h-tap items-center rounded-full px-1 font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+          className="mt-4 inline-flex min-h-tap items-center rounded-full px-1 font-semibold text-primary hover:underline focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
         >
           {t.account.back}
         </Link>

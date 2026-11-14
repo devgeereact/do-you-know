@@ -124,7 +124,7 @@ export function TileBuild({
   }
 
   return (
-    <div className="flex w-full max-w-[40rem] flex-col items-center gap-4" data-q-build>
+    <div className="flex w-full max-w-160 flex-col items-center gap-4" data-q-build>
       <div role="group" aria-label={`${t.play.build.yourAnswer}: ${prompt}`} className="w-full">
         {answerArea}
       </div>
@@ -148,7 +148,7 @@ export function TileBuild({
         <div className="flex w-full flex-wrap justify-center gap-3">
           <button
             type="button"
-            className="stage-key min-w-[7rem] text-lg"
+            className="stage-key min-w-28 text-lg"
             disabled={locked || history.length === 0}
             onClick={undo}
           >
@@ -156,7 +156,7 @@ export function TileBuild({
           </button>
           <button
             type="button"
-            className="h-14 min-w-[9rem] flex-1 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
+            className="h-14 min-w-36 flex-1 rounded-full bg-(--fd) px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
             disabled={locked || !full}
             aria-describedby={full ? undefined : `${questionKey}-hint`}
             onClick={() => onSubmit(placed as string[])}

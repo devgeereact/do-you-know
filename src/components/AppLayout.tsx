@@ -38,7 +38,7 @@ export function AppLayout(): JSX.Element {
         id="content"
         tabIndex={-1}
         className={cn(
-          'flex-1 focus:outline-none',
+          'flex-1 focus:outline-hidden',
           fit && 'min-h-0 overflow-hidden pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0',
         )}
       >

@@ -71,7 +71,7 @@ export function InfoShell({
                   to={link.to}
                   className={({ isActive }) =>
                     cn(
-                      'flex min-h-[40px] items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary lg:rounded-xl lg:px-3',
+                      'flex min-h-[40px] items-center whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary lg:rounded-xl lg:px-3',
                       isActive
                         ? 'bg-primary text-primary-fg lg:bg-primary/10 lg:text-primary'
                         : 'bg-surface text-content-muted ring-1 ring-surface-border hover:text-content lg:bg-transparent lg:ring-0 lg:hover:bg-surface',
@@ -147,7 +147,7 @@ export function InfoSection({ heading, id, children }: InfoSectionProps): JSX.El
     <section
       id={slug}
       aria-labelledby={`${slug}-heading`}
-      className="scroll-mt-24 break-words border-b border-surface-border py-7 first:pt-0 last:border-b-0"
+      className="scroll-mt-24 wrap-break-word border-b border-surface-border py-7 first:pt-0 last:border-b-0"
     >
       <h2 id={`${slug}-heading`} className="text-2xl font-extrabold tracking-tight text-content">
         {heading}

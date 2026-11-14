@@ -27,7 +27,7 @@ export function SettingsPage(): JSX.Element {
               <label
                 key={option.mode}
                 className={cn(
-                  'flex min-h-tap cursor-pointer items-center gap-3 rounded-2xl border-2 p-4 transition-colors duration-200 has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-primary',
+                  'flex min-h-tap cursor-pointer items-center gap-3 rounded-2xl border-2 p-4 transition-colors duration-200 has-focus-visible:ring-[3px] has-focus-visible:ring-primary',
                   theme === option.mode
                     ? 'border-primary bg-primary/10'
                     : 'border-surface-border bg-background hover:border-primary/40',

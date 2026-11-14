@@ -33,14 +33,14 @@ export function SliderAnswer({
   useEffect(() => setValue(midpoint), [questionKey, midpoint]);
 
   return (
-    <div className="w-full max-w-xl rounded-[1.75rem] border-[3px] border-[var(--fd)] bg-stage-paper p-5 text-stage-ink shadow-[0_4px_0_var(--fd)]">
+    <div className="w-full max-w-xl rounded-3xl border-[3px] border-(--fd) bg-stage-paper p-5 text-stage-ink shadow-[0_4px_0_var(--fd)]">
       <label htmlFor={id} className="sr-only">
         {prompt}
       </label>
       <output
         htmlFor={id}
         aria-live="polite"
-        className="mb-2 block text-center font-display text-4xl font-extrabold text-[var(--fd)]"
+        className="mb-2 block text-center font-display text-4xl font-extrabold text-(--fd)"
       >
         {format(value, slider.unit)}
       </output>
@@ -53,7 +53,7 @@ export function SliderAnswer({
         value={value}
         disabled={disabled || result !== null}
         onChange={(e) => setValue(Number(e.target.value))}
-        className="h-12 w-full cursor-pointer accent-[var(--fd)] disabled:cursor-default"
+        className="h-12 w-full cursor-pointer accent-(--fd) disabled:cursor-default"
       />
       <div className="mt-1 flex justify-between text-sm font-semibold opacity-60">
         <span>{format(slider.min, slider.unit)}</span>
@@ -63,7 +63,7 @@ export function SliderAnswer({
       {result === null ? (
         <button
           type="button"
-          className="mt-4 h-12 w-full rounded-full bg-[var(--fd)] font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
+          className="mt-4 h-12 w-full rounded-full bg-(--fd) font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
           disabled={disabled}
           onClick={() => onSubmit(value)}
         >

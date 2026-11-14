@@ -25,7 +25,7 @@ export function WorldBanner({
   return (
     <div
       className={cn(
-        'relative isolate flex min-h-[9.5rem] items-end overflow-hidden rounded-[1.75rem] p-5 lg:min-h-[11rem] lg:p-7',
+        'relative isolate flex min-h-38 items-end overflow-hidden rounded-3xl p-5 lg:min-h-44 lg:p-7',
         className,
       )}
     >

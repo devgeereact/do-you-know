@@ -152,15 +152,15 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
 
   return (
     <main ref={root} className="overflow-x-clip">
-      <section data-hero className="relative isolate overflow-hidden rounded-b-[2.5rem] text-white">
-        <div data-hero-bg className="absolute -inset-[4%] -z-10">
+      <section data-hero className="relative isolate overflow-hidden rounded-b-frame text-white">
+        <div data-hero-bg className="absolute inset-[-4%] -z-10">
           <WorldBackdrop world="ocean" />
         </div>
         <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] items-center gap-12 px-6 pb-24 pt-20">
           <div>
             <p
               data-hero-fade
-              className="inline-flex h-7 items-center rounded-full bg-white/20 px-3 text-sm font-bold backdrop-blur"
+              className="inline-flex h-7 items-center rounded-full bg-white/20 px-3 text-sm font-bold backdrop-blur-sm"
             >
               {t.home.hero.kicker}
             </p>
@@ -184,7 +184,7 @@ function DesktopHome({ catalog, daily, trending, bestBySlug, slugOf }: HomeData)
               </Link>
               <a
                 href="#worlds"
-                className="inline-flex h-14 items-center rounded-full border-[1.5px] border-white/50 bg-white/15 px-7 text-lg font-bold backdrop-blur hover:bg-white/25 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-white"
+                className="inline-flex h-14 items-center rounded-full border-[1.5px] border-white/50 bg-white/15 px-7 text-lg font-bold backdrop-blur-sm hover:bg-white/25 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-white"
               >
                 {t.home.hero.seeWorlds}
               </a>
@@ -337,9 +337,9 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
   const playable = question && question.type !== 'slider';
 
   return (
-    <div className="stage-frame relative w-[34rem] max-w-full" style={frameStyle(w)}>
-      <span className="stage-tab !text-[1.7rem]">{t.home.tryOne.tab}</span>
-      <div className="pointer-events-none absolute -bottom-7 -left-14 z-[7] drop-shadow-[0_8px_10px_rgb(8_40_90/0.25)]">
+    <div className="stage-frame relative w-136 max-w-full" style={frameStyle(w)}>
+      <span className="stage-tab text-[1.7rem]!">{t.home.tryOne.tab}</span>
+      <div className="pointer-events-none absolute -bottom-7 -left-14 z-7 drop-shadow-[0_8px_10px_rgb(8_40_90/0.25)]">
         <Character
           name={w.host}
           size={120}
@@ -347,12 +347,12 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
         />
       </div>
       <div
-        className="stage-inner min-h-[27rem]"
+        className="stage-inner min-h-108"
         data-dark={w.dark && !result}
         data-result={result ? (result.is_correct ? 'right' : 'wrong') : undefined}
       >
-        <Scene world={w.key} className="!h-[55%]" />
-        <div className="relative z-[2] flex flex-1 flex-col items-center justify-center gap-4 px-6 pb-7 pt-12 text-center">
+        <Scene world={w.key} className="h-[55%]!" />
+        <div className="relative z-2 flex flex-1 flex-col items-center justify-center gap-4 px-6 pb-7 pt-12 text-center">
           {!state ? (
             <>
               <p className="text-sm font-bold opacity-70">{t.home.tryOne.kicker}</p>
@@ -366,7 +366,7 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
                 type="button"
                 disabled={status === 'loading'}
                 onClick={() => void start()}
-                className="h-12 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] active:translate-y-[3px] disabled:opacity-60"
+                className="h-12 rounded-full bg-(--fd) px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] active:translate-y-[3px] disabled:opacity-60"
               >
                 {status === 'loading' ? t.home.tryOne.loading : t.home.tryOne.start}
               </button>
@@ -383,7 +383,7 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
               )}
               <Link
                 to={`/play/${quiz.slug}?mode=practice`}
-                className="h-12 rounded-full bg-[var(--fd)] px-7 pt-[0.7rem] font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)]"
+                className="h-12 rounded-full bg-(--fd) px-7 pt-[0.7rem] font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)]"
               >
                 {t.home.tryOne.keepGoing}
               </Link>
@@ -408,7 +408,7 @@ function TryOne({ quiz }: { quiz: Quiz }): JSX.Element {
                       state={answerState(o.id)}
                       chosen={o.id === chosen}
                       onClick={() => void answer(o.id)}
-                      className="!min-h-[3.1rem] !text-[0.95rem]"
+                      className="min-h-[3.1rem]! text-[0.95rem]!"
                     >
                       {o.label}
                     </AnswerButton>
@@ -494,11 +494,11 @@ function DailyCard({
       className={cn(
         cardLinkClass,
         'relative isolate flex flex-col justify-end overflow-hidden border-0 text-white',
-        compact ? 'min-h-[13rem] rounded-[1.75rem] p-5' : 'min-h-[14rem] p-6',
+        compact ? 'min-h-52 rounded-3xl p-5' : 'min-h-56 p-6',
       )}
     >
       <WorldBackdrop world={w.key} className="-z-10" />
-      <span className="absolute right-4 top-3 -z-[5]" aria-hidden="true">
+      <span className="absolute right-4 top-3 z-[-5]" aria-hidden="true">
         <Character name={w.host} size={compact ? 88 : 96} />
       </span>
       <span className="self-start rounded-full bg-secondary px-2.5 py-0.5 text-xs font-bold text-secondary-fg">
@@ -611,14 +611,14 @@ function WorldTiles({ categories }: { categories: Category[] }): JSX.Element {
             <Link
               to={to}
               data-reveal
-              className="group relative isolate block aspect-[4/3] overflow-hidden rounded-[1.4rem] text-white transition-transform duration-200 hover:-translate-y-1 hover:shadow-lift focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+              className="group relative isolate block aspect-4/3 overflow-hidden rounded-[1.4rem] text-white transition-transform duration-200 hover:-translate-y-1 hover:shadow-lift focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
             >
               <WorldBackdrop
                 world={key}
                 className="-z-10 transition-transform duration-500 group-hover:scale-105"
               />
               {count > 0 && (
-                <span className="absolute left-3 top-3 rounded-full bg-white/25 px-2.5 py-0.5 text-xs font-bold backdrop-blur">
+                <span className="absolute left-3 top-3 rounded-full bg-white/25 px-2.5 py-0.5 text-xs font-bold backdrop-blur-sm">
                   {t.home.subjectQuizzes(count)}
                 </span>
               )}
@@ -650,7 +650,7 @@ function SubjectTiles({ categories }: { categories: Category[] }): JSX.Element {
   const tiles = categories.filter((c) => c.kids_count > 0).map((c) => ({ c, n: c.kids_count }));
   const spare = (6 - (tiles.length % 6)) % 6;
   const tile =
-    'flex aspect-square flex-col items-center justify-center gap-1.5 rounded-[1.4rem] p-3 text-center transition-transform duration-200 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary';
+    'flex aspect-square flex-col items-center justify-center gap-1.5 rounded-[1.4rem] p-3 text-center transition-transform duration-200 hover:-translate-y-1 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary';
   return (
     <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
       {tiles.map(({ c, n }) => (
@@ -676,7 +676,7 @@ function SubjectTiles({ categories }: { categories: Category[] }): JSX.Element {
         <li className={cn('col-span-2 sm:col-span-3', SPARE_SPAN[spare])}>
           <Link
             to="/contact?type=idea"
-            className="flex h-full min-h-[8rem] items-center justify-center gap-4 rounded-[1.4rem] border-2 border-dashed border-surface-border p-4 text-content-muted transition-colors hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+            className="flex h-full min-h-32 items-center justify-center gap-4 rounded-[1.4rem] border-2 border-dashed border-surface-border p-4 text-content-muted transition-colors hover:border-primary hover:bg-primary/5 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
           >
             <Character name="mug" size={60} />
             <span className="grid text-left">
@@ -728,7 +728,7 @@ function SuggestRow(): JSX.Element {
       to="/contact?type=idea"
       className={cn(
         cardLinkClass,
-        'flex h-full min-h-[5rem] items-center gap-4 border-dashed bg-transparent p-3 pr-4 shadow-none',
+        'flex h-full min-h-20 items-center gap-4 border-dashed bg-transparent p-3 pr-4 shadow-none',
       )}
     >
       <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[rgb(var(--surface-border)/0.6)]">
@@ -867,7 +867,7 @@ function AllQuizzes({
 
 function ParentsBand(): JSX.Element {
   return (
-    <section className="my-14 grid items-center gap-8 overflow-hidden rounded-[2rem] bg-[#17153A] p-8 text-white lg:grid-cols-[1.1fr_1fr] lg:p-12">
+    <section className="my-14 grid items-center gap-8 overflow-hidden rounded-4xl bg-[#17153A] p-8 text-white lg:grid-cols-[1.1fr_1fr] lg:p-12">
       <div>
         <span className="rounded-full bg-sky/20 px-3 py-1 text-xs font-bold text-[#7EE6D9]">
           {t.home.parentsKicker}
@@ -925,7 +925,7 @@ function PhoneHome({
         : quizzes.filter(isKids);
 
   return (
-    <main className="mx-auto grid max-w-xl gap-6 px-4 pb-6 pt-5 [&>*]:min-w-0">
+    <main className="mx-auto grid max-w-xl gap-6 px-4 pb-6 pt-5 *:min-w-0">
       <section>
         <p className="text-sm text-content-muted">
           {name ? t.home.hello(name) : t.home.helloGuest}
@@ -947,7 +947,7 @@ function PhoneHome({
 
       <Link
         to="/daily"
-        className="flex items-center justify-between gap-3 rounded-[1.5rem] border-2 border-content bg-secondary px-5 py-4 text-left text-secondary-fg shadow-edge-ink"
+        className="flex items-center justify-between gap-3 rounded-2xl border-2 border-content bg-secondary px-5 py-4 text-left text-secondary-fg shadow-edge-ink"
       >
         <span>
           <span className="block text-sm font-semibold">
@@ -966,15 +966,15 @@ function PhoneHome({
         <section aria-hidden="true">
           <h2 className="mb-2.5 text-[1.4rem]">{t.home.carryOn}</h2>
           <div className="-mx-4 grid auto-cols-[82%] grid-flow-col gap-3 overflow-hidden px-4 pb-1">
-            <div className="min-h-[9.5rem] rounded-[1.5rem] bg-content/[0.06]" />
-            <div className="min-h-[9.5rem] rounded-[1.5rem] bg-content/[0.06]" />
+            <div className="min-h-38 rounded-2xl bg-content/6" />
+            <div className="min-h-38 rounded-2xl bg-content/6" />
           </div>
         </section>
       )}
       {carryOnRow(unfinished.length, trending.length, trendingLoading) === 'show' && (
         <section>
           <h2 className="mb-2.5 text-[1.4rem]">{t.home.carryOn}</h2>
-          <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[82%] grid-flow-col gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none]">
+          <ul className="-mx-4 grid snap-x snap-mandatory auto-cols-[82%] grid-flow-col gap-3 overflow-x-auto px-4 pb-1 scrollbar-none">
             {(unfinished.length
               ? unfinished.map((u) => ({
                   key: u.attemptId,
@@ -1000,7 +1000,7 @@ function PhoneHome({
                   <Link
                     to={item.to}
                     className={cn(
-                      'grid min-h-[9.5rem] grid-cols-[1fr_auto] items-end gap-2 rounded-[1.5rem] p-4',
+                      'grid min-h-38 grid-cols-[1fr_auto] items-end gap-2 rounded-2xl p-4',
                       bg,
                     )}
                   >
@@ -1026,7 +1026,7 @@ function PhoneHome({
         <div
           role="group"
           aria-label={t.home.categoriesLabel}
-          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none]"
+          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-none"
         >
           <button
             type="button"

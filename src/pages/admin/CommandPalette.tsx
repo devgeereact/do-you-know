@@ -85,7 +85,7 @@ export function CommandPalette({
   };
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-start justify-center bg-[#17153A]/40 px-4 pt-[12vh]">
+    <div className="fixed inset-0 z-70 flex items-start justify-center bg-[#17153A]/40 px-4 pt-[12vh]">
       <button
         type="button"
         aria-label="Close search"
@@ -136,7 +136,7 @@ export function CommandPalette({
                 go(items[active]);
               }
             }}
-            className="h-full flex-1 bg-transparent text-base text-content outline-none placeholder:text-content-muted"
+            className="h-full flex-1 bg-transparent text-base text-content outline-hidden placeholder:text-content-muted"
           />
           <kbd className="rounded-md border border-surface-border px-1.5 text-[11px] font-semibold text-content-muted">
             esc

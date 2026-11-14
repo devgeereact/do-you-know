@@ -3,7 +3,7 @@ import { LogoMark } from '@/components/brand/Logo';
 import { t } from '@/i18n';
 
 const linkClass =
-  'inline-flex min-h-tap items-center rounded-full px-2 font-semibold text-content-muted hover:text-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary';
+  'inline-flex min-h-tap items-center rounded-full px-2 font-semibold text-content-muted hover:text-primary focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary';
 
 const LINKS: { to: string; label: string }[] = [
   { to: '/how-to-play', label: t.footer.links.howToPlay },
@@ -18,7 +18,7 @@ const LINKS: { to: string; label: string }[] = [
 /** Quiet footer: help and legal pages, away from the playful bits. */
 export function SiteFooter(): JSX.Element {
   return (
-    <footer className="border-t border-surface-border bg-surface/70 backdrop-blur-sm">
+    <footer className="border-t border-surface-border bg-surface/70 backdrop-blur-xs">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm md:flex-row md:items-center md:justify-between lg:px-6">
         <p className="flex items-center gap-2 text-content-muted">
           <LogoMark size={24} />

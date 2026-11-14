@@ -86,12 +86,12 @@ export function NumberTiles({
   );
 
   return (
-    <div className="flex w-full max-w-[22rem] flex-col items-center gap-3" data-q-numbers>
+    <div className="flex w-full max-w-88 flex-col items-center gap-3" data-q-numbers>
       <output
         id={outId}
         aria-live="polite"
         aria-label={`${t.play.numbers.label}: ${prompt}`}
-        className="flex min-h-[4.5rem] w-full items-center justify-center rounded-2xl border-[3px] border-[var(--fd)] bg-stage-paper px-4 font-display text-4xl font-extrabold tabular-nums text-stage-ink"
+        className="flex min-h-18 w-full items-center justify-center rounded-2xl border-[3px] border-(--fd) bg-stage-paper px-4 font-display text-4xl font-extrabold tabular-nums text-stage-ink"
       >
         {text === '' ? (
           <span className="text-lg font-semibold opacity-60">{t.play.numbers.empty}</span>
@@ -130,7 +130,7 @@ export function NumberTiles({
       {result === null ? (
         <button
           type="button"
-          className="h-14 w-full rounded-full bg-[var(--fd)] font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
+          className="h-14 w-full rounded-full bg-(--fd) font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
           disabled={locked || text === ''}
           onClick={check}
         >

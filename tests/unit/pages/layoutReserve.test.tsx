@@ -28,7 +28,7 @@ describe('layout space reserved while data loads', () => {
     );
     const holder = container.querySelector('[data-reserve="banner"]');
     expect(holder).not.toBeNull();
-    expect(holder?.className).toContain('min-h-[9.5rem]');
+    expect(holder?.className).toContain('min-h-38');
     expect(holder?.getAttribute('aria-hidden')).toBe('true');
     expect(container.querySelector('[data-reserve="description"]')).not.toBeNull();
     expect(container.querySelector('[role="status"]')?.className).toContain('min-h-[60vh]');

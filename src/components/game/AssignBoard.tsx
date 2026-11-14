@@ -88,11 +88,8 @@ export function AssignBoard({
   const wrong = result !== null && !result.is_correct && result.correct_pairs;
 
   return (
-    <div className="flex w-full max-w-[40rem] flex-col items-center gap-4" data-q-assign>
-      <ul
-        aria-label={t.play.assign.items}
-        className="flex min-h-[3.5rem] flex-wrap justify-center gap-2"
-      >
+    <div className="flex w-full max-w-160 flex-col items-center gap-4" data-q-assign>
+      <ul aria-label={t.play.assign.items} className="flex min-h-14 flex-wrap justify-center gap-2">
         {trayItems.map((i) => (
           <li key={i.id}>
             <button
@@ -130,10 +127,7 @@ export function AssignBoard({
               >
                 {x.label}
               </button>
-              <ul
-                aria-label={x.label}
-                className="flex min-h-[3.5rem] flex-wrap justify-center gap-2"
-              >
+              <ul aria-label={x.label} className="flex min-h-14 flex-wrap justify-center gap-2">
                 {inside.map((i) => (
                   <li key={i.id}>
                     <button
@@ -159,7 +153,7 @@ export function AssignBoard({
         <div className="flex w-full flex-wrap justify-center gap-3">
           <button
             type="button"
-            className="h-14 min-w-[9rem] flex-1 rounded-full bg-[var(--fd)] px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
+            className="h-14 min-w-36 flex-1 rounded-full bg-(--fd) px-7 font-display text-lg font-extrabold text-white shadow-[0_4px_0_rgb(0_0_0/0.25)] transition-transform active:translate-y-[3px] disabled:opacity-50"
             disabled={locked || !all}
             aria-describedby={all ? undefined : `${questionKey}-hint`}
             onClick={() => onSubmit(items.map((i): [string, string] => [i.id, placed[i.id] ?? '']))}

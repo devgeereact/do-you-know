@@ -1,9 +1,493 @@
-@import '@fontsource-variable/outfit';
-@import '@fontsource-variable/baloo-2';
+@import '@fontsource-variable/outfit' layer(base);
+@import '@fontsource-variable/baloo-2' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: rgb(var(--background));
+
+  --color-surface: rgb(var(--surface));
+  --color-surface-border: rgb(var(--surface-border));
+
+  --color-primary: rgb(var(--primary));
+  --color-primary-fg: rgb(var(--primary-fg));
+
+  --color-secondary: rgb(var(--sun));
+  --color-secondary-fg: rgb(var(--sun-fg));
+
+  --color-sky: rgb(var(--sky));
+
+  --color-tang: rgb(var(--tang));
+  --color-tang-fg: rgb(var(--content));
+
+  --color-gum: rgb(var(--gum));
+
+  --color-content: rgb(var(--content));
+  --color-content-muted: rgb(var(--content-muted));
+
+  --color-correct: rgb(var(--correct));
+  --color-correct-fg: #ffffff;
+
+  --color-correct-soft: rgb(var(--correct-soft));
+  --color-stage-paper: rgb(var(--stage-paper));
+  --color-stage-ink: rgb(var(--stage-ink));
+
+  --color-wrong: rgb(var(--wrong));
+  --color-wrong-fg: #ffffff;
+
+  --color-warning: rgb(var(--warning));
+  --color-warning-fg: #1b2a3a;
+
+  --color-avatar-fox: rgb(var(--avatar-fox));
+  --color-avatar-owl: rgb(var(--avatar-owl));
+  --color-avatar-panda: rgb(var(--avatar-panda));
+  --color-avatar-lion: rgb(var(--avatar-lion));
+  --color-avatar-frog: rgb(var(--avatar-frog));
+  --color-avatar-octopus: rgb(var(--avatar-octopus));
+  --color-avatar-penguin: rgb(var(--avatar-penguin));
+  --color-avatar-unicorn: rgb(var(--avatar-unicorn));
+  --color-avatar-dragon: rgb(var(--avatar-dragon));
+  --color-avatar-robot: rgb(var(--avatar-robot));
+  --color-avatar-rocket: rgb(var(--avatar-rocket));
+  --color-avatar-star: rgb(var(--avatar-star));
+
+  --font-weight-medium: 500;
+  --font-weight-semibold: 500;
+  --font-weight-bold: 500;
+  --font-weight-extrabold: 500;
+  --font-weight-black: 500;
+
+  --font-sans: 'Outfit Variable', Outfit, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Baloo 2 Variable', 'Baloo 2', 'Outfit Variable', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.6;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 1.75rem;
+  --radius-frame: 2.5rem;
+
+  --shadow-edge-primary: 0 4px 0 0 rgb(var(--primary-edge));
+  --shadow-edge-sun: 0 4px 0 0 rgb(var(--sun-edge));
+  --shadow-edge-tang: 0 4px 0 0 rgb(var(--tang-edge));
+  --shadow-edge-ink: 0 4px 0 0 rgb(var(--content));
+  --shadow-edge-surface: 0 4px 0 0 rgb(var(--surface-border));
+  --shadow-edge-pressed: 0 1px 0 0 rgb(var(--surface-border));
+  --shadow-lift: 0 12px 32px -14px rgb(var(--content) / 0.3);
+  --shadow-soft: 0 1px 2px rgb(var(--content) / 0.05);
+  --shadow-float: 0 24px 48px -20px rgb(var(--content) / 0.38);
+
+  --min-height-tap: 3rem;
+
+  --min-width-tap: 3rem;
+
+  --animate-fade-up: fade-up 300ms ease-out both;
+  --animate-pop: pop 250ms ease-out;
+  --animate-shake: shake 250ms ease-in-out;
+  --animate-countdown: countdown 2500ms linear forwards;
+
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.06);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes countdown {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-6px);
+    }
+    75% {
+      transform: translateX(6px);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* ---------- The game stage: a framed card over a full-bleed illustrated world ---------- */
+
+@utility stage-frame {
+  --fc: rgb(var(--stage-frame));
+  --fd: rgb(var(--stage-edge));
+  position: relative;
+  border-radius: 2.5rem;
+  background: var(--fc);
+  padding: 10px;
+  box-shadow:
+    0 12px 0 rgb(0 0 0 / 0.14),
+    0 24px 48px -20px rgb(23 21 58 / 0.4);
+  @media (max-width: 759px) {
+    border-radius: 1.9rem;
+    padding: 6px;
+  }
+}
+
+@utility stage-inner {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 6px solid rgb(var(--stage-paper));
+  border-radius: 2rem;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bot));
+  color: rgb(var(--stage-ink));
+  /* The frame's sky is always light, so the light theme's tokens apply inside it (dark mode too). */
+  --background: 246 244 253;
+  --surface: 255 255 255;
+  --surface-border: 232 228 243;
+  --primary: 108 76 245;
+  --primary-fg: 255 255 255;
+  --primary-edge: 74 47 201;
+  --content: 23 21 58;
+  --content-muted: 90 86 128;
+  --correct: 15 122 79;
+  --wrong: 198 49 47;
+  &[data-dark='true'] {
+    color: rgb(var(--stage-paper));
+  }
+  &[data-result='right'] {
+    --sky-top: rgb(var(--stage-right-top)) !important;
+    --sky-bot: rgb(var(--stage-right-bot)) !important;
+    color: rgb(var(--stage-ink));
+  }
+  &[data-result='wrong'] {
+    --sky-top: rgb(var(--stage-wrong-top)) !important;
+    --sky-bot: rgb(var(--stage-wrong-bot)) !important;
+    color: rgb(var(--stage-ink));
+  }
+  @media (max-width: 759px) {
+    border-width: 4px;
+    border-radius: 1.6rem;
+  }
+}
+
+@utility stage-tab {
+  position: absolute;
+  left: 50%;
+  top: -1.9rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  border-radius: 1.4rem;
+  background: var(--fd);
+  padding: 0.6rem 1.75rem 0.45rem;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(var(--stage-paper));
+  text-shadow: 0 3px 0 rgb(0 0 0 / 0.22);
+  box-shadow:
+    0 5px 0 rgb(0 0 0 / 0.2),
+    0 0 0 5px rgb(var(--stage-paper));
+  @media (max-width: 759px) {
+    top: -1.4rem;
+    font-size: 1.35rem;
+    padding: 0.5rem 1.1rem 0.35rem;
+    box-shadow:
+      0 4px 0 rgb(0 0 0 / 0.2),
+      0 0 0 4px rgb(var(--stage-paper));
+  }
+}
+
+@utility stage-answer {
+  display: flex;
+  min-height: 3.6rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 3px solid var(--fd);
+  border-radius: 9999px;
+  background: rgb(var(--stage-paper));
+  padding: 0.5rem 1.1rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--fd);
+  box-shadow: 0 4px 0 var(--fd);
+  transition:
+    transform 120ms ease-out,
+    box-shadow 120ms ease-out,
+    opacity 200ms;
+  touch-action: manipulation;
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--fd);
+  }
+  &:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--fd);
+  }
+  &:focus-visible {
+    outline: 3px solid rgb(var(--stage-ink));
+    outline-offset: 3px;
+  }
+  &[data-state='right'] {
+    border-color: rgb(var(--right-fill));
+    background: rgb(var(--right-fill));
+    color: rgb(var(--right-ink));
+    box-shadow: 0 4px 0 rgb(var(--right-edge));
+  }
+  &[data-state='wrong'] {
+    border-color: rgb(var(--wrong-edge));
+    background: rgb(var(--wrong-fill));
+    color: rgb(var(--wrong-ink));
+    box-shadow: 0 4px 0 rgb(var(--wrong-edge));
+  }
+  &[data-state='dimmed'] {
+    opacity: 0.4;
+    filter: saturate(0.3);
+  }
+  &:disabled {
+    cursor: default;
+  }
+  @media (max-width: 759px) {
+    min-height: 3.35rem;
+    font-size: 1rem;
+  }
+}
+
+@utility stage-sheet {
+  position: relative;
+  z-index: 4;
+  flex: none;
+  background: rgb(var(--stage-paper));
+  color: rgb(var(--stage-ink));
+  padding: 1.75rem 2rem 1.4rem;
+  @media (max-width: 759px) {
+    padding: 1.6rem 1.1rem 1rem;
+  }
+}
+
+@utility stage-sheet-tag {
+  position: absolute;
+  left: 1.5rem;
+  top: -1.35rem;
+  border-radius: 1rem;
+  background: rgb(var(--stage-paper));
+  padding: 0.35rem 1.1rem 0.1rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  @media (max-width: 759px) {
+    left: 1rem;
+    top: -1.15rem;
+    font-size: 1.05rem;
+  }
+}
+
+@utility stage-pill {
+  display: inline-flex;
+  height: 2.25rem;
+  align-items: center;
+  gap: 0.35rem;
+  border: 3px solid var(--fd);
+  border-radius: 9999px;
+  background: rgb(var(--stage-paper));
+  padding: 0 0.85rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--fd);
+  font-variant-numeric: tabular-nums;
+  &[data-low='true'] {
+    border-color: rgb(var(--wrong));
+    background: rgb(var(--wrong));
+    color: rgb(var(--stage-paper));
+  }
+}
+
+@utility stage-tile {
+  /* Tap-to-build questions (spell, gap, order) and number tiles. Every target is at least 3.5rem (56px). */
+  display: inline-flex;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--fd);
+  border-radius: 1rem;
+  background: rgb(var(--stage-paper));
+  padding: 0.25rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fd);
+  box-shadow: 0 4px 0 var(--fd);
+  transition:
+    transform 120ms ease-out,
+    box-shadow 120ms ease-out,
+    opacity 200ms;
+  touch-action: manipulation;
+  &:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--fd);
+  }
+  &:focus-visible {
+    outline: 3px solid rgb(var(--stage-ink));
+    outline-offset: 3px;
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.3;
+    box-shadow: none;
+  }
+  /* Assign questions: a picked-up thing, a place that is ready to take it. */
+  &[aria-pressed='true'] {
+    background: var(--fd);
+    color: white;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--fd);
+  }
+}
+
+@utility stage-key {
+  display: inline-flex;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--fd);
+  border-radius: 1rem;
+  background: rgb(var(--stage-paper));
+  padding: 0.25rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fd);
+  box-shadow: 0 4px 0 var(--fd);
+  transition:
+    transform 120ms ease-out,
+    box-shadow 120ms ease-out,
+    opacity 200ms;
+  touch-action: manipulation;
+  &:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--fd);
+  }
+  &:focus-visible {
+    outline: 3px solid rgb(var(--stage-ink));
+    outline-offset: 3px;
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.45;
+  }
+  &[data-ready='true'] {
+    background: rgb(var(--stage-ink));
+    color: rgb(var(--stage-paper));
+  }
+}
+
+@utility stage-slot {
+  &:focus-visible {
+    outline: 3px solid rgb(var(--stage-ink));
+    outline-offset: 3px;
+  }
+  display: inline-flex;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 3px dashed var(--fd);
+  border-radius: 1rem;
+  background: rgb(var(--stage-paper) / 0.55);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1;
+  color: rgb(var(--stage-ink));
+  touch-action: manipulation;
+  &[data-filled='true'] {
+    border-style: solid;
+    background: rgb(var(--stage-paper));
+  }
+  &[data-state='right'] {
+    border-style: solid;
+    border-color: rgb(var(--right-edge));
+    background: rgb(var(--right-fill));
+    color: rgb(var(--right-ink));
+  }
+  &[data-state='wrong'] {
+    border-style: solid;
+    border-color: rgb(var(--wrong-edge));
+    background: rgb(var(--wrong-fill));
+    color: rgb(var(--wrong-ink));
+  }
+  &:disabled {
+    cursor: default;
+  }
+}
+
+@utility stage-zone {
+  border: 3px dashed var(--fd);
+  background: rgb(var(--stage-paper) / 0.55);
+}
 
 @layer base {
   /* Pop & Ink. Light theme (default). Values are RGB channels for Tailwind alpha support. */
@@ -134,300 +618,6 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
       scroll-behavior: auto !important;
-    }
-  }
-}
-
-/* ---------- The game stage: a framed card over a full-bleed illustrated world ---------- */
-@layer components {
-  .stage-frame {
-    --fc: rgb(var(--stage-frame));
-    --fd: rgb(var(--stage-edge));
-    position: relative;
-    border-radius: 2.5rem;
-    background: var(--fc);
-    padding: 10px;
-    box-shadow:
-      0 12px 0 rgb(0 0 0 / 0.14),
-      0 24px 48px -20px rgb(23 21 58 / 0.4);
-  }
-  .stage-inner {
-    position: relative;
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    overflow: hidden;
-    border: 6px solid rgb(var(--stage-paper));
-    border-radius: 2rem;
-    background: linear-gradient(180deg, var(--sky-top), var(--sky-bot));
-    color: rgb(var(--stage-ink));
-  }
-  /* The frame's sky is always light, so the light theme's tokens apply inside it (dark mode too). */
-  .stage-inner {
-    --background: 246 244 253;
-    --surface: 255 255 255;
-    --surface-border: 232 228 243;
-    --primary: 108 76 245;
-    --primary-fg: 255 255 255;
-    --primary-edge: 74 47 201;
-    --content: 23 21 58;
-    --content-muted: 90 86 128;
-    --correct: 15 122 79;
-    --wrong: 198 49 47;
-  }
-  .stage-inner[data-dark='true'] {
-    color: rgb(var(--stage-paper));
-  }
-  .stage-inner[data-result='right'] {
-    --sky-top: rgb(var(--stage-right-top)) !important;
-    --sky-bot: rgb(var(--stage-right-bot)) !important;
-    color: rgb(var(--stage-ink));
-  }
-  .stage-inner[data-result='wrong'] {
-    --sky-top: rgb(var(--stage-wrong-top)) !important;
-    --sky-bot: rgb(var(--stage-wrong-bot)) !important;
-    color: rgb(var(--stage-ink));
-  }
-  .stage-tab {
-    position: absolute;
-    left: 50%;
-    top: -1.9rem;
-    z-index: 5;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    border-radius: 1.4rem;
-    background: var(--fd);
-    padding: 0.6rem 1.75rem 0.45rem;
-    font-family: theme('fontFamily.display');
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1;
-    color: rgb(var(--stage-paper));
-    text-shadow: 0 3px 0 rgb(0 0 0 / 0.22);
-    box-shadow:
-      0 5px 0 rgb(0 0 0 / 0.2),
-      0 0 0 5px rgb(var(--stage-paper));
-  }
-  .stage-answer {
-    display: flex;
-    min-height: 3.6rem;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border: 3px solid var(--fd);
-    border-radius: 9999px;
-    background: rgb(var(--stage-paper));
-    padding: 0.5rem 1.1rem;
-    font-family: theme('fontFamily.display');
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.1;
-    color: var(--fd);
-    box-shadow: 0 4px 0 var(--fd);
-    transition:
-      transform 120ms ease-out,
-      box-shadow 120ms ease-out,
-      opacity 200ms;
-    touch-action: manipulation;
-  }
-  .stage-answer:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 var(--fd);
-  }
-  .stage-answer:active:not(:disabled) {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 var(--fd);
-  }
-  .stage-answer:focus-visible {
-    outline: 3px solid rgb(var(--stage-ink));
-    outline-offset: 3px;
-  }
-  .stage-answer[data-state='right'] {
-    border-color: rgb(var(--right-fill));
-    background: rgb(var(--right-fill));
-    color: rgb(var(--right-ink));
-    box-shadow: 0 4px 0 rgb(var(--right-edge));
-  }
-  .stage-answer[data-state='wrong'] {
-    border-color: rgb(var(--wrong-edge));
-    background: rgb(var(--wrong-fill));
-    color: rgb(var(--wrong-ink));
-    box-shadow: 0 4px 0 rgb(var(--wrong-edge));
-  }
-  .stage-answer[data-state='dimmed'] {
-    opacity: 0.4;
-    filter: saturate(0.3);
-  }
-  .stage-answer:disabled {
-    cursor: default;
-  }
-  .stage-sheet {
-    position: relative;
-    z-index: 4;
-    flex: none;
-    background: rgb(var(--stage-paper));
-    color: rgb(var(--stage-ink));
-    padding: 1.75rem 2rem 1.4rem;
-  }
-  .stage-sheet-tag {
-    position: absolute;
-    left: 1.5rem;
-    top: -1.35rem;
-    border-radius: 1rem;
-    background: rgb(var(--stage-paper));
-    padding: 0.35rem 1.1rem 0.1rem;
-    font-family: theme('fontFamily.display');
-    font-size: 1.35rem;
-    font-weight: 500;
-  }
-  .stage-pill {
-    display: inline-flex;
-    height: 2.25rem;
-    align-items: center;
-    gap: 0.35rem;
-    border: 3px solid var(--fd);
-    border-radius: 9999px;
-    background: rgb(var(--stage-paper));
-    padding: 0 0.85rem;
-    font-family: theme('fontFamily.display');
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--fd);
-    font-variant-numeric: tabular-nums;
-  }
-  .stage-pill[data-low='true'] {
-    border-color: rgb(var(--wrong));
-    background: rgb(var(--wrong));
-    color: rgb(var(--stage-paper));
-  }
-  /* Tap-to-build questions (spell, gap, order) and number tiles. Every target is at least 3.5rem (56px). */
-  .stage-tile,
-  .stage-key {
-    display: inline-flex;
-    min-width: 3.5rem;
-    min-height: 3.5rem;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid var(--fd);
-    border-radius: 1rem;
-    background: rgb(var(--stage-paper));
-    padding: 0.25rem 0.9rem;
-    font-family: theme('fontFamily.display');
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 1;
-    color: var(--fd);
-    box-shadow: 0 4px 0 var(--fd);
-    transition:
-      transform 120ms ease-out,
-      box-shadow 120ms ease-out,
-      opacity 200ms;
-    touch-action: manipulation;
-  }
-  .stage-tile:active:not(:disabled),
-  .stage-key:active:not(:disabled) {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 var(--fd);
-  }
-  .stage-tile:focus-visible,
-  .stage-key:focus-visible,
-  .stage-slot:focus-visible {
-    outline: 3px solid rgb(var(--stage-ink));
-    outline-offset: 3px;
-  }
-  .stage-tile:disabled {
-    cursor: default;
-    opacity: 0.3;
-    box-shadow: none;
-  }
-  .stage-key:disabled {
-    cursor: default;
-    opacity: 0.45;
-  }
-  .stage-slot {
-    display: inline-flex;
-    min-width: 3.5rem;
-    min-height: 3.5rem;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    border: 3px dashed var(--fd);
-    border-radius: 1rem;
-    background: rgb(var(--stage-paper) / 0.55);
-    padding: 0.25rem 0.75rem;
-    font-family: theme('fontFamily.display');
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 1;
-    color: rgb(var(--stage-ink));
-    touch-action: manipulation;
-  }
-  .stage-slot[data-filled='true'] {
-    border-style: solid;
-    background: rgb(var(--stage-paper));
-  }
-  .stage-slot[data-state='right'] {
-    border-style: solid;
-    border-color: rgb(var(--right-edge));
-    background: rgb(var(--right-fill));
-    color: rgb(var(--right-ink));
-  }
-  .stage-slot[data-state='wrong'] {
-    border-style: solid;
-    border-color: rgb(var(--wrong-edge));
-    background: rgb(var(--wrong-fill));
-    color: rgb(var(--wrong-ink));
-  }
-  .stage-slot:disabled {
-    cursor: default;
-  }
-  /* Assign questions: a picked-up thing, a place that is ready to take it. */
-  .stage-tile[aria-pressed='true'] {
-    background: var(--fd);
-    color: white;
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 var(--fd);
-  }
-  .stage-zone {
-    border: 3px dashed var(--fd);
-    background: rgb(var(--stage-paper) / 0.55);
-  }
-  .stage-key[data-ready='true'] {
-    background: rgb(var(--stage-ink));
-    color: rgb(var(--stage-paper));
-  }
-  @media (max-width: 759px) {
-    .stage-frame {
-      border-radius: 1.9rem;
-      padding: 6px;
-    }
-    .stage-inner {
-      border-width: 4px;
-      border-radius: 1.6rem;
-    }
-    .stage-tab {
-      top: -1.4rem;
-      font-size: 1.35rem;
-      padding: 0.5rem 1.1rem 0.35rem;
-      box-shadow:
-        0 4px 0 rgb(0 0 0 / 0.2),
-        0 0 0 4px rgb(var(--stage-paper));
-    }
-    .stage-answer {
-      min-height: 3.35rem;
-      font-size: 1rem;
-    }
-    .stage-sheet {
-      padding: 1.6rem 1.1rem 1rem;
-    }
-    .stage-sheet-tag {
-      left: 1rem;
-      top: -1.15rem;
-      font-size: 1.05rem;
     }
   }
 }

@@ -6,7 +6,7 @@ import { t } from '@/i18n';
 
 const copy = t.grownUps.contact;
 const field =
-  'w-full rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-base focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/20';
+  'w-full rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-base focus:border-primary focus:outline-hidden focus:ring-[3px] focus:ring-primary/20';
 const TYPES = ['feedback', 'question', 'idea', 'problem'] as const;
 
 /** Typed text lives here and nowhere on the child's side: this form needs a grown-up sign-in. */

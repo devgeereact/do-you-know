@@ -241,7 +241,7 @@ export function SubjectsScreen(): JSX.Element {
       </Table>
       <Panel
         as="form"
-        className="flex flex-wrap items-end gap-2 !p-4"
+        className="flex flex-wrap items-end gap-2 p-4!"
         onSubmit={(e) => {
           e.preventDefault();
           void add();

@@ -77,7 +77,7 @@ export function TabBar(): JSX.Element {
                   to={item.to}
                   aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'flex min-h-[3.75rem] flex-col items-center justify-center gap-0.5 text-xs font-bold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-primary',
+                    'flex min-h-15 flex-col items-center justify-center gap-0.5 text-xs font-bold transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-primary',
                     active ? 'text-primary' : 'text-content-muted',
                   )}
                 >

@@ -93,7 +93,7 @@ export function NicknamePicker({ onDone }: NicknamePickerProps): JSX.Element | n
           autoComplete="off"
           spellCheck={false}
           placeholder={profile.nickname ?? t.me.nickname.placeholder}
-          className="min-h-tap rounded-full border-2 border-surface-border bg-surface px-5 text-center font-display text-lg text-content placeholder:text-content-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary"
+          className="min-h-tap rounded-full border-2 border-surface-border bg-surface px-5 text-center font-display text-lg text-content placeholder:text-content-muted focus-visible:border-primary focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-secondary"
         />
         <p className="text-xs text-content-muted">{t.me.nickname.hint}</p>
         <Button type="submit" disabled={busy || typed.trim().length < 3}>

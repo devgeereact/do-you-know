@@ -80,7 +80,7 @@ export function CalendarScreen(): JSX.Element {
         lead="Drag a quiz onto a day, or pick one and click a day. Empty days use the automatic pick: the live quiz used least recently."
       />
       <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
-        <Panel as="aside" className="order-first min-w-0 self-start !p-3 lg:order-last">
+        <Panel as="aside" className="order-first min-w-0 self-start p-3! lg:order-last">
           <b className="text-sm">Live quizzes</b>
           <p className="mb-2 mt-0.5 text-xs text-content-muted">
             Only live quizzes can be the daily.
@@ -210,7 +210,7 @@ export function CalendarScreen(): JSX.Element {
                       <span
                         className={cn(
                           'truncate rounded-[7px] px-1 py-0.5 text-[10.5px] font-extrabold sm:px-1.5 sm:text-xs',
-                          d.status === 'live' ? 'bg-correct/15 text-correct' : 'bg-content/[0.06]',
+                          d.status === 'live' ? 'bg-correct/15 text-correct' : 'bg-content/6',
                         )}
                       >
                         {d.title}
@@ -218,7 +218,7 @@ export function CalendarScreen(): JSX.Element {
                     )}
                     {d.status === 'auto' && (
                       <span
-                        className="truncate rounded-[7px] bg-content/[0.06] px-1 py-0.5 text-[10.5px] font-bold text-content-muted sm:px-1.5 sm:text-xs"
+                        className="truncate rounded-[7px] bg-content/6 px-1 py-0.5 text-[10.5px] font-bold text-content-muted sm:px-1.5 sm:text-xs"
                         title={d.title ? `Automatic pick: ${d.title}` : undefined}
                       >
                         Auto pick

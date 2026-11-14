@@ -95,12 +95,12 @@ export function ContactPage(): JSX.Element {
   }
 
   const field =
-    'h-12 w-full rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/20';
+    'h-12 w-full rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-hidden focus:ring-[3px] focus:ring-primary/20';
 
   return (
     <InfoShell title={f.title} lead={f.lead}>
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-8">
-        <section className="order-2 grid gap-4 xl:order-none xl:col-start-2 xl:row-start-1">
+        <section className="order-2 grid gap-4 xl:order-0 xl:col-start-2 xl:row-start-1">
           <ul className="grid gap-2">
             {f.tiles.map((tile) => (
               <li

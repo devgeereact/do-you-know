@@ -217,7 +217,7 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
       {createPortal(
         <div
           data-lenis-prevent
-          className="fixed inset-0 z-[60] flex flex-col bg-background text-content lg:flex-row"
+          className="fixed inset-0 z-60 flex flex-col bg-background text-content lg:flex-row"
         >
           <nav
             aria-label="Studio"
@@ -244,7 +244,7 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
                     end={item.to === '/admin'}
                     className={({ isActive }) =>
                       cn(
-                        'flex h-[38px] flex-none items-center gap-2.5 whitespace-nowrap rounded-[10px] px-2.5 text-[14px] transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40',
+                        'flex h-[38px] flex-none items-center gap-2.5 whitespace-nowrap rounded-[10px] px-2.5 text-[14px] transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40',
                         isActive ||
                           (item.to === '/admin/library' && pathname.startsWith('/admin/edit'))
                           ? 'bg-primary/10 font-semibold text-primary'
@@ -275,7 +275,7 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
             <div className="ml-2 flex flex-none items-center rounded-[14px] bg-background px-2.5 py-1 text-[13px] lg:mt-auto lg:ml-0 lg:block lg:p-2.5">
               <p className="hidden font-semibold text-content lg:block">Signed in</p>
               <p className="mb-1.5 hidden text-content-muted lg:block">Super Admin</p>
-              <div className="[&_button]:!h-8 [&_button]:!text-xs">{account}</div>
+              <div className="[&_button]:h-8! [&_button]:text-xs!">{account}</div>
             </div>
           </nav>
           <div className="flex min-h-0 min-w-0 flex-1 flex-col">
@@ -288,7 +288,7 @@ function Studio({ getToken, account }: { getToken: GetToken; account: ReactNode 
               <button
                 type="button"
                 onClick={() => setPalette(true)}
-                className="ml-6 flex h-[38px] w-full max-w-[420px] items-center gap-2.5 rounded-[11px] bg-background px-3 text-sm text-content-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40"
+                className="ml-6 flex h-[38px] w-full max-w-[420px] items-center gap-2.5 rounded-[11px] bg-background px-3 text-sm text-content-muted focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40"
               >
                 <svg
                   viewBox="0 0 24 24"

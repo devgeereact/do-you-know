@@ -42,7 +42,7 @@ export function QuestionPreview({
           <WorldGlyph world={w.key} size={12} />
           {w.name}
         </span>
-        <p className="mb-3 mt-2 font-display text-lg font-extrabold leading-tight [overflow-wrap:anywhere]">
+        <p className="mb-3 mt-2 font-display text-lg font-extrabold leading-tight wrap-anywhere">
           {question.prompt.trim() || 'Your question'}
         </p>
         {question.type === 'choice' && (
@@ -50,7 +50,7 @@ export function QuestionPreview({
             {(question.options ?? []).map((o, k) => (
               <div key={k} className={answerBox(o.correct)}>
                 <span className={letter(o.correct)}>{LETTERS[k]}</span>
-                <span className="min-w-0 [overflow-wrap:anywhere]">{o.label || '…'}</span>
+                <span className="min-w-0 wrap-anywhere">{o.label || '…'}</span>
               </div>
             ))}
           </div>

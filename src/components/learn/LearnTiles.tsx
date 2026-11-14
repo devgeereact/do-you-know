@@ -7,7 +7,7 @@ import type { LearnArea } from '@/types/game';
 import { t } from '@/i18n';
 
 const tile =
-  'grid h-full min-h-[9rem] w-full content-center justify-items-center gap-1 rounded-[1.4rem] p-4 text-center transition-transform duration-200 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary';
+  'grid h-full min-h-36 w-full content-center justify-items-center gap-1 rounded-[1.4rem] p-4 text-center transition-transform duration-200 hover:-translate-y-1 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary';
 
 /**
  * Four big tiles, one for each area. For a child a parent has set up they start a learning session

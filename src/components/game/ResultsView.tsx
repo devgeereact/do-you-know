@@ -219,8 +219,8 @@ export function ResultsView({
       >
         <span className="stage-tab">{resultTab(summary.correct, summary.total)}</span>
         <div className="stage-inner px-5 pb-8 pt-12 text-center md:px-10">
-          <Scene world={resultWorld(percent)} className="!h-[45%] opacity-90" />
-          <div className="relative z-[2]">
+          <Scene world={resultWorld(percent)} className="h-[45%]! opacity-90" />
+          <div className="relative z-2">
             <div aria-hidden="true" className="relative mx-auto mb-2 h-28 w-28 md:h-32 md:w-32">
               <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
                 <circle
@@ -259,7 +259,7 @@ export function ResultsView({
             <h1
               ref={headingRef}
               tabIndex={-1}
-              className="mt-2 text-5xl font-semibold text-content focus:outline-none md:text-6xl"
+              className="mt-2 text-5xl font-semibold text-content focus:outline-hidden md:text-6xl"
             >
               {summary.correct} <span className="text-content-muted">/ {summary.total}</span>
               <span className="sr-only"> {t.results.correctSuffix}</span>

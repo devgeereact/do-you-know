@@ -48,7 +48,7 @@ export function AnswerButton({
           {marker}
         </span>
       )}
-      <span className="min-w-0 [overflow-wrap:anywhere]">{children}</span>
+      <span className="min-w-0 wrap-anywhere">{children}</span>
       {state === 'right' && (
         <span className="sr-only">{chosen ? t.play.answer.correct : t.play.answer.answer}</span>
       )}

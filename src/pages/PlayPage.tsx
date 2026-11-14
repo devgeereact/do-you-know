@@ -260,9 +260,9 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
         <Link
           to={leaveTo}
           className={cn(
-            'inline-flex min-h-tap shrink-0 items-center gap-1 rounded-full px-3 font-semibold focus-visible:outline-none focus-visible:ring-[3px]',
+            'inline-flex min-h-tap shrink-0 items-center gap-1 rounded-full px-3 font-semibold focus-visible:outline-hidden focus-visible:ring-[3px]',
             inStage
-              ? 'border-[1.5px] border-white/40 bg-white/20 text-white backdrop-blur focus-visible:ring-white'
+              ? 'border-[1.5px] border-white/40 bg-white/20 text-white backdrop-blur-sm focus-visible:ring-white'
               : '-ml-2 text-primary hover:underline focus-visible:ring-primary',
           )}
         >
@@ -273,7 +273,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
           className={cn(
             'min-w-0 truncate font-semibold',
             inStage
-              ? 'rounded-full border-[1.5px] border-white/40 bg-white/20 px-3 py-2 text-sm text-white backdrop-blur'
+              ? 'rounded-full border-[1.5px] border-white/40 bg-white/20 px-3 py-2 text-sm text-white backdrop-blur-sm'
               : 'text-center font-display text-lg text-content',
           )}
         >
@@ -360,7 +360,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
           <section
             data-q-card
             aria-label={t.play.questionOf(state.position, state.total)}
-            className="stage-frame flex w-full max-w-[70rem] flex-col md:h-[min(calc(100dvh-7rem),45rem)] md:min-h-[35rem]"
+            className="stage-frame flex w-full max-w-280 flex-col md:h-[min(calc(100dvh-7rem),45rem)] md:min-h-140"
             style={frameStyle(w)}
           >
             <span data-q-tab className="stage-tab">
@@ -378,8 +378,8 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                   : undefined
               }
             >
-              <Scene world={w.key} className="!h-[58%]" />
-              <div className="absolute inset-x-4 top-4 z-[4] flex items-center justify-between md:inset-x-6">
+              <Scene world={w.key} className="h-[58%]!" />
+              <div className="absolute inset-x-4 top-4 z-4 flex items-center justify-between md:inset-x-6">
                 {timer.secondsLeft !== null && phase === 'question' ? (
                   <span className="stage-pill" data-low={timer.isLow} role="timer" aria-live="off">
                     {t.play.timer.badge(timer.secondsLeft)}
@@ -388,12 +388,12 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                   <span />
                 )}
               </div>
-              <div className="relative z-[2] flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-32 xl:pb-10">
+              <div className="relative z-2 flex flex-1 flex-col items-center justify-center px-4 pb-28 pt-16 text-center md:px-10 md:pb-32 xl:pb-10">
                 <div
                   data-q-host
                   aria-hidden="true"
                   className={cn(
-                    'pointer-events-none absolute bottom-3 left-4 z-[3] md:bottom-6 md:left-7',
+                    'pointer-events-none absolute bottom-3 left-4 z-3 md:bottom-6 md:left-7',
                   )}
                 >
                   <Character
@@ -406,7 +406,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                           : 'sad'
                         : 'happy'
                     }
-                    className="h-24 w-24 xl:h-[10.5rem] xl:w-[10.5rem]"
+                    className="h-24 w-24 xl:h-42 xl:w-42"
                   />
                 </div>
                 <p
@@ -433,7 +433,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                       ref={feedbackRef}
                       tabIndex={-1}
                       data-q-verdict
-                      className="mt-3 font-display text-[2.1rem] font-extrabold leading-none focus:outline-none md:text-[3.4rem]"
+                      className="mt-3 font-display text-[2.1rem] font-extrabold leading-none focus:outline-hidden md:text-[3.4rem]"
                     >
                       {lastResult.timed_out
                         ? t.play.feedback.timeUp
@@ -456,7 +456,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                     tabIndex={-1}
                     data-q-prompt
                     className={cn(
-                      'mx-auto mb-6 mt-3 font-display font-extrabold focus:outline-none',
+                      'mx-auto mb-6 mt-3 font-display font-extrabold focus:outline-hidden',
                       // A short passage with its question reads as text, not as a headline.
                       question.prompt.length > 140
                         ? 'max-w-[44ch] text-pretty text-left text-[1.15rem] font-bold leading-snug md:text-[1.45rem]'
@@ -532,7 +532,7 @@ export function PlayPage({ kind = 'quiz' }: PlayPageProps): JSX.Element {
                   ) : (
                     <ul
                       className={cn(
-                        'grid w-full max-w-[40rem] gap-3',
+                        'grid w-full max-w-160 gap-3',
                         question.type === 'boolean' ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2',
                       )}
                     >

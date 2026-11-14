@@ -23,7 +23,9 @@ describe('quizSeoDescription', () => {
   const quiz = { intro: 'Kings, queens and castles.', question_count: 20, age_min: 7, age_max: 11 };
 
   it('adds the size and ages to the intro, with no shared sales line', () => {
-    expect(quizSeoDescription(quiz)).toBe('Kings, queens and castles. 20 questions for ages 7 to 11.');
+    expect(quizSeoDescription(quiz)).toBe(
+      'Kings, queens and castles. 20 questions for ages 7 to 11.',
+    );
   });
 
   it('handles open age ranges and missing facts', () => {

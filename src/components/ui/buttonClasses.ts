@@ -31,9 +31,9 @@ export function buttonClasses(
 ): string {
   return cn(
     'inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-bold',
-    'touch-manipulation transition-[transform,box-shadow,background-color,border-color] duration-[120ms] ease-out',
+    'touch-manipulation transition-[transform,box-shadow,background-color,border-color] duration-120 ease-out',
     'hover:-translate-y-0.5 active:translate-y-[3px] active:shadow-edge-pressed',
-    'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+    'focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background',
     'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
     VARIANTS[variant],
     SIZES[size],

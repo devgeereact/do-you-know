@@ -108,7 +108,7 @@ export function QuizPage(): JSX.Element {
                   <img
                     src={quiz.cover_image_url}
                     alt=""
-                    className="aspect-[16/9] w-full rounded-xl object-cover"
+                    className="aspect-video w-full rounded-xl object-cover"
                   />
                 )}
                 {quiz.intro && (

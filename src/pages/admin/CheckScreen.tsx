@@ -153,7 +153,7 @@ export function CheckScreen(): JSX.Element {
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
           <Panel className="grid min-w-0 content-start gap-3">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <b className="[overflow-wrap:anywhere]">
+              <b className="wrap-anywhere">
                 {detail.quiz.title} · question {index + 1} of {total}
               </b>
               <Pill tone={q.checked ? 'ok' : 'warn'}>{q.checked ? 'Checked' : 'Not checked'}</Pill>
@@ -189,7 +189,7 @@ export function CheckScreen(): JSX.Element {
                 size="sm"
                 disabled={busy || errors.length > 0 || q.checked}
                 title={errors.length ? 'Fix the problems shown first' : undefined}
-                className="!bg-correct !text-correct-fg !shadow-[0_4px_0_0_#0A5A3A]"
+                className="bg-correct! text-correct-fg! shadow-[0_4px_0_0_#0A5A3A]!"
                 onClick={() => void mark(true)}
               >
                 ✓ Looks right
@@ -208,7 +208,7 @@ export function CheckScreen(): JSX.Element {
             <Panel className="grid gap-3">
               <div>
                 <p className="text-sm font-bold text-content-muted">Marked answer</p>
-                <p className="font-extrabold [overflow-wrap:anywhere]">{markedAnswer(q)}</p>
+                <p className="font-extrabold wrap-anywhere">{markedAnswer(q)}</p>
               </div>
               <div>
                 <p className="text-sm font-bold text-content-muted">Explanation</p>
@@ -218,7 +218,7 @@ export function CheckScreen(): JSX.Element {
               </div>
               <div>
                 <p className="text-sm font-bold text-content-muted">Source</p>
-                <div className="rounded-[14px] bg-content/[0.05] p-3 text-sm [overflow-wrap:anywhere]">
+                <div className="rounded-[14px] bg-content/5 p-3 text-sm wrap-anywhere">
                   {q.source_url ? (
                     <>
                       <a

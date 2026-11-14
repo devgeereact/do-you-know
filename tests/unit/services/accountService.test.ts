@@ -7,9 +7,13 @@ afterEach(() => {
 
 describe('linkAdultSession', () => {
   it('posts the adult confirmation with the Clerk token', async () => {
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ profile_id: 'p1', linked_game_history: false }), { status: 200 }),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(JSON.stringify({ profile_id: 'p1', linked_game_history: false }), {
+          status: 200,
+        }),
+      );
     vi.stubGlobal('fetch', fetchMock);
     const result = await linkAdultSession(() => Promise.resolve('clerk-token'));
     expect(result?.profile_id).toBe('p1');

@@ -34,7 +34,7 @@ export function QuizCard({
   return (
     <Link
       to={`/q/${quiz.slug}`}
-      className={cn(cardLinkClass, 'group flex h-full min-h-[5rem] items-center gap-4 p-3 pr-4')}
+      className={cn(cardLinkClass, 'group flex h-full min-h-20 items-center gap-4 p-3 pr-4')}
     >
       <span
         aria-hidden="true"

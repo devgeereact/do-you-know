@@ -174,7 +174,7 @@ export function InboxScreen(): JSX.Element {
                   'grid grid-cols-[12px_minmax(0,1fr)] items-start gap-2.5 rounded-xl border-[1.5px] p-2.5 text-left',
                   f.id === current?.id
                     ? 'border-primary/30 bg-primary/10'
-                    : 'border-transparent hover:bg-content/[0.04]',
+                    : 'border-transparent hover:bg-content/4',
                 )}
               >
                 <span className="mt-1.5">
@@ -220,11 +220,11 @@ export function InboxScreen(): JSX.Element {
                     {niceDateTime(detail.created_at)}
                   </span>
                 </div>
-                <h2 className="font-display text-[22px] font-extrabold [overflow-wrap:anywhere]">
+                <h2 className="font-display text-[22px] font-extrabold wrap-anywhere">
                   {who(detail, detail.email)}
                 </h2>
                 {detail.message && (
-                  <blockquote className="rounded-lg border-l-4 border-primary bg-content/[0.04] px-3 py-2 text-sm [overflow-wrap:anywhere]">
+                  <blockquote className="rounded-lg border-l-4 border-primary bg-content/4 px-3 py-2 text-sm wrap-anywhere">
                     {detail.message}
                   </blockquote>
                 )}
@@ -238,7 +238,7 @@ export function InboxScreen(): JSX.Element {
                   </div>
                 )}
                 {detail.quiz && (
-                  <div className="grid gap-1 rounded-[14px] bg-content/[0.04] p-3">
+                  <div className="grid gap-1 rounded-[14px] bg-content/4 p-3">
                     <span className="text-xs font-extrabold text-content-muted">About</span>
                     <b>{detail.quiz.title}</b>
                     {detail.question_prompt && (
@@ -278,7 +278,7 @@ export function InboxScreen(): JSX.Element {
                               : 'Internal note'}
                           {m.author ? ` · ${m.author}` : ''} · {niceDateTime(m.created_at)}
                         </span>
-                        <p className="mt-0.5 whitespace-pre-wrap text-[14.5px] [overflow-wrap:anywhere]">
+                        <p className="mt-0.5 whitespace-pre-wrap text-[14.5px] wrap-anywhere">
                           {m.body}
                         </p>
                       </div>
@@ -352,7 +352,7 @@ export function InboxScreen(): JSX.Element {
                     <Button
                       size="sm"
                       disabled={busy}
-                      className="!bg-correct !text-correct-fg !shadow-[0_4px_0_0_#0A5A3A]"
+                      className="bg-correct! text-correct-fg! shadow-[0_4px_0_0_#0A5A3A]!"
                       onClick={() => void setItemStatus('resolved')}
                     >
                       Resolve

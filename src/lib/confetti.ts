@@ -9,7 +9,7 @@ const COLOURS = [
   'bg-avatar-octopus',
   'bg-avatar-unicorn',
 ];
-const SHAPES = ['rounded-full', 'rounded-sm', 'rounded-[2px]'];
+const SHAPES = ['rounded-full', 'rounded-xs', 'rounded-[2px]'];
 
 /**
  * A short, decorative burst of confetti from an element (or the top of the screen).
@@ -24,7 +24,7 @@ export function burstConfetti(origin?: Element | null, pieces = 36): void {
 
   const layer = document.createElement('div');
   layer.setAttribute('aria-hidden', 'true');
-  layer.className = 'pointer-events-none fixed inset-0 z-[60] overflow-hidden';
+  layer.className = 'pointer-events-none fixed inset-0 z-60 overflow-hidden';
   document.body.appendChild(layer);
 
   for (let i = 0; i < pieces; i += 1) {

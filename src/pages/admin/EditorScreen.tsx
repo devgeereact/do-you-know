@@ -433,7 +433,7 @@ export function EditorScreen(): JSX.Element {
           variant="ghost"
           size="sm"
           disabled={busy}
-          className="!border-wrong/40 !text-wrong"
+          className="border-wrong/40! text-wrong!"
           onClick={async () => {
             const ok = await confirm({
               title: 'Retire this quiz?',
@@ -453,7 +453,7 @@ export function EditorScreen(): JSX.Element {
             variant="ghost"
             size="sm"
             disabled={busy}
-            className="!border-wrong/40 !text-wrong"
+            className="border-wrong/40! text-wrong!"
             onClick={async () => {
               const ok = await confirm({
                 title: 'Delete this draft?',
@@ -602,7 +602,7 @@ export function EditorScreen(): JSX.Element {
         </div>
       )}
       {detail.warnings.length > 0 && !retired && (
-        <div className="mb-3 rounded-2xl border border-warning/40 bg-warning/[0.12] px-4 py-3">
+        <div className="mb-3 rounded-2xl border border-warning/40 bg-warning/12 px-4 py-3">
           <b className="text-sm">
             {detail.warnings.length === 1 ? '1 thing' : `${detail.warnings.length} things`} worth a
             look. They do not stop you publishing.
@@ -625,7 +625,7 @@ export function EditorScreen(): JSX.Element {
       )}
 
       {reviewReady && !retired && (
-        <Panel as="div" className="mb-3 grid gap-2 !p-4">
+        <Panel as="div" className="mb-3 grid gap-2 p-4!">
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <b>AI review</b>
             <span className="text-content-muted">
@@ -681,7 +681,7 @@ export function EditorScreen(): JSX.Element {
         <legend className="sr-only">Quiz editor</legend>
         {/* Details and question list */}
         <div className="grid min-w-0 content-start gap-4 md:grid-cols-2 min-[1200px]:grid-cols-1">
-          <Panel as="div" className="grid content-start gap-3 !p-4">
+          <Panel as="div" className="grid content-start gap-3 p-4!">
             <Field label="Title" htmlFor="ed-title">
               <input
                 id="ed-title"
@@ -827,7 +827,7 @@ export function EditorScreen(): JSX.Element {
             </label>
           </Panel>
 
-          <Panel as="div" className="!p-4">
+          <Panel as="div" className="p-4!">
             <div className="mb-1.5 flex items-center justify-between gap-2">
               <b className="text-sm">Questions ({questions.length})</b>
               <span className="flex items-center gap-1.5 text-xs text-content-muted">
@@ -851,7 +851,7 @@ export function EditorScreen(): JSX.Element {
                         'grid w-full grid-cols-[18px_minmax(0,1fr)_auto] items-center gap-2 rounded-[10px] border-[1.5px] px-2 py-[7px] text-left text-[13.5px] font-bold disabled:opacity-100',
                         i === sel
                           ? 'border-primary bg-primary/10'
-                          : 'border-transparent hover:bg-content/[0.04]',
+                          : 'border-transparent hover:bg-content/4',
                       )}
                       disabled={false}
                     >
@@ -1048,7 +1048,7 @@ export function EditorScreen(): JSX.Element {
                 <div
                   role="group"
                   aria-label="Right answer"
-                  className="inline-flex gap-0.5 rounded-full bg-content/[0.06] p-[3px]"
+                  className="inline-flex gap-0.5 rounded-full bg-content/6 p-[3px]"
                 >
                   {[true, false].map((v) => (
                     <button
@@ -1209,7 +1209,7 @@ export function EditorScreen(): JSX.Element {
           )}
           <div className="grid content-start gap-4">
             {q && (
-              <Panel as="div" className="!p-4">
+              <Panel as="div" className="p-4!">
                 <b className="text-sm">How players do</b>
                 {rate === null ? (
                   <p className="mt-1 text-xs text-content-muted">No answers yet.</p>
@@ -1229,7 +1229,7 @@ export function EditorScreen(): JSX.Element {
                 )}
               </Panel>
             )}
-            <Panel as="div" className="!p-4">
+            <Panel as="div" className="p-4!">
               <b className="text-sm">Versions</b>
               <ul className="mt-1.5 text-[13.5px]">
                 {detail.versions.length === 0 && (

@@ -66,7 +66,7 @@ export function AHead({
     <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
       <div className="min-w-0">
         {above}
-        <h1 className="font-display text-[28px] font-extrabold leading-tight text-content [overflow-wrap:anywhere]">
+        <h1 className="font-display text-[28px] font-extrabold leading-tight text-content wrap-anywhere">
           {title}
         </h1>
         {lead && <p className="text-sm font-semibold text-content-muted">{lead}</p>}
@@ -172,7 +172,7 @@ export function SegList<T extends string>({
     <div
       role="group"
       aria-label={label}
-      className="inline-flex max-w-full gap-0.5 overflow-x-auto rounded-full bg-content/[0.06] p-[3px]"
+      className="inline-flex max-w-full gap-0.5 overflow-x-auto rounded-full bg-content/6 p-[3px]"
     >
       {options.map((o) => (
         <button
@@ -181,7 +181,7 @@ export function SegList<T extends string>({
           aria-pressed={o.value === value}
           onClick={() => onChange(o.value)}
           className={cn(
-            'h-8 shrink-0 whitespace-nowrap rounded-full px-3.5 text-sm font-extrabold transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40',
+            'h-8 shrink-0 whitespace-nowrap rounded-full px-3.5 text-sm font-extrabold transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40',
             o.value === value
               ? 'bg-surface text-content shadow-soft'
               : 'text-content-muted hover:text-content',
@@ -230,7 +230,7 @@ export function Table({
                   key={`${h.label}-${i}`}
                   scope="col"
                   className={cn(
-                    'whitespace-nowrap border-b border-surface-border bg-content/[0.025] px-3 py-2 text-left text-[11.5px] font-extrabold text-content-muted',
+                    'whitespace-nowrap border-b border-surface-border bg-content/2.5 px-3 py-2 text-left text-[11.5px] font-extrabold text-content-muted',
                     h.num && 'text-right',
                   )}
                 >
@@ -250,7 +250,7 @@ export function Tr({ className, ...props }: HTMLAttributes<HTMLTableRowElement>)
   return (
     <tr
       className={cn(
-        'border-b border-surface-border/70 last:border-b-0 hover:bg-content/[0.02] max-[719px]:block max-[719px]:px-3 max-[719px]:py-2.5',
+        'border-b border-surface-border/70 last:border-b-0 hover:bg-content/2 max-[719px]:block max-[719px]:px-3 max-[719px]:py-2.5',
         className,
       )}
       {...props}
@@ -340,7 +340,7 @@ export function Modal({
     };
   }, [onClose]);
   return (
-    <div className="fixed inset-0 z-[80] grid place-items-center bg-[#17153A]/50 p-4">
+    <div className="fixed inset-0 z-80 grid place-items-center bg-[#17153A]/50 p-4">
       <div
         ref={box}
         role="dialog"
@@ -349,7 +349,7 @@ export function Modal({
         tabIndex={-1}
         className={cn(
           cardClass,
-          'max-h-[calc(100dvh-2rem)] w-full overflow-y-auto p-5 shadow-float focus:outline-none',
+          'max-h-[calc(100dvh-2rem)] w-full overflow-y-auto p-5 shadow-float focus:outline-hidden',
           wide ? 'max-w-lg' : 'max-w-md',
         )}
       >
@@ -391,7 +391,7 @@ export function ConfirmDialog({
             onClick={() => onAnswer(true)}
             className={
               tone === 'danger'
-                ? '!bg-wrong !text-wrong-fg !shadow-[0_4px_0_0_#8F1F1D] hover:!bg-wrong/95'
+                ? 'bg-wrong! text-wrong-fg! shadow-[0_4px_0_0_#8F1F1D]! hover:bg-wrong/95!'
                 : undefined
             }
           >
@@ -413,7 +413,7 @@ export function Toasts({
   return (
     <div
       aria-live="polite"
-      className="pointer-events-none fixed inset-x-0 bottom-4 z-[90] flex flex-col items-center gap-2 px-4"
+      className="pointer-events-none fixed inset-x-0 bottom-4 z-90 flex flex-col items-center gap-2 px-4"
     >
       {items.map((t) => (
         <p
@@ -453,7 +453,7 @@ export function Kpi({
 
 export function Bar({ percent, tone }: { percent: number; tone: 'ok' | 'bad' }): JSX.Element {
   return (
-    <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-content/[0.08]">
+    <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-content/8">
       <div
         className={cn('h-full rounded-full', tone === 'bad' ? 'bg-wrong' : 'bg-correct')}
         style={{ width: `${Math.max(0, Math.min(100, percent))}%` }}

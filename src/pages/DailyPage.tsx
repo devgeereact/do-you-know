@@ -124,7 +124,7 @@ export function DailyPage(): JSX.Element {
         <section
           ref={stage}
           aria-label={t.common.todaysChallenge}
-          className="relative isolate flex min-h-0 flex-col justify-between overflow-hidden rounded-[1.75rem] p-4 text-white shadow-lift lg:p-6"
+          className="relative isolate flex min-h-0 flex-col justify-between overflow-hidden rounded-3xl p-4 text-white shadow-lift lg:p-6"
         >
           {unique.map((key) => (
             <div
@@ -139,7 +139,7 @@ export function DailyPage(): JSX.Element {
           ))}
           <div
             aria-hidden="true"
-            className="absolute inset-0 -z-10 bg-gradient-to-b from-[rgb(10_10_40/0.15)] via-transparent to-[rgb(10_10_40/0.45)]"
+            className="absolute inset-0 -z-10 bg-linear-to-b from-[rgb(10_10_40/0.15)] via-transparent to-[rgb(10_10_40/0.45)]"
           />
 
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -147,7 +147,7 @@ export function DailyPage(): JSX.Element {
               {t.daily.kicker(today ? shortDate(today.date) : shortDate(londonToday()))}
             </span>
             <span
-              className="rounded-full bg-black/25 px-3 py-1 font-display text-sm font-extrabold tabular-nums backdrop-blur lg:text-base"
+              className="rounded-full bg-black/25 px-3 py-1 font-display text-sm font-extrabold tabular-nums backdrop-blur-sm lg:text-base"
               aria-live="off"
             >
               {t.daily.countdown(countdown)}
@@ -181,7 +181,7 @@ export function DailyPage(): JSX.Element {
                 </Link>
               )}
               <span
-                className="inline-flex h-8 items-center gap-1.5 rounded-full bg-white/20 px-3 text-sm font-bold backdrop-blur"
+                className="inline-flex h-8 items-center gap-1.5 rounded-full bg-white/20 px-3 text-sm font-bold backdrop-blur-sm"
                 aria-live="off"
               >
                 <WorldGlyph world={current} />
@@ -193,7 +193,7 @@ export function DailyPage(): JSX.Element {
           {/* Postcards for the current and next stops, with the stop's character on the front one. */}
           <div
             aria-hidden="true"
-            className="absolute right-[6%] top-[18%] hidden h-[10.5rem] w-[14rem] lg:block"
+            className="absolute right-[6%] top-[18%] hidden h-42 w-56 lg:block"
           >
             {[0, 1, 2].map((k) => {
               const i = Math.min(step + k, stops.length - 1);
@@ -248,7 +248,7 @@ export function DailyPage(): JSX.Element {
                 data-stop={i}
                 title={t.daily.stopLabel(i + 1, world(key).name)}
                 className={cn(
-                  'relative z-[1] grid h-6 w-6 place-items-center rounded-full transition-colors lg:h-7 lg:w-7',
+                  'relative z-1 grid h-6 w-6 place-items-center rounded-full transition-colors lg:h-7 lg:w-7',
                   i <= step ? 'bg-white text-[#17153A]' : 'bg-white/35 text-white',
                 )}
               >
@@ -258,7 +258,7 @@ export function DailyPage(): JSX.Element {
             <span
               data-token
               aria-hidden="true"
-              className="absolute left-0 top-0 z-[2] drop-shadow-[0_4px_4px_rgb(0_0_0/0.3)]"
+              className="absolute left-0 top-0 z-2 drop-shadow-[0_4px_4px_rgb(0_0_0/0.3)]"
             >
               <Character name="owl" size={34} />
             </span>
@@ -305,7 +305,8 @@ export function DailyPage(): JSX.Element {
                       className={cn(
                         'grid h-8 w-8 place-items-center rounded-full',
                         on ? 'bg-tang text-white' : 'bg-background',
-                        d === londonToday() && 'outline outline-2 outline-offset-2 outline-content',
+                        d === londonToday() &&
+                          'outline-solid outline-2 outline-offset-2 outline-content',
                       )}
                     >
                       {on && '✓'}

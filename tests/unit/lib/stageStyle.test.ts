@@ -11,7 +11,8 @@ const read = (path: string): string => readFileSync(join(root, path), 'utf8');
 const css = read('src/index.css');
 const start = css.indexOf('/* ---------- The game stage');
 const end = css.indexOf('/* Scene motion from src/lib/art.ts');
-const stageCss = css.slice(start, end);
+// The theme token blocks (:root, .dark) are the one place hex values live, so leave them out.
+const stageCss = css.slice(start, end).replace(/(:root|\.dark)\s*\{[^}]*\}/g, '');
 
 const gameDir = 'src/components/game';
 const stageFiles = [

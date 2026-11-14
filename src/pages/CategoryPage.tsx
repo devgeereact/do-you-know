@@ -69,7 +69,7 @@ export function CategoryPage(): JSX.Element {
           <div
             data-reserve="banner"
             aria-hidden="true"
-            className="mb-4 mt-2 min-h-[9.5rem] rounded-[1.75rem] bg-content/[0.06] lg:min-h-[11rem]"
+            className="mb-4 mt-2 min-h-38 rounded-3xl bg-content/6 lg:min-h-44"
           />
         ) : (
           <h1 className="mb-4 mt-2 text-[2rem]">{t.category.fallbackTitle}</h1>
@@ -107,7 +107,7 @@ export function CategoryPage(): JSX.Element {
               <select
                 value={curriculumTag ?? ''}
                 onChange={(e) => setFilter('curriculum', e.target.value)}
-                className="min-h-tap min-w-0 max-w-full flex-1 truncate rounded-full border-2 border-surface-border bg-surface px-3 text-base font-semibold text-content focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-secondary"
+                className="min-h-tap min-w-0 max-w-full flex-1 truncate rounded-full border-2 border-surface-border bg-surface px-3 text-base font-semibold text-content focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-secondary"
               >
                 <option value="">{t.category.anyYear}</option>
                 {curriculumTags.map((tag) => (
@@ -162,7 +162,7 @@ function SuggestQuiz(): JSX.Element {
       to="/contact?type=idea"
       className={cn(
         cardLinkClass,
-        'flex h-full min-h-[5rem] items-center gap-4 border-dashed bg-transparent p-3 pr-4 shadow-none',
+        'flex h-full min-h-20 items-center gap-4 border-dashed bg-transparent p-3 pr-4 shadow-none',
       )}
     >
       <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[rgb(var(--surface-border)/0.6)]">

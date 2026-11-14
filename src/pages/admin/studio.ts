@@ -113,10 +113,10 @@ export function useAction(): {
 // ---- Shared class strings ----
 
 export const inputClass =
-  'block w-full min-w-0 rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-[15px] text-content placeholder:text-content-muted/70 focus:border-primary focus:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/30 disabled:opacity-60';
+  'block w-full min-w-0 rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-[15px] text-content placeholder:text-content-muted/70 focus:border-primary focus:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/30 disabled:opacity-60';
 export const selectClass = `${inputClass} h-10 py-0 pr-8`;
 export const linkButtonClass =
-  'inline-flex items-center gap-1 rounded-md text-sm font-bold text-primary hover:underline underline-offset-2 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40 disabled:opacity-50';
+  'inline-flex items-center gap-1 rounded-md text-sm font-bold text-primary hover:underline underline-offset-2 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40 disabled:opacity-50';
 export const cardClass = 'rounded-2xl border border-surface-border bg-surface shadow-soft';
 
 // ---- Labels ----
@@ -141,7 +141,7 @@ export const TONES: Record<Tone, string> = {
   ok: 'bg-correct/10 text-correct',
   bad: 'bg-wrong/10 text-wrong',
   warn: 'bg-warning/20 text-content',
-  mute: 'bg-content/[0.06] text-content-muted',
+  mute: 'bg-content/6 text-content-muted',
   lemon: 'bg-secondary text-secondary-fg',
   ink: 'bg-content text-background',
   lagoon: 'bg-sky/15 text-content',

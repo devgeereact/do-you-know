@@ -64,16 +64,16 @@ export function SiteHeader(): JSX.Element {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-surface-border/70 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
+    <header className="sticky top-0 z-40 border-b border-surface-border/70 bg-background/85 backdrop-blur-md supports-backdrop-filter:bg-background/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 lg:px-6">
         <Link
           to="/"
           aria-label={t.nav.homeLink}
-          className="group flex min-h-tap shrink-0 items-center rounded-full pr-2 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+          className="group flex min-h-tap shrink-0 items-center rounded-full pr-2 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
         >
           <Logo
             size={36}
-            className="[&_svg]:transition-transform [&_svg]:duration-300 group-hover:[&_svg]:-rotate-6"
+            className="[&_svg]:transition-transform [&_svg]:duration-300 [&_svg]:group-hover:-rotate-6"
           />
         </Link>
         <nav
@@ -89,7 +89,7 @@ export function SiteHeader(): JSX.Element {
                 to={item.to}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'inline-flex min-h-tap items-center rounded-full px-4 font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary',
+                  'inline-flex min-h-tap items-center rounded-full px-4 font-semibold transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary',
                   active ? 'font-bold text-content' : 'text-content-muted hover:text-content',
                 )}
               >
@@ -135,10 +135,10 @@ function ProfileLink(): JSX.Element {
       to="/me"
       aria-current={pathname === '/me' ? 'page' : undefined}
       aria-label={unread ? t.nav.menu.openUnread(name) : t.nav.menu.open(name)}
-      className="relative flex h-11 items-center gap-2 rounded-full border-2 border-surface-border bg-surface pl-1 pr-1 font-semibold transition-colors hover:border-content-muted/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary sm:pr-3.5"
+      className="relative flex h-11 items-center gap-2 rounded-full border-2 border-surface-border bg-surface pl-1 pr-1 font-semibold transition-colors hover:border-content-muted/40 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary sm:pr-3.5"
     >
       <AvatarBadge avatarId={user?.avatarId} nickname={user?.nickname} size="xs" />
-      <span className="hidden max-w-[11rem] truncate text-[0.95rem] sm:inline">{name}</span>
+      <span className="hidden max-w-44 truncate text-[0.95rem] sm:inline">{name}</span>
       {unread && (
         <span
           aria-hidden="true"

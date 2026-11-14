@@ -44,15 +44,13 @@ export function AiVerdict({
     );
   }
   return (
-    <div className="grid w-full max-w-[420px] gap-1.5 rounded-[12px] border border-primary/30 bg-primary/[0.06] p-2.5 text-left text-[12.5px]">
+    <div className="grid w-full max-w-[420px] gap-1.5 rounded-[12px] border border-primary/30 bg-primary/6 p-2.5 text-left text-[12.5px]">
       <b>AI suggests a fix{item.reason ? `: ${item.reason}` : ''}</b>
       {diffFix(question, item.fix).map((c) => (
         <div key={c.field} className="grid gap-0.5">
           <span className="font-bold text-content-muted">{c.field}</span>
-          <del className="text-wrong [overflow-wrap:anywhere]">{c.before || '(empty)'}</del>
-          <ins className="font-semibold text-correct no-underline [overflow-wrap:anywhere]">
-            {c.after}
-          </ins>
+          <del className="text-wrong wrap-anywhere">{c.before || '(empty)'}</del>
+          <ins className="font-semibold text-correct no-underline wrap-anywhere">{c.after}</ins>
         </div>
       ))}
       <span className="flex gap-1.5">

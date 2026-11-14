@@ -109,7 +109,7 @@ function Overall({
             options={PERIODS.map((p) => ({ value: p, label: t.leaderboards.periods[p] }))}
             value={period}
             onChange={(p) => setParams({ period: p }, { replace: true })}
-            className="w-full lg:w-[30rem]"
+            className="w-full lg:w-120"
           />
           <button
             type="button"
@@ -263,7 +263,7 @@ function Podium({ rows }: { rows: OverallRow[] }): JSX.Element {
   const slots: { row: OverallRow | undefined; place: 1 | 2 | 3; colour: string; height: string }[] =
     [
       { row: rows[1], place: 2, colour: 'bg-sky', height: 'h-12' },
-      { row: rows[0], place: 1, colour: 'bg-tang', height: 'h-[4.5rem]' },
+      { row: rows[0], place: 1, colour: 'bg-tang', height: 'h-18' },
       { row: rows[2], place: 3, colour: 'bg-gum', height: 'h-8' },
     ];
   return (

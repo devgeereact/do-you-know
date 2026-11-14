@@ -184,7 +184,7 @@ export function LibraryScreen(): JSX.Element {
               <Td label="Quiz" lead>
                 <Link
                   to={`/admin/edit/${q.id}`}
-                  className="block max-w-[260px] truncate font-extrabold text-content hover:text-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/40 max-[719px]:max-w-none max-[719px]:whitespace-normal"
+                  className="block max-w-[260px] truncate font-extrabold text-content hover:text-primary focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary/40 max-[719px]:max-w-none max-[719px]:whitespace-normal"
                 >
                   {q.title}
                 </Link>

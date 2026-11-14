@@ -221,7 +221,16 @@ describe('categoryPage with the full catalogue', () => {
       shell,
       ORIGIN,
       { slug: 'science', name: 'Science', description: 'Space, bodies and bugs.' },
-      [{ slug: 'space-facts', title: 'Space facts', intro: 'Rockets and planets.', question_count: 10, age_min: 7, age_max: 11 }],
+      [
+        {
+          slug: 'space-facts',
+          title: 'Space facts',
+          intro: 'Rockets and planets.',
+          question_count: 10,
+          age_min: 7,
+          age_max: 11,
+        },
+      ],
       [
         { slug: 'science', name: 'Science' },
         { slug: 'history', name: 'History & <Time>' },
@@ -307,7 +316,6 @@ describe('staticPage and infoPages', () => {
     expect(doc.getElementById('prerender')?.querySelector('h1')?.textContent).toBe('<h>');
   });
 });
-
 
 describe('quizPage related links', () => {
   const doc = parse(

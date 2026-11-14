@@ -1,7 +1,6 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import config from '../../../tailwind.config';
 
 // A clean, calm type scale across the whole app, the Studio included (owner, 7 Nov 2026): nothing is bold,
 // and nothing is forced into capitals. Hierarchy comes from size and colour.
@@ -15,8 +14,10 @@ const sources = walk(join(root, 'src')).filter((f) => /\.(tsx?|css)$/.test(f));
 
 describe('type scale', () => {
   it('maps every Tailwind weight class to 500 or lighter', () => {
-    const weights =
-      (config.theme?.extend as { fontWeight?: Record<string, string> }).fontWeight ?? {};
+    const css = readFileSync(join(root, 'src/index.css'), 'utf8');
+    const weights = Object.fromEntries(
+      [...css.matchAll(/--font-weight-(\w+):\s*(\d+)/g)].map((m) => [m[1], m[2]]),
+    ) as Record<string, string>;
     expect(Object.keys(weights).sort()).toEqual([
       'black',
       'bold',

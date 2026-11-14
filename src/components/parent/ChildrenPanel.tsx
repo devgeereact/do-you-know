@@ -18,7 +18,7 @@ import { t } from '@/i18n';
 
 const copy = t.grownUps.children;
 const field =
-  'h-12 w-full rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-none focus:ring-[3px] focus:ring-primary/20';
+  'h-12 w-full rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-hidden focus:ring-[3px] focus:ring-primary/20';
 
 /** A grid of the preset pictures: choosing one is a tap, never a file or a name. */
 function AvatarPicker({
@@ -40,7 +40,7 @@ function AvatarPicker({
           aria-label={a.label}
           onClick={() => onPick(a.id)}
           className={cn(
-            'grid min-h-tap min-w-tap place-items-center rounded-full border-[3px] p-0.5 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary',
+            'grid min-h-tap min-w-tap place-items-center rounded-full border-[3px] p-0.5 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary',
             value === a.id ? 'border-primary' : 'border-transparent',
           )}
         >

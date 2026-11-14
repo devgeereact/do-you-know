@@ -14,6 +14,8 @@ export default defineConfig({
     setupFiles: ['tests/unit/setup.ts'],
     // Pin the public settings the code reads, so local machine settings cannot change results.
     env: { VITE_CPANEL_API_URL: '/api/v1', VITE_SENTRY_DSN: '' },
+    // Component tests render whole screens; 5 s fails on a busy or shared CI/dev machine.
+    testTimeout: 20000,
     restoreMocks: true,
     unstubGlobals: true,
   },

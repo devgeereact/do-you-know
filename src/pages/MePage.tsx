@@ -111,7 +111,7 @@ export function MePage(): JSX.Element {
 function Identity({ profile }: { profile: Profile | null }): JSX.Element {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-surface-border bg-surface shadow-soft">
-      <div aria-hidden="true" className="h-20 bg-gradient-to-br from-primary to-[#9C86FF]" />
+      <div aria-hidden="true" className="h-20 bg-linear-to-br from-primary to-[#9C86FF]" />
       <div className="-mt-12 grid justify-items-center px-5 pb-5 text-center">
         <span className="rounded-full ring-4 ring-surface">
           <AvatarBadge
@@ -327,7 +327,7 @@ function NicknameOnce({
                 maxLength={20}
                 autoComplete="off"
                 onChange={(e) => setTyped(e.target.value)}
-                className="h-11 rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-none"
+                className="h-11 rounded-xl border-2 border-surface-border bg-surface px-3 text-base focus:border-primary focus:outline-hidden"
               />
               <span className="text-xs text-content-muted">{t.me.nicknameOnce.typeHint}</span>
             </div>
@@ -390,7 +390,7 @@ function CharacterPicker({
                   });
                 }}
                 className={cn(
-                  'relative grid w-full justify-items-center gap-1 rounded-2xl border-2 px-2 pb-3 pt-4 transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary',
+                  'relative grid w-full justify-items-center gap-1 rounded-2xl border-2 px-2 pb-3 pt-4 transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary',
                   current
                     ? 'border-primary bg-primary/10'
                     : 'border-surface-border bg-surface hover:border-primary/40',
@@ -517,7 +517,7 @@ function Thread({ message, onSent }: { message: MyMessage; onSent: () => void })
             value={text}
             placeholder={t.me.messages.replyPlaceholder}
             onChange={(e) => setText(e.target.value)}
-            className="rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-base focus:border-primary focus:outline-none"
+            className="rounded-xl border-2 border-surface-border bg-surface px-3 py-2 text-base focus:border-primary focus:outline-hidden"
           />
           <div className="flex items-center gap-3">
             <Button size="sm" type="submit" disabled={busy || text.trim().length < 2}>
@@ -713,7 +713,7 @@ function DeleteData(): JSX.Element {
     <button
       type="button"
       onClick={() => setConfirming(true)}
-      className="justify-self-start text-sm font-semibold text-content-muted underline underline-offset-2 hover:text-wrong focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary"
+      className="justify-self-start text-sm font-semibold text-content-muted underline underline-offset-2 hover:text-wrong focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-primary"
     >
       {t.me.profile.delete}
     </button>

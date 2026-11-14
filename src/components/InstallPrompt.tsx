@@ -42,7 +42,7 @@ export function InstallPrompt(): JSX.Element | null {
       aria-label={t.pwa.install.label}
       className="fixed inset-x-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-50 mx-auto flex max-w-md animate-fade-up flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-surface-border bg-surface p-4 shadow-lift md:bottom-6"
     >
-      <div className="min-w-[12rem] flex-1">
+      <div className="min-w-48 flex-1">
         <p className="font-display font-semibold text-content">{t.pwa.install.title}</p>
         <p className="text-sm text-content-muted">{t.pwa.install.body}</p>
       </div>
